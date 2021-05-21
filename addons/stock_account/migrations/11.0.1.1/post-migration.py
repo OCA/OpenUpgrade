@@ -88,90 +88,83 @@ def update_stock_move_value_fifo(env):
     to switch to it after migration in envs with manual valuation.
     """
     # Valuate incoming moves:
-    env.cr.execute("""
-        SELECT sm.id, pt.id, sm.price_unit, sm.product_uom_qty
-        FROM stock_move sm
+    # q1: Update remaining value and remaining qty based on quants that
+    # still exist in internal locations.
+    # q2: Update value based on quants that a linked to this move.
+    openupgrade.logged_query(
+        env.cr,
+        """
+        UPDATE stock_move AS to_update
+        SET
+            remaining_value = q1.remaining_value,
+            remaining_qty = q1.remaining_qty,
+            value = q2.value
+        FROM stock_move AS sm
         INNER JOIN stock_location loc_from
         ON sm.location_id = loc_from.id
         INNER JOIN stock_location loc_to
         ON sm.location_dest_id = loc_to.id
-        INNER JOIN product_product pp
-        ON sm.product_id = pp.id
-        INNER JOIN product_template pt
-        ON pp.product_tmpl_id = pt.id
-        WHERE (loc_from.company_id IS NULL
-                OR loc_from.usage <> 'internal')
-            AND (loc_to.company_id IS NOT NULL
-                OR loc_from.usage = 'internal')
-            AND sm.state = 'done'
-    """)
-    for move, tmpl_id, price_unit, product_uom_qty in env.cr.fetchall():
-        # Update remaining value and remaining qty based on quants that
-        # still exist in internal locations.
-        env.cr.execute("""
-            UPDATE stock_move AS to_update
-            SET remaining_value = q1.remaining_value,
-                remaining_qty = q1.remaining_qty
-            FROM (
-                SELECT sum(sq.quantity*sq.cost) as remaining_value,
-                    sum(sq.quantity) as remaining_qty
-                FROM stock_quant_move_rel sqsm
-                INNER JOIN stock_quant sq
-                ON sqsm.quant_id = sq.id
-                INNER JOIN stock_location sl
-                ON sq.location_id = sl.id
-                WHERE sqsm.move_id = %s
-                    AND (sl.company_id IS NOT NULL
-                        OR sl.usage = 'internal')
-                ) AS q1
-            WHERE to_update.id = %s
-        """, (move, move))
-        # Update value based on quants that a linked to this move.
-        env.cr.execute("""
-            UPDATE stock_move AS to_update
-            SET value = q1.value
-            FROM (
-                SELECT sum(sq.quantity*sq.cost) as value
-                FROM stock_quant_move_rel sqsm
-                INNER JOIN stock_quant sq
-                ON sqsm.quant_id = sq.id
-                WHERE sqsm.move_id = %s
-                ) AS q1
-            WHERE to_update.id = %s
-        """, (move, move))
 
+        LEFT JOIN (
+            SELECT
+                sqsm.move_id as move_id,
+                sum(sq.quantity * sq.cost) as remaining_value,
+                sum(sq.quantity) as remaining_qty
+            FROM stock_quant_move_rel sqsm
+            INNER JOIN stock_quant sq
+            ON sqsm.quant_id = sq.id
+            INNER JOIN stock_location sl
+            ON sq.location_id = sl.id
+            WHERE (sl.company_id IS NOT NULL OR sl.usage = 'internal')
+            GROUP BY sqsm.move_id
+        ) AS q1 ON (q1.move_id = sm.id)
+
+        LEFT JOIN (
+            SELECT
+                sqsm.move_id as move_id,
+                sum(sq.quantity * sq.cost) as value
+            FROM stock_quant_move_rel sqsm
+            INNER JOIN stock_quant sq
+            ON sqsm.quant_id = sq.id
+            GROUP BY sqsm.move_id
+        ) AS q2 ON (q2.move_id = sm.id)
+
+        WHERE sm.id = to_update.id
+        AND (loc_from.company_id IS NULL OR loc_from.usage <> 'internal')
+        AND (loc_to.company_id IS NOT NULL OR loc_from.usage = 'internal')
+        AND sm.state = 'done'
+        """
+    )
     # Valuate outgoing moves:
-    env.cr.execute("""
-        SELECT sm.id, pt.id, sm.price_unit, sm.product_uom_qty
+    # q1: Update value based on quants that a linked to this move.
+    openupgrade.logged_query(
+        env.cr,
+        """
+        UPDATE stock_move AS to_update
+        SET
+            value = -q1.value
         FROM stock_move sm
         INNER JOIN stock_location loc_from
         ON sm.location_id = loc_from.id
         INNER JOIN stock_location loc_to
         ON sm.location_dest_id = loc_to.id
-        INNER JOIN product_product pp
-        ON sm.product_id = pp.id
-        INNER JOIN product_template pt
-        ON pp.product_tmpl_id = pt.id
-        WHERE (loc_from.company_id IS NOT NULL
-                OR loc_from.usage = 'internal')
-            AND (loc_to.company_id IS NULL
-                OR loc_from.usage <> 'internal')
-            AND sm.state = 'done'
-    """)
-    for move, tmpl_id, price_unit, product_uom_qty in env.cr.fetchall():
-        # Update value based on quants that a linked to this move.
-        env.cr.execute("""
-            UPDATE stock_move AS to_update
-            SET value = -q1.value
-            FROM (
-                SELECT sum(sq.quantity*sq.cost) as value
-                FROM stock_quant_move_rel sqsm
-                INNER JOIN stock_quant sq
-                ON sqsm.quant_id = sq.id
-                WHERE sqsm.move_id = %s
-                ) AS q1
-            WHERE to_update.id = %s
-        """, (move, move))
+
+        LEFT JOIN (
+            SELECT
+                sqsm.move_id as move_id,
+                sum(sq.quantity * sq.cost) as value
+            FROM stock_quant_move_rel sqsm
+            INNER JOIN stock_quant sq
+            ON sqsm.quant_id = sq.id
+            GROUP BY sqsm.move_id
+        ) AS q1 ON (q1.move_id = sm.id)
+
+        WHERE sm.id = to_update.id
+        AND (loc_from.company_id IS NOT NULL OR loc_from.usage = 'internal')
+        AND (loc_to.company_id IS NULL OR loc_from.usage <> 'internal')
+        AND sm.state = 'done'
+        """
+    )
 
 
 @openupgrade.migrate(use_env=True)
