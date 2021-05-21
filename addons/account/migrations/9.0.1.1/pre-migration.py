@@ -268,6 +268,7 @@ def remove_account_moves_from_special_periods(cr):
         USING account_period p, account_journal j
         WHERE l.period_id=p.id AND l.journal_id=j.id
         AND p.special AND j.centralisation
+        AND l.move_id <> 21856
     """)
 
     openupgrade.logged_query(cr, """
@@ -279,6 +280,7 @@ def remove_account_moves_from_special_periods(cr):
             FROM account_move_line
             WHERE name = 'Year opening entry'
         )
+        AND m.id <> 21856
     """)
 
 
