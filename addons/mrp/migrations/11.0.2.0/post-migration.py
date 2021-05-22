@@ -148,7 +148,7 @@ def create_stock_move_lines_from_stock_move_lots(env):
             sml.workorder_id"""
     from_ = """stock_move sm
         INNER JOIN mrp_production mp ON sm.production_id = mp.id
-        INNER JOIN stock_move_lots sml ON sml.move_id = sm.id
+        LEFT JOIN stock_move_lots sml ON sml.move_id = sm.id
         LEFT JOIN stock_production_lot spl ON sml.lot_id = spl.id"""
     openupgrade.logged_query(
         env.cr, """
@@ -157,7 +157,7 @@ def create_stock_move_lines_from_stock_move_lots(env):
         SELECT %(select)s
         FROM %(from)s
         WHERE sm.state NOT IN ('cancel') AND (sml.lot_id IS NOT NULL OR
-            sm.state NOT IN ('confirmed'))
+            sm.state = 'done')
             AND sm.id NOT IN (SELECT sq.reservation_id
                               FROM stock_quant sq
                               WHERE sq.reservation_id IS NOT NULL)
