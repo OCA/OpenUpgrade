@@ -65,7 +65,7 @@ jobs:
           # select modules and perform the upgrade
       - name: OpenUpgrade test
         run: |
-          MODULES_OLD=base,$(sed -n '/^+========/,$p'  odoo/openupgrade/doc/source/modules130-140.rst | grep "Done\|Partial\|Nothing" | grep -v "theme_" | sed -r -n 's/((^\| *\|del\| *)|^\|)([0-9a-z_]*) *\|.*$/\3/g p' | sed '/^\s*$/d' | paste -d, -s)
+          MODULES_OLD=base,$(sed -n '/^+========/,$p'  doc/source/modules130-140.rst | grep "Done\|Partial\|Nothing" | grep -v "theme_" | sed -r -n 's/((^\| *\|del\| *)|^\|)([0-9a-z_]*) *\|.*$/\3/g p' | sed '/^\s*$/d' | paste -d, -s)
           MODULES_NEW=base,$(sed -n '/^+========/,$p'  doc/source/modules130-140.rst | grep "Done\|Partial\|Nothing" | grep -v "theme_" | sed -r -n 's/((^\| *\|new\| *)|^\|)([0-9a-z_]*) *\|.*$/\3/g p' | sed '/^\s*$/d' | paste -d, -s)
           psql $DB -c "update ir_module_module set state='uninstalled' where name not in ('$(echo $MODULES_OLD | sed -e "s/,/','/g")')"
           echo Testing modules $MODULES_NEW
