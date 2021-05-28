@@ -59,7 +59,8 @@ script:
   # on unreleased features in openupgradelib
   - pip install --ignore-installed git+https://github.com/OCA/openupgradelib.git@master
   # select modules and perform the upgrade
-  - MODULES_OLD=base,$(sed -n '/^+========/,$p'  doc/source/modules130-140.rst | grep
+  - MODULES_OLD=base,$(sed -n
+    '/^+========/,$p'  odoo/openupgrade/doc/source/modules130-140.rst | grep
     "Done\|Partial\|Nothing" | grep -v "theme_" | sed -r -n 's/((^\| *\|del\|
     *)|^\|)([0-9a-z_]*) *\|.*$/\3/g p' | sed '/^\s*$/d' | paste -d, -s)
   - MODULES_NEW=base,$(sed -n '/^+========/,$p' doc/source/modules130-140.rst | grep
