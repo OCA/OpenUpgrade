@@ -40,6 +40,7 @@ jobs:
         run: createdb $DB
       - name: DB Restore
         run: |
+          # psql -d $DB -c "DROP SCHEMA IF EXISTS PUBLIC;"
           wget -q -O- https://github.com/OCA/OpenUpgrade/releases/download/databases/13.0.psql | pg_restore -d $DB --no-owner
           # TODO: create test data in Odoo 13.0 which does not support yml anymore
           # Roundtrip to previous release to update the test database with additional test data
