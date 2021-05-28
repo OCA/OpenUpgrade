@@ -35,7 +35,7 @@ jobs:
       - name: Wait / Sleep
         uses: jakejarvis/wait-action@v0.1.0
         with:
-          time: '10s'
+          time: "10s"
       - name: DB Creation
         run: createdb $DB
       - name: DB Restore
