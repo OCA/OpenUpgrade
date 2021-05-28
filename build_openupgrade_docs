@@ -1,6 +1,6 @@
 #!/bin/sh
 
-DOC_BUILD_DIR=${DOC_BUILD_DIR:-$(realpath $(dirname $0)/../odoo/openupgrade/doc)}
+DOC_BUILD_DIR=${DOC_BUILD_DIR:-$(realpath $(dirname $0)/../doc)}
 BASE_URL=https://github.com/OCA/OpenUpgrade/raw/
 DOC_PARTS="7.0/openerp/openupgrade/doc/source/modules50-60.rst
 7.0/openerp/openupgrade/doc/source/modules60-61.rst
