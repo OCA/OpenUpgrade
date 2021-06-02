@@ -17,7 +17,7 @@ jobs:
       DB_PASSWORD: "odoo"
       DB_HOST: "localhost"
       DB_PORT: 5432
-      ODOO: "./odoo-bin"
+      ODOO: "./odoo/odoo-bin"
       PGPASSWORD: "odoo"
       PGHOST: "localhost"
       PGUSER: "odoo"
@@ -26,15 +26,25 @@ jobs:
         uses: actions/setup-python@v2
         with:
           python-version: 3.7
-      - uses: actions/checkout@v2
+      - name: Check out Odoo
+        uses: actions/checkout@v2
+        with:
+          repository: odoo/odoo
+          ref: "14.0"
+          fetch-depth: 1
+          path: odoo
+      - name: Check out OpenUpgrade
+        uses: actions/checkout@v2
+        with:
+          path: openupgrade
       - name: Configuration
         run: |
           sudo apt update
           sudo apt install libldap2-dev nodejs libxml2-dev libxslt1-dev libevent-dev libsasl2-dev expect unixodbc-dev expect-dev python3-lxml python3-simplejson python3-serial python3-yaml python3-passlib python3-psycopg2 python3-werkzeug
-          pip install -r requirements.txt
+          pip install -r odoo/requirements.txt
           pip install sphinx
       - name: OpenUpgrade Docs
         run: |
-          sh build_openupgrade_docs
+          sh openupgrade/build_openupgrade_docs
           # try to build the documentation
           pip install sphinx
