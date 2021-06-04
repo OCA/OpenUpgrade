@@ -321,6 +321,22 @@ def move_view_accounts(env):
     )
 
 
+def _get_account_type_to_internal_type(env):
+    """Return a mapping from account types to internal types
+
+    When different from the default 'other' value.
+    """
+    res = {}
+    for ref, type in [
+            ("account.data_account_type_receivable", "receivable"),
+            ("account.data_account_type_payable", "payable"),
+            ("account.data_account_type_liquidity", "liquidity")]:
+        record = env.ref(ref, raise_if_not_found=False)
+        if record:
+            res[record] = type
+    return res
+
+
 def account_internal_type(env):
     """type on accounts was replaced by internal_type which is a related field
     to the user type's type field"""
@@ -329,7 +345,10 @@ def account_internal_type(env):
         operator.itemgetter(0),
         env['account.account.type']._fields['type'].selection,
     )
+    account_type_to_internal_type = _get_account_type_to_internal_type(env)
     for account_type in env['account.account.type'].search([]):
+        account_type_type = account_type_to_internal_type.get(
+            account_type, "other")
         cr.execute(
             'select %(type)s, array_agg(id) from account_account '
             'where user_type_id=%%s group by %(type)s '
@@ -348,7 +367,7 @@ def account_internal_type(env):
         # type has default 'other', be sure that's a type actually used
         # in the existing accounts. The sorting above makes sure we pick
         # the type with most accounts
-        if account_type.type not in type2ids:
+        if account_type_type not in type2ids:
             first_type = type2ids.keys()[0]
             _logger.error(
                 "Updating account.account.type#%s (%s), setting its type to "
@@ -356,12 +375,12 @@ def account_internal_type(env):
                 "This is likely an inconsistency in your accounts "
                 "configuration that needs to be fixed before the migration.",
                 account_type.id, account_type.name, first_type,
-                account_type.type)
+                account_type_type)
             account_type.write({
                 'type': first_type if first_type in possible_types else 'other'
             })
         for legacy_type, ids in type2ids.iteritems():
-            if legacy_type == account_type.type:
+            if legacy_type == account_type_type:
                 continue
             default = {
                 'name': '%s (Copy for accounts with type %s)' % (
@@ -392,6 +411,9 @@ def account_internal_type(env):
             env['account.account'].browse(ids).write({
                 'user_type_id': account_type.copy(default=default).id,
             })
+        if account_type_type != account_type.type:
+            # payable, receivable, liquidity
+            account_type.type = account_type_type
 
 
 def map_account_tax_type(cr):
