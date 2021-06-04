@@ -72,5 +72,14 @@
       <field name="note">Payment term: 30 Net Days</field>
       <field name="line_ids" eval="[(5, ), (0, 0, {'value': 'balance', 'value_amount': 0.0, 'sequence': 500, 'days': 30, 'option': 'day_after_invoice_date'})]"/>
     </record>
+    <record model="account.account.type" id="data_account_type_liquidity">
+        <field name="name">Bank and Cash</field>
+    </record>
+    <record model="account.account.type" id="data_account_type_current_assets">
+        <field name="name">Current Assets</field>
+    </record>
+    <record model="account.account.type" id="data_account_type_current_liabilities">
+        <field name="name">Current Liabilities</field>
+    </record>
   </data>
 </openerp>
