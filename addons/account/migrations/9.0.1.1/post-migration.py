@@ -350,6 +350,13 @@ def account_internal_type(env):
         # the type with most accounts
         if account_type.type not in type2ids:
             first_type = type2ids.keys()[0]
+            _logger.error(
+                "Updating account.account.type#%s (%s), setting its type to "
+                "%s because it was not actually used for accounts of type %s. "
+                "This is likely an inconsistency in your accounts "
+                "configuration that needs to be fixed before the migration.",
+                account_type.id, account_type.name, first_type,
+                account_type.type)
             account_type.write({
                 'type': first_type if first_type in possible_types else 'other'
             })
@@ -357,18 +364,31 @@ def account_internal_type(env):
             if legacy_type == account_type.type:
                 continue
             default = {
+                'name': '%s (Copy for accounts with type %s)' % (
+                    account_type.name,
+                    legacy_type,
+                ),
                 'type': legacy_type,
             }
             # for one of the deprecated types, use other but create a new
             # account type pointing to the deprecated type
             if legacy_type not in possible_types:
-                default.update({
-                    'name': '%s (%s)' % (
-                        account_type.name,
-                        legacy_type,
-                    ),
-                    'type': 'other',
-                })
+                default["type"] = "other"
+                _logger.error(
+                    "Creating a copy of account.account.type#%s (%s) because "
+                    "it is also used for accounts of type %s. This is not a "
+                    "valid type in Odoo 9, so the new account type is created "
+                    "with type 'other'. This is likely "
+                    "an inconsistency in your accounts configuration that "
+                    "needs to be fixed before the migration.",
+                    account_type.id, account_type.name, legacy_type)
+            else:
+                _logger.error(
+                    "Creating a copy of account.account.type#%s (%s) because "
+                    "it is also used for accounts of type %s. This is likely "
+                    "an inconsistency in your accounts configuration that "
+                    "needs to be fixed before the migration.",
+                    account_type.id, account_type.name, legacy_type)
             env['account.account'].browse(ids).write({
                 'user_type_id': account_type.copy(default=default).id,
             })
