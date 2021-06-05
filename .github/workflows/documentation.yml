@@ -43,8 +43,8 @@ jobs:
           sudo apt install libldap2-dev nodejs libxml2-dev libxslt1-dev libevent-dev libsasl2-dev expect unixodbc-dev expect-dev python3-lxml python3-simplejson python3-serial python3-yaml python3-passlib python3-psycopg2 python3-werkzeug
           pip install -r odoo/requirements.txt
           pip install sphinx
+          pip install --ignore-installed git+https://github.com/OCA/openupgradelib.git@master
       - name: OpenUpgrade Docs
         run: |
-          sh openupgrade/build_openupgrade_docs
           # try to build the documentation
-          pip install sphinx
+          sh openupgrade/build_openupgrade_docs
