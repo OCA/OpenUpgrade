@@ -23,11 +23,6 @@ for line in $DOC_PARTS; do
     wget -q $BASE_URL/$line -O $DOC_BUILD_DIR/source/$name
 done
 OPENUPGRADE_PYTHON_PATH=$DOC_BUILD_DIR/../../
-if [ ! -d $DOC_BUILD_DIR/openupgradelib ]; then
-    git clone --single-branch --depth=1 $OPENUPGRADELIB $DOC_BUILD_DIR/openupgradelib
-else
-    git -C $DOC_BUILD_DIR/openupgradelib pull --quiet
-fi
-export PYTHONPATH=$PYTHONPATH:$OPENUPGRADE_PYTHON_PATH:$DOC_BUILD_DIR/openupgradelib
+export PYTHONPATH=$PYTHONPATH:$OPENUPGRADE_PYTHON_PATH/odoo:$DOC_BUILD_DIR/openupgradelib
 mkdir -p $DOC_BUILD_DIR/source/.static
 python3 -m sphinx -W -q -d $DOC_BUILD_DIR/.doctrees $DOC_BUILD_DIR/source $OUTPUT_DIR
