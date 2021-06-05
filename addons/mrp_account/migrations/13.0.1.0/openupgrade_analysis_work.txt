@@ -1,0 +1,24 @@
+---Models in module 'mrp_account'---
+---Fields in module 'mrp_account'---
+mrp_account  / mrp.production           / extra_cost (float)            : NEW
+mrp_account  / mrp.workcenter           / costs_hour_account_id (many2one): NEW relation: account.analytic.account
+mrp_account  / mrp.workcenter.productivity / cost_already_recorded (boolean): NEW
+# NOTHING TO DO: New feature
+
+---XML records in module 'mrp_account'---
+NEW ir.actions.server: mrp_account.action_compute_price_bom_product [renamed from mrp_bom_cost module]
+NEW ir.actions.server: mrp_account.action_compute_price_bom_template [renamed from mrp_bom_cost module]
+DEL ir.actions.server: mrp_bom_cost.action_compute_price_bom_product [renamed to mrp_account module]
+DEL ir.actions.server: mrp_bom_cost.action_compute_price_bom_template [renamed to mrp_account module]
+# Done: in a base module we mrp_bom_cost merged into mrp_account
+
+NEW ir.model.access: mrp_account.access_mrp_bom_invoice_bom
+NEW ir.model.access: mrp_account.access_mrp_bom_line_invoice_bom
+NEW ir.ui.view: mrp_account.mrp_production_form_view_inherited
+NEW ir.ui.view: mrp_account.product_product_ext_form_view2
+NEW ir.ui.view: mrp_account.product_product_view_form_normal_inherit_extended
+NEW ir.ui.view: mrp_account.product_variant_easy_edit_view_bom_inherit
+DEL ir.ui.view: mrp_bom_cost.product_product_ext_form_view2
+DEL ir.ui.view: mrp_bom_cost.product_product_view_form_normal_inherit_extended
+DEL ir.ui.view: mrp_bom_cost.product_variant_easy_edit_view_bom_inherit
+# NOTHING TO DO
