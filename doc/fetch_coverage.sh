@@ -6,3 +6,4 @@ wget https://github.com/OCA/OpenUpgrade/raw/9.0/openerp/openupgrade/doc/source/m
 wget https://github.com/OCA/OpenUpgrade/raw/10.0/odoo/openupgrade/doc/source/modules90-100.rst -O source/modules90-100.rst
 wget https://github.com/OCA/OpenUpgrade/raw/11.0/odoo/openupgrade/doc/source/modules100-110.rst -O source/modules100-110.rst
 wget https://github.com/OCA/OpenUpgrade/raw/12.0/odoo/openupgrade/doc/source/modules110-120.rst -O source/modules110-120.rst
+wget https://github.com/OCA/OpenUpgrade/raw/13.0/odoo/openupgrade/doc/source/modules120-130.rst -O source/modules120-130.rst
