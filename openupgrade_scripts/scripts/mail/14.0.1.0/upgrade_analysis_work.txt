@@ -1,7 +1,7 @@
 ---Models in module 'mail'---
 obsolete model email_template.preview (renamed to mail.template.preview) [transient]
 new model mail.template.preview (renamed from email_template.preview) [transient]
-# DONE: pre-migration: module renamed
+# DONE: pre-migration: renamed model and table
 
 obsolete model mail.address.mixin [abstract]
 new model mail.render.mixin [abstract]
@@ -13,20 +13,20 @@ mail         / ir.ui.view               / type (False)                  : select
 # NOTHING TO DO: Add new view type diagram
 
 mail         / mail.activity            / request_partner_id (many2one) : NEW relation:
-# NOTHING TO DO: Filled automatically when creating the activity
+# NOTHING TO DO: New feature only used for now by website_slides (or maybe enterprise) modules, for a kind of tier validation workflow
 
 mail         / mail.alias               / alias_bounced_content (html)  : NEW
-# NOTHING TO DO: New feature
+# NOTHING TO DO: New feature for specifying the message to return when bouncing. Not required and if empty, fallback one is used.
 
 mail         / mail.channel             / active (boolean)              : NEW hasdefault
-# NOTHING TO DO: New feature that allows you to hide a channel without removing it. No need to precreate as the model doesn't usually has a lot of records
+# NOTHING TO DO: New feature that allows you to hide a channel without removing it. Let Odoo to fill the default (True).
 
 mail         / mail.mail                / description (char)            : previously in module website_mail
 mail         / mail.message             / description (char)            : previously in module website_mail
-# DONE: pre-migration: Updated module in fields
+# NOTHING TO DO: Handled by regular Odoo update mechanism
 
 mail         / mail.message             / is_internal (boolean)         : NEW
-# NOTHING TO DO: New feature. You can hide messages from some users independently from subtype configuration
+# NOTHING TO DO: New feature. You can hide messages from some users independently from subtype configuration. Default (False) is OK.
 
 mail         / mail.template            / copyvalue (char)              : not stored anymore
 mail         / mail.template            / model_object_field (many2one) : not stored anymore
@@ -41,7 +41,7 @@ mail         / mail.template            / user_signature (boolean)      : DEL
 mail         / mail.tracking.value      / field (char)                  : relation is now 'ir.model.fields' ('False') [nothing to do]
 mail         / mail.tracking.value      / field (char)                  : type is now 'many2one' ('char')
 # DONE: pre-migration: rename field column
-# DONE: post-migration: filled the column with the id of the fields form the original column
+# DONE: pre-migration: pre-create the field and fill it with the id of the field from the original column, and remove records for obsolete fields
 
 mail         / res.users                / alias_id (many2one)           : DEL relation: mail.alias
 mail         / res.users                / out_of_office_message (char)  : DEL
@@ -85,12 +85,12 @@ DEL ir.ui.view: mail.view_message_form
 # NOTHING TO DO: noupdate="0" records
 
 ir.rule: mail.mail_channel_rule (noupdate) (noupdate switched)
-# DONE: pre-migration: noupdate changed to "1"
+# DONE: pre-migration: noupdate changed to "1" with no changes from 13.0
 
 NEW ir.rule: mail.ir_rule_mail_channel_partner_group_user (noupdate)
 NEW ir.rule: mail.mail_compose_message_rule (noupdate)
 NEW mail.channel.partner: mail.channel_partner_general_channel_for_admin (noupdate)
-# NOTHING TO DO: noupdate="1" records
+# NOTHING TO DO: New noupdate="1" records
 
 DEL ir.rule: mail.mail_followers_read_write_own (noupdate)
 # DONE: post-migration: try to delete
