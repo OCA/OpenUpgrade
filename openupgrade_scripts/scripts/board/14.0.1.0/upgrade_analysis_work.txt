@@ -1,0 +1,9 @@
+---Models in module 'board'---
+---Fields in module 'board'---
+---XML records in module 'board'---
+NEW ir.model.access: board.access_board_board_all
+DEL ir.model.access: board.access_board_board all
+# DONE: Rename XML-ID
+
+ir.ui.menu: board.menu_board_my_dash (noupdate switched)
+# DONE: pre-migration: switched to noupdate = "0"
