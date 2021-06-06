@@ -16,7 +16,7 @@
     <field name="name">in</field>
   </record>
   <record id="product_uom_kgm" model="uom.uom">
-    <field name="rounding"/>
+    <field name="rounding" eval="0.01"/>
     <field name="uom_type">reference</field>
   </record>
   <record id="product_uom_lb" model="uom.uom">
@@ -39,7 +39,7 @@
     <field name="name">qt (US)</field>
   </record>
   <record id="product_uom_unit" model="uom.uom">
-    <field name="rounding"/>
+    <field name="rounding" eval="0.01"/>
     <field name="uom_type">reference</field>
   </record>
 </odoo>
