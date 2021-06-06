@@ -5,6 +5,9 @@ from openupgradelib import openupgrade
 
 @openupgrade.migrate()
 def migrate(env, version):
+    openupgrade.rename_xmlids(
+        env.cr, [("board.access_board_board all", "board.access_board_board_all")]
+    )
     openupgrade.set_xml_ids_noupdate_value(
         env,
         "board",
