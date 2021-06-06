@@ -30,18 +30,19 @@ product      / product.pricelist.item   / date_start (date)             : type i
 # post-migration: set datetime values with the user tz into account
 
 product      / product.pricelist.item   / min_quantity (integer)        : type is now 'float' ('integer')
-# NOTHING TO DO
+# NOTHING TO DO: Automatic conversion from integer to float is assured by PG
 
 product      / product.template         / barcode (char)                : not related anymore
 product      / product.template         / barcode (char)                : now a function
 # NOTHING TO DO
 
 product      / product.template         / rental (boolean)              : DEL
-# NOTHING TO DO
+# NOTHING TO DO: Field without use in community (was there for the rental enterprise module)
 
 ---XML records in module 'product'---
 DEL ir.actions.act_window: product.action_product_price_list
-# NOTHING TO DO
+DEL ir.ui.view: product.view_product_price_list
+# NOTHING TO DO: noupdate=0 records
 
 NEW ir.actions.server: product.action_product_price_list_report
 NEW ir.actions.server: product.action_product_template_price_list_report
@@ -50,7 +51,4 @@ NEW ir.model.access: product.access_product_attribute_custom_value_user
 NEW ir.ui.view: product.assets_backend
 NEW ir.ui.view: product.qunit_suite
 NEW ir.ui.view: product.report_pricelist_page
-# NOTHING TO DO
-
-DEL ir.ui.view: product.view_product_price_list
-# NOTHING TO DO
+# NOTHING TO DO: noupdate=0 records
