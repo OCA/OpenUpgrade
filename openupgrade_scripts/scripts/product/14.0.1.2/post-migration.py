@@ -23,4 +23,4 @@ def date_to_datetime_fields(env):
 @openupgrade.migrate()
 def migrate(env, version):
     date_to_datetime_fields(env)
-    openupgrade.load_data(env.cr, "product", "14.0.1.0/noupdate_changes.xml")
+    openupgrade.load_data(env.cr, "product", "14.0.1.2/noupdate_changes.xml")
