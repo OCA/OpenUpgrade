@@ -36,7 +36,7 @@ def fill_calendar_recurrence_table(env):
                 create_uid,create_date,write_uid,write_date)
             SELECT id,event_tz,rrule,rrule_type,end_type,interval,count,
                 mo,tu,we,th,fr,sa,su,month_by,day,week_list,byday,final_date,
-                create_uid,create_date,write_uid,write_date)
+                create_uid,create_date,write_uid,write_date
             FROM calendar_event
             WHERE recurrency AND recurrence_id IS NULL
                 AND (recurrent_id IS NULL OR recurrent_id = 0)
