@@ -7,7 +7,7 @@ def delete_empty_event_id_partner_id_records(env):
     openupgrade.logged_query(
         env.cr,
         """
-        DELETE FROM calendar_event
+        DELETE FROM calendar_attendee
         WHERE event_id is null OR partner_id is null
         """,
     )
