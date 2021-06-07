@@ -64,7 +64,8 @@ def create_recurrent_events(env):
     """In v14, now all occurrences of recurrent events are created as real records, not
     virtual ones, so we need to regenerate them for all the existing ones.
     """
-    env["calendar.event"].search([("base_event_id", "!=", False)])._apply_recurrence()
+    recs = env["calendar.recurrence"].search([("base_event_id", "!=", False)])
+    recs._apply_recurrence()
 
 
 @openupgrade.migrate()
