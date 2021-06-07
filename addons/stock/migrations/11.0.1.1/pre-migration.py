@@ -22,6 +22,25 @@ def delete_quants_for_consumable(env):
     )
 
 
+def remove_company_for_quants_in_vendor_customer(env):
+    """On v11, customer or vendor location's quants do not have company
+    (it is not assinged, it is related to the location) and customer
+    location should not have company. In v10 is was a _company_default_get.
+    We should remove the company on those in order to be aligned to the
+    new flow.
+    """
+    openupgrade.logged_query(
+        env.cr, """
+        UPDATE stock_quant sq
+        SET company_id = sl.company_id
+        FROM stock_location sl
+        WHERE sl.id = sq.location_id
+            AND sl.usage in ('customer', 'supplier')
+            AND sq.company_id != sl.company_id
+        """
+    )
+
+
 def fix_act_window(env):
     """Action window with XML-ID 'stock.action_procurement_compute' has
     set src_model='procurement.order', and this will provoke an error as
@@ -43,6 +62,7 @@ def fix_act_window(env):
 @openupgrade.migrate(use_env=True)
 def migrate(env, version):
     delete_quants_for_consumable(env)
+    remove_company_for_quants_in_vendor_customer(env)
     fix_act_window(env)
     openupgrade.update_module_moved_fields(
         env.cr, 'stock.move', ['has_tracking'], 'mrp', 'stock',
