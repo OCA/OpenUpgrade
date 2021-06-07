@@ -1,0 +1,107 @@
+---Models in module 'calendar'---
+new model calendar.recurrence
+# NOTHING TO DO: new module to manage recurrent events
+
+---Fields in module 'calendar'---
+calendar     / calendar.attendee        / email (char)                  : not stored anymore
+calendar     / calendar.attendee        / email (char)                  : now related
+# NOTHING TO DO: Same functionality, now avoiding use of api.on_change()
+
+calendar     / calendar.attendee        / event_id (many2one)           : now required
+calendar     / calendar.attendee        / partner_id (many2one)         : now required
+# DONE: pre-migration: check for empty fields and deleted them as an event without these fields doesn't make sense.
+
+calendar     / calendar.event           / _order                        : _order is now 'start desc' ('id desc')
+# NOTHING TO DO: ordered by starting date
+
+calendar     / calendar.event           / byday (selection)             : selection_keys is now '['-1', '1', '2', '3', '4']' ('['-1', '1', '2', '3', '4', '5']')
+# DONE: pre-migration: copied column byday to prevent data loss
+# post-migration: replaced the 5th day option ("5") with last day option ("-1")
+
+calendar     / calendar.event           / byday (selection)             : not stored anymore
+calendar     / calendar.event           / byday (selection)             : now a function
+calendar     / calendar.event           / count (integer)               : not stored anymore
+calendar     / calendar.event           / count (integer)               : now a function
+calendar     / calendar.event           / day (integer)                 : not stored anymore
+calendar     / calendar.event           / day (integer)                 : now a function
+calendar     / calendar.event           / duration (float)              : now a function
+calendar     / calendar.event           / end_type (selection)          : not stored anymore
+calendar     / calendar.event           / end_type (selection)          : now a function
+calendar     / calendar.event           / event_tz (selection)          : not stored anymore
+calendar     / calendar.event           / event_tz (selection)          : now a function
+calendar     / calendar.event           / mo (boolean)                  : not stored anymore
+calendar     / calendar.event           / mo (boolean)                  : now a function
+calendar     / calendar.event           / tu (boolean)                  : not stored anymore
+calendar     / calendar.event           / tu (boolean)                  : now a function
+calendar     / calendar.event           / we (boolean)                  : not stored anymore
+calendar     / calendar.event           / we (boolean)                  : now a function
+calendar     / calendar.event           / th (boolean)                  : not stored anymore
+calendar     / calendar.event           / th (boolean)                  : now a function
+calendar     / calendar.event           / fr (boolean)                  : not stored anymore
+calendar     / calendar.event           / fr (boolean)                  : now a function
+calendar     / calendar.event           / sa (boolean)                  : not stored anymore
+calendar     / calendar.event           / sa (boolean)                  : now a function
+calendar     / calendar.event           / su (boolean)                  : not stored anymore
+calendar     / calendar.event           / su (boolean)                  : now a function
+calendar     / calendar.event           / rrule_type (selection)        : not stored anymore
+calendar     / calendar.event           / rrule_type (selection)        : now a function
+calendar     / calendar.event           / interval (integer)            : not stored anymore
+calendar     / calendar.event           / interval (integer)            : now a function
+calendar     / calendar.event           / month_by (selection)          : not stored anymore
+calendar     / calendar.event           / month_by (selection)          : now a function
+calendar     / calendar.event           / rrule (char)                  : not stored anymore
+calendar     / calendar.recurrence      / byday (selection)             : NEW selection_keys: ['-1', '1', '2', '3', '4']
+calendar     / calendar.recurrence      / calendar_event_ids (one2many) : NEW relation: calendar.event
+calendar     / calendar.recurrence      / count (integer)               : NEW hasdefault
+calendar     / calendar.recurrence      / day (integer)                 : NEW hasdefault
+calendar     / calendar.recurrence      / end_type (selection)          : NEW selection_keys: ['count', 'end_date', 'forever'], hasdefault
+calendar     / calendar.recurrence      / event_tz (selection)          : NEW selection_keys: function, hasdefault
+calendar     / calendar.recurrence      / fr (boolean)                  : NEW
+calendar     / calendar.recurrence      / interval (integer)            : NEW hasdefault
+calendar     / calendar.recurrence      / mo (boolean)                  : NEW
+calendar     / calendar.recurrence      / month_by (selection)          : NEW selection_keys: ['date', 'day'], hasdefault
+calendar     / calendar.recurrence      / name (char)                   : NEW isfunction: function, stored
+calendar     / calendar.recurrence      / rrule (char)                  : NEW isfunction: function, stored
+calendar     / calendar.recurrence      / rrule_type (selection)        : NEW selection_keys: ['daily', 'monthly', 'weekly', 'yearly'], hasdefault
+calendar     / calendar.recurrence      / sa (boolean)                  : NEW
+calendar     / calendar.recurrence      / su (boolean)                  : NEW
+calendar     / calendar.recurrence      / th (boolean)                  : NEW
+calendar     / calendar.recurrence      / tu (boolean)                  : NEW
+calendar     / calendar.recurrence      / until (date)                  : NEW
+calendar     / calendar.event           / final_date (date)             : DEL
+calendar     / calendar.recurrence      / we (boolean)                  : NEW
+calendar     / calendar.recurrence      / weekday (selection)           : NEW selection_keys: ['FR', 'MO', 'SA', 'SU', 'TH', 'TU', 'WE']
+calendar     / calendar.event           / week_list (selection)         : DEL selection_keys: ['FR', 'MO', 'SA', 'SU', 'TH', 'TU', 'WE']
+calendar     / calendar.event           / recurrence_id (many2one)      : NEW relation: calendar.recurrence
+calendar     / calendar.recurrence      / base_event_id (many2one)      : NEW relation: calendar.event
+# DONE: Moved these fields from event to recurrence and set relation from event to recurrence (recurrence_id)
+
+calendar     / calendar.event           / recurrent_id (integer)        : DEL
+# DONE: post-migration: used recurrent_id to map to others recurrences
+
+calendar     / calendar.event           / follow_recurrence (boolean)   : NEW hasdefault
+# DONE: post-migration: Set true all recurrent events (default=False)
+
+calendar     / calendar.event           / privacy (selection)           : now required, req_default: function
+calendar     / calendar.event           / show_as (selection)           : now required, req_default: function
+# DONE: pre-migration: Checking fields not empty and filling them with default ('public' and 'busy') if they are, in fact, empty
+
+calendar     / calendar.event           / display_start (char)          : DEL
+calendar     / calendar.event           / recurrent_id_date (datetime)  : DEL
+calendar     / calendar.event           / start_datetime (datetime)     : DEL
+calendar     / calendar.event           / state (selection)             : DEL selection_keys: ['draft', 'open']
+calendar     / calendar.event           / stop_datetime (datetime)      : DEL
+# NOTHING TO DO
+
+calendar     / calendar.event           / end_type (selection)          : selection_keys is now '['count', 'end_date', 'forever']' ('['count', 'end_date']')
+# NOTHING TO DO: new option when creating recurrent event
+
+calendar     / calendar.event           / stop (datetime)               : now a function
+# NOTHING TO DO: Computes when the event ends based on start and duration
+
+calendar     / calendar.event           / recurrence_update (selection) : NEW selection_keys: ['all_events', 'future_events', 'self_only'], hasdefault
+# NOTHING TO DO: set of options to use when updating recurrent event
+
+---XML records in module 'calendar'---
+NEW ir.model.access: calendar.access_calendar_recurrence
+# NOTHING TO DO: Add access to new model (noupdate="0")
