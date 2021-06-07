@@ -3,7 +3,7 @@
 from openupgradelib import openupgrade
 
 
-def delete_empty_event_id_pratner_id_records(env):
+def delete_empty_event_id_partner_id_records(env):
     openupgrade.logged_query(
         env.cr,
         """
@@ -34,6 +34,6 @@ def fill_empty_privacy_and_show_as_fields(env):
 
 @openupgrade.migrate()
 def migrate(env, version):
-    delete_empty_event_id_pratner_id_records(env)
+    delete_empty_event_id_partner_id_records(env)
     fill_empty_privacy_and_show_as_fields(env)
     openupgrade.copy_columns(env.cr, {"calendar_event": [("byday", None, None)]})

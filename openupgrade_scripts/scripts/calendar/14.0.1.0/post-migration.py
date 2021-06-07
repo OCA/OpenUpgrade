@@ -1,4 +1,5 @@
 # Copyright 2021 ForgeFlow S.L.  <https://www.forgeflow.com>
+# Copyright 2021 Tecnativa - Pedro M. Baeza
 # License AGPL-3.0 or later (http://www.gnu.org/licenses/agpl.html).
 from openupgradelib import openupgrade
 
@@ -38,7 +39,7 @@ def fill_calendar_recurrence_table(env):
                 create_uid,create_date,write_uid,write_date)
             FROM calendar_event
             WHERE recurrency AND recurrence_id IS NULL
-                AND (recurrent_id IS NULL OR recurrent_id = '')
+                AND (recurrent_id IS NULL OR recurrent_id = 0)
             RETURNING id,base_event_id
         )
         UPDATE calendar_event ce
@@ -51,12 +52,19 @@ def fill_calendar_recurrence_table(env):
         env.cr,
         """
         UPDATE calendar_event ce
-        SET recurrence_id = ce2.recurrence_id
+        SET recurrence_id = ce2.recurrence_id, recurrency = True
         FROM calendar_event ce2
-        WHERE ce.recurrency AND ce.recurrence_id IS NULL
-            AND ce.recurrent_id = ce2.id || ''
+        WHERE ce.recurrence_id IS NULL AND ce.recurrent_id = ce2.id
         """,
     )
+
+
+@openupgrade.logging()
+def create_recurrent_events(env):
+    """In v14, now all occurrences of recurrent events are created as real records, not
+    virtual ones, so we need to regenerate them for all the existing ones.
+    """
+    env["calendar.event"].search([("base_event_id", "!=", False)])._apply_recurrence()
 
 
 @openupgrade.migrate()
@@ -64,4 +72,14 @@ def migrate(env, version):
     update_follow_recurrence_field(env)
     map_calendar_event_byday(env)
     fill_calendar_recurrence_table(env)
+    create_recurrent_events(env)
     openupgrade.load_data(env.cr, "calendar", "14.0.1.0/noupdate_changes.xml")
+    openupgrade.delete_record_translations(
+        env.cr,
+        "calendar",
+        [
+            "calendar_template_meeting_changedate",
+            "calendar_template_meeting_invitation",
+            "calendar_template_meeting_reminder",
+        ],
+    )
