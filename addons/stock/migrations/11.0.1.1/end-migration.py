@@ -15,7 +15,8 @@ QUANT_MERGE_OPS = {
 def merge_quants(env):
     logger = logging.getLogger('openupgrade.stock.end_migration')
     group_list = [
-        'product_id', 'package_id', 'lot_id', 'location_id', 'owner_id',
+        'product_id', 'package_id', 'lot_id', 'location_id', 'company_id',
+        'owner_id',
     ]
     StockQuant = env['stock.quant']
     groups = StockQuant.read_group([], group_list, group_list, lazy=False)
