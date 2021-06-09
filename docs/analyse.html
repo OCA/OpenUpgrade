@@ -1,0 +1,156 @@
+
+<!DOCTYPE html>
+
+<html>
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>How to run your own analysis &#8212; OpenUpgrade 14.0 documentation</title>
+    <link rel="stylesheet" type="text/css" href="_static/pygments.css" />
+    <link rel="stylesheet" type="text/css" href="_static/alabaster.css" />
+    <script data-url_root="./" id="documentation_options" src="_static/documentation_options.js"></script>
+    <script src="_static/jquery.js"></script>
+    <script src="_static/underscore.js"></script>
+    <script src="_static/doctools.js"></script>
+    <link rel="index" title="Index" href="genindex.html" />
+    <link rel="search" title="Search" href="search.html" />
+    <link rel="next" title="XML IDs" href="xmlids.html" />
+    <link rel="prev" title="Database analysis" href="analysis.html" />
+   
+  <link rel="stylesheet" href="_static/custom.css" type="text/css" />
+  
+  
+  <meta name="viewport" content="width=device-width, initial-scale=0.9, maximum-scale=0.9" />
+
+  </head><body>
+  
+
+    <div class="document">
+      <div class="documentwrapper">
+        <div class="bodywrapper">
+          
+
+          <div class="body" role="main">
+            
+  <div class="section" id="how-to-run-your-own-analysis">
+<h1>How to run your own analysis<a class="headerlink" href="#how-to-run-your-own-analysis" title="Permalink to this headline">¶</a></h1>
+<p>If you do need to run your own analysis, you need to perform the following
+steps.</p>
+<ul>
+<li><p>Set up two servers of subsequent Odoo releases. Make the following modules
+available: <cite>upgrade_analysis</cite> and <cite>openupgrade_scripts</cite>.</p>
+<p>In the case of a release before 14.0, you need to run the fork from the
+corresponding branch in <a class="reference external" href="https://github.com/oca/openupgrade">https://github.com/oca/openupgrade</a>. That fork also
+contains <cite>openupgrade_records</cite>.</p>
+</li>
+<li><p>On both instances, install a database without demo data and
+install the <em>upgrade_analysis</em> module, which is included in the
+OpenUpgrade server distribution. This will add a menu
+<em>Upgrade Analysis</em> to the Settings menu.</p></li>
+<li><p>On both instances, install the modules that you need to write migration
+scripts for, or use the <em>Install Modules</em> from the <em>Upgrade Analysis</em> menu.</p></li>
+<li><p>On both instances: from the analysis menu, start the <em>Generate Records
+Wizard</em>.</p></li>
+<li><p>On the target instance (this is the more recent version): from the
+analysis menu, select the <em>Comparison Configuration</em> option and
+create a new config to connect to the other instance. In the form view of
+this configuration record , start a <em>New Analysis</em>.</p></li>
+</ul>
+<p>The analysis files for each of the modules will be placed in the following
+location:</p>
+<ul class="simple">
+<li><p>In the case of Odoo modules: in the path that is indicated by the
+<cite>–upgrade-path</cite> parameter of the Odoo server, or in the <cite>scripts</cite>
+folder of the <cite>openupgrade_scripts</cite> module directory if it is available in
+your addons path</p></li>
+<li><p>In the case of OCA or custom modules: in the <cite>migrations/&lt;version&gt;</cite>
+directory in the module directory itself.</p></li>
+</ul>
+</div>
+
+
+          </div>
+          
+        </div>
+      </div>
+      <div class="sphinxsidebar" role="navigation" aria-label="main navigation">
+        <div class="sphinxsidebarwrapper">
+<h1 class="logo"><a href="index.html">OpenUpgrade</a></h1>
+
+
+
+
+
+
+
+
+<h3>Navigation</h3>
+<ul class="current">
+<li class="toctree-l1"><a class="reference internal" href="intro.html">Introduction</a></li>
+<li class="toctree-l1"><a class="reference internal" href="intro.html#migrating-your-database">Migrating your database</a></li>
+<li class="toctree-l1"><a class="reference internal" href="community.html">Community involvement</a></li>
+<li class="toctree-l1"><a class="reference internal" href="status.html">Module coverage</a></li>
+<li class="toctree-l1 current"><a class="reference internal" href="analysis.html">Database analysis</a><ul class="current">
+<li class="toctree-l2"><a class="reference internal" href="analysis.html#earlier-versions">Earlier versions</a></li>
+<li class="toctree-l2 current"><a class="reference internal" href="analysis.html#contents">Contents</a><ul class="current">
+<li class="toctree-l3 current"><a class="current reference internal" href="#">How to run your own analysis</a></li>
+<li class="toctree-l3"><a class="reference internal" href="xmlids.html">XML IDs</a></li>
+<li class="toctree-l3"><a class="reference internal" href="format.html">Fields analysis format</a></li>
+</ul>
+</li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="development.html">Migration script development</a></li>
+<li class="toctree-l1"><a class="reference internal" href="API.html">OpenUpgrade API</a></li>
+</ul>
+
+<div class="relations">
+<h3>Related Topics</h3>
+<ul>
+  <li><a href="index.html">Documentation overview</a><ul>
+  <li><a href="analysis.html">Database analysis</a><ul>
+      <li>Previous: <a href="analysis.html" title="previous chapter">Database analysis</a></li>
+      <li>Next: <a href="xmlids.html" title="next chapter">XML IDs</a></li>
+  </ul></li>
+  </ul></li>
+</ul>
+</div>
+<div id="searchbox" style="display: none" role="search">
+  <h3 id="searchlabel">Quick search</h3>
+    <div class="searchformwrapper">
+    <form class="search" action="search.html" method="get">
+      <input type="text" name="q" aria-labelledby="searchlabel" />
+      <input type="submit" value="Go" />
+    </form>
+    </div>
+</div>
+<script>$('#searchbox').show(0);</script>
+
+
+
+
+
+
+
+
+        </div>
+      </div>
+      <div class="clearer"></div>
+    </div>
+    <div class="footer">
+      &copy;2012-2021, Odoo Community Association (OCA) / The OpenUpgrade developers.
+      
+      |
+      Powered by <a href="http://sphinx-doc.org/">Sphinx 4.0.2</a>
+      &amp; <a href="https://github.com/bitprophet/alabaster">Alabaster 0.7.12</a>
+      
+      |
+      <a href="_sources/analyse.rst.txt"
+          rel="nofollow">Page source</a>
+    </div>
+
+    
+
+    
+  </body>
+</html>
