@@ -3,10 +3,11 @@
 # https://help.github.com/actions/language-and-framework-guides\
 # /using-python-with-github-actions
 
-name: OpenUpgrade documentation
+name: Build and commit documentation
 
 on:
-  pull_request:
+  push:
+    branches: ["14.0"]
 
 jobs:
   documentation:
@@ -68,3 +69,10 @@ jobs:
         run: |
           # try to build the documentation
           sh openupgrade/build_openupgrade_docs
+      - name: Commit changes
+        uses: EndBug/add-and-commit@v7
+        with:
+          add: "docs"
+          cwd: "openupgrade"
+          default_author: github_actions
+          message: "[UPD] HTML documentation"

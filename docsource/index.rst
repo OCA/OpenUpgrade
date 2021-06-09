@@ -23,7 +23,7 @@ Contents:
    development.rst
    API.rst
 
-You should find the latest version of this documentation here: `<https://doc.therp.nl/openupgrade>`_
+You should find the latest version of this documentation here: `<https://oca.github.io/OpenUpgrade>`_
 
 Indices and tables
 ==================
