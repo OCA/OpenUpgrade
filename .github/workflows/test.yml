@@ -1,5 +1,7 @@
-# This workflow will install Python dependencies, run tests and lint with a single version of Python
-# For more information see: https://help.github.com/actions/language-and-framework-guides/using-python-with-github-actions
+# This workflow will install Python dependencies, run tests and lint with a
+# single version of Python. For more information see:
+# https://help.github.com/actions/language-and-framework-guides\
+# /using-python-with-github-actions
 
 name: Test OpenUpgrade migration
 
@@ -13,13 +15,14 @@ jobs:
     runs-on: ubuntu-latest
     env:
       DB: "openupgrade"
-      DB_USERNAME: "odoo"
-      DB_PASSWORD: "odoo"
       DB_HOST: "localhost"
+      DB_PASSWORD: "odoo"
       DB_PORT: 5432
+      DB_USERNAME: "odoo"
+      DOWNLOADS: https://github.com/OCA/OpenUpgrade/releases/download/databases
       ODOO: "./odoo/odoo-bin"
-      PGPASSWORD: "odoo"
       PGHOST: "localhost"
+      PGPASSWORD: "odoo"
       PGUSER: "odoo"
     steps:
       - name: Set up Python
@@ -41,11 +44,15 @@ jobs:
       - name: DB Restore
         run: |
           # psql -d $DB -c "DROP SCHEMA IF EXISTS PUBLIC;"
-          wget -q -O- https://github.com/OCA/OpenUpgrade/releases/download/databases/13.0.psql | pg_restore -d $DB --no-owner
-          # TODO: create test data in Odoo 13.0 which does not support yml anymore
-          # Roundtrip to previous release to update the test database with additional test data
+          wget -q -O- $DOWNLOADS/13.0.psql | pg_restore -d $DB --no-owner
+          # TODO: create test data in Odoo 13.0 which does not support yml
+          # anymore
+          # Roundtrip to previous release to update the test database with
+          # additional test data
           # - git fetch --depth 2 origin 13.0
-          # - git reset --hard `git ls-remote |grep refs/heads/13.0 |awk '{print $1}'`
+          # - git reset --hard `git ls-remote \
+          #       | grep refs/heads/13.0 \
+          #       | awk '{print $1}'`
           # - pip install -q -r requirements.txt
           # Line below may fail quite often due to Travis bug:
           # - git reset -q --hard $TRAVIS_COMMIT
@@ -64,20 +71,65 @@ jobs:
       - name: Configuration
         run: |
           sudo apt update
-          sudo apt install libldap2-dev nodejs libxml2-dev libxslt1-dev libevent-dev libsasl2-dev expect unixodbc-dev expect-dev python3-lxml python3-simplejson python3-serial python3-yaml python3-passlib python3-psycopg2 python3-werkzeug
+          sudo apt install \
+              expect \
+              expect-dev \
+              libevent-dev \
+              libldap2-dev \
+              libsasl2-dev \
+              libxml2-dev \
+              libxslt1-dev \
+              nodejs \
+              python3-lxml \
+              python3-passlib \
+              python3-psycopg2 \
+              python3-serial \
+              python3-simplejson \
+              python3-werkzeug \
+              python3-yaml \
+              unixodbc-dev
       - name: Requirements Installation
         run: |
           sudo npm install -g less less-plugin-clean-css
           pip install -q -r odoo/requirements.txt
-          # don't use pypi's openupgradelib, but the one from source to avoid choking
-          # on unreleased features in openupgradelib
-          pip install --ignore-installed git+https://github.com/OCA/openupgradelib.git@master
+          pip install --ignore-installed \
+              git+https://github.com/OCA/openupgradelib.git@master
           # select modules and perform the upgrade
       - name: OpenUpgrade test
         run: |
-          MODULES_OLD=base,$(sed -n '/^+========/,$p'  openupgrade/doc/source/modules130-140.rst | grep "Done\|Partial\|Nothing" | grep -v "theme_" | sed -r -n 's/((^\| *\|del\| *)|^\|)([0-9a-z_]*) *\|.*$/\3/g p' | sed '/^\s*$/d' | paste -d, -s)
-          MODULES_NEW=base,$(sed -n '/^+========/,$p'  openupgrade/doc/source/modules130-140.rst | grep "Done\|Partial\|Nothing" | grep -v "theme_" | sed -r -n 's/((^\| *\|new\| *)|^\|)([0-9a-z_]*) *\|.*$/\3/g p' | sed '/^\s*$/d' | paste -d, -s)
-          psql $DB -c "update ir_module_module set state='uninstalled' where name not in ('$(echo $MODULES_OLD | sed -e "s/,/','/g")')"
+          MODULES_OLD=base,$(\
+              sed -n '/^+========/,$p' \
+              openupgrade/doc/source/modules130-140.rst \
+              | grep "Done\|Partial\|Nothing" \
+              | grep -v "theme_" \
+              | sed -rn 's/((^\| *\|del\| *)|^\|)([0-9a-z_]*) *\|.*$/\3/g p' \
+              | sed '/^\s*$/d' \
+              | paste -d, -s)
+          MODULES_NEW=base,$(\
+              sed -n '/^+========/,$p' \
+              openupgrade/doc/source/modules130-140.rst \
+              | grep "Done\|Partial\|Nothing" \
+              | grep -v "theme_" \
+              | sed -rn 's/((^\| *\|new\| *)|^\|)([0-9a-z_]*) *\|.*$/\3/g p' \
+              | sed '/^\s*$/d' \
+              | paste -d, -s)
+          psql $DB -c "update ir_module_module set state='uninstalled' \
+              where name not in ('$(echo $MODULES_OLD | sed -e "s/,/','/g")')"
+          ADDONS_PATHS="\
+              $GITHUB_WORKSPACE/odoo/addons \
+              $GITHUB_WORKSPACE/odoo/odoo/addons \
+              $GITHUB_WORKSPACE/openupgrade"
           echo Testing modules $MODULES_NEW
-          # Silence redundant logs from unlinking records (1 line is enough) to prevent log overflow
-          OPENUPGRADE_TESTS=1 $ODOO --database=$DB --update=$MODULES_NEW --db_host=$DB_HOST --db_port=$DB_PORT --db_password=$DB_PASSWORD --db_user=$DB_USERNAME --stop-after-init --log-handler odoo.models.unlink:WARNING --load=base,web,openupgrade_framework --addons-path=$GITHUB_WORKSPACE/odoo/odoo/addons,$GITHUB_WORKSPACE/odoo/addons,$GITHUB_WORKSPACE/openupgrade
+          # Silence redundant logs from unlinking records (1 line is enough)
+          # to prevent log overflow
+          OPENUPGRADE_TESTS=1 $ODOO \
+              --addons-path=`echo $ADDONS_PATHS | awk -v OFS="," '$1=$1'` \
+              --database=$DB \
+              --db_host=$DB_HOST \
+              --db_password=$DB_PASSWORD \
+              --db_port=$DB_PORT \
+              --db_user=$DB_USERNAME \
+              --load=base,web,openupgrade_framework \
+              --log-handler odoo.models.unlink:WARNING \
+              --stop-after-init \
+              --update=$MODULES_NEW
