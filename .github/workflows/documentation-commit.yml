@@ -1,0 +1,78 @@
+# This workflow will install Python dependencies, run tests and lint with a
+# single version of Python. For more information see:
+# https://help.github.com/actions/language-and-framework-guides\
+# /using-python-with-github-actions
+
+name: Build and commit documentation
+
+on:
+  push:
+    branches: ["14.0"]
+
+jobs:
+  documentation:
+    runs-on: ubuntu-latest
+    env:
+      DB: "openupgrade"
+      DB_HOST: "localhost"
+      DB_PASSWORD: "odoo"
+      DB_PORT: 5432
+      DB_USERNAME: "odoo"
+      DOWNLOADS: https://github.com/OCA/OpenUpgrade/releases/download/databases
+      ODOO: "./odoo/odoo-bin"
+      PGHOST: "localhost"
+      PGPASSWORD: "odoo"
+      PGUSER: "odoo"
+    steps:
+      - name: Set up Python
+        uses: actions/setup-python@v2
+        with:
+          python-version: 3.7
+      - name: Check out Odoo
+        uses: actions/checkout@v2
+        with:
+          repository: odoo/odoo
+          ref: "14.0"
+          fetch-depth: 1
+          path: odoo
+      - name: Check out OpenUpgrade
+        uses: actions/checkout@v2
+        with:
+          path: openupgrade
+      - name: Configuration
+        run: |
+          sudo apt update
+          sudo apt install \
+              expect \
+              expect-dev \
+              libevent-dev \
+              libldap2-dev \
+              libsasl2-dev \
+              libxml2-dev \
+              libxslt1-dev \
+              nodejs \
+              python3-lxml \
+              python3-passlib \
+              python3-psycopg2 \
+              python3-serial \
+              python3-simplejson \
+              python3-werkzeug \
+              python3-yaml \
+              unixodbc-dev
+      - name: Requirements Installation
+        run: |
+          pip install -q -r odoo/requirements.txt
+          pip install --ignore-installed \
+              git+https://github.com/OCA/openupgradelib.git@master
+          pip install sphinx
+      - name: OpenUpgrade Docs
+        run: |
+          # try to build the documentation
+          sh openupgrade/build_openupgrade_docs
+      - name: Commit changes
+        uses: EndBug/add-and-commit@v7
+        with:
+          add: "docs"
+          cwd: "openupgrade"
+          default_author: github_actions
+          message: "[UPD] HTML documentation"

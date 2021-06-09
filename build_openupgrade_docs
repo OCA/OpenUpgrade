@@ -1,6 +1,7 @@
 #!/bin/sh
 
-DOC_BUILD_DIR=${DOC_BUILD_DIR:-$(realpath $(dirname $0)/../openupgrade/doc)}
+DOC_BUILD_DIR=${DOC_BUILD_DIR:-$(realpath $(dirname $0)/../openupgrade/docs)}
+SOURCE=$(realpath $(dirname $0)/../openupgrade/docsource)
 BASE_URL=https://raw.githubusercontent.com/OCA/OpenUpgrade/
 DOC_PARTS="7.0/openerp/openupgrade/doc/source/modules50-60.rst
 7.0/openerp/openupgrade/doc/source/modules60-61.rst
@@ -12,16 +13,16 @@ DOC_PARTS="7.0/openerp/openupgrade/doc/source/modules50-60.rst
 12.0/odoo/openupgrade/doc/source/modules110-120.rst
 13.0/odoo/openupgrade/doc/source/modules120-130.rst
 "
-OUTPUT_DIR=${OUTPUT_DIR:-$DOC_BUILD_DIR}/build/html
+OUTPUT_DIR=${OUTPUT_DIR:-$DOC_BUILD_DIR}
 
 for line in $DOC_PARTS; do
     if [ -z "$line" ]; then
         continue
     fi
     name=$(basename $line)
-    wget -q $BASE_URL/$line -O $DOC_BUILD_DIR/source/$name
+    wget -q $BASE_URL/$line -O $SOURCE/$name
 done
 OPENUPGRADE_PYTHON_PATH=$DOC_BUILD_DIR/../../
 export PYTHONPATH=$PYTHONPATH:$OPENUPGRADE_PYTHON_PATH/odoo
 mkdir -p $DOC_BUILD_DIR/source/.static
-python3 -m sphinx -W -q -d $DOC_BUILD_DIR/.doctrees $DOC_BUILD_DIR/source $OUTPUT_DIR
+python3 -m sphinx -W -q -d $DOC_BUILD_DIR/.doctrees $SOURCE $OUTPUT_DIR
