@@ -27,7 +27,7 @@ To make more easy the diff analysis :
 
 * When you want to change the code. add the following tags:
 
-    * For an addition:
+For an addition:
 
 .. code-block:: python
 
@@ -35,7 +35,7 @@ To make more easy the diff analysis :
     some code...
     # </OpenUpgrade>
 
-    * For a change:
+For a change:
 
 .. code-block:: python
 
@@ -43,7 +43,7 @@ To make more easy the diff analysis :
     some code...
     # </OpenUpgrade>
 
-    * For a removal:
+For a removal:
 
 .. code-block:: python
 
