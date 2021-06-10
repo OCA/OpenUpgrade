@@ -42,6 +42,11 @@ OpenUpgrade migration scripts:
   of upgraded modules (when there are such scripts for those particular
   modules)
 
+For detailed documentation see:
+
+* https://github.com/OCA/OpenUpgrade/
+* https://oca.github.io/OpenUpgrade
+
 **Table of contents**
 
 .. contents::
