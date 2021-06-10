@@ -1,6 +1,6 @@
 ![Test OpenUpgrade Migration](https://github.com/OCA/OpenUpgrade/actions/workflows/test.yml/badge.svg?branch=14.0)
 ![OpenUpgrade documentation](https://github.com/OCA/OpenUpgrade/actions/workflows/documentation.yml/badge.svg?branch=14.0)
-![pre-commit](https://github.com/OCA/OpenUpgrade/actions/workflows/pre-commit.yml/badge.svg?branch=14.0)
+![pre-commit](https://github.com/OCA/OpenUpgrade/actions/workflows/pre-commit.yml/badge.svg?branch=14.0)https://oca.github.io/OpenUpgrade/development.html
 
 <!-- /!\ do not modify above this line -->
 
@@ -15,10 +15,10 @@ It is hosted at <a href="https://github.com/oca/openupgrade">GitHub</a>.
 
 For documentation, see <a href="https://oca.github.io/OpenUpgrade">here</a> including:
 
-- [introduction](doc/source/intro.rst)
-- [migration process](doc/source/migration_details.rst)
-- [module coverage](doc/source/status.rst)
-- [development](doc/source/development.rst)
+- [introduction](https://oca.github.io/OpenUpgrade/intro.html)
+- [migration process](https://oca.github.io/OpenUpgrade/migration_details.html)
+- [module coverage](https://oca.github.io/OpenUpgrade/status.html)
+- [development](https://oca.github.io/OpenUpgrade/development.html)
 - and much more ...
 
 <!-- /!\ do not modify below this line -->
