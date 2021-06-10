@@ -1,6 +1,6 @@
 ![Test OpenUpgrade Migration](https://github.com/OCA/OpenUpgrade/actions/workflows/test.yml/badge.svg?branch=14.0)
 ![OpenUpgrade documentation](https://github.com/OCA/OpenUpgrade/actions/workflows/documentation.yml/badge.svg?branch=14.0)
-![pre-commit](https://github.com/OCA/OpenUpgrade/actions/workflows/pre-commit.yml/badge.svg?branch=14.0)https://oca.github.io/OpenUpgrade/development.html
+![pre-commit](https://github.com/OCA/OpenUpgrade/actions/workflows/pre-commit.yml/badge.svg?branch=14.0)
 
 <!-- /!\ do not modify above this line -->
 
