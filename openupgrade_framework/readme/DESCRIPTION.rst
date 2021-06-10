@@ -17,3 +17,8 @@ OpenUpgrade migration scripts:
 * Run migration scripts for modules that are installed as new dependencies
   of upgraded modules (when there are such scripts for those particular
   modules)
+
+For detailed documentation see:
+
+* https://github.com/OCA/OpenUpgrade/
+* https://oca.github.io/OpenUpgrade
