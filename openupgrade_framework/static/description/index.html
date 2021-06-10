@@ -3,7 +3,7 @@
 <html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en">
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
-<meta name="generator" content="Docutils 0.15.1: http://docutils.sourceforge.net/" />
+<meta name="generator" content="Docutils: http://docutils.sourceforge.net/" />
 <title>Openupgrade Framework</title>
 <style type="text/css">
 
@@ -448,29 +448,22 @@ errors</li>
 <span class="c1"># flake8: noqa</span>
 <span class="c1"># pylint: skip-file</span>
 </pre>
-<ul>
-<li><p class="first">When you want to change the code. add the following tags:</p>
-<blockquote>
 <ul class="simple">
-<li>For an addition:</li>
+<li>When you want to change the code. add the following tags:</li>
 </ul>
-</blockquote>
-</li>
-</ul>
+<p>For an addition:</p>
 <pre class="code python literal-block">
 <span class="c1"># &lt;OpenUpgrade:ADD&gt;</span>
 <span class="n">some</span> <span class="n">code</span><span class="o">...</span>
 <span class="c1"># &lt;/OpenUpgrade&gt;</span>
-
-<span class="o">*</span> <span class="n">For</span> <span class="n">a</span> <span class="n">change</span><span class="p">:</span>
 </pre>
+<p>For a change:</p>
 <pre class="code python literal-block">
 <span class="c1"># &lt;OpenUpgrade:CHANGE&gt;</span>
 <span class="n">some</span> <span class="n">code</span><span class="o">...</span>
 <span class="c1"># &lt;/OpenUpgrade&gt;</span>
-
-<span class="o">*</span> <span class="n">For</span> <span class="n">a</span> <span class="n">removal</span><span class="p">:</span>
 </pre>
+<p>For a removal:</p>
 <pre class="code python literal-block">
 <span class="c1"># &lt;OpenUpgrade:REMOVE&gt;</span>
 <span class="c1"># Comment the code, instead of removing it.</span>
