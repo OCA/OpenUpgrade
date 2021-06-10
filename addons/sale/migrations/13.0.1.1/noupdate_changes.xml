@@ -48,16 +48,4 @@
 <!--    <field name="padding">5</field>-->
 <!--    <field name="prefix">S</field>-->
 <!--  </record>-->
-  <record id="account_move_personal_rule" model="ir.rule">
-    <field name="domain_force">[('type', 'in', ('out_invoice', 'out_refund')), '|', ('invoice_user_id', '=', user.id), ('invoice_user_id', '=', False)]</field>
-  </record>
-  <record id="account_move_see_all" model="ir.rule">
-    <field name="domain_force">[('type', 'in', ('out_invoice', 'out_refund'))]</field>
-  </record>
-  <record id="account_move_line_personal_rule" model="ir.rule">
-    <field name="domain_force">[('move_id.type', 'in', ('out_invoice', 'out_refund')), '|', ('move_id.invoice_user_id', '=', user.id), ('move_id.invoice_user_id', '=', False)]</field>
-  </record>
-  <record id="account_move_line_see_all" model="ir.rule">
-    <field name="domain_force">[('move_id.type', 'in', ('out_invoice', 'out_refund'))]</field>
-  </record>
 </odoo>
