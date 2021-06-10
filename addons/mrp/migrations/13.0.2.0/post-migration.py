@@ -229,7 +229,6 @@ def update_consumption(env):
         env.cr, """
         UPDATE mrp_bom
         SET consumption = 'flexible'
-        WHERE type = 'normal'
         """,
     )
     openupgrade.logged_query(
