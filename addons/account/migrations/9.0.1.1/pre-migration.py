@@ -370,6 +370,38 @@ def set_date_maturity(env):
     )
 
 
+def migrate_bic_numbers(env):
+    """ OD12-343 BIC numbers not migrated in supplier bank details """
+    # if no bank exists with a matching BIC, automatically create a new bank, with the new BIC;
+    # if the bank account details do not specify the bank name, use the BIC as bank name.
+    openupgrade.logged_query(
+        env.cr, """
+        INSERT INTO res_bank(name, city, zip, country, bic, state, street, active)
+        SELECT CASE WHEN bank_name IS NOT NULL THEN bank_name ELSE bank_bic END, city, zip, country_id, bank_bic, state_id, street, active
+        FROM res_partner_bank
+        WHERE bank IS NULL AND bank_bic IS NOT NULL AND bank_bic NOT IN (
+            SELECT bic
+            FROM res_bank
+            WHERE bic IS NOT NULL
+        )
+        GROUP BY bank_name, city, zip, country_id, bank_bic, state_id, street, active
+        """
+    )
+    # if a bank object with a matching BIC exists, link the bank account to that bank
+    openupgrade.logged_query(
+        env.cr, """
+        UPDATE res_partner_bank rpb
+        SET bank = subquery.id
+        FROM (
+            SELECT rb.id, rb.bic
+            FROM res_bank rb
+            WHERE rb.bic IS NOT NULL
+        ) AS subquery
+        WHERE rpb.bank IS NULL AND rpb.bank_bic = subquery.bic
+        """
+    )
+
+
 def fast_create(env, settings):
     for setting in settings:
         (table_name, field_name, sql_type, sql_request) = setting
@@ -421,6 +453,7 @@ def migrate(env, version):
     merge_supplier_invoice_refs(env)
     openupgrade.rename_fields(env, field_renames)
     set_date_maturity(env)
+    migrate_bic_numbers(env)
 
     # Fast Create new fields
     fast_create(env, FAST_CREATIONS)
