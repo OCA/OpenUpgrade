@@ -20,8 +20,16 @@ def update_procurement_field_from_sale(env):
         UPDATE procurement_group pg
         SET sale_id = sol.order_id
         FROM stock_move sm
-        INNER JOIN sale_order_line sol ON sm.sale_line_id = sol.id
+        JOIN sale_order_line sol ON sm.sale_line_id = sol.id
         WHERE sm.group_id = pg.id""",
+    )
+    openupgrade.logged_query(
+        env.cr, """
+        UPDATE procurement_group pg
+        SET sale_id = sol.order_id
+        FROM procurement_order po
+        JOIN sale_order_line sol ON po.sale_line_id = sol.id
+        WHERE po.group_id = pg.id AND pg.sale_id IS NULL""",
     )
 
 
