@@ -997,6 +997,24 @@ def assign_account_tags_to_move_lines(env):
     )
 
 
+@openupgrade.logging()
+def _recompute_move_entries_totals(env):
+    """Regular journal entries inform as well the totals, so we need to recompute them."""
+    openupgrade.logged_query(
+        env.cr, """
+        UPDATE account_move am
+        SET amount_total_signed = abs(sub.balance)
+        FROM (
+            SELECT aml.move_id, SUM(aml.balance) AS balance
+            FROM account_move_line aml
+            WHERE aml.debit > 0
+            GROUP BY aml.move_id
+        ) AS sub
+        WHERE sub.move_id = am.id
+        AND am.type = 'entry'"""
+    )
+
+
 @openupgrade.migrate()
 def migrate(env, version):
     fill_account_reconcile_model_second_analytic_tag_rel_table(env)
@@ -1021,6 +1039,7 @@ def migrate(env, version):
     assign_tax_repartition_line_to_move_lines(env)
     assign_account_tags_to_move_lines(env)
     compute_balance_for_draft_invoice_lines(env)
+    _recompute_move_entries_totals(env)
     openupgrade.load_data(
         env.cr, "account", "migrations/13.0.1.1/noupdate_changes.xml")
     openupgrade.delete_record_translations(

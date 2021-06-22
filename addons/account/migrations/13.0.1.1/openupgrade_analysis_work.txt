@@ -80,6 +80,7 @@ account      / account.invoice          / amount_total_signed (float)   : DEL
 account      / account.move             / amount_total_signed (float)   : NEW isfunction: function, stored
 # DONE: pre-migration: pre-created
 # DONE: post-migration: mapped
+# DONE: post-migration: Compute them for entry type
 
 account      / account.invoice          / amount_tax (float)            : DEL
 account_voucher / account.voucher          / tax_amount (float)            : DEL
