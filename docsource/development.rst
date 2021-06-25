@@ -16,7 +16,8 @@ steps are not necessary):
 - end-migration.py
 
 Since version 14, these files can be found here:
-``openupgrade-framework/openupgrade_scripts/scripts/<module-name>``
+
+``openupgrade_scripts/scripts/<module-name>``
 
 Each of those files will contain a function `migrate` which is called by the
 Migration Manager.
@@ -52,7 +53,8 @@ Learn from existing migration scrips
 
 
 Since version 14, the migration scripts are located in:
-``OpenUpgrade/openupgrade-framework/openupgrade_scripts/scripts/<module-name>``
+
+``openupgrade_scripts/scripts/<module-name>``
 
 During the review for a given module, you can follow this process:
 
