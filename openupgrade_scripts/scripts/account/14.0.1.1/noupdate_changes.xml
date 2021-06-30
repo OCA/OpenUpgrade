@@ -1,22 +1,22 @@
 <?xml version='1.0' encoding='utf-8'?>
 <odoo>
   <record id="account_analytic_line_rule_billing_user" model="ir.rule">
-    <field name="perm_create"/>
-    <field name="perm_read"/>
-    <field name="perm_unlink"/>
-    <field name="perm_write"/>
+<!--    <field name="perm_create"/>-->
+<!--    <field name="perm_read"/>-->
+<!--    <field name="perm_unlink"/>-->
+<!--    <field name="perm_write"/>-->
   </record>
   <record id="account_bank_statement_comp_rule" model="ir.rule">
-    <field name="global"/>
+<!--    <field name="global"/>-->
   </record>
   <record id="account_bank_statement_line_comp_rule" model="ir.rule">
-    <field name="global"/>
+<!--    <field name="global"/>-->
   </record>
   <record id="account_comp_rule" model="ir.rule">
-    <field name="global"/>
+<!--    <field name="global"/>-->
   </record>
   <record id="account_fiscal_position_comp_rule" model="ir.rule">
-    <field name="global"/>
+<!--    <field name="global"/>-->
   </record>
   <record id="account_invoice_line_rule_portal" model="ir.rule">
     <field name="domain_force">[('move_id.move_type', 'in', ('out_invoice', 'out_refund', 'in_invoice', 'in_refund')), ('move_id.message_partner_ids','child_of',[user.commercial_partner_id.id])]</field>
@@ -25,19 +25,19 @@
     <field name="domain_force">[('move_type', 'in', ('out_invoice', 'out_refund', 'in_invoice', 'in_refund')), ('message_partner_ids','child_of',[user.commercial_partner_id.id])]</field>
   </record>
   <record id="account_move_comp_rule" model="ir.rule">
-    <field name="global"/>
+<!--    <field name="global"/>-->
   </record>
   <record id="account_move_line_comp_rule" model="ir.rule">
-    <field name="global"/>
+<!--    <field name="global"/>-->
   </record>
   <record id="account_payment_comp_rule" model="ir.rule">
-    <field name="global"/>
+<!--    <field name="global"/>-->
   </record>
   <record id="account_reconcile_model_template_comp_rule" model="ir.rule">
-    <field name="global"/>
+<!--    <field name="global"/>-->
   </record>
   <record id="account_root_comp_rule" model="ir.rule">
-    <field name="global"/>
+<!--    <field name="global"/>-->
   </record>
   <record id="email_template_edi_invoice" model="mail.template">
     <field name="body_html" type="html">
@@ -81,13 +81,13 @@
     </field>
   </record>
   <record id="invoice_analysis_comp_rule" model="ir.rule">
-    <field name="global"/>
+<!--    <field name="global"/>-->
   </record>
   <record id="journal_comp_rule" model="ir.rule">
-    <field name="global"/>
+<!--    <field name="global"/>-->
   </record>
   <record id="journal_group_comp_rule" model="ir.rule">
-    <field name="global"/>
+<!--    <field name="global"/>-->
   </record>
   <record id="mail_template_data_payment_receipt" model="mail.template">
     <field name="body_html" type="xml">
@@ -110,6 +110,6 @@
     </field>
   </record>
   <record id="tax_comp_rule" model="ir.rule">
-    <field name="global"/>
+<!--    <field name="global"/>-->
   </record>
 </odoo>
