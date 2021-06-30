@@ -99,7 +99,7 @@ jobs:
         run: |
           MODULES_OLD=base,$(\
               sed -n '/^+========/,$p' \
-              openupgrade/doc/source/modules130-140.rst \
+              openupgrade/docsource/modules130-140.rst \
               | grep "Done\|Partial\|Nothing" \
               | grep -v "theme_" \
               | sed -rn 's/((^\| *\|del\| *)|^\|)([0-9a-z_]*) *\|.*$/\3/g p' \
@@ -107,7 +107,7 @@ jobs:
               | paste -d, -s)
           MODULES_NEW=base,$(\
               sed -n '/^+========/,$p' \
-              openupgrade/doc/source/modules130-140.rst \
+              openupgrade/docsource/modules130-140.rst \
               | grep "Done\|Partial\|Nothing" \
               | grep -v "theme_" \
               | sed -rn 's/((^\| *\|new\| *)|^\|)([0-9a-z_]*) *\|.*$/\3/g p' \
