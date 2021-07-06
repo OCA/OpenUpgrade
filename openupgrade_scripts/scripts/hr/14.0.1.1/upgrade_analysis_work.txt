@@ -3,14 +3,19 @@
 hr           / hr.employee              / address_id (many2one)         : now a function
 hr           / hr.employee              / certificate (selection)       : selection_keys is now '['bachelor', 'doctor', 'graduate', 'master', 'other']' ('['bachelor', 'master', 'other']')
 hr           / hr.employee              / coach_id (many2one)           : now a function
+# NOTHING TO DO
+
 hr           / hr.employee              / company_id (many2one)         : now required, req_default: function
 # DONE: Post-migration: Filled with Create user company_id
+
 hr           / hr.employee              / departure_date (date)         : NEW
 hr           / hr.employee              / job_title (char)              : now a function
 hr           / hr.employee              / parent_id (many2one)          : now a function
 hr           / hr.employee              / work_phone (char)             : now a function
 hr           / hr.plan.activity.type    / summary (char)                : now a function
 hr           / res.users                / barcode (char)                : module is now 'base' ('hr')
+# NOTHING TO DO
+
 ---XML records in module 'hr'---
 NEW ir.actions.act_window: hr.hr_department_kanban_action
 NEW ir.actions.act_window: hr.hr_department_tree_action
@@ -20,7 +25,10 @@ NEW ir.model.access: hr.access_hr_plan_wizard
 DEL ir.model.access: hr.access_ir_property_hr_user
 NEW ir.ui.menu: hr.menu_hr_department_kanban
 NEW ir.ui.view: hr.qunit_suite
+# NOTHING TO DO
+
 DEL mail.template: hr.mail_template_data_unknown_employee_email_address (noupdate)
+# DONE: post-migration: deleted xmlid safely (and its translations)
+
 NEW res.partner: hr.res_partner_admin_private_address (noupdate)
-hr.employee: hr.employee_admin (noupdate)
-# DONE: post-migration: noupdate changed to "res_partner_admin_private_address"
+# DONE: post-migration: update this partner with actual admin data
