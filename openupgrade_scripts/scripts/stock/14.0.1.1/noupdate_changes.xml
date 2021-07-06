@@ -34,7 +34,7 @@
       </div>
     </field>
   </record>
-  <record id="product_pulled_flow_comp_rule" model="ir.rule">
+  <!-- <record id="product_pulled_flow_comp_rule" model="ir.rule">
     <field name="global"/>
   </record>
   <record id="report_stock_quantity_flow_comp_rule" model="ir.rule">
@@ -58,16 +58,16 @@
   </record>
   <record id="stock_location_route_comp_rule" model="ir.rule">
     <field name="global"/>
-  </record>
+  </record> -->
   <record id="stock_move_line_rule" model="ir.rule">
     <field name="domain_force">['|',('company_id','=',False),('company_id', 'in', company_ids)]</field>
-    <field name="global"/>
+<!--    <field name="global"/>-->
   </record>
   <record id="stock_move_rule" model="ir.rule">
     <field name="domain_force">[('company_id', 'in', company_ids)]</field>
-    <field name="global"/>
+<!--    <field name="global"/>-->
   </record>
-  <record id="stock_picking_rule" model="ir.rule">
+  <!-- <record id="stock_picking_rule" model="ir.rule">
     <field name="global"/>
   </record>
   <record id="stock_picking_type_rule" model="ir.rule">
@@ -96,5 +96,5 @@
   </record>
   <record id="warehouse0" model="stock.warehouse">
     <field name="name">San Francisco</field>
-  </record>
+  </record> -->
 </odoo>
