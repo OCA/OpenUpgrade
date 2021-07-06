@@ -11376,7 +11376,7 @@ msgstr "Commenti"
 #: model:ir.model.fields,field_description:base.field_res_partner__commercial_partner_id
 #: model:ir.model.fields,field_description:base.field_res_users__commercial_partner_id
 msgid "Commercial Entity"
-msgstr "Ente commerciale"
+msgstr "Entità commerciale"
 
 #. module: base
 #: model:res.country,name:base.km
@@ -14340,6 +14340,12 @@ msgid ""
 "Technical Details:\n"
 "%s"
 msgstr ""
+"File %r non importato, non è valido.\n"
+"\n"
+"Il problema può essere causato da voci duplicate che si riferiscono allo stesso campo. Controllare il contenuto del file che si sta tentando di importare.\n"
+"\n"
+"Dettagli tecnici:\n"
+"%s"
 
 #. module: base
 #: code:addons/base/wizard/base_import_language.py:0
@@ -23113,7 +23119,7 @@ msgstr "Errore di ricorsione delle dipendenze dei moduli !"
 #: code:addons/base/models/ir_actions.py:0
 #, python-format
 msgid "Recursion found in child server actions"
-msgstr ""
+msgstr "Trovata ricorsività nelle azioni server secondarie"
 
 #. module: base
 #: model:ir.model.fields,field_description:base.field_ir_model_data__reference
