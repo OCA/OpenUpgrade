@@ -13,8 +13,8 @@ NEW ir.actions.act_window: hr_timesheet.timesheet_action_project
 NEW ir.actions.act_window: hr_timesheet.timesheet_action_task
 NEW ir.actions.act_window.view: hr_timesheet.timesheet_action_view_all_kanban
 NEW ir.actions.act_window.view: hr_timesheet.timesheet_action_view_all_pivot
-NEW ir.config_parameter: hr_timesheet.ir_config_parameter_timesheet_min_duration
-NEW ir.config_parameter: hr_timesheet.ir_config_parameter_timesheet_rounding
+NEW ir.config_parameter: hr_timesheet.ir_config_parameter_timesheet_min_duration (noupdate)
+NEW ir.config_parameter: hr_timesheet.ir_config_parameter_timesheet_rounding (noupdate)
 NEW ir.model.access: hr_timesheet.access_project_task_create_timesheet
 NEW ir.rule: hr_timesheet.timesheet_line_rule_approver (noupdate)
 ir.rule: hr_timesheet.timesheet_line_rule_user (noupdate) (noupdate switched)

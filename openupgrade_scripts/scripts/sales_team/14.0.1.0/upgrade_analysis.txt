@@ -1,8 +1,11 @@
 ---Models in module 'sales_team'---
-new model crm.tag
+new model crm.tag (renamed from crm.lead.tag in module crm)
 ---Fields in module 'sales_team'---
-sales_team   / crm.tag                  / color (integer)               : NEW hasdefault
-sales_team   / crm.tag                  / name (char)                   : NEW required
+sales_team   / crm.lead.tag             / __last_update (datetime)      : previously in module crm
+sales_team   / crm.lead.tag             / _order                        : previously in module crm
+sales_team   / crm.lead.tag             / color (integer)               : previously in module crm
+sales_team   / crm.lead.tag             / display_name (char)           : previously in module crm
+sales_team   / crm.lead.tag             / name (char)                   : previously in module crm
 ---XML records in module 'sales_team'---
 NEW ir.actions.act_window: sales_team.sales_team_crm_tag_action
 NEW ir.model.access: sales_team.access_crm_tag

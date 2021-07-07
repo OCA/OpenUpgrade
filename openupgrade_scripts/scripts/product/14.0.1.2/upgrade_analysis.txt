@@ -16,6 +16,7 @@ product      / product.pricelist        / discount_policy (selection)   : now re
 product      / product.pricelist.item   / date_end (date)               : type is now 'datetime' ('date')
 product      / product.pricelist.item   / date_start (date)             : type is now 'datetime' ('date')
 product      / product.pricelist.item   / min_quantity (integer)        : type is now 'float' ('integer')
+product      / product.supplierinfo     / _order                        : _order is now 'sequence, min_qty DESC, price, id' ('sequence, min_qty desc, price')
 product      / product.template         / barcode (char)                : not related anymore
 product      / product.template         / barcode (char)                : now a function
 product      / product.template         / rental (boolean)              : DEL

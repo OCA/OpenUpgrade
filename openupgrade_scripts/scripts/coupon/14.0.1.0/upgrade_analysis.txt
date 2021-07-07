@@ -48,7 +48,7 @@ NEW ir.actions.act_window: coupon.coupon_generate_action
 NEW ir.actions.act_window: coupon.coupon_program_action_coupon_program
 NEW ir.actions.act_window: coupon.coupon_program_action_promo_program
 NEW ir.actions.report: coupon.report_coupon_code [renamed from sale_coupon module]
-NEW ir.cron: coupon.expire_coupon_cron (noupdate)
+NEW ir.cron: coupon.expire_coupon_cron [renamed from sale_coupon module] (noupdate)
 NEW ir.model.access: coupon.access_coupon_coupon
 NEW ir.model.access: coupon.access_coupon_generate_wizard
 NEW ir.model.access: coupon.access_coupon_program

@@ -65,6 +65,9 @@ new model test_new_api.multi_compute_inverse
 new model test_new_api.multi.line
 new model test_new_api.multi.line2
 new model test_new_api.multi.tag
+new model test_new_api.one2many
+new model test_new_api.one2many.line
+new model test_new_api.payment
 new model test_new_api.recursive
 new model test_new_api.recursive.tree
 new model test_new_api.related
@@ -251,6 +254,7 @@ test_new_api / test_new_api.monetary_order_line / subtotal (float)              
 test_new_api / test_new_api.monetary_related / monetary_id (many2one)        : NEW relation: test_new_api.monetary_base
 test_new_api / test_new_api.move        / line_ids (one2many)           : NEW relation: test_new_api.move_line
 test_new_api / test_new_api.move        / quantity (integer)            : NEW isfunction: function, stored
+test_new_api / test_new_api.move        / tag_id (many2one)             : NEW relation: test_new_api.multi.tag
 test_new_api / test_new_api.move_line   / move_id (many2one)            : NEW relation: test_new_api.move, required
 test_new_api / test_new_api.move_line   / quantity (integer)            : NEW
 test_new_api / test_new_api.move_line   / visible (boolean)             : NEW hasdefault
@@ -269,6 +273,13 @@ test_new_api / test_new_api.multi_compute_inverse / bar1 (char)                 
 test_new_api / test_new_api.multi_compute_inverse / bar2 (char)                   : NEW isfunction: function, stored
 test_new_api / test_new_api.multi_compute_inverse / bar3 (char)                   : NEW isfunction: function, stored
 test_new_api / test_new_api.multi_compute_inverse / foo (char)                    : NEW required, req_default: function, hasdefault
+test_new_api / test_new_api.one2many    / line_ids (one2many)           : NEW relation: test_new_api.one2many.line, isfunction: function, stored
+test_new_api / test_new_api.one2many    / name (char)                   : NEW
+test_new_api / test_new_api.one2many.line / container_id (many2one)       : NEW relation: test_new_api.one2many, required
+test_new_api / test_new_api.one2many.line / count (integer)               : NEW hasdefault
+test_new_api / test_new_api.one2many.line / name (char)                   : NEW
+test_new_api / test_new_api.payment     / _inherits                     : NEW _inherits: {'test_new_api.move': 'move_id'}
+test_new_api / test_new_api.payment     / move_id (many2one)            : NEW relation: test_new_api.move, required
 test_new_api / test_new_api.recursive   / display_name (char)           : NEW isfunction: function, stored
 test_new_api / test_new_api.recursive   / name (char)                   : NEW required
 test_new_api / test_new_api.recursive   / parent (many2one)             : NEW relation: test_new_api.recursive
@@ -365,6 +376,9 @@ NEW ir.model.access: test_new_api.access_test_new_api_monetary_related
 NEW ir.model.access: test_new_api.access_test_new_api_move
 NEW ir.model.access: test_new_api.access_test_new_api_move_line
 NEW ir.model.access: test_new_api.access_test_new_api_multi_compute_inverse
+NEW ir.model.access: test_new_api.access_test_new_api_one2many
+NEW ir.model.access: test_new_api.access_test_new_api_one2many_line
+NEW ir.model.access: test_new_api.access_test_new_api_payment
 NEW ir.model.access: test_new_api.access_test_new_api_recursive
 NEW ir.model.access: test_new_api.access_test_new_api_recursive_tree
 NEW ir.model.access: test_new_api.access_test_new_api_related

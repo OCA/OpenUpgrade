@@ -5,7 +5,7 @@ obsolete model account.bank.statement.import.journal.creation [module account_ba
 obsolete model account.fiscal.year [module account]
 obsolete model account.reconciliation.widget [module account]
 obsolete model base.gengo.translations [module base_gengo]
-obsolete model crm.lead.tag [module crm]
+obsolete model crm.lead.tag (renamed to crm.tag) [module crm]
 obsolete model crm.partner.binding [module crm]
 obsolete model email_template.preview (renamed to mail.template.preview) [module mail]
 obsolete model event.answer (renamed to event.question.answer) [module website_event_questions]
@@ -52,6 +52,7 @@ obsolete model test_performance.mail [module test_mail]
 new model account.automatic.entry.wizard [module account]
 new model account.edi.document [module account_edi]
 new model account.edi.format [module account_edi]
+new model account_edi_proxy_client.user [module account_edi_proxy_client]
 new model account.group.template [module account]
 new model account.reconcile.model.line [module account]
 new model account.reconcile.model.line.template [module account]
@@ -82,11 +83,8 @@ new model coupon.program [module coupon]
 new model coupon.reward [module coupon]
 new model coupon.rule [module coupon]
 new model crm.recurring.plan [module crm]
-new model crm.tag [module sales_team]
+new model crm.tag (renamed from crm.lead.tag) [module sales_team]
 new model decimal.precision.test [module test_new_api]
-new model delegation.keyboard [module test_documentation_examples]
-new model delegation.laptop [module test_documentation_examples]
-new model delegation.screen [module test_documentation_examples]
 new model domain.bool [module test_new_api]
 new model event.lead.rule [module event_crm]
 new model event.meeting.room [module website_event_meet]
@@ -112,6 +110,8 @@ new model export.group_operator.one2many [module test_xlsx_export]
 new model export.inherits.child [module test_impex]
 new model export.inherits.parent [module test_impex]
 new model export.integer [module test_impex]
+new model export.m2o.str [module test_impex]
+new model export.m2o.str.child [module test_impex]
 new model export.many2many [module test_impex]
 new model export.many2many.other [module test_impex]
 new model export.many2one [module test_impex]
@@ -130,15 +130,12 @@ new model export.string.bounded [module test_impex]
 new model export.string.required [module test_impex]
 new model export.text [module test_impex]
 new model export.unique [module test_impex]
-new model extension.0 [module test_documentation_examples]
 new model fleet.vehicle.cost.report [module fleet]
 new model gamification.karma.tracking [module gamification]
 new model google.calendar.account.reset [module google_calendar]
 new model google.calendar.sync [module google_calendar]
 new model hr.applicant.refuse.reason [module hr_recruitment]
 new model hr.payroll.structure.type [module hr_contract]
-new model inheritance.0 [module test_documentation_examples]
-new model inheritance.1 [module test_documentation_examples]
 new model ir.qweb.field.image_url [module base]
 new model mail.blacklist.remove [module mail]
 new model mail.performance.thread [module test_mail]
@@ -146,6 +143,8 @@ new model mail.performance.tracking [module test_mail]
 new model mail.render.mixin [module mail]
 new model mail.template.preview (renamed from email_template.preview) [module mail]
 new model mail.test.container [module test_mail]
+new model mail.test.sms.bl.optout [module test_mail_full]
+new model mail.test.sms.partner.2many [module test_mail_full]
 new model mail.test.ticket [module test_mail]
 new model mail.test.track.compute [module test_mail]
 new model mailing.performance [module test_mass_mailing]
@@ -282,6 +281,9 @@ new model test_new_api.multi_compute_inverse [module test_new_api]
 new model test_new_api.multi.line [module test_new_api]
 new model test_new_api.multi.line2 [module test_new_api]
 new model test_new_api.multi.tag [module test_new_api]
+new model test_new_api.one2many [module test_new_api]
+new model test_new_api.one2many.line [module test_new_api]
+new model test_new_api.payment [module test_new_api]
 new model test_new_api.recursive [module test_new_api]
 new model test_new_api.recursive.tree [module test_new_api]
 new model test_new_api.related [module test_new_api]
@@ -349,13 +351,13 @@ new model website.robots [module website]
 new model website.sale.extra.field [module website_sale]
 new model website.snippet.filter [module website]
 ---Fields in module 'general'---
-# 9725 fields matched,
-# Direct match: 9613
-# Found in other module: 112
+# 9739 fields matched,
+# Direct match: 9622
+# Found in other module: 117
 # Found with different type: 0
-# In obsolete models: 295
-# New columns: 3231
-# Not matched: 649
+# In obsolete models: 290
+# New columns: 3344
+# Not matched: 645
 ---XML records in module 'general'---
 ERROR: module not in list of installed modules:
 ---Models in module 'account_bank_statement_import'---

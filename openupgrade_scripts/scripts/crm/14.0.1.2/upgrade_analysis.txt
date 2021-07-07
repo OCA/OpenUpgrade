@@ -1,5 +1,5 @@
 ---Models in module 'crm'---
-obsolete model crm.lead.tag
+obsolete model crm.lead.tag (renamed to crm.tag in module sales_team)
 obsolete model crm.partner.binding [transient]
 new model crm.recurring.plan
 ---Fields in module 'crm'---
@@ -35,8 +35,11 @@ crm          / crm.lead                 / team_id (many2one)            : now a 
 crm          / crm.lead                 / title (many2one)              : now a function
 crm          / crm.lead                 / website (char)                : now a function
 crm          / crm.lead                 / zip (char)                    : now a function
-crm          / crm.lead.tag             / color (integer)               : DEL
-crm          / crm.lead.tag             / name (char)                   : DEL required
+crm          / crm.lead.tag             / __last_update (datetime)      : module is now 'sales_team' ('crm')
+crm          / crm.lead.tag             / _order                        : module is now 'sales_team' ('crm')
+crm          / crm.lead.tag             / color (integer)               : module is now 'sales_team' ('crm')
+crm          / crm.lead.tag             / display_name (char)           : module is now 'sales_team' ('crm')
+crm          / crm.lead.tag             / name (char)                   : module is now 'sales_team' ('crm')
 crm          / crm.recurring.plan       / active (boolean)              : NEW hasdefault
 crm          / crm.recurring.plan       / name (char)                   : NEW required
 crm          / crm.recurring.plan       / number_of_months (integer)    : NEW required
@@ -71,7 +74,6 @@ NEW ir.model.access: crm.crm_recurring_plan_access_salesman
 DEL ir.model.access: crm.access_crm_lead_tag
 DEL ir.model.access: crm.access_crm_lead_tag_manager
 DEL ir.model.access: crm.access_crm_lead_tag_salesman
-DEL ir.rule: crm.calendar_event_global (noupdate)
 NEW ir.ui.menu: crm.crm_lead_menu_my_activities
 NEW ir.ui.menu: crm.crm_recurring_plan_menu_config
 NEW ir.ui.view: crm.crm_lead_view_list_activities

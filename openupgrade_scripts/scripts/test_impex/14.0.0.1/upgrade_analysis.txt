@@ -8,6 +8,8 @@ new model export.function
 new model export.inherits.child
 new model export.inherits.parent
 new model export.integer
+new model export.m2o.str
+new model export.m2o.str.child
 new model export.many2many
 new model export.many2many.other
 new model export.many2one
@@ -44,6 +46,8 @@ test_impex   / export.inherits.child    / value (integer)               : NEW
 test_impex   / export.inherits.parent   / value_parent (integer)        : NEW
 test_impex   / export.integer           / const (integer)               : NEW hasdefault
 test_impex   / export.integer           / value (integer)               : NEW
+test_impex   / export.m2o.str           / child_id (many2one)           : NEW relation: export.m2o.str.child
+test_impex   / export.m2o.str.child     / name (char)                   : NEW
 test_impex   / export.many2many         / const (integer)               : NEW hasdefault
 test_impex   / export.many2many         / value (many2many)             : NEW relation: export.many2many.other
 test_impex   / export.many2many.other   / str (char)                    : NEW
@@ -98,6 +102,8 @@ NEW ir.model.access: test_impex.access_export_function
 NEW ir.model.access: test_impex.access_export_inherits_child
 NEW ir.model.access: test_impex.access_export_inherits_parent
 NEW ir.model.access: test_impex.access_export_integer
+NEW ir.model.access: test_impex.access_export_m2o_str
+NEW ir.model.access: test_impex.access_export_m2o_str_child
 NEW ir.model.access: test_impex.access_export_many2many
 NEW ir.model.access: test_impex.access_export_many2many_other
 NEW ir.model.access: test_impex.access_export_many2one
