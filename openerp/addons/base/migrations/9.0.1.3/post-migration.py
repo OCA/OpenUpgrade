@@ -18,6 +18,34 @@ column_copies = {
 }
 
 
+def align_partner_type_with_address_sync(cr):
+    """The usage of use_parent_address is replaced by address type logic
+    (see https://github.com/odoo/odoo/commit/43839a84), even if the field
+    is only removed in Odoo 10.0.
+    Addresses are now synced with the parent if the partner type is 'contact'.
+    Therefore, set addresses of type 'other' to 'contact' if they had the
+    `use_parent_address` flag in 8.0, and vice versa.
+    """
+    openupgrade.logged_query(
+        cr,
+        """
+        UPDATE res_partner
+        SET type = 'contact'
+        WHERE type = 'other'
+            AND use_parent_address
+            AND parent_id IS NOT NULL;
+        """)
+    openupgrade.logged_query(
+        cr,
+        """
+        UPDATE res_partner
+        SET type = 'other'
+        WHERE type = 'contact'
+            AND use_parent_address IS NOT TRUE
+            AND parent_id IS NOT NULL;
+        """)
+
+
 # company_type must match is_company
 def match_company_type_to_is_company(cr):
     openupgrade.logged_query(cr, """
@@ -111,6 +139,7 @@ def migrate(env, version):
             openupgrade.convert_field_to_html(
                 env.cr, table_name, openupgrade.get_legacy_name(old), old
             )
+    align_partner_type_with_address_sync(env.cr)
     match_company_type_to_is_company(env.cr)
     clear_inherit_id(env.cr)
     rename_your_company(env.cr)
