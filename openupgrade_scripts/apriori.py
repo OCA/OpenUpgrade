@@ -33,6 +33,7 @@ merged_modules = {
     "hw_proxy": "hw_drivers",
     "l10n_cn_small_business": "l10n_cn",
     "partner_autocomplete_address_extended": "base_address_extended",
+    "payment_stripe_checkout_webhook": "payment_stripe",
     "pos_cash_rounding": "point_of_sale",
     "pos_kitchen_printer": "pos_restaurant",
     "pos_reprint": "point_of_sale",
@@ -47,6 +48,7 @@ merged_modules = {
 # only used here for upgrade_analysis
 renamed_models = {
     # odoo
+    "crm.lead.tag": "crm.tag",
     "email_template.preview": "mail.template.preview",
     "event.answer": "event.question.answer",
     "product.style": "product.ribbon",

@@ -58,6 +58,7 @@ DEL ir.actions.act_window: sale_coupon.sale_coupon_generate_action
 DEL ir.actions.act_window: sale_coupon.sale_coupon_program_action_coupon_program
 DEL ir.actions.act_window: sale_coupon.sale_coupon_program_action_promo_program
 DEL ir.actions.report: sale_coupon.report_coupon_code [renamed to coupon module]
+DEL ir.cron: sale_coupon.expire_coupon_cron [renamed to coupon module] (noupdate)
 NEW ir.model.access: sale_coupon.access_sale_coupon_apply_code
 NEW ir.model.access: sale_coupon.access_sale_coupon_generate
 NEW ir.rule: sale_coupon.sale_coupon_apply_code_rule (noupdate)
