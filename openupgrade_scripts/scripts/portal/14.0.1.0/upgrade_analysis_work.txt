@@ -1,0 +1,37 @@
+---Models in module 'portal'---
+---Fields in module 'portal'---
+portal       / adyen.account            / website_message_ids (one2many): NEW relation: mail.message
+portal       / fleet.vehicle.log.services / website_message_ids (one2many): NEW relation: mail.message
+portal       / hr.contract              / website_message_ids (one2many): previously in module hr_contract
+portal       / hr.leave                 / website_message_ids (one2many): previously in module hr_holidays
+portal       / hr.leave.allocation      / website_message_ids (one2many): previously in module hr_holidays
+portal       / ir.ui.view               / customize_show (boolean)      : previously in module website
+portal       / mail.performance.thread  / website_message_ids (one2many): NEW relation: mail.message
+portal       / mail.performance.tracking / website_message_ids (one2many): NEW relation: mail.message
+portal       / mail.test.activity       / website_message_ids (one2many): previously in module test_mail
+portal       / mail.test.cc             / website_message_ids (one2many): previously in module test_mail
+portal       / mail.test.container      / website_message_ids (one2many): NEW relation: mail.message
+portal       / mail.test.gateway        / website_message_ids (one2many): previously in module test_mail
+portal       / mail.test.multi.company  / website_message_ids (one2many): previously in module test_mail
+portal       / mail.test.simple         / website_message_ids (one2many): previously in module test_mail
+portal       / mail.test.ticket         / website_message_ids (one2many): NEW relation: mail.message
+portal       / mail.test.track          / website_message_ids (one2many): previously in module test_mail
+portal       / mail.test.track.compute  / website_message_ids (one2many): NEW relation: mail.message
+portal       / mailing.contact          / website_message_ids (one2many): module is now 'mass_mailing' ('portal')
+portal       / mailing.mailing          / website_message_ids (one2many): module is now 'mass_mailing' ('portal')
+# NOTHING TO DO
+
+---XML records in module 'portal'---
+NEW ir.model.access: portal.access_portal_share
+NEW ir.model.access: portal.access_portal_wizard
+NEW ir.model.access: portal.access_portal_wizard_user
+NEW ir.ui.view: portal.footer_language_selector
+NEW ir.ui.view: portal.language_selector
+NEW ir.ui.view: portal.placeholder_user_sign_in
+NEW ir.ui.view: portal.portal_my_security
+NEW ir.ui.view: portal.user_dropdown
+NEW ir.ui.view: portal.user_sign_in
+DEL ir.ui.view: portal.portal_404
+DEL ir.ui.view: portal.portal_archive_groups
+DEL ir.ui.view: portal.portal_show_sign_in
+# NOTHING TO DO
