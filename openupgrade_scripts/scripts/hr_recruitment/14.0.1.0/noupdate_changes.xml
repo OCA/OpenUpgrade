@@ -149,19 +149,36 @@
       </table>
     </field>
   </record>
-  <record id="mt_applicant_new" model="mail.message.subtype">
-    <field name="description"/>
-  </record>
-  <record id="mt_department_new" model="mail.message.subtype">
-    <field name="parent_id" ref="mt_job_new"/>
-  </record>
-  <record id="mt_job_applicant_hired" model="mail.message.subtype">
-    <field name="parent_id" ref="mt_applicant_hired"/>
-  </record>
-  <record id="mt_job_applicant_stage_changed" model="mail.message.subtype">
-    <field name="parent_id" ref="mt_applicant_stage_changed"/>
-  </record>
-  <record id="stage_job2" model="hr.recruitment.stage">
-    <field name="template_id" ref="email_template_data_applicant_congratulations"/>
-  </record>
+    <record id="mt_applicant_new" model="mail.message.subtype">
+        <field name="description"/>
+    </record>
+    <record id="mt_department_new" model="mail.message.subtype">
+        <field name="parent_id" ref="mt_job_new"/>
+    </record>
+    <record id="mt_job_applicant_hired" model="mail.message.subtype">
+        <field name="parent_id" ref="mt_applicant_hired"/>
+    </record>
+    <record id="mt_job_applicant_stage_changed" model="mail.message.subtype">
+        <field name="parent_id" ref="mt_applicant_stage_changed"/>
+    </record>
+    <record id="stage_job2" model="hr.recruitment.stage">
+        <field name="template_id" ref="email_template_data_applicant_congratulations"/>
+    </record>
+    <record id="digest_tip_hr_recruitment_0" model="digest.tip">
+        <field name="name">Tip: Let candidates apply by email</field>
+        <field name="sequence">1300</field>
+        <field name="group_id" ref="hr_recruitment.group_hr_recruitment_manager" />
+        <field name="tip_description" type="html">
+            <div>
+                <p class="tip_title">Tip: Let candidates apply by email</p>
+                <p class="tip_content">
+                    By setting an alias to a job position, emails sent to this address create applications automatically. You can even use multiple trackers to get statistics according to the source of the application: LinkedIn, Monster, Indeed, etc.
+                    % set record = object.env['hr.job'].search([('alias_name', '!=', False)], limit=1)
+                    % if record and record.alias_domain
+                    <a href="mailto:${record.alias_id.display_name}" target="_blank" style="color: #875a7b; text-decoration: none;">Try sending an email</a>
+                    % endif
+                </p>
+            </div>
+        </field>
+    </record>
 </odoo>
