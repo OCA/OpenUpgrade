@@ -1,4 +1,31 @@
 ---Models in module 'test_mail_full'---
+new model mail.test.sms.bl.optout
+new model mail.test.sms.partner.2many
 ---Fields in module 'test_mail_full'---
+test_mail_full / mail.test.sms.bl.optout  / customer_id (many2one)        : NEW relation: res.partner
+test_mail_full / mail.test.sms.bl.optout  / email_from (char)             : NEW
+test_mail_full / mail.test.sms.bl.optout  / message_follower_ids (one2many): NEW relation: mail.followers
+test_mail_full / mail.test.sms.bl.optout  / message_ids (one2many)        : NEW relation: mail.message
+test_mail_full / mail.test.sms.bl.optout  / message_main_attachment_id (many2one): NEW relation: ir.attachment
+test_mail_full / mail.test.sms.bl.optout  / mobile_nbr (char)             : NEW
+test_mail_full / mail.test.sms.bl.optout  / name (char)                   : NEW
+test_mail_full / mail.test.sms.bl.optout  / opt_out (boolean)             : NEW
+test_mail_full / mail.test.sms.bl.optout  / phone_nbr (char)              : NEW
+test_mail_full / mail.test.sms.bl.optout  / phone_sanitized (char)        : NEW isfunction: function, stored
+test_mail_full / mail.test.sms.bl.optout  / subject (char)                : NEW
+test_mail_full / mail.test.sms.bl.optout  / website_message_ids (one2many): NEW relation: mail.message
+test_mail_full / mail.test.sms.partner    / customer_id (many2one)        : NEW relation: res.partner
+test_mail_full / mail.test.sms.partner    / opt_out (boolean)             : NEW
+test_mail_full / mail.test.sms.partner    / partner_id (many2one)         : DEL relation: res.partner
+test_mail_full / mail.test.sms.partner.2many / customer_ids (many2many)      : NEW relation: res.partner
+test_mail_full / mail.test.sms.partner.2many / message_follower_ids (one2many): NEW relation: mail.followers
+test_mail_full / mail.test.sms.partner.2many / message_ids (one2many)        : NEW relation: mail.message
+test_mail_full / mail.test.sms.partner.2many / message_main_attachment_id (many2one): NEW relation: ir.attachment
+test_mail_full / mail.test.sms.partner.2many / name (char)                   : NEW
+test_mail_full / mail.test.sms.partner.2many / opt_out (boolean)             : NEW
+test_mail_full / mail.test.sms.partner.2many / website_message_ids (one2many): NEW relation: mail.message
 ---XML records in module 'test_mail_full'---
----nothing has changed in this module--
+NEW ir.model.access: test_mail_full.access_mail_test_sms_bl_optout_all
+NEW ir.model.access: test_mail_full.access_mail_test_sms_bl_optout_user
+NEW ir.model.access: test_mail_full.access_mail_test_sms_partner_2many_all
+NEW ir.model.access: test_mail_full.access_mail_test_sms_partner_2many_user

@@ -20,7 +20,7 @@ NEW ir.actions.act_window: purchase.purchase_action_dashboard_list
 DEL ir.actions.act_window: purchase.purchase_order_action_generic
 NEW ir.actions.server: purchase.action_purchase_batch_bills
 NEW ir.actions.server: purchase.action_purchase_send_reminder
-NEW ir.cron: purchase.purchase_send_reminder_mail
+NEW ir.cron: purchase.purchase_send_reminder_mail (noupdate)
 DEL ir.filters: purchase.filter_purchase_order_average_delivery_time
 DEL ir.filters: purchase.filter_purchase_order_monthly_purchases
 DEL ir.filters: purchase.filter_purchase_order_price_per_supplier

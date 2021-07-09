@@ -5,12 +5,6 @@ website_crm_partner_assign / crm.lead                 / date_partner_assign (dat
 website_crm_partner_assign / res.partner              / partner_weight (integer)      : now a function
 website_crm_partner_assign / res.partner.grade        / _order                        : _order is now 'sequence' ('id')
 ---XML records in module 'website_crm_partner_assign'---
-DEL crm.lead.tag: website_crm_partner_assign.tag_portal_lead_is_spam
-DEL crm.lead.tag: website_crm_partner_assign.tag_portal_lead_own_opp
-DEL crm.lead.tag: website_crm_partner_assign.tag_portal_lead_partner_unavailable
-NEW crm.tag: website_crm_partner_assign.tag_portal_lead_is_spam
-NEW crm.tag: website_crm_partner_assign.tag_portal_lead_own_opp
-NEW crm.tag: website_crm_partner_assign.tag_portal_lead_partner_unavailable
 NEW ir.model.access: website_crm_partner_assign.access_crm_lead_assignation
 NEW ir.model.access: website_crm_partner_assign.access_crm_lead_forward_to_partner
 NEW ir.model.access: website_crm_partner_assign.access_res_partner_grade_invoicing_payment_readonly
