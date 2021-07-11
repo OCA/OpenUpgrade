@@ -1,10 +1,10 @@
 <?xml version='1.0' encoding='utf-8'?>
 <odoo>
   <record id="challenge_base_configure" model="gamification.challenge">
-    <field name="challenge_category">other</field>
+<!--    <field name="challenge_category">other</field>-->
   </record>
   <record id="challenge_base_discover" model="gamification.challenge">
-    <field name="challenge_category">other</field>
+<!--    <field name="challenge_category">other</field>-->
   </record>
   <record id="definition_base_company_data" model="gamification.goal.definition">
     <field name="action_id" ref="base.action_res_company_form"/>
@@ -153,7 +153,7 @@
     </field>
   </record>
   <record id="goal_global_multicompany" model="ir.rule">
-    <field name="global"/>
+<!--    <field name="global"/>-->
   </record>
   <record id="line_base_admin1" model="gamification.challenge.line">
     <field name="challenge_id" ref="challenge_base_configure"/>
