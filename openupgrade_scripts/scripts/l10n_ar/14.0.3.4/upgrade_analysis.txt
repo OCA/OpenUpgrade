@@ -1,0 +1,128 @@
+---Models in module 'l10n_ar'---
+---Fields in module 'l10n_ar'---
+l10n_ar      / account.journal          / l10n_ar_sequence_ids (one2many): DEL relation: ir.sequence
+l10n_ar      / ir.sequence              / l10n_ar_letter (selection)    : DEL selection_keys: function
+---XML records in module 'l10n_ar'---
+DEL account.group: l10n_ar.account_group_activo (noupdate)
+DEL account.group: l10n_ar.account_group_activo_corriente (noupdate)
+DEL account.group: l10n_ar.account_group_activo_no_corriente (noupdate)
+DEL account.group: l10n_ar.account_group_activos_fijos (noupdate)
+DEL account.group: l10n_ar.account_group_activos_intangibles (noupdate)
+DEL account.group: l10n_ar.account_group_bancos (noupdate)
+DEL account.group: l10n_ar.account_group_bienes_de_cambio (noupdate)
+DEL account.group: l10n_ar.account_group_caja (noupdate)
+DEL account.group: l10n_ar.account_group_cajas_y_bancos (noupdate)
+DEL account.group: l10n_ar.account_group_capital_social (noupdate)
+DEL account.group: l10n_ar.account_group_costo_de_mercadería_vendida (noupdate)
+DEL account.group: l10n_ar.account_group_creditos_fiscales (noupdate)
+DEL account.group: l10n_ar.account_group_creditos_fiscales_ganancias (noupdate)
+DEL account.group: l10n_ar.account_group_creditos_fiscales_iibb (noupdate)
+DEL account.group: l10n_ar.account_group_creditos_fiscales_iva (noupdate)
+DEL account.group: l10n_ar.account_group_creditos_fiscales_municipales (noupdate)
+DEL account.group: l10n_ar.account_group_creditos_fiscales_suss (noupdate)
+DEL account.group: l10n_ar.account_group_creditos_por_ventas (noupdate)
+DEL account.group: l10n_ar.account_group_cuentas_particulares (noupdate)
+DEL account.group: l10n_ar.account_group_cuentas_puentes (noupdate)
+DEL account.group: l10n_ar.account_group_derechos_de_marcas (noupdate)
+DEL account.group: l10n_ar.account_group_deudas_comerciales (noupdate)
+DEL account.group: l10n_ar.account_group_deudas_comerciales_a_largo_plazo (noupdate)
+DEL account.group: l10n_ar.account_group_deudas_financieras (noupdate)
+DEL account.group: l10n_ar.account_group_deudas_fiscales (noupdate)
+DEL account.group: l10n_ar.account_group_deudas_iibb (noupdate)
+DEL account.group: l10n_ar.account_group_deudas_imp_ganancias (noupdate)
+DEL account.group: l10n_ar.account_group_deudas_iva (noupdate)
+DEL account.group: l10n_ar.account_group_deudas_tasas_municipales (noupdate)
+DEL account.group: l10n_ar.account_group_egresos (noupdate)
+DEL account.group: l10n_ar.account_group_gastos_administrativos (noupdate)
+DEL account.group: l10n_ar.account_group_gastos_comerciales (noupdate)
+DEL account.group: l10n_ar.account_group_gastos_de_producción (noupdate)
+DEL account.group: l10n_ar.account_group_gastos_financieros (noupdate)
+DEL account.group: l10n_ar.account_group_gastos_operativos (noupdate)
+DEL account.group: l10n_ar.account_group_iibb (noupdate)
+DEL account.group: l10n_ar.account_group_imp_a_las_ganancias (noupdate)
+DEL account.group: l10n_ar.account_group_impuestos (noupdate)
+DEL account.group: l10n_ar.account_group_ingresos (noupdate)
+DEL account.group: l10n_ar.account_group_ingresos_extraordinarios (noupdate)
+DEL account.group: l10n_ar.account_group_ingresos_por_resultados_financieros (noupdate)
+DEL account.group: l10n_ar.account_group_ingresos_por_ventas (noupdate)
+DEL account.group: l10n_ar.account_group_instalaciones (noupdate)
+DEL account.group: l10n_ar.account_group_inversiones (noupdate)
+DEL account.group: l10n_ar.account_group_maquinarias_y_equipos (noupdate)
+DEL account.group: l10n_ar.account_group_muebles_y_útiles (noupdate)
+DEL account.group: l10n_ar.account_group_otros_creditos (noupdate)
+DEL account.group: l10n_ar.account_group_otros_impuestos (noupdate)
+DEL account.group: l10n_ar.account_group_pasivo (noupdate)
+DEL account.group: l10n_ar.account_group_pasivo_corriente (noupdate)
+DEL account.group: l10n_ar.account_group_pasivo_no_corriente (noupdate)
+DEL account.group: l10n_ar.account_group_patrimonio_neto (noupdate)
+DEL account.group: l10n_ar.account_group_previsiones (noupdate)
+DEL account.group: l10n_ar.account_group_remueraciones_y_cargas_sociales (noupdate)
+DEL account.group: l10n_ar.account_group_reservas (noupdate)
+DEL account.group: l10n_ar.account_group_resultados (noupdate)
+DEL account.group: l10n_ar.account_group_rodados (noupdate)
+DEL account.group: l10n_ar.account_group_tasas_municipales (noupdate)
+NEW account.group.template: l10n_ar.account_group_activo
+NEW account.group.template: l10n_ar.account_group_activo_corriente
+NEW account.group.template: l10n_ar.account_group_activo_no_corriente
+NEW account.group.template: l10n_ar.account_group_activos_fijos
+NEW account.group.template: l10n_ar.account_group_activos_intangibles
+NEW account.group.template: l10n_ar.account_group_bancos
+NEW account.group.template: l10n_ar.account_group_bienes_de_cambio
+NEW account.group.template: l10n_ar.account_group_caja
+NEW account.group.template: l10n_ar.account_group_cajas_y_bancos
+NEW account.group.template: l10n_ar.account_group_capital_social
+NEW account.group.template: l10n_ar.account_group_costo_de_mercadería_vendida
+NEW account.group.template: l10n_ar.account_group_creditos_fiscales
+NEW account.group.template: l10n_ar.account_group_creditos_fiscales_ganancias
+NEW account.group.template: l10n_ar.account_group_creditos_fiscales_iibb
+NEW account.group.template: l10n_ar.account_group_creditos_fiscales_iva
+NEW account.group.template: l10n_ar.account_group_creditos_fiscales_municipales
+NEW account.group.template: l10n_ar.account_group_creditos_fiscales_suss
+NEW account.group.template: l10n_ar.account_group_creditos_por_ventas
+NEW account.group.template: l10n_ar.account_group_cuentas_particulares
+NEW account.group.template: l10n_ar.account_group_cuentas_puentes
+NEW account.group.template: l10n_ar.account_group_derechos_de_marcas
+NEW account.group.template: l10n_ar.account_group_deudas_comerciales
+NEW account.group.template: l10n_ar.account_group_deudas_comerciales_a_largo_plazo
+NEW account.group.template: l10n_ar.account_group_deudas_financieras
+NEW account.group.template: l10n_ar.account_group_deudas_fiscales
+NEW account.group.template: l10n_ar.account_group_deudas_iibb
+NEW account.group.template: l10n_ar.account_group_deudas_imp_ganancias
+NEW account.group.template: l10n_ar.account_group_deudas_iva
+NEW account.group.template: l10n_ar.account_group_deudas_tasas_municipales
+NEW account.group.template: l10n_ar.account_group_egresos
+NEW account.group.template: l10n_ar.account_group_gastos_administrativos
+NEW account.group.template: l10n_ar.account_group_gastos_comerciales
+NEW account.group.template: l10n_ar.account_group_gastos_de_producción
+NEW account.group.template: l10n_ar.account_group_gastos_financieros
+NEW account.group.template: l10n_ar.account_group_gastos_operativos
+NEW account.group.template: l10n_ar.account_group_iibb
+NEW account.group.template: l10n_ar.account_group_imp_a_las_ganancias
+NEW account.group.template: l10n_ar.account_group_impuestos
+NEW account.group.template: l10n_ar.account_group_ingresos
+NEW account.group.template: l10n_ar.account_group_ingresos_extraordinarios
+NEW account.group.template: l10n_ar.account_group_ingresos_por_resultados_financieros
+NEW account.group.template: l10n_ar.account_group_ingresos_por_ventas
+NEW account.group.template: l10n_ar.account_group_instalaciones
+NEW account.group.template: l10n_ar.account_group_inversiones
+NEW account.group.template: l10n_ar.account_group_maquinarias_y_equipos
+NEW account.group.template: l10n_ar.account_group_muebles_y_útiles
+NEW account.group.template: l10n_ar.account_group_otros_creditos
+NEW account.group.template: l10n_ar.account_group_otros_impuestos
+NEW account.group.template: l10n_ar.account_group_pasivo
+NEW account.group.template: l10n_ar.account_group_pasivo_corriente
+NEW account.group.template: l10n_ar.account_group_pasivo_no_corriente
+NEW account.group.template: l10n_ar.account_group_patrimonio_neto
+NEW account.group.template: l10n_ar.account_group_previsiones
+NEW account.group.template: l10n_ar.account_group_remueraciones_y_cargas_sociales
+NEW account.group.template: l10n_ar.account_group_reservas
+NEW account.group.template: l10n_ar.account_group_resultados
+NEW account.group.template: l10n_ar.account_group_rodados
+NEW account.group.template: l10n_ar.account_group_tasas_municipales
+NEW ir.ui.view: l10n_ar.assets_backend
+NEW ir.ui.view: l10n_ar.report_invoice
+NEW ir.ui.view: l10n_ar.report_invoice_with_payments
+DEL ir.ui.view: l10n_ar.report_invoice_document_with_payments
+DEL ir.ui.view: l10n_ar.sequence_view
+DEL ir.ui.view: l10n_ar.sequence_view_tree
+DEL ir.ui.view: l10n_ar.view_sequence_search
