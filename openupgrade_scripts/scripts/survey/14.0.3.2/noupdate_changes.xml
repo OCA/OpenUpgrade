@@ -10,4 +10,18 @@
   <record id="group_survey_user" model="res.groups">
     <field name="category_id" ref="base.module_category_marketing_surveys"/>
   </record>
+<!-- manually generated, don't delete: -->
+  <record id="survey_question_answer_rule_survey_manager" model="ir.rule">
+    <field name="model_id" ref="survey.model_survey_question_answer"/>
+    <field name="name">Survey question answer: manager: all</field>
+  </record>
+  <record id="survey_question_answer_rule_survey_user_cw" model="ir.rule">
+    <field name="domain_force">['|', ('question_id.survey_id.create_uid', '=', user.id), ('matrix_question_id.survey_id.create_uid', '=', user.id)]</field>
+    <field name="model_id" ref="survey.model_survey_question_answer"/>
+    <field name="name">Survey question answer: officer: create/write/unlink linked to own survey only</field>
+  </record>
+  <record id="survey_question_answer_rule_survey_user_read" model="ir.rule">
+    <field name="model_id" ref="survey.model_survey_question_answer"/>
+    <field name="name">Survey question answer: officer: read all</field>
+  </record>
 </odoo>
