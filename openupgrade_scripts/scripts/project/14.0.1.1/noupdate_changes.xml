@@ -31,7 +31,7 @@
     <field name="parent_id" ref="mt_task_stage"/>
   </record>
   <record id="project_comp_rule" model="ir.rule">
-    <field name="global"/>
+<!--    <field name="global"/>-->
   </record>
   <record id="project_project_rule_portal" model="ir.rule">
     <field name="domain_force">[
@@ -83,10 +83,10 @@
     </field>
   </record>
   <record id="report_project_task_user_report_comp_rule" model="ir.rule">
-    <field name="global"/>
+<!--    <field name="global"/>-->
   </record>
   <record id="task_comp_rule" model="ir.rule">
-    <field name="global"/>
+<!--    <field name="global"/>-->
   </record>
   <record id="task_visibility_rule" model="ir.rule">
     <field name="domain_force">[
