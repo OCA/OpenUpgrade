@@ -1,7 +1,7 @@
 <?xml version='1.0' encoding='utf-8'?>
 <odoo>
   <record id="crm_activity_report_rule_multi_company" model="ir.rule">
-    <field name="global"/>
+<!--    <field name="global"/>-->
   </record>
   <record id="frequency_field_country_id" model="crm.lead.scoring.frequency.field">
     <field name="field_id" ref="crm.field_crm_lead__country_id"/>
