@@ -10,7 +10,7 @@ new model mail.blacklist.remove [transient]
 
 ---Fields in module 'mail'---
 mail         / ir.ui.view               / type (False)                  : selection_keys is now '['activity', 'calendar', 'form', 'gantt', 'graph', 'kanban', 'pivot', 'qweb', 'search', 'tree']' ('['activity', 'calendar', 'diagram', 'form', 'gantt', 'graph', 'kanban', 'pivot', 'qweb', 'search', 'tree']')
-# NOTHING TO DO: Add new view type diagram
+# NOTHING TO DO: Deleted view type 'diagram' as module web_diagram is removed
 
 mail         / mail.activity            / request_partner_id (many2one) : NEW relation:
 # NOTHING TO DO: New feature only used for now by website_slides (or maybe enterprise) modules, for a kind of tier validation workflow
