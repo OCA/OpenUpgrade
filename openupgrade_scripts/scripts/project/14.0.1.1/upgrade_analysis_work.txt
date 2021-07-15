@@ -10,30 +10,32 @@ project      / project.project          / allow_subtasks (boolean)      : NEW ha
 # NOTHING TO DO: new features
 
 project      / project.project          / description (html)            : NEW
+# NOTHING TO DO: New feature
+
 project      / project.project          / partner_email (char)          : NEW isfunction: function, stored
 project      / project.project          / partner_phone (char)          : NEW isfunction: function, stored
-# NOTHING TO DO
+# NOTHING TO DO: Stored by ORM
 
 project      / project.project          / portal_show_rating (boolean)  : DEL
 project      / project.project          / rating_active (boolean)       : NEW hasdefault
 # DONE: pre-migration: renamed field
 
 project      / project.project          / rating_status (selection)     : selection_keys is now '['periodic', 'stage']' ('['no', 'periodic', 'stage']')
+# DONE: pre-migration: copy column for preserving data
 # DONE: post-migration: map 'no' to 'stage'
 
 project      / project.project          / rating_status_period (selection): now required, req_default: function
-# NOTHING TO DO
+# DONE: pre-migration: Apply default if no value
 
 project      / project.project          / resource_calendar_id (many2one): not stored anymore
 project      / project.project          / resource_calendar_id (many2one): now related
-# NOTHING TO DO
+# NOTHING TO DO: There's the possibility of having another calendar in v13, but as this was only used for computing number of working days and hours till closed, it's OK to ignore it
 
 project      / project.project          / allowed_internal_user_ids (many2many): NEW relation: res.users, hasdefault
 project      / project.project          / allowed_portal_user_ids (many2many): NEW relation: res.users
-# DONE: post-migration: computed correctly
-
 project      / project.task             / allowed_user_ids (many2many)  : NEW relation: res.users, isfunction: function, stored
-# DONE: post-migration: computed correctly
+# DONE: pre-migration: Pre-create tables for not launching the default + computed
+# DONE: post-migration: fill these tables from followers
 
 project      / project.task             / company_id (many2one)         : now a function
 project      / project.task             / email_from (char)             : now a function
@@ -70,7 +72,7 @@ project      / project.task.recurrence  / task_ids (one2many)           : NEW re
 project      / project.task.recurrence  / thu (boolean)                 : NEW
 project      / project.task.recurrence  / tue (boolean)                 : NEW
 project      / project.task.recurrence  / wed (boolean)                 : NEW
-# NOTHING TO DO: new method, empty when migrating
+# NOTHING TO DO: new model, empty when migrating
 
 project      / project.task.type        / active (boolean)              : NEW hasdefault
 # NOTHING TO DO: has default true
