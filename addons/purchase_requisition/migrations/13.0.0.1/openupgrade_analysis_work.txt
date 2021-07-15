@@ -1,0 +1,18 @@
+---Models in module 'purchase_requisition'---
+---Fields in module 'purchase_requisition'---
+purchase_requisition / purchase.requisition     / activity_ids (one2many)       : NEW relation: mail.activity
+# NOTHING TO DO: New feature for handling activities in requisition model
+
+purchase_requisition / purchase.requisition     / picking_type_id (many2one)    : module is now 'purchase_requisition_stock' ('purchase_requisition')
+purchase_requisition / purchase.requisition     / warehouse_id (many2one)       : module is now 'purchase_requisition_stock' ('purchase_requisition')
+purchase_requisition / purchase.requisition.line / move_dest_id (many2one)       : module is now 'purchase_requisition_stock' ('purchase_requisition')
+purchase_requisition / stock.move               / requisition_line_ids (one2many): module is now 'purchase_requisition_stock' ('purchase_requisition')
+# NOTHING TO DO: Handled by ORM
+
+purchase_requisition / stock.move               / requistion_line_ids (one2many): DEL relation: purchase.requisition.line
+# NOTHING TO DO: Removed one2many, but with no real consequence on DB layout
+
+---XML records in module 'purchase_requisition'---
+DEL ir.model.access: purchase_requisition.access_purchase_requisition_line_stock_manager [renamed to purchase_requisition_stock module]
+DEL ir.model.access: purchase_requisition.access_purchase_requisition_stock_manager [renamed to purchase_requisition_stock module]
+# DONE: post-migration: Renamed XML-IDs
