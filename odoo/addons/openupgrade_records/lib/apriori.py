@@ -78,6 +78,7 @@ merged_modules = {
     'sale_timesheet_existing_project': 'sale_timesheet',
     # OCA/web
     'web_favicon': 'base',
+    'web_view_searchpanel': 'web',
     'web_widget_color': 'web',
     'web_widget_many2many_tags_multi_selection': 'web',
     # OCA/website
