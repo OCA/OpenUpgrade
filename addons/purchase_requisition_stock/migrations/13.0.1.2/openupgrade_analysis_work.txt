@@ -1,0 +1,15 @@
+---Models in module 'purchase_requisition_stock'---
+---Fields in module 'purchase_requisition_stock'---
+purchase_requisition_stock / purchase.requisition     / picking_type_id (many2one)    : previously in module purchase_requisition
+purchase_requisition_stock / purchase.requisition     / warehouse_id (many2one)       : previously in module purchase_requisition
+purchase_requisition_stock / purchase.requisition.line / move_dest_id (many2one)       : previously in module purchase_requisition
+purchase_requisition_stock / stock.move               / requisition_line_ids (one2many): previously in module purchase_requisition
+# NOTHING TO DO: handled by ORM
+
+---XML records in module 'purchase_requisition_stock'---
+NEW ir.model.access: purchase_requisition_stock.access_purchase_requisition_line_stock_manager [renamed from purchase_requisition module]
+NEW ir.model.access: purchase_requisition_stock.access_purchase_requisition_stock_manager [renamed from purchase_requisition module]
+# NOTHING TO DO: done in purchase_requisition
+
+NEW ir.ui.view: purchase_requisition_stock.view_purchase_requisition_form_inherit
+# NOTHING TO DO
