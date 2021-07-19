@@ -16,7 +16,11 @@ _xmlid_renames_event_sale = [
     (
         "event_sale.access_event_event_ticket_user",
         "event.access_event_event_ticket_user",
-    )
+    ),
+    (
+        "event_sale.access_event_event_ticket_admin",
+        "event.access_event_event_ticket_manager",
+    ),
 ]
 
 
@@ -66,7 +70,7 @@ def migrate(env, version):
     openupgrade.rename_fields(env, _field_renames)
     if openupgrade.table_exists(env.cr, "event_event_ticket"):
         openupgrade.rename_fields(env, _field_renames_event_sale)
-        openupgrade.rename_xmlids(env.cr, _xmlid_renames_event_sale)
+    openupgrade.rename_xmlids(env.cr, _xmlid_renames_event_sale)
     rename_event_event_seats(env)
     fast_fill_kanban_state(env)
     avoid_default_in_event_event_stage_id(env)

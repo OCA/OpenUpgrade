@@ -13,7 +13,7 @@ event        / event.event              / date_tz (selection)           : now a 
 event        / event.event              / event_mail_ids (one2many)     : now a function
 event        / event.event              / event_ticket_ids (one2many)   : previously in module event_sale
 event        / event.event              / seats_max (integer)           : now a function
-# NOTHING TO DO
+# NOTHING TO DO: Computed writable fields
 
 event        / event.event              / color (integer)               : DEL
 # NOTHING TO DO: obsolete
@@ -38,16 +38,16 @@ event        / event.event              / state (selection)             : DEL re
 
 event        / event.event              / is_online (boolean)           : DEL
 event        / event.type               / is_online (boolean)           : DEL
-# NOTHING TO DO: obsolete
+# NOTHING TO DO: obsolete feature
 
 event        / event.event              / seats_min (integer)           : DEL
 event        / event.type               / default_registration_min (integer): DEL
-# NOTHING TO DO: obsolete
+# NOTHING TO DO: obsolete feature
 
 event        / event.event              / twitter_hashtag (char)        : DEL
 event        / event.type               / default_hashtag (char)        : DEL
 event        / event.type               / use_hashtag (boolean)         : DEL
-# NOTHING TO DO: obsolete
+# NOTHING TO DO: obsolete feature
 
 event        / event.type               / event_type_mail_ids (one2many): now a function
 event        / event.type               / event_type_ticket_ids (one2many): NEW relation: event.type.ticket, isfunction: function, stored
@@ -75,7 +75,8 @@ event        / event.event.ticket       / seats_max (integer)           : previo
 event        / event.event.ticket       / seats_reserved (integer)      : previously in module event_sale
 event        / event.event.ticket       / seats_unconfirmed (integer)   : previously in module event_sale
 event        / event.event.ticket       / seats_used (integer)          : previously in module event_sale
-# NOTHING TO DO
+event        / event.registration       / event_ticket_id (many2one)    : previously in module event_sale
+# NOTHING TO DO: Handled by ORM when event_sale was installed
 
 event        / event.event.ticket       / end_sale_date (date)          : NEW
 # DONE: pre-migration: renamed from deadline (of event_sale)
@@ -88,14 +89,13 @@ event        / event.event.ticket       / start_sale_date (date)        : NEW
 event        / event.registration       / _order                        : _order is now 'id desc' ('name, create_date desc')
 event        / event.registration       / date_closed (datetime)        : now a function
 event        / event.registration       / email (char)                  : now a function
-event        / event.registration       / event_ticket_id (many2one)    : previously in module event_sale
 event        / event.registration       / mobile (char)                 : now a function
 event        / event.registration       / name (char)                   : now a function
 event        / event.registration       / phone (char)                  : now a function
-# NOTHING TO DO
+# NOTHING TO DO: Computed writable fields
 
 event        / event.registration       / origin (char)                 : DEL
-# NOTHING TO DO: obsolete
+# NOTHING TO DO: obsolete feature
 
 event        / event.registration       / utm_campaign_id (many2one)    : NEW relation: utm.campaign
 event        / event.registration       / utm_medium_id (many2one)      : NEW relation: utm.medium
@@ -147,7 +147,6 @@ NEW ir.actions.act_window: event.event_tag_category_action_tree
 DEL ir.actions.act_window: event.action_event_confirm
 NEW ir.model.access: event.access_event_category
 NEW ir.model.access: event.access_event_category_manager
-NEW ir.model.access: event.access_event_event_ticket_manager
 NEW ir.model.access: event.access_event_registration_all
 NEW ir.model.access: event.access_event_stage_manager
 NEW ir.model.access: event.access_event_stage_user
@@ -159,8 +158,9 @@ DEL ir.model.access: event.access_event_registration_employee
 DEL ir.model.access: event.access_event_registration_portal
 # NOTHING TO DO
 
+NEW ir.model.access: event.access_event_event_ticket_manager
 NEW ir.model.access: event.access_event_event_ticket_user [renamed from event_sale module]
-# DONE: pre-migration: renamed xmlid (if event_sale installed)
+# DONE: pre-migration: renamed xmlids from event_sale
 
 NEW ir.rule: event.ir_rule_event_event_ticket_company (noupdate)
 # NOTHING TO DO

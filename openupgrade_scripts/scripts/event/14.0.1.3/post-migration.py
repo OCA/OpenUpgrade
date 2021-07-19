@@ -1,55 +1,21 @@
 # Copyright 2021 ForgeFlow S.L.  <https://www.forgeflow.com>
+# Copyright 2021 Tecnativa - Pedro M. Baeza
 # License AGPL-3.0 or later (http://www.gnu.org/licenses/agpl.html).
 from openupgradelib import openupgrade
 
 
 def map_event_event_states_to_stages(env):
-    openupgrade.logged_query(
-        env.cr,
-        """
-        UPDATE event_event event
-        SET stage_id = stage.id
-        FROM event_stage stage
-        WHERE stage.name = 'New' AND event.state = 'draft'""",
-    )
-    openupgrade.logged_query(
-        env.cr,
-        """
-        UPDATE event_event event
-        SET stage_id = stage.id
-        FROM event_stage stage, event_event event2
-        LEFT JOIN event_registration evr ON evr.event_id = event2.id
-        WHERE stage.name = 'Booked' AND event.state = 'confirm'
-            AND evr.id IS NULL OR evr.state IN ('draft', 'cancel')
-            AND event.id = event2.id""",
-    )
-    openupgrade.logged_query(
-        env.cr,
-        """
-        UPDATE event_event event
-        SET stage_id = stage.id
-        FROM event_stage stage, event_event event2
-        JOIN event_registration evr ON evr.event_id = event2.id
-        WHERE stage.name = 'Announced' AND event.state = 'confirm'
-            AND evr.state IN ('open', 'done')
-            AND event.id = event2.id""",
-    )
-    openupgrade.logged_query(
-        env.cr,
-        """
-        UPDATE event_event event
-        SET stage_id = stage.id
-        FROM event_stage stage
-        WHERE stage.name = 'Ended' AND event.state = 'done'""",
-    )
-    openupgrade.logged_query(
-        env.cr,
-        """
-        UPDATE event_event event
-        SET stage_id = stage.id
-        FROM event_stage stage
-        WHERE stage.name = 'Cancelled' AND event.state = 'cancel'""",
-    )
+    def _map_state_to_stage(state, stage_xmlid):
+        query = """
+            UPDATE event_event event SET stage_id = imd.res_id
+            FROM ir_model_data imd
+            WHERE imd.module = 'event' AND imd.name = %s AND event.state = %s"""
+        openupgrade.logged_query(env.cr, query, (stage_xmlid, state))
+
+    _map_state_to_stage("draft", "event_stage_new")
+    _map_state_to_stage("done", "event_stage_done")
+    _map_state_to_stage("cancel", "event_stage_cancelled")
+    _map_state_to_stage("confirm", "event_stage_announced")
 
 
 @openupgrade.migrate()
