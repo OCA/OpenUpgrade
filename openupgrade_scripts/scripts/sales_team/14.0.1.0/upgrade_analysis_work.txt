@@ -12,15 +12,13 @@ sales_team   / crm.lead.tag             / name (char)                   : previo
 
 ---XML records in module 'sales_team'---
 NEW ir.actions.act_window: sales_team.sales_team_crm_tag_action
+NEW ir.ui.view: sales_team.sales_team_crm_tag_view_form
+NEW ir.ui.view: sales_team.sales_team_crm_tag_view_tree
 NEW ir.model.access: sales_team.access_crm_tag
 NEW ir.model.access: sales_team.access_crm_tag_manager
 NEW ir.model.access: sales_team.access_crm_tag_salesman
-# NOTHING TO DO
+# DONE: pre-migration: Renamed from crm module
 
 ir.rule: sales_team.crm_rule_all_salesteam (noupdate) (noupdate switched)
 ir.rule: sales_team.sale_team_comp_rule (noupdate) (noupdate switched)
 # DONE: pre-migration: switched noupdate
-
-NEW ir.ui.view: sales_team.sales_team_crm_tag_view_form
-NEW ir.ui.view: sales_team.sales_team_crm_tag_view_tree
-# NOTHING TO DO

@@ -1,8 +1,8 @@
 <?xml version='1.0' encoding='utf-8'?>
 <odoo>
-  <record id="crm_activity_report_rule_multi_company" model="ir.rule">
-<!--    <field name="global"/>-->
-  </record>
+  <!-- <record id="crm_activity_report_rule_multi_company" model="ir.rule">
+    <field name="global"/>
+  </record> -->
   <record id="frequency_field_country_id" model="crm.lead.scoring.frequency.field">
     <field name="field_id" ref="crm.field_crm_lead__country_id"/>
   </record>
@@ -39,8 +39,8 @@
   <record id="mt_salesteam_lead_won" model="mail.message.subtype">
     <field name="parent_id" ref="mt_lead_won"/>
   </record>
-  <record id="sales_team.team_sales_department" model="crm.team" forcecreate="False">
+  <!--  <record id="sales_team.team_sales_department" model="crm.team" forcecreate="False">
     <field name="alias_name">info</field>
     <field name="alias_user_id" ref="base.user_admin"/>
-  </record>
+  </record> -->
 </odoo>
