@@ -31,7 +31,7 @@
   <record id="portal_purchase_order_line_rule" model="ir.rule">
     <field name="name">Portal Purchase Order Lines</field>
   </record>
-  <record id="purchase_bill_union_comp_rule" model="ir.rule">
+  <!-- <record id="purchase_bill_union_comp_rule" model="ir.rule">
     <field name="global"/>
   </record>
   <record id="purchase_order_comp_rule" model="ir.rule">
@@ -42,7 +42,7 @@
   </record>
   <record id="purchase_order_report_comp_rule" model="ir.rule">
     <field name="global"/>
-  </record>
+  </record> -->
   <record id="purchase_user_account_move_line_rule" model="ir.rule">
     <field name="domain_force">[('move_id.move_type', 'in', ('in_invoice', 'in_refund', 'in_receipt'))]</field>
   </record>

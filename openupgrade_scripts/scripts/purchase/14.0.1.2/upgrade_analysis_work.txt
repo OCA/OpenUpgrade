@@ -1,0 +1,60 @@
+---Models in module 'purchase'---
+---Fields in module 'purchase'---
+purchase     / purchase.order           / _order                        : _order is now 'priority desc, id desc' ('date_order desc, id desc')
+purchase     / purchase.order           / date_planned (datetime)       : now a function
+purchase     / purchase.order.line      / account_analytic_id (many2one): now a function
+purchase     / purchase.order.line      / analytic_tag_ids (many2many)  : now a function
+# NOTHING TO DO
+
+purchase     / purchase.order           / date_calendar_start (datetime): NEW isfunction: function, stored
+# NOTHING TO DO: computed in load
+
+purchase     / purchase.order           / mail_reception_confirmed (boolean): NEW hasdefault
+purchase     / purchase.order           / mail_reminder_confirmed (boolean): NEW hasdefault
+purchase     / purchase.order           / priority (selection)          : NEW selection_keys: ['0', '1'], hasdefault
+# NOTHING TO DO: new features
+
+purchase     / purchase.order.line      / qty_to_invoice (float)        : NEW isfunction: function, stored
+# DONE: pre-migration: fast filled
+
+purchase     / res.partner              / receipt_reminder_email (boolean): NEW hasdefault
+purchase     / res.partner              / reminder_date_before_receipt (integer): NEW hasdefault
+# NOTHING TO DO: new features
+
+---XML records in module 'purchase'---
+NEW digest.tip: purchase.digest_tip_purchase_0
+NEW digest.tip: purchase.digest_tip_purchase_1
+NEW ir.actions.act_window: purchase.action_rfq_form
+NEW ir.actions.act_window: purchase.purchase_action_dashboard_kanban
+NEW ir.actions.act_window: purchase.purchase_action_dashboard_list
+DEL ir.actions.act_window: purchase.purchase_order_action_generic
+NEW ir.actions.server: purchase.action_purchase_batch_bills
+NEW ir.actions.server: purchase.action_purchase_send_reminder
+NEW ir.cron: purchase.purchase_send_reminder_mail (noupdate)
+DEL ir.filters: purchase.filter_purchase_order_average_delivery_time
+DEL ir.filters: purchase.filter_purchase_order_monthly_purchases
+DEL ir.filters: purchase.filter_purchase_order_price_per_supplier
+NEW ir.model.access: purchase.access_account_move
+NEW ir.model.access: purchase.access_account_move_line_manager
+NEW ir.model.access: purchase.access_account_tag_purchase_user
+NEW ir.model.access: purchase.access_purchase_order_invoicing_payments_readonly
+NEW ir.model.access: purchase.access_purchase_order_line_invoicing_payments_readonly
+DEL ir.model.access: purchase.access_account_journal_purchase_manager
+DEL ir.model.access: purchase.access_account_move_purchase
+DEL ir.model.access: purchase.access_account_move_purchase_manager
+DEL ir.model.access: purchase.access_product_group_res_partner_purchase_manager
+NEW ir.property: purchase.receipt_reminder_email (noupdate)
+NEW ir.property: purchase.reminder_date_before_receipt (noupdate)
+NEW ir.ui.menu: purchase.menu_product_attribute_action
+NEW ir.ui.menu: purchase.menu_unit_of_measure_in_config_purchase
+DEL ir.ui.menu: purchase.menu_report_purchase
+NEW ir.ui.view: purchase.assets_backend
+NEW ir.ui.view: purchase.assets_frontend
+NEW ir.ui.view: purchase.mail_notification_confirm (noupdate)
+NEW ir.ui.view: purchase.portal_my_purchase_order_update_date
+NEW ir.ui.view: purchase.product_supplierinfo_tree_view2
+NEW ir.ui.view: purchase.purchase_order_kpis_tree
+NEW ir.ui.view: purchase.track_po_line_qty_received_template
+NEW mail.template: purchase.email_template_edi_purchase_reminder (noupdate)
+NEW res.groups: purchase.group_send_reminder
+# NOTHING TO DO
