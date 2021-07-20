@@ -1,0 +1,281 @@
+---Models in module 'lunch'---
+obsolete model lunch.order.line (renamed to lunch.order)
+# DONE: pre-migration merged into lunch.order
+
+obsolete model lunch.order.line.lucky [transient]
+# NOTHING TO DO: Removed model
+
+new model lunch.cashmove.report [sql_view]
+new model lunch.product.report [sql_view]
+new model lunch.order.temp [transient]
+new model lunch.location
+new model lunch.supplier
+new model lunch.topping
+# NOTHING TO DO: New models
+
+---Fields in module 'lunch'---
+lunch        / lunch.alert              / monday (boolean)              : DEL
+lunch        / lunch.alert              / tuesday (boolean)             : DEL
+lunch        / lunch.alert              / wednesday (boolean)           : DEL
+lunch        / lunch.alert              / thursday (boolean)            : DEL
+lunch        / lunch.alert              / friday (boolean)              : DEL
+lunch        / lunch.alert              / saturday (boolean)            : DEL
+lunch        / lunch.alert              / sunday (boolean)              : DEL
+lunch        / lunch.alert              / specific_day (date)           : DEL
+lunch        / lunch.alert              / recurrency_monday (boolean)   : NEW hasdefault
+lunch        / lunch.alert              / recurrency_tuesday (boolean)  : NEW hasdefault
+lunch        / lunch.alert              / recurrency_wednesday (boolean): NEW hasdefault
+lunch        / lunch.alert              / recurrency_thursday (boolean) : NEW hasdefault
+lunch        / lunch.alert              / recurrency_friday (boolean)   : NEW hasdefault
+lunch        / lunch.alert              / recurrency_saturday (boolean) : NEW hasdefault
+lunch        / lunch.alert              / recurrency_sunday (boolean)   : NEW hasdefault
+lunch        / lunch.alert              / until (date)                  : NEW
+# DONE: pre-migration (renamed)
+
+lunch        / lunch.alert              / end_hour (float)              : DEL required, req_default: function
+lunch        / lunch.alert              / start_hour (float)            : DEL required, req_default: function
+lunch        / lunch.alert              / alert_type (selection)        : DEL required, selection_keys: ['days', 'specific', 'week'], req_default: function
+lunch        / lunch.alert              / partner_id (many2one)         : DEL relation: res.partner
+# NOTHING TO DO: Removed feature
+
+lunch        / lunch.alert              / location_ids (many2many)      : NEW relation: lunch.location
+lunch        / lunch.alert              / message (text)                : type is now 'html' ('text')
+lunch        / lunch.alert              / mode (selection)              : NEW selection_keys: ['alert', 'chat'], hasdefault
+lunch        / lunch.alert              / name (char)                   : NEW required
+lunch        / lunch.alert              / recipients (selection)        : NEW selection_keys: ['everyone', 'last_month', 'last_week', 'last_year'], hasdefault
+lunch        / lunch.alert              / tz (selection)                : NEW required, selection_keys: function, req_default: function, hasdefault
+lunch        / lunch.alert              / notification_moment (selection): NEW required, selection_keys: ['am', 'pm'], req_default: function, hasdefault
+lunch        / lunch.alert              / notification_time (float)     : NEW hasdefault
+# NOTHING TO DO: New features with defaults
+
+lunch        / lunch.cashmove           / currency_id (many2one)        : NEW relation: res.currency, hasdefault
+lunch        / lunch.cashmove           / order_id (many2one)           : DEL relation: lunch.order.line
+lunch        / lunch.cashmove           / state (selection)             : DEL selection_keys: ['order', 'payment']
+# NOTHING TO DO: Removed features
+
+lunch        / lunch.location           / address (text)                : NEW
+lunch        / lunch.location           / company_id (many2one)         : NEW relation: res.company, hasdefault
+lunch        / lunch.location           / name (char)                   : NEW required
+# NOTHING TO DO: New model
+
+lunch        / lunch.order              / topping_ids_1 (many2many)     : NEW relation: lunch.topping
+lunch        / lunch.order              / topping_ids_2 (many2many)     : NEW relation: lunch.topping
+lunch        / lunch.order              / topping_ids_3 (many2many)     : NEW relation: lunch.topping
+# NOTHING TO DO: New model
+
+lunch        / lunch.order              / company_id (many2one)         : not related anymore
+# DONE: post-migration filled with default
+
+lunch        / lunch.order              / active (boolean)              : NEW hasdefault
+lunch        / lunch.order              / display_toppings (text)       : NEW isfunction: function, stored
+lunch        / lunch.order              / quantity (float)              : NEW required, req_default: function, hasdefault
+lunch        / lunch.order              / total (float)                 : DEL
+lunch        / lunch.order.line         / cashmove (one2many)           : DEL relation: lunch.cashmove
+lunch        / lunch.order.line         / date (date)                   : DEL
+lunch        / lunch.order.line         / user_id (many2one)            : DEL relation: res.users
+# NOTHING TO DO: Removed and new features
+
+lunch        / lunch.order              / category_id (many2one)        : NEW relation: lunch.product.category, isrelated: related, stored
+lunch        / lunch.order              / price (float)                 : NEW isfunction: function, stored
+lunch        / lunch.order              / product_id (many2one)         : NEW relation: lunch.product, required
+lunch        / lunch.order              / note (text)                   : NEW
+lunch        / lunch.order              / state (selection)             : selection_keys is now '['cancelled', 'confirmed', 'new', 'ordered']' ('['cancelled', 'confirmed', 'new']')
+lunch        / lunch.order              / state (selection)             : not a function anymore
+lunch        / lunch.order              / supplier_id (many2one)        : NEW relation: lunch.supplier, isrelated: related, stored
+lunch        / lunch.order              / order_line_ids (one2many)     : DEL relation: lunch.order.line
+lunch        / lunch.order.line         / category_id (many2one)        : DEL relation: lunch.product.category
+lunch        / lunch.order.line         / price (float)                 : DEL
+lunch        / lunch.order.line         / product_id (many2one)         : DEL relation: lunch.product, required
+lunch        / lunch.order.line         / note (text)                   : DEL
+lunch        / lunch.order.line         / state (selection)             : DEL selection_keys: ['cancelled', 'confirmed', 'new', 'ordered']
+lunch        / lunch.order.line         / supplier (many2one)           : DEL relation: res.partner
+lunch        / lunch.order.line         / order_id (many2one)           : DEL relation: lunch.order, required
+# DONE: pre-migration merge fields from lunch.order.line to lunch.order
+
+lunch        / lunch.product            / company_id (many2one)         : NEW relation: res.company, isrelated: related, stored
+lunch        / lunch.product            / favorite_user_ids (many2many) : NEW relation: res.users
+lunch        / lunch.product            / image_1024 (binary)           : NEW attachment: True, isrelated: related, stored
+lunch        / lunch.product            / image_128 (binary)            : NEW attachment: True, isrelated: related, stored
+lunch        / lunch.product            / image_1920 (binary)           : NEW attachment: True
+lunch        / lunch.product            / image_256 (binary)            : NEW attachment: True, isrelated: related, stored
+lunch        / lunch.product            / image_512 (binary)            : NEW attachment: True, isrelated: related, stored
+lunch        / lunch.product            / new_until (date)              : NEW
+lunch        / lunch.product            / price (float)                 : now required
+lunch        / lunch.product            / supplier_id (many2one)        : NEW relation: lunch.supplier, required
+# NOTHING TO DO: New features and not required
+
+lunch        / lunch.product            / supplier (many2one)           : DEL relation: res.partner
+# NOTHING TO DO: Removed feature
+
+lunch        / lunch.product.category   / company_id (many2one)         : NEW relation: res.company, hasdefault
+# DONE: post-migration filled with default
+
+lunch        / lunch.product.category   / image_1024 (binary)           : NEW attachment: True, isrelated: related, stored
+lunch        / lunch.product.category   / image_128 (binary)            : NEW attachment: True, isrelated: related, stored
+lunch        / lunch.product.category   / image_1920 (binary)           : NEW attachment: True
+lunch        / lunch.product.category   / image_256 (binary)            : NEW attachment: True, isrelated: related, stored
+lunch        / lunch.product.category   / image_512 (binary)            : NEW attachment: True, isrelated: related, stored
+lunch        / lunch.product.category   / topping_ids_1 (one2many)      : NEW relation: lunch.topping
+lunch        / lunch.product.category   / topping_ids_2 (one2many)      : NEW relation: lunch.topping
+lunch        / lunch.product.category   / topping_ids_3 (one2many)      : NEW relation: lunch.topping
+lunch        / lunch.product.category   / topping_label_1 (char)        : NEW required, req_default: function, hasdefault
+lunch        / lunch.product.category   / topping_label_2 (char)        : NEW required, req_default: function, hasdefault
+lunch        / lunch.product.category   / topping_label_3 (char)        : NEW required, req_default: function, hasdefault
+lunch        / lunch.product.category   / topping_quantity_1 (selection): NEW required, selection_keys: ['0_more', '1', '1_more'], req_default: function, hasdefault
+lunch        / lunch.product.category   / topping_quantity_2 (selection): NEW required, selection_keys: ['0_more', '1', '1_more'], req_default: function, hasdefault
+lunch        / lunch.product.category   / topping_quantity_3 (selection): NEW required, selection_keys: ['0_more', '1', '1_more'], req_default: function, hasdefault
+# NOTHING TO DO: New features with proper defaults
+
+lunch        / lunch.supplier           / active (boolean)              : NEW hasdefault
+lunch        / lunch.supplier           / activity_ids (one2many)       : NEW relation: mail.activity
+lunch        / lunch.supplier           / automatic_email_time (float)  : NEW required, req_default: function, hasdefault
+lunch        / lunch.supplier           / available_location_ids (many2many): NEW relation: lunch.location
+lunch        / lunch.supplier           / delivery (selection)          : NEW selection_keys: ['delivery', 'no_delivery'], hasdefault
+lunch        / lunch.supplier           / message_follower_ids (one2many): NEW relation: mail.followers
+lunch        / lunch.supplier           / message_ids (one2many)        : NEW relation: mail.message
+lunch        / lunch.supplier           / message_main_attachment_id (many2one): NEW relation: ir.attachment
+lunch        / lunch.supplier           / moment (selection)            : NEW required, selection_keys: ['am', 'pm'], req_default: function, hasdefault
+lunch        / lunch.supplier           / partner_id (many2one)         : NEW relation: res.partner, required
+lunch        / lunch.supplier           / recurrency_end_date (date)    : NEW
+lunch        / lunch.supplier           / recurrency_friday (boolean)   : NEW hasdefault
+lunch        / lunch.supplier           / recurrency_monday (boolean)   : NEW hasdefault
+lunch        / lunch.supplier           / recurrency_saturday (boolean) : NEW
+lunch        / lunch.supplier           / recurrency_sunday (boolean)   : NEW
+lunch        / lunch.supplier           / recurrency_thursday (boolean) : NEW hasdefault
+lunch        / lunch.supplier           / recurrency_tuesday (boolean)  : NEW hasdefault
+lunch        / lunch.supplier           / recurrency_wednesday (boolean): NEW hasdefault
+lunch        / lunch.supplier           / responsible_id (many2one)     : NEW relation: res.users, hasdefault
+lunch        / lunch.supplier           / send_by (selection)           : NEW selection_keys: ['mail', 'phone'], hasdefault
+lunch        / lunch.supplier           / tz (selection)                : NEW required, selection_keys: function, req_default: function, hasdefault
+lunch        / lunch.topping            / category_id (many2one)        : NEW relation: lunch.product.category
+lunch        / lunch.topping            / company_id (many2one)         : NEW relation: res.company, hasdefault
+lunch        / lunch.topping            / name (char)                   : NEW required
+lunch        / lunch.topping            / price (float)                 : NEW required
+lunch        / lunch.topping            / topping_category (integer)    : NEW required, req_default: function, hasdefault
+# NOTHING TO DO: New models
+
+lunch        / res.company              / lunch_minimum_threshold (float): NEW
+lunch        / res.users                / favorite_lunch_product_ids (many2many): NEW relation: lunch.product
+lunch        / res.users                / last_lunch_location_id (many2one): NEW relation: lunch.location
+# NOTHING TO DO: New features
+
+---XML records in module 'lunch'---
+NEW ir.actions.act_window: lunch.lunch_cashmove_report_action_account
+NEW ir.actions.act_window: lunch.lunch_cashmove_report_action_control_accounts
+NEW ir.actions.act_window: lunch.lunch_config_settings_action
+NEW ir.actions.act_window: lunch.lunch_location_action
+NEW ir.actions.act_window: lunch.lunch_order_action
+NEW ir.actions.act_window: lunch.lunch_order_action_by_supplier
+NEW ir.actions.act_window: lunch.lunch_order_action_control_suppliers
+NEW ir.actions.act_window: lunch.lunch_product_action_order
+NEW ir.actions.act_window: lunch.lunch_product_action_statbutton
+NEW ir.actions.act_window: lunch.lunch_vendors_action
+DEL ir.actions.act_window: lunch.action_lunch_order_line_lucky
+DEL ir.actions.act_window: lunch.lunch_cashmove_action_account
+DEL ir.actions.act_window: lunch.lunch_cashmove_action_control_accounts
+DEL ir.actions.act_window: lunch.lunch_order_action_form
+DEL ir.actions.act_window: lunch.lunch_order_line_action
+DEL ir.actions.act_window: lunch.lunch_order_line_action_by_supplier
+DEL ir.actions.act_window: lunch.lunch_order_line_action_control_suppliers
+DEL ir.actions.report: lunch.action_report_lunch_order
+NEW ir.actions.server: lunch.lunch_order_action_cancel
+NEW ir.actions.server: lunch.lunch_order_action_confirm
+DEL ir.actions.server: lunch.action_server_lunch_archive_product
+DEL ir.actions.server: lunch.lunch_order_line_action_cancel
+DEL ir.actions.server: lunch.lunch_order_line_action_confirm
+DEL ir.actions.server: lunch.lunch_order_line_action_order
+# NOTHING TO DO: noupdate=0
+
+NEW ir.cron: lunch.ir_cron_lunch (noupdate)
+NEW ir.cron: lunch.ir_cron_lunch_alerts (noupdate)
+# NOTHING TO DO: New records
+
+NEW ir.model.access: lunch.lunch_alert_manager
+NEW ir.model.access: lunch.lunch_cashmove_report_manager
+NEW ir.model.access: lunch.lunch_location_manager
+NEW ir.model.access: lunch.lunch_location_user
+NEW ir.model.access: lunch.lunch_product_report_user
+NEW ir.model.access: lunch.lunch_supplier_manager
+NEW ir.model.access: lunch.lunch_supplier_user
+NEW ir.model.access: lunch.lunch_topping_manager
+NEW ir.model.access: lunch.lunch_topping_user
+# NOTHING TO DO: new records
+
+DEL ir.model.access: lunch.order_line_manager
+DEL ir.model.access: lunch.order_line_user
+# NOTHING TO DO: Model removed
+
+NEW ir.model.access: lunch.lunch_alert_access
+NEW ir.model.access: lunch.lunch_alert_user
+DEL ir.model.access: lunch.alert_manager
+DEL ir.model.access: lunch.alert_user
+# DONE: pre-migration (renamed)
+
+NEW ir.rule: lunch.ir_rule_lunch_location_multi_company (noupdate)
+NEW ir.rule: lunch.ir_rule_lunch_product_multi_company (noupdate)
+NEW ir.rule: lunch.ir_rule_lunch_product_report_multi_company (noupdate)
+NEW ir.rule: lunch.ir_rule_lunch_supplier_multi_company (noupdate)
+NEW ir.rule: lunch.lunch_order_rule_delete
+NEW ir.rule: lunch.lunch_order_rule_write
+NEW ir.rule: lunch.lunch_order_rule_write_manager
+# NOTHING TO DO: New records
+
+DEL ir.rule: lunch.lunch_order_line_rule_delete
+# NOTHING TO DO: Model removed
+
+NEW ir.ui.menu: lunch.lunch_cashmove_report_menu_control_accounts
+NEW ir.ui.menu: lunch.lunch_cashmove_report_menu_form
+NEW ir.ui.menu: lunch.lunch_cashmove_report_menu_payment
+NEW ir.ui.menu: lunch.lunch_location_menu
+NEW ir.ui.menu: lunch.lunch_order_menu_by_supplier
+NEW ir.ui.menu: lunch.lunch_order_menu_control_suppliers
+NEW ir.ui.menu: lunch.lunch_settings_menu
+NEW ir.ui.menu: lunch.lunch_vendors_menu
+DEL ir.ui.menu: lunch.lunch_cashmove_menu_control_accounts
+DEL ir.ui.menu: lunch.lunch_cashmove_menu_form
+DEL ir.ui.menu: lunch.lunch_cashmove_menu_payment
+DEL ir.ui.menu: lunch.lunch_order_line_menu_by_supplier
+DEL ir.ui.menu: lunch.lunch_order_line_menu_control_suppliers
+NEW ir.ui.view: lunch.lunch_cashmove_report_view_form
+NEW ir.ui.view: lunch.lunch_cashmove_report_view_search
+NEW ir.ui.view: lunch.lunch_cashmove_report_view_search_2
+NEW ir.ui.view: lunch.lunch_cashmove_report_view_tree
+NEW ir.ui.view: lunch.lunch_cashmove_report_view_tree_2
+NEW ir.ui.view: lunch.lunch_location_form_view
+NEW ir.ui.view: lunch.lunch_location_tree_view
+NEW ir.ui.view: lunch.lunch_location_view_search
+NEW ir.ui.view: lunch.lunch_order_view_graph
+NEW ir.ui.view: lunch.lunch_order_view_kanban
+NEW ir.ui.view: lunch.lunch_order_view_pivot
+NEW ir.ui.view: lunch.lunch_order_view_search
+NEW ir.ui.view: lunch.lunch_payment_dialog
+NEW ir.ui.view: lunch.lunch_product_category_view_tree
+NEW ir.ui.view: lunch.lunch_product_report_view_search
+NEW ir.ui.view: lunch.lunch_supplier_view_form
+NEW ir.ui.view: lunch.lunch_supplier_view_kanban
+NEW ir.ui.view: lunch.lunch_supplier_view_search
+NEW ir.ui.view: lunch.lunch_supplier_view_tree
+NEW ir.ui.view: lunch.qunit_mobile_suite
+NEW ir.ui.view: lunch.res_config_settings_view_form
+NEW ir.ui.view: lunch.view_lunch_cashmove_report_kanban
+NEW ir.ui.view: lunch.view_lunch_order_temp
+NEW ir.ui.view: lunch.view_lunch_product_kanban_order
+DEL ir.ui.view: lunch.lunch_cashmove_view_search_2
+DEL ir.ui.view: lunch.lunch_cashmove_view_tree_2
+DEL ir.ui.view: lunch.lunch_order_line_view_kanban
+DEL ir.ui.view: lunch.lunch_order_line_view_search
+DEL ir.ui.view: lunch.lunch_order_line_view_tree
+DEL ir.ui.view: lunch.lunch_order_view_form
+DEL ir.ui.view: lunch.report_lunch_order
+DEL ir.ui.view: lunch.view_lunch_alert_kanban
+DEL ir.ui.view: lunch.view_lunch_order_line_lucky
+# NOTHING TO DO: noupdate=0
+
+NEW lunch.location: lunch.lunch_location_main (noupdate)
+NEW lunch.product.category: lunch.categ_burger (noupdate)
+NEW lunch.product.category: lunch.categ_drinks (noupdate)
+NEW lunch.product.category: lunch.categ_pizza (noupdate)
+NEW lunch.product.category: lunch.categ_sandwich (noupdate)
+NEW lunch.supplier: lunch.supplier_hungry_dog (noupdate)
+NEW res.partner: lunch.partner_hungry_dog (noupdate)
+# NOTHING TO DO: New records
