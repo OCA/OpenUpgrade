@@ -1,0 +1,118 @@
+---Models in module 'crm'---
+obsolete model crm.lead.tag (renamed to crm.tag in module sales_team)
+obsolete model crm.partner.binding [transient]
+new model crm.recurring.plan
+# NOTHING TO DO
+
+---Fields in module 'crm'---
+crm          / crm.lead                 / probability (float)           : now a function
+crm          / crm.lead                 / automated_probability (float) : now a function
+# NOTHING TO DO: Computed writable field + already stored field
+
+crm          / crm.lead                 / city (char)                   : now a function
+crm          / crm.lead                 / contact_name (char)           : now a function
+crm          / crm.lead                 / country_id (many2one)         : now a function
+crm          / crm.lead                 / email_from (char)             : now a function
+crm          / crm.lead                 / function (char)               : now a function
+crm          / crm.lead                 / mobile (char)                 : now a function
+crm          / crm.lead                 / name (char)                   : now a function
+crm          / crm.lead                 / partner_name (char)           : now a function
+crm          / crm.lead                 / phone (char)                  : now a function
+crm          / crm.lead                 / phone_sanitized (char)        : NEW isfunction: function, stored
+crm          / crm.lead                 / state_id (many2one)           : now a function
+crm          / crm.lead                 / street (char)                 : now a function
+crm          / crm.lead                 / street2 (char)                : now a function
+crm          / crm.lead                 / title (many2one)              : now a function
+crm          / crm.lead                 / website (char)                : now a function
+crm          / crm.lead                 / zip (char)                    : now a function
+crm          / crm.lead                 / stage_id (many2one)           : now a function
+crm          / crm.lead                 / team_id (many2one)            : now a function
+# NOTHING TO DO: Switched to computed writable fields (replacement of onchanges)
+
+crm          / crm.lead                 / date_last_stage_update (datetime): now a function
+crm          / crm.lead                 / date_open (datetime)          : now a function
+# NOTHING TO DO: Already stored fields
+
+crm          / crm.lead                 / recurring_revenue_monthly (float): NEW isfunction: function, stored
+crm          / crm.lead                 / recurring_revenue_monthly_prorated (float): NEW isfunction: function, stored
+# DONE: pre-migration: pre-create fields for not having any useless computation
+
+crm          / crm.lead                 / phone_mobile_search (char)    : NEW
+# NOTHING TO DO: it has store=False and it's only for searching purposes
+
+crm          / crm.lead                 / expected_revenue (float)      : not a function anymore
+crm          / crm.lead                 / planned_revenue (float)       : DEL
+crm          / crm.lead                 / prorated_revenue (float)      : NEW isfunction: function, stored
+# DONE: pre-migration: renamed fields in the proper order: expected > prorrated; planned > expected
+
+crm          / crm.lead                 / recurring_plan (many2one)     : NEW relation: crm.recurring.plan
+crm          / crm.lead                 / recurring_revenue (float)     : NEW
+# NOTHING TO DO: related to new crm.recurring.plan model
+
+crm          / crm.lead                 / tag_ids (many2many)           : relation is now 'crm.tag' ('crm.lead.tag') [nothing to do]
+crm          / crm.lead                 / tag_ids (many2many)           : table is now 'crm_tag_rel' ('crm_lead_tag_rel')
+# DONE: pre-migration: renamed table
+
+crm          / crm.lead.tag             / __last_update (datetime)      : module is now 'sales_team' ('crm')
+crm          / crm.lead.tag             / _order                        : module is now 'sales_team' ('crm')
+crm          / crm.lead.tag             / color (integer)               : module is now 'sales_team' ('crm')
+crm          / crm.lead.tag             / display_name (char)           : module is now 'sales_team' ('crm')
+crm          / crm.lead.tag             / name (char)                   : module is now 'sales_team' ('crm')
+# NOTHING TO DO: handled by ORM
+
+crm          / crm.recurring.plan       / active (boolean)              : NEW hasdefault
+crm          / crm.recurring.plan       / name (char)                   : NEW required
+crm          / crm.recurring.plan       / number_of_months (integer)    : NEW required
+crm          / crm.recurring.plan       / sequence (integer)            : NEW hasdefault
+# NOTHING TO DO: new feature
+
+crm          / crm.team                 / opportunities_amount (integer): type is now 'float' ('integer')
+# NOTHING TO DO: It's not stored
+
+---XML records in module 'crm'---
+NEW crm.recurring.plan: crm.crm_recurring_plan_monthly (noupdate)
+NEW crm.recurring.plan: crm.crm_recurring_plan_over_3_years (noupdate)
+NEW crm.recurring.plan: crm.crm_recurring_plan_over_5_years (noupdate)
+NEW crm.recurring.plan: crm.crm_recurring_plan_yearly (noupdate)
+NEW digest.tip: crm.digest_tip_crm_1
+NEW digest.tip: crm.digest_tip_crm_2
+NEW digest.tip: crm.digest_tip_crm_3
+NEW digest.tip: crm.digest_tip_crm_4
+NEW digest.tip: crm.digest_tip_crm_5
+NEW ir.actions.act_window: crm.crm_lead_act_window_compose
+NEW ir.actions.act_window: crm.crm_lead_action_my_activities
+NEW ir.actions.act_window: crm.crm_recurring_plan_action
+NEW ir.actions.act_window.view: crm.crm_lead_action_my_activities_view_tree
+NEW ir.model.access: crm.access_crm_lead2opportunity_partner
+NEW ir.model.access: crm.access_crm_lead2opportunity_partner_mass
+NEW ir.model.access: crm.access_crm_lead_lost
+NEW ir.model.access: crm.access_crm_merge_opportunity
+NEW ir.model.access: crm.crm_recurring_plan_access_manager
+NEW ir.model.access: crm.crm_recurring_plan_access_salesman
+NEW ir.ui.menu: crm.crm_lead_menu_my_activities
+NEW ir.ui.menu: crm.crm_recurring_plan_menu_config
+NEW ir.ui.view: crm.crm_lead_view_list_activities
+NEW ir.ui.view: crm.crm_recurring_plan_view_search
+NEW ir.ui.view: crm.crm_recurring_plan_view_tree
+NEW ir.ui.view: crm.qunit_suite
+NEW ir.ui.view: crm.view_crm_case_my_activities_filter
+NEW res.groups: crm.group_use_recurring_revenues
+# NOTHING TO DO: New records
+
+DEL ir.config_parameter: crm.crm_pls_rebuild_threshold_param (noupdate)
+# DONE: post-migration: safely deleted xmlid
+
+DEL ir.actions.act_window: crm.crm_team_act_tree
+DEL ir.actions.act_window: crm.relate_partner_opportunities
+DEL ir.actions.act_window.view: crm.relate_partner_opportunities_kanban
+DEL ir.actions.act_window.view: crm.relate_partner_opportunities_tree
+DEL ir.ui.view: crm.crm_lead_view_tree_activity
+# NOTHING TO DO: Delete records with no correspondence
+
+DEL ir.actions.act_window: crm.crm_lead_tag_action
+DEL ir.ui.view: crm.crm_lead_tag_form
+DEL ir.ui.view: crm.crm_lead_tag_tree
+DEL ir.model.access: crm.access_crm_lead_tag
+DEL ir.model.access: crm.access_crm_lead_tag_manager
+DEL ir.model.access: crm.access_crm_lead_tag_salesman
+# NOTHING TO DO: Renamed in sales_team
