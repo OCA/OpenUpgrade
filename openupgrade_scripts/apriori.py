@@ -6,6 +6,7 @@ to help the matching process
 renamed_modules = {
     # odoo
     "account_facturx": "account_edi_facturx",
+    "sale_coupon": "coupon",
     "website_rating": "portal_rating",
     # OCA/account-invoice-reporting
     "account_invoice_comment_template": "account_comment_template",
@@ -52,7 +53,14 @@ renamed_models = {
     "email_template.preview": "mail.template.preview",
     "event.answer": "event.question.answer",
     "product.style": "product.ribbon",
+    "report.sale_coupon.report_coupon": "report.coupon.report_coupon",
+    "sale.coupon": "coupon.coupon",
+    "sale.coupon.generate": "coupon.generate.wizard",
+    "sale.coupon.program": "coupon.program",
+    "sale.coupon.reward": "coupon.reward",
+    "sale.coupon.rule": "coupon.rule",
     "survey.user_input_line": "survey.user_input.line",
+    "survey.label": "survey.question.answer",
     # OCA/server-tools
     "openupgrade.analysis.wizard": "upgrade.analysis",
     "openupgrade.attribute": "upgrade.attribute",
