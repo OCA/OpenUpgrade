@@ -1,0 +1,18 @@
+---Models in module 'event_sms'---
+---Fields in module 'event_sms'---
+event_sms    / event.mail               / notification_type (False)     : NEW selection_keys: ['mail', 'sms'], mode: modify
+event_sms    / event.mail               / sms_template_id (many2one)    : NEW relation: sms.template
+event_sms    / event.type.mail          / notification_type (False)     : NEW selection_keys: ['mail', 'sms'], mode: modify
+event_sms    / event.type.mail          / sms_template_id (many2one)    : NEW relation: sms.template
+# NOTHING TO DO: new features
+
+---XML records in module 'event_sms'---
+NEW ir.model.access: event_sms.access_sms_template_event_manager
+NEW ir.rule: event_sms.ir_rule_sms_template_event_manager
+NEW ir.ui.view: event_sms.event_event_view_form_inherit_sms
+NEW ir.ui.view: event_sms.event_mail_view_form
+NEW ir.ui.view: event_sms.event_mail_view_tree
+NEW ir.ui.view: event_sms.event_type_view_form
+NEW sms.template: event_sms.sms_template_data_event_registration (noupdate)
+NEW sms.template: event_sms.sms_template_data_event_reminder (noupdate)
+# NOTHING TO DO
