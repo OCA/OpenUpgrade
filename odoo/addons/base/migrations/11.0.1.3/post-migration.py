@@ -41,12 +41,12 @@ def merge_default_ir_values(cr):
     at the end."""
     cr.execute("""
         SELECT id, create_date, write_date, create_uid, write_uid, user_id,
-            company_id, name, model, value
+            company_id, name, model, value, key2
         FROM ir_values WHERE key = 'default' AND value IS NOT NULL;""")
     query = """
         INSERT INTO ir_default (
             create_date, write_date, create_uid, write_uid, user_id,
-            company_id, field_id, json_value)
+            company_id, field_id, json_value, condition)
         VALUES %s;
         DELETE FROM ir_values WHERE id = %s;"""
     for r in cr.fetchall():
@@ -61,7 +61,7 @@ def merge_default_ir_values(cr):
             value = pickle.loads(bytes(r[9], 'utf-8'))
             json_value = json.dumps(value, ensure_ascii=False)
             values = (r[1], r[2], r[3], r[4], r[5], r[6], model_field[0],
-                      json_value)
+                      json_value, r[10])
             cr.execute(query, (values, r[0]))
     return True
 
