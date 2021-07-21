@@ -21,6 +21,13 @@ def fill_company_id(cr):
     openupgrade.logged_query(
         cr, """
         UPDATE stock_move_line sml
+        SET company_id = sp.company_id
+        FROM stock_picking sp
+        WHERE sml.picking_id = sp.id AND sml.company_id IS NULL"""
+    )
+    openupgrade.logged_query(
+        cr, """
+        UPDATE stock_move_line sml
         SET company_id = sqp.company_id
         FROM stock_quant_package sqp
         WHERE sml.package_id = sqp.id AND sml.company_id IS NULL"""
