@@ -1,0 +1,43 @@
+---Models in module 'event_crm'---
+new model event.lead.rule
+# NOTHING TO DO
+
+---Fields in module 'event_crm'---
+event_crm    / crm.lead                 / event_id (many2one)           : NEW relation: event.event
+event_crm    / crm.lead                 / event_lead_rule_id (many2one) : NEW relation: event.lead.rule
+event_crm    / crm.lead                 / registration_ids (many2many)  : NEW relation: event.registration
+event_crm    / event.event              / lead_ids (one2many)           : NEW relation: crm.lead
+event_crm    / event.lead.rule          / active (boolean)              : NEW hasdefault
+event_crm    / event.lead.rule          / company_id (many2one)         : NEW relation: res.company
+event_crm    / event.lead.rule          / event_id (many2one)           : NEW relation: event.event
+event_crm    / event.lead.rule          / event_registration_filter (text): NEW
+event_crm    / event.lead.rule          / event_type_ids (many2many)    : NEW relation: event.type
+event_crm    / event.lead.rule          / lead_creation_basis (selection): NEW required, selection_keys: ['attendee', 'order'], req_default: function, hasdefault
+event_crm    / event.lead.rule          / lead_creation_trigger (selection): NEW required, selection_keys: ['confirm', 'create', 'done'], req_default: function, hasdefault
+event_crm    / event.lead.rule          / lead_ids (one2many)           : NEW relation: crm.lead
+event_crm    / event.lead.rule          / lead_sales_team_id (many2one) : NEW relation: crm.team
+event_crm    / event.lead.rule          / lead_tag_ids (many2many)      : NEW relation: crm.tag
+event_crm    / event.lead.rule          / lead_type (selection)         : NEW required, selection_keys: ['lead', 'opportunity'], req_default: function, hasdefault
+event_crm    / event.lead.rule          / lead_user_id (many2one)       : NEW relation: res.users
+event_crm    / event.lead.rule          / name (char)                   : NEW required
+event_crm    / event.registration       / lead_ids (many2many)          : NEW relation: crm.lead
+# NOTHING TO DO: everything is NEW
+
+---XML records in module 'event_crm'---
+NEW ir.actions.act_window: event_crm.crm_lead_action_from_event
+NEW ir.actions.act_window: event_crm.crm_lead_action_from_registration
+NEW ir.actions.act_window: event_crm.event_lead_rule_action
+NEW ir.actions.act_window: event_crm.event_registration_action_from_lead
+NEW ir.model.access: event_crm.access_event_crm_manager
+NEW ir.model.access: event_crm.access_event_crm_salesman
+NEW ir.model.access: event_crm.access_event_crm_user
+NEW ir.rule: event_crm.ir_rule_event_crm
+NEW ir.ui.menu: event_crm.event_lead_rule_menu
+NEW ir.ui.view: event_crm.crm_lead_view_form
+NEW ir.ui.view: event_crm.event_lead_rule_view_form
+NEW ir.ui.view: event_crm.event_lead_rule_view_search
+NEW ir.ui.view: event_crm.event_lead_rule_view_tree
+NEW ir.ui.view: event_crm.event_registration_view_form
+NEW ir.ui.view: event_crm.event_view_form
+NEW ir.ui.view: event_crm.event_view_tree
+# NOTHING TO DO: everything is NEW
