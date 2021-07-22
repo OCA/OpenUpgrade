@@ -37,16 +37,16 @@ obsolete model product.price_list [module product]
 obsolete model product.style (renamed to product.ribbon) [module website_sale]
 obsolete model repair.cancel [module repair]
 obsolete model report.account.report_agedpartnerbalance [module account]
-obsolete model report.sale_coupon.report_coupon [module sale_coupon]
-obsolete model sale.coupon [module sale_coupon]
-obsolete model sale.coupon.generate [module sale_coupon]
-obsolete model sale.coupon.program [module sale_coupon]
-obsolete model sale.coupon.reward [module sale_coupon]
-obsolete model sale.coupon.rule [module sale_coupon]
+obsolete model report.sale_coupon.report_coupon (renamed to report.coupon.report_coupon) [module coupon]
+obsolete model sale.coupon (renamed to coupon.coupon) [module coupon]
+obsolete model sale.coupon.generate (renamed to coupon.generate.wizard) [module coupon]
+obsolete model sale.coupon.program (renamed to coupon.program) [module coupon]
+obsolete model sale.coupon.reward (renamed to coupon.reward) [module coupon]
+obsolete model sale.coupon.rule (renamed to coupon.rule) [module coupon]
 obsolete model stock.change.standard.price [module stock_account]
 obsolete model stock.overprocessed.transfer [module stock]
 obsolete model stock.picking.responsible [module stock]
-obsolete model survey.label [module survey]
+obsolete model survey.label (renamed to survey.question.answer) [module survey]
 obsolete model survey.user_input_line (renamed to survey.user_input.line) [module survey]
 obsolete model test_performance.mail [module test_mail]
 new model account.automatic.entry.wizard [module account]
@@ -77,11 +77,11 @@ new model base.automation.linked.test [module test_base_automation]
 new model calendar.recurrence [module calendar]
 new model chat.room [module website_jitsi]
 new model chat.room.mixin [module website_jitsi]
-new model coupon.coupon [module coupon]
-new model coupon.generate.wizard [module coupon]
-new model coupon.program [module coupon]
-new model coupon.reward [module coupon]
-new model coupon.rule [module coupon]
+new model coupon.coupon (renamed from sale.coupon) [module coupon]
+new model coupon.generate.wizard (renamed from sale.coupon.generate) [module coupon]
+new model coupon.program (renamed from sale.coupon.program) [module coupon]
+new model coupon.reward (renamed from sale.coupon.reward) [module coupon]
+new model coupon.rule (renamed from sale.coupon.rule) [module coupon]
 new model crm.recurring.plan [module crm]
 new model crm.tag (renamed from crm.lead.tag) [module sales_team]
 new model decimal.precision.test [module test_new_api]
@@ -175,7 +175,7 @@ new model project.task.create.timesheet [module hr_timesheet]
 new model project.task.recurrence [module project]
 new model project.task.type.delete.wizard [module project]
 new model report.account.report_invoice [module account]
-new model report.coupon.report_coupon [module coupon]
+new model report.coupon.report_coupon (renamed from report.sale_coupon.report_coupon) [module coupon]
 new model report.l10n_ch.qr_report_main [module l10n_ch]
 new model report.stock.report_product_product_replenishment [module stock]
 new model report.stock.report_product_template_replenishment [module stock]
@@ -192,7 +192,7 @@ new model stock.backorder.confirmation.line [module stock]
 new model stock.immediate.transfer.line [module stock]
 new model stock.orderpoint.snooze [module stock]
 new model stock.valuation.layer.revaluation [module stock_account]
-new model survey.question.answer [module survey]
+new model survey.question.answer (renamed from survey.label) [module survey]
 new model survey.user_input.line (renamed from survey.user_input_line) [module survey]
 new model tab.a [module test_action_bindings]
 new model tab.b [module test_action_bindings]
@@ -351,13 +351,13 @@ new model website.robots [module website]
 new model website.sale.extra.field [module website_sale]
 new model website.snippet.filter [module website]
 ---Fields in module 'general'---
-# 9739 fields matched,
-# Direct match: 9622
-# Found in other module: 117
+# 9824 fields matched,
+# Direct match: 9697
+# Found in other module: 127
 # Found with different type: 0
-# In obsolete models: 290
-# New columns: 3344
-# Not matched: 645
+# In obsolete models: 204
+# New columns: 3259
+# Not matched: 560
 ---XML records in module 'general'---
 ERROR: module not in list of installed modules:
 ---Models in module 'account_bank_statement_import'---

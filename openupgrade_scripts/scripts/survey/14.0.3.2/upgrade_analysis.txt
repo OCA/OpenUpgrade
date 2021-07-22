@@ -1,17 +1,13 @@
 ---Models in module 'survey'---
-obsolete model survey.label
+obsolete model survey.label (renamed to survey.question.answer)
 obsolete model survey.user_input_line (renamed to survey.user_input.line)
-new model survey.question.answer
+new model survey.question.answer (renamed from survey.label)
 new model survey.user_input.line (renamed from survey.user_input_line)
 ---Fields in module 'survey'---
 survey       / gamification.challenge   / category (False)              : DEL selection_keys: ['certification', 'hr', 'other'], mode: modify
 survey       / gamification.challenge   / challenge_category (False)    : NEW selection_keys: ['certification', 'hr', 'other'], mode: modify
-survey       / survey.label             / answer_score (float)          : DEL
-survey       / survey.label             / is_correct (boolean)          : DEL
-survey       / survey.label             / question_id (many2one)        : DEL relation: survey.question
+survey       / survey.label             / _order                        : _order is now 'sequence, id' ('sequence,id')
 survey       / survey.label             / question_id_2 (many2one)      : DEL relation: survey.question
-survey       / survey.label             / sequence (integer)            : DEL
-survey       / survey.label             / value (char)                  : DEL required
 survey       / survey.question          / allow_value_image (boolean)   : NEW
 survey       / survey.question          / answer_date (date)            : NEW
 survey       / survey.question          / answer_datetime (datetime)    : NEW
@@ -33,12 +29,7 @@ survey       / survey.question          / time_limit (integer)          : NEW
 survey       / survey.question          / triggering_answer_id (many2one): NEW relation: survey.question.answer, isfunction: function, stored
 survey       / survey.question          / triggering_question_id (many2one): NEW relation: survey.question, isfunction: function, stored
 survey       / survey.question          / user_input_line_ids (one2many): relation is now 'survey.user_input.line' ('survey.user_input_line') [nothing to do]
-survey       / survey.question.answer   / answer_score (float)          : NEW
-survey       / survey.question.answer   / is_correct (boolean)          : NEW
 survey       / survey.question.answer   / matrix_question_id (many2one) : NEW relation: survey.question
-survey       / survey.question.answer   / question_id (many2one)        : NEW relation: survey.question
-survey       / survey.question.answer   / sequence (integer)            : NEW hasdefault
-survey       / survey.question.answer   / value (char)                  : NEW required
 survey       / survey.question.answer   / value_image (binary)          : NEW attachment: True
 survey       / survey.survey            / background_image (binary)     : NEW attachment: True
 survey       / survey.survey            / category (selection)          : DEL required, selection_keys: ['default'], req_default: function
