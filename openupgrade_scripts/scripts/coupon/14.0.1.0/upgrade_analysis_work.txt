@@ -1,0 +1,134 @@
+---Models in module 'coupon'---
+model sale.coupon.apply.code (moved to sale_coupon) [transient]
+# NOTHING TO DO: this is due to the module rename
+
+new model coupon.coupon (renamed from sale.coupon)
+new model coupon.generate.wizard (renamed from sale.coupon.generate) [transient]
+new model coupon.program (renamed from sale.coupon.program)
+new model coupon.reward (renamed from sale.coupon.reward)
+new model coupon.rule (renamed from sale.coupon.rule)
+new model report.coupon.report_coupon (renamed from report.sale_coupon.report_coupon) [abstract]
+obsolete model sale.coupon (renamed to coupon.coupon)
+obsolete model sale.coupon.generate (renamed to coupon.generate.wizard) [transient]
+obsolete model sale.coupon.program (renamed to coupon.program)
+obsolete model sale.coupon.reward (renamed to coupon.reward)
+obsolete model sale.coupon.rule (renamed to coupon.rule)
+obsolete model report.sale_coupon.report_coupon (renamed to report.coupon.report_coupon) [abstract]
+# DONE: pre-migration: renamed models and tables
+
+---Fields in module 'coupon'---
+sale_coupon  / sale.coupon              / program_id (many2one)         : relation is now 'coupon.program' ('sale.coupon.program') [nothing to do]
+sale_coupon  / sale.coupon.program      / coupon_ids (one2many)         : relation is now 'coupon.coupon' ('sale.coupon') [nothing to do]
+sale_coupon  / sale.coupon.program      / reward_id (many2one)          : relation is now 'coupon.reward' ('sale.coupon.reward') [nothing to do]
+sale_coupon  / sale.coupon.program      / rule_id (many2one)            : relation is now 'coupon.rule' ('sale.coupon.rule') [nothing to do]
+sale_coupon  / sale.order               / applied_coupon_ids (one2many) : relation is now 'coupon.coupon' ('sale.coupon') [nothing to do]
+sale_coupon  / sale.order               / code_promo_program_id (many2one): relation is now 'coupon.program' ('sale.coupon.program') [nothing to do]
+sale_coupon  / sale.order               / generated_coupon_ids (one2many): relation is now 'coupon.coupon' ('sale.coupon') [nothing to do]
+sale_coupon  / sale.order               / no_code_promo_program_ids (many2many): relation is now 'coupon.program' ('sale.coupon.program') [nothing to do]
+sale_coupon  / sale.coupon.program      / _inherits                     : _inherits is now '{'coupon.rule': 'rule_id', 'coupon.reward': 'reward_id'}' ('{'sale.coupon.rule': 'rule_id', 'sale.coupon.reward': 'reward_id'}')
+# NOTHING TO DO: due to model renames
+
+sale_coupon  / sale.coupon              / state (selection)             : selection_keys is now '['cancel', 'expired', 'new', 'reserved', 'sent', 'used']' ('['expired', 'new', 'reserved', 'used']')
+# NOTHING TO DO: new keys
+
+sale_coupon  / sale.coupon.reward       / discount_specific_product_ids (many2many): column1 is now 'coupon_reward_id' ('sale_coupon_reward_id') [product_product_sale_coupon_reward_rel]
+sale_coupon  / sale.coupon.reward       / discount_specific_product_ids (many2many): table is now 'coupon_reward_product_product_rel' ('product_product_sale_coupon_reward_rel')
+sale_coupon  / sale.order               / no_code_promo_program_ids (many2many): column2 is now 'coupon_program_id' ('sale_coupon_program_id') [sale_coupon_program_sale_order_rel]
+sale_coupon  / sale.order               / no_code_promo_program_ids (many2many): table is now 'coupon_program_sale_order_rel' ('sale_coupon_program_sale_order_rel')
+# DONE: pre-migration: renamed columns and tables
+
+---XML records in module 'coupon'---
+NEW ir.actions.act_window: sale_coupon.sale_coupon_apply_code_action [moved from sale_coupon module]
+DEL ir.actions.act_window: sale_coupon.sale_coupon_apply_code_action [moved to sale_coupon module]
+NEW ir.actions.act_window: sale_coupon.sale_order_action [moved from sale_coupon module]
+DEL ir.actions.act_window: sale_coupon.sale_order_action [moved to sale_coupon module]
+NEW ir.model.access: sale_coupon.access_applicability_manager [moved from sale_coupon module]
+DEL ir.model.access: sale_coupon.access_applicability_manager [moved to sale_coupon module]
+NEW ir.model.access: sale_coupon.access_applicability_salesman [moved from sale_coupon module]
+DEL ir.model.access: sale_coupon.access_applicability_salesman [moved to sale_coupon module]
+NEW ir.model.access: sale_coupon.access_coupon_manager [moved from sale_coupon module]
+DEL ir.model.access: sale_coupon.access_coupon_manager [moved to sale_coupon module]
+NEW ir.model.access: sale_coupon.access_coupon_salesman [moved from sale_coupon module]
+DEL ir.model.access: sale_coupon.access_coupon_salesman [moved to sale_coupon module]
+NEW ir.model.access: sale_coupon.access_program_manager [moved from sale_coupon module]
+DEL ir.model.access: sale_coupon.access_program_manager [moved to sale_coupon module]
+NEW ir.model.access: sale_coupon.access_program_salesman [moved from sale_coupon module]
+DEL ir.model.access: sale_coupon.access_program_salesman [moved to sale_coupon module]
+NEW ir.model.access: sale_coupon.access_reward_manager [moved from sale_coupon module]
+DEL ir.model.access: sale_coupon.access_reward_manager [moved to sale_coupon module]
+NEW ir.model.access: sale_coupon.access_reward_salesman [moved from sale_coupon module]
+DEL ir.model.access: sale_coupon.access_reward_salesman [moved to sale_coupon module]
+NEW ir.ui.menu: sale_coupon.menu_coupon_type_config [moved from sale_coupon module]
+DEL ir.ui.menu: sale_coupon.menu_coupon_type_config [moved to sale_coupon module]
+NEW ir.ui.menu: sale_coupon.menu_promotion_type_config [moved from sale_coupon module]
+DEL ir.ui.menu: sale_coupon.menu_promotion_type_config [moved to sale_coupon module]
+NEW ir.ui.view: sale_coupon.res_config_settings_view_form [moved from sale_coupon module]
+DEL ir.ui.view: sale_coupon.res_config_settings_view_form [moved to sale_coupon module]
+NEW ir.ui.view: sale_coupon.sale_coupon_apply_code_view_form [moved from sale_coupon module]
+DEL ir.ui.view: sale_coupon.sale_coupon_apply_code_view_form [moved to sale_coupon module]
+NEW ir.ui.view: sale_coupon.sale_order_view_form [moved from sale_coupon module]
+DEL ir.ui.view: sale_coupon.sale_order_view_form [moved to sale_coupon module]
+# DONE: pre-migration: rename prefix to sale_coupon
+
+
+NEW ir.model.access: sale_coupon.access_sale_coupon_apply_code
+NEW ir.model.access: sale_coupon.access_sale_coupon_generate
+NEW ir.rule: sale_coupon.sale_coupon_apply_code_rule (noupdate)
+NEW ir.ui.view: sale_coupon.sale_coupon_program_view_promo_program_form [moved from sale_coupon module]
+NEW ir.ui.view: sale_coupon.sale_coupon_view_form [moved from sale_coupon module]
+NEW ir.ui.view: sale_coupon.sale_coupon_view_tree [moved from sale_coupon module]
+NEW ir.ui.view: sale_coupon.sale_coupon_program_view_coupon_program_form
+NEW ir.ui.view: sale_coupon.sale_coupon_view_coupon_program_kanban
+# NOTHING TO DO: new things in sale_coupon
+
+NEW ir.actions.report: coupon.report_coupon_code [renamed from sale_coupon module]
+DEL ir.actions.report: sale_coupon.report_coupon_code [renamed to coupon module]
+NEW ir.cron: coupon.expire_coupon_cron [renamed from sale_coupon module] (noupdate)
+DEL ir.cron: sale_coupon.expire_coupon_cron [renamed to coupon module] (noupdate)
+NEW mail.template: coupon.mail_template_sale_coupon [renamed from sale_coupon module] (noupdate)
+DEL mail.template: sale_coupon.mail_template_sale_coupon [renamed to coupon module] (noupdate)
+NEW ir.ui.view: coupon.report_coupon
+DEL ir.ui.view: sale_coupon.report_coupon
+NEW ir.ui.view: coupon.report_coupon_i18n
+DEL ir.ui.view: sale_coupon.report_coupon_i18n
+# NOTHING TO DO: because the prefix is corrected when doing the module rename
+
+NEW ir.model.access: coupon.access_coupon_coupon
+NEW ir.model.access: coupon.access_coupon_generate_wizard
+NEW ir.model.access: coupon.access_coupon_program
+NEW ir.model.access: coupon.access_coupon_reward
+NEW ir.model.access: coupon.access_coupon_rule
+NEW ir.rule: coupon.sale_coupon_generate_rule (noupdate)
+# NOTHING TO DO: new things in coupon
+
+NEW ir.actions.act_window: coupon.coupon_action
+DEL ir.actions.act_window: sale_coupon.sale_coupon_action
+NEW ir.actions.act_window: coupon.coupon_generate_action
+DEL ir.actions.act_window: sale_coupon.sale_coupon_generate_action
+NEW ir.actions.act_window: coupon.coupon_program_action_coupon_program
+DEL ir.actions.act_window: sale_coupon.sale_coupon_program_action_coupon_program
+NEW ir.actions.act_window: coupon.coupon_program_action_promo_program
+DEL ir.actions.act_window: sale_coupon.sale_coupon_program_action_promo_program
+NEW ir.ui.view: coupon.coupon_generate_view_form
+DEL ir.ui.view: sale_coupon.sale_coupon_generate_view_form
+NEW ir.ui.view: coupon.coupon_program_view_form_common
+DEL ir.ui.view: sale_coupon.sale_coupon_program_view_form_common
+NEW ir.ui.view: coupon.coupon_view_form
+DEL ir.ui.view: sale_coupon.sale_coupon_view_form [moved to sale_coupon module]
+NEW ir.ui.view: coupon.coupon_view_tree
+DEL ir.ui.view: sale_coupon.sale_coupon_view_tree [moved to sale_coupon module]
+NEW ir.ui.view: coupon.coupon_program_view_promo_program_search
+DEL ir.ui.view: sale_coupon.sale_coupon_program_view_promo_program_search
+NEW ir.ui.view: coupon.coupon_program_view_promo_program_tree
+DEL ir.ui.view: sale_coupon.sale_coupon_program_view_promo_program_tree
+NEW ir.ui.view: coupon.coupon_program_view_coupon_program_form
+DEL ir.ui.view: sale_coupon.sale_coupon_program_view_form
+NEW ir.ui.view: coupon.coupon_program_view_search
+DEL ir.ui.view: sale_coupon.sale_coupon_program_view_search
+NEW ir.ui.view: coupon.coupon_program_view_tree
+DEL ir.ui.view: sale_coupon.sale_coupon_program_view_tree
+NEW ir.ui.view: coupon.view_coupon_program_kanban
+DEL ir.ui.view: sale_coupon.view_sale_coupon_program_kanban
+NEW ir.ui.view: coupon.coupon_program_view_promo_program_form
+DEL ir.ui.view: sale_coupon.sale_coupon_program_view_promo_program_form [moved to sale_coupon module]
+# DONE: pre-migration: renamed xmlids
