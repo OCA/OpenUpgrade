@@ -1,7 +1,7 @@
 <?xml version='1.0' encoding='utf-8'?>
 <odoo>
   <record id="group_hr_timesheet_user" model="res.groups">
-    <field name="implied_ids" eval="[(4, ref('base.group_user'))]"/>
+    <field name="implied_ids" eval="[(3, ref('hr.group_hr_user')), (4, ref('base.group_user'))]"/>
     <field name="name">User</field>
   </record>
   <record id="base.default_user" model="res.users">
