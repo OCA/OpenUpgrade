@@ -110,7 +110,7 @@ def update_product_pricelist_item(cr):
         cr,
         "update product_pricelist_item "
         "set compute_price='fixed', fixed_price=price_surcharge "
-        "where compute_price='formula' and price_discount=100 and "
+        "where compute_price='formula' and price_discount=-1 and "
         "price_surcharge > 0 and coalesce(price_min_margin, 0)=0 and "
         "coalesce(price_max_margin, 0)=0"
     )
