@@ -146,7 +146,7 @@ def migration_invoice_moves(env):
         write_date) = (
         ai.message_main_attachment_id, ai.access_token,
         COALESCE(ai.number, ai.move_name, am.name), COALESCE(ai.date, am.date),
-        ai.reference, ai.comment, ai.type, ai.journal_id, ai.company_id,
+        ai.name, ai.comment, ai.type, ai.journal_id, ai.company_id,
         ai.currency_id, ai.partner_id, ai.commercial_partner_id,
         ai.amount_untaxed, ai.amount_tax, ai.amount_total, ai.residual,
         CASE WHEN ai.type IN ('in_invoice', 'in_refund')
@@ -161,7 +161,7 @@ def migration_invoice_moves(env):
         ELSE COALESCE(ai.residual_company_signed, ai.residual_signed) END,
         ai.fiscal_position_id, ai.user_id, 'posted', CASE WHEN ai.state IN (
         'in_payment', 'paid') THEN ai.state ELSE 'not_paid' END,
-        ai.date_invoice, ai.date_due, ai.name, ai.sent, ai.origin,
+        ai.date_invoice, ai.date_due, ai.reference, ai.sent, ai.origin,
         ai.payment_term_id, ai.partner_bank_id, ai.incoterm_id,
         ai.source_email, ai.vendor_display_name, ai.cash_rounding_id,
         ai.create_uid, ai.create_date, ai.write_uid, ai.write_date)
@@ -187,7 +187,7 @@ def migration_invoice_moves(env):
         create_uid, create_date, write_uid, write_date)
         SELECT message_main_attachment_id, access_token,
         COALESCE(number, move_name, name, '/'), COALESCE(date, date_invoice,
-        write_date), reference, comment, type, journal_id, company_id,
+        write_date), name, comment, type, journal_id, company_id,
         currency_id, partner_id, commercial_partner_id, amount_untaxed,
         amount_tax, amount_total, residual,
         CASE WHEN type IN ('in_invoice', 'in_refund')
@@ -199,7 +199,7 @@ def migration_invoice_moves(env):
         CASE WHEN type IN ('in_invoice', 'in_refund')
         THEN -residual_company_signed ELSE residual_company_signed END,
         fiscal_position_id, user_id,
-        state, 'not_paid', date_invoice, date_due, name, sent, origin,
+        state, 'not_paid', date_invoice, date_due, reference, sent, origin,
         payment_term_id, partner_bank_id, incoterm_id, source_email,
         vendor_display_name, cash_rounding_id, id, create_uid, create_date,
         write_uid, write_date
