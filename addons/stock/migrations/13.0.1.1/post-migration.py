@@ -60,12 +60,11 @@ def fill_company_id(cr):
     openupgrade.logged_query(
         cr, """
         UPDATE stock_scrap ss
-        SET company_id = COALESCE(
-            (SELECT sm.company_id FROM stock_move sm
-             WHERE sm.id = ss.move_id AND sm.company_id IS NOT NULL
-             LIMIT 1), ru.company_id)
-        FROM res_users ru
-        WHERE ru.id = ss.create_uid AND ss.company_id IS NULL"""
+        SET company_id = COALESCE(sm.company_id, ru.company_id)
+        FROM stock_scrap ss2
+        JOIN res_users ru ON ru.id = ss2.create_uid
+        LEFT JOIN stock_move sm ON ss2.move_id = sm.id
+        WHERE ss2.id = ss.id"""
     )
     # stock.putaway.rule
     openupgrade.logged_query(

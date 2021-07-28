@@ -125,7 +125,7 @@ stock        / stock.rule               / propagate_date_minimum_delta (integer)
 # DONE: post-migration: match cases using company's old column 'propagation_minimum_delta'
 
 stock        / stock.scrap              / company_id (many2one)         : NEW relation: res.company, required, req_default: function, hasdefault
-# DONE: post-migration: filled the field when empty
+# DONE: post-migration: filled the field ignoring the default value
 
 stock        / stock.scrap              / date_done (datetime)          : NEW
 stock        / stock.scrap              / date_expected (datetime)      : DEL
