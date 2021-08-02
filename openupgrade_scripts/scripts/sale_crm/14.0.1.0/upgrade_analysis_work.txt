@@ -1,0 +1,9 @@
+---Models in module 'sale_crm'---
+---Fields in module 'sale_crm'---
+sale_crm     / sale.order               / tag_ids (many2many)           : module is now 'sale' ('sale_crm')
+sale_crm     / sale.order               / tag_ids (many2many)           : relation is now 'crm.tag' ('crm.lead.tag') [nothing to do]
+---XML records in module 'sale_crm'---
+NEW ir.model.access: sale_crm.access_crm_quotation_partner
+DEL ir.ui.view: sale_crm.view_order_tree
+DEL ir.ui.view: sale_crm.view_quotation_tree
+# NOTHING TO DO: handled by ORM
