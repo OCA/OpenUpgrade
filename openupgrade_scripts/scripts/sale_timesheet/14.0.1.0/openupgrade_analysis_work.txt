@@ -1,0 +1,68 @@
+---Models in module 'sale_timesheet'---
+new model project.task.create.sale.order [transient]
+---Fields in module 'sale_timesheet'---
+sale_timesheet / account.analytic.line    / non_allow_billable (boolean)  : NEW
+sale_timesheet / account.analytic.line    / timesheet_invoice_type (selection): selection_keys is now '['billable_fixed', 'billable_time', 'non_billable', 'non_billable_project', 'non_billable_timesheet']' ('['billable_fixed', 'billable_time', 'non_billable', 'non_billable_project']')
+sale_timesheet / product.product          / project_id (many2one)         : module is now 'sale_project' ('sale_timesheet')
+sale_timesheet / product.product          / project_template_id (many2one): module is now 'sale_project' ('sale_timesheet')
+sale_timesheet / product.product          / service_tracking (selection)  : module is now 'sale_project' ('sale_timesheet')
+sale_timesheet / product.template         / project_id (many2one)         : module is now 'sale_project' ('sale_timesheet')
+sale_timesheet / product.template         / project_template_id (many2one): module is now 'sale_project' ('sale_timesheet')
+sale_timesheet / product.template         / service_tracking (selection)  : module is now 'sale_project' ('sale_timesheet')
+sale_timesheet / project.project          / allow_billable (boolean)      : NEW
+sale_timesheet / project.project          / bill_type (selection)         : NEW selection_keys: ['customer_project', 'customer_task'], hasdefault
+sale_timesheet / project.project          / billable_type (selection)     : DEL selection_keys: ['employee_rate', 'no', 'task_rate']
+sale_timesheet / project.project          / pricing_type (selection)      : NEW selection_keys: ['employee_rate', 'fixed_rate'], hasdefault
+sale_timesheet / project.project          / sale_line_id (many2one)       : module is now 'sale_project' ('sale_timesheet')
+sale_timesheet / project.project          / sale_order_id (many2one)      : module is now 'sale_project' ('sale_timesheet')
+sale_timesheet / project.project          / timesheet_product_id (many2one): NEW relation: product.product, hasdefault, isfunction: function, stored
+sale_timesheet / project.sale.line.employee.map / currency_id (many2one)        : NEW relation: res.currency, isfunction: function, stored
+sale_timesheet / project.sale.line.employee.map / price_unit (float)            : is now stored
+sale_timesheet / project.sale.line.employee.map / price_unit (float)            : not related anymore
+sale_timesheet / project.sale.line.employee.map / price_unit (float)            : now a function
+sale_timesheet / project.sale.line.employee.map / timesheet_product_id (many2one): NEW relation: product.product
+sale_timesheet / project.task             / billable_type (selection)     : DEL selection_keys: ['employee_rate', 'no', 'task_rate']
+sale_timesheet / project.task             / non_allow_billable (boolean)  : NEW
+sale_timesheet / project.task             / sale_line_id (many2one)       : module is now 'sale_project' ('sale_timesheet')
+sale_timesheet / project.task             / sale_line_id (many2one)       : now a function
+sale_timesheet / project.task             / sale_order_id (many2one)      : module is now 'sale_project' ('sale_timesheet')
+sale_timesheet / project.task             / sale_order_id (many2one)      : not a function anymore
+sale_timesheet / project.task             / timesheet_product_id (many2one): NEW relation: product.product
+sale_timesheet / sale.order               / project_id (many2one)         : module is now 'sale_project' ('sale_timesheet')
+sale_timesheet / sale.order               / project_ids (many2many)       : module is now 'sale_project' ('sale_timesheet')
+sale_timesheet / sale.order               / tasks_count (integer)         : module is now 'sale_project' ('sale_timesheet')
+sale_timesheet / sale.order               / tasks_ids (many2many)         : module is now 'sale_project' ('sale_timesheet')
+sale_timesheet / sale.order               / timesheet_total_duration (float): type is now 'integer' ('float')
+sale_timesheet / sale.order               / visible_project (boolean)     : module is now 'sale_project' ('sale_timesheet')
+sale_timesheet / sale.order.line          / is_service (boolean)          : module is now 'sale_project' ('sale_timesheet')
+sale_timesheet / sale.order.line          / project_id (many2one)         : module is now 'sale_project' ('sale_timesheet')
+sale_timesheet / sale.order.line          / task_id (many2one)            : module is now 'sale_project' ('sale_timesheet')
+---XML records in module 'sale_timesheet'---
+NEW ir.actions.act_window: sale_timesheet.project_task_action_multi_create_sale_order
+NEW ir.actions.act_window.view: sale_timesheet.timesheet_action_view_report_by_billing_rate_graph
+NEW ir.actions.act_window.view: sale_timesheet.timesheet_action_view_report_by_billing_rate_pivot
+DEL ir.filters: sale_timesheet.ir_filter_project_profitability_report_manager_and_product
+DEL ir.filters: sale_timesheet.timesheet_filter_billing
+NEW ir.model.access: sale_timesheet.access_project_create_invoice
+NEW ir.model.access: sale_timesheet.access_project_create_sale_order
+NEW ir.model.access: sale_timesheet.access_project_create_sale_order_line
+NEW ir.model.access: sale_timesheet.access_project_task_create_sale_order
+DEL ir.model.access: sale_timesheet.access_sale_order_line_project_manager [renamed to sale_project module]
+DEL ir.model.access: sale_timesheet.access_sale_order_project_manager [renamed to sale_project module]
+DEL ir.rule: sale_timesheet.sale_order_line_rule_project_manager [renamed to sale_project module] (noupdate)
+NEW ir.ui.view: sale_timesheet.portal_my_timesheets_inherit
+NEW ir.ui.view: sale_timesheet.project_project_view_form_salesman
+NEW ir.ui.view: sale_timesheet.project_project_view_form_simplified_inherit
+NEW ir.ui.view: sale_timesheet.project_task_create_sale_order_view_form
+NEW ir.ui.view: sale_timesheet.quick_create_task_form_sale_timesheet
+NEW ir.ui.view: sale_timesheet.report_invoice_document
+NEW ir.ui.view: sale_timesheet.sale_advance_payment_inv_timesheet_view_form
+NEW ir.ui.view: sale_timesheet.sale_order_portal_content_inherit
+NEW ir.ui.view: sale_timesheet.sale_order_portal_template_inherit
+NEW ir.ui.view: sale_timesheet.timesheet_view_tree_sale
+NEW ir.ui.view: sale_timesheet.view_hr_timesheet_line_pivot_billing_rate
+NEW ir.ui.view: sale_timesheet.view_task_form2_inherit_sale_timesheet
+DEL ir.ui.view: sale_timesheet.project_task_view_form_inherit_sale_line_editable
+DEL ir.ui.view: sale_timesheet.project_task_view_form_sale_order
+DEL ir.ui.view: sale_timesheet.project_task_view_search
+NEW product.product: sale_timesheet.time_product (noupdate)
