@@ -7,6 +7,8 @@ renamed_modules = {
     'crm_reveal': 'crm_iap_lead',
     'document': 'attachment_indexation',
     'payment_ogone': 'payment_ingenico',
+    # OCA/delivery-carrier
+    'delivery_carrier_label_ups': 'delivery_ups_oca',
     # OCA/event
     'website_event_filter_selector': 'website_event_filter_city',
     # OCA/hr
