@@ -6,6 +6,7 @@
         and scripts for migrate Odoo SA modules.""",
     "author": "Odoo SA, Odoo Community Association (OCA),"
     " Therp BV, Opener B.V., GRAP",
+    "maintainers": ["MiquelRForgeFlow", "StefanRijnhart", "pedrobaeza"],
     "website": "https://github.com/OCA/openupgrade",
     "category": "Migration",
     "version": "14.0.1.0.0",
