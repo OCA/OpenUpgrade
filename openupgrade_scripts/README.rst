@@ -89,6 +89,20 @@ OCA, or the Odoo Community Association, is a nonprofit organization whose
 mission is to support the collaborative development of Odoo features and
 promote its widespread use.
 
+.. |maintainer-MiquelRForgeFlow| image:: https://github.com/MiquelRForgeFlow.png?size=40px
+    :target: https://github.com/MiquelRForgeFlow
+    :alt: MiquelRForgeFlow
+.. |maintainer-StefanRijnhart| image:: https://github.com/StefanRijnhart.png?size=40px
+    :target: https://github.com/StefanRijnhart
+    :alt: StefanRijnhart
+.. |maintainer-pedrobaeza| image:: https://github.com/pedrobaeza.png?size=40px
+    :target: https://github.com/pedrobaeza
+    :alt: pedrobaeza
+
+Current `maintainers <https://odoo-community.org/page/maintainer-role>`__:
+
+|maintainer-MiquelRForgeFlow| |maintainer-StefanRijnhart| |maintainer-pedrobaeza| 
+
 This module is part of the `OCA/OpenUpgrade <https://github.com/OCA/OpenUpgrade/tree/14.0/openupgrade_scripts>`_ project on GitHub.
 
 You are welcome to contribute. To learn how please visit https://odoo-community.org/page/Contribute.
