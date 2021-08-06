@@ -146,7 +146,11 @@ def migration_invoice_moves(env):
         write_date) = (
         ai.message_main_attachment_id, ai.access_token,
         COALESCE(ai.number, ai.move_name, am.name), COALESCE(ai.date, am.date),
-        ai.name, ai.comment, ai.type, ai.journal_id, ai.company_id,
+        CASE WHEN ai.type IN ('in_invoice', 'in_refund') THEN ai.reference ELSE ai.name END,
+        CASE WHEN ai.type = 'in_refund' THEN COALESCE(ai.comment, ai.name)
+            WHEN ai.type = 'out_refund' THEN COALESCE(ai.comment, ai.reference)
+            ELSE ai.comment END,
+        ai.type, ai.journal_id, ai.company_id,
         ai.currency_id, ai.partner_id, ai.commercial_partner_id,
         ai.amount_untaxed, ai.amount_tax, ai.amount_total, ai.residual,
         CASE WHEN ai.type IN ('in_invoice', 'in_refund')
@@ -161,8 +165,10 @@ def migration_invoice_moves(env):
         ELSE COALESCE(ai.residual_company_signed, ai.residual_signed) END,
         ai.fiscal_position_id, ai.user_id, 'posted', CASE WHEN ai.state IN (
         'in_payment', 'paid') THEN ai.state ELSE 'not_paid' END,
-        ai.date_invoice, ai.date_due, ai.reference, ai.sent, ai.origin,
-        ai.payment_term_id, ai.partner_bank_id, ai.incoterm_id,
+        ai.date_invoice, ai.date_due,
+        CASE WHEN ai.type IN ('in_invoice', 'in_refund') THEN ai.name
+            ELSE COALESCE(ai.reference, ai.number) END,
+        ai.sent, ai.origin, ai.payment_term_id, ai.partner_bank_id, ai.incoterm_id,
         ai.source_email, ai.vendor_display_name, ai.cash_rounding_id,
         ai.create_uid, ai.create_date, ai.write_uid, ai.write_date)
         FROM account_invoice ai
@@ -186,8 +192,12 @@ def migration_invoice_moves(env):
         invoice_partner_display_name, invoice_cash_rounding_id, old_invoice_id,
         create_uid, create_date, write_uid, write_date)
         SELECT message_main_attachment_id, access_token,
-        COALESCE(number, move_name, name, '/'), COALESCE(date, date_invoice,
-        write_date), name, comment, type, journal_id, company_id,
+        COALESCE(number, move_name, name, '/'), COALESCE(date, date_invoice, write_date),
+        CASE WHEN type IN ('in_invoice', 'in_refund') THEN reference ELSE name END,
+        CASE WHEN type = 'in_refund' THEN COALESCE(comment, name)
+            WHEN type = 'out_refund' THEN COALESCE(comment, reference)
+            ELSE comment END,
+        type, journal_id, company_id,
         currency_id, partner_id, commercial_partner_id, amount_untaxed,
         amount_tax, amount_total, residual,
         CASE WHEN type IN ('in_invoice', 'in_refund')
@@ -198,9 +208,9 @@ def migration_invoice_moves(env):
         THEN -amount_total_company_signed ELSE amount_total_company_signed END,
         CASE WHEN type IN ('in_invoice', 'in_refund')
         THEN -residual_company_signed ELSE residual_company_signed END,
-        fiscal_position_id, user_id,
-        state, 'not_paid', date_invoice, date_due, reference, sent, origin,
-        payment_term_id, partner_bank_id, incoterm_id, source_email,
+        fiscal_position_id, user_id, state, 'not_paid', date_invoice, date_due,
+        CASE WHEN type IN ('in_invoice', 'in_refund') THEN name ELSE COALESCE(reference, number) END,
+        sent, origin, payment_term_id, partner_bank_id, incoterm_id, source_email,
         vendor_display_name, cash_rounding_id, id, create_uid, create_date,
         write_uid, write_date
         FROM account_invoice ai
