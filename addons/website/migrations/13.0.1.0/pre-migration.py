@@ -1,4 +1,5 @@
 # Copyright 2020 Payam Yasaie <https://www.tashilgostar.com>
+# Copyright 2021 Tecnativa - Pedro M. Baeza
 # License AGPL-3.0 or later (http://www.gnu.org/licenses/agpl.html).
 from openupgradelib import openupgrade
 
@@ -35,6 +36,47 @@ def fill_website_rewrite_name(cr):
     )
 
 
+def remove_social_googleplus(env):
+    """On v13, this field has been removed, but it was put on certain places on
+    the website, and they remain unaltered due to the noupdate=1 flag or being
+    a COW (created on write) view, so we directly remove that part from the
+    view if we find the exact HTML expected code that is on the definition.
+    This is done for avoiding side effects, and it means that if you have altered
+    somehow that part, you will need to remove it manually.
+    """
+    for key, code in [
+        (
+            "website.footer_custom",
+            '                                <a t-if="website.social_googleplus" t-att-href="website.social_googleplus"'
+            ' class="btn btn-sm btn-link" rel="publisher"><i class="fa fa-2x fa-google-plus-square"/></a>\n'
+        ),
+        (
+            "website.footer_default",
+            '                        <a t-att-href="website.social_googleplus" t-if="website.social_googleplus" '
+            'rel="publisher"><i class="fa fa-google-plus-square"/></a>\n'
+        ),
+        (
+            "website_blog.opt_blog_rc_follow_us",
+            '                <a t-att-href="website.social_googleplus" t-if="website.social_googleplus" '
+            'aria-label="Google Plus" title="Google Plus"><i class="fa fa-google-plus-square"/></a>\n'
+        ),
+        (
+            "website_mass_mailing.social_links",
+            '    <t t-if="website.social_googleplus">\n'
+            '        <a t-att-href="website.social_googleplus" style="margin-left:10px" '
+            'aria-label="Google Plus" title="Google Plus">\n'
+            '            <span class="fa fa-google-plus"/>\n'
+            '        </a>\n'
+            '    </t>\n'
+        ),
+    ]:
+        views = env["ir.ui.view"].search([("key", "=", key)])
+        for view in views:
+            arch = view.arch.replace(code, "")
+            if arch != view.arch:
+                view.arch = arch
+
+
 @openupgrade.migrate()
 def migrate(env, version):
     openupgrade.rename_models(env.cr, _model_renames)
@@ -43,3 +85,4 @@ def migrate(env, version):
     openupgrade.rename_xmlids(env.cr, _xmlid_renames)
     fill_website_rewrite_name(env.cr)
     openupgrade.cow_templates_mark_if_equal_to_upstream(env.cr)
+    remove_social_googleplus(env)
