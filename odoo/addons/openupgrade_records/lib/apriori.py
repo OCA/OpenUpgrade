@@ -63,6 +63,8 @@ merged_modules = {
     'partner_group': 'partner_company_group',
     # OCA/product-attribute
     'product_pricelist_show_product_ref': 'product',
+    # OCA/product-variant
+    'sale_order_variant_mgmt': 'sale_product_matrix',
     # OCA/purchase-reporting
     'purchase_report_extension': 'purchase',
     # OCA/server-backend
