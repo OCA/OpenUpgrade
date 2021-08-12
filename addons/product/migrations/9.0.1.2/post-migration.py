@@ -278,7 +278,8 @@ def update_product_supplierinfo(env):
 
 def migrate_purchase_pricelists(env):
     """ Create product.supplierinfo records for "simple" pricelist items,
-    those are items based on a field (not other pricelist or supplier items)"""
+    those are items based on the cost price (not other lists or items)
+    or items with price_discount == -1 (fixed prices)"""
     openupgrade.logged_query(
         env.cr,
         """
@@ -316,8 +317,12 @@ def migrate_purchase_pricelists(env):
             from partner2version p2v
             join product_pricelist_item ppi
                 on ppi.openupgrade_legacy_9_0_price_version_id=p2v.version_id
-            where openupgrade_legacy_9_0_base in (
-                select id from product_price_type where field='standard_price'
+            where (
+                openupgrade_legacy_9_0_base in (
+                    select id from product_price_type
+                    where field='standard_price'
+                )
+                or price_discount=-1
             ) and (
                 product_id is not null or product_tmpl_id is not null
             )
@@ -341,20 +346,24 @@ def migrate_purchase_pricelists(env):
         )
         select
         partner_id, min_quantity, currency_id, p2i.date_start, p2i.date_end,
-        p2i.company_id, p2i.product_id, p2i.product_tmpl_id,
-        coalesce(p2p1.amount, p2p2.amount) *
+        p2i.company_id, p2i.product_id,
+        coalesce(p2i.product_tmpl_id, pp2.product_tmpl_id),
+        coalesce(p2p1.amount, p2p2.amount, 0) *
         (1 + price_discount) + price_surcharge, 0
         from partner2item p2i
         join res_partner p on p.id=p2i.partner_id
         left join product2price p2p1 on
             p2i.product_id=p2p1.product_id and
             p2p1.company_id=p2i.company_id
-        left join product_product pp on
+        left join product_product pp1 on
             p2i.product_id is null and
-            pp.product_tmpl_id=p2i.product_tmpl_id
+            pp1.product_tmpl_id=p2i.product_tmpl_id
         left join product2price p2p2 on
-            p2p2.product_id=pp.id
-        where p.active and coalesce(p2p1.amount, p2p2.amount) is not null
+            p2p2.product_id=pp1.id
+        left join product_product pp2 on
+            p2i.product_tmpl_id is null and
+            pp2.id=p2i.product_id
+        where p.active
         """,
     )
 
