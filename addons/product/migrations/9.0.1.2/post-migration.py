@@ -280,6 +280,9 @@ def migrate_purchase_pricelists(env):
     """ Create product.supplierinfo records for "simple" pricelist items,
     those are items based on the cost price (not other lists or items)
     or items with price_discount == -1 (fixed prices)"""
+    env.cr.execute(
+        """ALTER TABLE product_supplierinfo
+        ADD COLUMN openupgrade_migrated_from_pricelist_item_id INTEGER""")
     openupgrade.logged_query(
         env.cr,
         """
@@ -342,14 +345,15 @@ def migrate_purchase_pricelists(env):
         insert into product_supplierinfo
         (
             name, min_qty, currency_id, date_start, date_end,
-            company_id, product_id, product_tmpl_id, price, delay
+            company_id, product_id, product_tmpl_id, price, delay,
+            openupgrade_migrated_from_pricelist_item_id
         )
         select
         partner_id, min_quantity, currency_id, p2i.date_start, p2i.date_end,
         p2i.company_id, p2i.product_id,
         coalesce(p2i.product_tmpl_id, pp2.product_tmpl_id),
         coalesce(p2p1.amount, p2p2.amount, 0) *
-        (1 + price_discount) + price_surcharge, 0
+        (1 + price_discount) + price_surcharge, 0, p2i.item_id
         from partner2item p2i
         join res_partner p on p.id=p2i.partner_id
         left join product2price p2p1 on
