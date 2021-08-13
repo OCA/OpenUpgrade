@@ -88,7 +88,9 @@ def fork_off_system_user(env):
             AND kcu.column_name IN ('create_uid', 'write_uid')
         """)
     exclude_columns = env.cr.fetchall() + [
-        ('ir_cron', 'user_id'), ('res_groups_users_rel', 'uid'),
+        ('ir_cron', 'user_id'),
+        ('queue_job', 'user_id'),
+        ('res_groups_users_rel', 'uid'),
         ('res_company_users_rel', 'user_id'),
     ]
 
