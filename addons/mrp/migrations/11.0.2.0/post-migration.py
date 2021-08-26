@@ -11,7 +11,7 @@ def set_stock_move_created_production_id(cr):
         UPDATE stock_move sm
         SET created_production_id = po.production_id
         FROM procurement_order po
-        WHERE sm.procurement_id = po.id
+        WHERE sm.id = po.move_dest_id
             AND po.production_id IS NOT NULL"""
     )
 
