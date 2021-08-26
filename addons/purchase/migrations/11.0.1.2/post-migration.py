@@ -13,7 +13,7 @@ def update_procurement_fields(env):
         UPDATE stock_move sm
         SET created_purchase_line_id = po.purchase_line_id
         FROM procurement_order po
-        WHERE sm.procurement_id = po.id
+        WHERE sm.id = po.move_dest_id
             AND po.purchase_line_id IS NOT NULL"""
     )
     # Update new field orderpoint_id at purchase.order.line
