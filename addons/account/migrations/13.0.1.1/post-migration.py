@@ -469,14 +469,24 @@ def migration_invoice_moves(env):
 
 
 def compute_balance_for_draft_invoice_lines(env):
-    # Compute balance for Draft Invoice Lines
-    draft_invoices = env['account.move'].search([
-        ('state', 'in', ('draft', 'cancel')),
-        ('type', 'in', ('out_invoice', 'out_refund', 'in_invoice', 'in_refund')),
-    ]).with_context(check_move_validity=False)
-    draft_invoices.line_ids.read()
-    draft_invoices.line_ids._onchange_price_subtotal()
-    draft_invoices._recompute_dynamic_lines(recompute_all_taxes=True)
+    move_obj = env['account.move']
+    groups = move_obj.read_group(
+        [
+            ('state', 'in', ('draft', 'cancel')),
+            ('type', 'in', ('out_invoice', 'out_refund', 'in_invoice', 'in_refund')),
+        ],
+        ["company_id"],
+        ["company_id"],
+    )
+    for group in groups:
+        company_id = group['company_id'][0]
+        draft_invoices = move_obj.search(group["__domain"]).with_context(
+            check_move_validity=False,
+            force_company=company_id,
+        )
+        draft_invoices.line_ids.read()
+        draft_invoices.line_ids._onchange_price_subtotal()
+        draft_invoices._recompute_dynamic_lines(recompute_all_taxes=True)
 
 
 def migration_voucher_moves(env):
