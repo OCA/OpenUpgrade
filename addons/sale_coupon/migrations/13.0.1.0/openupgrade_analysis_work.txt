@@ -1,0 +1,12 @@
+---Models in module 'sale_coupon'---
+---Fields in module 'sale_coupon'---
+sale_coupon  / sale.coupon              / program_id (many2one)         : now required
+# NOTHING TO DO: Previously all data was introduced with this field filled
+
+sale_coupon  / sale.coupon.reward       / discount_apply_on (selection) : selection_keys: ['cheapest_product', 'on_order', 'specific_products'], previously: ['cheapest_product', 'on_order', 'specific_product']
+# DONE: pre-migration: Renamed column for preserving values
+# DONE: post-migration: map value
+
+sale_coupon  / sale.coupon.reward       / discount_specific_product_id (many2one): DEL relation: product.product
+sale_coupon  / sale.coupon.reward       / discount_specific_product_ids (many2many): NEW relation: product.product
+# DONE: post-migration: Transformed m2o into m2m
