@@ -1,5 +1,5 @@
 ---Fields in module 'base'---
-base         / ir.actions.act_window    / auto_refresh (integer)        : DEL 
+base         / ir.actions.act_window    / auto_refresh (integer)        : DEL
 base         / ir.actions.act_window    / target (selection)            : selection_keys is now '['current', 'fullscreen', 'inline', 'main', 'new']' ('['current', 'inline', 'inlineview', 'new']')
 # inlineview => inline
 base         / ir.actions.client        / target (selection)            : NEW selection_keys: ['current', 'fullscreen', 'main', 'new']
@@ -49,7 +49,6 @@ NEW ir.rule: base.res_company_rule_erp_manager
 NEW ir.rule: base.res_company_rule_portal
 NEW ir.rule: base.res_company_rule_public
 DEL ir.rule: base.ir_filters_rule
-DEL ir.rule: base.res_company_rule
 NEW ir.ui.menu: base.menu_tests
 DEL ir.ui.menu: base.menu_action_currency_form
 DEL ir.ui.menu: base.menu_action_res_bank_form
@@ -69,6 +68,9 @@ DEL ir.ui.menu: base.menu_sales
 NEW ir.ui.view: base.action_view_company_form_link_2_currencies
 NEW ir.ui.view: base.view_translation_dialog_tree
 # NOTHING TO DO
+
+DEL ir.rule: base.res_company_rule
+# DONE: Post-migration: Delete noupdate=1 record
 
 NEW res.country.state: base.state_ae_aj
 NEW res.country.state: base.state_ae_az

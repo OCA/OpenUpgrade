@@ -139,6 +139,7 @@ def merge_country_states(env):
 def migrate(env, version):
     handle_im_odoo_support_views(env)
     merge_country_states(env)
+    openupgrade.delete_records_safely_by_xml_id(env, ["base.res_company_rule"])
     openupgrade.load_data(
         env.cr, 'base', 'migrations/10.0.1.3/noupdate_changes.xml'
     )
