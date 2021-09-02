@@ -59,6 +59,21 @@ def correct_object_references(cr):
         WHERE dg.carrier_id = dc.id AND sp.carrier_id = dc.id
         """,
     )
+    openupgrade.logged_query(
+        cr, """
+        UPDATE ir_property ip
+        SET value_reference = 'delivery.carrier,' || dg.id::varchar
+        FROM ir_model_fields imf,
+            delivery_carrier dc,
+            delivery_grid dg
+        WHERE
+            imf.name = 'property_delivery_carrier'
+            AND imf.model = 'res.partner'
+            AND ip.fields_id = imf.id
+            AND split_part(ip.value_reference, ',', 2)::int = dc.id
+            AND dg.carrier_id = dc.id
+        """,
+    )
 
 
 def correct_rule_prices(cr):
