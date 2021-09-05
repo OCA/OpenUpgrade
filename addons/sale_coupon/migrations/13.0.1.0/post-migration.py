@@ -16,7 +16,7 @@ def _adjust_reward_specific_products(env):
     )
     openupgrade.m2o_to_x2m(
         env.cr,
-        "sale.coupon.reward",
+        env["sale.coupon.reward"],
         "sale_coupon_reward",
         "discount_specific_product_ids",
         "discount_specific_product_id",
