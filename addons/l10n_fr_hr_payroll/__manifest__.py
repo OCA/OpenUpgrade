@@ -39,4 +39,5 @@ TODO:
     # None" while parsing /home/bruno/buildout/ou110/parts/odoo/addons/l10n_fr_hr_payroll/data/l10n_fr_hr_payroll_data.xml:9, near
     # <record model="hr.holidays.status" id="holiday_status_heures_sup">
     'installable': False,
+    'license': 'LGPL-3',
 }
