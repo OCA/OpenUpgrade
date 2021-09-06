@@ -452,9 +452,9 @@ class HolidaysRequest(models.Model):
             else:
                 holiday.can_approve = True
 
-    @api.constrains('date_from', 'date_to')
+    @api.constrains('date_from', 'date_to', 'state', 'employee_id')
     def _check_date(self):
-        for holiday in self:
+        for holiday in self.filtered('employee_id'):
             domain = [
                 ('date_from', '<', holiday.date_to),
                 ('date_to', '>', holiday.date_from),
@@ -693,8 +693,8 @@ class HolidaysRequest(models.Model):
             'holiday_status_id': self.holiday_status_id.id,
             'date_from': self.date_from,
             'date_to': self.date_to,
-            'request_date_from': self.date_from,
-            'request_date_to': self.date_to,
+            'request_date_from': self.request_date_from,
+            'request_date_to': self.request_date_to,
             'notes': self.notes,
             'number_of_days': employee.get_work_days_data(self.date_from, self.date_to)['days'],
             'parent_id': self.id,
