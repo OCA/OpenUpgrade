@@ -86,11 +86,17 @@ def fill_company_id(cr):
     openupgrade.logged_query(
          cr, """
          UPDATE stock_production_lot spl
-         SET company_id = COALESCE(pt.company_id, ru.company_id)
-         FROM res_users ru, product_product pp
+         SET company_id = pt.company_id
+         FROM product_product pp
          JOIN product_template pt ON pt.id = pp.product_tmpl_id
-         WHERE pp.id = spl.product_id AND ru.id = spl.create_uid
-            AND spl.company_id IS NULL"""
+         WHERE pp.id = spl.product_id AND spl.company_id IS NULL"""
+    )
+    openupgrade.logged_query(
+         cr, """
+         UPDATE stock_production_lot spl
+         SET company_id = ru.company_id
+         FROM res_users ru
+         WHERE ru.id = spl.create_uid AND spl.company_id IS NULL"""
     )
 
 
