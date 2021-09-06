@@ -232,24 +232,26 @@ var BasicModel = AbstractModel.extend({
         const mainFieldInfo = dataPoint.fieldsInfo[dataPoint[viewInfo.viewType]];
         dataPoint.fieldsInfo[viewInfo.viewType] = _.defaults({}, viewInfo.fieldInfo, mainFieldInfo);
 
-        // Some fields in the new fields info might not be in the previous one,
-        // so we might have stored changes for them (e.g. coming from onchange
-        // RPCs), that we haven't been able to process earlier (because those
-        // fields were unknown at that time). So we now try to process them.
-        return this.applyRawChanges(dataPointID, viewInfo.viewType).then(() => {
+        // recursively apply the new field info on sub datapoints
+        if (dataPoint.type === 'list') {
+            // case 'list': on all datapoints in the list
             const proms = [];
-            const fieldInfo = dataPoint.fieldsInfo[viewInfo.viewType];
-            // recursively apply the new field info on sub datapoints
-            if (dataPoint.type === 'list') {
-                // case 'list': on all datapoints in the list
-                Object.values(dataPoint._cache).forEach(subDataPointID => {
-                    proms.push(this.addFieldsInfo(subDataPointID, {
-                        fields: dataPoint.fields,
-                        fieldInfo: dataPoint.fieldsInfo[viewInfo.viewType],
-                        viewType: viewInfo.viewType,
-                    }));
-                });
-            } else {
+            Object.values(dataPoint._cache).forEach(subDataPointID => {
+                proms.push(this.addFieldsInfo(subDataPointID, {
+                    fields: dataPoint.fields,
+                    fieldInfo: dataPoint.fieldsInfo[viewInfo.viewType],
+                    viewType: viewInfo.viewType,
+                }));
+            });
+            return Promise.all(proms);
+        } else {
+            // Some fields in the new fields info might not be in the previous one,
+            // so we might have stored changes for them (e.g. coming from onchange
+            // RPCs), that we haven't been able to process earlier (because those
+            // fields were unknown at that time). So we now try to process them.
+            return this.applyRawChanges(dataPointID, viewInfo.viewType).then(() => {
+                const proms = [];
+                const fieldInfo = dataPoint.fieldsInfo[viewInfo.viewType];
                 // case 'record': on datapoints of all x2many fields
                 const values = _.extend({}, dataPoint.data, dataPoint._changes);
                 Object.keys(fieldInfo).forEach(fieldName => {
@@ -267,9 +269,10 @@ var BasicModel = AbstractModel.extend({
                         }
                     }
                 });
-            }
-            return Promise.all(proms);
-        });
+                return Promise.all(proms);
+            });
+        }
+
 
     },
     /**
@@ -456,6 +459,11 @@ var BasicModel = AbstractModel.extend({
                     if (parent && parent.type === 'list') {
                         parent.data = _.without(parent.data, record.id);
                         delete self.localData[record.id];
+                        // Check if we are on last page and all records are deleted from current
+                        // page i.e. if there is no state.data.length then go to previous page
+                        if (!parent.data.length && parent.offset > 0) {
+                            parent.offset = Math.max(parent.offset - parent.limit, 0);
+                        }
                     } else {
                         record.res_ids.splice(record.offset, 1);
                         record.offset = Math.min(record.offset, record.res_ids.length - 1);
@@ -1284,14 +1292,27 @@ var BasicModel = AbstractModel.extend({
                 // optionally clear the DataManager's cache
                 self._invalidateCache(parent);
                 if (!_.isEmpty(action)) {
-                    return self.do_action(action, {
-                        on_close: function () {
-                            return self.trigger_up('reload');
-                        }
+                    return new Promise(function (resolve, reject) {
+                        self.do_action(action, {
+                            on_close: function (result) {
+                                return self.trigger_up('reload', {
+                                    onSuccess: resolve,
+                                });
+                            }
+                        });
                     });
                 } else {
                     return self.reload(parentID);
                 }
+            }).then(function (datapoint) {
+                // if there are no records to display and we are not on first page(we check it
+                // by checking offset is greater than limit i.e. we are not on first page)
+                // reason for adding logic after reload to make sure there is no records after operation
+                if (parent && parent.type === 'list' && !parent.data.length && parent.offset > 0) {
+                    parent.offset = Math.max(parent.offset - parent.limit, 0);
+                    return self.reload(parentID);
+                }
+                return datapoint;
             });
     },
     /**
@@ -1316,14 +1337,27 @@ var BasicModel = AbstractModel.extend({
                 // optionally clear the DataManager's cache
                 self._invalidateCache(parent);
                 if (!_.isEmpty(action)) {
-                    return self.do_action(action, {
-                        on_close: function () {
-                            return self.trigger_up('reload');
-                        }
+                    return new Promise(function (resolve, reject) {
+                        self.do_action(action, {
+                            on_close: function () {
+                                return self.trigger_up('reload', {
+                                    onSuccess: resolve,
+                                });
+                            }
+                        });
                     });
                 } else {
                     return self.reload(parentID);
                 }
+            }).then(function (datapoint) {
+                // if there are no records to display and we are not on first page(we check it
+                // by checking offset is greater than limit i.e. we are not on first page)
+                // reason for adding logic after reload to make sure there is no records after operation
+                if (parent && parent.type === 'list' && !parent.data.length && parent.offset > 0) {
+                    parent.offset = Math.max(parent.offset - parent.limit, 0);
+                    return self.reload(parentID);
+                }
+                return datapoint;
             });
     },
     /**

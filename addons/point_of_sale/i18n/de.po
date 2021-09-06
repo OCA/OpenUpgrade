@@ -14,14 +14,15 @@
 # Marco Tarsia <marco.y.tarsia@gmail.com>, 2019
 # Michael Schütt <michael.schuett.lwl@gmail.com>, 2019
 # Bettina Pfeifer <betzilla@web.de>, 2019
+# Wolfgang Taferner, 2019
 # e2f <projects@e2f.com>, 2019
 # Leon Grill <leg@odoo.com>, 2019
 # Chris Egal <sodaswed@web.de>, 2019
-# JEK Odoo <jek@odoo.com>, 2020
+# Jérôme JEK <jek@odoo.com>, 2020
 # Kevin Harrings <kha@odoo.com>, 2020
 # Martin Trigaux, 2020
 # Florian Pose <fp@igh.de>, 2020
-# Wolfgang Taferner, 2021
+# EugenBrodskiSAMSAIT <eugen.brodski@samsa-it.de>, 2021
 # Robert Förster <hello@suppliot.eu>, 2021
 # 
 msgid ""
@@ -450,7 +451,7 @@ msgstr "Administrator"
 #. module: point_of_sale
 #: model_terms:ir.ui.view,arch_db:point_of_sale.pos_config_view_form
 msgid "Advanced Pricelists"
-msgstr ""
+msgstr "Erweiterte Preislisten"
 
 #. module: point_of_sale
 #: model_terms:ir.ui.view,arch_db:point_of_sale.res_config_settings_view_form
@@ -2700,6 +2701,8 @@ msgid ""
 "Operation type used to record product pickings <br/>\n"
 "                                    Products will be taken from the default source location of this operation type"
 msgstr ""
+"Der für Lagerbewegungen genutzte Vorgangstyp <br/>\n"
+"                                    Produkte werden von der Standard-Quelle dieses Vorgangstyps bezogen"
 
 #. module: point_of_sale
 #: model_terms:ir.ui.view,arch_db:point_of_sale.pos_config_view_form
@@ -3982,7 +3985,7 @@ msgstr "Sitzungen"
 #. module: point_of_sale
 #: model_terms:ir.ui.view,arch_db:point_of_sale.view_pos_session_form
 msgid "Set Closing Cash"
-msgstr ""
+msgstr "Schlussbetrag setzen"
 
 #. module: point_of_sale
 #. openerp-web
@@ -4801,7 +4804,7 @@ msgstr ""
 #: code:addons/point_of_sale/models/pos_session.py:0
 #, python-format
 msgid "This session is already closed."
-msgstr ""
+msgstr "Die Sitzung ist bereits geschossen"
 
 #. module: point_of_sale
 #: model_terms:ir.ui.view,arch_db:point_of_sale.res_config_settings_view_form
@@ -4996,7 +4999,7 @@ msgstr "Rückgängig"
 #. module: point_of_sale
 #: model:ir.model.fields,field_description:point_of_sale.field_pos_order_line__price_unit
 msgid "Unit Price"
-msgstr "Einzelpreis"
+msgstr "Stückpreis"
 
 #. module: point_of_sale
 #: model:product.product,uom_name:point_of_sale.desk_organizer
