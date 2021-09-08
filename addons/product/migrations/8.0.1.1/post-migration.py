@@ -164,5 +164,5 @@ def migrate(cr, version):
         compute_func=active_field_template_func)
     migrate_packaging(cr, pool)
     create_properties(cr, pool)
-    migrate_variants(cr, pool)
+    # migrate_variants(cr, pool)
     load_data(cr)

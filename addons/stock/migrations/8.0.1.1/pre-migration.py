@@ -101,6 +101,9 @@ def initialize_location_inventory(cr):
     Therefore, precreate the column and fill with values from its own lines.
     Fallback on the stock location of the inventory's company's warehouse.
     """
+    logger.info("~~~~~~~~~~~~~")
+    logger.info("stock::pre::initialize_location_inventory")
+    logger.info("~~~~~~~~~~~~~")
     cr.execute("ALTER TABLE stock_inventory ADD COLUMN location_id INTEGER")
     openupgrade.logged_query(
         cr,
@@ -127,6 +130,9 @@ def initialize_location_inventory(cr):
 def create_stock_picking_fields(cr):
     """ This function reduce creation time of the stock_picking fields
     """
+    logger.info("~~~~~~~~~~~~~")
+    logger.info("stock::pre::create_stock_picking_fields")
+    logger.info("~~~~~~~~~~~~~")
     logger.info("Fast creation of the field stock_picking.priority")
     cr.execute("""
         ALTER TABLE stock_picking
@@ -153,6 +159,9 @@ def create_stock_move_fields(cr):
        This part of the function (pre) just create the field and let
        the other function in post script fill the value, because orm is needed
     """
+    logger.info("~~~~~~~~~~~~~")
+    logger.info("stock::pre::create_stock_move_fields")
+    logger.info("~~~~~~~~~~~~~")
     logger.info("Fast creation of the field stock_move.product_qty (pre)")
     # This field is a functional field, the value will be set at the
     # beginning of the post script;

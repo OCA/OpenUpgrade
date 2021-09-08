@@ -22,11 +22,13 @@
 
 import logging
 from datetime import datetime
+
 from openerp import api, SUPERUSER_ID
 from openerp.openupgrade import openupgrade, openupgrade_80
 from openerp.modules.registry import RegistryManager
 from openerp import SUPERUSER_ID as uid
 from openerp.tools.float_utils import float_compare
+from psycopg2.extras import execute_values
 
 logger = logging.getLogger('OpenUpgrade.stock')
 default_spec = {
@@ -55,6 +57,9 @@ def _migrate_security(env):
 
 def migrate_product(cr, registry):
     """Migrate track_incoming, track_outgoing"""
+    logger.info("~~~~~~~~~~~~~")
+    logger.info("stock::post::migrate_product")
+    logger.info("~~~~~~~~~~~~~")
     prod_tmpl_obj = registry['product.template']
     for field in 'track_incoming', 'track_outgoing':
         cr.execute(
@@ -77,6 +82,9 @@ def migrate_move_inventory(cr, registry):
 
     Set product and filter for single product inventories.
     """
+    logger.info("~~~~~~~~~~~~~")
+    logger.info("stock::post::migrate_move_inventory")
+    logger.info("~~~~~~~~~~~~~")
     openupgrade.logged_query(
         cr,
         """
@@ -113,6 +121,9 @@ def migrate_move_inventory(cr, registry):
 def migrate_stock_location(cr, registry):
     """Create a Push rule for each pair of locations linked. Will break if
     there are multiple warehouses for the same company."""
+    logger.info("~~~~~~~~~~~~~")
+    logger.info("stock::post::migrate_stock_location")
+    logger.info("~~~~~~~~~~~~~")
     path_obj = registry['stock.location.path']
     location_obj = registry['stock.location']
     warehouse_obj = registry['stock.warehouse']
@@ -132,6 +143,8 @@ def migrate_stock_location(cr, registry):
         loc = location_obj.browse(cr, uid, location[1])
         loc_from = location_obj.browse(cr, uid, location[0])
         name = '{} -> {}'.format(location[5], loc.name)
+        logger.info("~~~~")
+        logger.info(name)
         vals = {
             'active': True,
             'propagate': True,
@@ -176,6 +189,9 @@ def migrate_stock_picking(cr, registry):
     """Update picking records with the correct picking_type_id and state.
     As elsewhere, multiple warehouses with the same company pose a problem.
     """
+    logger.info("~~~~~~~~~~~~~")
+    logger.info("stock::post::migrate_stock_picking")
+    logger.info("~~~~~~~~~~~~~")
     warehouse_obj = registry['stock.warehouse']
     company_obj = registry['res.company']
     picking_obj = registry['stock.picking']
@@ -184,6 +200,8 @@ def migrate_stock_picking(cr, registry):
     for company in company_obj.browse(
             cr, uid, company_obj.search(
                 cr, uid, [])):
+        logger.info("~~~~")
+        logger.info(company.name)
         warehouse_ids = warehouse_obj.search(
             cr, uid, [('company_id', '=', company.id)])
         if not warehouse_ids:
@@ -293,6 +311,9 @@ def set_warehouse_view_location(cr, registry, warehouse):
     of other warehouses and is thus not warehouse specific so we'll just warn
     about the changes we make.
     """
+    logger.info("~~~~~~~~~~~~~")
+    logger.info("stock::post::set_warehouse_view_location")
+    logger.info("~~~~~~~~~~~~~")
     location_obj = registry['stock.location']
     all_warehouse_view = registry['ir.model.data'].get_object_reference(
         cr, uid, 'stock', 'stock_location_locations')[1]
@@ -330,6 +351,8 @@ def set_warehouse_view_location(cr, registry, warehouse):
                 warehouse.lot_stock_id,
                 warehouse.wh_input_stock_loc_id,
                 warehouse.wh_output_stock_loc_id):
+            logger.info("~~~~")
+            logger.info(location.name)
             if (location.location_id and
                     location.location_id.id != all_warehouse_view):
                 openupgrade.message(
@@ -358,6 +381,9 @@ def _migrate_stock_warehouse(cr, registry, res_id):
     """Warehouse adaptation to the new functionality. Sequences, Picking types,
     Rules.
     """
+    logger.info("~~~~~~~~~~~~~")
+    logger.info("stock::post::_migrate_stock_warehouse")
+    logger.info("~~~~~~~~~~~~~")
     location_obj = registry['stock.location']
     warehouse_obj = registry['stock.warehouse']
     picking_type_obj = registry['stock.picking.type']
@@ -579,6 +605,10 @@ def _migrate_stock_warehouse(cr, registry, res_id):
 
 def migrate_stock_warehouses(cr, registry):
     """Migrate all the warehouses"""
+    logger.info("~~~~~~~~~~~~~")
+    logger.info("stock::post::migrate_stock_warehouses")
+    logger.info("~~~~~~~~~~~~~")
+
     # Add a code to all warehouses that have no code
     openupgrade.logged_query(
         cr, """
@@ -601,6 +631,9 @@ def migrate_stock_warehouse_orderpoint(cr):
     """procurement_id to procurement_ids
     :param cr: database cursor
     """
+    logger.info("~~~~~~~~~~~~~")
+    logger.info("stock::post::migrate_stock_warehouse_orderpoint")
+    logger.info("~~~~~~~~~~~~~")
     registry = RegistryManager.get(cr.dbname)
     openupgrade.m2o_to_x2m(
         cr, registry['stock.warehouse.orderpoint'],
@@ -662,6 +695,10 @@ def migrate_product_supply_method(cr, registry):
     make to order -> MTO Rule
     :param cr:
     """
+    logger.info("~~~~~~~~~~~~~")
+    logger.info("stock::post::migrate_product_supply_method")
+    logger.info("~~~~~~~~~~~~~")
+
     route_obj = registry['stock.location.route']
     template_obj = registry['product.template']
 
@@ -705,6 +742,10 @@ def migrate_procurement_order(cr, registry):
     e.g. a purchased product from supplier to stock location. Counterpart field
     on the stock move is stock_move.procurement_id.
     """
+    logger.info("~~~~~~~~~~~~~")
+    logger.info("stock::post::migrate_procurement_order")
+    logger.info("~~~~~~~~~~~~~")
+
     # Reverse the link between procurement orders and the stock moves that
     # satisfy them.
     cr.execute(
@@ -738,6 +779,8 @@ def migrate_procurement_order(cr, registry):
     procurement_obj = registry['procurement.order']
     for company in company_obj.browse(
             cr, uid, company_obj.search(cr, uid, [])):
+        logger.info("~~~~")
+        logger.info(company.name)
         procurement_ids = procurement_obj.search(
             cr, uid, [('company_id', '=', company.id)])
         if not procurement_ids:
@@ -929,6 +972,10 @@ def _move_done(env, move):
 
 def migrate_stock_qty(cr, registry):
     """Reprocess stock moves in done state to fill stock.quant."""
+    logger.info("~~~~~~~~~~~~~")
+    logger.info("stock::post::migrate_stock_qty")
+    logger.info("~~~~~~~~~~~~~")
+
     # First set restrict_lot_id so that quants point to correct moves
     sql = '''
         UPDATE stock_move SET restrict_lot_id = {}
@@ -1021,6 +1068,9 @@ def migrate_stock_production_lot(cr, registry):
     """Serial numbers migration
     :param cr:
     """
+    logger.info("~~~~~~~~~~~~~")
+    logger.info("stock::post::migrate_stock_production_lot")
+    logger.info("~~~~~~~~~~~~~")
     lot_obj = registry['stock.production.lot']
     user_obj = registry['res.users']
 
@@ -1038,31 +1088,24 @@ def migrate_stock_production_lot(cr, registry):
     # stock.pack.operation linked with related lot before creating the quant
     field_name = openupgrade.get_legacy_name('prodlot_id')
     cr.execute("""
-        SELECT id, %s
-        FROM stock_move
-        WHERE
-            %s IS NOT NULL AND
-            picking_id IS NULL""" % (
-        field_name, field_name))
-    res1 = cr.fetchall()
-    for move, lot in res1:
-        cr.execute("""
-            SELECT quant_id
-            FROM stock_quant_move_rel
-            WHERE move_id = %s""" % (move,))
-        res2 = cr.fetchall()
-        for quant in res2:
-            cr.execute("""
-                UPDATE stock_quant
-                SET lot_id = %s
-                WHERE id = %s""" % (lot, quant[0],))
-        cr.commit()
+        UPDATE stock_quant SET lot_id = ss.lot 
+        FROM (SELECT q.quant_id, sm.{fieldname}, 
+            FROM stock_quant_move_rel q, stock_move sm
+              WHERE sm.{fieldname} IS NOT NULL AND 
+                sm.picking_id IS NULL AND sm.id=q.move_id) as ss (qid, lot)
+        WHERE stock_quant.id = q.qid; 
+    """.format(fieldname=field_name))
+    cr.commit()
 
 
 def reset_warehouse_data_ids(cr, registry):
     """ While stock_data.yml creates some noupdate XML IDs, they contain empty
     res_ids because the main warehouse was not fully configured at that time.
     Reset them here."""
+    logger.info("~~~~~~~~~~~~~")
+    logger.info("stock::post::reset_warehouse_data_ids")
+    logger.info("~~~~~~~~~~~~~")
+
     data_model = registry['ir.model.data']
     warehouse = data_model.xmlid_to_object(
         cr, uid, 'stock.warehouse0')
@@ -1091,19 +1134,27 @@ def populate_stock_move_fields(cr, registry):
     """ This function reduce creation time of the stock_move fields
        (See pre script, for more information)
     """
+    logger.info("~~~~~~~~~~~~~")
+    logger.info("stock::post::populate_stock_move_fields")
+    logger.info("~~~~~~~~~~~~~")
+
     sm_obj = registry['stock.move']
     logger.info("Fast creation of the field stock_move.product_qty (post)")
     # Set product_qty = product_uom_qty if uom_id of stock move
     # is the same as uom_id of product. (Main case)
     openupgrade.logged_query(cr, """
-        UPDATE stock_move sm1
+        UPDATE stock_move
         SET product_qty = product_uom_qty
-        FROM
-            (SELECT sm2.id from stock_move sm2
-            INNER join product_product pp on sm2.product_id = pp.id
-            INNER join product_template pt on pp.product_tmpl_id = pt.id
-            where pt.uom_id = sm2.product_uom) as res
-        WHERE sm1.id = res.id""")
+        FROM product_product pp, product_template pt 
+            WHERE pp.id=stock_move.product_id AND 
+              pt.id=pp.product_tmpl_id AND 
+              pt.uom_id = stock_move.product_uom;
+        """)
+        #     (SELECT sm2.id from stock_move sm2
+        #     INNER join product_product pp on sm2.product_id = pp.id
+        #     INNER join product_template pt on pp.product_tmpl_id = pt.id
+        #     where pt.uom_id = sm2.product_uom) as res
+        # WHERE sm1.id = res.id""")
     # Use ORM if uom id are different
     cr.execute(
         """SELECT sm2.id from stock_move sm2
@@ -1112,24 +1163,24 @@ def populate_stock_move_fields(cr, registry):
         where pt.uom_id != sm2.product_uom""")
     sm_ids = [row[0] for row in cr.fetchall()]
     qty_vals = sm_obj._quantity_normalize(cr, uid, sm_ids, None, None)
-    for id, qty in qty_vals.iteritems():
-        cr.execute("UPDATE stock_move set product_qty = '%s' where id=%s" % (
-            qty, id))
+    execute_values(cr, "UPDATE stock_move SET product_qty = v.qty "
+                       "FROM (VALUES %s) as v (id, qty) "
+                       "WHERE v.id=stock_move.id", qty_vals.items())
+    # for id, qty in qty_vals.iteritems():
+    #     cr.execute("UPDATE stock_move set product_qty = '%s' where id=%s" % (
+    #         qty, id))
 
     # If a stock move is Waiting availability ('confirmed'), but the source
     # location is 'supplier', 'inventory' or 'production', then set it as
     # Available ('assigned').
-    openupgrade.logged_query(cr, """
-        UPDATE stock_move sm1
-        SET state = 'assigned'
-        FROM
-            (SELECT sm2.id from stock_move sm2
-            INNER JOIN stock_location sl
-            ON sm2.location_id = sl.id
-            where sl.usage in ('supplier', 'inventory', 'production')
-            and sm2.state = 'confirmed'
-            ) as res
-        WHERE sm1.id = res.id""")
+    openupgrade.logged_query(
+        cr,
+        "UPDATE stock_move SET state = 'assigned' "
+        "FROM stock_location sl " 
+        "WHERE sl.id=stock_move.location_id AND " 
+        "sl.usage IN ('supplier', 'inventory', 'production') AND " 
+        "stock_move.state = 'confirmed';"
+    )
 
 
 @openupgrade.migrate(use_env=True)
