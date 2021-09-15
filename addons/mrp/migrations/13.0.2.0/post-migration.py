@@ -152,7 +152,7 @@ def fill_unbuild_company_id(cr):
         SET company_id = mb.company_id
         FROM mrp_bom mb
         WHERE mu.bom_id = mb.id AND mb.company_id IS NOT NULL
-            AND mu.company_id IS NULL"""
+            AND mu.company_id IS DISTINCT FROM mb.company_id"""
     )
     # from stock_move/res_users
     openupgrade.logged_query(
