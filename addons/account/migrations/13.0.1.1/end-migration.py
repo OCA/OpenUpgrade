@@ -21,7 +21,11 @@ def add_default_account_data(env):
              "default_cash_difference_income_account_id"),
         ]:
             chart = company.chart_template_id
-            account_template = chart[chart_field]
+            check_chart = chart
+            account_template = False
+            while not account_template and check_chart:
+                account_template = check_chart[chart_field]
+                check_chart = check_chart.parent_id
             if not account_template:
                 continue
             tmpl_xml_id = account_template.get_external_id()[account_template.id]
