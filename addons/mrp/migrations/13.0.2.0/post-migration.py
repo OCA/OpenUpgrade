@@ -257,7 +257,8 @@ def generate_wo_line(env):
     for sml_id, wo_id in env.cr.fetchall():
         wo_ids.add(wo_id)
         active_sml_ids.append(sml_id)
-    env['mrp.workorder'].browse(list(wo_ids))._refresh_wo_lines()
+    for workorder in env['mrp.workorder'].browse(list(wo_ids)):
+        workorder._refresh_wo_lines()
     env['stock.move.line'].browse(active_sml_ids).unlink()
 
 
