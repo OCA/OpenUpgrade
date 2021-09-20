@@ -44,6 +44,17 @@ def map_payment_acquirer_state(cr):
             sql.Identifier(openupgrade.get_legacy_name('environment'))
         )
     )
+    openupgrade.logged_query(
+        cr,
+        sql.SQL(
+            """UPDATE payment_acquirer
+            SET state = 'disabled'
+            WHERE NOT {} AND {} = 'test'"""
+        ).format(
+            sql.Identifier(openupgrade.get_legacy_name('website_published')),
+            sql.Identifier(openupgrade.get_legacy_name('environment'))
+        )
+    )
 
 
 @openupgrade.migrate(use_env=True)
