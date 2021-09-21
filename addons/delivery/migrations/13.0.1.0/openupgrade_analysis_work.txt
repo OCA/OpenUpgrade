@@ -8,7 +8,7 @@ delivery     / delivery.carrier         / return_label_on_delivery (boolean): NE
 # NOTHING TO DO: New feature for allowing to print the return label. Default False value is OK for preserving previous behavior (no return label).
 
 delivery     / delivery.carrier         / invoice_policy (selection)    : NEW required, selection_keys: ['estimated', 'real'], req_default: function, hasdefault
-# DONE: post-migration: Fill all delivery.carrier records to have `real` value in invoice_policy, as this is the most similar one to the v12 behavior
+# NOTHING TO DO: Default `estimated` value has is the less conflicting one according the new Odoo rules. Users can't choose 'real' on the core standard methods and the behavior change isn't that intuitive.
 
 delivery     / delivery.carrier         / margin (integer)              : type is now 'float' ('integer')
 # NOTHING TO DO: ORM/PG does the switch automatically
