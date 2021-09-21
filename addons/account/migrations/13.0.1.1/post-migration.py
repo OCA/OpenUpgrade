@@ -192,7 +192,8 @@ def migration_invoice_moves(env):
         invoice_partner_display_name, invoice_cash_rounding_id, old_invoice_id,
         create_uid, create_date, write_uid, write_date)
         SELECT message_main_attachment_id, access_token,
-        COALESCE(number, move_name, name, '/'), COALESCE(date, date_invoice, write_date),
+        COALESCE(NULLIF(number, ''), NULLIF(move_name, ''), NULLIF(name, ''), '/'),
+        COALESCE(date, date_invoice, write_date),
         CASE WHEN type IN ('in_invoice', 'in_refund') THEN reference ELSE name END,
         CASE WHEN type = 'in_refund' THEN COALESCE(comment, name)
             WHEN type = 'out_refund' THEN COALESCE(comment, reference)
