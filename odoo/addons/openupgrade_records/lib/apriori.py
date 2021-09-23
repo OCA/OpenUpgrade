@@ -47,7 +47,11 @@ merged_modules = {
     'website_sale_link_tracker': 'website_sale',
     'website_survey': 'survey',
     # OCA/account-financial-tools
+    'account_coa_menu': 'account_menu',
+    'account_group_menu': 'account_menu',
     'account_move_chatter': 'account',
+    'account_tag_menu': 'account_menu',
+    'account_type_menu': 'account_menu',
     # OCA/account-reconcile
     'account_set_reconcilable': 'account',
     'bank_statement_foreign_currency': 'account',
