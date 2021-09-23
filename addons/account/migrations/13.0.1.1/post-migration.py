@@ -1037,6 +1037,21 @@ def _recompute_move_entries_totals(env):
     )
 
 
+def fill_account_move_line_missing_fields(env):
+    openupgrade.logged_query(env.cr, """
+        UPDATE account_move_line aml
+        SET account_root_id = aa.root_id
+        FROM account_account aa
+        WHERE aa.id = aml.account_id
+    """)
+    openupgrade.logged_query(env.cr, """
+        UPDATE account_move_line aml
+        SET tax_group_id = at.tax_group_id
+        FROM account_tax at
+        WHERE at.id = aml.tax_line_id
+    """)
+
+
 @openupgrade.migrate()
 def migrate(env, version):
     fill_account_reconcile_model_second_analytic_tag_rel_table(env)
@@ -1048,6 +1063,7 @@ def migrate(env, version):
     fill_account_journal_restrict_mode_hash_table(env)
     archive_account_tax_type_tax_use_adjustment(env)
     fill_account_journal_invoice_reference_type(env)
+    fill_account_move_line_missing_fields(env)
     migration_invoice_moves(env)
     if openupgrade.table_exists(env.cr, 'account_voucher'):
         migration_voucher_moves(env)
