@@ -415,10 +415,11 @@ def migration_invoice_moves(env):
     )
     openupgrade.logged_query(
         env.cr, """
-        UPDATE account_invoice_payment_rel aipr
-        SET invoice_id = am.id
-        FROM account_move am
-        WHERE am.old_invoice_id = aipr.invoice_id
+        INSERT INTO account_invoice_payment_rel
+            (invoice_id, payment_id)
+        SELECT am.id, aipr.payment_id
+        FROM old_account_invoice_payment_rel as aipr
+            INNER JOIN account_move am ON am.old_invoice_id = aipr.invoice_id
         """,
     )
     # Relink analytic tags

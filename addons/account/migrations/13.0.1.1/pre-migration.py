@@ -51,6 +51,7 @@ _table_renames = [
     ('account_register_payments', 'account_payment_register'),
     ('account_analytic_tag_account_reconcile_model_rel',
      'account_reconcile_model_analytic_tag_rel'),
+    ('account_invoice_payment_rel', 'old_account_invoice_payment_rel'),
 ]
 
 
