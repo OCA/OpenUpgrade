@@ -152,36 +152,25 @@ def create_account_move_new_columns(env):
             )
 
 
-def fill_account_move_line_parent_state(env):
+def fill_account_move_line(env):
     """Faster way"""
     openupgrade.logged_query(
         env.cr, """
         ALTER TABLE account_move_line
-        ADD COLUMN parent_state varchar""",
-    )
-    openupgrade.logged_query(
-        env.cr, """
-        UPDATE account_move_line aml
-        SET parent_state = am.state
-        FROM account_move am
-        WHERE am.id = aml.move_id""",
-    )
-
-
-def fill_account_move_line_account_internal_type(env):
-    """Faster way"""
-    openupgrade.logged_query(
-        env.cr, """
-        ALTER TABLE account_move_line
+        ADD COLUMN parent_state varchar,
         ADD COLUMN account_internal_type varchar""",
     )
     openupgrade.logged_query(
         env.cr, """
         UPDATE account_move_line aml
-        SET account_internal_type = aat.type
-        FROM account_account aa
-        JOIN account_account_type aat ON aa.user_type_id = aat.id
-        WHERE aml.account_id = aa.id""",
+        SET parent_state = am.state,
+            account_internal_type = aat.type
+        FROM account_move am,
+            account_account aa,
+            account_account_type aat
+        WHERE am.id = aml.move_id
+            AND aa.user_type_id = aat.id
+            AND aml.account_id = aa.id""",
     )
 
 
@@ -325,8 +314,7 @@ def migrate(env, version):
     type_change_account_fiscal_position_zips(env)
     create_account_invoice_amount_tax_company_signed(env)
     create_account_move_new_columns(env)
-    fill_account_move_line_parent_state(env)
-    fill_account_move_line_account_internal_type(env)
+    fill_account_move_line(env)
     create_res_partner_ranks(env)
     delete_fk_constraints(env)
     fill_account_move_commercial_partner_id(env)
