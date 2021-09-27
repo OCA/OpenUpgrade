@@ -173,10 +173,8 @@ def migration_invoice_moves(env):
         ai.create_uid, ai.create_date, ai.write_uid, ai.write_date)
         FROM account_invoice ai
         WHERE am.id = ai.move_id AND ai.state not in ('draft', 'cancel')
-        RETURNING ai.id, am.id
         """,
     )
-    ids1 = env.cr.fetchall()
     # Insert moves for draft or canceled invoices
     openupgrade.logged_query(
         env.cr, """
@@ -215,13 +213,10 @@ def migration_invoice_moves(env):
         vendor_display_name, cash_rounding_id, id, create_uid, create_date,
         write_uid, write_date
         FROM account_invoice ai
-        WHERE ai.state in ('draft', 'cancel')
-        RETURNING old_invoice_id, id""",
+        WHERE ai.state in ('draft', 'cancel')""",
     )
-    ids2 = env.cr.fetchall()
-    if ids1 or ids2:
-        _move_model_in_data(
-            env, ids1 + ids2, 'account.invoice', 'account.move')
+    _move_model_in_data(
+        env, 'account.invoice', 'account.move', 'old_invoice_id')
     # Not Draft or Cancel Invoice Lines
     # 1st: update the ungrouped ones
     openupgrade.logged_query(env.cr, "ALTER TABLE account_invoice_line ADD aml_matched BOOLEAN")
@@ -421,10 +416,11 @@ def migration_invoice_moves(env):
     )
     openupgrade.logged_query(
         env.cr, """
-        UPDATE account_invoice_payment_rel aipr
-        SET invoice_id = am.id
-        FROM account_move am
-        WHERE am.old_invoice_id = aipr.invoice_id
+        INSERT INTO account_invoice_payment_rel
+            (invoice_id, payment_id)
+        SELECT am.id, aipr.payment_id
+        FROM old_account_invoice_payment_rel as aipr
+            INNER JOIN account_move am ON am.old_invoice_id = aipr.invoice_id
         """,
     )
     # Relink analytic tags
@@ -509,10 +505,8 @@ def migration_voucher_moves(env):
         FROM account_voucher av
         WHERE am.old_voucher_id = av.id AND av.state not in (
             'draft', 'cancel', 'proforma')
-        RETURNING am.old_voucher_id, am.id
         """,
     )
-    ids1 = env.cr.fetchall()
     openupgrade.logged_query(
         env.cr, """
         INSERT INTO account_move (message_main_attachment_id, name, date,
@@ -529,12 +523,10 @@ def migration_voucher_moves(env):
         write_date
         FROM account_voucher av
         WHERE av.state in ('draft', 'cancel', 'proforma')
-        RETURNING old_voucher_id, id""",
+        """,
     )
-    ids2 = env.cr.fetchall()
-    if ids1 or ids2:
-        _move_model_in_data(
-            env, ids1 + ids2, 'account.voucher', 'account.move')
+    _move_model_in_data(
+        env, 'account.voucher', 'account.move', 'old_voucher_id')
     # Not draft, cancel, proforma voucher lines
     openupgrade.logged_query(
         env.cr, """
@@ -605,35 +597,45 @@ def migration_voucher_moves(env):
     )
 
 
-def _move_model_in_data(env, ids_map, old_model, new_model):
+def _move_model_in_data(env, old_model, new_model, field):
     renames = [
         ('mail_message', 'model', 'res_id'),
-        ('mail_followers', 'res_model', 'res_id'),
         ('ir_attachment', 'res_model', 'res_id'),
         ('mail_activity', 'res_model', 'res_id'),
         ('ir_model_data', 'model', 'res_id'),
     ]
-    for old_id, new_id in ids_map:
-        for rename in renames:
-            query = """
-                UPDATE {table}
-                SET {field1} = %(new_value1)s, {field2} = %(new_value2)s
-                WHERE {field1} = %(old_value1)s AND {field2} = %(old_value2)s"""
-            if rename[0] == 'mail_followers':
-                query += """ AND partner_id NOT IN (
-                    SELECT partner_id FROM mail_followers
-                    WHERE res_model = 'account.move' AND res_id = %(new_value2)s
-                )"""
-            env.cr.execute(sql.SQL(query).format(
-                table=sql.Identifier(rename[0]),
-                field1=sql.Identifier(rename[1]),
-                field2=sql.Identifier(rename[2])
-            ), {
-                "old_value1": old_model,
-                "new_value1": new_model,
-                "old_value2": old_id,
-                "new_value2": new_id,
-            })
+    for rename in renames:
+        query = """
+            UPDATE {table} t
+            SET {field1} = %(new_value1)s, {field2} = am.id
+            FROM account_move am
+            WHERE t.{field1} = %(old_value1)s AND am.{field} = t.{field2}"""
+        openupgrade.logged_query(env.cr, sql.SQL(query).format(
+            table=sql.Identifier(rename[0]),
+            field1=sql.Identifier(rename[1]),
+            field2=sql.Identifier(rename[2]),
+            field=sql.Identifier(field)
+        ), {
+            "old_value1": old_model,
+            "new_value1": new_model,
+        })
+    openupgrade.logged_query(env.cr, sql.SQL("""
+        UPDATE mail_followers mf
+            SET res_model = %(new_value1)s, res_id = am.id
+            FROM account_move am
+                JOIN mail_followers mf1
+                    ON (am.{field} = mf1.res_id AND mf1.res_model = %(old_value1)s)
+                LEFT JOIN mail_followers mf2
+                    ON (am.id = mf2.res_id
+                        AND mf2.res_model = 'account.move'
+                        AND mf2.partner_id = mf1.partner_id)
+            WHERE mf.id = mf1.id AND mf2.id IS NULL
+    """).format(
+            field=sql.Identifier(field)
+        ), {
+            "old_value1": old_model,
+            "new_value1": new_model,
+        })
 
 
 def fill_account_move_reversed_entry_id(env):
@@ -1036,6 +1038,21 @@ def _recompute_move_entries_totals(env):
     )
 
 
+def fill_account_move_line_missing_fields(env):
+    openupgrade.logged_query(env.cr, """
+        UPDATE account_move_line aml
+        SET account_root_id = aa.root_id
+        FROM account_account aa
+        WHERE aa.id = aml.account_id
+    """)
+    openupgrade.logged_query(env.cr, """
+        UPDATE account_move_line aml
+        SET tax_group_id = at.tax_group_id
+        FROM account_tax at
+        WHERE at.id = aml.tax_line_id
+    """)
+
+
 @openupgrade.migrate()
 def migrate(env, version):
     fill_account_reconcile_model_second_analytic_tag_rel_table(env)
@@ -1047,6 +1064,7 @@ def migrate(env, version):
     fill_account_journal_restrict_mode_hash_table(env)
     archive_account_tax_type_tax_use_adjustment(env)
     fill_account_journal_invoice_reference_type(env)
+    fill_account_move_line_missing_fields(env)
     migration_invoice_moves(env)
     if openupgrade.table_exists(env.cr, 'account_voucher'):
         migration_voucher_moves(env)
