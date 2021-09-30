@@ -1,7 +1,9 @@
 # Copyright 2020 Payam Yasaie <https://www.tashilgostar.com>
 # Copyright 2020 ForgeFlow <https://www.forgeflow.com>
+# Copyright 2021 Tecnativa - Pedro M. Baeza
 # License AGPL-3.0 or later (http://www.gnu.org/licenses/agpl.html).
 from openupgradelib import openupgrade
+import re
 
 
 def _get_main_company(cr):
@@ -184,18 +186,16 @@ def map_stock_location_usage(env):
 
 
 def fill_stock_picking_type_sequence_code(env):
-    openupgrade.logged_query(
-        env.cr, """
-        UPDATE stock_picking_type
-        SET sequence_code = CASE WHEN code = 'incoming' THEN 'IN'
-          WHEN code = 'outgoing' THEN 'OUT'
-          WHEN code = 'internal' AND barcode like '%-PACK' THEN 'PACK'
-          WHEN code = 'internal' AND barcode like '%-PICK' THEN 'PICK'
-          WHEN code = 'internal' AND barcode like '%-INTERNAL' THEN 'INT'
-          ELSE 'TO_FILL' END
-        WHERE sequence_code IS NULL
-        """
-    )
+    """Deduce sequence code from current sequence pattern """
+    picking_types = env["stock.picking.type"].with_context(active_text=False).search([])
+    for picking_type in picking_types:
+        prefix = picking_type.sequence_id.prefix
+        if picking_type.warehouse_id:
+            groups = re.findall(r"(.*)\/(.*)\/", prefix)
+            if groups and len(groups[0]) == 2:
+                picking_type.sequence_code = groups[0][1]
+        else:
+            picking_type.sequence_code = prefix
 
 
 def convert_many2one_stock_inventory_product_and_location(env):

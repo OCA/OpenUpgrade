@@ -73,6 +73,16 @@ def fill_inventory_line_categ(env):
     )
 
 
+def prefill_stock_picking_type_sequence_code(env):
+    """Prefill this field for avoiding the not null warning during update."""
+    openupgrade.logged_query(
+        env.cr, "ALTER TABLE stock_picking_type ADD sequence_code VARCHAR"
+    )
+    openupgrade.logged_query(
+        env.cr, "UPDATE stock_picking_type SET sequence_code = '-'"
+    )
+
+
 @openupgrade.migrate()
 def migrate(env, version):
     openupgrade.copy_columns(env.cr, _column_copies)
@@ -83,3 +93,4 @@ def migrate(env, version):
     openupgrade.rename_xmlids(env.cr, _xmlid_renames)
     assure_stock_rule_company_is_correct(env)
     fill_inventory_line_categ(env)
+    prefill_stock_picking_type_sequence_code(env)
