@@ -309,6 +309,7 @@ def migrate(env, version):
             WHERE key = 'sale.use_sale_note'"""
         )
     openupgrade.rename_models(cr, _model_renames)
+    openupgrade.remove_tables_fks(env.cr, ["account_invoice_payment_rel"])
     openupgrade.rename_tables(cr, _table_renames)
     openupgrade.add_fields(env, _field_adds)
     type_change_account_fiscal_position_zips(env)
