@@ -47,7 +47,16 @@ def handle_view_error(
             self.write({"active": False})
 
 
+def _postprocess_view(self, node, model, validate=True, editable=True):
+    """ Don't validate views, handle_view_error is mutted"""
+    return View._postprocess_view._original_method(
+        self, node, model, validate=False, editable=editable
+    )
+
+
 _check_xml._original_method = View._check_xml
 View._check_xml = _check_xml
 handle_view_error._original_method = View.handle_view_error
 View.handle_view_error = handle_view_error
+_postprocess_view._original_method = View._postprocess_view
+View._postprocess_view = _postprocess_view
