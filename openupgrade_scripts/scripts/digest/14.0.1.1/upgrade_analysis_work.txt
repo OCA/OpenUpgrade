@@ -4,6 +4,8 @@ digest       / digest.digest            / periodicity (selection)       : select
 # NOTHING TO DO: New daily option available, but no need to change existing ones.
 
 digest       / digest.digest            / template_id (many2one)        : DEL relation: mail.template, required, req_default: function
+# DONE: pre-migration: delete required constraint
+
 digest       / digest.tip               / name (char)                   : NEW
 # NOTHING TO DO
 
