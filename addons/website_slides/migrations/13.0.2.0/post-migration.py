@@ -63,12 +63,14 @@ def convert_slide_categories(env):
     openupgrade.logged_query(
         env.cr, sql.SQL("""
         INSERT INTO slide_slide (
-            create_date, create_uid, write_date, write_uid, is_category,
-            name, channel_id, old_category_id, sequence, slide_type
+            active, create_date, create_uid, write_date, write_uid, is_category,
+            name, channel_id, old_category_id, sequence, slide_type, is_published,
+            is_preview
         )
         SELECT
-            sc.create_date, sc.create_uid, sc.write_date, sc.write_uid, True,
-            sc.name, sc.channel_id, sc.id, min(ss.sequence) - 1 as sequence, 'document'
+            True, sc.create_date, sc.create_uid, sc.write_date, sc.write_uid, True,
+            sc.name, sc.channel_id, sc.id, min(ss.sequence) - 1 as sequence, 'document',
+            True, True
         FROM slide_slide ss
         JOIN slide_category sc ON sc.id = ss.{category_id}
         WHERE ss.channel_id IN (
