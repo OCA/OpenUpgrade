@@ -669,20 +669,6 @@ def fill_account_move_type(env):
     )
 
 
-def fill_account_move_currency_id(env):
-    openupgrade.logged_query(
-        env.cr, """
-        UPDATE account_move am
-        SET currency_id = COALESCE(am_rel.cur1, am_rel.cur2)
-        FROM (SELECT am1.id, aj.currency_id as cur1, rc.currency_id as cur2
-          FROM account_move am1
-          LEFT JOIN account_journal aj ON aj.id = am1.journal_id
-          LEFT JOIN res_company rc ON rc.id = aj.company_id) am_rel
-        WHERE am.id = am_rel.id AND am.currency_id IS NULL
-        """,
-    )
-
-
 def fill_res_partner_ranks(env):
     # customer_rank
     openupgrade.logged_query(
@@ -1070,7 +1056,6 @@ def migrate(env, version):
         migration_voucher_moves(env)
     fill_account_move_reversed_entry_id(env)
     fill_account_move_type(env)
-    fill_account_move_currency_id(env)
     fill_res_partner_ranks(env)
     try_to_fill_account_account_tag_country_id(env)
     create_account_tax_repartition_lines(env)
