@@ -43,6 +43,8 @@ merged_modules = {
     "partner_bank_active": "base",
     # OCA/stock-logistics-warehouse
     "stock_inventory_include_exhausted": "stock",
+    # OCA/project
+    "project_description": "project",
     # OCA/...
 }
 
