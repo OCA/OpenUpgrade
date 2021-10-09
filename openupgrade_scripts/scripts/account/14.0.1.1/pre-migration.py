@@ -148,6 +148,19 @@ def copy_fields(env):
                 ),
             ],
         )
+    openupgrade.copy_columns(
+        env.cr,
+        {
+            "account_bank_statement_line": [
+                ("date", None, None),
+            ],
+            "account_payment": [
+                ("journal_id", None, None),
+                ("name", None, None),
+                ("payment_date", None, None),
+            ],
+        },
+    )
 
 
 def add_move_id_field_account_bank_statement_line(env):
@@ -235,23 +248,6 @@ def add_move_id_field_account_bank_statement_line(env):
             AND absl.account_number = am.ref
         """,
     )
-    # TODO: if still exist some account_bank_statement_line with null move_id
-    # openupgrade.logged_query(
-    #     env.cr,
-    #     """
-    # WITH new_moves AS (
-    #     INSERT INTO account_move (statement_line_id, ...
-    #         create_uid, create_date, write_uid, write_date)
-    #     SELECT id, ...
-    #         create_uid, create_date, write_uid, write_date
-    #     FROM account_bank_statement_line absl
-    #     WHERE absl.move_id IS NULL
-    #     RETURNING id, statement_line_id)
-    # UPDATE account_bank_statement_line absl
-    # SET move_id = am.id
-    # FROM new_moves am
-    # WHERE absl.id = am.statement_line_id""",
-    # )
     openupgrade.logged_query(
         env.cr,
         """
@@ -323,23 +319,6 @@ def add_move_id_field_account_payment(env):
             OR am.name = ap.communication)
         """,
     )
-    # TODO: if still exist some account_payment with null move_id
-    # openupgrade.logged_query(
-    #     env.cr,
-    #     """
-    # WITH new_moves AS (
-    #     INSERT INTO account_move (payment_id, ...
-    #         create_uid, create_date, write_uid, write_date)
-    #     SELECT id, ...
-    #         create_uid, create_date, write_uid, write_date
-    #     FROM account_payment ap
-    #     WHERE ap.move_id IS NULL
-    #     RETURNING id, payment_id)
-    # UPDATE account_payment ap
-    # SET move_id = am.id
-    # FROM new_moves am
-    # WHERE ao.id = am.payment_id""",
-    # )
     openupgrade.logged_query(
         env.cr,
         """

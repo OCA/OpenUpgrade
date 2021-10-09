@@ -63,9 +63,8 @@ account      / account.bank.statement   / sequence_prefix (char)        : NEW is
 account      / account.bank.statement.line / _inherits                     : NEW _inherits: {'account.move': 'move_id'}
 account      / account.bank.statement.line / move_id (many2one)            : NEW relation: account.move, required
 account      / account.move             / statement_line_id (many2one)  : NEW relation: account.bank.statement.line
-# pre-migration: added move_id column and filled with an account.move id related to the move_name field
-# TODO: in v13, an account.move was created after the reconciliation (move_name field). In v14, a temporary account.move is created when
-# the statement line is created. In cases where move_name is empty, this temporary account.move has to be created as move_id field is required
+DONE: # pre-migration: created move_id column and assigned account.move ids when
+DONE: # post-migration: filled move_id where no move_name is is assigned to the bank statement line
 
 account      / account.bank.statement.line / account_id (many2one)         : DEL relation: account.account
 account      / account.bank.statement.line / journal_entry_ids (one2many)  : DEL relation: account.move.line
@@ -241,8 +240,8 @@ account      / account.partial.reconcile / currency_id (many2one)        : DEL r
 account      / account.payment          / _inherits                     : NEW _inherits: {'account.move': 'move_id'}
 account      / account.payment          / move_id (many2one)            : NEW relation: account.move, required
 account      / account.move             / payment_id (many2one)         : NEW relation: account.payment
-# pre-migration: created move_id column and assigned account.move ids when move_name exists
-# TODO: Check for cases where no move_name or payment_reference is assigned to the payment.
+DONE: # pre-migration: created move_id column and assigned account.move ids when move_name exists
+DONE: # post-migration: filled move_id where no move_name or payment_reference is assigned to the payment.
 
 account      / account.payment          / _order                        : _order is now 'date desc, name desc' ('payment_date desc, name desc')
 # NOTHING TO DO

@@ -1,8 +1,12 @@
 # Copyright 2021 ForgeFlow S.L.  <https://www.forgeflow.com>
 # License AGPL-3.0 or later (http://www.gnu.org/licenses/agpl.html).
+import logging
+
 from openupgradelib import openupgrade
 
 from odoo.tools.translate import _
+
+_logger = logging.getLogger(__name__)
 
 
 def fill_account_journal_posted_before(env):
@@ -399,6 +403,64 @@ def fill_company_account_journal_suspense_account_id(env):
     journals._compute_suspense_account_id()
 
 
+def fill_statement_lines_with_no_move(env):
+    stl_dates = {}
+    env.cr.execute(
+        """
+        SELECT id, %s
+        FROM account_bank_statement_line
+        WHERE move_id IS NULL"""
+        % (openupgrade.get_legacy_name("date"),)
+    )
+    for stl_id, stl_date in env.cr.fetchall():
+        stl_dates[stl_id] = stl_date
+    st_lines = env["account.bank.statement.line"].browse(list(stl_dates.keys()))
+    for st_line in st_lines.with_context(check_move_validity=False):
+        move = env["account.move"].create(
+            {
+                "name": "/",
+                "date": stl_dates[st_line.id],
+                "statement_line_id": st_line.id,
+                "move_type": "entry",
+                "journal_id": st_line.statement_id.journal_id.id,
+                "company_id": st_line.statement_id.company_id.id,
+                "currency_id": st_line.statement_id.journal_id.currency_id.id
+                or st_line.statement_id.company_id.currency_id.id,
+            }
+        )
+        st_line.move_id = move
+        deprecated_accounts = env["account.account"].search(
+            [("deprecated", "=", True), ("company_id", "=", st_line.company_id.id)]
+        )
+        deprecated_accounts.deprecated = False
+        try:
+            st_line._synchronize_to_moves(
+                [
+                    "payment_ref",
+                    "amount",
+                    "amount_currency",
+                    "foreign_currency_id",
+                    "currency_id",
+                    "partner_id",
+                ]
+            )
+        except Exception as e:
+            _logger.error("Failed for statement line with id %s: %s", st_line.id, e)
+            raise
+        deprecated_accounts.deprecated = True
+        to_write = {
+            "line_ids": [
+                (0, 0, line_vals)
+                for line_vals in st_line._prepare_move_line_default_vals(
+                    counterpart_account_id=False
+                )
+            ]
+        }
+        st_line.move_id.with_context(skip_account_move_synchronization=True).write(
+            to_write
+        )
+
+
 def fill_account_journal_payment_credit_debit_account_id(env):
     journals = (
         env["account.journal"]
@@ -447,6 +509,79 @@ def fill_account_journal_payment_credit_debit_account_id(env):
         )
 
 
+def fill_account_payment_with_no_move(env):
+    p_data = {}
+    env.cr.execute(
+        """
+        SELECT id, %s, %s, %s
+        FROM account_payment
+        WHERE move_id IS NULL
+        """
+        % (
+            openupgrade.get_legacy_name("journal_id"),
+            openupgrade.get_legacy_name("name"),
+            openupgrade.get_legacy_name("payment_date"),
+        )
+    )
+    for p_id, p_journal_id, p_name, p_payment_date in env.cr.fetchall():
+        p_data[p_id] = {
+            "journal_id": p_journal_id,
+            "name": p_name,
+            "payment_date": p_payment_date,
+        }
+    payments = env["account.payment"].browse(list(p_data.keys()))
+    for payment in payments.with_context(check_move_validity=False):
+        journal = env["account.journal"].browse(p_data[payment.id]["journal_id"])
+        move = env["account.move"].create(
+            {
+                "name": "/",
+                "date": p_data[payment.id]["payment_date"],
+                "payment_id": payment.id,
+                "move_type": "entry",
+                "journal_id": journal.id,
+                "company_id": journal.company_id.id,
+                "currency_id": journal.currency_id.id
+                or journal.company_id.currency_id.id,
+            }
+        )
+        payment.move_id = move
+        deprecated_accounts = env["account.account"].search(
+            [("deprecated", "=", True), ("company_id", "=", payment.company_id.id)]
+        )
+        deprecated_accounts.deprecated = False
+        try:
+            payment._synchronize_to_moves(
+                [
+                    "date",
+                    "amount",
+                    "payment_type",
+                    "partner_type",
+                    "payment_reference",
+                    "is_internal_transfer",
+                    "currency_id",
+                    "partner_id",
+                    "destination_account_id",
+                    "partner_bank_id",
+                    "journal_id",
+                ]
+            )
+        except Exception as e:
+            _logger.error("Failed for payment with id %s: %s", payment.id, e)
+            raise
+        deprecated_accounts.deprecated = True
+        to_write = {
+            "line_ids": [
+                (0, 0, line_vals)
+                for line_vals in payment._prepare_move_line_default_vals(
+                    write_off_line_vals=False
+                )
+            ]
+        }
+        payment.move_id.with_context(skip_account_move_synchronization=True).write(
+            to_write
+        )
+
+
 def try_delete_noupdate_records(env):
     openupgrade.delete_records_safely_by_xml_id(
         env,
@@ -475,6 +610,17 @@ def fill_account_move_line_amounts(env):
     )
 
 
+def fill_account_move_line_date(env):
+    openupgrade.logged_query(
+        env.cr,
+        """
+        UPDATE account_move_line aml
+        SET date = COALESCE(am.date, aml.create_date::date)
+        FROM account_move am
+        WHERE aml.move_id = am.id AND aml.date IS NULL""",
+    )
+
+
 @openupgrade.migrate()
 def migrate(env, version):
     fill_account_journal_posted_before(env)
@@ -489,11 +635,14 @@ def migrate(env, version):
     pass_payment_to_journal_entry_narration(env)
     fill_company_account_cash_basis_base_account_id(env)
     fill_account_move_line_amounts(env)
+    fill_account_move_line_date(env)
     openupgrade.load_data(env.cr, "account", "14.0.1.1/noupdate_changes.xml")
     try_delete_noupdate_records(env)
     fix_group_company_and_create_groups_for_each_company_if_necessary(env)
     fill_company_account_journal_suspense_account_id(env)
+    fill_statement_lines_with_no_move(env)
     fill_account_journal_payment_credit_debit_account_id(env)
+    fill_account_payment_with_no_move(env)
     openupgrade.delete_record_translations(
         env.cr,
         "account",
