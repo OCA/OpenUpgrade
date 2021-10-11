@@ -93,3 +93,12 @@ def migrate(env, version):
         "project",
         ["mail_template_data_project_task", "rating_project_request_email_template"],
     )
+    # Apply update related to project_stage_closed addon only if column exists
+    if openupgrade.column_exists(env.cr, "project_task_type", "closed"):
+        openupgrade.logged_query(
+            env.cr,
+            """
+            UPDATE project_task_type SET is_closed = closed
+            WHERE closed is not NULL
+            """,
+        )
