@@ -17,6 +17,8 @@ renamed_modules = {
     "edi_storage": "edi_storage_oca",
     "edi_webservice": "edi_webservice_oca",
     "edi_xml": "edi_xml_oca",
+    # OCA/project
+    "project_stage_closed": "project",
     # OCA/server-tools
     "openupgrade_records": "upgrade_analysis",
     # OCA/...
