@@ -222,6 +222,24 @@ def fill_account_move_commercial_partner_id(env):
     )
 
 
+def set_account_move_currency_id_required(env):
+    # with this, we avoid calling _get_default_currency during the load
+    openupgrade.logged_query(
+        env.cr,
+        """
+        UPDATE account_move am
+        SET currency_id = COALESCE(aj.currency_id, rc.currency_id)
+        FROM account_journal aj
+        JOIN res_company rc ON aj.company_id = rc.id
+        WHERE am.journal_id = aj.id AND am.currency_id IS NULL
+        """)
+    openupgrade.logged_query(
+        env.cr,
+        """
+        ALTER TABLE account_move ALTER COLUMN currency_id SET NOT NULL;
+        """)
+
+
 def add_helper_invoice_move_rel(env):
     openupgrade.logged_query(
         env.cr, """
@@ -318,6 +336,7 @@ def migrate(env, version):
     create_res_partner_ranks(env)
     delete_fk_constraints(env)
     fill_account_move_commercial_partner_id(env)
+    set_account_move_currency_id_required(env)
     add_helper_invoice_move_rel(env)
     if openupgrade.table_exists(cr, 'account_voucher'):
         add_helper_voucher_move_rel(env)

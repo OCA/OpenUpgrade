@@ -323,7 +323,7 @@ account      / account.move             / reverse_date (date)           : DEL
 
 account      / account.move             / currency_id (many2one)        : not a function anymore
 account      / account.move             / currency_id (many2one)        : now required, req_default: function
-# DONE: post-migration: filled empty cases
+# DONE: pre-migration: filled empty cases and add required constraint
 
 account      / account.move             / matched_percentage (float)    : DEL
 # NOTHING TO DO: obsolete fields, replaced by _get_cash_basis_matched_percentage() method
