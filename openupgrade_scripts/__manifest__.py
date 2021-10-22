@@ -4,7 +4,7 @@
     "name": "Openupgrade Scripts",
     "summary": """Module that contains all the migrations analysis
         and scripts for migrate Odoo SA modules.""",
-    "author": "Odoo Community Association (OCA)"
+    "author": "Odoo Community Association (OCA)",
     "maintainers": ["MiquelRForgeFlow", "StefanRijnhart", "pedrobaeza"],
     "website": "https://github.com/OCA/openupgrade",
     "category": "Migration",
