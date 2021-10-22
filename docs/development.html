@@ -1,0 +1,235 @@
+
+<!DOCTYPE html>
+
+<html>
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Migration script development &#8212; OpenUpgrade 14.0 documentation</title>
+    <link rel="stylesheet" type="text/css" href="_static/pygments.css" />
+    <link rel="stylesheet" type="text/css" href="_static/alabaster.css" />
+    <script data-url_root="./" id="documentation_options" src="_static/documentation_options.js"></script>
+    <script src="_static/jquery.js"></script>
+    <script src="_static/underscore.js"></script>
+    <script src="_static/doctools.js"></script>
+    <link rel="index" title="Index" href="genindex.html" />
+    <link rel="search" title="Search" href="search.html" />
+    <link rel="next" title="The Odoo Migration Manager" href="migrationmanager.html" />
+    <link rel="prev" title="Fields analysis format" href="format.html" />
+   
+  <link rel="stylesheet" href="_static/custom.css" type="text/css" />
+  
+  
+  <meta name="viewport" content="width=device-width, initial-scale=0.9, maximum-scale=0.9" />
+
+  </head><body>
+  
+
+    <div class="document">
+      <div class="documentwrapper">
+        <div class="bodywrapper">
+          
+
+          <div class="body" role="main">
+            
+  <div class="section" id="migration-script-development">
+<h1>Migration script development<a class="headerlink" href="#migration-script-development" title="Permalink to this headline">¶</a></h1>
+<div class="section" id="overview">
+<h2>Overview<a class="headerlink" href="#overview" title="Permalink to this headline">¶</a></h2>
+<p>The execution of the migration scripts is triggered by the “Migration Manager”:
+<a class="reference internal" href="migrationmanager.html"><span class="doc">The Odoo Migration Manager</span></a>.</p>
+<p>As explained with more detail in the page <a class="reference internal" href="migrationmanager.html"><span class="doc">The Odoo Migration Manager</span></a>, the migration scripts
+of a module are usually the combination of 3 python files (might be less if some
+steps are not necessary):</p>
+<ul class="simple">
+<li><p>pre-migration.py</p></li>
+<li><p>post-migration.py</p></li>
+<li><p>end-migration.py</p></li>
+</ul>
+<p>Since version 14, these files can be found here:</p>
+<p><code class="docutils literal notranslate"><span class="pre">openupgrade_scripts/scripts/&lt;module-name&gt;</span></code></p>
+<p>Each of those files will contain a function <cite>migrate</cite> which is called by the
+Migration Manager.</p>
+<p>Then, the function migrate will call other functions. Each of these functions
+will execute a task of the migration, these functions are the one which
+needs most of the work from developers. These functions are usually declared in the
+same file.</p>
+<p>Luckily, many pre-existing functions already exist within <cite>openupgradelib</cite> reducing
+significantly the work of development.
+See <a class="reference external" href="https://oca.github.io/OpenUpgrade/API.html">OpenUpgrade API</a></p>
+<p>For many modules, a developer will not even need to write any function, but will
+“simply” need to call pre-existing functions from <cite>openupgradelib</cite> with the appropriate
+arguments. The main complexities becomes to learn what are the functions available in
+<cite>openupgradelib</cite> and then to select appropriatly the arguments (usually according to
+the <cite>openupgrade_analysis.txt</cite>, see below).</p>
+<p>For instance, the migration to version 13 of mass_mailing did not require any custom
+function: <a class="reference external" href="https://github.com/OCA/OpenUpgrade/pull/2273/files">https://github.com/OCA/OpenUpgrade/pull/2273/files</a></p>
+<p>After this introduction, which highlight how simple the migration scripts can be,
+do not underestimate the power of OpenUpgrade.
+The migration of the account module to version 13 is the kind of situation where
+the full power of OpenUpgrade was unleashed to successfully overcome the
+“acc-pocalypse”:
+<a class="reference external" href="https://github.com/OCA/OpenUpgrade/pull/2275/files">https://github.com/OCA/OpenUpgrade/pull/2275/files</a>.</p>
+</div>
+<div class="section" id="learn-from-existing-migration-scrips">
+<h2>Learn from existing migration scrips<a class="headerlink" href="#learn-from-existing-migration-scrips" title="Permalink to this headline">¶</a></h2>
+<p>Since version 14, the migration scripts are located in:</p>
+<p><code class="docutils literal notranslate"><span class="pre">openupgrade_scripts/scripts/&lt;module-name&gt;</span></code></p>
+<p>During the review for a given module, you can follow this process:</p>
+<ul class="simple">
+<li><p>Review the analysis (read more in <a class="reference internal" href="analysis.html"><span class="doc">Database analysis</span></a>). First the file
+<cite>openupgrade_analysis.txt</cite> showing some differences between the 2 versions of
+the module. Then, <cite>openupgrade_analysis_work.txt</cite> to see what the developer
+planned to do.</p></li>
+<li><p>Then you can check the other files to see how the plan was achieved.</p></li>
+</ul>
+<p>You should pick modules with which you are familiar with in both version and for which
+you are aware of the changes.</p>
+</div>
+<div class="section" id="learn-from-code-review-of-open-prs">
+<h2>Learn from code review of open PRs<a class="headerlink" href="#learn-from-code-review-of-open-prs" title="Permalink to this headline">¶</a></h2>
+<p><a class="reference external" href="https://github.com/OCA/OpenUpgrade/pulls">https://github.com/OCA/OpenUpgrade/pulls</a></p>
+<p>This will engage you in a discussion with other contributors and help you understand
+how developers selected one way or another to implement the migration scripts.</p>
+</div>
+<div class="section" id="the-trial-and-error-process-for-the-development-of-your-scripts">
+<h2>The Trial and error process for the development of your scripts<a class="headerlink" href="#the-trial-and-error-process-for-the-development-of-your-scripts" title="Permalink to this headline">¶</a></h2>
+<p>Basically, this is the happening during the step when you try to run the upgrade
+described in <a class="reference internal" href="migration_details.html"><span class="doc">Running the migration</span></a>:</p>
+<ul class="simple">
+<li><p>[A] get the copy of your database in old version as <cite>db-upgrade</cite>, it is
+easy to do through the database manager of your old odoo
+<cite>http://localhost:8069/web/database/manager</cite></p></li>
+<li><p>[B] run <code class="docutils literal notranslate"><span class="pre">odoo</span> <span class="pre">-d</span> <span class="pre">db-upgrade</span> <span class="pre">-u</span> <span class="pre">all</span> <span class="pre">--stop-after-init</span></code></p></li>
+<li><p>[C] In case of error, fix the error adding or editing migration
+scripts within the module to fix, then rerun with <code class="docutils literal notranslate"><span class="pre">-u</span> <span class="pre">&lt;fixed_module&gt;</span></code>
+instead of <code class="docutils literal notranslate"><span class="pre">-u</span> <span class="pre">all</span></code>.
+This way of running is only done for testing purposes and will help you
+save a lot of time in the development process.
+Whenever facing unexpected errors, you might want to restart from [A] as
+this step will leave your database in an inconsistent state.</p></li>
+<li><p>[D] After all issues are fixed go back to <code class="docutils literal notranslate"><span class="pre">--update</span> <span class="pre">all</span></code> to ensure that all
+dependent modules have been upgraded.</p></li>
+</ul>
+<div class="section" id="restart-the-upgrade-of-the-failed-module-instead-of-upgrading-all-systematically">
+<h3>Restart the upgrade of the failed module instead of upgrading all systematically<a class="headerlink" href="#restart-the-upgrade-of-the-failed-module-instead-of-upgrading-all-systematically" title="Permalink to this headline">¶</a></h3>
+<p><strong>As an alternative to the step [C] mentioned above…</strong></p>
+<p>In case of error, fix the error (adding or editing migration
+scripts), then rerun <strong>without</strong> the <code class="docutils literal notranslate"><span class="pre">--update</span> <span class="pre">all</span></code>:
+<code class="docutils literal notranslate"><span class="pre">odoo</span> <span class="pre">-d</span> <span class="pre">db-upgrade</span> <span class="pre">--stop-after-init</span></code>. This will continue the upgrade
+process from where it left off, starting with the module that caused the
+error. That way, the migration will not run the end-migration scripts of
+the modules that were already upgraded before the error. But in case of a
+live migration you always need to restore the database.</p>
+<p>Note that for the time being, this is not available in all versions
+(see explanations here: <a class="reference external" href="https://github.com/OCA/OpenUpgrade/pull/2499">https://github.com/OCA/OpenUpgrade/pull/2499</a>).
+It is available only for 12 and 13:
+<a class="reference external" href="https://github.com/OCA/OpenUpgrade/pulls?q=is%3Apr+%5BFIX%5D+reset+exception">https://github.com/OCA/OpenUpgrade/pulls?q=is%3Apr+%5BFIX%5D+reset+exception</a></p>
+</div>
+</div>
+<div class="section" id="learning-resources">
+<h2>Learning resources<a class="headerlink" href="#learning-resources" title="Permalink to this headline">¶</a></h2>
+<div class="toctree-wrapper compound">
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="migrationmanager.html">The Odoo Migration Manager</a></li>
+<li class="toctree-l1"><a class="reference internal" href="devfaq.html">Development FAQ</a></li>
+</ul>
+</div>
+<p>You can also refer to the following:</p>
+<ul class="simple">
+<li><p><a class="reference external" href="https://oca.github.io/OpenUpgrade/API.html">OpenUpgrade API</a></p></li>
+<li><p>the code of OpenUpgrade API
+<a class="reference external" href="https://github.com/OCA/openupgradelib/blob/master/openupgradelib/openupgrade.py">openupgrade.py</a></p></li>
+</ul>
+</div>
+</div>
+
+
+          </div>
+          
+        </div>
+      </div>
+      <div class="sphinxsidebar" role="navigation" aria-label="main navigation">
+        <div class="sphinxsidebarwrapper">
+<h1 class="logo"><a href="index.html">OpenUpgrade</a></h1>
+
+
+
+
+
+
+
+
+<h3>Navigation</h3>
+<ul class="current">
+<li class="toctree-l1"><a class="reference internal" href="intro.html">Introduction</a></li>
+<li class="toctree-l1"><a class="reference internal" href="intro.html#migrating-your-database">Migrating your database</a></li>
+<li class="toctree-l1"><a class="reference internal" href="community.html">Community involvement</a></li>
+<li class="toctree-l1"><a class="reference internal" href="status.html">Module coverage</a></li>
+<li class="toctree-l1"><a class="reference internal" href="analysis.html">Database analysis</a></li>
+<li class="toctree-l1 current"><a class="current reference internal" href="#">Migration script development</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="#overview">Overview</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#learn-from-existing-migration-scrips">Learn from existing migration scrips</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#learn-from-code-review-of-open-prs">Learn from code review of open PRs</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#the-trial-and-error-process-for-the-development-of-your-scripts">The Trial and error process for the development of your scripts</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="#restart-the-upgrade-of-the-failed-module-instead-of-upgrading-all-systematically">Restart the upgrade of the failed module instead of upgrading all systematically</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="#learning-resources">Learning resources</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="migrationmanager.html">The Odoo Migration Manager</a></li>
+<li class="toctree-l3"><a class="reference internal" href="devfaq.html">Development FAQ</a></li>
+</ul>
+</li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="API.html">OpenUpgrade API</a></li>
+</ul>
+
+<div class="relations">
+<h3>Related Topics</h3>
+<ul>
+  <li><a href="index.html">Documentation overview</a><ul>
+      <li>Previous: <a href="format.html" title="previous chapter">Fields analysis format</a></li>
+      <li>Next: <a href="migrationmanager.html" title="next chapter">The Odoo Migration Manager</a></li>
+  </ul></li>
+</ul>
+</div>
+<div id="searchbox" style="display: none" role="search">
+  <h3 id="searchlabel">Quick search</h3>
+    <div class="searchformwrapper">
+    <form class="search" action="search.html" method="get">
+      <input type="text" name="q" aria-labelledby="searchlabel" autocomplete="off" autocorrect="off" autocapitalize="off" spellcheck="false"/>
+      <input type="submit" value="Go" />
+    </form>
+    </div>
+</div>
+<script>$('#searchbox').show(0);</script>
+
+
+
+
+
+
+
+
+        </div>
+      </div>
+      <div class="clearer"></div>
+    </div>
+    <div class="footer">
+      &copy;2012-2021, Odoo Community Association (OCA) / The OpenUpgrade developers.
+      
+      |
+      Powered by <a href="http://sphinx-doc.org/">Sphinx 4.1.1</a>
+      &amp; <a href="https://github.com/bitprophet/alabaster">Alabaster 0.7.12</a>
+      
+      |
+      <a href="_sources/development.rst.txt"
+          rel="nofollow">Page source</a>
+    </div>
+
+    
+
+    
+  </body>
+</html>

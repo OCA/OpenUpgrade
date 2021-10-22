@@ -1,0 +1,134 @@
+
+<!DOCTYPE html>
+
+<html>
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>After migration &#8212; OpenUpgrade 14.0 documentation</title>
+    <link rel="stylesheet" type="text/css" href="_static/pygments.css" />
+    <link rel="stylesheet" type="text/css" href="_static/alabaster.css" />
+    <script data-url_root="./" id="documentation_options" src="_static/documentation_options.js"></script>
+    <script src="_static/jquery.js"></script>
+    <script src="_static/underscore.js"></script>
+    <script src="_static/doctools.js"></script>
+    <link rel="index" title="Index" href="genindex.html" />
+    <link rel="search" title="Search" href="search.html" />
+    <link rel="next" title="Community involvement" href="community.html" />
+    <link rel="prev" title="Running the migration" href="migration_details.html" />
+   
+  <link rel="stylesheet" href="_static/custom.css" type="text/css" />
+  
+  
+  <meta name="viewport" content="width=device-width, initial-scale=0.9, maximum-scale=0.9" />
+
+  </head><body>
+  
+
+    <div class="document">
+      <div class="documentwrapper">
+        <div class="bodywrapper">
+          
+
+          <div class="body" role="main">
+            
+  <div class="section" id="after-migration">
+<h1>After migration<a class="headerlink" href="#after-migration" title="Permalink to this headline">¶</a></h1>
+<p>OpenUpgrade keeps old model tables and old columns (prefixed with
+<cite>openupgrade_legacy_</cite> word) in PostgreSQL as a conservative strategy because
+they can be used in a later migration script (or to fix an incorrect migration)
+or only for reference.</p>
+<p>After the upgraded database has been running stable for a while, you can
+consider removing the obsolete tables and columns to keep your database clean
+and tidy (i.e. to restore the consistency between the ORM and the database
+layout). The data is orphaned, which means there is no protection from the ORM
+when another module or a future version of Odoo reintroduces any table or
+column (for a new purpose) that happens to still exist in your database.</p>
+<p>There’s a module called _database_cleanup_, hosted on OCA server-tools project
+(<a class="reference external" href="https://github.com/OCA/server-tools">https://github.com/OCA/server-tools</a>), that allows to purge this old data in
+an intuitive way.</p>
+<p>You are also encouraged to have Postgresql run a full vacuum to free up disk
+space (see the documentation of your version of Postgresql).</p>
+</div>
+
+
+          </div>
+          
+        </div>
+      </div>
+      <div class="sphinxsidebar" role="navigation" aria-label="main navigation">
+        <div class="sphinxsidebarwrapper">
+<h1 class="logo"><a href="index.html">OpenUpgrade</a></h1>
+
+
+
+
+
+
+
+
+<h3>Navigation</h3>
+<ul class="current">
+<li class="toctree-l1"><a class="reference internal" href="intro.html">Introduction</a></li>
+<li class="toctree-l1 current"><a class="reference internal" href="intro.html#migrating-your-database">Migrating your database</a><ul class="current">
+<li class="toctree-l2"><a class="reference internal" href="migration_details.html">Running the migration</a></li>
+<li class="toctree-l2 current"><a class="current reference internal" href="#">After migration</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="community.html">Community involvement</a></li>
+<li class="toctree-l1"><a class="reference internal" href="status.html">Module coverage</a></li>
+<li class="toctree-l1"><a class="reference internal" href="analysis.html">Database analysis</a></li>
+<li class="toctree-l1"><a class="reference internal" href="development.html">Migration script development</a></li>
+<li class="toctree-l1"><a class="reference internal" href="API.html">OpenUpgrade API</a></li>
+</ul>
+
+<div class="relations">
+<h3>Related Topics</h3>
+<ul>
+  <li><a href="index.html">Documentation overview</a><ul>
+  <li><a href="intro.html">Introduction</a><ul>
+      <li>Previous: <a href="migration_details.html" title="previous chapter">Running the migration</a></li>
+      <li>Next: <a href="community.html" title="next chapter">Community involvement</a></li>
+  </ul></li>
+  </ul></li>
+</ul>
+</div>
+<div id="searchbox" style="display: none" role="search">
+  <h3 id="searchlabel">Quick search</h3>
+    <div class="searchformwrapper">
+    <form class="search" action="search.html" method="get">
+      <input type="text" name="q" aria-labelledby="searchlabel" autocomplete="off" autocorrect="off" autocapitalize="off" spellcheck="false"/>
+      <input type="submit" value="Go" />
+    </form>
+    </div>
+</div>
+<script>$('#searchbox').show(0);</script>
+
+
+
+
+
+
+
+
+        </div>
+      </div>
+      <div class="clearer"></div>
+    </div>
+    <div class="footer">
+      &copy;2012-2021, Odoo Community Association (OCA) / The OpenUpgrade developers.
+      
+      |
+      Powered by <a href="http://sphinx-doc.org/">Sphinx 4.1.1</a>
+      &amp; <a href="https://github.com/bitprophet/alabaster">Alabaster 0.7.12</a>
+      
+      |
+      <a href="_sources/after_migration.rst.txt"
+          rel="nofollow">Page source</a>
+    </div>
+
+    
+
+    
+  </body>
+</html>
