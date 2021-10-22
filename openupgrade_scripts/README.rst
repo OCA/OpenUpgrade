@@ -62,14 +62,6 @@ Do not contact contributors directly about support or help with technical issues
 Credits
 =======
 
-Authors
-~~~~~~~
-
-* Odoo SA
-* Therp BV
-* Opener B.V.
-* GRAP
-
 Contributors
 ~~~~~~~~~~~~
 
