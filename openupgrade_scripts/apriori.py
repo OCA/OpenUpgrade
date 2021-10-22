@@ -46,6 +46,8 @@ merged_modules = {
     # OCA/project
     "project_description": "project",
     "project_stage_closed": "project",
+    # OCA/web
+    "web_editor_background_color": "web_editor",
     # OCA/...
 }
 
