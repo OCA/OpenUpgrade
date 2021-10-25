@@ -34,6 +34,7 @@ renamed_modules = {
     "account_e-invoice_generate": "account_einvoice_generate",
     "edi": "edi_oca",
     "edi_account": "edi_account_oca",
+    "edi_backend_partner": "edi_backend_partner_oca",
     "edi_exchange_template": "edi_exchange_template_oca",
     "edi_storage": "edi_storage_oca",
     "edi_webservice": "edi_webservice_oca",
