@@ -10,9 +10,31 @@ renamed_modules = {
     "website_rating": "portal_rating",
     # OCA/account-invoice-reporting
     "account_invoice_comment_template": "account_comment_template",
+    # OCA/bank-statement-import
+    "account_bank_statement_import": "account_statement_import",  # from odoo
+    "account_bank_statement_import_bypass_check": "account_statement_import_bypass_check",  # noqa: B950
+    "account_bank_statement_clear_partner": "account_statement_clear_partner",
+    "account_bank_statement_import_camt_details": "account_statement_import_camt_details",  # noqa: B950
+    "account_bank_statement_import_camt_oca": "account_statement_import_camt_oca",
+    "account_bank_statement_import_move_line": "account_statement_import_move_line",
+    "account_bank_statement_import_mt940_base": "account_statement_import_mt940_base",
+    "account_bank_statement_import_oca_camt54": "account_statement_import_oca_camt54",
+    "account_bank_statement_import_ofx": "account_statement_import_ofx",
+    "account_bank_statement_import_online": "account_statement_import_online",
+    "account_bank_statement_import_online_paypal": "account_statement_import_online_paypal",  # noqa: B950
+    "account_bank_statement_import_online_ponto": "account_statement_import_online_ponto",  # noqa: B950
+    "account_bank_statement_import_online_transferwise": "account_statement_import_online_transferwise",  # noqa: B950
+    "account_bank_statement_import_paypal": "account_statement_import_paypal",
+    "account_bank_statement_import_qif": "account_statement_import_qif",
+    "account_bank_statement_import_split": "account_statement_import_split",
+    "account_bank_statement_import_save_file": "account_statement_import_save_file",
+    "account_bank_statement_import_transfer_move": "account_statement_import_transfer_move",  # noqa: B950
+    "account_bank_statement_import_txt_xlsx": "account_statement_import_txt_xlsx",
     # OCA/edi
+    "account_e-invoice_generate": "account_einvoice_generate",
     "edi": "edi_oca",
     "edi_account": "edi_account_oca",
+    "edi_backend_partner": "edi_backend_partner_oca",
     "edi_exchange_template": "edi_exchange_template_oca",
     "edi_storage": "edi_storage_oca",
     "edi_webservice": "edi_webservice_oca",
@@ -40,6 +62,7 @@ merged_modules = {
     "pos_reprint": "point_of_sale",
     "website_theme_install": "website",
     # OCA/partner-contact
+    "base_vat_sanitized": "base_vat",
     "partner_bank_active": "base",
     # OCA/stock-logistics-warehouse
     "stock_inventory_include_exhausted": "stock",
