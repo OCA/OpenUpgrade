@@ -10,6 +10,26 @@ renamed_modules = {
     "website_rating": "portal_rating",
     # OCA/account-invoice-reporting
     "account_invoice_comment_template": "account_comment_template",
+    # OCA/bank-statement-import
+    "account_bank_statement_import": "account_statement_import",  # from odoo
+    "account_bank_statement_import_bypass_check": "account_statement_import_bypass_check",  # noqa: B950
+    "account_bank_statement_clear_partner": "account_statement_clear_partner",
+    "account_bank_statement_import_camt_details": "account_statement_import_camt_details",  # noqa: B950
+    "account_bank_statement_import_camt_oca": "account_statement_import_camt_oca",
+    "account_bank_statement_import_move_line": "account_statement_import_move_line",
+    "account_bank_statement_import_mt940_base": "account_statement_import_mt940_base",
+    "account_bank_statement_import_oca_camt54": "account_statement_import_oca_camt54",
+    "account_bank_statement_import_ofx": "account_statement_import_ofx",
+    "account_bank_statement_import_online": "account_statement_import_online",
+    "account_bank_statement_import_online_paypal": "account_statement_import_online_paypal",  # noqa: B950
+    "account_bank_statement_import_online_ponto": "account_statement_import_online_ponto",  # noqa: B950
+    "account_bank_statement_import_online_transferwise": "account_statement_import_online_transferwise",  # noqa: B950
+    "account_bank_statement_import_paypal": "account_statement_import_paypal",
+    "account_bank_statement_import_qif": "account_statement_import_qif",
+    "account_bank_statement_import_split": "account_statement_import_split",
+    "account_bank_statement_import_save_file": "account_statement_import_save_file",
+    "account_bank_statement_import_transfer_move": "account_statement_import_transfer_move",  # noqa: B950
+    "account_bank_statement_import_txt_xlsx": "account_statement_import_txt_xlsx",
     # OCA/edi
     "edi": "edi_oca",
     "edi_account": "edi_account_oca",
