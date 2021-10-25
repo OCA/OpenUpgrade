@@ -62,6 +62,7 @@ merged_modules = {
     "pos_reprint": "point_of_sale",
     "website_theme_install": "website",
     # OCA/partner-contact
+    "base_vat_sanitized": "base_vat",
     "partner_bank_active": "base",
     # OCA/stock-logistics-warehouse
     "stock_inventory_include_exhausted": "stock",
