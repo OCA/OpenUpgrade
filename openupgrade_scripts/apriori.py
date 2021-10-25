@@ -31,6 +31,7 @@ renamed_modules = {
     "account_bank_statement_import_transfer_move": "account_statement_import_transfer_move",  # noqa: B950
     "account_bank_statement_import_txt_xlsx": "account_statement_import_txt_xlsx",
     # OCA/edi
+    "account_e-invoice_generate": "account_einvoice_generate",
     "edi": "edi_oca",
     "edi_account": "edi_account_oca",
     "edi_exchange_template": "edi_exchange_template_oca",
