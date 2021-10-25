@@ -22,13 +22,13 @@
 # fah_odoo <fah@odoo.com>, 2019
 # Daniel Osser <danielosser@gmail.com>, 2019
 # Martin Trigaux, 2019
-# Kim Asplund <kim.asplund@gmail.com>, 2020
 # Mikael Holm <mikael.holm@vertel.se>, 2020
 # Jakob Krabbe <jakob.krabbe@vertel.se>, 2021
-# Anders Wallenquist <anders.wallenquist@vertel.se>, 2021
 # STefan Rundgren <stefanrundgren@cellglas.com>, 2021
-# Simon Strömberg <simon.stromberg@vertel.se>, 2021
 # Chrille Hedberg <hedberg.chrille@gmail.com>, 2021
+# Anders Wallenquist <anders.wallenquist@vertel.se>, 2021
+# Simon S, 2021
+# Kim Asplund <kim.asplund@gmail.com>, 2021
 # 
 msgid ""
 msgstr ""
@@ -36,7 +36,7 @@ msgstr ""
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2019-11-14 07:33+0000\n"
 "PO-Revision-Date: 2018-08-24 09:14+0000\n"
-"Last-Translator: Chrille Hedberg <hedberg.chrille@gmail.com>, 2021\n"
+"Last-Translator: Kim Asplund <kim.asplund@gmail.com>, 2021\n"
 "Language-Team: Swedish (https://www.transifex.com/odoo/teams/41243/sv/)\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
@@ -1743,7 +1743,7 @@ msgstr "Objektkonto"
 #: model:ir.ui.menu,name:account.account_analytic_group_menu
 #: model_terms:ir.ui.view,arch_db:account.res_config_settings_view_form
 msgid "Analytic Account Groups"
-msgstr ""
+msgstr "Objektkontogrupper"
 
 #. module: account
 #: model:ir.model.fields,field_description:account.field_res_config_settings__group_analytic_accounting
@@ -1822,7 +1822,7 @@ msgstr ""
 #. module: account
 #: model:ir.model.fields,field_description:account.field_account_move_line__tax_exigible
 msgid "Appears in VAT report"
-msgstr ""
+msgstr "Förekommer i momsrapporten"
 
 #. module: account
 #: model:ir.model.fields,field_description:account.field_account_account_tag__applicability
@@ -2246,7 +2246,7 @@ msgstr "Bankkontoutdrag"
 #: code:addons/account/models/account_journal_dashboard.py:36
 #, python-format
 msgid "Bank: Balance"
-msgstr ""
+msgstr "Bank: Saldo"
 
 #. module: account
 #: model:ir.model.fields,field_description:account.field_account_invoice_tax__base
@@ -2634,7 +2634,7 @@ msgstr ""
 #: code:addons/account/models/account_journal_dashboard.py:34
 #, python-format
 msgid "Cash: Balance"
-msgstr ""
+msgstr "Kontant: Saldo"
 
 #. module: account
 #: model:ir.model,name:account.model_account_cashbox_line
@@ -3092,7 +3092,7 @@ msgstr "Konfigurera en produkt"
 #. module: account
 #: model:ir.actions.act_window,name:account.action_open_account_onboarding_invoice_layout
 msgid "Configure your document layout"
-msgstr ""
+msgstr "Konfigurera er dokumentlayout"
 
 #. module: account
 #: model_terms:ir.ui.view,arch_db:account.view_account_bnk_stmt_cashbox
@@ -3856,7 +3856,7 @@ msgstr "december"
 #. module: account
 #: model:ir.model.fields,field_description:account.field_account_journal__refund_sequence
 msgid "Dedicated Credit Note Sequence"
-msgstr ""
+msgstr "Separat nummerserie för kreditnotor"
 
 #. module: account
 #: model:ir.model.fields,field_description:account.field_res_company__invoice_reference_type
@@ -3916,7 +3916,7 @@ msgstr ""
 #. module: account
 #: model_terms:ir.ui.view,arch_db:account.res_config_settings_view_form
 msgid "Default taxes applied to local transactions"
-msgstr ""
+msgstr "Standardmomssatser som appliceras på lokala transaktioner"
 
 #. module: account
 #: model:ir.model.fields,help:account.field_product_product__supplier_taxes_id
@@ -4484,7 +4484,7 @@ msgstr ""
 #: code:addons/account/static/src/xml/account_reconciliation.xml:333
 #, python-format
 msgid "External link"
-msgstr ""
+msgstr "Extern länk"
 
 #. module: account
 #: model:account.incoterms,name:account.incoterm_FAS
@@ -4981,7 +4981,7 @@ msgstr "Historik"
 #. module: account
 #: model_terms:ir.ui.view,arch_db:account.res_config_settings_view_form
 msgid "How total tax amount is computed in orders and invoices"
-msgstr ""
+msgstr "Hur den totala momssatsen beräknas på ordrar och fakturor"
 
 #. module: account
 #: model:ir.model.fields,field_description:account.field_account_abstract_payment__id
@@ -6321,7 +6321,7 @@ msgstr ""
 #. module: account
 #: model:ir.model.fields,field_description:account.field_account_invoice_send__layout
 msgid "Layout"
-msgstr ""
+msgstr "Layout"
 
 #. module: account
 #: model_terms:ir.ui.view,arch_db:account.view_account_position_form
@@ -6404,7 +6404,7 @@ msgstr ""
 #: code:addons/account/static/src/xml/account_reconciliation.xml:154
 #, python-format
 msgid "Load more... ("
-msgstr ""
+msgstr "Ladda mera...("
 
 #. module: account
 #: model:ir.model.fields,field_description:account.field_res_company__fiscalyear_lock_date
@@ -6825,7 +6825,7 @@ msgstr ""
 #: model:ir.model.fields,field_description:account.field_account_invoice_send__needaction
 #: model:ir.model.fields,help:account.field_account_invoice_send__needaction
 msgid "Need Action"
-msgstr ""
+msgstr "Behöver åtgärd"
 
 #. module: account
 #: model:ir.model.fields,field_description:account.field_account_invoice_send__need_moderation
@@ -8086,7 +8086,7 @@ msgstr "Inköp"
 #. module: account
 #: model_terms:ir.ui.view,arch_db:account.invoice_supplier_form
 msgid "Purchase Representative"
-msgstr ""
+msgstr "Inköpsombud"
 
 #. module: account
 #: model_terms:ir.ui.view,arch_db:account.res_config_settings_view_form
@@ -8172,7 +8172,7 @@ msgstr ""
 #. module: account
 #: model_terms:ir.ui.view,arch_db:account.product_template_form_view
 msgid "Receivables"
-msgstr ""
+msgstr "Fordringar"
 
 #. module: account
 #: selection:account.abstract.payment,payment_type:0
@@ -8268,7 +8268,7 @@ msgstr ""
 #. module: account
 #: model_terms:ir.ui.view,arch_db:account.res_config_settings_view_form
 msgid "Record transactions in foreign currencies"
-msgstr ""
+msgstr "Registrera transaktioner i utländska valutor"
 
 #. module: account
 #: code:addons/account/models/account.py:930
@@ -8632,12 +8632,12 @@ msgstr "Försäljning"
 #: model_terms:ir.ui.view,arch_db:account.account_invoice_onboarding_sale_tax_form
 #: model_terms:ir.ui.view,arch_db:account.res_config_settings_view_form
 msgid "Sales Tax"
-msgstr ""
+msgstr "Försäljningsmoms"
 
 #. module: account
 #: model:ir.actions.act_window,name:account.action_open_account_onboarding_sale_tax
 msgid "Sales tax"
-msgstr ""
+msgstr "Försäljningsmoms"
 
 #. module: account
 #: model:ir.model.fields,field_description:account.field_account_invoice__user_id
@@ -9034,12 +9034,12 @@ msgstr ""
 #. module: account
 #: model_terms:ir.ui.view,arch_db:account.onboarding_bank_account_step
 msgid "Setup your bank account to sync bank feeds."
-msgstr ""
+msgstr "Ställ in din bank för att synkronisera med banktransaktionerna."
 
 #. module: account
 #: model_terms:ir.ui.view,arch_db:account.onboarding_chart_of_account_step
 msgid "Setup your chart of accounts and record initial balances."
-msgstr ""
+msgstr "Ställ in kontoplan och registrera ingående balanser."
 
 #. module: account
 #: model_terms:ir.ui.view,arch_db:account.dashboard_onboarding_company_step
@@ -9101,13 +9101,13 @@ msgstr ""
 #. module: account
 #: model:res.groups,comment:account.group_show_line_subtotals_tax_included
 msgid "Show line subtotals with taxes included (B2C)"
-msgstr ""
+msgstr "Visa delsummor på rader med inkluderad moms (B2C)"
 
 #. module: account
 #: model:ir.model.fields,field_description:account.field_res_config_settings__group_show_line_subtotals_tax_excluded
 #: model:res.groups,comment:account.group_show_line_subtotals_tax_excluded
 msgid "Show line subtotals without taxes (B2B)"
-msgstr ""
+msgstr "Visa delsummor på rader exklusive moms (B2B)"
 
 #. module: account
 #. openerp-web
@@ -9478,7 +9478,7 @@ msgstr ""
 #: model_terms:ir.ui.view,arch_db:account.invoice_supplier_tree
 #: model_terms:ir.ui.view,arch_db:account.invoice_tree
 msgid "Tax Excluded"
-msgstr ""
+msgstr "Ex. moms"
 
 #. module: account
 #: model:ir.model,name:account.model_account_tax_group
@@ -11486,6 +11486,8 @@ msgid ""
 "You can not have an overlap between two fiscal years, please correct the "
 "start and/or end dates of your fiscal years."
 msgstr ""
+"Ni kan inte ha en överlappning mellan två räkenskapsår, vänligen ändra start"
+" och/eller slutdatumen på era räkenskapsår."
 
 #. module: account
 #: code:addons/account/models/account_invoice.py:1784
@@ -11732,7 +11734,7 @@ msgstr ""
 #: code:addons/account/models/account_move.py:1112
 #, python-format
 msgid "You cannot use a deprecated account."
-msgstr ""
+msgstr "Du kan inte använda föråldrade konton."
 
 #. module: account
 #: code:addons/account/models/account_move.py:1069
