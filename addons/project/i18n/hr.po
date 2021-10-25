@@ -19,6 +19,8 @@
 # Ana-Maria Olujić <ana-maria.olujic@slobodni-programi.hr>, 2019
 # Milan Tribuson <one.mile.code@gmail.com>, 2019
 # Igor Krizanovic <krizanovic.igor@gmail.com>, 2019
+# 0ba0ac30481a756f36528ba6f9a4317e_6443a87 <52eefe24349934c364624ef40611b7a3_1010754>, 2021
+# Hrvoje Sić <hrvoje.sic@gmail.com>, 2021
 # Bole <bole@dajmi5.com>, 2021
 # 
 msgid ""
@@ -63,7 +65,7 @@ msgstr " # zadataka"
 #. module: project
 #: model:mail.template,subject:project.rating_project_request_email_template
 msgid "${object.project_id.company_id.name}: Satisfaction Survey"
-msgstr ""
+msgstr "${object.project_id.company_id.name}: Upitnik o zadovoljstvu"
 
 #. module: project
 #: model_terms:ir.ui.view,arch_db:project.edit_project
@@ -279,7 +281,7 @@ msgstr "<span class=\"fa fa-tasks\" role=\"img\" aria-label=\"Tasks\" title=\"Za
 #. module: project
 #: model_terms:ir.ui.view,arch_db:project.portal_my_task
 msgid "<strong class=\"d-block mb-2\">Attachments</strong>"
-msgstr ""
+msgstr "<strong class=\"d-block mb-2\">Privitci</strong>"
 
 #. module: project
 #: model_terms:ir.ui.view,arch_db:project.portal_my_task
@@ -453,7 +455,7 @@ msgstr "Arhivirano"
 #. module: project
 #: model_terms:ir.ui.view,arch_db:project.view_task_form2
 msgid "Assign to Me"
-msgstr ""
+msgstr "Dodijeli mi"
 
 #. module: project
 #: model:ir.model.fields,field_description:project.field_report_project_task_user__date_start
@@ -510,7 +512,7 @@ msgstr "Broj priloga"
 #. module: project
 #: model:ir.model.fields,help:project.field_project_task__attachment_ids
 msgid "Attachment that don't come from message."
-msgstr ""
+msgstr "Privitci koji ne dolaze iz poruke."
 
 #. module: project
 #: code:addons/project/models/project.py:114
@@ -530,6 +532,9 @@ msgid ""
 " * A good feedback from the customer will update the kanban state to 'ready for the new stage' (green bullet).\n"
 " * A medium or a bad feedback will set the kanban state to 'blocked' (red bullet).\n"
 msgstr ""
+"Automatski izmijeni kanban stanje kada korisnik odgovori na povratne informacije za ovaj stadij.\n"
+" * korisnikov pozitivni povratni odgovor ažurirati će kanban stanje na \"spremno za novij stadij\" (zelena oznaka).\n"
+" * korisnikov srednje dobar ili negativan povratni odgovor ažurirati će kanban stanje na \"blokirano\" (crvena oznaka).\n"
 
 #. module: project
 #: model_terms:ir.ui.view,arch_db:project.portal_project_rating_progressbar
@@ -587,7 +592,7 @@ msgstr "Blokirano"
 #: code:addons/project/static/src/js/project_task_kanban_examples.js:61
 #, python-format
 msgid "Brainstorm"
-msgstr ""
+msgstr "Razmjena ideja"
 
 #. module: project
 #: model:project.task,legend_done:project.project_task_10
@@ -748,7 +753,7 @@ msgstr ""
 #. module: project
 #: model:ir.model.fields,field_description:project.field_project_task__displayed_image_id
 msgid "Cover Image"
-msgstr ""
+msgstr "Naslovna slika"
 
 #. module: project
 #: model_terms:ir.ui.view,arch_db:project.project_project_view_form_simplified
@@ -769,7 +774,7 @@ msgstr ""
 #. module: project
 #: model_terms:ir.actions.act_window,help:project.open_task_type_form
 msgid "Create a new stage in the task pipeline"
-msgstr ""
+msgstr "Dodajte novu fazu u tok zadataka"
 
 #. module: project
 #: model_terms:ir.actions.act_window,help:project.project_tags_action
@@ -850,13 +855,13 @@ msgstr "E-mail kupca"
 #: code:addons/project/static/src/js/project_task_kanban_examples.js:44
 #, python-format
 msgid "Customer Feedback"
-msgstr ""
+msgstr "Povratne informacije korisnika"
 
 #. module: project
 #: model:ir.model.fields,help:project.field_project_project__access_url
 #: model:ir.model.fields,help:project.field_project_task__access_url
 msgid "Customer Portal URL"
-msgstr ""
+msgstr "URL portala za kupce"
 
 #. module: project
 #: model:ir.actions.act_window,name:project.rating_rating_action_project_report
@@ -994,7 +999,7 @@ msgstr "Naziv za prikaz"
 #: code:addons/project/models/digest.py:16
 #, python-format
 msgid "Do not have access, skip this data for user's digest email"
-msgstr ""
+msgstr "Nemate pristup, preskočite ove podatke za sažetak e-pošte korisnika"
 
 #. module: project
 #: model_terms:ir.ui.view,arch_db:project.edit_project
@@ -1047,7 +1052,7 @@ msgstr ""
 #: code:addons/project/static/src/js/project_task_kanban_examples.js:39
 #, python-format
 msgid "Editing"
-msgstr ""
+msgstr "Uređivanje"
 
 #. module: project
 #: model:ir.model.fields,field_description:project.field_project_task__email_from
@@ -1135,7 +1140,7 @@ msgstr ""
 #: code:addons/project/static/src/js/project_task_kanban_examples.js:61
 #, python-format
 msgid "Final Document"
-msgstr ""
+msgstr "Završni dokument"
 
 #. module: project
 #: model:ir.model.fields,field_description:project.field_project_task_type__fold
@@ -1423,7 +1428,7 @@ msgstr "U tijeku"
 #: code:addons/project/static/src/js/project_task_kanban_examples.js:45
 #, python-format
 msgid "In development"
-msgstr ""
+msgstr "U razvoju"
 
 #. module: project
 #. openerp-web
@@ -1480,7 +1485,7 @@ msgstr "Kanban stanje"
 #. module: project
 #: model:ir.model.fields,field_description:project.field_project_task__kanban_state_label
 msgid "Kanban State Label"
-msgstr ""
+msgstr "Labela statusa u kanbanu"
 
 #. module: project
 #: model:ir.model.fields,field_description:project.field_project_task__legend_done
@@ -1891,7 +1896,7 @@ msgstr ""
 #. module: project
 #: model:ir.model.fields,field_description:project.field_digest_digest__kpi_project_task_opened
 msgid "Open Tasks"
-msgstr ""
+msgstr "Otvoreni zadaci"
 
 #. module: project
 #: model:ir.model.fields,help:project.field_project_project__alias_force_thread_id
@@ -2052,7 +2057,7 @@ msgstr ""
 #: model:ir.model.fields,field_description:project.field_project_project__access_url
 #: model:ir.model.fields,field_description:project.field_project_task__access_url
 msgid "Portal Access URL"
-msgstr ""
+msgstr "URL za pristup portalu"
 
 #. module: project
 #: model:ir.model.fields,field_description:project.field_project_task__priority
@@ -2385,19 +2390,19 @@ msgstr "Traži projekt"
 #: code:addons/project/controllers/portal.py:118
 #, python-format
 msgid "Search in All"
-msgstr ""
+msgstr "Traži svuda"
 
 #. module: project
 #: code:addons/project/controllers/portal.py:116
 #, python-format
 msgid "Search in Customer"
-msgstr ""
+msgstr "Traži u korisnicima"
 
 #. module: project
 #: code:addons/project/controllers/portal.py:115
 #, python-format
 msgid "Search in Messages"
-msgstr ""
+msgstr "Traži u porukama"
 
 #. module: project
 #: code:addons/project/controllers/portal.py:117
@@ -2830,7 +2835,7 @@ msgstr "Nema zadataka."
 #: code:addons/project/static/src/xml/project.xml:11
 #, python-format
 msgid "There is no available image to be set as cover."
-msgstr ""
+msgstr "Ne postoji dostupna slika koju je moguće postaviti kao naslovnu."
 
 #. module: project
 #: model_terms:ir.actions.act_window,help:project.rating_rating_action_view_project_rating
@@ -2987,7 +2992,7 @@ msgstr "Brojač nepročitanih poruka"
 #: code:addons/project/static/src/js/project.js:72
 #, python-format
 msgid "Upload and Set"
-msgstr ""
+msgstr "Prenesi i postavi"
 
 #. module: project
 #: model:ir.model.fields,field_description:project.field_res_config_settings__group_project_rating

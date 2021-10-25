@@ -5,15 +5,15 @@
 # Translators:
 # Jorunn D. Newth, 2018
 # Martin Trigaux, 2018
-# Marius Stedjan <marius@stedjan.com>, 2020
+# Marius Stedjan <marius@stedjan.com>, 2021
 # 
 msgid ""
 msgstr ""
 "Project-Id-Version: Odoo Server 12.0\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2019-08-08 13:50+0000\n"
+"POT-Creation-Date: 2021-09-07 07:15+0000\n"
 "PO-Revision-Date: 2018-08-24 09:22+0000\n"
-"Last-Translator: Marius Stedjan <marius@stedjan.com>, 2020\n"
+"Last-Translator: Marius Stedjan <marius@stedjan.com>, 2021\n"
 "Language-Team: Norwegian Bokmål (https://www.transifex.com/odoo/teams/41243/nb/)\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
@@ -22,17 +22,25 @@ msgstr ""
 "Plural-Forms: nplurals=2; plural=(n != 1);\n"
 
 #. module: portal
-#. openerp-web
-#: code:addons/portal/static/src/js/portal_sidebar.js:43
+#: code:addons/portal/wizard/portal_wizard.py:117
 #, python-format
-msgid "%d days overdue"
-msgstr "%d dager over forfall"
+msgid ""
+"\n"
+"- Switch the internal users to portal manually"
+msgstr ""
+
+#. module: portal
+#. openerp-web
+#: code:addons/portal/static/src/js/portal_sidebar.js:47
+#, python-format
+msgid "%1d days overdue"
+msgstr ""
 
 #. module: portal
 #: code:addons/portal/controllers/portal.py:277
 #, python-format
 msgid "%s is not the reference of a report"
-msgstr ""
+msgstr "%s er ikke en rapportreferanse"
 
 #. module: portal
 #: model_terms:ir.ui.view,arch_db:portal.portal_show_sign_in
@@ -50,36 +58,38 @@ msgid ""
 "<i class=\"fa fa-chevron-left\" role=\"img\" aria-label=\"Previous\" "
 "title=\"Previous\"/>"
 msgstr ""
+"<i class=\"fa fa-chevron-left\" role=\"img\" aria-label=\"Previous\" "
+"title=\"Forrige\"/>"
 
 #. module: portal
 #: model_terms:ir.ui.view,arch_db:portal.record_pager
 msgid "<i class=\"fa fa-chevron-right\" role=\"img\" aria-label=\"Next\" title=\"Next\"/>"
-msgstr ""
+msgstr "<i class=\"fa fa-chevron-right\" role=\"img\" aria-label=\"Next\" title=\"Neste\"/>"
 
 #. module: portal
 #: model_terms:ir.ui.view,arch_db:portal.portal_layout
 msgid "<i class=\"fa fa-pencil\"/> Edit"
-msgstr ""
+msgstr "<i class=\"fa fa-pencil\"/> Rediger"
 
 #. module: portal
 #: model_terms:ir.ui.view,arch_db:portal.portal_searchbar
 msgid "<span class=\"small mr-1 navbar-text\">Filter By:</span>"
-msgstr ""
+msgstr "<span class=\"small mr-1 navbar-text\">Filtrer etter:"
 
 #. module: portal
 #: model_terms:ir.ui.view,arch_db:portal.portal_searchbar
 msgid "<span class=\"small mr-1 navbar-text\">Group By:</span>"
-msgstr ""
+msgstr "<span class=\"small mr-1 navbar-text\">Grupper etter:</span>"
 
 #. module: portal
 #: model_terms:ir.ui.view,arch_db:portal.portal_searchbar
 msgid "<span class=\"small mr-1 navbar-text\">Sort By:</span>"
-msgstr ""
+msgstr "<span class=\"small mr-1 navbar-text\">Sorter etter:</span>"
 
 #. module: portal
 #: model_terms:ir.ui.view,arch_db:portal.portal_share_template
 msgid "<strong>Open </strong>"
-msgstr ""
+msgstr "<strong>Åpne</strong>"
 
 #. module: portal
 #: model:mail.template,body_html:portal.mail_template_data_portal_welcome
@@ -255,7 +265,7 @@ msgstr ""
 #: code:addons/portal/static/src/xml/portal_signature.xml:19
 #, python-format
 msgid "Accept & Sign"
-msgstr ""
+msgstr "Aksepter og signer"
 
 #. module: portal
 #: model:ir.model.fields,field_description:portal.field_portal_mixin__access_warning
@@ -271,12 +281,12 @@ msgstr "Legg til notat"
 #. module: portal
 #: model_terms:ir.ui.view,arch_db:portal.portal_share_wizard
 msgid "Add contacts to share the document..."
-msgstr ""
+msgstr "Legg til kontakter for å dele dokumentet..."
 
 #. module: portal
 #: model:ir.model.fields,help:portal.field_portal_share__note
 msgid "Add extra content to display in the email"
-msgstr ""
+msgstr "Legg til ekstra innhold i eposten"
 
 #. module: portal
 #: model_terms:ir.ui.view,arch_db:portal.wizard_view
@@ -303,11 +313,15 @@ msgstr "Kanseller"
 
 #. module: portal
 #: code:addons/portal/controllers/portal.py:220
+#: model_terms:ir.ui.view,arch_db:portal.portal_my_details
 #, python-format
 msgid ""
 "Changing VAT number is not allowed once document(s) have been issued for "
 "your account. Please contact us directly for this operation."
 msgstr ""
+"Det er ikke mulig å endre organisasjonsnummer etter at dokumenter har blitt "
+"opprettet på kontoen din. Vennligst ta kontakt med oss direkte for å endre "
+"organisasjonsnummeret."
 
 #. module: portal
 #: model_terms:ir.ui.view,arch_db:portal.portal_my_details
@@ -315,6 +329,8 @@ msgid ""
 "Changing company name is not allowed once document(s) have been issued for "
 "your account. Please contact us directly for this operation."
 msgstr ""
+"Det er ikke mulig å endre firmanavn etter at dokumenter har blitt opprettet "
+"på kontoen din. Vennligst ta kontakt med oss direkte for å endre navnet."
 
 #. module: portal
 #: model_terms:ir.ui.view,arch_db:portal.portal_my_details
@@ -330,7 +346,7 @@ msgstr "Tøm"
 
 #. module: portal
 #. openerp-web
-#: code:addons/portal/static/src/xml/portal_signature.xml:27
+#: code:addons/portal/static/src/xml/portal_signature.xml:28
 #, python-format
 msgid "Click here to see your document."
 msgstr "Klikk her for å se dokumentet ditt."
@@ -417,17 +433,17 @@ msgstr "Tegn signaturen din"
 
 #. module: portal
 #. openerp-web
-#: code:addons/portal/static/src/js/portal_sidebar.js:41
+#: code:addons/portal/static/src/js/portal_sidebar.js:45
 #, python-format
-msgid "Due in %d days"
-msgstr "Utløper om %d dager"
+msgid "Due in %1d days"
+msgstr ""
 
 #. module: portal
 #. openerp-web
-#: code:addons/portal/static/src/js/portal_sidebar.js:39
+#: code:addons/portal/static/src/js/portal_sidebar.js:41
 #, python-format
 msgid "Due today"
-msgstr ""
+msgstr "Forfaller i dag"
 
 #. module: portal
 #: model:ir.model.fields,field_description:portal.field_portal_wizard_user__email
@@ -445,7 +461,7 @@ msgstr "Eposttråd"
 #: model:ir.model,name:portal.model_portal_wizard
 #: model_terms:ir.ui.view,arch_db:portal.wizard_view
 msgid "Grant Portal Access"
-msgstr ""
+msgstr "Gi portaltilgang"
 
 #. module: portal
 #: model:ir.model,name:portal.model_ir_http
@@ -480,7 +496,7 @@ msgstr "Ugyldig epostadresse! Vennligst legg inn en gyldig adresse."
 #: code:addons/portal/controllers/portal.py:272
 #, python-format
 msgid "Invalid report type: %s"
-msgstr ""
+msgstr "Ugyldig rapporttype: %s"
 
 #. module: portal
 #: model:ir.model.fields,field_description:portal.field_portal_wizard__welcome_message
@@ -584,12 +600,12 @@ msgstr "URL for tilgang til portal"
 #. module: portal
 #: model:ir.model,name:portal.model_portal_mixin
 msgid "Portal Mixin"
-msgstr ""
+msgstr "Portal Mixin"
 
 #. module: portal
 #: model:ir.model,name:portal.model_portal_share
 msgid "Portal Sharing"
-msgstr ""
+msgstr "Portaldeling"
 
 #. module: portal
 #: model:ir.model,name:portal.model_portal_wizard_user
@@ -616,7 +632,7 @@ msgstr "Forrige"
 
 #. module: portal
 #. openerp-web
-#: code:addons/portal/static/src/js/portal_chatter.js:109
+#: code:addons/portal/static/src/js/portal_chatter.js:116
 #, python-format
 msgid "Published on %s"
 msgstr "Publisert %s"
@@ -666,7 +682,7 @@ msgid "Send"
 msgstr "Send"
 
 #. module: portal
-#: code:addons/portal/wizard/portal_wizard.py:100
+#: code:addons/portal/wizard/portal_wizard.py:105
 #, python-format
 msgid "Several contacts have the same email: "
 msgstr "Flere kontakter har samme epostadresse:"
@@ -675,16 +691,22 @@ msgstr "Flere kontakter har samme epostadresse:"
 #: model:ir.actions.act_window,name:portal.portal_share_action
 #: model_terms:ir.ui.view,arch_db:portal.portal_share_wizard
 msgid "Share Document"
+msgstr "Del dokument"
+
+#. module: portal
+#: code:addons/portal/wizard/portal_wizard.py:111
+#, python-format
+msgid "Some contacts are already internal users:"
 msgstr ""
 
 #. module: portal
-#: code:addons/portal/wizard/portal_wizard.py:97
+#: code:addons/portal/wizard/portal_wizard.py:102
 #, python-format
 msgid "Some contacts don't have a valid email: "
 msgstr "Noen kontakter mangler en gyldig epostadresse:"
 
 #. module: portal
-#: code:addons/portal/wizard/portal_wizard.py:103
+#: code:addons/portal/wizard/portal_wizard.py:108
 #, python-format
 msgid "Some contacts have the same email as an existing portal user:"
 msgstr ""
@@ -708,7 +730,7 @@ msgstr "Gate"
 
 #. module: portal
 #. openerp-web
-#: code:addons/portal/static/src/xml/portal_signature.xml:25
+#: code:addons/portal/static/src/xml/portal_signature.xml:26
 #, python-format
 msgid "Thank You !"
 msgstr "Takk!"
@@ -724,12 +746,12 @@ msgstr "Det er så langt ingen kommentarer."
 #: code:addons/portal/controllers/portal.py:237
 #, python-format
 msgid "This document does not exist."
-msgstr ""
+msgstr "Dokumentet finnes ikke."
 
 #. module: portal
 #: model_terms:ir.ui.view,arch_db:portal.portal_back_in_edit_mode
 msgid "This is a preview of the customer portal."
-msgstr ""
+msgstr "Dette er en forhåndsvisning av kundeportalen."
 
 #. module: portal
 #: model_terms:ir.ui.view,arch_db:portal.wizard_view
@@ -742,7 +764,7 @@ msgid "This text is included in the email sent to new users of the portal."
 msgstr "Denne teksten tas med i epostmeldingen som sendes nye portalbrukere."
 
 #. module: portal
-#: code:addons/portal/wizard/portal_wizard.py:106
+#: code:addons/portal/wizard/portal_wizard.py:114
 #, python-format
 msgid ""
 "To resolve this error, you can: \n"
@@ -756,7 +778,7 @@ msgstr ""
 #. module: portal
 #: model_terms:ir.ui.view,arch_db:portal.portal_searchbar
 msgid "Toggle filters"
-msgstr ""
+msgstr "Skru av/på filtre"
 
 #. module: portal
 #: model:ir.model.fields,field_description:portal.field_portal_wizard__user_ids
@@ -769,7 +791,7 @@ msgid "VAT Number"
 msgstr "Organisasjonsnummer"
 
 #. module: portal
-#: code:addons/portal/models/portal_mixin.py:83
+#: code:addons/portal/models/portal_mixin.py:93
 #, python-format
 msgid "View %s"
 msgstr "Vis %s"
@@ -835,16 +857,16 @@ msgid "Write a message..."
 msgstr "Skriv en melding ..."
 
 #. module: portal
-#: code:addons/portal/wizard/portal_share.py:59
-#: code:addons/portal/wizard/portal_share.py:71
+#: code:addons/portal/wizard/portal_share.py:61
+#: code:addons/portal/wizard/portal_share.py:77
 #, python-format
 msgid "You are invited to access %s"
-msgstr ""
+msgstr "Du har fått tilgang til %s"
 
 #. module: portal
 #: model_terms:ir.ui.view,arch_db:portal.portal_share_template
 msgid "You have been invited to access the following document:"
-msgstr ""
+msgstr "Du har fått tilgang til følgende dokument:"
 
 #. module: portal
 #. openerp-web
@@ -854,7 +876,7 @@ msgid "You must be"
 msgstr "Du må være"
 
 #. module: portal
-#: code:addons/portal/wizard/portal_wizard.py:175
+#: code:addons/portal/wizard/portal_wizard.py:184
 #, python-format
 msgid ""
 "You must have an email address in your User Preferences to send emails."
@@ -890,12 +912,12 @@ msgstr "Navnet ditt"
 #. module: portal
 #: model:mail.template,subject:portal.mail_template_data_portal_welcome
 msgid "Your Odoo account at ${object.user_id.company_id.name}"
-msgstr ""
+msgstr "Din Odoo-konto hos ${object.user_id.company_id.name}"
 
 #. module: portal
 #: model_terms:ir.ui.view,arch_db:portal.portal_contact
 msgid "Your contact"
-msgstr ""
+msgstr "Din kontakt"
 
 #. module: portal
 #: model_terms:ir.ui.view,arch_db:portal.portal_my_details
@@ -933,7 +955,7 @@ msgstr "innlogget"
 #. module: portal
 #: model_terms:ir.ui.view,arch_db:portal.portal_record_sidebar
 msgid "odoo"
-msgstr ""
+msgstr "odoo"
 
 #. module: portal
 #: model_terms:ir.ui.view,arch_db:portal.portal_my_details
