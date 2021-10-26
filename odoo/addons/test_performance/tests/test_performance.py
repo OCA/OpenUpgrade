@@ -140,18 +140,18 @@ class TestPerformance(TransactionCase):
         self.assertEqual(rec2.line_ids, lines[0])
 
         rec1.invalidate_cache()
-        with self.assertQueryCount(7):
+        with self.assertQueryCount(8):
             rec2.write({'line_ids': [(4, line.id) for line in lines[1:]]})
         self.assertFalse(rec1.line_ids)
         self.assertEqual(rec2.line_ids, lines)
 
         rec1.invalidate_cache()
-        with self.assertQueryCount(5):
+        with self.assertQueryCount(4):
             rec2.write({'line_ids': [(4, line.id) for line in lines[0]]})
         self.assertEqual(rec2.line_ids, lines)
 
         rec1.invalidate_cache()
-        with self.assertQueryCount(5):
+        with self.assertQueryCount(4):
             rec2.write({'line_ids': [(4, line.id) for line in lines[1:]]})
         self.assertEqual(rec2.line_ids, lines)
 
@@ -461,10 +461,10 @@ class TestIrPropertyOptimizations(TransactionCase):
             self.Bacon.create({'property_eggs': False})
 
         # create with another value
-        with self.assertQueryCount(5):
+        with self.assertQueryCount(3):
             self.Bacon.with_context(default_property_eggs=eggs.id).create({})
 
-        with self.assertQueryCount(5):
+        with self.assertQueryCount(3):
             self.Bacon.create({'property_eggs': eggs.id})
 
     def test_with_truthy_default(self):
@@ -495,14 +495,14 @@ class TestIrPropertyOptimizations(TransactionCase):
         eggs = self.Eggs.create({})
         self.Bacon.create({'property_eggs': eggs.id})
 
-        with self.assertQueryCount(5):
+        with self.assertQueryCount(3):
             self.Bacon.with_context(default_property_eggs=eggs.id).create({})
 
-        with self.assertQueryCount(5):
+        with self.assertQueryCount(3):
             self.Bacon.create({'property_eggs': eggs.id})
 
-        with self.assertQueryCount(5):
+        with self.assertQueryCount(3):
             self.Bacon.with_context(default_property_eggs=False).create({})
 
-        with self.assertQueryCount(5):
+        with self.assertQueryCount(3):
             self.Bacon.create({'property_eggs': False})

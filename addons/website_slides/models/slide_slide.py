@@ -158,7 +158,7 @@ class Slide(models.Model):
     document_id = fields.Char('Document ID', help="Youtube or Google Document ID")
     link_ids = fields.One2many('slide.slide.link', 'slide_id', string="External URL for this slide")
     mime_type = fields.Char('Mime-type')
-    html_content = fields.Html("HTML Content", help="Custom HTML content for slides of type 'Web Page'.", translate=True)
+    html_content = fields.Html("HTML Content", help="Custom HTML content for slides of type 'Web Page'.", translate=True, sanitize_attributes=False, sanitize_form=False)
     # website
     website_id = fields.Many2one(related='channel_id.website_id', readonly=True)
     date_published = fields.Datetime('Publish Date', readonly=True, tracking=True)
@@ -352,6 +352,10 @@ class Slide(models.Model):
             data = base64.b64decode(self.datas)
             if data.startswith(b'%PDF-'):
                 pdf = PyPDF2.PdfFileReader(io.BytesIO(data), overwriteWarnings=False, strict=False)
+                try:
+                    pdf.getNumPages()
+                except PyPDF2.utils.PdfReadError:
+                    return
                 self.completion_time = (5 * len(pdf.pages)) / 60
 
     @api.depends('name', 'channel_id.website_id.domain')

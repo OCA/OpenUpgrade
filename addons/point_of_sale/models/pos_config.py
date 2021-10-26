@@ -357,6 +357,14 @@ class PosConfig(models.Model):
                 _("You must configure an intermediary account for the payment methods: %s.") % method_names
             )
 
+    @api.constrains('pricelist_id', 'available_pricelist_ids')
+    def _check_pricelists(self):
+        self._check_companies()
+        self = self.sudo()
+        if self.pricelist_id.company_id and self.pricelist_id.company_id != self.company_id:
+            raise ValidationError(
+                _("The default pricelist must belong to no company or the company of the point of sale."))
+
     @api.constrains('company_id', 'available_pricelist_ids')
     def _check_companies(self):
         if any(self.available_pricelist_ids.mapped(lambda pl: pl.company_id.id not in (False, self.company_id.id))):
@@ -445,6 +453,11 @@ class PosConfig(models.Model):
         return result
 
     @api.model
+    def _get_allowed_change_fields(self):
+        allowed_keys = []
+        return allowed_keys
+
+    @api.model
     def create(self, values):
         IrSequence = self.env['ir.sequence'].sudo()
         val = {
@@ -467,7 +480,9 @@ class PosConfig(models.Model):
 
     def write(self, vals):
         opened_session = self.mapped('session_ids').filtered(lambda s: s.state != 'closed')
-        if opened_session:
+        allowed_change_fields = self._get_allowed_change_fields()
+        only_allowed_fields = all(val in allowed_change_fields for val in vals.keys())
+        if opened_session and not only_allowed_fields:
             raise UserError(_('Unable to modify this PoS Configuration because there is an open PoS Session based on it.'))
         result = super(PosConfig, self).write(vals)
 
@@ -528,10 +543,10 @@ class PosConfig(models.Model):
     # Methods to open the POS
     def open_ui(self):
         """Open the pos interface with config_id as an extra argument.
-    
+
         In vanilla PoS each user can only have one active session, therefore it was not needed to pass the config_id
         on opening a session. It is also possible to login to sessions created by other users.
-        
+
         :returns: dict
         """
         self.ensure_one()
@@ -551,6 +566,7 @@ class PosConfig(models.Model):
         """
         self.ensure_one()
         if not self.current_session_id:
+            self._check_pricelists()
             self._check_company_journal()
             self._check_company_invoice_journal()
             self._check_company_payment()
@@ -573,6 +589,7 @@ class PosConfig(models.Model):
         return self._open_session(self.current_session_id.id)
 
     def _open_session(self, session_id):
+        self._check_pricelists()  # The pricelist company might have changed after the first opening of the session
         return {
             'name': _('Session'),
             'view_mode': 'form,tree',

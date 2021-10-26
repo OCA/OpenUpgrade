@@ -465,6 +465,41 @@ QUnit.module('basic_fields', {
         form.destroy();
     });
 
+    QUnit.test('toggle_button in form view with readonly modifiers', async function (assert) {
+        assert.expect(3);
+
+        var form = await createView({
+            View: FormView,
+            model: 'partner',
+            data: this.data,
+            arch: '<form>' +
+                '<field name="bar" widget="toggle_button" ' +
+                'options="{\'active\': \'Active value\', \'inactive\': \'Inactive value\'}" ' +
+                'readonly="True"/>' +
+                '</form>',
+            mockRPC: function (route, args) {
+                if (args.method === 'write') {
+                    throw new Error("Should not do a write RPC with readonly toggle_button");
+                }
+                return this._super.apply(this, arguments);
+            },
+            res_id: 2,
+        });
+
+        assert.strictEqual(form.$('.o_field_widget[name=bar] i.o_toggle_button_success:not(.text-muted)').length,
+            1, "should be green");
+        assert.ok(form.$('.o_field_widget[name=bar]').prop('disabled'),
+            "button should be disabled when readonly attribute is given");
+
+        // click on the button to check click doesn't call write as we throw error in write call
+        form.$('.o_field_widget[name=bar]').click();
+
+        assert.strictEqual(form.$('.o_field_widget[name=bar] i.o_toggle_button_success:not(.text-muted)').length,
+            1, "should be green even after click");
+
+        form.destroy();
+    });
+
     QUnit.module('FieldFloat');
 
     QUnit.test('float field when unset', async function (assert) {
@@ -2183,7 +2218,7 @@ QUnit.module('basic_fields', {
     });
 
     QUnit.test('binary fields that are readonly in create mode do not download', async function (assert) {
-        assert.expect(2);
+        assert.expect(4);
 
         // save the session function
         var oldGetFile = session.get_file;
@@ -2215,10 +2250,17 @@ QUnit.module('basic_fields', {
         await testUtils.fields.many2one.clickOpenDropdown('product_id');
         await testUtils.fields.many2one.clickHighlightedItem('product_id');
 
-        assert.containsOnce(form, 'a.o_field_widget[name="document"] > .fa-download',
+        assert.containsOnce(form, 'a.o_field_widget[name="document"]',
             'The link to download the binary should be present');
+        assert.containsNone(form, 'a.o_field_widget[name="document"] > .fa-download',
+            'The download icon should not be present');
 
-        testUtils.dom.click(form.$('a.o_field_widget[name="document"]'));
+        var link = form.$('a.o_field_widget[name="document"]');
+        assert.ok(link.is(':hidden'), "the link element should not be visible");
+
+        // force visibility to test that the clicking has also been disabled
+        link.removeClass('o_hidden');
+        testUtils.dom.click(link);
 
         assert.verifySteps([]); // We shouldn't have passed through steps
 
