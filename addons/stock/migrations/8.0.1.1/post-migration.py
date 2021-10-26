@@ -1089,11 +1089,11 @@ def migrate_stock_production_lot(cr, registry):
     field_name = openupgrade.get_legacy_name('prodlot_id')
     cr.execute("""
         UPDATE stock_quant SET lot_id = ss.lot 
-        FROM (SELECT q.quant_id, sm.{fieldname}, 
+        FROM (SELECT q.quant_id, sm.{fieldname}
             FROM stock_quant_move_rel q, stock_move sm
               WHERE sm.{fieldname} IS NOT NULL AND 
                 sm.picking_id IS NULL AND sm.id=q.move_id) as ss (qid, lot)
-        WHERE stock_quant.id = q.qid; 
+        WHERE stock_quant.id = ss.qid; 
     """.format(fieldname=field_name))
     cr.commit()
 
