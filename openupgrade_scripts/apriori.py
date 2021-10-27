@@ -39,6 +39,8 @@ renamed_modules = {
     "edi_storage": "edi_storage_oca",
     "edi_webservice": "edi_webservice_oca",
     "edi_xml": "edi_xml_oca",
+    # OCA/l10n-spain
+    "l10n_es_account_bank_statement_import_n43": "l10n_es_account_statement_import_n43",
     # OCA/server-tools
     "openupgrade_records": "upgrade_analysis",
     # OCA/...
