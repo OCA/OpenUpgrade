@@ -20,10 +20,9 @@ except ImportError:
         " The upgrade process will not work properly."
     )
 
-
 module_category_xmlid_renames = [
     # Module category renames were not detected by the analyze. These records
-    # are created on the fly when intializing a new database in
+    # are created on the fly when initializing a new database in
     # odoo/modules/db.py
     (
         "base.module_category_accounting_expenses",
@@ -64,6 +63,24 @@ module_category_xmlid_renames = [
         "base.module_category_services_timesheets",
     ),
 ]
+
+
+def deduplicate_ir_properties(cr):
+    # delete duplicates in ir_property due to new constrain
+    # see https://github.com/odoo/odoo/commit/e85faf398659a5beb0b1570a06af64dcf78dc1c8
+    openupgrade.logged_query(
+        cr,
+        """
+        DELETE FROM ir_property
+        WHERE id IN (
+            SELECT id
+            FROM (
+                SELECT id, row_number() over (
+                    partition BY fields_id, company_id, res_id ORDER BY id DESC) AS rnum
+                FROM ir_property
+            ) t
+            WHERE t.rnum > 1)""",
+    )
 
 
 @openupgrade.migrate(use_env=False)
@@ -109,3 +126,4 @@ def migrate(cr, version):
     openupgrade.logged_query(
         cr, "UPDATE res_partner SET lang = 'tl_PH' WHERE lang = 'fil_PH'"
     )
+    deduplicate_ir_properties(cr)
