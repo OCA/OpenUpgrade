@@ -7,3 +7,10 @@ from openupgradelib import openupgrade
 def migrate(env, version):
     openupgrade.set_xml_ids_noupdate_value(
         env, 'survey', ['email_template_survey'], True)
+    openupgrade.logged_query(
+        env.cr,
+        """
+        ALTER TABLE survey_user_input
+        DROP CONSTRAINT IF EXISTS survey_user_input_deadline_in_the_past
+        """,
+    )
