@@ -17,6 +17,19 @@ def fill_product_template_attribute_value_attribute_line_id(env):
             ptav.product_attribute_value_id = avtalr.product_attribute_value_id
         """,
     )
+    # set attribute_line_id for archived ptals
+    openupgrade.logged_query(
+        env.cr, """
+        UPDATE product_template_attribute_value ptav
+        SET attribute_line_id = ptal.id
+        FROM product_template_attribute_line ptal
+        JOIN product_attribute_value pav ON pav.attribute_id = ptal.attribute_id
+        JOIN product_template pt ON ptal.product_tmpl_id = pt.id
+        WHERE ptav.attribute_line_id IS NULL
+            AND ptav.product_tmpl_id = pt.id
+            AND ptav.product_attribute_value_id = pav.id
+        """,
+    )
 
 
 def fill_product_template_attribute_value__attribute_id_related(env):
