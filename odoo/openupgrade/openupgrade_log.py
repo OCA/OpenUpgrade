@@ -3,7 +3,11 @@
 # Copyright 2016 Opener B.V. <https://opener.am>
 # License AGPL-3.0 or later (http://www.gnu.org/licenses/agpl).
 
+import logging
+
 from openupgradelib.openupgrade_tools import table_exists
+
+logger = logging.getLogger('OpenUpgrade')
 
 
 def log_xml_id(cr, module, xml_id):
@@ -46,7 +50,7 @@ def log_xml_id(cr, module, xml_id):
         xml_id.split('.'))
     record = cr.fetchone()
     if not record:
-        print "Cannot find xml_id %s" % xml_id
+        logger.warning("Cannot find xml_id %s" % xml_id)
         return
     else:
         cr.execute(
