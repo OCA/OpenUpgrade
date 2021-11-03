@@ -73,7 +73,7 @@ class AnalysisWizard(models.TransientModel):
         remote_xml_record_ids = remote_record_obj.search(
             [('type', '=', 'xmlid')])
         remote_xml_records = [
-            dict([(field, record[field]) for field in flds])
+            dict([(field, record[field]) for field in flds if field in record])
             for record in remote_record_obj.read(
                 remote_xml_record_ids, flds)
         ]

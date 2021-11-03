@@ -57,14 +57,14 @@ def compare_records(dict_old, dict_new, fields):
         elif field == 'model':
             if model_rename_map(dict_old['model']) != dict_new['model']:
                 return False
-        elif field == 'other_prefix':
+        elif field == 'other_prefix' and 'prefix' in dict_old:
             if dict_old['module'] != dict_old['prefix'] or \
                     dict_new['module'] != dict_new['prefix']:
                 return False
             if dict_old['model'] == 'ir.ui.view':
                 # basically, to avoid the assets_backend case
                 return False
-        elif dict_old[field] != dict_new[field]:
+        elif field in dict_old and dict_old[field] != dict_new[field]:
             return False
     return True
 
@@ -116,7 +116,7 @@ def report_generic(new, old, attrs, reprs):
                     text += ', req_default: %s' % new['req_default']
                 fieldprint(old, new, '', text, reprs)
         elif attr == 'stored':
-            if old[attr] != new[attr]:
+            if attr in old and old[attr] != new[attr]:
                 if new['stored']:
                     text = "is now stored"
                 else:
@@ -148,7 +148,7 @@ def report_generic(new, old, attrs, reprs):
                not new.get('isproperty'):
                 text = 'was renamed to %s [nothing to do]' % new['field']
                 fieldprint(old, new, '', text, reprs)
-        elif old[attr] != new[attr]:
+        elif attr in old and old[attr] != new[attr]:
             fieldprint(old, new, attr, '', reprs)
 
 
@@ -232,7 +232,7 @@ def compare_sets(old_records, new_records):
         ]
     for column in old_records:
         # we do not care about removed non stored function fields
-        if not column['stored'] and (
+        if not column.get("stored", True) and (
                 column['isfunction'] or column['isrelated']):
             continue
         if column['mode'] == 'create':
@@ -296,7 +296,8 @@ def compare_xml_sets(old_records, new_records):
                     found['new'] = True
                     column[match_type] = found['module']
                     found[match_type] = column['module']
-                found['domain'] = column['domain'] != found['domain'] and \
+                found['domain'] = 'domain' in column and\
+                    column['domain'] != found['domain'] and \
                     column['domain'] != '[]' and found['domain'] is False
                 column['domain'] = False
                 column['noupdate_switched'] = False
