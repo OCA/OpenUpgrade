@@ -68,6 +68,11 @@ def migrate(env, version):
     )
     openupgrade.logged_query(
         env.cr,
+        """CREATE TABLE project_allowed_portal_users_rel
+        (project_project_id INTEGER, res_users_id INTEGER)""",
+    )
+    openupgrade.logged_query(
+        env.cr,
         """CREATE TABLE project_task_res_users_rel
         (project_task_id INTEGER, res_users_id INTEGER)""",
     )
