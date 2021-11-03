@@ -16,9 +16,8 @@ def fill_bom_product_template_attribute_value(env):
     FROM mrp_bom_line_product_attribute_value_rel mbl_pav_rel
     JOIN mrp_bom_line mbl ON mbl.id = mbl_pav_rel.mrp_bom_line_id
     JOIN mrp_bom mb ON mbl.bom_id = mb.id
-    JOIN product_template pt ON mb.product_tmpl_id = pt.id
     JOIN product_template_attribute_value ptav ON (
-            pt.id = ptav.product_tmpl_id
+            mb.product_tmpl_id = ptav.product_tmpl_id
             AND mbl_pav_rel.product_attribute_value_id = ptav.product_attribute_value_id)
     GROUP BY mbl_pav_rel.mrp_bom_line_id, ptav.id
     """)
