@@ -37,11 +37,13 @@ project      / project.task             / allowed_user_ids (many2many)  : NEW re
 # DONE: pre-migration: Pre-create tables for not launching the default + computed
 # DONE: post-migration: fill these tables from followers
 
+project      / project.task             / partner_phone (char)          : NEW isfunction: function, stored
+project      / project.task             / partner_email (char)          : NEW isfunction: function, stored
+# DONE: pre-migration: filled by SQL, to avoid computations and inverses
+
 project      / project.task             / company_id (many2one)         : now a function
 project      / project.task             / email_from (char)             : now a function
-project      / project.task             / partner_email (char)          : NEW isfunction: function, stored
 project      / project.task             / partner_id (many2one)         : now a function
-project      / project.task             / partner_phone (char)          : NEW isfunction: function, stored
 project      / project.task             / project_id (many2one)         : now a function
 project      / project.task             / stage_id (many2one)           : now a function
 # NOTHING TO DO: compute methods that will launch when loading
