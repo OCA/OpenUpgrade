@@ -12,12 +12,15 @@ def fill_product_variant_combination_table(env):
         (product_product_id, product_template_attribute_value_id)
         SELECT pavppr.product_product_id, ptav.id
         FROM product_attribute_value_product_product_rel pavppr
+        JOIN product_attribute_value pav
+            ON pav.id = pavppr.product_attribute_value_id
         JOIN product_product pp
             ON pp.id = pavppr.product_product_id
         JOIN product_template_attribute_value ptav
-            ON ptav.product_attribute_value_id = pavppr.product_attribute_value_id
+            ON ptav.product_attribute_value_id = pav.id
                 AND pp.product_tmpl_id = ptav.product_tmpl_id
-        """,
+                AND ptav.attribute_id = pav.attribute_id
+        GROUP BY pavppr.product_product_id, ptav.id""",
     )
 
 
