@@ -1,0 +1,15 @@
+---Models in module 'event_sale'---
+---Fields in module 'event_sale'---
+event_sale   / product.template         / detailed_type (False)         : NEW selection_keys: ['consu', 'event', 'gift', 'product', 'service'], mode: modify
+event_sale   / product.template         / event_ok (boolean)            : DEL
+event_sale   / sale.order.line          / event_ok (boolean)            : not related anymore
+event_sale   / sale.order.line          / event_ok (boolean)            : now a function
+---XML records in module 'event_sale'---
+NEW ir.ui.view: event_sale.event_report_template_full_page_ticket_inherit_sale
+DEL ir.ui.view: event_sale.assets_backend
+DEL ir.ui.view: event_sale.assets_tests
+DEL ir.ui.view: event_sale.event_event_report_template_badge
+DEL ir.ui.view: event_sale.event_registration_report_template_badge
+DEL ir.ui.view: event_sale.event_sale_product_template_form
+DEL ir.ui.view: event_sale.qunit_suite
+product.product: event_sale.product_product_event (noupdate) (noupdate switched)

@@ -1,0 +1,8 @@
+---Models in module 'auth_totp_mail'---
+---Fields in module 'auth_totp_mail'---
+---XML records in module 'auth_totp_mail'---
+NEW ir.actions.server: auth_totp_mail.action_activate_two_factor_authentication
+NEW ir.actions.server: auth_totp_mail.action_invite_totp
+NEW ir.ui.view: auth_totp_mail.res_users_view_form
+NEW ir.ui.view: auth_totp_mail.view_users_form
+NEW mail.template: auth_totp_mail.mail_template_totp_invite (noupdate)

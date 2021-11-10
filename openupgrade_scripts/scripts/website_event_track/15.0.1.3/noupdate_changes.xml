@@ -1,0 +1,31 @@
+<?xml version='1.0' encoding='utf-8'?>
+<odoo>
+  <record id="event_track_stage2" model="event.track.stage">
+    <field name="is_visible_in_agenda" eval="True"/>
+  </record>
+  <record id="event_track_stage3" model="event.track.stage">
+    <field name="is_fully_accessible" eval="True"/>
+    <field name="is_visible_in_agenda" eval="True"/>
+  </record>
+  <record id="mail_template_data_track_confirmation" model="mail.template">
+    <field name="body_html" type="html">
+      <div>
+    Dear <t t-out="object.partner_id.name or object.partner_name or ''">Brandon Freeman</t><br/>
+    We are pleased to inform you that your proposal <t t-out="object.name or ''">What This Event Is All About</t> has been accepted and confirmed for the event <t t-out="object.event_id.name or ''">OpenWood Collection Online Reveal</t>.
+    <br/>
+    You will find more details here:
+    <div style="margin: 16px 0px 16px 0px;"><a t-attf-href="/event/{{ object.event_id.id }}/track/{{ object.id }}" style="padding: 8px 16px 8px 16px; font-size: 14px; color: #FFFFFF; text-decoration: none !important; background-color: #875A7B; border: 0px solid #875A7B; border-radius:3px">
+            View Talk
+        </a></div>
+    <br/><br/>
+    Thank you,
+    <t t-if="user.signature"><br/><t t-out="user.signature or ''">--<br/>Mitchell Admin</t></t>
+</div>
+    </field>
+    <field name="lang">{{ object.partner_id.lang }}</field>
+    <field name="subject">Confirmation of {{ object.name }}</field>
+  </record>
+  <record id="mt_event_track" model="mail.message.subtype">
+    <field name="description"/>
+  </record>
+</odoo>

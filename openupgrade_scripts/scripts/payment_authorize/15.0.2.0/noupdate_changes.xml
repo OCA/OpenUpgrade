@@ -1,0 +1,14 @@
+<?xml version='1.0' encoding='utf-8'?>
+<odoo>
+  <record id="payment.payment_acquirer_authorize" model="payment.acquirer">
+    <field name="company_id"/>
+    <field name="image_128" type="base64" file="payment_authorize/static/src/img/authorize_icon.png"/>
+    <field name="name"/>
+    <field name="allow_tokenization">True</field>
+    <field name="inline_form_view_id" ref="inline_form"/>
+    <field name="support_authorization">True</field>
+    <field name="support_fees_computation">False</field>
+    <field name="support_refund"/>
+    <field name="support_tokenization">True</field>
+  </record>
+</odoo>

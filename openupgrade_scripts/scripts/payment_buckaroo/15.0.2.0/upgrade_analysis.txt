@@ -1,0 +1,13 @@
+---Models in module 'payment_buckaroo'---
+---Fields in module 'payment_buckaroo'---
+payment_buckaroo / payment.acquirer         / brq_secretkey (char)          : DEL
+payment_buckaroo / payment.acquirer         / brq_websitekey (char)         : DEL
+payment_buckaroo / payment.acquirer         / buckaroo_secret_key (char)    : NEW
+payment_buckaroo / payment.acquirer         / buckaroo_website_key (char)   : NEW
+payment_buckaroo / payment.acquirer         / provider (False)              : selection_keys is now '['adyen', 'alipay', 'authorize', 'buckaroo', 'none']' ('['adyen', 'alipay', 'authorize', 'buckaroo', 'manual']')
+---XML records in module 'payment_buckaroo'---
+NEW account.payment.method: payment_buckaroo.payment_method_buckaroo (noupdate)
+NEW ir.ui.view: payment_buckaroo.payment_acquirer_form
+NEW ir.ui.view: payment_buckaroo.redirect_form
+DEL ir.ui.view: payment_buckaroo.acquirer_form_buckaroo
+DEL ir.ui.view: payment_buckaroo.buckaroo_form (noupdate)

@@ -1,0 +1,27 @@
+---Models in module 'hr_contract'---
+new model hr.contract.history [sql_view]
+new model hr.contract.type
+---Fields in module 'hr_contract'---
+hr_contract  / hr.contract              / contract_type_id (many2one)   : NEW relation: hr.contract.type
+hr_contract  / hr.contract              / notes (text)                  : type is now 'html' ('text')
+hr_contract  / hr.contract.type         / name (char)                   : NEW required
+hr_contract  / hr.employee              / first_contract_date (date)    : is now stored
+---XML records in module 'hr_contract'---
+NEW ir.actions.act_window: hr_contract.hr_contract_history_to_review_view_list_action
+NEW ir.actions.act_window: hr_contract.hr_contract_history_view_form_action
+NEW ir.actions.act_window: hr_contract.hr_contract_history_view_list_action
+DEL ir.actions.act_window: hr_contract.act_hr_employee_2_hr_contract
+NEW ir.model.access: hr_contract.access_hr_contract_history_manager
+NEW ir.model.access: hr_contract.access_hr_contract_type_manager
+NEW ir.rule: hr_contract.ir_rule_hr_contract_history_multi_company (noupdate)
+NEW ir.ui.menu: hr_contract.hr_menu_contract_history
+DEL ir.ui.menu: hr_contract.hr_menu_contract
+NEW ir.ui.view: hr_contract.hr_contract_history_view_form
+NEW ir.ui.view: hr_contract.hr_contract_history_view_kanban
+NEW ir.ui.view: hr_contract.hr_contract_history_view_list
+NEW ir.ui.view: hr_contract.hr_contract_history_view_search
+NEW ir.ui.view: hr_contract.hr_employee_public_view_form
+NEW ir.ui.view: hr_contract.resource_calendar_view_form
+NEW ir.ui.view: hr_contract.resource_calendar_view_tree
+NEW ir.ui.view: hr_contract.view_employee_tree
+DEL ir.ui.view: hr_contract.assets_backend

@@ -1,0 +1,12 @@
+---Models in module 'crm_iap_enrich'---
+---Fields in module 'crm_iap_enrich'---
+crm_iap_enrich / crm.lead                 / iap_enrich_done (boolean)     : previously in module crm_iap_lead_enrich
+crm_iap_enrich / crm.lead                 / show_enrich_button (boolean)  : previously in module crm_iap_lead_enrich
+---XML records in module 'crm_iap_enrich'---
+NEW ir.actions.server: crm_iap_enrich.action_enrich_mail [renamed from crm_iap_lead_enrich module]
+NEW ir.cron: crm_iap_enrich.ir_cron_lead_enrichment [renamed from crm_iap_lead_enrich module]
+NEW ir.ui.view: crm_iap_enrich.crm_lead_view_form
+NEW ir.ui.view: crm_iap_enrich.mail_message_lead_enrich_no_credit (noupdate)
+NEW ir.ui.view: crm_iap_enrich.mail_message_lead_enrich_no_email (noupdate)
+NEW ir.ui.view: crm_iap_enrich.mail_message_lead_enrich_notfound (noupdate)
+NEW ir.ui.view: crm_iap_enrich.res_config_settings_view_form

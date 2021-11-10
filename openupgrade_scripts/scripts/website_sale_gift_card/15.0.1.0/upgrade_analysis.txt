@@ -1,0 +1,12 @@
+---Models in module 'website_sale_gift_card'---
+---Fields in module 'website_sale_gift_card'---
+website_sale_gift_card / gift.card                / website_id (many2one)         : NEW relation: website, isrelated: related, stored
+---XML records in module 'website_sale_gift_card'---
+NEW ir.ui.menu: website_sale_gift_card.website_product_gift_card_menu
+NEW ir.ui.view: website_sale_gift_card.add_gift_card
+NEW ir.ui.view: website_sale_gift_card.cart_line_product_no_link
+NEW ir.ui.view: website_sale_gift_card.cart_summary_inherit_website_gift_card_sale
+NEW ir.ui.view: website_sale_gift_card.gift_card_view_form
+NEW ir.ui.view: website_sale_gift_card.gift_card_view_search
+NEW ir.ui.view: website_sale_gift_card.pay_with_gift_card_form
+NEW ir.ui.view: website_sale_gift_card.website_sale_purchased_gift_card

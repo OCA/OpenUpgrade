@@ -1,0 +1,84 @@
+<?xml version='1.0' encoding='utf-8'?>
+<odoo>
+  <record id="payment_acquirer_adyen" model="payment.acquirer">
+    <field name="description" type="html">
+      <p>
+                A payment gateway to accept online payments via credit cards, debit cards and bank
+                transfers.
+            </p>
+      <ul class="list-inline">
+        <li class="list-inline-item"><i class="fa fa-check"/>Online Payment</li>
+        <li class="list-inline-item"><i class="fa fa-check"/>Payment Status Tracking</li>
+      </ul>
+    </field>
+    <field name="payment_icon_ids" eval="[(6, 0, [                    ref('payment.payment_icon_cc_bancontact'),                    ref('payment.payment_icon_cc_maestro'),                    ref('payment.payment_icon_cc_mastercard'),                    ref('payment.payment_icon_cc_visa'),                    ref('payment.payment_icon_cc_discover'),                    ref('payment.payment_icon_cc_diners_club_intl'),                    ref('payment.payment_icon_cc_jcb'),                    ref('payment.payment_icon_cc_unionpay'),                ])]"/>
+  </record>
+  <record id="payment_acquirer_alipay" model="payment.acquirer">
+    <field name="description" type="html">
+      <p>
+                Alipay is the most popular online payment platform in China. Chinese consumers can
+                buy online using their Alipay eWallet.
+            </p>
+      <ul class="list-inline">
+        <li><i class="fa fa-check"/>Online Payment</li>
+        <li><i class="fa fa-check"/>Payment Status Tracking</li>
+      </ul>
+    </field>
+    <field name="payment_icon_ids" eval="[(6, 0, [                    ref('payment.payment_icon_cc_jcb'),                    ref('payment.payment_icon_cc_mastercard'),                    ref('payment.payment_icon_cc_western_union'),                    ref('payment.payment_icon_cc_webmoney'),                    ref('payment.payment_icon_cc_visa'),                ])]"/>
+  </record>
+  <record id="payment_acquirer_authorize" model="payment.acquirer">
+    <field name="payment_icon_ids" eval="[(6, 0, [                    ref('payment.payment_icon_cc_maestro'),                    ref('payment.payment_icon_cc_mastercard'),                    ref('payment.payment_icon_cc_discover'),                    ref('payment.payment_icon_cc_diners_club_intl'),                    ref('payment.payment_icon_cc_jcb'),                    ref('payment.payment_icon_cc_visa'),                ])]"/>
+    <field name="sequence"/>
+  </record>
+  <record id="payment_acquirer_buckaroo" model="payment.acquirer">
+    <field name="payment_icon_ids" eval="[(6, 0, [                    ref('payment.payment_icon_cc_bancontact'),                    ref('payment.payment_icon_cc_maestro'),                    ref('payment.payment_icon_cc_mastercard'),                    ref('payment.payment_icon_cc_visa'),                    ref('payment.payment_icon_cc_american_express'),                ])]"/>
+  </record>
+  <record id="payment_acquirer_paypal" model="payment.acquirer">
+    <field name="payment_icon_ids" eval="[(6, 0, [                    ref('payment.payment_icon_cc_maestro'),                    ref('payment.payment_icon_cc_mastercard'),                    ref('payment.payment_icon_cc_discover'),                    ref('payment.payment_icon_cc_diners_club_intl'),                    ref('payment.payment_icon_cc_jcb'),                    ref('payment.payment_icon_cc_american_express'),                    ref('payment.payment_icon_cc_unionpay'),                    ref('payment.payment_icon_cc_visa'),                ])]"/>
+    <field name="sequence"/>
+  </record>
+  <record id="payment_acquirer_payulatam" model="payment.acquirer">
+    <field name="description" type="html">
+      <p>
+                PayU is a leading financial services provider in Colombia, Argentina, Brazil, Chile,
+                Mexico, Panama, and Peru. It allows merchant to accept local payments with just one
+                account and integration.
+            </p>
+      <ul class="list-inline">
+        <li class="list-inline-item"><i class="fa fa-check"/>Online Payment</li>
+        <li class="list-inline-item"><i class="fa fa-check"/>Payment Status Tracking</li>
+      </ul>
+    </field>
+    <field name="payment_icon_ids" eval="[(6, 0, [                    ref('payment.payment_icon_cc_diners_club_intl'),                    ref('payment.payment_icon_cc_mastercard'),                    ref('payment.payment_icon_cc_american_express'),                    ref('payment.payment_icon_cc_visa'),                    ref('payment.payment_icon_cc_codensa_easy_credit'),                ])]"/>
+  </record>
+  <record id="payment_acquirer_sepa_direct_debit" model="payment.acquirer">
+    <field name="description" type="html">
+      <p>
+                SEPA Direct Debit is a Europe-wide Direct Debit system that allows merchants to
+                collect Euro-denominated payments from accounts in the 34 SEPA countries and
+                associated territories.
+            </p>
+    </field>
+    <field name="sequence">20</field>
+  </record>
+  <record id="payment_acquirer_sips" model="payment.acquirer">
+    <field name="payment_icon_ids" eval="[(6, 0, [                    ref('payment.payment_icon_cc_maestro'),                    ref('payment.payment_icon_cc_mastercard'),                    ref('payment.payment_icon_cc_discover'),                    ref('payment.payment_icon_cc_diners_club_intl'),                    ref('payment.payment_icon_cc_jcb'),                    ref('payment.payment_icon_cc_american_express'),                    ref('payment.payment_icon_cc_bancontact'),                    ref('payment.payment_icon_cc_unionpay'),                    ref('payment.payment_icon_cc_visa'),                ])]"/>
+  </record>
+  <record id="payment_acquirer_stripe" model="payment.acquirer">
+    <field name="payment_icon_ids" eval="[(6, 0, [                    ref('payment.payment_icon_cc_maestro'),                    ref('payment.payment_icon_cc_mastercard'),                    ref('payment.payment_icon_cc_discover'),                    ref('payment.payment_icon_cc_diners_club_intl'),                    ref('payment.payment_icon_cc_jcb'),                    ref('payment.payment_icon_cc_american_express'),                    ref('payment.payment_icon_cc_visa'),                ])]"/>
+  </record>
+  <record id="payment_acquirer_transfer" model="payment.acquirer">
+    <field name="pending_msg"/>
+    <field name="sequence">30</field>
+  </record>
+  <record id="payment_token_user_rule" model="ir.rule">
+    <field name="name">Access only tokens belonging to commercial partner</field>
+  </record>
+  <record id="payment_transaction_billing_rule" model="ir.rule">
+    <field name="name">Access every transaction</field>
+  </record>
+  <record id="payment_transaction_user_rule" model="ir.rule">
+    <field name="domain_force">['|', ('partner_id', '=', False), ('partner_id', '=', user.partner_id.id)]</field>
+    <field name="name">Access own transactions only</field>
+  </record>
+</odoo>

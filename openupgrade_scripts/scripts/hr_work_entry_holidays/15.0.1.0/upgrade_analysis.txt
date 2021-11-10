@@ -1,0 +1,8 @@
+---Models in module 'hr_work_entry_holidays'---
+---Fields in module 'hr_work_entry_holidays'---
+hr_work_entry_holidays / hr.leave.type            / work_entry_type_id (many2one) : NEW relation: hr.work.entry.type
+hr_work_entry_holidays / hr.work.entry            / leave_id (many2one)           : NEW relation: hr.leave
+hr_work_entry_holidays / hr.work.entry.type       / leave_type_ids (one2many)     : NEW relation: hr.leave.type
+---XML records in module 'hr_work_entry_holidays'---
+NEW ir.ui.view: hr_work_entry_holidays.hr_leave_view_tree_inherit_work_entry
+NEW ir.ui.view: hr_work_entry_holidays.work_entry_type_leave_form_inherit

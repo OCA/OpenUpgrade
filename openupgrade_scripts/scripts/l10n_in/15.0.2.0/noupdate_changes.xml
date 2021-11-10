@@ -1,0 +1,24 @@
+<?xml version='1.0' encoding='utf-8'?>
+<odoo>
+  <record id="cess_group" model="account.tax.group">
+    <field name="country_id" ref="base.in"/>
+  </record>
+  <record id="cgst_group" model="account.tax.group">
+    <field name="country_id" ref="base.in"/>
+  </record>
+  <record id="exempt_group" model="account.tax.group">
+    <field name="country_id" ref="base.in"/>
+  </record>
+  <record id="gst_group" model="account.tax.group">
+    <field name="country_id" ref="base.in"/>
+  </record>
+  <record id="igst_group" model="account.tax.group">
+    <field name="country_id" ref="base.in"/>
+  </record>
+  <record id="nil_rated_group" model="account.tax.group">
+    <field name="country_id" ref="base.in"/>
+  </record>
+  <record id="sgst_group" model="account.tax.group">
+    <field name="country_id" ref="base.in"/>
+  </record>
+</odoo>

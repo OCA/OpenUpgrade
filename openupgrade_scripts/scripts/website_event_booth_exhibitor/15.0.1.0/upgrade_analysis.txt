@@ -1,0 +1,15 @@
+---Models in module 'website_event_booth_exhibitor'---
+---Fields in module 'website_event_booth_exhibitor'---
+website_event_booth_exhibitor / event.booth              / sponsor_id (many2one)         : NEW relation: event.sponsor
+website_event_booth_exhibitor / event.booth.category     / exhibitor_type (selection)    : NEW selection_keys: function
+website_event_booth_exhibitor / event.booth.category     / sponsor_type_id (many2one)    : NEW relation: event.sponsor.type
+website_event_booth_exhibitor / event.booth.category     / use_sponsor (boolean)         : NEW
+---XML records in module 'website_event_booth_exhibitor'---
+NEW ir.ui.view: website_event_booth_exhibitor.event_booth_booked_template
+NEW ir.ui.view: website_event_booth_exhibitor.event_booth_category_view_form
+NEW ir.ui.view: website_event_booth_exhibitor.event_booth_category_view_search
+NEW ir.ui.view: website_event_booth_exhibitor.event_booth_category_view_tree
+NEW ir.ui.view: website_event_booth_exhibitor.event_booth_registration
+NEW ir.ui.view: website_event_booth_exhibitor.event_booth_registration_details
+NEW ir.ui.view: website_event_booth_exhibitor.event_booth_view_form_from_event
+NEW ir.ui.view: website_event_booth_exhibitor.event_booth_view_search

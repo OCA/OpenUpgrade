@@ -1,0 +1,27 @@
+<?xml version='1.0' encoding='utf-8'?>
+<odoo>
+  <record id="base.group_system" model="res.groups">
+    <field name="implied_ids" eval="[(4, ref('mail.group_mail_template_editor'))]"/>
+  </record>
+  <record id="base.group_user" model="res.groups">
+    <field name="implied_ids" eval="[(4, ref('mail.group_mail_template_editor'))]"/>
+  </record>
+  <record id="channel_all_employees" model="mail.channel">
+    <field name="group_ids" eval="[Command.link(ref('base.group_user'))]"/>
+  </record>
+  <record id="ir_rule_mail_notifications_group_user" model="ir.rule">
+    <field name="groups" eval="[Command.link(ref('base.group_user')), Command.link(ref('base.group_portal'))]"/>
+  </record>
+  <record id="mail_activity_data_call" model="mail.activity.type">
+    <field name="category">phonecall</field>
+  </record>
+  <record id="mail_activity_rule_user" model="ir.rule">
+    <field name="groups" eval="[Command.link(ref('base.group_user'))]"/>
+  </record>
+  <record id="mail_channel_rule" model="ir.rule">
+    <field name="groups" eval="[Command.link(ref('base.group_user')), Command.link(ref('base.group_portal')), Command.link(ref('base.group_public'))]"/>
+  </record>
+  <record id="mail_message_subtype_rule_public" model="ir.rule">
+    <field name="groups" eval="[Command.link(ref('base.group_portal')), Command.link(ref('base.group_public'))]"/>
+  </record>
+</odoo>

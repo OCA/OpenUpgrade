@@ -1,0 +1,21 @@
+---Models in module 'hr_work_entry_contract'---
+new model hr.work.entry.regeneration.wizard [transient]
+---Fields in module 'hr_work_entry_contract'---
+hr_work_entry_contract / hr.contract              / date_generated_from (datetime): NEW required, req_default: function, hasdefault
+hr_work_entry_contract / hr.contract              / date_generated_to (datetime)  : NEW required, req_default: function, hasdefault
+hr_work_entry_contract / hr.work.entry            / contract_id (many2one)        : NEW relation: hr.contract, required
+hr_work_entry_contract / hr.work.entry.type       / is_leave (boolean)            : NEW hasdefault
+---XML records in module 'hr_work_entry_contract'---
+NEW hr.work.entry.type: hr_work_entry_contract.work_entry_type_compensatory
+NEW hr.work.entry.type: hr_work_entry_contract.work_entry_type_home_working
+NEW hr.work.entry.type: hr_work_entry_contract.work_entry_type_leave
+NEW hr.work.entry.type: hr_work_entry_contract.work_entry_type_legal_leave
+NEW hr.work.entry.type: hr_work_entry_contract.work_entry_type_sick_leave
+NEW hr.work.entry.type: hr_work_entry_contract.work_entry_type_unpaid_leave
+NEW ir.actions.act_window: hr_work_entry_contract.hr_work_entry_regeneration_wizard_action
+NEW ir.model.access: hr_work_entry_contract.access_hr_work_entry_regeneration_wizard
+NEW ir.rule: hr_work_entry_contract.ir_rule_hr_work_entry_multi_company (noupdate)
+NEW ir.ui.view: hr_work_entry_contract.hr_work_entry_contract_type_view_form_inherit
+NEW ir.ui.view: hr_work_entry_contract.hr_work_entry_contract_view_calendar_inherit
+NEW ir.ui.view: hr_work_entry_contract.hr_work_entry_contract_view_form_inherit
+NEW ir.ui.view: hr_work_entry_contract.hr_work_entry_regeneration_wizard

@@ -1,0 +1,6 @@
+---Models in module 'note'---
+---Fields in module 'note'---
+note         / mail.activity.type       / category (False)              : selection_keys is now '['default', 'meeting', 'phonecall', 'reminder', 'upload_file']' ('['default', 'meeting', 'reminder', 'upload_file']')
+---XML records in module 'note'---
+DEL ir.ui.view: note.assets_backend
+DEL ir.ui.view: note.qunit_suite

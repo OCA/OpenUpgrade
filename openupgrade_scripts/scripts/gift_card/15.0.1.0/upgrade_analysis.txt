@@ -1,0 +1,18 @@
+---Models in module 'gift_card'---
+new model gift.card
+---Fields in module 'gift_card'---
+gift_card    / gift.card                / code (char)                   : NEW required, req_default: function, hasdefault
+gift_card    / gift.card                / company_id (many2one)         : NEW relation: res.company, hasdefault
+gift_card    / gift.card                / expired_date (date)           : NEW hasdefault
+gift_card    / gift.card                / initial_amount (float)        : NEW required
+gift_card    / gift.card                / partner_id (many2one)         : NEW relation: res.partner
+gift_card    / gift.card                / state (selection)             : NEW selection_keys: ['expired', 'valid'], hasdefault
+gift_card    / product.template         / detailed_type (False)         : NEW selection_keys: ['consu', 'gift', 'service'], mode: modify
+---XML records in module 'gift_card'---
+NEW ir.actions.act_window: gift_card.gift_card_action
+NEW ir.model.access: gift_card.access_gift_card_all
+NEW ir.ui.view: gift_card.gift_card_view_form
+NEW ir.ui.view: gift_card.gift_card_view_search
+NEW ir.ui.view: gift_card.gift_card_view_tree
+NEW product.product: gift_card.gift_card_product_50 (noupdate)
+NEW product.product: gift_card.pay_with_gift_card_product (noupdate)

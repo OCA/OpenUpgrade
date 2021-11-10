@@ -1,0 +1,16 @@
+---Models in module 'sale_gift_card'---
+---Fields in module 'sale_gift_card'---
+sale_gift_card / gift.card                / buy_line_id (many2one)        : NEW relation: sale.order.line
+sale_gift_card / gift.card                / redeem_line_ids (one2many)    : NEW relation: sale.order.line
+sale_gift_card / sale.order.line          / generated_gift_card_ids (one2many): NEW relation: gift.card
+sale_gift_card / sale.order.line          / gift_card_id (many2one)       : NEW relation: gift.card
+---XML records in module 'sale_gift_card'---
+NEW ir.actions.act_window: sale_gift_card.gift_card_sale_order_action
+NEW ir.model.access: sale_gift_card.access_gift_card_manager
+NEW ir.model.access: sale_gift_card.access_gift_card_sales
+NEW ir.ui.view: sale_gift_card.sale_gift_card_view_form
+NEW ir.ui.view: sale_gift_card.sale_order_portal_content_inherit
+NEW ir.ui.view: sale_gift_card.sale_order_view_extend_gift_card_form
+NEW ir.ui.view: sale_gift_card.sale_purchased_gift_card
+NEW ir.ui.view: sale_gift_card.used_gift_card
+NEW mail.template: sale_gift_card.mail_template_gift_card

@@ -1,0 +1,19 @@
+<?xml version='1.0' encoding='utf-8'?>
+<odoo>
+  <record id="fleet.fleet_rule_contract_visibility_user" model="ir.rule">
+    <field name="domain_force">['|', ('vehicle_id.driver_id','=',user.partner_id.id),
+                ('vehicle_id.driver_employee_id.user_id','=',user.id)]</field>
+  </record>
+  <record id="fleet.fleet_rule_odometer_visibility_user" model="ir.rule">
+    <field name="domain_force">['|', ('vehicle_id.driver_id','=',user.partner_id.id),
+                ('vehicle_id.driver_employee_id.user_id','=',user.id)]</field>
+  </record>
+  <record id="fleet.fleet_rule_service_visibility_user" model="ir.rule">
+    <field name="domain_force">['|', ('vehicle_id.driver_id','=',user.partner_id.id),
+                ('vehicle_id.driver_employee_id.user_id','=',user.id)]</field>
+  </record>
+  <record id="fleet.fleet_rule_vehicle_visibility_user" model="ir.rule">
+    <field name="domain_force">['|', ('driver_id','=',user.partner_id.id),
+                ('driver_employee_id.user_id','=',user.id)]</field>
+  </record>
+</odoo>

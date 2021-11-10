@@ -1,0 +1,14 @@
+---Models in module 'l10n_latam_invoice_document'---
+---Fields in module 'l10n_latam_invoice_document'---
+l10n_latam_invoice_document / account.bank.statement.line / l10n_latam_document_type_id_code (char): previously in module l10n_cl
+l10n_latam_invoice_document / account.move             / l10n_latam_document_type_id_code (char): previously in module l10n_cl
+l10n_latam_invoice_document / account.payment          / l10n_latam_document_type_id_code (char): previously in module l10n_cl
+l10n_latam_invoice_document / ir.sequence              / l10n_latam_document_type_id (many2one): DEL relation: l10n_latam.document.type
+---XML records in module 'l10n_latam_invoice_document'---
+NEW ir.ui.view: l10n_latam_invoice_document.external_layout_bold
+NEW ir.ui.view: l10n_latam_invoice_document.external_layout_striped
+DEL ir.ui.view: l10n_latam_invoice_document.external_layout_background
+DEL ir.ui.view: l10n_latam_invoice_document.external_layout_clean
+DEL ir.ui.view: l10n_latam_invoice_document.sequence_view
+DEL ir.ui.view: l10n_latam_invoice_document.sequence_view_tree
+DEL ir.ui.view: l10n_latam_invoice_document.view_sequence_search

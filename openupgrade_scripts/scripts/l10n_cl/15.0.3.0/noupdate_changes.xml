@@ -1,0 +1,43 @@
+<?xml version='1.0' encoding='utf-8'?>
+<odoo>
+  <record id="product_product_ad_valorem" model="product.product">
+    <field name="type"/>
+    <field name="detailed_type">service</field>
+  </record>
+  <record id="tax_group_2da_categ" model="account.tax.group">
+    <field name="country_id" ref="base.cl"/>
+  </record>
+  <record id="tax_group_ila" model="account.tax.group">
+    <field name="country_id" ref="base.cl"/>
+  </record>
+  <record id="tax_group_impuestos_especificos" model="account.tax.group">
+    <field name="country_id" ref="base.cl"/>
+  </record>
+  <record id="tax_group_iva_19" model="account.tax.group">
+    <field name="country_id" ref="base.cl"/>
+  </record>
+  <record id="tax_group_retenciones" model="account.tax.group">
+    <field name="country_id" ref="base.cl"/>
+  </record>
+  <record id="uom.product_uom_dozen" model="uom.uom">
+    <field name="name"/>
+  </record>
+  <record id="uom.product_uom_foot" model="uom.uom">
+    <field name="name"/>
+  </record>
+  <record id="uom.product_uom_gram" model="uom.uom">
+    <field name="name"/>
+  </record>
+  <record id="uom.product_uom_kgm" model="uom.uom">
+    <field name="name"/>
+  </record>
+  <record id="uom.product_uom_litre" model="uom.uom">
+    <field name="name"/>
+  </record>
+  <record id="uom.product_uom_meter" model="uom.uom">
+    <field name="name"/>
+  </record>
+  <record id="uom.product_uom_unit" model="uom.uom">
+    <field name="name"/>
+  </record>
+</odoo>

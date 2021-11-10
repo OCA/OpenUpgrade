@@ -1,0 +1,10 @@
+---Models in module 'mrp_subcontracting'---
+---Fields in module 'mrp_subcontracting'---
+mrp_subcontracting / mrp.production           / subcontracting_has_been_recorded (boolean): NEW
+mrp_subcontracting / stock.picking            / display_action_record_components (boolean): selection_keys is now '['facultative', 'hide', 'mandatory']' ('False')
+mrp_subcontracting / stock.picking            / display_action_record_components (boolean): type is now 'selection' ('boolean')
+mrp_subcontracting / stock.quant              / is_subcontract (boolean)      : NEW
+mrp_subcontracting / stock.warehouse          / subcontracting_resupply_type_id (many2one): NEW relation: stock.picking.type
+---XML records in module 'mrp_subcontracting'---
+NEW ir.ui.view: mrp_subcontracting.quant_subcontracting_search_view
+NEW ir.ui.view: mrp_subcontracting.report_mrp_bom_line_inherit_mrp_subcontracting

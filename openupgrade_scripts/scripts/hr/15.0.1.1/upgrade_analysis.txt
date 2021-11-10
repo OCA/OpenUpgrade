@@ -1,0 +1,46 @@
+---Models in module 'hr'---
+new model hr.departure.reason
+new model hr.work.location
+---Fields in module 'hr'---
+hr           / hr.department            / total_employee (integer)      : previously in module hr_holidays
+hr           / hr.departure.reason      / name (char)                   : NEW required
+hr           / hr.departure.reason      / sequence (integer)            : NEW hasdefault
+hr           / hr.employee              / departure_description (text)  : type is now 'html' ('text')
+hr           / hr.employee              / departure_reason (selection)  : DEL selection_keys: ['fired', 'resigned', 'retired']
+hr           / hr.employee              / departure_reason_id (many2one): NEW relation: hr.departure.reason
+hr           / hr.employee              / driving_license (binary)      : NEW attachment: True
+hr           / hr.employee              / employee_type (selection)     : NEW required, selection_keys: ['contractor', 'employee', 'freelance', 'student', 'trainee'], req_default: function, hasdefault
+hr           / hr.employee              / has_work_permit (binary)      : NEW attachment: True
+hr           / hr.employee              / id_card (binary)              : NEW attachment: True
+hr           / hr.employee              / work_location (char)          : DEL
+hr           / hr.employee              / work_location_id (many2one)   : NEW relation: hr.work.location, isfunction: function, stored
+hr           / hr.employee              / work_permit_expiration_date (date): NEW
+hr           / hr.employee              / work_permit_scheduled_activity (boolean): NEW hasdefault
+hr           / hr.job                   / _order                        : _order is now 'sequence' ('id')
+hr           / hr.job                   / description (text)            : type is now 'html' ('text')
+hr           / hr.job                   / sequence (integer)            : NEW hasdefault
+hr           / hr.work.location         / active (boolean)              : NEW hasdefault
+hr           / hr.work.location         / address_id (many2one)         : NEW relation: res.partner, required
+hr           / hr.work.location         / company_id (many2one)         : NEW relation: res.company, required, req_default: function, hasdefault
+hr           / hr.work.location         / location_number (char)        : NEW
+hr           / hr.work.location         / name (char)                   : NEW required
+hr           / res.partner              / employee_ids (one2many)       : NEW relation: hr.employee
+---XML records in module 'hr'---
+NEW hr.departure.reason: hr.departure_fired (noupdate)
+NEW hr.departure.reason: hr.departure_resigned (noupdate)
+NEW hr.departure.reason: hr.departure_retired (noupdate)
+NEW ir.actions.act_window: hr.hr_departure_reason_action
+NEW ir.actions.act_window: hr.hr_work_location_action
+NEW ir.cron: hr.ir_cron_data_check_work_permit_validity (noupdate)
+NEW ir.model.access: hr.access_hr_departure_reason
+NEW ir.model.access: hr.access_hr_work_location_manager
+NEW ir.model.access: hr.access_hr_work_location_user
+NEW ir.ui.menu: hr.menu_hr_departure_reason_tree
+NEW ir.ui.menu: hr.menu_hr_work_location_tree
+NEW ir.ui.view: hr.hr_departure_reason_view_form
+NEW ir.ui.view: hr.hr_departure_reason_view_list
+NEW ir.ui.view: hr.hr_work_location_form_view
+NEW ir.ui.view: hr.hr_work_location_tree_view
+NEW ir.ui.view: hr.res_partner_view_form
+DEL ir.ui.view: hr.assets_backend
+DEL ir.ui.view: hr.qunit_suite

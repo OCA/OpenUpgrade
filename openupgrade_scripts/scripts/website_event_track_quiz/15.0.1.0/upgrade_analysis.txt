@@ -1,0 +1,15 @@
+---Models in module 'website_event_track_quiz'---
+---Fields in module 'website_event_track_quiz'---
+website_event_track_quiz / event.quiz               / event_track_id (many2one)     : not a function anymore
+website_event_track_quiz / event.quiz               / event_track_ids (one2many)    : DEL relation: event.track
+website_event_track_quiz / event.quiz               / repeatable (boolean)          : NEW
+website_event_track_quiz / event.quiz.answer        / is_correct (boolean)          : is now stored
+website_event_track_quiz / event.quiz.answer        / is_correct (boolean)          : not a function anymore
+website_event_track_quiz / event.track              / quiz_id (many2one)            : now a function
+website_event_track_quiz / event.track              / quiz_ids (one2many)           : NEW relation: event.quiz
+---XML records in module 'website_event_track_quiz'---
+DEL ir.model.access: website_event_track_quiz.event_quiz_access_event_manager
+DEL ir.model.access: website_event_track_quiz.event_quiz_answer_access_event_manager
+DEL ir.model.access: website_event_track_quiz.event_quiz_question_access_event_manager
+DEL ir.ui.view: website_event_track_quiz.assets_frontend
+DEL ir.ui.view: website_event_track_quiz.event_quiz_view_form_from_track

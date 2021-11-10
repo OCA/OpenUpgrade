@@ -1,0 +1,5 @@
+---Models in module 'coupon'---
+---Fields in module 'coupon'---
+coupon       / coupon.program           / company_id (many2one)         : now required, req_default: function
+---XML records in module 'coupon'---
+DEL mail.template: coupon.mail_template_sale_coupon [renamed to sale_coupon module] (noupdate)

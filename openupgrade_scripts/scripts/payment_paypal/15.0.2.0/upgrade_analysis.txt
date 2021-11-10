@@ -1,0 +1,17 @@
+---Models in module 'payment_paypal'---
+---Fields in module 'payment_paypal'---
+payment_paypal / payment.acquirer         / fees_dom_fixed (False)        : DEL mode: modify
+payment_paypal / payment.acquirer         / fees_dom_var (False)          : DEL mode: modify
+payment_paypal / payment.acquirer         / fees_int_fixed (False)        : DEL mode: modify
+payment_paypal / payment.acquirer         / fees_int_var (False)          : DEL mode: modify
+payment_paypal / payment.acquirer         / provider (False)              : selection_keys is now '['adyen', 'alipay', 'authorize', 'buckaroo', 'mollie', 'none', 'ogone', 'paypal']' ('['adyen', 'alipay', 'authorize', 'buckaroo', 'manual', 'odoo_adyen', 'ogone', 'paypal']')
+payment_paypal / payment.transaction      / paypal_txn_type (char)        : DEL
+payment_paypal / payment.transaction      / paypal_type (char)            : NEW
+---XML records in module 'payment_paypal'---
+NEW account.payment.method: payment_paypal.payment_method_paypal (noupdate)
+NEW ir.ui.view: payment_paypal.payment_acquirer_form
+NEW ir.ui.view: payment_paypal.payment_transaction_form
+NEW ir.ui.view: payment_paypal.redirect_form
+DEL ir.ui.view: payment_paypal.acquirer_form_paypal
+DEL ir.ui.view: payment_paypal.paypal_form (noupdate)
+DEL ir.ui.view: payment_paypal.transaction_form_paypal

@@ -1,0 +1,9 @@
+---Models in module 'resource'---
+---Fields in module 'resource'---
+resource     / resource.calendar.leaves / company_id (many2one)         : not related anymore
+resource     / resource.calendar.leaves / company_id (many2one)         : now a function
+resource     / resource.resource        / _order                        : _order is now 'name' ('id')
+---XML records in module 'resource'---
+NEW ir.rule: resource.resource_calendar_leaves_rule_multi_company (noupdate)
+NEW ir.rule: resource.resource_resource_multi_company (noupdate)
+DEL ir.ui.view: resource.assets_backend

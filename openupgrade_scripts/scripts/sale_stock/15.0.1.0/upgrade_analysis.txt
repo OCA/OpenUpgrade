@@ -1,0 +1,9 @@
+---Models in module 'sale_stock'---
+---Fields in module 'sale_stock'---
+sale_stock   / sale.order               / effective_date (date)         : type is now 'datetime' ('date')
+sale_stock   / sale.order.line          / product_packaging (many2one)  : DEL relation: product.packaging
+---XML records in module 'sale_stock'---
+NEW ir.model.access: sale_stock.access_stock_package_type_salesman
+DEL ir.ui.view: sale_stock.sale_order_line_view_list
+DEL ir.ui.view: sale_stock.sale_stock_report_invoice_document
+DEL res.groups: sale_stock.group_lot_on_invoice [renamed to stock_account module]

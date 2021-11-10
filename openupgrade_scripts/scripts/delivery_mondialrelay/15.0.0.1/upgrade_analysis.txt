@@ -1,0 +1,20 @@
+---Models in module 'delivery_mondialrelay'---
+---Fields in module 'delivery_mondialrelay'---
+delivery_mondialrelay / delivery.carrier         / mondialrelay_brand (char)     : NEW hasdefault
+delivery_mondialrelay / delivery.carrier         / mondialrelay_packagetype (char): NEW hasdefault
+---XML records in module 'delivery_mondialrelay'---
+NEW delivery.carrier: delivery_mondialrelay.delivery_carrier_mondialrelay_be_lu (noupdate)
+NEW delivery.carrier: delivery_mondialrelay.delivery_carrier_mondialrelay_es (noupdate)
+NEW delivery.carrier: delivery_mondialrelay.delivery_carrier_mondialrelay_fr_nl (noupdate)
+NEW delivery.price.rule: delivery_mondialrelay.delivery_price_rule1 (noupdate)
+NEW delivery.price.rule: delivery_mondialrelay.delivery_price_rule2 (noupdate)
+NEW delivery.price.rule: delivery_mondialrelay.delivery_price_rule_es_1 (noupdate)
+NEW delivery.price.rule: delivery_mondialrelay.delivery_price_rule_es_2 (noupdate)
+NEW delivery.price.rule: delivery_mondialrelay.delivery_price_rule_es_3 (noupdate)
+NEW delivery.price.rule: delivery_mondialrelay.delivery_price_rule_fr_nl_1 (noupdate)
+NEW delivery.price.rule: delivery_mondialrelay.delivery_price_rule_fr_nl_2 (noupdate)
+NEW delivery.price.rule: delivery_mondialrelay.delivery_price_rule_fr_nl_3 (noupdate)
+NEW ir.ui.view: delivery_mondialrelay.choose_delivery_carrier_view_form
+NEW ir.ui.view: delivery_mondialrelay.view_delivery_carrier_form_provider_mondialrelay
+NEW ir.ui.view: delivery_mondialrelay.view_delivery_carrier_tree_provider_mondialrelay
+NEW product.product: delivery_mondialrelay.product_product_delivery_mondialrelay (noupdate)

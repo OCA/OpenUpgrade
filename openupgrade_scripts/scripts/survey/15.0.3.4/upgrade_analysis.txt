@@ -1,0 +1,15 @@
+---Models in module 'survey'---
+---Fields in module 'survey'---
+survey       / survey.survey            / state (selection)             : DEL required, selection_keys: ['closed', 'draft', 'open'], req_default: function
+survey       / survey.survey            / user_id (many2one)            : NEW relation: res.users, hasdefault
+survey       / survey.user_input        / _order                        : _order is now 'create_date desc' ('id')
+survey       / survey.user_input        / end_datetime (datetime)       : NEW
+---XML records in module 'survey'---
+NEW ir.ui.view: survey.certification_preview
+DEL ir.ui.view: survey.assets_backend
+DEL ir.ui.view: survey.assets_backend_inherit_survey
+DEL ir.ui.view: survey.assets_tests
+DEL ir.ui.view: survey.survey_assets
+DEL ir.ui.view: survey.survey_report_assets_pdf
+DEL ir.ui.view: survey.survey_user_input_session_assets
+NEW report.paperformat: survey.paperformat_survey_certification

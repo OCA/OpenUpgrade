@@ -1,0 +1,8 @@
+---Models in module 'l10n_ch'---
+---Fields in module 'l10n_ch'---
+l10n_ch      / res.partner.bank         / l10n_ch_qr_iban (char)        : previously in module l10n_ch_qriban
+---XML records in module 'l10n_ch'---
+account.tax.group: l10n_ch.tax_group_tva_100 (noupdate) (noupdate switched)
+DEL ir.ui.view: l10n_ch.assets_common
+DEL ir.ui.view: l10n_ch.assets_common_qr
+DEL ir.ui.view: l10n_ch.isr_bank_journal_form
