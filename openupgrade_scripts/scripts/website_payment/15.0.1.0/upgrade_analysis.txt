@@ -1,0 +1,16 @@
+---Models in module 'website_payment'---
+---Fields in module 'website_payment'---
+website_payment / payment.transaction      / is_donation (boolean)         : NEW
+---XML records in module 'website_payment'---
+NEW ir.asset: website_payment.s_donation_000_js
+NEW ir.asset: website_payment.s_donation_000_scss
+NEW ir.ui.view: website_payment.donation_input
+NEW ir.ui.view: website_payment.donation_mail_body
+NEW ir.ui.view: website_payment.donation_pay
+NEW ir.ui.view: website_payment.payment_checkout
+NEW ir.ui.view: website_payment.remove_external_snippets
+NEW ir.ui.view: website_payment.s_donation
+NEW ir.ui.view: website_payment.s_donation_button
+NEW ir.ui.view: website_payment.s_donation_options
+NEW ir.ui.view: website_payment.snippets
+NEW mail.template: website_payment.mail_template_donation (noupdate)

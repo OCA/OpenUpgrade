@@ -1,0 +1,77 @@
+---Models in module 'event_booth'---
+new model event.booth
+new model event.booth.category
+new model event.type.booth
+---Fields in module 'event_booth'---
+event_booth  / event.booth              / activity_ids (one2many)       : NEW relation: mail.activity
+event_booth  / event.booth              / booth_category_id (many2one)  : NEW relation: event.booth.category, required, req_default: function, hasdefault
+event_booth  / event.booth              / contact_email (char)          : NEW isfunction: function, stored
+event_booth  / event.booth              / contact_mobile (char)         : NEW isfunction: function, stored
+event_booth  / event.booth              / contact_name (char)           : NEW isfunction: function, stored
+event_booth  / event.booth              / contact_phone (char)          : NEW isfunction: function, stored
+event_booth  / event.booth              / event_id (many2one)           : NEW relation: event.event, required
+event_booth  / event.booth              / event_type_id (many2one)      : NEW relation: event.type
+event_booth  / event.booth              / message_follower_ids (one2many): NEW relation: mail.followers
+event_booth  / event.booth              / message_ids (one2many)        : NEW relation: mail.message
+event_booth  / event.booth              / message_main_attachment_id (many2one): NEW relation: ir.attachment
+event_booth  / event.booth              / name (char)                   : NEW required
+event_booth  / event.booth              / partner_id (many2one)         : NEW relation: res.partner
+event_booth  / event.booth              / state (selection)             : NEW required, selection_keys: ['available', 'unavailable'], req_default: function, hasdefault
+event_booth  / event.booth              / website_message_ids (one2many): NEW relation: mail.message
+event_booth  / event.booth.category     / active (boolean)              : NEW hasdefault
+event_booth  / event.booth.category     / booth_ids (one2many)          : NEW relation: event.booth
+event_booth  / event.booth.category     / description (html)            : NEW
+event_booth  / event.booth.category     / image_1024 (binary)           : NEW attachment: True, isrelated: related, stored
+event_booth  / event.booth.category     / image_128 (binary)            : NEW attachment: True, isrelated: related, stored
+event_booth  / event.booth.category     / image_1920 (binary)           : NEW attachment: True
+event_booth  / event.booth.category     / image_256 (binary)            : NEW attachment: True, isrelated: related, stored
+event_booth  / event.booth.category     / image_512 (binary)            : NEW attachment: True, isrelated: related, stored
+event_booth  / event.booth.category     / name (char)                   : NEW required
+event_booth  / event.booth.category     / sequence (integer)            : NEW hasdefault
+event_booth  / event.event              / event_booth_ids (one2many)    : NEW relation: event.booth, isfunction: function, stored
+event_booth  / event.type               / event_type_booth_ids (one2many): NEW relation: event.type.booth
+event_booth  / event.type.booth         / booth_category_id (many2one)  : NEW relation: event.booth.category, required, req_default: function, hasdefault
+event_booth  / event.type.booth         / event_type_id (many2one)      : NEW relation: event.type, required
+event_booth  / event.type.booth         / name (char)                   : NEW required
+---XML records in module 'event_booth'---
+NEW event.booth.category: event_booth.event_booth_category_premium
+NEW event.booth.category: event_booth.event_booth_category_standard
+NEW event.booth.category: event_booth.event_booth_category_vip
+NEW ir.actions.act_window: event_booth.event_booth_action
+NEW ir.actions.act_window: event_booth.event_booth_action_from_event
+NEW ir.actions.act_window: event_booth.event_booth_category_action
+NEW ir.actions.act_window: event_booth.event_type_booth_action
+NEW ir.actions.act_window.view: event_booth.event_booth_action_from_event_view_form
+NEW ir.actions.act_window.view: event_booth.event_booth_action_from_event_view_kanban
+NEW ir.actions.act_window.view: event_booth.event_booth_action_from_event_view_tree
+NEW ir.model.access: event_booth.access_event_booth_all
+NEW ir.model.access: event_booth.access_event_booth_category
+NEW ir.model.access: event_booth.access_event_booth_category_desk
+NEW ir.model.access: event_booth.access_event_booth_category_manager
+NEW ir.model.access: event_booth.access_event_booth_manager
+NEW ir.model.access: event_booth.access_event_booth_user
+NEW ir.model.access: event_booth.access_event_type_booth_manager
+NEW ir.model.access: event_booth.access_event_type_booth_user
+NEW ir.ui.menu: event_booth.menu_event_booth
+NEW ir.ui.menu: event_booth.menu_event_booth_category
+NEW ir.ui.view: event_booth.event_booth_booked_template
+NEW ir.ui.view: event_booth.event_booth_category_view_form
+NEW ir.ui.view: event_booth.event_booth_category_view_search
+NEW ir.ui.view: event_booth.event_booth_category_view_tree
+NEW ir.ui.view: event_booth.event_booth_view_form
+NEW ir.ui.view: event_booth.event_booth_view_form_from_event
+NEW ir.ui.view: event_booth.event_booth_view_form_quick_create
+NEW ir.ui.view: event_booth.event_booth_view_form_simple_from_event
+NEW ir.ui.view: event_booth.event_booth_view_kanban
+NEW ir.ui.view: event_booth.event_booth_view_kanban_from_event
+NEW ir.ui.view: event_booth.event_booth_view_search
+NEW ir.ui.view: event_booth.event_booth_view_tree
+NEW ir.ui.view: event_booth.event_booth_view_tree_from_event
+NEW ir.ui.view: event_booth.event_event_view_form
+NEW ir.ui.view: event_booth.event_type_booth_view_form
+NEW ir.ui.view: event_booth.event_type_booth_view_form_from_type
+NEW ir.ui.view: event_booth.event_type_booth_view_search
+NEW ir.ui.view: event_booth.event_type_booth_view_tree
+NEW ir.ui.view: event_booth.event_type_booth_view_tree_from_type
+NEW ir.ui.view: event_booth.event_type_view_form
+NEW mail.message.subtype: event_booth.mt_event_booth_booked (noupdate)

@@ -1,0 +1,11 @@
+---Models in module 'uom'---
+---Fields in module 'uom'---
+uom          / uom.category             / reference_uom_id (many2one)   : NEW relation: uom.uom
+uom          / uom.category             / uom_ids (one2many)            : NEW relation: uom.uom
+uom          / uom.uom                  / _order                        : _order is now 'factor DESC, id' ('name')
+---XML records in module 'uom'---
+NEW ir.ui.view: uom.uom_categ_view_search
+NEW uom.category: uom.uom_categ_surface (noupdate)
+NEW uom.uom: uom.product_uom_millimeter (noupdate)
+NEW uom.uom: uom.uom_square_foot (noupdate)
+NEW uom.uom: uom.uom_square_meter (noupdate)

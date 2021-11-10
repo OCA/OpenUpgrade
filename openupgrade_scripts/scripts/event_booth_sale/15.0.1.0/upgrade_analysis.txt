@@ -1,0 +1,41 @@
+---Models in module 'event_booth_sale'---
+new model event.booth.configurator [transient]
+new model event.booth.registration
+---Fields in module 'event_booth_sale'---
+event_booth_sale / event.booth              / event_booth_registration_ids (one2many): NEW relation: event.booth.registration
+event_booth_sale / event.booth              / is_paid (boolean)             : NEW
+event_booth_sale / event.booth              / sale_order_id (many2one)      : NEW relation: sale.order, isrelated: related, stored
+event_booth_sale / event.booth              / sale_order_line_id (many2one) : NEW relation: sale.order.line
+event_booth_sale / event.booth              / sale_order_line_registration_ids (many2many): NEW relation: sale.order.line
+event_booth_sale / event.booth.category     / price (float)                 : NEW isfunction: function, stored
+event_booth_sale / event.booth.category     / product_id (many2one)         : NEW relation: product.product, required, req_default: function, hasdefault
+event_booth_sale / event.booth.registration / contact_email (char)          : NEW isfunction: function, stored
+event_booth_sale / event.booth.registration / contact_mobile (char)         : NEW isfunction: function, stored
+event_booth_sale / event.booth.registration / contact_name (char)           : NEW isfunction: function, stored
+event_booth_sale / event.booth.registration / contact_phone (char)          : NEW isfunction: function, stored
+event_booth_sale / event.booth.registration / event_booth_id (many2one)     : NEW relation: event.booth, required
+event_booth_sale / event.booth.registration / partner_id (many2one)         : NEW relation: res.partner, isrelated: related, stored
+event_booth_sale / event.booth.registration / sale_order_line_id (many2one) : NEW relation: sale.order.line, required
+event_booth_sale / product.template         / detailed_type (False)         : NEW selection_keys: ['consu', 'event', 'event_booth', 'gift', 'product', 'service'], mode: modify
+event_booth_sale / sale.order               / event_booth_ids (one2many)    : NEW relation: event.booth
+event_booth_sale / sale.order.line          / event_booth_category_id (many2one): NEW relation: event.booth.category
+event_booth_sale / sale.order.line          / event_booth_ids (one2many)    : NEW relation: event.booth
+event_booth_sale / sale.order.line          / event_booth_registration_ids (one2many): NEW relation: event.booth.registration
+---XML records in module 'event_booth_sale'---
+NEW ir.actions.act_window: event_booth_sale.event_booth_configurator_action
+NEW ir.model.access: event_booth_sale.access_event_booth_configurator_salesman
+NEW ir.model.access: event_booth_sale.access_event_booth_registration_event_desk
+NEW ir.model.access: event_booth_sale.access_event_booth_registration_event_user
+NEW ir.model.access: event_booth_sale.access_event_booth_registration_salesman
+NEW ir.ui.view: event_booth_sale.event_booth_category_view_form
+NEW ir.ui.view: event_booth_sale.event_booth_category_view_tree
+NEW ir.ui.view: event_booth_sale.event_booth_configurator_view_form
+NEW ir.ui.view: event_booth_sale.event_booth_registration_view_form
+NEW ir.ui.view: event_booth_sale.event_booth_registration_view_tree
+NEW ir.ui.view: event_booth_sale.event_booth_view_form_from_event
+NEW ir.ui.view: event_booth_sale.event_booth_view_search
+NEW ir.ui.view: event_booth_sale.event_booth_view_tree
+NEW ir.ui.view: event_booth_sale.event_type_booth_view_form_from_type
+NEW ir.ui.view: event_booth_sale.event_type_booth_view_tree_from_type
+NEW ir.ui.view: event_booth_sale.sale_order_view_form
+NEW product.product: event_booth_sale.product_product_event_booth

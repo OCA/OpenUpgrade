@@ -1,0 +1,20 @@
+---Models in module 'website_slides'---
+---Fields in module 'website_slides'---
+website_slides / slide.channel            / completed_template_id (many2one): NEW relation: mail.template, hasdefault
+website_slides / slide.channel            / description (text)            : type is now 'html' ('text')
+website_slides / slide.channel            / description_short (text)      : type is now 'html' ('text')
+website_slides / slide.slide              / description (text)            : type is now 'html' ('text')
+website_slides / slide.slide              / embed_code (text)             : type is now 'html' ('text')
+---XML records in module 'website_slides'---
+NEW ir.actions.act_window: website_slides.slide_channel_partner_action_report
+NEW ir.rule: website_slides.rule_slide_channel_tag_public (noupdate)
+NEW ir.ui.menu: website_slides.website_slides_menu_report_attendees
+NEW ir.ui.view: website_slides.slide_channel_partner_view_kanban
+NEW ir.ui.view: website_slides.slide_searchbar_input_snippet_options
+DEL ir.ui.view: website_slides.assets_backend
+DEL ir.ui.view: website_slides.assets_editor_inherit_website_slides
+DEL ir.ui.view: website_slides.assets_frontend
+DEL ir.ui.view: website_slides.assets_tests
+DEL ir.ui.view: website_slides.slide_embed_assets
+DEL ir.ui.view: website_slides.website_slides_tests
+NEW mail.template: website_slides.mail_template_channel_completed (noupdate)

@@ -1,0 +1,51 @@
+---Models in module 'calendar'---
+obsolete model calendar.contacts
+new model calendar.filters
+---Fields in module 'calendar'---
+calendar     / calendar.alarm           / body (text)                   : NEW
+calendar     / calendar.alarm           / mail_template_id (many2one)   : NEW relation: mail.template, isfunction: function, stored
+calendar     / calendar.attendee        / _order                        : _order is now 'create_date ASC' ('id')
+calendar     / calendar.contacts        / active (boolean)              : DEL
+calendar     / calendar.contacts        / partner_id (many2one)         : DEL relation: res.partner, required
+calendar     / calendar.contacts        / user_id (many2one)            : DEL relation: res.users, required, req_default: function
+calendar     / calendar.event           / description (text)            : type is now 'html' ('text')
+calendar     / calendar.event           / videocall_location (char)     : NEW
+calendar     / calendar.event           / weekday (selection)           : selection_keys is now '['FRI', 'MON', 'SAT', 'SUN', 'THU', 'TUE', 'WED']' ('['FR', 'MO', 'SA', 'SU', 'TH', 'TU', 'WE']')
+calendar     / calendar.event.type      / color (integer)               : NEW hasdefault
+calendar     / calendar.filters         / active (boolean)              : NEW hasdefault
+calendar     / calendar.filters         / partner_checked (boolean)     : NEW hasdefault
+calendar     / calendar.filters         / partner_id (many2one)         : NEW relation: res.partner, required
+calendar     / calendar.filters         / user_id (many2one)            : NEW relation: res.users, required, req_default: function, hasdefault
+calendar     / calendar.recurrence      / fr (boolean)                  : DEL
+calendar     / calendar.recurrence      / fri (boolean)                 : NEW
+calendar     / calendar.recurrence      / mo (boolean)                  : DEL
+calendar     / calendar.recurrence      / mon (boolean)                 : NEW
+calendar     / calendar.recurrence      / sa (boolean)                  : DEL
+calendar     / calendar.recurrence      / sat (boolean)                 : NEW
+calendar     / calendar.recurrence      / su (boolean)                  : DEL
+calendar     / calendar.recurrence      / sun (boolean)                 : NEW
+calendar     / calendar.recurrence      / th (boolean)                  : DEL
+calendar     / calendar.recurrence      / thu (boolean)                 : NEW
+calendar     / calendar.recurrence      / tu (boolean)                  : DEL
+calendar     / calendar.recurrence      / tue (boolean)                 : NEW
+calendar     / calendar.recurrence      / we (boolean)                  : DEL
+calendar     / calendar.recurrence      / wed (boolean)                 : NEW
+calendar     / calendar.recurrence      / weekday (selection)           : selection_keys is now '['FRI', 'MON', 'SAT', 'SUN', 'THU', 'TUE', 'WED']' ('['FR', 'MO', 'SA', 'SU', 'TH', 'TU', 'WE']')
+calendar     / mail.activity.type       / category (False)              : selection_keys is now '['default', 'meeting', 'phonecall', 'upload_file']' ('['default', 'meeting', 'upload_file']')
+calendar     / res.partner              / meeting_count (integer)       : previously in module crm
+calendar     / res.partner              / meeting_ids (many2many)       : previously in module crm
+calendar     / res.users                / meeting_count (integer)       : previously in module crm
+calendar     / res.users                / meeting_ids (many2many)       : previously in module crm
+---XML records in module 'calendar'---
+NEW ir.model.access: calendar.access_calendar_filters
+NEW ir.model.access: calendar.access_calendar_filters_all
+DEL ir.model.access: calendar.access_calendar_contacts
+DEL ir.model.access: calendar.access_calendar_contacts_all
+NEW ir.ui.menu: calendar.calendar_menu_config
+NEW ir.ui.menu: calendar.calendar_submenu_reminders
+NEW ir.ui.view: calendar.res_partner_kanban_view
+NEW ir.ui.view: calendar.res_users_view_form
+NEW ir.ui.view: calendar.view_partners_form
+DEL ir.ui.view: calendar.assets_backend
+DEL ir.ui.view: calendar.qunit_suite
+NEW mail.template: calendar.calendar_template_meeting_update (noupdate)

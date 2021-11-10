@@ -1,0 +1,14 @@
+---Models in module 'repair'---
+---Fields in module 'repair'---
+repair       / repair.order             / _order                        : _order is now 'priority desc, create_date desc' ('create_date desc')
+repair       / repair.order             / description (char)            : NEW
+repair       / repair.order             / internal_notes (text)         : type is now 'html' ('text')
+repair       / repair.order             / priority (selection)          : NEW selection_keys: ['0', '1'], hasdefault
+repair       / repair.order             / quotation_notes (text)        : type is now 'html' ('text')
+repair       / repair.order             / sale_order_id (many2one)      : NEW relation: sale.order
+repair       / repair.order             / schedule_date (date)          : NEW
+repair       / repair.order             / state (selection)             : selection_keys is now '['2binvoiced', 'cancel', 'confirmed', 'done', 'draft', 'ready', 'under_repair']' ('['2binvoiced', 'cancel', 'confirmed', 'done', 'draft', 'invoice_except', 'ready', 'under_repair']')
+---XML records in module 'repair'---
+NEW ir.actions.act_window: repair.action_repair_move_lines
+DEL ir.model.access: repair.access_stock_production_lot_user
+NEW ir.ui.view: repair.stock_production_lot_view_form

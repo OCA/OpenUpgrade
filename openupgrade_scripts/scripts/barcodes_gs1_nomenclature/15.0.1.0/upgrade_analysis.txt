@@ -1,0 +1,35 @@
+---Models in module 'barcodes_gs1_nomenclature'---
+---Fields in module 'barcodes_gs1_nomenclature'---
+barcodes_gs1_nomenclature / barcode.nomenclature     / gs1_separator_fnc1 (char)     : NEW
+barcodes_gs1_nomenclature / barcode.nomenclature     / is_gs1_nomenclature (boolean) : NEW
+barcodes_gs1_nomenclature / barcode.rule             / associated_uom_id (many2one)  : NEW relation: uom.uom
+barcodes_gs1_nomenclature / barcode.rule             / encoding (False)              : NEW selection_keys: ['any', 'ean13', 'ean8', 'gs1-128', 'upca'], mode: modify
+barcodes_gs1_nomenclature / barcode.rule             / gs1_content_type (selection)  : NEW selection_keys: ['alpha', 'date', 'identifier', 'measure']
+barcodes_gs1_nomenclature / barcode.rule             / gs1_decimal_usage (boolean)   : NEW
+barcodes_gs1_nomenclature / barcode.rule             / type (False)                  : NEW selection_keys: ['alias', 'expiration_date', 'location', 'location_dest', 'lot', 'package', 'package_type', 'packaging_date', 'product', 'quantity', 'use_date'], mode: modify
+---XML records in module 'barcodes_gs1_nomenclature'---
+NEW barcode.nomenclature: barcodes_gs1_nomenclature.default_gs1_nomenclature (noupdate)
+NEW barcode.rule: barcodes_gs1_nomenclature.barcode_rule_gs1_00 (noupdate)
+NEW barcode.rule: barcodes_gs1_nomenclature.barcode_rule_gs1_01 (noupdate)
+NEW barcode.rule: barcodes_gs1_nomenclature.barcode_rule_gs1_02 (noupdate)
+NEW barcode.rule: barcodes_gs1_nomenclature.barcode_rule_gs1_10 (noupdate)
+NEW barcode.rule: barcodes_gs1_nomenclature.barcode_rule_gs1_13 (noupdate)
+NEW barcode.rule: barcodes_gs1_nomenclature.barcode_rule_gs1_15 (noupdate)
+NEW barcode.rule: barcodes_gs1_nomenclature.barcode_rule_gs1_17 (noupdate)
+NEW barcode.rule: barcodes_gs1_nomenclature.barcode_rule_gs1_21 (noupdate)
+NEW barcode.rule: barcodes_gs1_nomenclature.barcode_rule_gs1_30 (noupdate)
+NEW barcode.rule: barcodes_gs1_nomenclature.barcode_rule_gs1_310y (noupdate)
+NEW barcode.rule: barcodes_gs1_nomenclature.barcode_rule_gs1_311y (noupdate)
+NEW barcode.rule: barcodes_gs1_nomenclature.barcode_rule_gs1_315y (noupdate)
+NEW barcode.rule: barcodes_gs1_nomenclature.barcode_rule_gs1_316y (noupdate)
+NEW barcode.rule: barcodes_gs1_nomenclature.barcode_rule_gs1_321y (noupdate)
+NEW barcode.rule: barcodes_gs1_nomenclature.barcode_rule_gs1_357y (noupdate)
+NEW barcode.rule: barcodes_gs1_nomenclature.barcode_rule_gs1_365y (noupdate)
+NEW barcode.rule: barcodes_gs1_nomenclature.barcode_rule_gs1_37 (noupdate)
+NEW barcode.rule: barcodes_gs1_nomenclature.barcode_rule_gs1_410 (noupdate)
+NEW barcode.rule: barcodes_gs1_nomenclature.barcode_rule_gs1_413 (noupdate)
+NEW barcode.rule: barcodes_gs1_nomenclature.barcode_rule_gs1_414 (noupdate)
+NEW barcode.rule: barcodes_gs1_nomenclature.barcode_rule_gs1_91 (noupdate)
+NEW ir.ui.view: barcodes_gs1_nomenclature.view_barcode_gs1_nomenclature_form
+NEW ir.ui.view: barcodes_gs1_nomenclature.view_barcode_gs1_nomenclature_tree
+NEW ir.ui.view: barcodes_gs1_nomenclature.view_barcode_gs1_rule_form

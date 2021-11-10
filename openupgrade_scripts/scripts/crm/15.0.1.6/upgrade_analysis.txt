@@ -1,0 +1,52 @@
+---Models in module 'crm'---
+new model crm.lead.pls.update [transient]
+---Fields in module 'crm'---
+crm          / crm.lead                 / calendar_event_ids (one2many) : NEW relation: calendar.event
+crm          / crm.lead                 / company_id (many2one)         : now a function
+crm          / crm.lead                 / description (text)            : type is now 'html' ('text')
+crm          / crm.team                 / assignment_domain (char)      : NEW
+crm          / crm.team                 / assignment_optout (boolean)   : NEW
+crm          / crm.team.member          / assignment_domain (char)      : NEW
+crm          / crm.team.member          / assignment_max (integer)      : NEW hasdefault
+crm          / crm.team.member          / assignment_optout (boolean)   : NEW
+crm          / res.partner              / meeting_count (integer)       : module is now 'calendar' ('crm')
+crm          / res.partner              / meeting_ids (many2many)       : module is now 'calendar' ('crm')
+crm          / res.users                / meeting_count (integer)       : module is now 'calendar' ('crm')
+crm          / res.users                / meeting_ids (many2many)       : module is now 'calendar' ('crm')
+---XML records in module 'crm'---
+NEW crm.lead.scoring.frequency.field: crm.frequency_field_tag_ids (noupdate)
+NEW ir.actions.act_window: crm.action_lead_mail_compose
+NEW ir.actions.act_window: crm.crm_lead_action_forecast
+NEW ir.actions.act_window: crm.crm_lead_action_open_lead_form
+NEW ir.actions.act_window: crm.crm_lead_pls_update_action
+DEL ir.actions.act_window: crm.crm_lead_act_window_compose
+NEW ir.actions.act_window.view: crm.action_report_crm_lead_salesteam_view_graph
+NEW ir.actions.act_window.view: crm.action_report_crm_lead_salesteam_view_pivot
+NEW ir.actions.act_window.view: crm.action_report_crm_lead_salesteam_view_tree
+NEW ir.actions.act_window.view: crm.crm_lead_action_forecast_view_graph
+NEW ir.actions.act_window.view: crm.crm_lead_action_forecast_view_kanban
+NEW ir.actions.act_window.view: crm.crm_lead_action_forecast_view_pivot
+NEW ir.actions.act_window.view: crm.crm_lead_action_forecast_view_tree
+NEW ir.actions.server: crm.action_opportunity_forecast
+NEW ir.cron: crm.ir_cron_crm_lead_assign (noupdate)
+NEW ir.model.access: crm.crm_lead_pls_update_access_system
+NEW ir.ui.menu: crm.crm_menu_forecast
+NEW ir.ui.menu: crm.crm_team_member_config
+NEW ir.ui.view: crm.crm_action_helper
+NEW ir.ui.view: crm.crm_lead_pls_update_view_form
+NEW ir.ui.view: crm.crm_lead_view_graph_forecast
+NEW ir.ui.view: crm.crm_lead_view_kanban_forecast
+NEW ir.ui.view: crm.crm_lead_view_pivot_forecast
+NEW ir.ui.view: crm.crm_lead_view_search_forecast
+NEW ir.ui.view: crm.crm_lead_view_tree_forecast
+NEW ir.ui.view: crm.crm_team_member_view_form
+NEW ir.ui.view: crm.crm_team_member_view_kanban
+NEW ir.ui.view: crm.crm_team_member_view_tree
+NEW ir.ui.view: crm.crm_team_view_kanban_dashboard
+NEW ir.ui.view: crm.crm_team_view_tree
+DEL ir.ui.view: crm.assets_backend
+DEL ir.ui.view: crm.assets_tests
+DEL ir.ui.view: crm.crm_team_salesteams_view_kanban
+DEL ir.ui.view: crm.qunit_suite
+DEL mail.alias: crm.mail_alias_lead_info (noupdate)
+DEL mail.template: crm.email_template_opportunity_mail (noupdate)

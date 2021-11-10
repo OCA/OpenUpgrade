@@ -1,0 +1,15 @@
+---Models in module 'website_event_meet'---
+---Fields in module 'website_event_meet'---
+website_event_meet / website.event.menu       / menu_type (False)             : selection_keys is now '['booth', 'community', 'exhibitor', 'introduction', 'location', 'meeting_room', 'register']' ('['community', 'meeting_room']')
+---XML records in module 'website_event_meet'---
+NEW ir.actions.act_window: website_event_meet.action_meeting_room_from_event
+NEW ir.model.access: website_event_meet.access_chat_room_registration
+NEW ir.model.access: website_event_meet.access_chat_room_user
+NEW ir.model.access: website_event_meet.access_event_meeting_room
+NEW ir.model.access: website_event_meet.access_event_meeting_room_user
+DEL ir.model.access: website_event_meet.chat_room_access_event_manager [renamed to website_event_exhibitor module]
+DEL ir.model.access: website_event_meet.chat_room_access_event_user
+DEL ir.model.access: website_event_meet.event_meeting_room_access_all
+DEL ir.model.access: website_event_meet.event_meeting_room_access_manager
+DEL ir.model.access: website_event_meet.event_meeting_room_access_user
+DEL ir.ui.view: website_event_meet.assets_frontend

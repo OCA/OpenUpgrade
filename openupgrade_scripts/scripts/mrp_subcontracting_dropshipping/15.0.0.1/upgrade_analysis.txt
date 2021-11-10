@@ -1,0 +1,7 @@
+---Models in module 'mrp_subcontracting_dropshipping'---
+---Fields in module 'mrp_subcontracting_dropshipping'---
+mrp_subcontracting_dropshipping / stock.warehouse          / subcontracting_dropshipping_pull_id (many2one): NEW relation: stock.rule
+mrp_subcontracting_dropshipping / stock.warehouse          / subcontracting_dropshipping_to_resupply (boolean): NEW hasdefault
+---XML records in module 'mrp_subcontracting_dropshipping'---
+NEW ir.ui.view: mrp_subcontracting_dropshipping.view_warehouse_inherit_mrp_subcontracting_dropshipping
+NEW stock.location.route: mrp_subcontracting_dropshipping.route_subcontracting_dropshipping (noupdate)

@@ -1,0 +1,13 @@
+---Models in module 'l10n_cl'---
+---Fields in module 'l10n_cl'---
+l10n_cl      / account.bank.statement.line / l10n_latam_document_type_id_code (char): module is now 'l10n_latam_invoice_document' ('l10n_cl')
+l10n_cl      / account.journal          / l10n_cl_sequence_ids (many2many): DEL relation: ir.sequence
+l10n_cl      / account.move             / l10n_latam_document_type_id_code (char): module is now 'l10n_latam_invoice_document' ('l10n_cl')
+l10n_cl      / account.payment          / l10n_latam_document_type_id_code (char): module is now 'l10n_latam_invoice_document' ('l10n_cl')
+l10n_cl      / ir.sequence              / l10n_cl_journal_ids (many2many): DEL relation: account.journal
+---XML records in module 'l10n_cl'---
+NEW account.account.template: l10n_cl.account_210715
+NEW account.tax.report.line: l10n_cl.tax_report_retencion_total_compras
+NEW account.tax.template: l10n_cl.I_RTI
+DEL ir.ui.view: l10n_cl.sequence_view
+DEL ir.ui.view: l10n_cl.view_sequence_search

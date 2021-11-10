@@ -1,0 +1,9 @@
+---Models in module 'mass_mailing_sms'---
+---Fields in module 'mass_mailing_sms'---
+mass_mailing_sms / mailing.contact          / phone_mobile_search (char)    : NEW
+mass_mailing_sms / mailing.trace            / failure_type (False)          : selection_keys is now '['mail_bl', 'mail_dup', 'mail_email_invalid', 'mail_email_missing', 'mail_optout', 'mail_smtp', 'sms_acc', 'sms_blacklist', 'sms_credit', 'sms_duplicate', 'sms_number_format', 'sms_number_missing', 'sms_optout', 'sms_server', 'unknown']' ('['BOUNCE', 'RECIPIENT', 'SMTP', 'UNKNOWN', 'sms_acc', 'sms_blacklist', 'sms_credit', 'sms_duplicate', 'sms_number_format', 'sms_number_missing', 'sms_server']')
+mass_mailing_sms / utm.campaign             / ab_testing_sms_winner_selection (selection): NEW selection_keys: ['clicks_ratio', 'manual'], hasdefault
+---XML records in module 'mass_mailing_sms'---
+NEW ir.actions.act_window.view: mass_mailing_sms.mailing_trace_report_action_sms_view_tree
+NEW ir.ui.view: mass_mailing_sms.mailing_list_view_kanban
+NEW ir.ui.view: mass_mailing_sms.mailing_trace_report_sms_view_tree

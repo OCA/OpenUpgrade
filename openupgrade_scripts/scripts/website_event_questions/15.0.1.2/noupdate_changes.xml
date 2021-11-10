@@ -1,0 +1,9 @@
+<?xml version='1.0' encoding='utf-8'?>
+<odoo>
+  <record id="ir_rule_event_question_answer_event_user" model="ir.rule">
+    <field name="groups" eval="[(4, ref('event.group_event_registration_desk'))]"/>
+  </record>
+  <record id="ir_rule_event_question_event_user" model="ir.rule">
+    <field name="groups" eval="[(4, ref('event.group_event_registration_desk'))]"/>
+  </record>
+</odoo>

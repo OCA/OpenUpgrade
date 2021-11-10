@@ -1,0 +1,12 @@
+<?xml version='1.0' encoding='utf-8'?>
+<odoo>
+  <record id="payment.payment_acquirer_alipay" model="payment.acquirer">
+    <field name="company_id"/>
+    <field name="name"/>
+    <field name="redirect_form_view_id" ref="redirect_form"/>
+    <field name="support_authorization">False</field>
+    <field name="support_fees_computation">True</field>
+    <field name="support_refund"/>
+    <field name="support_tokenization">False</field>
+  </record>
+</odoo>

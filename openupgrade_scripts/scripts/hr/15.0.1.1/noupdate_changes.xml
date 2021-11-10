@@ -1,0 +1,10 @@
+<?xml version='1.0' encoding='utf-8'?>
+<odoo>
+  <record id="employee_admin" model="hr.employee">
+    <field name="address_id" ref="base.main_company"/>
+    <field name="department_id" ref="dep_administration"/>
+  </record>
+  <record id="res_partner_admin_private_address" model="res.partner">
+    <field name="image_1920" type="base64" file="base/static/img/avatar_grey.png"/>
+  </record>
+</odoo>

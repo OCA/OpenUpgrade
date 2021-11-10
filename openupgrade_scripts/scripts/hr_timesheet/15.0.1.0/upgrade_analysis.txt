@@ -1,0 +1,40 @@
+---Models in module 'hr_timesheet'---
+---Fields in module 'hr_timesheet'---
+hr_timesheet / res.company              / internal_project_id (many2one): NEW relation: project.project
+---XML records in module 'hr_timesheet'---
+NEW digest.tip: hr_timesheet.digest_tip_hr_timesheet_0
+NEW ir.actions.act_window.view: hr_timesheet.act_hr_timesheet_line_view_graph
+NEW ir.actions.act_window.view: hr_timesheet.act_hr_timesheet_line_view_pivot
+NEW ir.actions.act_window.view: hr_timesheet.act_hr_timesheet_report_kanban
+NEW ir.actions.act_window.view: hr_timesheet.timesheet_action_view_all_graph
+NEW ir.actions.act_window.view: hr_timesheet.timesheet_action_view_report_by_project_kanban
+NEW ir.actions.act_window.view: hr_timesheet.timesheet_action_view_report_by_task_kanban
+NEW ir.actions.report: hr_timesheet.timesheet_report_project
+NEW ir.actions.report: hr_timesheet.timesheet_report_task
+DEL ir.config_parameter: hr_timesheet.ir_config_parameter_timesheet_min_duration (noupdate)
+DEL ir.config_parameter: hr_timesheet.ir_config_parameter_timesheet_rounding (noupdate)
+NEW ir.model.access: hr_timesheet.access_account_analytic_line_portal_user (noupdate)
+NEW ir.rule: hr_timesheet.timesheet_line_rule_portal_user (noupdate)
+NEW ir.ui.menu: hr_timesheet.timesheet_menu_activity_user
+DEL ir.ui.menu: hr_timesheet.hr_timesheet_config_settings_menu_action
+NEW ir.ui.view: hr_timesheet.portal_my_task_planned_hours_template
+NEW ir.ui.view: hr_timesheet.portal_tasks_list_inherit
+NEW ir.ui.view: hr_timesheet.project_sharing_inherit_project_task_view_form
+NEW ir.ui.view: hr_timesheet.project_sharing_inherit_project_task_view_search
+NEW ir.ui.view: hr_timesheet.project_sharing_inherit_project_task_view_tree
+NEW ir.ui.view: hr_timesheet.project_sharing_kanban_inherit_project_task_view_kanban
+NEW ir.ui.view: hr_timesheet.project_task_view_graph
+NEW ir.ui.view: hr_timesheet.project_task_view_pivot
+NEW ir.ui.view: hr_timesheet.report_project_task_timesheet
+NEW ir.ui.view: hr_timesheet.report_project_task_user_view_search
+NEW ir.ui.view: hr_timesheet.report_project_task_user_view_tree
+NEW ir.ui.view: hr_timesheet.report_timesheet_project
+NEW ir.ui.view: hr_timesheet.timesheet_table
+NEW ir.ui.view: hr_timesheet.view_hr_timesheet_line_graph_all
+NEW ir.ui.view: hr_timesheet.view_hr_timesheet_line_graph_my
+NEW ir.ui.view: hr_timesheet.view_my_timesheet_line_pivot
+NEW ir.ui.view: hr_timesheet.view_task_project_user_graph_inherited
+NEW ir.ui.view: hr_timesheet.view_task_project_user_pivot_inherited
+DEL ir.ui.view: hr_timesheet.assets_backend
+DEL ir.ui.view: hr_timesheet.portal_subtask_timesheet_tables
+NEW project.task.type: hr_timesheet.internal_project_default_stage

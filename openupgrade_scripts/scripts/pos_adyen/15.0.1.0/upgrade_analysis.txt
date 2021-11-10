@@ -1,0 +1,33 @@
+---Models in module 'pos_adyen'---
+obsolete model adyen.store
+obsolete model adyen.terminal
+---Fields in module 'pos_adyen'---
+pos_adyen    / adyen.account            / store_ids (one2many)          : DEL relation: adyen.store
+pos_adyen    / adyen.account            / terminal_ids (one2many)       : DEL relation: adyen.terminal
+pos_adyen    / adyen.store              / adyen_account_id (many2one)   : DEL relation: adyen.account
+pos_adyen    / adyen.store              / city (char)                   : DEL required
+pos_adyen    / adyen.store              / country_id (many2one)         : DEL relation: res.country, required
+pos_adyen    / adyen.store              / house_number_or_name (char)   : DEL required
+pos_adyen    / adyen.store              / name (char)                   : DEL required
+pos_adyen    / adyen.store              / phone_number (char)           : DEL required
+pos_adyen    / adyen.store              / state_id (many2one)           : DEL relation: res.country.state
+pos_adyen    / adyen.store              / store_reference (char)        : DEL
+pos_adyen    / adyen.store              / store_uuid (char)             : DEL
+pos_adyen    / adyen.store              / street (char)                 : DEL required
+pos_adyen    / adyen.store              / terminal_ids (one2many)       : DEL relation: adyen.terminal
+pos_adyen    / adyen.store              / zip (char)                    : DEL required
+pos_adyen    / adyen.terminal           / adyen_account_id (many2one)   : DEL relation: adyen.account
+pos_adyen    / adyen.terminal           / store_id (many2one)           : DEL relation: adyen.store
+pos_adyen    / adyen.terminal           / terminal_uuid (char)          : DEL
+pos_adyen    / pos.payment.method       / adyen_payout_id (many2one)    : DEL relation: adyen.payout
+pos_adyen    / pos.payment.method       / adyen_terminal_id (many2one)  : DEL relation: adyen.terminal
+---XML records in module 'pos_adyen'---
+DEL ir.actions.server: pos_adyen.action_pos_adyen_account
+DEL ir.model.access: pos_adyen.access_adyen_payout_group_pos_manager
+DEL ir.model.access: pos_adyen.access_adyen_store_group_erp_manager
+DEL ir.model.access: pos_adyen.access_adyen_terminal_group_pos_manager
+DEL ir.ui.menu: pos_adyen.menu_pos_adyen_account
+DEL ir.ui.view: pos_adyen.adyen_account_view_form
+DEL ir.ui.view: pos_adyen.adyen_store_view_form
+DEL ir.ui.view: pos_adyen.assets
+DEL ir.ui.view: pos_adyen.res_config_settings_view_form

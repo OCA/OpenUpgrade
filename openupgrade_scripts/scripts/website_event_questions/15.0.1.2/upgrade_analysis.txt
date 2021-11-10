@@ -1,0 +1,16 @@
+---Models in module 'website_event_questions'---
+---Fields in module 'website_event_questions'---
+website_event_questions / event.type               / use_questions (boolean)       : DEL
+---XML records in module 'website_event_questions'---
+NEW ir.model.access: website_event_questions.access_event_question
+NEW ir.model.access: website_event_questions.access_event_question_answer
+NEW ir.model.access: website_event_questions.access_event_question_answer_registration
+NEW ir.model.access: website_event_questions.access_event_question_answer_user
+NEW ir.model.access: website_event_questions.access_event_question_user
+NEW ir.model.access: website_event_questions.access_event_registration_answer_registration
+DEL ir.model.access: website_event_questions.event_question_all
+DEL ir.model.access: website_event_questions.event_question_answer_all
+DEL ir.model.access: website_event_questions.event_question_answer_event_user
+DEL ir.model.access: website_event_questions.event_question_event_user
+DEL ir.model.access: website_event_questions.event_registration_answer_event_user
+DEL ir.ui.view: website_event_questions.assets_tests

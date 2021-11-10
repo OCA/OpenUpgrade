@@ -1,0 +1,36 @@
+---Models in module 'pos_coupon'---
+---Fields in module 'pos_coupon'---
+pos_coupon   / barcode.rule             / type (False)                  : NEW selection_keys: ['alias', 'cashier', 'client', 'coupon', 'discount', 'expiration_date', 'location', 'location_dest', 'lot', 'package', 'package_type', 'packaging_date', 'price', 'product', 'quantity', 'use_date', 'weight'], mode: modify
+pos_coupon   / coupon.coupon            / pos_order_id (many2one)       : NEW relation: pos.order
+pos_coupon   / coupon.coupon            / source_pos_order_id (many2one): NEW relation: pos.order
+pos_coupon   / coupon.program           / pos_config_ids (many2many)    : NEW relation: pos.config
+pos_coupon   / coupon.program           / pos_order_ids (many2many)     : NEW relation: pos.order
+pos_coupon   / coupon.program           / pos_order_line_ids (one2many) : NEW relation: pos.order.line
+pos_coupon   / coupon.program           / promo_barcode (char)          : NEW hasdefault
+pos_coupon   / pos.config               / program_ids (many2many)       : NEW relation: coupon.program
+pos_coupon   / pos.config               / use_coupon_programs (boolean) : NEW
+pos_coupon   / pos.order                / applied_program_ids (many2many): NEW relation: coupon.program
+pos_coupon   / pos.order                / generated_coupon_ids (one2many): NEW relation: coupon.coupon
+pos_coupon   / pos.order                / used_coupon_ids (one2many)    : NEW relation: coupon.coupon
+pos_coupon   / pos.order.line           / coupon_id (many2one)          : NEW relation: coupon.coupon
+pos_coupon   / pos.order.line           / is_program_reward (boolean)   : NEW
+pos_coupon   / pos.order.line           / program_id (many2one)         : NEW relation: coupon.program
+---XML records in module 'pos_coupon'---
+NEW barcode.rule: pos_coupon.barcode_rule_coupon (noupdate)
+NEW ir.model.access: pos_coupon.access_coupon_generate_wizard
+NEW ir.model.access: pos_coupon.access_coupon_pos_manager
+NEW ir.model.access: pos_coupon.access_coupon_pos_user
+NEW ir.model.access: pos_coupon.access_program_pos_manager
+NEW ir.model.access: pos_coupon.access_program_pos_user
+NEW ir.model.access: pos_coupon.access_reward_pos_manager
+NEW ir.model.access: pos_coupon.access_reward_pos_user
+NEW ir.model.access: pos_coupon.access_rule_pos_manager
+NEW ir.model.access: pos_coupon.access_rule_pos_user
+NEW ir.ui.menu: pos_coupon.menu_coupon_type_config
+NEW ir.ui.menu: pos_coupon.menu_promotion_type_config
+NEW ir.ui.view: pos_coupon.pos_coupon_pos_config_view_form
+NEW ir.ui.view: pos_coupon.pos_coupon_program_view_coupon_program_form
+NEW ir.ui.view: pos_coupon.pos_coupon_program_view_promo_program_form
+NEW ir.ui.view: pos_coupon.pos_coupon_view_form
+NEW ir.ui.view: pos_coupon.res_config_view_form_inherit_pos_coupon
+NEW mail.template: pos_coupon.mail_coupon_template (noupdate)

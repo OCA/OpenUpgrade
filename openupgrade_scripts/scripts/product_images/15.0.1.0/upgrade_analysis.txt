@@ -1,0 +1,12 @@
+---Models in module 'product_images'---
+new model product.fetch.image.wizard [transient]
+---Fields in module 'product_images'---
+product_images / product.product          / image_fetch_pending (boolean) : NEW
+---XML records in module 'product_images'---
+NEW ir.actions.act_window: product_images.product_product_action_get_pic_with_barcode
+NEW ir.actions.act_window: product_images.product_template_action_get_pic_with_barcode
+NEW ir.cron: product_images.ir_cron_fetch_image
+NEW ir.model.access: product_images.access_product_get_pic_barcode_manager
+NEW ir.rule: product_images.product_images_product_fetch_image_wizard_rule (noupdate)
+NEW ir.ui.view: product_images.product_fetch_image_wizard_view_form
+NEW ir.ui.view: product_images.res_config_settings_view_form

@@ -1,0 +1,9 @@
+---Models in module 'event_sms'---
+---Fields in module 'event_sms'---
+event_sms    / event.mail               / sms_template_id (many2one)    : DEL relation: sms.template
+event_sms    / event.type.mail          / sms_template_id (many2one)    : DEL relation: sms.template
+---XML records in module 'event_sms'---
+DEL ir.ui.view: event_sms.event_event_view_form_inherit_sms
+DEL ir.ui.view: event_sms.event_mail_view_form
+DEL ir.ui.view: event_sms.event_mail_view_tree
+DEL ir.ui.view: event_sms.event_type_view_form

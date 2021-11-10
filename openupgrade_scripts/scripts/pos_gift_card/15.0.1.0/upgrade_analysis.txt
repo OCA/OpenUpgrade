@@ -1,0 +1,19 @@
+---Models in module 'pos_gift_card'---
+---Fields in module 'pos_gift_card'---
+pos_gift_card / barcode.rule             / type (False)                  : NEW selection_keys: ['alias', 'cashier', 'client', 'coupon', 'discount', 'expiration_date', 'gift_card', 'location', 'location_dest', 'lot', 'package', 'package_type', 'packaging_date', 'price', 'product', 'quantity', 'use_date', 'weight'], mode: modify
+pos_gift_card / gift.card                / buy_pos_order_line_id (many2one): NEW relation: pos.order.line
+pos_gift_card / gift.card                / redeem_pos_order_line_ids (one2many): NEW relation: pos.order.line
+pos_gift_card / pos.config               / gift_card_product_id (many2one): NEW relation: product.product
+pos_gift_card / pos.config               / gift_card_settings (selection): NEW selection_keys: ['create_set', 'scan_set', 'scan_use'], hasdefault
+pos_gift_card / pos.config               / use_gift_card (boolean)       : NEW
+pos_gift_card / pos.order.line           / generated_gift_card_ids (one2many): NEW relation: gift.card
+pos_gift_card / pos.order.line           / gift_card_id (many2one)       : NEW relation: gift.card
+---XML records in module 'pos_gift_card'---
+NEW ir.actions.report: pos_gift_card.gift_card_report_pdf (noupdate)
+NEW ir.model.access: pos_gift_card.access_gift_card_sales
+NEW ir.model.access: pos_gift_card.access_pos_gift_card_manager
+NEW ir.ui.menu: pos_gift_card.pos_gift_card_menu
+NEW ir.ui.view: pos_gift_card.gift_card_template (noupdate)
+NEW ir.ui.view: pos_gift_card.pos_gift_card_config_view_form
+NEW ir.ui.view: pos_gift_card.pos_gift_card_view_form
+NEW ir.ui.view: pos_gift_card.res_config_view_form_inherit_pos_coupon

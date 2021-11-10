@@ -1,0 +1,69 @@
+---Models in module 'lunch'---
+obsolete model lunch.product.report [sql_view]
+---Fields in module 'lunch'---
+lunch        / lunch.alert              / cron_id (many2one)            : NEW relation: ir.cron, required
+lunch        / lunch.alert              / fri (boolean)                 : NEW hasdefault
+lunch        / lunch.alert              / mon (boolean)                 : NEW hasdefault
+lunch        / lunch.alert              / recurrency_friday (boolean)   : DEL
+lunch        / lunch.alert              / recurrency_monday (boolean)   : DEL
+lunch        / lunch.alert              / recurrency_saturday (boolean) : DEL
+lunch        / lunch.alert              / recurrency_sunday (boolean)   : DEL
+lunch        / lunch.alert              / recurrency_thursday (boolean) : DEL
+lunch        / lunch.alert              / recurrency_tuesday (boolean)  : DEL
+lunch        / lunch.alert              / recurrency_wednesday (boolean): DEL
+lunch        / lunch.alert              / sat (boolean)                 : NEW hasdefault
+lunch        / lunch.alert              / sun (boolean)                 : NEW hasdefault
+lunch        / lunch.alert              / thu (boolean)                 : NEW hasdefault
+lunch        / lunch.alert              / tue (boolean)                 : NEW hasdefault
+lunch        / lunch.alert              / wed (boolean)                 : NEW hasdefault
+lunch        / lunch.cashmove           / currency_id (many2one)        : now required, req_default: function
+lunch        / lunch.order              / lunch_location_id (many2one)  : NEW relation: lunch.location, hasdefault
+lunch        / lunch.order              / name (char)                   : is now stored
+lunch        / lunch.order              / product_description (text)    : type is now 'html' ('text')
+lunch        / lunch.product            / description (text)            : type is now 'html' ('text')
+lunch        / lunch.product.category   / topping_ids_1 (one2many)      : DEL relation: lunch.topping
+lunch        / lunch.product.category   / topping_ids_2 (one2many)      : DEL relation: lunch.topping
+lunch        / lunch.product.category   / topping_ids_3 (one2many)      : DEL relation: lunch.topping
+lunch        / lunch.product.category   / topping_label_1 (char)        : DEL required, req_default: function
+lunch        / lunch.product.category   / topping_label_2 (char)        : DEL required, req_default: function
+lunch        / lunch.product.category   / topping_label_3 (char)        : DEL required, req_default: function
+lunch        / lunch.product.category   / topping_quantity_1 (selection): DEL required, selection_keys: ['0_more', '1', '1_more'], req_default: function
+lunch        / lunch.product.category   / topping_quantity_2 (selection): DEL required, selection_keys: ['0_more', '1', '1_more'], req_default: function
+lunch        / lunch.product.category   / topping_quantity_3 (selection): DEL required, selection_keys: ['0_more', '1', '1_more'], req_default: function
+lunch        / lunch.supplier           / cron_id (many2one)            : NEW relation: ir.cron, required
+lunch        / lunch.supplier           / fri (boolean)                 : NEW hasdefault
+lunch        / lunch.supplier           / mon (boolean)                 : NEW hasdefault
+lunch        / lunch.supplier           / recurrency_friday (boolean)   : DEL
+lunch        / lunch.supplier           / recurrency_monday (boolean)   : DEL
+lunch        / lunch.supplier           / recurrency_saturday (boolean) : DEL
+lunch        / lunch.supplier           / recurrency_sunday (boolean)   : DEL
+lunch        / lunch.supplier           / recurrency_thursday (boolean) : DEL
+lunch        / lunch.supplier           / recurrency_tuesday (boolean)  : DEL
+lunch        / lunch.supplier           / recurrency_wednesday (boolean): DEL
+lunch        / lunch.supplier           / sat (boolean)                 : NEW
+lunch        / lunch.supplier           / sun (boolean)                 : NEW
+lunch        / lunch.supplier           / thu (boolean)                 : NEW hasdefault
+lunch        / lunch.supplier           / topping_ids_1 (one2many)      : NEW relation: lunch.topping
+lunch        / lunch.supplier           / topping_ids_2 (one2many)      : NEW relation: lunch.topping
+lunch        / lunch.supplier           / topping_ids_3 (one2many)      : NEW relation: lunch.topping
+lunch        / lunch.supplier           / topping_label_1 (char)        : NEW required, req_default: function, hasdefault
+lunch        / lunch.supplier           / topping_label_2 (char)        : NEW required, req_default: function, hasdefault
+lunch        / lunch.supplier           / topping_label_3 (char)        : NEW required, req_default: function, hasdefault
+lunch        / lunch.supplier           / topping_quantity_1 (selection): NEW required, selection_keys: ['0_more', '1', '1_more'], req_default: function, hasdefault
+lunch        / lunch.supplier           / topping_quantity_2 (selection): NEW required, selection_keys: ['0_more', '1', '1_more'], req_default: function, hasdefault
+lunch        / lunch.supplier           / topping_quantity_3 (selection): NEW required, selection_keys: ['0_more', '1', '1_more'], req_default: function, hasdefault
+lunch        / lunch.supplier           / tue (boolean)                 : NEW hasdefault
+lunch        / lunch.supplier           / wed (boolean)                 : NEW hasdefault
+lunch        / lunch.topping            / category_id (many2one)        : DEL relation: lunch.product.category
+lunch        / lunch.topping            / supplier_id (many2one)        : NEW relation: lunch.supplier
+---XML records in module 'lunch'---
+DEL ir.cron: lunch.ir_cron_lunch (noupdate)
+DEL ir.cron: lunch.ir_cron_lunch_alerts (noupdate)
+DEL ir.model.access: lunch.lunch_product_report_user
+NEW ir.rule: lunch.ir_rule_lunch_order_multi_company (noupdate)
+DEL ir.rule: lunch.ir_rule_lunch_product_report_multi_company (noupdate)
+DEL ir.ui.view: lunch.assets_backend
+DEL ir.ui.view: lunch.lunch_product_report_view_search
+DEL ir.ui.view: lunch.lunch_product_report_view_tree
+DEL ir.ui.view: lunch.qunit_mobile_suite
+DEL ir.ui.view: lunch.qunit_suite

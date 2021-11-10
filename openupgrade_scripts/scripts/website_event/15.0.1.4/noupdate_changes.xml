@@ -1,0 +1,7 @@
+<?xml version='1.0' encoding='utf-8'?>
+<odoo>
+  <record id="ir_rule_event_tag_public" model="ir.rule">
+    <field name="domain_force">[('category_id.website_published', '=', True), ('color', '!=', False), ('color', '!=', 0)]</field>
+    <field name="name">Event Tag: public/portal: color = published and category = published</field>
+  </record>
+</odoo>

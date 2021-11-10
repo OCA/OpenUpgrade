@@ -1,0 +1,15 @@
+---Models in module 'l10n_nl'---
+---Fields in module 'l10n_nl'---
+l10n_nl      / res.partner              / l10n_nl_kvk (char)            : NEW
+l10n_nl      / res.partner              / l10n_nl_oin (char)            : NEW
+---XML records in module 'l10n_nl'---
+DEL account.tax.group: l10n_nl.tax_group_0_eu (noupdate)
+DEL account.tax.group: l10n_nl.tax_group_0_niet_eu (noupdate)
+DEL account.tax.group: l10n_nl.tax_group_21_eu (noupdate)
+DEL account.tax.group: l10n_nl.tax_group_21_niet_eu (noupdate)
+DEL account.tax.group: l10n_nl.tax_group_6_eu (noupdate)
+DEL account.tax.group: l10n_nl.tax_group_6_niet_eu (noupdate)
+DEL account.tax.group: l10n_nl.tax_group_9_eu (noupdate)
+DEL account.tax.group: l10n_nl.tax_group_9_niet_eu (noupdate)
+NEW ir.ui.view: l10n_nl.res_company_form_inherit_nl
+NEW ir.ui.view: l10n_nl.view_partner_form_inherit_l10n_nl
