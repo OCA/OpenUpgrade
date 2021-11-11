@@ -13,5 +13,5 @@ jobs:
         with:
           # The pylint-odoo version we use here does not support python 3.10
           # https://github.com/OCA/oca-addons-repo-template/issues/80
-          python-version: "3.9"
+          python-version: "3.9.7"
       - uses: pre-commit/action@v2.0.0
