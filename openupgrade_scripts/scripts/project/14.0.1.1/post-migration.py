@@ -16,6 +16,13 @@ def map_project_project_rating_status(env):
 
 def _fill_res_users_m2m_tables(env):
     # TODO: Take into account channels and task followers part of the old rule
+    # Remove temp table and re-create m2m table through ORM method
+    openupgrade.logged_query(env.cr, "DROP TABLE project_allowed_internal_users_rel")
+    openupgrade.logged_query(env.cr, "DROP TABLE project_allowed_portal_users_rel")
+    openupgrade.logged_query(env.cr, "DROP TABLE project_task_res_users_rel")
+    env.registry.init_models(
+        env.cr, ["project.project", "project.task"], env.context, install=False
+    )
     openupgrade.logged_query(
         env.cr,
         """
