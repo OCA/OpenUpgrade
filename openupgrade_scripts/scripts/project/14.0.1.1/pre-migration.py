@@ -12,6 +12,25 @@ def _set_default_rating_status_period(env):
     )
 
 
+def fast_fill_stored_calculated_fields(env):
+    """ Faster way """
+    openupgrade.logged_query(
+        env.cr,
+        """
+        ALTER TABLE project_task
+        ADD COLUMN partner_phone varchar,
+        ADD COLUMN partner_email varchar""",
+    )
+    openupgrade.logged_query(
+        env.cr,
+        """
+        UPDATE project_task pt
+        SET partner_email = rp.email, partner_phone = rp.phone
+        FROM res_partner rp
+        WHERE pt.partner_id = rp.id""",
+    )
+
+
 @openupgrade.migrate()
 def migrate(env, version):
     openupgrade.copy_columns(
@@ -49,6 +68,12 @@ def migrate(env, version):
     )
     openupgrade.logged_query(
         env.cr,
+        """CREATE TABLE project_allowed_portal_users_rel
+        (project_project_id INTEGER, res_users_id INTEGER)""",
+    )
+    openupgrade.logged_query(
+        env.cr,
         """CREATE TABLE project_task_res_users_rel
         (project_task_id INTEGER, res_users_id INTEGER)""",
     )
+    fast_fill_stored_calculated_fields(env)
