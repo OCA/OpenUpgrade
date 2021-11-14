@@ -1,0 +1,7 @@
+<?xml version='1.0' encoding='utf-8'?>
+<odoo>
+  <record id="event_sponsor_rule_share" model="ir.rule">
+    <field name="model_id" ref="website_event_exhibitor.model_event_sponsor"/>
+    <field name="name">Event Sponsor: public/portal sponsor or published only</field>
+  </record>
+</odoo>

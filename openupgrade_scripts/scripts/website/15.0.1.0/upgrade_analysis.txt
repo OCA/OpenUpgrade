@@ -6,11 +6,6 @@ new model website.searchable.mixin [abstract]
 website      / ir.asset                 / key (char)                    : NEW
 website      / ir.asset                 / theme_template_id (many2one)  : NEW relation: theme.ir.asset
 website      / ir.asset                 / website_id (many2one)         : NEW relation: website
-website      / ir.model                 / website_form_access (boolean) : previously in module website_form
-website      / ir.model                 / website_form_default_field_id (many2one): previously in module website_form
-website      / ir.model                 / website_form_key (char)       : previously in module website_form
-website      / ir.model                 / website_form_label (char)     : previously in module website_form
-website      / ir.model.fields          / website_form_blacklisted (boolean): previously in module website_form
 website      / res.company              / website_id (many2one)         : NEW relation: website, isfunction: function, stored
 website      / theme.ir.asset           / active (boolean)              : NEW hasdefault
 website      / theme.ir.asset           / bundle (char)                 : NEW required
@@ -293,6 +288,18 @@ DEL ir.ui.view: website.template_header_hamburger_oe_structure_header_hamburger_
 DEL ir.ui.view: website.template_header_image_oe_structure_header_image_2
 DEL ir.ui.view: website.template_header_minimalist
 DEL ir.ui.view: website.template_header_slogan_oe_structure_header_slogan_2
+DEL ir.ui.view: website_form.assets_editor
+DEL ir.ui.view: website_form.assets_snippet_s_website_form_css_000
+DEL ir.ui.view: website_form.assets_snippet_s_website_form_css_001
+DEL ir.ui.view: website_form.assets_snippet_s_website_form_js_000
+DEL ir.ui.view: website_form.assets_tests
+DEL ir.ui.view: website_form.contactus_form
+DEL ir.ui.view: website_form.ir_model_fields_view
+DEL ir.ui.view: website_form.ir_model_view
+DEL ir.ui.view: website_form.remove_external_snippets
+DEL ir.ui.view: website_form.s_website_form
+DEL ir.ui.view: website_form.s_website_form_options
+DEL ir.ui.view: website_form.snippets
 NEW website.configurator.feature: website.feature_module_career
 NEW website.configurator.feature: website.feature_module_elearning
 NEW website.configurator.feature: website.feature_module_event
@@ -307,4 +314,5 @@ NEW website.configurator.feature: website.feature_page_our_services
 NEW website.configurator.feature: website.feature_page_pricing
 NEW website.configurator.feature: website.feature_page_privacy_policy
 NEW website.page: website.contactus_thanks [renamed from website_form module]
+DEL website.page: website_form.contactus_thanks [renamed to website module]
 DEL website.snippet.filter: website.dynamic_snippet_data_source_country

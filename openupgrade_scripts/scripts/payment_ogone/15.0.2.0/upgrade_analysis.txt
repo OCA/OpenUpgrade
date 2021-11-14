@@ -1,12 +1,11 @@
 ---Models in module 'payment_ogone'---
 ---Fields in module 'payment_ogone'---
-payment_ogone / payment.acquirer         / ogone_password (char)         : previously in module payment_ingenico
-payment_ogone / payment.acquirer         / ogone_pspid (char)            : previously in module payment_ingenico
-payment_ogone / payment.acquirer         / ogone_shakey_in (char)        : previously in module payment_ingenico
-payment_ogone / payment.acquirer         / ogone_shakey_out (char)       : previously in module payment_ingenico
-payment_ogone / payment.acquirer         / ogone_userid (char)           : previously in module payment_ingenico
-payment_ogone / payment.acquirer         / provider (False)              : previously in module payment_odoo_by_adyen
+payment_ingenico / payment.acquirer         / ogone_alias_usage (char)      : DEL
+payment_ingenico / payment.acquirer         / provider (False)              : selection_keys is now '['adyen', 'alipay', 'authorize', 'buckaroo', 'mollie', 'none', 'ogone']' ('['adyen', 'alipay', 'authorize', 'buckaroo', 'manual', 'ogone']')
 ---XML records in module 'payment_ogone'---
 NEW account.payment.method: payment_ogone.payment_method_ogone (noupdate)
 NEW ir.ui.view: payment_ogone.payment_acquirer_form
 NEW ir.ui.view: payment_ogone.redirect_form
+DEL ir.ui.view: payment_ingenico.acquirer_form_ogone
+DEL ir.ui.view: payment_ingenico.ogone_form
+DEL ir.ui.view: payment_ingenico.ogone_s2s_form
