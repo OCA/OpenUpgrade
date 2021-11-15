@@ -12,7 +12,7 @@ _logger = logging.getLogger(__name__)
 
 @api.constrains("arch_db")
 def _check_xml(self):
-    """ Mute warnings about views which are common during migration """
+    """Mute warnings about views which are common during migration"""
     with mute_logger("odoo.addons.base.models.ir_ui_view"):
         return View._check_xml._original_method(self)
 
@@ -32,7 +32,7 @@ def _raise_view_error(
                 message,
                 node=node,
                 from_exception=from_exception,
-                from_traceback=from_traceback
+                from_traceback=from_traceback,
             )
         except ValueError:
             _logger.warning(
@@ -47,7 +47,7 @@ def _raise_view_error(
 
 
 def _postprocess_view(self, node, model, validate=True, editable=True):
-    """ Don't validate views, _raise_view_error is mutted"""
+    """Don't validate views, _raise_view_error is mutted"""
     return View._postprocess_view._original_method(
         self, node, model, validate=False, editable=editable
     )
