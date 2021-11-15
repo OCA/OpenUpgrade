@@ -10,8 +10,8 @@ obsolete model adyen.terminal [module pos_adyen]
 obsolete model adyen.transaction [module adyen_platforms]
 obsolete model calendar.contacts [module calendar]
 obsolete model closing.balance.confirm.wizard [module point_of_sale]
-obsolete model l10n_eu_service.service_tax_rate [module l10n_eu_service]
-obsolete model l10n_eu_service.wizard [module l10n_eu_service]
+obsolete model l10n_eu_service.service_tax_rate [module l10n_eu_oss]
+obsolete model l10n_eu_service.wizard [module l10n_eu_oss]
 obsolete model lunch.product.report [module lunch]
 obsolete model mail.moderation [module mail]
 obsolete model phone.validation.mixin [module phone_validation]
@@ -99,30 +99,13 @@ new model website.configurator.feature [module website]
 new model website.searchable.mixin [module website]
 ---Fields in module 'general'---
 # 10818 fields matched,
-# Direct match: 10608
-# Found in other module: 210
+# Direct match: 10712
+# Found in other module: 106
 # Found with different type: 0
 # In obsolete models: 236
 # New columns: 1698
 # Not matched: 596
 ---XML records in module 'general'---
-ERROR: module not in list of installed modules:
----Models in module 'account_edi_extended'---
----Fields in module 'account_edi_extended'---
-account_edi_extended / account.bank.statement.line / edi_blocking_level (selection): module is now 'account_edi' ('account_edi_extended')
-account_edi_extended / account.bank.statement.line / edi_error_message (html)      : module is now 'account_edi' ('account_edi_extended')
-account_edi_extended / account.bank.statement.line / edi_show_abandon_cancel_button (boolean): module is now 'account_edi' ('account_edi_extended')
-account_edi_extended / account.edi.document     / blocking_level (selection)    : module is now 'account_edi' ('account_edi_extended')
-account_edi_extended / account.move             / edi_blocking_level (selection): module is now 'account_edi' ('account_edi_extended')
-account_edi_extended / account.move             / edi_error_message (html)      : module is now 'account_edi' ('account_edi_extended')
-account_edi_extended / account.move             / edi_show_abandon_cancel_button (boolean): module is now 'account_edi' ('account_edi_extended')
-account_edi_extended / account.payment          / edi_blocking_level (selection): module is now 'account_edi' ('account_edi_extended')
-account_edi_extended / account.payment          / edi_error_message (html)      : module is now 'account_edi' ('account_edi_extended')
-account_edi_extended / account.payment          / edi_show_abandon_cancel_button (boolean): module is now 'account_edi' ('account_edi_extended')
----XML records in module 'account_edi_extended'---
-DEL ir.ui.view: account_edi_extended.view_move_form_inherit
-DEL ir.ui.view: account_edi_extended.view_payment_form_inherit
-DEL ir.ui.view: account_edi_extended.view_tree_account_edi_document_inherit
 ERROR: module not in list of installed modules:
 ---Models in module 'adyen_platforms'---
 obsolete model adyen.account
@@ -244,156 +227,6 @@ DEL ir.ui.view: adyen_platforms.adyen_transaction_view_list
 DEL ir.ui.view: adyen_platforms.assets_backend
 DEL ir.ui.view: adyen_platforms.kyc_status_message
 ERROR: module not in list of installed modules:
----Models in module 'crm_iap_lead'---
-model crm.iap.lead.helpers (moved to crm_iap_mine)
-model crm.iap.lead.industry (moved to crm_iap_mine)
-model crm.iap.lead.mining.request (moved to crm_iap_mine)
-model crm.iap.lead.role (moved to crm_iap_mine)
-model crm.iap.lead.seniority (moved to crm_iap_mine)
----Fields in module 'crm_iap_lead'---
-crm_iap_lead / crm.iap.lead.helpers     / __last_update (datetime)      : module is now 'crm_iap_mine' ('crm_iap_lead')
-crm_iap_lead / crm.iap.lead.helpers     / _order                        : module is now 'crm_iap_mine' ('crm_iap_lead')
-crm_iap_lead / crm.iap.lead.helpers     / display_name (char)           : module is now 'crm_iap_mine' ('crm_iap_lead')
-crm_iap_lead / crm.iap.lead.industry    / __last_update (datetime)      : module is now 'crm_iap_mine' ('crm_iap_lead')
-crm_iap_lead / crm.iap.lead.industry    / _order                        : _order is now 'sequence,id' ('id')
-crm_iap_lead / crm.iap.lead.industry    / _order                        : module is now 'crm_iap_mine' ('crm_iap_lead')
-crm_iap_lead / crm.iap.lead.industry    / color (integer)               : module is now 'crm_iap_mine' ('crm_iap_lead')
-crm_iap_lead / crm.iap.lead.industry    / display_name (char)           : module is now 'crm_iap_mine' ('crm_iap_lead')
-crm_iap_lead / crm.iap.lead.industry    / name (char)                   : module is now 'crm_iap_mine' ('crm_iap_lead')
-crm_iap_lead / crm.iap.lead.industry    / reveal_id (char)              : DEL required
-crm_iap_lead / crm.iap.lead.mining.request / __last_update (datetime)      : module is now 'crm_iap_mine' ('crm_iap_lead')
-crm_iap_lead / crm.iap.lead.mining.request / _order                        : module is now 'crm_iap_mine' ('crm_iap_lead')
-crm_iap_lead / crm.iap.lead.mining.request / company_size_max (integer)    : module is now 'crm_iap_mine' ('crm_iap_lead')
-crm_iap_lead / crm.iap.lead.mining.request / company_size_min (integer)    : module is now 'crm_iap_mine' ('crm_iap_lead')
-crm_iap_lead / crm.iap.lead.mining.request / contact_filter_type (selection): module is now 'crm_iap_mine' ('crm_iap_lead')
-crm_iap_lead / crm.iap.lead.mining.request / contact_number (integer)      : module is now 'crm_iap_mine' ('crm_iap_lead')
-crm_iap_lead / crm.iap.lead.mining.request / country_ids (many2many)       : module is now 'crm_iap_mine' ('crm_iap_lead')
-crm_iap_lead / crm.iap.lead.mining.request / display_lead_label (char)     : module is now 'crm_iap_mine' ('crm_iap_lead')
-crm_iap_lead / crm.iap.lead.mining.request / display_name (char)           : module is now 'crm_iap_mine' ('crm_iap_lead')
-crm_iap_lead / crm.iap.lead.mining.request / error (text)                  : DEL
-crm_iap_lead / crm.iap.lead.mining.request / filter_on_size (boolean)      : module is now 'crm_iap_mine' ('crm_iap_lead')
-crm_iap_lead / crm.iap.lead.mining.request / industry_ids (many2many)      : module is now 'crm_iap_mine' ('crm_iap_lead')
-crm_iap_lead / crm.iap.lead.mining.request / lead_contacts_credits (char)  : module is now 'crm_iap_mine' ('crm_iap_lead')
-crm_iap_lead / crm.iap.lead.mining.request / lead_count (integer)          : module is now 'crm_iap_mine' ('crm_iap_lead')
-crm_iap_lead / crm.iap.lead.mining.request / lead_credits (char)           : module is now 'crm_iap_mine' ('crm_iap_lead')
-crm_iap_lead / crm.iap.lead.mining.request / lead_ids (one2many)           : module is now 'crm_iap_mine' ('crm_iap_lead')
-crm_iap_lead / crm.iap.lead.mining.request / lead_number (integer)         : module is now 'crm_iap_mine' ('crm_iap_lead')
-crm_iap_lead / crm.iap.lead.mining.request / lead_total_credits (char)     : module is now 'crm_iap_mine' ('crm_iap_lead')
-crm_iap_lead / crm.iap.lead.mining.request / lead_type (selection)         : module is now 'crm_iap_mine' ('crm_iap_lead')
-crm_iap_lead / crm.iap.lead.mining.request / name (char)                   : module is now 'crm_iap_mine' ('crm_iap_lead')
-crm_iap_lead / crm.iap.lead.mining.request / preferred_role_id (many2one)  : module is now 'crm_iap_mine' ('crm_iap_lead')
-crm_iap_lead / crm.iap.lead.mining.request / role_ids (many2many)          : module is now 'crm_iap_mine' ('crm_iap_lead')
-crm_iap_lead / crm.iap.lead.mining.request / search_type (selection)       : module is now 'crm_iap_mine' ('crm_iap_lead')
-crm_iap_lead / crm.iap.lead.mining.request / seniority_id (many2one)       : module is now 'crm_iap_mine' ('crm_iap_lead')
-crm_iap_lead / crm.iap.lead.mining.request / state (selection)             : module is now 'crm_iap_mine' ('crm_iap_lead')
-crm_iap_lead / crm.iap.lead.mining.request / state_ids (many2many)         : module is now 'crm_iap_mine' ('crm_iap_lead')
-crm_iap_lead / crm.iap.lead.mining.request / tag_ids (many2many)           : module is now 'crm_iap_mine' ('crm_iap_lead')
-crm_iap_lead / crm.iap.lead.mining.request / team_id (many2one)            : module is now 'crm_iap_mine' ('crm_iap_lead')
-crm_iap_lead / crm.iap.lead.mining.request / user_id (many2one)            : module is now 'crm_iap_mine' ('crm_iap_lead')
-crm_iap_lead / crm.iap.lead.role        / __last_update (datetime)      : module is now 'crm_iap_mine' ('crm_iap_lead')
-crm_iap_lead / crm.iap.lead.role        / _order                        : module is now 'crm_iap_mine' ('crm_iap_lead')
-crm_iap_lead / crm.iap.lead.role        / color (integer)               : module is now 'crm_iap_mine' ('crm_iap_lead')
-crm_iap_lead / crm.iap.lead.role        / display_name (char)           : module is now 'crm_iap_mine' ('crm_iap_lead')
-crm_iap_lead / crm.iap.lead.role        / name (char)                   : module is now 'crm_iap_mine' ('crm_iap_lead')
-crm_iap_lead / crm.iap.lead.role        / reveal_id (char)              : module is now 'crm_iap_mine' ('crm_iap_lead')
-crm_iap_lead / crm.iap.lead.seniority   / __last_update (datetime)      : module is now 'crm_iap_mine' ('crm_iap_lead')
-crm_iap_lead / crm.iap.lead.seniority   / _order                        : module is now 'crm_iap_mine' ('crm_iap_lead')
-crm_iap_lead / crm.iap.lead.seniority   / display_name (char)           : module is now 'crm_iap_mine' ('crm_iap_lead')
-crm_iap_lead / crm.iap.lead.seniority   / name (char)                   : module is now 'crm_iap_mine' ('crm_iap_lead')
-crm_iap_lead / crm.iap.lead.seniority   / reveal_id (char)              : module is now 'crm_iap_mine' ('crm_iap_lead')
-crm_iap_lead / crm.lead                 / lead_mining_request_id (many2one): module is now 'crm_iap_mine' ('crm_iap_lead')
----XML records in module 'crm_iap_lead'---
-DEL crm.iap.lead.industry: crm_iap_lead.crm_iap_lead_industry_114
-DEL crm.iap.lead.industry: crm_iap_lead.crm_iap_lead_industry_136
-DEL crm.iap.lead.industry: crm_iap_lead.crm_iap_lead_industry_138
-DEL crm.iap.lead.industry: crm_iap_lead.crm_iap_lead_industry_146
-DEL crm.iap.lead.industry: crm_iap_lead.crm_iap_lead_industry_148
-DEL crm.iap.lead.industry: crm_iap_lead.crm_iap_lead_industry_149
-DEL crm.iap.lead.industry: crm_iap_lead.crm_iap_lead_industry_150
-DEL crm.iap.lead.industry: crm_iap_lead.crm_iap_lead_industry_151
-DEL crm.iap.lead.industry: crm_iap_lead.crm_iap_lead_industry_152
-DEL crm.iap.lead.industry: crm_iap_lead.crm_iap_lead_industry_153
-DEL crm.iap.lead.industry: crm_iap_lead.crm_iap_lead_industry_154
-DEL crm.iap.lead.industry: crm_iap_lead.crm_iap_lead_industry_155
-DEL crm.iap.lead.industry: crm_iap_lead.crm_iap_lead_industry_156
-DEL crm.iap.lead.industry: crm_iap_lead.crm_iap_lead_industry_157
-DEL crm.iap.lead.industry: crm_iap_lead.crm_iap_lead_industry_158
-DEL crm.iap.lead.industry: crm_iap_lead.crm_iap_lead_industry_159
-DEL crm.iap.lead.industry: crm_iap_lead.crm_iap_lead_industry_160
-DEL crm.iap.lead.industry: crm_iap_lead.crm_iap_lead_industry_161
-DEL crm.iap.lead.industry: crm_iap_lead.crm_iap_lead_industry_162
-DEL crm.iap.lead.industry: crm_iap_lead.crm_iap_lead_industry_163
-DEL crm.iap.lead.industry: crm_iap_lead.crm_iap_lead_industry_164
-DEL crm.iap.lead.industry: crm_iap_lead.crm_iap_lead_industry_165
-DEL crm.iap.lead.industry: crm_iap_lead.crm_iap_lead_industry_166
-DEL crm.iap.lead.industry: crm_iap_lead.crm_iap_lead_industry_167
-DEL crm.iap.lead.industry: crm_iap_lead.crm_iap_lead_industry_168
-DEL crm.iap.lead.industry: crm_iap_lead.crm_iap_lead_industry_238
-DEL crm.iap.lead.industry: crm_iap_lead.crm_iap_lead_industry_239
-DEL crm.iap.lead.industry: crm_iap_lead.crm_iap_lead_industry_30
-DEL crm.iap.lead.industry: crm_iap_lead.crm_iap_lead_industry_33
-DEL crm.iap.lead.industry: crm_iap_lead.crm_iap_lead_industry_69
-DEL crm.iap.lead.industry: crm_iap_lead.crm_iap_lead_industry_86
-DEL crm.iap.lead.role: crm_iap_lead.crm_iap_lead_role_1
-DEL crm.iap.lead.role: crm_iap_lead.crm_iap_lead_role_10
-DEL crm.iap.lead.role: crm_iap_lead.crm_iap_lead_role_11
-DEL crm.iap.lead.role: crm_iap_lead.crm_iap_lead_role_12
-DEL crm.iap.lead.role: crm_iap_lead.crm_iap_lead_role_13
-DEL crm.iap.lead.role: crm_iap_lead.crm_iap_lead_role_14
-DEL crm.iap.lead.role: crm_iap_lead.crm_iap_lead_role_15
-DEL crm.iap.lead.role: crm_iap_lead.crm_iap_lead_role_16
-DEL crm.iap.lead.role: crm_iap_lead.crm_iap_lead_role_17
-DEL crm.iap.lead.role: crm_iap_lead.crm_iap_lead_role_18
-DEL crm.iap.lead.role: crm_iap_lead.crm_iap_lead_role_19
-DEL crm.iap.lead.role: crm_iap_lead.crm_iap_lead_role_2
-DEL crm.iap.lead.role: crm_iap_lead.crm_iap_lead_role_20
-DEL crm.iap.lead.role: crm_iap_lead.crm_iap_lead_role_21
-DEL crm.iap.lead.role: crm_iap_lead.crm_iap_lead_role_22
-DEL crm.iap.lead.role: crm_iap_lead.crm_iap_lead_role_3
-DEL crm.iap.lead.role: crm_iap_lead.crm_iap_lead_role_4
-DEL crm.iap.lead.role: crm_iap_lead.crm_iap_lead_role_5
-DEL crm.iap.lead.role: crm_iap_lead.crm_iap_lead_role_6
-DEL crm.iap.lead.role: crm_iap_lead.crm_iap_lead_role_7
-DEL crm.iap.lead.role: crm_iap_lead.crm_iap_lead_role_8
-DEL crm.iap.lead.role: crm_iap_lead.crm_iap_lead_role_9
-DEL crm.iap.lead.seniority: crm_iap_lead.crm_iap_lead_seniority_1
-DEL crm.iap.lead.seniority: crm_iap_lead.crm_iap_lead_seniority_2
-DEL crm.iap.lead.seniority: crm_iap_lead.crm_iap_lead_seniority_3
-DEL ir.actions.act_window: crm_iap_lead.crm_iap_lead_mining_request_action [renamed to crm_iap_mine module]
-DEL ir.model.access: crm_iap_lead.access_crm_iap_lead_helpers [renamed to crm_iap_mine module]
-DEL ir.model.access: crm_iap_lead.access_crm_iap_lead_industry [renamed to crm_iap_mine module]
-DEL ir.model.access: crm_iap_lead.access_crm_iap_lead_mining_request [renamed to crm_iap_mine module]
-DEL ir.model.access: crm_iap_lead.access_crm_iap_lead_role [renamed to crm_iap_mine module]
-DEL ir.model.access: crm_iap_lead.access_crm_iap_lead_seniority [renamed to crm_iap_mine module]
-DEL ir.sequence: crm_iap_lead.seq_crm_iap_lead_mining_request (noupdate)
-DEL ir.ui.menu: crm_iap_lead.crm_iap_lead_mining_request_menu_action [renamed to crm_iap_mine module]
-DEL ir.ui.menu: crm_iap_lead.crm_menu_lead_generation [renamed to crm_iap_mine module]
-DEL ir.ui.view: crm_iap_lead.assets_backend
-DEL ir.ui.view: crm_iap_lead.crm_iap_lead_kanban
-DEL ir.ui.view: crm_iap_lead.crm_iap_lead_mining_request_form
-DEL ir.ui.view: crm_iap_lead.crm_iap_lead_mining_request_search
-DEL ir.ui.view: crm_iap_lead.crm_iap_lead_mining_request_tree
-DEL ir.ui.view: crm_iap_lead.crm_iap_lead_tree
-DEL ir.ui.view: crm_iap_lead.crm_iap_opportunity_kanban
-DEL ir.ui.view: crm_iap_lead.crm_iap_opportunity_tree
-DEL ir.ui.view: crm_iap_lead.enrich_company
-DEL ir.ui.view: crm_iap_lead.res_config_settings_view_form
-DEL mail.template: crm_iap_lead.lead_generation_no_credits [renamed to crm_iap_mine module] (noupdate)
-ERROR: module not in list of installed modules:
----Models in module 'crm_iap_lead_enrich'---
-model iap.enrich.api (moved to iap) [abstract]
----Fields in module 'crm_iap_lead_enrich'---
-crm_iap_lead_enrich / crm.lead                 / iap_enrich_done (boolean)     : module is now 'crm_iap_enrich' ('crm_iap_lead_enrich')
-crm_iap_lead_enrich / crm.lead                 / show_enrich_button (boolean)  : module is now 'crm_iap_enrich' ('crm_iap_lead_enrich')
----XML records in module 'crm_iap_lead_enrich'---
-DEL ir.actions.server: crm_iap_lead_enrich.action_enrich_mail [renamed to crm_iap_enrich module]
-DEL ir.cron: crm_iap_lead_enrich.ir_cron_lead_enrichment [renamed to crm_iap_enrich module]
-DEL ir.ui.view: crm_iap_lead_enrich.crm_lead_view_form
-DEL ir.ui.view: crm_iap_lead_enrich.mail_message_lead_enrich_no_credit (noupdate)
-DEL ir.ui.view: crm_iap_lead_enrich.mail_message_lead_enrich_no_email (noupdate)
-DEL ir.ui.view: crm_iap_lead_enrich.mail_message_lead_enrich_notfound (noupdate)
-DEL ir.ui.view: crm_iap_lead_enrich.res_config_settings_view_form
-ERROR: module not in list of installed modules:
 ---Models in module 'crm_iap_lead_website'---
 model crm.reveal.rule (moved to website_crm_iap_reveal)
 model crm.reveal.view (moved to website_crm_iap_reveal)
@@ -465,186 +298,20 @@ DEL ir.ui.view: l10n_ch_qriban.l10n_ch_swissqr_qriban_template
 DEL ir.ui.view: l10n_ch_qriban.setup_bank_account_wizard_qr_inherit
 DEL ir.ui.view: l10n_ch_qriban.view_partner_bank_form
 ERROR: module not in list of installed modules:
----Models in module 'l10n_eu_service'---
-obsolete model l10n_eu_service.service_tax_rate
-obsolete model l10n_eu_service.wizard [transient]
----Fields in module 'l10n_eu_service'---
-l10n_eu_service / l10n_eu_service.service_tax_rate / country_id (many2one)         : DEL relation: res.country
-l10n_eu_service / l10n_eu_service.service_tax_rate / rate (float)                  : DEL
----XML records in module 'l10n_eu_service'---
-DEL ir.actions.act_window: l10n_eu_service.action_eu_service
-DEL ir.model.access: l10n_eu_service.access_l10n_eu_service_service_tax_rate_manager
-DEL ir.model.access: l10n_eu_service.access_l10n_eu_service_service_tax_rate_user
-DEL ir.model.access: l10n_eu_service.access_l10n_eu_service_wizard
-DEL ir.ui.view: l10n_eu_service.eu_service_view
-DEL ir.ui.view: l10n_eu_service.res_config_settings_view_form
-DEL l10n_eu_service.service_tax_rate: l10n_eu_service.eu_rate_at
-DEL l10n_eu_service.service_tax_rate: l10n_eu_service.eu_rate_be
-DEL l10n_eu_service.service_tax_rate: l10n_eu_service.eu_rate_bg
-DEL l10n_eu_service.service_tax_rate: l10n_eu_service.eu_rate_cy
-DEL l10n_eu_service.service_tax_rate: l10n_eu_service.eu_rate_cz
-DEL l10n_eu_service.service_tax_rate: l10n_eu_service.eu_rate_de
-DEL l10n_eu_service.service_tax_rate: l10n_eu_service.eu_rate_dk
-DEL l10n_eu_service.service_tax_rate: l10n_eu_service.eu_rate_ee
-DEL l10n_eu_service.service_tax_rate: l10n_eu_service.eu_rate_es
-DEL l10n_eu_service.service_tax_rate: l10n_eu_service.eu_rate_fi
-DEL l10n_eu_service.service_tax_rate: l10n_eu_service.eu_rate_fr
-DEL l10n_eu_service.service_tax_rate: l10n_eu_service.eu_rate_gr
-DEL l10n_eu_service.service_tax_rate: l10n_eu_service.eu_rate_hr
-DEL l10n_eu_service.service_tax_rate: l10n_eu_service.eu_rate_hu
-DEL l10n_eu_service.service_tax_rate: l10n_eu_service.eu_rate_ie
-DEL l10n_eu_service.service_tax_rate: l10n_eu_service.eu_rate_it
-DEL l10n_eu_service.service_tax_rate: l10n_eu_service.eu_rate_lt
-DEL l10n_eu_service.service_tax_rate: l10n_eu_service.eu_rate_lu
-DEL l10n_eu_service.service_tax_rate: l10n_eu_service.eu_rate_lv
-DEL l10n_eu_service.service_tax_rate: l10n_eu_service.eu_rate_mt
-DEL l10n_eu_service.service_tax_rate: l10n_eu_service.eu_rate_nl
-DEL l10n_eu_service.service_tax_rate: l10n_eu_service.eu_rate_pl
-DEL l10n_eu_service.service_tax_rate: l10n_eu_service.eu_rate_pt
-DEL l10n_eu_service.service_tax_rate: l10n_eu_service.eu_rate_ro
-DEL l10n_eu_service.service_tax_rate: l10n_eu_service.eu_rate_se
-DEL l10n_eu_service.service_tax_rate: l10n_eu_service.eu_rate_si
-DEL l10n_eu_service.service_tax_rate: l10n_eu_service.eu_rate_sk
-DEL l10n_eu_service.service_tax_rate: l10n_eu_service.eu_rate_uk
-ERROR: module not in list of installed modules:
----Models in module 'l10n_se_ocr'---
----Fields in module 'l10n_se_ocr'---
-l10n_se_ocr  / account.journal          / invoice_reference_model (False): module is now 'l10n_se' ('l10n_se_ocr')
-l10n_se_ocr  / account.journal          / l10n_se_invoice_ocr_length (integer): module is now 'l10n_se' ('l10n_se_ocr')
-l10n_se_ocr  / res.partner              / l10n_se_check_vendor_ocr (boolean): module is now 'l10n_se' ('l10n_se_ocr')
-l10n_se_ocr  / res.partner              / l10n_se_default_vendor_payment_ref (char): module is now 'l10n_se' ('l10n_se_ocr')
-l10n_se_ocr  / res.users                / l10n_se_check_vendor_ocr (boolean): module is now 'l10n_se' ('l10n_se_ocr')
-l10n_se_ocr  / res.users                / l10n_se_default_vendor_payment_ref (char): module is now 'l10n_se' ('l10n_se_ocr')
----XML records in module 'l10n_se_ocr'---
-DEL ir.ui.view: l10n_se_ocr.res_partner_ocr_form
-DEL ir.ui.view: l10n_se_ocr.view_account_journal_se_ocr_form
-ERROR: module not in list of installed modules:
----Models in module 'mail_client_extension'---
----Fields in module 'mail_client_extension'---
-mail_client_extension / res.partner              / iap_enrich_info (text)        : module is now 'mail_plugin' ('mail_client_extension')
-mail_client_extension / res.partner              / iap_enrich_info (text)        : not stored anymore
-mail_client_extension / res.partner              / iap_enrich_info (text)        : now a function
-mail_client_extension / res.users                / iap_enrich_info (text)        : module is now 'mail_plugin' ('mail_client_extension')
----XML records in module 'mail_client_extension'---
-DEL ir.actions.server: mail_client_extension.lead_creation_prefilled_action [renamed to crm_mail_plugin module]
-DEL ir.ui.view: mail_client_extension.app_auth
-ERROR: module not in list of installed modules:
 ---Models in module 'odoo_referral'---
 ---Fields in module 'odoo_referral'---
 ---XML records in module 'odoo_referral'---
 DEL ir.ui.view: odoo_referral.assets_backend
 ERROR: module not in list of installed modules:
----Models in module 'payment_fix_register_token'---
----Fields in module 'payment_fix_register_token'---
----XML records in module 'payment_fix_register_token'---
-DEL ir.ui.view: payment_fix_register_token.view_account_payment_register_form_inherit_payment
-ERROR: module not in list of installed modules:
----Models in module 'payment_ingenico'---
----Fields in module 'payment_ingenico'---
-payment_ingenico / payment.acquirer         / ogone_alias_usage (char)      : DEL
-payment_ingenico / payment.acquirer         / ogone_password (char)         : module is now 'payment_ogone' ('payment_ingenico')
-payment_ingenico / payment.acquirer         / ogone_pspid (char)            : module is now 'payment_ogone' ('payment_ingenico')
-payment_ingenico / payment.acquirer         / ogone_shakey_in (char)        : module is now 'payment_ogone' ('payment_ingenico')
-payment_ingenico / payment.acquirer         / ogone_shakey_out (char)       : module is now 'payment_ogone' ('payment_ingenico')
-payment_ingenico / payment.acquirer         / ogone_userid (char)           : module is now 'payment_ogone' ('payment_ingenico')
-payment_ingenico / payment.acquirer         / provider (False)              : module is now 'payment_mollie' ('payment_ingenico')
-payment_ingenico / payment.acquirer         / provider (False)              : selection_keys is now '['adyen', 'alipay', 'authorize', 'buckaroo', 'mollie', 'none']' ('['adyen', 'alipay', 'authorize', 'buckaroo', 'manual', 'ogone']')
----XML records in module 'payment_ingenico'---
-DEL ir.ui.view: payment_ingenico.acquirer_form_ogone
-DEL ir.ui.view: payment_ingenico.ogone_form
-DEL ir.ui.view: payment_ingenico.ogone_s2s_form
-ERROR: module not in list of installed modules:
 ---Models in module 'payment_odoo_by_adyen'---
 ---Fields in module 'payment_odoo_by_adyen'---
 payment_odoo_by_adyen / payment.acquirer         / odoo_adyen_payout_id (many2one): DEL relation: adyen.payout
-payment_odoo_by_adyen / payment.acquirer         / provider (False)              : module is now 'payment_ogone' ('payment_odoo_by_adyen')
-payment_odoo_by_adyen / payment.acquirer         / provider (False)              : selection_keys is now '['adyen', 'alipay', 'authorize', 'buckaroo', 'mollie', 'none', 'ogone']' ('['adyen', 'alipay', 'authorize', 'buckaroo', 'manual', 'odoo_adyen', 'ogone']')
+payment_odoo_by_adyen / payment.acquirer         / provider (False)              : module is now 'payment_mollie' ('payment_odoo_by_adyen')
+payment_odoo_by_adyen / payment.acquirer         / provider (False)              : selection_keys is now '['adyen', 'alipay', 'authorize', 'buckaroo', 'mollie', 'none']' ('['adyen', 'alipay', 'authorize', 'buckaroo', 'manual', 'odoo_adyen', 'ogone']')
 payment_odoo_by_adyen / payment.token            / odoo_adyen_payment_method_type (char): DEL
 ---XML records in module 'payment_odoo_by_adyen'---
 DEL ir.ui.view: payment_odoo_by_adyen.acquirer_form_odoo_by_adyen
 DEL ir.ui.view: payment_odoo_by_adyen.odoo_by_adyen_form (noupdate)
-ERROR: module not in list of installed modules:
----Models in module 'sale_timesheet_edit'---
----Fields in module 'sale_timesheet_edit'---
-sale_timesheet_edit / account.analytic.line    / is_so_line_edited (boolean)   : module is now 'sale_timesheet' ('sale_timesheet_edit')
----XML records in module 'sale_timesheet_edit'---
-DEL ir.ui.view: sale_timesheet_edit.assets_backend
-DEL ir.ui.view: sale_timesheet_edit.project_task_view_form_inherit_sale_timesheet_edit
-DEL ir.ui.view: sale_timesheet_edit.project_task_view_form_inherit_sale_timesheet_editable
-ERROR: module not in list of installed modules:
----Models in module 'website_event_track_exhibitor'---
----Fields in module 'website_event_track_exhibitor'---
-website_event_track_exhibitor / event.event              / exhibitor_menu (boolean)      : module is now 'website_event_exhibitor' ('website_event_track_exhibitor')
-website_event_track_exhibitor / event.event              / exhibitor_menu_ids (one2many) : module is now 'website_event_exhibitor' ('website_event_track_exhibitor')
-website_event_track_exhibitor / event.sponsor            / can_publish (boolean)         : module is now 'website_event_exhibitor' ('website_event_track_exhibitor')
-website_event_track_exhibitor / event.sponsor            / chat_room_id (many2one)       : module is now 'website_event_exhibitor' ('website_event_track_exhibitor')
-website_event_track_exhibitor / event.sponsor            / country_flag_url (char)       : module is now 'website_event_exhibitor' ('website_event_track_exhibitor')
-website_event_track_exhibitor / event.sponsor            / country_id (many2one)         : module is now 'website_event_exhibitor' ('website_event_track_exhibitor')
-website_event_track_exhibitor / event.sponsor            / event_date_tz (selection)     : module is now 'website_event_exhibitor' ('website_event_track_exhibitor')
-website_event_track_exhibitor / event.sponsor            / hour_from (float)             : module is now 'website_event_exhibitor' ('website_event_track_exhibitor')
-website_event_track_exhibitor / event.sponsor            / hour_to (float)               : module is now 'website_event_exhibitor' ('website_event_track_exhibitor')
-website_event_track_exhibitor / event.sponsor            / is_exhibitor (boolean)        : DEL
-website_event_track_exhibitor / event.sponsor            / is_in_opening_hours (boolean) : module is now 'website_event_exhibitor' ('website_event_track_exhibitor')
-website_event_track_exhibitor / event.sponsor            / is_published (boolean)        : module is now 'website_event_exhibitor' ('website_event_track_exhibitor')
-website_event_track_exhibitor / event.sponsor            / room_is_full (boolean)        : module is now 'website_event_exhibitor' ('website_event_track_exhibitor')
-website_event_track_exhibitor / event.sponsor            / room_lang_id (many2one)       : module is now 'website_event_exhibitor' ('website_event_track_exhibitor')
-website_event_track_exhibitor / event.sponsor            / room_last_activity (datetime) : module is now 'website_event_exhibitor' ('website_event_track_exhibitor')
-website_event_track_exhibitor / event.sponsor            / room_max_capacity (selection) : module is now 'website_event_exhibitor' ('website_event_track_exhibitor')
-website_event_track_exhibitor / event.sponsor            / room_max_participant_reached (integer): module is now 'website_event_exhibitor' ('website_event_track_exhibitor')
-website_event_track_exhibitor / event.sponsor            / room_name (char)              : module is now 'website_event_exhibitor' ('website_event_track_exhibitor')
-website_event_track_exhibitor / event.sponsor            / room_participant_count (integer): module is now 'website_event_exhibitor' ('website_event_track_exhibitor')
-website_event_track_exhibitor / event.sponsor            / subtitle (char)               : module is now 'website_event_exhibitor' ('website_event_track_exhibitor')
-website_event_track_exhibitor / event.sponsor            / website_description (html)    : module is now 'website_event_exhibitor' ('website_event_track_exhibitor')
-website_event_track_exhibitor / event.sponsor            / website_published (boolean)   : module is now 'website_event_exhibitor' ('website_event_track_exhibitor')
-website_event_track_exhibitor / event.sponsor            / website_url (char)            : module is now 'website_event_exhibitor' ('website_event_track_exhibitor')
-website_event_track_exhibitor / event.type               / exhibitor_menu (boolean)      : module is now 'website_event_exhibitor' ('website_event_track_exhibitor')
-website_event_track_exhibitor / website.event.menu       / menu_type (False)             : module is now 'website_event_booth' ('website_event_track_exhibitor')
-website_event_track_exhibitor / website.event.menu       / menu_type (False)             : selection_keys is now '['booth', 'community', 'introduction', 'location', 'register']' ('['community', 'exhibitor', 'meeting_room', 'track', 'track_proposal']')
----XML records in module 'website_event_track_exhibitor'---
-DEL ir.actions.act_window: website_event_track_exhibitor.event_sponsor_action [renamed to website_event_exhibitor module]
-DEL ir.model.access: website_event_track_exhibitor.chat_room_access_event_manager
-DEL ir.rule: website_event_track_exhibitor.event_sponsor_rule_share [renamed to website_event_exhibitor module] (noupdate)
-DEL ir.ui.view: website_event_track_exhibitor.assets_frontend
-DEL ir.ui.view: website_event_track_exhibitor.event_event_view_form
-DEL ir.ui.view: website_event_track_exhibitor.event_exhibitor_main
-DEL ir.ui.view: website_event_track_exhibitor.event_exhibitors
-DEL ir.ui.view: website_event_track_exhibitor.event_sponsor_edit_options
-DEL ir.ui.view: website_event_track_exhibitor.event_sponsor_view_form
-DEL ir.ui.view: website_event_track_exhibitor.event_sponsor_view_kanban
-DEL ir.ui.view: website_event_track_exhibitor.event_sponsor_view_search
-DEL ir.ui.view: website_event_track_exhibitor.event_sponsor_view_tree
-DEL ir.ui.view: website_event_track_exhibitor.event_type_view_form
-DEL ir.ui.view: website_event_track_exhibitor.exhibitor_aside
-DEL ir.ui.view: website_event_track_exhibitor.exhibitor_card
-DEL ir.ui.view: website_event_track_exhibitor.exhibitor_main
-DEL ir.ui.view: website_event_track_exhibitor.exhibitors_display_cards
-DEL ir.ui.view: website_event_track_exhibitor.exhibitors_main
-DEL ir.ui.view: website_event_track_exhibitor.exhibitors_search
-DEL ir.ui.view: website_event_track_exhibitor.exhibitors_topbar
-DEL ir.ui.view: website_event_track_exhibitor.exhibitors_topbar_country
-DEL ir.ui.view: website_event_track_exhibitor.exhibitors_topbar_sponsorship
-ERROR: module not in list of installed modules:
----Models in module 'website_form'---
----Fields in module 'website_form'---
-website_form / ir.model                 / website_form_access (boolean) : module is now 'website' ('website_form')
-website_form / ir.model                 / website_form_default_field_id (many2one): module is now 'website' ('website_form')
-website_form / ir.model                 / website_form_key (char)       : module is now 'website' ('website_form')
-website_form / ir.model                 / website_form_label (char)     : module is now 'website' ('website_form')
-website_form / ir.model.fields          / website_form_blacklisted (boolean): module is now 'website' ('website_form')
----XML records in module 'website_form'---
-DEL ir.ui.view: website_form.assets_editor
-DEL ir.ui.view: website_form.assets_snippet_s_website_form_css_000
-DEL ir.ui.view: website_form.assets_snippet_s_website_form_css_001
-DEL ir.ui.view: website_form.assets_snippet_s_website_form_js_000
-DEL ir.ui.view: website_form.assets_tests
-DEL ir.ui.view: website_form.contactus_form
-DEL ir.ui.view: website_form.ir_model_fields_view
-DEL ir.ui.view: website_form.ir_model_view
-DEL ir.ui.view: website_form.remove_external_snippets
-DEL ir.ui.view: website_form.s_website_form
-DEL ir.ui.view: website_form.s_website_form_options
-DEL ir.ui.view: website_form.snippets
-DEL website.page: website_form.contactus_thanks [renamed to website module]
 ERROR: module not in list of installed modules:
 ---Models in module 'website_mail_channel'---
 ---Fields in module 'website_mail_channel'---

@@ -1,17 +1,10 @@
 ---Models in module 'account_edi'---
 ---Fields in module 'account_edi'---
-account_edi  / account.bank.statement.line / edi_blocking_level (selection): previously in module account_edi_extended
-account_edi  / account.bank.statement.line / edi_error_message (html)      : previously in module account_edi_extended
-account_edi  / account.bank.statement.line / edi_show_abandon_cancel_button (boolean): previously in module account_edi_extended
-account_edi  / account.edi.document     / blocking_level (selection)    : previously in module account_edi_extended
-account_edi  / account.move             / edi_blocking_level (selection): previously in module account_edi_extended
-account_edi  / account.move             / edi_error_message (html)      : previously in module account_edi_extended
-account_edi  / account.move             / edi_show_abandon_cancel_button (boolean): previously in module account_edi_extended
-account_edi  / account.payment          / edi_blocking_level (selection): previously in module account_edi_extended
-account_edi  / account.payment          / edi_error_message (html)      : previously in module account_edi_extended
-account_edi  / account.payment          / edi_show_abandon_cancel_button (boolean): previously in module account_edi_extended
 ---XML records in module 'account_edi'---
 NEW ir.ui.view: account_edi.view_account_invoice_filter
 NEW ir.ui.view: account_edi.view_out_credit_note_tree_inherit
 NEW ir.ui.view: account_edi.view_out_invoice_tree_inherit
 DEL ir.ui.view: account_edi.account_invoice_send_inherit_account_wizard_form
+DEL ir.ui.view: account_edi_extended.view_move_form_inherit
+DEL ir.ui.view: account_edi_extended.view_payment_form_inherit
+DEL ir.ui.view: account_edi_extended.view_tree_account_edi_document_inherit
