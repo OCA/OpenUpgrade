@@ -17,8 +17,8 @@ def _check_xml(self):
         return View._check_xml._original_method(self)
 
 
-def handle_view_error(
-    self, message, *args, raise_exception=True, from_exception=None, from_traceback=None
+def _raise_view_error(
+    self, message, node=None, *, from_exception=None, from_traceback=None
 ):
     """Don't raise or log exceptions in view validation unless explicitely
     requested
@@ -27,11 +27,11 @@ def handle_view_error(
     to_mute = "odoo.addons.base.models.ir_ui_view" if raise_exception else "not_muted"
     with mute_logger(to_mute):
         try:
-            return View.handle_view_error._original_method(
+            return View._raise_view_error._original_method(
                 self,
                 message,
-                *args,
-                raise_exception=False,
+                node=node,
+                *,
                 from_exception=from_exception,
                 from_traceback=from_traceback
             )
@@ -48,7 +48,7 @@ def handle_view_error(
 
 
 def _postprocess_view(self, node, model, validate=True, editable=True):
-    """ Don't validate views, handle_view_error is mutted"""
+    """ Don't validate views, _raise_view_error is mutted"""
     return View._postprocess_view._original_method(
         self, node, model, validate=False, editable=editable
     )
@@ -56,7 +56,7 @@ def _postprocess_view(self, node, model, validate=True, editable=True):
 
 _check_xml._original_method = View._check_xml
 View._check_xml = _check_xml
-handle_view_error._original_method = View.handle_view_error
-View.handle_view_error = handle_view_error
+_raise_view_error._original_method = View._raise_view_error
+View._raise_view_error = _raise_view_error
 _postprocess_view._original_method = View._postprocess_view
 View._postprocess_view = _postprocess_view
