@@ -5,7 +5,7 @@ from odoo.modules.graph import Graph
 
 
 def update_from_db(self, cr):
-    """ Prevent reloading of demo data from the new version on major upgrade """
+    """Prevent reloading of demo data from the new version on major upgrade"""
     Graph.update_from_db._original_method(self, cr)
     if (
         "base" in self

@@ -8,7 +8,7 @@ _logger = logging.getLogger(__name__)
 
 
 class FakeRecord:
-    """Artificial construct to handle delete(records) submethod """
+    """Artificial construct to handle delete(records) submethod"""
 
     def __new__(cls):
         return object.__new__(cls)
