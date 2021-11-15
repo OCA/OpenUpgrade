@@ -15,7 +15,7 @@ from odoo.addons.base.models.ir_model import (
 
 
 def _drop_table(self):
-    """ Never drop tables """
+    """Never drop tables"""
     for model in self:
         if self.env.get(model.model) is not None:
             openupgrade.message(
@@ -32,7 +32,7 @@ IrModel._drop_table = _drop_table
 
 
 def _drop_column(self):
-    """ Never drop columns """
+    """Never drop columns"""
     for field in self:
         if field.name in models.MAGIC_COLUMNS:
             continue
