@@ -31,7 +31,6 @@ def _raise_view_error(
                 self,
                 message,
                 node=node,
-                *,
                 from_exception=from_exception,
                 from_traceback=from_traceback
             )
