@@ -640,13 +640,21 @@ def remove_invoice_table_relations(env):
 
 
 def fill_ir_model_data_noupdate(env):
-    """In previous version, true noupdate data by default was saved as null."""
+    """In previous version, true noupdate data by default was saved as null.
+    See https://github.com/odoo/odoo/commit/8f88570ca18061716fd6e246b9d16aa2cbc24f3a"""
     openupgrade.logged_query(
         env.cr, """
         UPDATE ir_model_data
         SET noupdate = TRUE
-        WHERE noupdate IS NULL"""
+        WHERE noupdate IS NULL AND model != 'ir.model'"""
     )
+    # In Odoo 13.0, ir.model xmlids are noupdate FALSE instead of NULL and are
+    # thus included when cleaning up obsolete data records in _process_end.
+    openupgrade.logged_query(
+        env.cr,
+        """UPDATE ir_model_data
+        SET noupdate=FALSE
+        WHERE model='ir.model' AND noupdate IS NULL""")
 
 
 def remove_offending_translations(env):
@@ -814,10 +822,3 @@ def migrate(env, version):
         """ UPDATE ir_model_constraint
         SET write_date = date_update
         WHERE write_date IS NULL AND date_update IS NOT NULL """)
-    # In Odoo 13.0, model xmlids are noupdate FALSE instead of NULL and are
-    # thus included when cleaning up obsolete data records in _process_end.
-    openupgrade.logged_query(
-        env.cr,
-        """UPDATE ir_model_data
-        SET noupdate=FALSE
-        WHERE model='ir.model' AND noupdate IS NULL""")
