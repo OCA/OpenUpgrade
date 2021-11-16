@@ -1,0 +1,14 @@
+---Fields in module 'stock_landed_costs'---
+stock_landed_costs / stock.landed.cost        / website_message_ids (one2many): NEW relation: mail.message
+# NOTHING TO DO: New stand-alone feature
+
+stock_landed_costs / stock.move               / landed_cost_value (float)     : NEW
+# DONE: post-migration: Increase stock.move price_unit + fill this field with the sum of stock.valuation.adjustment.lines
+
+---XML records in module 'stock_landed_costs'---
+NEW ir.rule: stock_landed_costs.stock_landed_cost_rule
+NEW ir.ui.view: stock_landed_costs.res_config_settings_view_form
+# NOTHING TO DO: New noupdate=0 records
+
+DEL res.groups: base.group_user (noupdate)
+# NOTHING TO DO: Fake report
