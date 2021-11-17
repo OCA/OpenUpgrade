@@ -2,31 +2,7 @@
 # Copyright 2020 Tecnativa - Pedro M. Baeza
 # License AGPL-3.0 or later (http://www.gnu.org/licenses/agpl.html).
 from openupgradelib import openupgrade
-
-
-def fill_product_template_attribute_value_attribute_line_id(env):
-    openupgrade.logged_query(
-        env.cr, """
-        UPDATE product_template_attribute_value ptav
-        SET attribute_line_id = ptal.id
-        FROM product_template_attribute_line ptal
-        JOIN product_template pt ON ptal.product_tmpl_id = pt.id
-        JOIN product_attribute_value_product_template_attribute_line_rel
-            avtalr ON avtalr.product_template_attribute_line_id = ptal.id
-        WHERE ptal.active = TRUE AND ptav.product_tmpl_id = pt.id AND
-            ptav.product_attribute_value_id = avtalr.product_attribute_value_id
-        """,
-    )
-
-
-def fill_product_template_attribute_value__attribute_id_related(env):
-    openupgrade.logged_query(
-        env.cr, """
-        UPDATE product_template_attribute_value ptav
-        SET attribute_id = ptal.attribute_id
-        FROM product_template_attribute_line ptal
-        WHERE ptav.attribute_line_id = ptal.id""",
-    )
+from odoo.tools import sql
 
 
 def fill_product_variant_combination_table(env):
@@ -36,12 +12,15 @@ def fill_product_variant_combination_table(env):
         (product_product_id, product_template_attribute_value_id)
         SELECT pavppr.product_product_id, ptav.id
         FROM product_attribute_value_product_product_rel pavppr
+        JOIN product_attribute_value pav
+            ON pav.id = pavppr.product_attribute_value_id
         JOIN product_product pp
             ON pp.id = pavppr.product_product_id
         JOIN product_template_attribute_value ptav
-            ON ptav.product_attribute_value_id = pavppr.product_attribute_value_id
+            ON ptav.product_attribute_value_id = pav.id
                 AND pp.product_tmpl_id = ptav.product_tmpl_id
-        """,
+                AND ptav.attribute_id = pav.attribute_id
+        GROUP BY pavppr.product_product_id, ptav.id""",
     )
 
 
@@ -88,10 +67,11 @@ def empty_template_pricelist_company(env):
 
 @openupgrade.migrate()
 def migrate(env, version):
-    fill_product_template_attribute_value_attribute_line_id(env)
-    fill_product_template_attribute_value__attribute_id_related(env)
     fill_product_variant_combination_table(env)
     openupgrade.load_data(
         env.cr, "product", "migrations/13.0.1.2/noupdate_changes.xml")
     convert_image_attachments(env)
     empty_template_pricelist_company(env)
+    sql.drop_index(
+        env.cr, 'product_template_attribute_value_ou_migration_idx',
+        "product_template_attribute_value")

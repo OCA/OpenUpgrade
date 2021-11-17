@@ -2,6 +2,7 @@
 # Copyright 2020 Tecnativa - Pedro M. Baeza
 # License AGPL-3.0 or later (http://www.gnu.org/licenses/agpl.html).
 from openupgradelib import openupgrade
+from odoo.tools import sql
 
 _xmlid_renames = [
     ('sale.group_discount_per_so_line', 'product.group_discount_per_so_line'),
@@ -29,16 +30,10 @@ def fill_product_pricelist_item_prices(env):
 
 def fill_product_pricelist_item_active_default(env):
     """Faster way to fill this new field"""
-    openupgrade.logged_query(
-        env.cr, """
-        ALTER TABLE product_pricelist_item
-        ADD COLUMN active boolean
-        DEFAULT TRUE""",
-    )
-    openupgrade.logged_query(
-        env.cr, """
-        ALTER TABLE product_pricelist_item ALTER COLUMN active DROP DEFAULT""",
-    )
+    openupgrade.add_fields(env, [(
+        "active", "product.pricelist.item",
+        "product_pricelist_item", "boolean", False, "product", True,
+    )])
 
 
 def insert_missing_product_template_attribute_line(env):
@@ -77,6 +72,23 @@ def insert_missing_product_template_attribute_line(env):
         WHERE ptal.id IS NULL
         GROUP BY pav.attribute_id, pp.product_tmpl_id""",
     )
+    if openupgrade.table_exists(env.cr, "mrp_bom_line"):
+        # make use of mrp_bom_line_product_attribute_value_rel
+        openupgrade.logged_query(
+            env.cr, """
+            INSERT INTO product_template_attribute_line
+                (active, product_tmpl_id, attribute_id)
+            SELECT False, mb.product_tmpl_id, pav.attribute_id
+            FROM mrp_bom_line_product_attribute_value_rel mblpavr
+            JOIN mrp_bom_line mbl ON mbl.id = mblpavr.mrp_bom_line_id
+            JOIN mrp_bom mb ON mbl.bom_id = mb.id
+            JOIN product_attribute_value pav ON pav.id = mblpavr.product_attribute_value_id
+            LEFT JOIN product_template_attribute_line ptal
+                ON ptal.product_tmpl_id = mb.product_tmpl_id
+                    AND ptal.attribute_id = pav.attribute_id
+            WHERE ptal.id IS NULL
+            GROUP BY pav.attribute_id, mb.product_tmpl_id"""
+        )
 
 
 def insert_missing_product_template_attribute_value(env):
@@ -110,17 +122,43 @@ def insert_missing_product_template_attribute_value(env):
         env.cr,
         """
         INSERT INTO product_template_attribute_value
-            (ptav_active, product_attribute_value_id, product_tmpl_id)
+            (ptav_active, product_attribute_value_id, product_tmpl_id, attribute_line_id)
         SELECT
-            False, pavppr.product_attribute_value_id, pp.product_tmpl_id
+            False, pavppr.product_attribute_value_id, pp.product_tmpl_id, ptal.id
         FROM product_attribute_value_product_product_rel pavppr
         JOIN product_product pp ON pp.id = pavppr.product_product_id
+        JOIN product_attribute_value pav ON pav.id = pavppr.product_attribute_value_id
+        JOIN product_template_attribute_line ptal
+            ON ptal.product_tmpl_id = pp.product_tmpl_id
+            AND pav.attribute_id = ptal.attribute_id
         LEFT JOIN product_template_attribute_value ptav
             ON ptav.product_attribute_value_id = pavppr.product_attribute_value_id
             AND ptav.product_tmpl_id = pp.product_tmpl_id
+            AND ptav.attribute_line_id = ptal.id
         WHERE ptav.id IS NULL
-        GROUP BY pavppr.product_attribute_value_id, pp.product_tmpl_id""",
+        GROUP BY pavppr.product_attribute_value_id, pp.product_tmpl_id, ptal.id""",
     )
+    if openupgrade.table_exists(env.cr, "mrp_bom_line"):
+        # make use of mrp_bom_line_product_attribute_value_rel
+        openupgrade.logged_query(
+            env.cr, """
+            INSERT INTO product_template_attribute_value
+                (ptav_active, product_attribute_value_id, product_tmpl_id, attribute_line_id)
+            SELECT False, mblpavr.product_attribute_value_id, mb.product_tmpl_id, ptal.id
+            FROM mrp_bom_line_product_attribute_value_rel mblpavr
+            JOIN mrp_bom_line mbl ON mbl.id = mblpavr.mrp_bom_line_id
+            JOIN mrp_bom mb ON mbl.bom_id = mb.id
+            JOIN product_attribute_value pav ON pav.id = mblpavr.product_attribute_value_id
+            JOIN product_template_attribute_line ptal ON (
+                ptal.product_tmpl_id = mb.product_tmpl_id
+                AND pav.attribute_id = ptal.attribute_id)
+            LEFT JOIN product_template_attribute_value ptav
+                ON (ptav.product_attribute_value_id = pav.id
+                AND ptav.product_tmpl_id = mb.product_tmpl_id
+                AND ptav.attribute_line_id = ptal.id)
+            WHERE ptav.id IS NULL
+            GROUP BY mblpavr.product_attribute_value_id, mb.product_tmpl_id, ptal.id""",
+        )
 
 
 def calculate_product_product_combination_indices(env):
@@ -134,37 +172,58 @@ def calculate_product_product_combination_indices(env):
     )
     openupgrade.logged_query(
         env.cr, """
-        WITH pvc AS (
-            SELECT pavppr.product_product_id,
-                ptav.id AS product_template_attribute_value_id
-            FROM product_attribute_value_product_product_rel pavppr
-            JOIN product_product pp ON pp.id = pavppr.product_product_id
-            JOIN product_template_attribute_value ptav
-                ON ptav.product_attribute_value_id =
-                    pavppr.product_attribute_value_id
-                AND pp.product_tmpl_id = ptav.product_tmpl_id
-        )
         UPDATE product_product pp
         SET combination_indices = grouped_pvc.indices
         FROM (
-            SELECT pvc.product_product_id, STRING_AGG(
-                pvc.product_template_attribute_value_id::varchar, ','
-                ORDER BY pvc.product_template_attribute_value_id) indices
-            FROM pvc
-            JOIN product_product pp ON pp.id = pvc.product_product_id
-            GROUP BY pvc.product_product_id
+            SELECT pavppr.product_product_id,
+                STRING_AGG(ptav.id::varchar, ',' ORDER BY ptav.id) indices
+            FROM product_attribute_value_product_product_rel pavppr
+            JOIN product_product pp ON pp.id = pavppr.product_product_id
+            JOIN product_template_attribute_value ptav
+                ON (ptav.product_attribute_value_id =
+                    pavppr.product_attribute_value_id
+                AND pp.product_tmpl_id = ptav.product_tmpl_id)
+            GROUP BY pavppr.product_product_id
         ) grouped_pvc
-        WHERE grouped_pvc.product_product_id = pp.id
+        WHERE grouped_pvc.product_product_id = pp.id""",
+    )
+
+
+def fill_product_template_attribute_value_attribute_line_id(env):
+    """Done in pre because the field attribute_line_id of ptav is required."""
+    openupgrade.logged_query(
+        env.cr,
+        "ALTER TABLE product_template_attribute_value "
+        "ADD COLUMN attribute_line_id INT4",
+    )
+    openupgrade.logged_query(
+        env.cr, """
+        UPDATE product_template_attribute_value ptav
+        SET attribute_line_id = ptal.id
+        FROM product_template_attribute_line ptal
+        JOIN product_attribute_value pav ON ptal.attribute_id = pav.attribute_id
+        WHERE ptav.product_tmpl_id = ptal.product_tmpl_id
+            AND ptav.product_attribute_value_id = pav.id
         """,
     )
 
 
-def add_product_template_attribute_value__attribute_id_column(env):
-    """For avoiding that ORM fills it. We fill it later on post-migration."""
+def fill_product_template_attribute_value__attribute_id_related(env):
+    """We fill the attribute_id of ptavs in pre-migration for a reason:
+     When the module is loading, the new product_attribute_product_template_rel
+     table will be automatically created and filled (it's an stored computed m2m),
+     thus the attribute_id of ptavs is needed in the compute."""
     openupgrade.logged_query(
         env.cr,
         "ALTER TABLE product_template_attribute_value "
         "ADD COLUMN attribute_id INT4",
+    )
+    openupgrade.logged_query(
+        env.cr, """
+        UPDATE product_template_attribute_value ptav
+        SET attribute_id = ptal.attribute_id
+        FROM product_template_attribute_line ptal
+        WHERE ptav.attribute_line_id = ptal.id""",
     )
 
 
@@ -174,7 +233,12 @@ def migrate(env, version):
     openupgrade.rename_xmlids(cr, _xmlid_renames)
     fill_product_pricelist_item_prices(env)
     fill_product_pricelist_item_active_default(env)
+    sql.create_index(
+        env.cr, 'product_template_attribute_value_ou_migration_idx',
+        "product_template_attribute_value",
+        ['product_attribute_value_id', 'product_tmpl_id'])
     insert_missing_product_template_attribute_line(env)
+    fill_product_template_attribute_value_attribute_line_id(env)
     insert_missing_product_template_attribute_value(env)
     calculate_product_product_combination_indices(env)
-    add_product_template_attribute_value__attribute_id_column(env)
+    fill_product_template_attribute_value__attribute_id_related(env)

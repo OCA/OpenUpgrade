@@ -5,6 +5,7 @@ obsolete model product.price.history
 ---Fields in module 'product'---
 product      / product.attribute        / product_tmpl_ids (many2many)  : NEW relation: product.template, isfunction: function, stored
 # NOTHING TO DO: is a new compute, so we could precreate and fill to speed up, but not needed because usually there are few records
+# (we assure the field attribute_line_id of ptav is filled, as it is used in the compute)
 
 product      / product.attribute.value  / pav_attribute_line_ids (many2many): NEW relation: product.template.attribute.line
 # NOTHING TO DO: Inverse many2many of an existing m2m table
@@ -76,14 +77,13 @@ product      / product.template.attribute.value / ptav_active (boolean)         
 # DONE: pre-migration: Insert missing records for variants with attributes that currently are not on the template definition
 
 product      / product.template.attribute.value / attribute_id (many2one)       : is now stored
-# DONE: pre-migration: added SQL column for avoiding the ORM computation
-# DONE: post-migration: filled field (done in post-migration because it's a related to a new field)
+# DONE: pre-migration: filled field (done in pre to let product_attribute_product_template_rel be calculated and filled in load).
 
 product      / product.template.attribute.line / product_template_value_ids (many2many): is now stored
 product      / product.template.attribute.line / product_template_value_ids (many2many): not a function anymore
 product      / product.template.attribute.line / product_template_value_ids (many2many): type is now 'one2many' ('many2many')
 product      / product.template.attribute.value / attribute_line_id (many2one)  : NEW relation: product.template.attribute.line, required
-# DONE: post-migration: filled field (using the same approach than in OU v12)
+# DONE: pre-migration: filled required field (using the same approach than in OU v12)
 
 ---XML records in module 'product'---
 NEW decimal.precision: product.decimal_volume (noupdate)
