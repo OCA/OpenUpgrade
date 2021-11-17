@@ -224,18 +224,32 @@ def migration_invoice_moves(env):
     # 1st: update the ungrouped ones
     openupgrade.logged_query(env.cr, "ALTER TABLE account_invoice_line ADD aml_matched BOOLEAN")
     query = sql.SQL("""
-    WITH sub AS (
+    WITH matches AS (
+        SELECT unnest(amls) as aml_id, unnest(ails) as ail_id
+        FROM (
+            SELECT array_agg(aml_id ORDER BY aml_id) as amls, ails
+            FROM (
+                SELECT aml.id as aml_id, array_agg(ail.id ORDER BY ail.id) as ails
+                FROM account_invoice_line ail
+                JOIN account_invoice ai ON ail.invoice_id = ai.id AND ai.state NOT IN ('draft', 'cancel')
+                JOIN account_move am ON ail.invoice_id = am.old_invoice_id
+                JOIN res_company rc ON ai.company_id = rc.id
+                JOIN account_move_line aml ON am.id = aml.move_id
+                {where}
+                GROUP BY aml.id
+            ) group_by_aml
+            GROUP BY ails
+        ) group_by_ail
+    ), sub AS (
         UPDATE account_move_line aml
         SET exclude_from_invoice_tab = FALSE, sequence = ail.sequence,
         price_unit = ail.price_unit, discount = ail.discount, price_subtotal = ail.price_subtotal,
         price_total = ail.price_total, display_type = ail.display_type,
         is_rounding_line = ail.is_rounding_line, old_invoice_line_id = ail.id,
         create_uid = ail.create_uid, create_date = ail.create_date
-        FROM account_invoice_line ail
-            JOIN account_invoice ai ON ail.invoice_id = ai.id AND ai.state NOT IN ('draft', 'cancel')
-            JOIN account_move am ON ail.invoice_id = am.old_invoice_id
-            JOIN res_company rc ON ai.company_id = rc.id
-        {where}
+        FROM matches
+        JOIN account_invoice_line ail ON matches.ail_id = ail.id
+        WHERE matches.aml_id = aml.id
         RETURNING ail.id
     )
     UPDATE account_invoice_line ail_main
@@ -248,49 +262,31 @@ def migration_invoice_moves(env):
     # The move lines that have a receivable or payable account (the same as the one
     # from the invoice) are not associated to any invoice line.
     minimal_where = """
-        WHERE am.id = aml.move_id
-            AND ail.aml_matched IS NOT True
+        WHERE ail.aml_matched IS NOT True
             AND aml.tax_line_id IS NULL
             AND aml.account_id <> ai.account_id
             AND ail.quantity = aml.quantity
             AND ((ail.product_id IS NULL AND aml.product_id IS NULL) OR ail.product_id = aml.product_id)
-            AND ((ail.uom_id IS NULL AND aml.product_uom_id IS NULL) OR ail.uom_id = aml.product_uom_id)
-            AND aml.old_invoice_line_id IS NULL
-        """
-    # Loop while duplicated move line references found
-    while True:
-        # Try first with a stricter criteria for matching invoice lines with account move lines
-        openupgrade.logged_query(
-            env.cr,
-            query.format(
-                where=(sql.SQL(minimal_where + """
-                AND ail.account_id = aml.account_id
-                AND ai.commercial_partner_id = aml.partner_id
-                AND ((ail.account_analytic_id IS NULL AND aml.analytic_account_id IS NULL)
-                    OR ail.account_analytic_id = aml.analytic_account_id)"""))
-            ),
-        )
-        # Try now with a more relaxed criteria, as it's possible that users change some data on amls
-        openupgrade.logged_query(
-            env.cr,
-            query.format(where=sql.SQL(minimal_where + " AND rc.anglo_saxon_accounting IS DISTINCT FROM TRUE"))
-        )
-        # Remove duplicates
-        openupgrade.logged_query(
-            env.cr, """
-            UPDATE account_move_line aml
-            SET old_invoice_line_id = NULL
-            FROM (
-                SELECT id,
-                row_number() over (partition BY old_invoice_line_id ORDER BY id) AS rnum
-                FROM account_move_line
-                WHERE old_invoice_line_id IS NOT NULL
-            ) t
-            WHERE t.rnum > 1 AND t.id = aml.id
-            RETURNING aml.id"""
-        )
-        if not env.cr.fetchone():
-            break  # exit condition not having more duplicates
+            AND ((ail.uom_id IS NULL AND aml.product_uom_id IS NULL) OR ail.uom_id = aml.product_uom_id)"""
+    # Try first with a stricter criteria for matching invoice lines with account move lines
+    openupgrade.logged_query(
+        env.cr,
+        query.format(
+            where=(sql.SQL(minimal_where + """
+            AND ail.account_id = aml.account_id
+            AND ai.commercial_partner_id = aml.partner_id
+            AND ((ail.account_analytic_id IS NULL AND aml.analytic_account_id IS NULL)
+                OR ail.account_analytic_id = aml.analytic_account_id)"""))
+        ),
+    )
+    # Try now with a more relaxed criteria, as it's possible that users change some data on amls
+    openupgrade.logged_query(
+        env.cr,
+        query.format(
+            where=sql.SQL(minimal_where + """
+            AND rc.anglo_saxon_accounting IS DISTINCT FROM TRUE
+            AND aml.old_invoice_line_id IS NULL"""))
+    )
     # 2st: exclude from invoice_tab the grouped ones
     openupgrade.logged_query(
         env.cr, """
