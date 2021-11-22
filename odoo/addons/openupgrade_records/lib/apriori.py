@@ -97,6 +97,26 @@ merged_modules = {
     'website_logo': 'website',
     'website_megamenu': 'website',
     'website_snippet_anchor': 'website',
+    # muk-it/muk_base - Agreed to move to OCA
+    'muk_security': 'dms',
+    # muk-it/muk_web - Agreed to move to OCA
+    'muk_web_preview': 'mail_preview_base',
+    'muk_web_preview_audio': 'mail_preview_audio',
+    'muk_web_preview_image': 'mail_preview_base',
+    'muk_web_preview_video': 'mail_preview_base',
+    'muk_web_searchpanel': 'web',
+    'muk_web_utils': 'dms',
+    # muk-it/muk_dms - Agreed to move to OCA
+    'muk_dms': 'dms',
+    'muk_dms_access': 'dms',
+    'muk_dms_actions': 'dms',
+    'muk_dms_attachment': 'dms',
+    'muk_dms_field': 'dms',
+    'muk_dms_file': 'dms',
+    'muk_dms_lobject': 'dms',
+    'muk_dms_mail': 'dms',
+    'muk_dms_thumbnails': 'dms',
+    'muk_dms_view': 'dms',
 }
 
 # only used here for openupgrade_records analysis:
