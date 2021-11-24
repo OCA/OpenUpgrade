@@ -1,7 +1,7 @@
 ---Models in module 'general'---
 obsolete model account.accrual.accounting.wizard [module account]
-obsolete model account.bank.statement.import [module account_bank_statement_import]
-obsolete model account.bank.statement.import.journal.creation [module account_bank_statement_import]
+obsolete model account.bank.statement.import [module account_statement_import]
+obsolete model account.bank.statement.import.journal.creation [module account_statement_import]
 obsolete model account.fiscal.year [module account]
 obsolete model account.reconciliation.widget [module account]
 obsolete model base.gengo.translations [module base_gengo]
@@ -137,6 +137,8 @@ new model google.calendar.sync [module google_calendar]
 new model hr.applicant.refuse.reason [module hr_recruitment]
 new model hr.payroll.structure.type [module hr_contract]
 new model ir.qweb.field.image_url [module base]
+new model l10n_es_edi.certificate [module l10n_es_edi_sii]
+new model l10n_es.sii.account.tax.mixin [module l10n_es_edi_sii]
 new model mail.blacklist.remove [module mail]
 new model mail.performance.thread [module test_mail]
 new model mail.performance.tracking [module test_mail]
@@ -203,6 +205,8 @@ new model test_access_right.some_obj [module test_access_rights]
 new model test_access_right.ticket [module test_access_rights]
 new model test.another_box [module test_inherits]
 new model test.another_unit [module test_inherits]
+new model test_base_automation.project [module test_base_automation]
+new model test_base_automation.task [module test_base_automation]
 new model test.box [module test_inherits]
 new model test_convert.test_model [module test_convert]
 new model test_convert.usered [module test_convert]
@@ -283,6 +287,8 @@ new model test_new_api.multi.line2 [module test_new_api]
 new model test_new_api.multi.tag [module test_new_api]
 new model test_new_api.one2many [module test_new_api]
 new model test_new_api.one2many.line [module test_new_api]
+new model test_new_api.order [module test_new_api]
+new model test_new_api.order.line [module test_new_api]
 new model test_new_api.payment [module test_new_api]
 new model test_new_api.recursive [module test_new_api]
 new model test_new_api.recursive.tree [module test_new_api]
@@ -351,27 +357,19 @@ new model website.robots [module website]
 new model website.sale.extra.field [module website_sale]
 new model website.snippet.filter [module website]
 ---Fields in module 'general'---
-# 9824 fields matched,
-# Direct match: 9697
-# Found in other module: 127
+# 9851 fields matched,
+# Direct match: 9722
+# Found in other module: 129
 # Found with different type: 0
 # In obsolete models: 204
-# New columns: 3259
-# Not matched: 560
+# New columns: 3327
+# Not matched: 562
 ---XML records in module 'general'---
 ERROR: module not in list of installed modules:
 ---Models in module 'account_bank_statement_import'---
-obsolete model account.bank.statement.import [transient]
-obsolete model account.bank.statement.import.journal.creation [transient]
 ---Fields in module 'account_bank_statement_import'---
-account_bank_statement_import / account.bank.statement.line / unique_import_id (char)       : DEL
 ---XML records in module 'account_bank_statement_import'---
-DEL ir.actions.act_window: account_bank_statement_import.action_account_bank_statement_import
-DEL ir.actions.act_window: account_bank_statement_import.install_more_import_formats_action
-DEL ir.ui.view: account_bank_statement_import.account_bank_statement_import_journal_creation_view
-DEL ir.ui.view: account_bank_statement_import.account_bank_statement_import_view
-DEL ir.ui.view: account_bank_statement_import.assets_backend
-DEL ir.ui.view: account_bank_statement_import.journal_dashboard_view_inherit
+---nothing has changed in this module--
 ERROR: module not in list of installed modules:
 ---Models in module 'base_gengo'---
 obsolete model base.gengo.translations [transient]

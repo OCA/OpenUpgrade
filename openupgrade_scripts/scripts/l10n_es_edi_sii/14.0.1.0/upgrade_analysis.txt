@@ -1,0 +1,32 @@
+---Models in module 'l10n_es_edi_sii'---
+new model l10n_es_edi.certificate
+new model l10n_es.sii.account.tax.mixin [abstract]
+---Fields in module 'l10n_es_edi_sii'---
+l10n_es_edi_sii / account.move             / l10n_es_edi_csv (char)        : NEW
+l10n_es_edi_sii / account.move             / l10n_es_registration_date (date): NEW
+l10n_es_edi_sii / account.tax              / l10n_es_bien_inversion (boolean): NEW hasdefault
+l10n_es_edi_sii / account.tax              / l10n_es_exempt_reason (selection): NEW selection_keys: ['E1', 'E2', 'E3', 'E4', 'E5', 'E6']
+l10n_es_edi_sii / account.tax              / l10n_es_type (selection)      : NEW selection_keys: ['exento', 'ignore', 'no_deducible', 'no_sujeto', 'no_sujeto_loc', 'recargo', 'retencion', 'sujeto', 'sujeto_agricultura', 'sujeto_isp'], hasdefault
+l10n_es_edi_sii / account.tax.template     / l10n_es_bien_inversion (boolean): NEW hasdefault
+l10n_es_edi_sii / account.tax.template     / l10n_es_exempt_reason (selection): NEW selection_keys: ['E1', 'E2', 'E3', 'E4', 'E5', 'E6']
+l10n_es_edi_sii / account.tax.template     / l10n_es_type (selection)      : NEW selection_keys: ['exento', 'ignore', 'no_deducible', 'no_sujeto', 'no_sujeto_loc', 'recargo', 'retencion', 'sujeto', 'sujeto_agricultura', 'sujeto_isp'], hasdefault
+l10n_es_edi_sii / l10n_es_edi.certificate  / company_id (many2one)         : NEW relation: res.company, required, req_default: function, hasdefault
+l10n_es_edi_sii / l10n_es_edi.certificate  / content (binary)              : NEW required, attachment: True
+l10n_es_edi_sii / l10n_es_edi.certificate  / date_end (datetime)           : NEW
+l10n_es_edi_sii / l10n_es_edi.certificate  / date_start (datetime)         : NEW
+l10n_es_edi_sii / l10n_es_edi.certificate  / password (char)               : NEW
+l10n_es_edi_sii / res.company              / l10n_es_edi_certificate_id (many2one): NEW relation: l10n_es_edi.certificate, isfunction: function, stored
+l10n_es_edi_sii / res.company              / l10n_es_edi_certificate_ids (one2many): NEW relation: l10n_es_edi.certificate
+l10n_es_edi_sii / res.company              / l10n_es_edi_tax_agency (selection): NEW selection_keys: ['aeat', 'bizkaia', 'gipuzkoa'], hasdefault
+l10n_es_edi_sii / res.company              / l10n_es_edi_test_env (boolean): NEW
+---XML records in module 'l10n_es_edi_sii'---
+NEW account.edi.format: l10n_es_edi_sii.edi_es_sii
+NEW ir.actions.act_window: l10n_es_edi_sii.l10n_es_edi_certificate_action
+NEW ir.model.access: l10n_es_edi_sii.access_l10n_es_edi_certificate
+NEW ir.ui.menu: l10n_es_edi_sii.menu_l10n_es_edi_certificates
+NEW ir.ui.menu: l10n_es_edi_sii.menu_l10n_es_edi_root
+NEW ir.ui.view: l10n_es_edi_sii.account_tax_form_inherit_l10n_es_edi
+NEW ir.ui.view: l10n_es_edi_sii.l10n_es_edi_certificate_form
+NEW ir.ui.view: l10n_es_edi_sii.l10n_es_edi_certificate_tree
+NEW ir.ui.view: l10n_es_edi_sii.res_config_settings_view_form
+NEW res.partner: l10n_es_edi_sii.partner_simplified

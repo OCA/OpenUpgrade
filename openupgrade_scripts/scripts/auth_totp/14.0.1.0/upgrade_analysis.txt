@@ -2,6 +2,7 @@
 new model auth_totp.wizard [transient]
 ---Fields in module 'auth_totp'---
 auth_totp    / res.users                / totp_secret (char)            : NEW
+auth_totp    / res.users                / totp_trusted_device_ids (one2many): NEW relation: res.users.apikeys
 ---XML records in module 'auth_totp'---
 NEW ir.actions.server: auth_totp.action_disable_totp
 NEW ir.model.access: auth_totp.access_auth_totp_wizard

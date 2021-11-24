@@ -3,6 +3,8 @@ model base.automation.lead.test (moved from base_automation)
 model base.automation.line.test (moved from base_automation)
 new model base.automation.link.test
 new model base.automation.linked.test
+new model test_base_automation.project
+new model test_base_automation.task
 ---Fields in module 'test_base_automation'---
 test_base_automation / base.automation.lead.test / __last_update (datetime)      : previously in module base_automation
 test_base_automation / base.automation.lead.test / _order                        : previously in module base_automation
@@ -28,8 +30,15 @@ test_base_automation / base.automation.link.test / linked_id (many2one)         
 test_base_automation / base.automation.link.test / name (char)                   : NEW
 test_base_automation / base.automation.linked.test / another_field (char)          : NEW
 test_base_automation / base.automation.linked.test / name (char)                   : NEW
+test_base_automation / test_base_automation.project / name (char)                   : NEW
+test_base_automation / test_base_automation.project / task_ids (one2many)           : NEW relation: test_base_automation.task
+test_base_automation / test_base_automation.task / name (char)                   : NEW
+test_base_automation / test_base_automation.task / parent_id (many2one)          : NEW relation: test_base_automation.task
+test_base_automation / test_base_automation.task / project_id (many2one)         : NEW relation: test_base_automation.project, isfunction: function, stored
 ---XML records in module 'test_base_automation'---
 NEW ir.model.access: test_base_automation.access_base_automation_lead_test [renamed from base_automation module]
 NEW ir.model.access: test_base_automation.access_base_automation_line_test [renamed from base_automation module]
 NEW ir.model.access: test_base_automation.access_base_automation_link_test
 NEW ir.model.access: test_base_automation.access_base_automation_linked_test
+NEW ir.model.access: test_base_automation.access_test_base_automation_project
+NEW ir.model.access: test_base_automation.access_test_base_automation_task

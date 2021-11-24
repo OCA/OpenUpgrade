@@ -149,9 +149,6 @@
       </table>
     </field>
   </record>
-  <record id="mt_applicant_new" model="mail.message.subtype">
-    <field name="description"/>
-  </record>
   <record id="mt_department_new" model="mail.message.subtype">
     <field name="parent_id" ref="mt_job_new"/>
   </record>

@@ -67,6 +67,8 @@ new model test_new_api.multi.line2
 new model test_new_api.multi.tag
 new model test_new_api.one2many
 new model test_new_api.one2many.line
+new model test_new_api.order
+new model test_new_api.order.line
 new model test_new_api.payment
 new model test_new_api.recursive
 new model test_new_api.recursive.tree
@@ -167,6 +169,7 @@ test_new_api / test_new_api.emailmessage / email_to (char)               : NEW
 test_new_api / test_new_api.emailmessage / message (many2one)            : NEW relation: test_new_api.message, required
 test_new_api / test_new_api.field_with_caps / pArTneR_321_id (many2one)     : NEW relation: res.partner
 test_new_api / test_new_api.foo         / name (char)                   : NEW
+test_new_api / test_new_api.foo         / text (char)                   : NEW
 test_new_api / test_new_api.foo         / value1 (integer)              : NEW
 test_new_api / test_new_api.foo         / value2 (integer)              : NEW
 test_new_api / test_new_api.inverse_m2o_ref / model_ids (one2many)          : NEW relation: test_new_api.model_many2one_reference
@@ -278,6 +281,10 @@ test_new_api / test_new_api.one2many    / name (char)                   : NEW
 test_new_api / test_new_api.one2many.line / container_id (many2one)       : NEW relation: test_new_api.one2many, required
 test_new_api / test_new_api.one2many.line / count (integer)               : NEW hasdefault
 test_new_api / test_new_api.one2many.line / name (char)                   : NEW
+test_new_api / test_new_api.order       / line_ids (one2many)           : NEW relation: test_new_api.order.line
+test_new_api / test_new_api.order.line  / order_id (many2one)           : NEW relation: test_new_api.order, required
+test_new_api / test_new_api.order.line  / product (char)                : NEW
+test_new_api / test_new_api.order.line  / reward (boolean)              : NEW
 test_new_api / test_new_api.payment     / _inherits                     : NEW _inherits: {'test_new_api.move': 'move_id'}
 test_new_api / test_new_api.payment     / move_id (many2one)            : NEW relation: test_new_api.move, required
 test_new_api / test_new_api.recursive   / display_name (char)           : NEW isfunction: function, stored
@@ -378,6 +385,8 @@ NEW ir.model.access: test_new_api.access_test_new_api_move_line
 NEW ir.model.access: test_new_api.access_test_new_api_multi_compute_inverse
 NEW ir.model.access: test_new_api.access_test_new_api_one2many
 NEW ir.model.access: test_new_api.access_test_new_api_one2many_line
+NEW ir.model.access: test_new_api.access_test_new_api_order
+NEW ir.model.access: test_new_api.access_test_new_api_order_line
 NEW ir.model.access: test_new_api.access_test_new_api_payment
 NEW ir.model.access: test_new_api.access_test_new_api_recursive
 NEW ir.model.access: test_new_api.access_test_new_api_recursive_tree
