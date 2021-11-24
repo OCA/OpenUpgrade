@@ -30,6 +30,10 @@ module_category_xmlid_renames = [
     ),
     ("base.module_category_discuss", "base.module_category_productivity_discuss"),
     (
+        "base.module_category_localization",
+        "base.module_category_accounting_localizations",
+    ),
+    (
         "base.module_category_localization_account_charts",
         "base.module_category_accounting_localizations_account_charts",
     ),
@@ -96,7 +100,7 @@ def migrate(cr, version):
             "recommended to run the Odoo with --load=openupgrade_framework "
             "when migrating your database."
         )
-    # Rename xmlids of module categies with allow_merge
+    # Rename xmlids of module categories with allow_merge
     openupgrade.rename_xmlids(cr, module_category_xmlid_renames, allow_merge=True)
     # Update ir_model_data timestamps from obsolete columns
     openupgrade.logged_query(
