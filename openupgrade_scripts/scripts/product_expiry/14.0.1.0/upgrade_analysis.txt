@@ -4,7 +4,7 @@ new model expiry.picking.confirmation [transient]
 product_expiry / product.template         / expiration_time (integer)     : NEW
 product_expiry / product.template         / life_time (integer)           : DEL
 product_expiry / product.template         / use_expiration_date (boolean) : NEW
-product_expiry / stock.move.line          / expiration_date (datetime)    : NEW
+product_expiry / stock.move.line          / expiration_date (datetime)    : NEW isfunction: function, stored
 product_expiry / stock.production.lot     / expiration_date (datetime)    : NEW
 product_expiry / stock.production.lot     / life_date (datetime)          : DEL
 ---XML records in module 'product_expiry'---

@@ -44,6 +44,8 @@ test_mail    / mail.test.container      / message_follower_ids (one2many): NEW r
 test_mail    / mail.test.container      / message_ids (one2many)        : NEW relation: mail.message
 test_mail    / mail.test.container      / message_main_attachment_id (many2one): NEW relation: ir.attachment
 test_mail    / mail.test.container      / name (char)                   : NEW
+test_mail    / mail.test.field.type     / message_has_sms_error (boolean): module is now 'sms' ('test_mail')
+test_mail    / mail.test.field.type     / website_message_ids (one2many): module is now 'portal' ('test_mail')
 test_mail    / mail.test.full           / count (integer)               : DEL
 test_mail    / mail.test.full           / customer_id (many2one)        : DEL relation: res.partner
 test_mail    / mail.test.full           / datetime (datetime)           : DEL

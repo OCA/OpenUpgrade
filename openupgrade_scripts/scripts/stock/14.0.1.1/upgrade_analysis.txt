@@ -14,6 +14,7 @@ stock        / stock.inventory          / message_follower_ids (one2many): NEW r
 stock        / stock.inventory          / message_ids (one2many)        : NEW relation: mail.message
 stock        / stock.inventory          / message_main_attachment_id (many2one): NEW relation: ir.attachment
 stock        / stock.inventory          / website_message_ids (one2many): NEW relation: mail.message
+stock        / stock.location           / _order                        : _order is now 'complete_name, id' ('complete_name')
 stock        / stock.move               / date_deadline (datetime)      : NEW
 stock        / stock.move               / date_expected (datetime)      : DEL required, req_default: function
 stock        / stock.move               / delay_alert (boolean)         : DEL
