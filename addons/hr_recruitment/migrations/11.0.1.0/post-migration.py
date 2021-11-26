@@ -32,6 +32,8 @@ def fill_applicant_activities(env):
 @openupgrade.migrate()
 def migrate(env, version):
     fill_applicant_activities(env)
+    # Delete the action defined in previous versions
+    env.ref("hr_recruitment.menu_crm_case_categ0_act_job").action_id = False
     openupgrade.load_data(
         env.cr, 'hr_recruitment', 'migrations/11.0.1.0/noupdate_changes.xml',
     )
