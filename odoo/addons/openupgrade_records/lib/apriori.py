@@ -98,7 +98,10 @@ merged_modules = {
     'website_megamenu': 'website',
     'website_snippet_anchor': 'website',
     # muk-it/muk_base - Agreed to move to OCA
+    'muk_attachment_lobject': 'dms',
     'muk_security': 'dms',
+    'muk_autovacuum': 'dms',
+    'muk_utils': 'dms',
     # muk-it/muk_web - Agreed to move to OCA
     'muk_web_preview': 'mail_preview_base',
     'muk_web_preview_audio': 'mail_preview_audio',
