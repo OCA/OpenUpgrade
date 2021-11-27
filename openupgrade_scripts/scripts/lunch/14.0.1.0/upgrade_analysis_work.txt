@@ -1,0 +1,29 @@
+---Models in module 'lunch'---
+obsolete model lunch.order.temp [transient]
+---Fields in module 'lunch'---
+lunch        / lunch.product.category   / active (boolean)              : NEW hasdefault
+# NOTHING TO DO: default = true
+
+lunch        / lunch.supplier           / company_id (many2one)         : is now stored
+# DONE: pre-migration: fast-populated
+
+---XML records in module 'lunch'---
+NEW ir.rule: lunch.ir_rule_lunch_product_category_multi_company (noupdate)
+# NOTHING TO DO
+
+ir.rule: lunch.lunch_mind_other_food_money (noupdate) (noupdate switched)
+ir.rule: lunch.lunch_mind_your_own_food_money (noupdate) (noupdate switched)
+ir.rule: lunch.lunch_order_rule_delete (noupdate) (noupdate switched)
+ir.rule: lunch.lunch_order_rule_write (noupdate) (noupdate switched)
+ir.rule: lunch.lunch_order_rule_write_manager (noupdate) (noupdate switched)
+# DONE: pre-migration: switched noupdate
+
+NEW ir.ui.view: lunch.lunch_alert_view_kanban
+NEW ir.ui.view: lunch.lunch_location_kanban_view
+NEW ir.ui.view: lunch.lunch_order_view_form
+NEW ir.ui.view: lunch.lunch_product_category_view_kanban
+NEW ir.ui.view: lunch.lunch_product_category_view_search
+NEW ir.ui.view: lunch.lunch_product_report_view_tree
+DEL ir.ui.view: lunch.view_lunch_order_temp
+# NOTHING TO DO
+
