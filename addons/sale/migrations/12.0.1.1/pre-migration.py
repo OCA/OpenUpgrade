@@ -90,8 +90,8 @@ def fill_sale_order_line_sections(cr):
             SELECT order_id
             FROM sale_order_line
             WHERE layout_category_id IS NOT NULL)
-        GROUP BY order_id, layout_category_id
-        ORDER BY order_id, layout_category_id, sequence
+        GROUP BY sol.order_id, sol.layout_category_id
+        ORDER BY sol.order_id, sol.layout_category_id, sequence
         """
     )
 
