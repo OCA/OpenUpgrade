@@ -188,6 +188,44 @@ def calculate_product_product_combination_indices(env):
         WHERE grouped_pvc.product_product_id = pp.id""",
     )
 
+    if not openupgrade.table_exists(env.cr, "product_variant_combination"):
+        # make use of mrp_bom_line_product_attribute_value_rel
+        openupgrade.logged_query(
+            env.cr, """
+                CREATE TABLE IF NOT EXISTS public.product_variant_combination
+                (
+                    product_product_id integer NOT NULL,
+                    product_template_attribute_value_id integer NOT NULL,
+                    CONSTRAINT product_variant_combination_pkey
+                        PRIMARY KEY (product_product_id, product_template_attribute_value_id),
+                    CONSTRAINT product_variant_combination_product_product_id_fkey
+                        FOREIGN KEY (product_product_id)
+                        REFERENCES public.product_product (id) MATCH SIMPLE
+                        ON UPDATE NO ACTION
+                        ON DELETE CASCADE,
+                    CONSTRAINT product_variant_combination_product_template_attribute_val_fkey
+                        FOREIGN KEY (product_template_attribute_value_id)
+                        REFERENCES public.product_template_attribute_value (id) MATCH SIMPLE
+                        ON UPDATE NO ACTION
+                        ON DELETE RESTRICT
+                )
+            """, )
+
+        openupgrade.logged_query(
+            env.cr, """
+                INSERT INTO product_variant_combination(product_product_id, product_template_attribute_value_id)
+                SELECT  product_product_id, product_template_attribute_value_id
+                FROM (
+                    SELECT pavppr.product_product_id, ptav.id AS product_template_attribute_value_id
+                    FROM product_attribute_value_product_product_rel pavppr
+                    JOIN product_product pp ON pp.id = pavppr.product_product_id
+                    JOIN product_template_attribute_value ptav
+                        ON (ptav.product_attribute_value_id =
+                            pavppr.product_attribute_value_id
+                        AND pp.product_tmpl_id = ptav.product_tmpl_id)
+                ) grouped_pvc
+            """,)
+
 
 def fill_product_template_attribute_value_attribute_line_id(env):
     """Done in pre because the field attribute_line_id of ptav is required."""
