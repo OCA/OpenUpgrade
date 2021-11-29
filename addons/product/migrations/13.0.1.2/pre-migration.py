@@ -178,11 +178,14 @@ def calculate_product_product_combination_indices(env):
             SELECT pavppr.product_product_id,
                 STRING_AGG(ptav.id::varchar, ',' ORDER BY ptav.id) indices
             FROM product_attribute_value_product_product_rel pavppr
+            JOIN product_attribute_value pav
+                ON pav.id = pavppr.product_attribute_value_id
             JOIN product_product pp ON pp.id = pavppr.product_product_id
             JOIN product_template_attribute_value ptav
                 ON (ptav.product_attribute_value_id =
                     pavppr.product_attribute_value_id
-                AND pp.product_tmpl_id = ptav.product_tmpl_id)
+                AND pp.product_tmpl_id = ptav.product_tmpl_id
+                AND ptav.attribute_id = pav.attribute_id)
             GROUP BY pavppr.product_product_id
         ) grouped_pvc
         WHERE grouped_pvc.product_product_id = pp.id""",
@@ -240,5 +243,5 @@ def migrate(env, version):
     insert_missing_product_template_attribute_line(env)
     fill_product_template_attribute_value_attribute_line_id(env)
     insert_missing_product_template_attribute_value(env)
-    calculate_product_product_combination_indices(env)
     fill_product_template_attribute_value__attribute_id_related(env)
+    calculate_product_product_combination_indices(env)
