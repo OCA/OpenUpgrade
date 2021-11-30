@@ -120,6 +120,9 @@ merged_modules = {
     'muk_dms_mail': 'dms',
     'muk_dms_thumbnails': 'dms',
     'muk_dms_view': 'dms',
+    # OCA/payroll
+    'hr_payroll': 'payroll',
+    'hr_payroll_account': 'payroll_account',
 }
 
 # only used here for openupgrade_records analysis:
