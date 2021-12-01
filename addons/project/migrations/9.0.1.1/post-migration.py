@@ -34,11 +34,21 @@ def copy_user_id(cr):
         """)
 
 
+def copy_dates(cr):
+    openupgrade.logged_query(cr, """
+        UPDATE project_project p
+        SET date = a.date, date_start = a.openupgrade_legacy_9_0_date_start
+        FROM account_analytic_account a
+        WHERE a.id = p.analytic_account_id
+        """)
+
+
 @openupgrade.migrate()
 def migrate(cr, version):
     map_priority(cr)
     map_template_state(cr)
     copy_user_id(cr)
+    copy_dates(cr)
     openupgrade.convert_field_to_html(
         cr, 'project_task', openupgrade.get_legacy_name('description'),
         'description'
