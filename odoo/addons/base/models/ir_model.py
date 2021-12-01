@@ -17,7 +17,6 @@ from odoo.osv import expression
 from odoo.tools import pycompat
 from odoo.tools.safe_eval import safe_eval
 
-from odoo.openupgrade import openupgrade_log, openupgrade_loading
 from openupgradelib import openupgrade
 
 _logger = logging.getLogger(__name__)
@@ -191,12 +190,14 @@ class IrModel(models.Model):
         for model in self:
             current_model = self.env.get(model.model)
             if current_model is not None:
-                # OpenUpgrade: do not run the new table cleanup
+                # OpenUpgrade: do not drop the table
+                table = current_model._table
+                if tools.table_kind(self._cr, table) == "r":
+                    openupgrade.remove_tables_fks(self.env.cr, [table])
                 openupgrade.message(
                     self._cr, 'Unknown', False, False,
                     "Not dropping the table or view of model %s", model.model)
                 continue
-                table = current_model._table
                 kind = tools.table_kind(self._cr, table)
                 if kind == 'v':
                     self._cr.execute('DROP VIEW "%s"' % table)
@@ -615,13 +616,21 @@ class IrModelFields(models.Model):
             if field.name in models.MAGIC_COLUMNS:
                 continue
             # OpenUpgrade: do not drop columns
+            model = self.env.get(field.model)
+            if (
+                    field.store
+                    and field.ttype == "many2one"
+                    and model is not None
+                    and tools.column_exists(self._cr, model._table, field.name)
+                    and tools.table_kind(self._cr, model._table) == "r"
+            ):
+                openupgrade.lift_constraints(self.env.cr, model._table, field.name)
             openupgrade.message(
                 self._cr, 'Unknown', False, False,
                 "Not dropping the column of field %s of model %s", field.name,
                 field.model,
             )
             continue
-            model = self.env.get(field.model)
             is_model = model is not None
             if field.store:
                 # TODO: Refactor this brol in master
