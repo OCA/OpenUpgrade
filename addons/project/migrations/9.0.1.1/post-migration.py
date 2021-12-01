@@ -33,6 +33,7 @@ def copy_user_id(cr):
         WHERE a.id = p.analytic_account_id
         """)
 
+
 def copy_dates(cr):
     openupgrade.logged_query(cr, """
         UPDATE project_project p
