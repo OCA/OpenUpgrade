@@ -19,8 +19,8 @@
 #
 ##############################################################################
 
-from openerp.openupgrade import openupgrade, openupgrade_80
-from openerp import pooler, SUPERUSER_ID
+from openerp.openupgrade import openupgrade
+from openerp import SUPERUSER_ID
 
 
 def post_messages(cr, pool):
@@ -71,7 +71,7 @@ def process_states(cr):
 
 @openupgrade.migrate()
 def migrate(cr, version):
-    pool = pooler.get_pool(cr.dbname)
+    # pool = pooler.get_pool(cr.dbname)
     # post_messages(cr, pool)
     # openupgrade_80.set_message_last_post(
     #     cr, SUPERUSER_ID, pool, ['procurement.order'])
