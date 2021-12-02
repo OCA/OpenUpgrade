@@ -1088,12 +1088,12 @@ def migrate_stock_production_lot(cr, registry):
     # stock.pack.operation linked with related lot before creating the quant
     field_name = openupgrade.get_legacy_name('prodlot_id')
     cr.execute("""
-        UPDATE stock_quant SET lot_id = ss.lot 
+        UPDATE stock_quant SET lot_id = ss.lot
         FROM (SELECT q.quant_id, sm.{fieldname}
             FROM stock_quant_move_rel q, stock_move sm
-              WHERE sm.{fieldname} IS NOT NULL AND 
+              WHERE sm.{fieldname} IS NOT NULL AND
                 sm.picking_id IS NULL AND sm.id=q.move_id) as ss (qid, lot)
-        WHERE stock_quant.id = ss.qid; 
+        WHERE stock_quant.id = ss.qid;
     """.format(fieldname=field_name))
     cr.commit()
 
@@ -1145,16 +1145,16 @@ def populate_stock_move_fields(cr, registry):
     openupgrade.logged_query(cr, """
         UPDATE stock_move
         SET product_qty = product_uom_qty
-        FROM product_product pp, product_template pt 
-            WHERE pp.id=stock_move.product_id AND 
-              pt.id=pp.product_tmpl_id AND 
+        FROM product_product pp, product_template pt
+            WHERE pp.id=stock_move.product_id AND
+              pt.id=pp.product_tmpl_id AND
               pt.uom_id = stock_move.product_uom;
         """)
-        #     (SELECT sm2.id from stock_move sm2
-        #     INNER join product_product pp on sm2.product_id = pp.id
-        #     INNER join product_template pt on pp.product_tmpl_id = pt.id
-        #     where pt.uom_id = sm2.product_uom) as res
-        # WHERE sm1.id = res.id""")
+    #     (SELECT sm2.id from stock_move sm2
+    #     INNER join product_product pp on sm2.product_id = pp.id
+    #     INNER join product_template pt on pp.product_tmpl_id = pt.id
+    #     where pt.uom_id = sm2.product_uom) as res
+    # WHERE sm1.id = res.id""")
     # Use ORM if uom id are different
     cr.execute(
         """SELECT sm2.id from stock_move sm2
@@ -1176,9 +1176,9 @@ def populate_stock_move_fields(cr, registry):
     openupgrade.logged_query(
         cr,
         "UPDATE stock_move SET state = 'assigned' "
-        "FROM stock_location sl " 
-        "WHERE sl.id=stock_move.location_id AND " 
-        "sl.usage IN ('supplier', 'inventory', 'production') AND " 
+        "FROM stock_location sl "
+        "WHERE sl.id=stock_move.location_id AND "
+        "sl.usage IN ('supplier', 'inventory', 'production') AND "
         "stock_move.state = 'confirmed';"
     )
 
