@@ -7,6 +7,8 @@ renamed_modules = {
     'base_vat_autocomplete': 'partner_autocomplete',
     'mrp_repair': 'repair',
     'product_extended': 'mrp_bom_cost',
+    # OCA/account-budgeting
+    'account_budget': 'account_budget_oca',
     # OCA/account-payment
     'account_payment_return_import_sepa_pain': (
         'account_payment_return_import_iso20022'

@@ -31,7 +31,7 @@ missing in the new release are marked with |del|.
 +--------------------------------------------+-------------------------------------------------+
 |account_bank_statement_import               | Nothing to do                                   |
 +--------------------------------------------+-------------------------------------------------+
-| |del| account_budget                       |                                                 |
+| |del| account_budget                       | Replaced by OCA module [#account_budget_oca]_   |
 +--------------------------------------------+-------------------------------------------------+
 |account_cancel                              | Nothing to do                                   |
 +--------------------------------------------+-------------------------------------------------+
@@ -655,6 +655,10 @@ missing in the new release are marked with |del|.
 .. [#account_asset] 'Account Asset' module is replaced by the Odoo Community Association module
     'Account Asset Management' (not exactly the same but does the same):
     See : https://github.com/OCA/account-financial-tools/tree/12.0/account_asset_management
+
+.. [#account_budget_oca] 'Account Budget' module moved into Enterprise Edition and is replaced
+    by the Odoo Community Association module 'Account Budget OCA':
+    See : https://github.com/OCA/account-budgeting/tree/12.0/account_budget_oca
 
 OCA modules
 ===========
