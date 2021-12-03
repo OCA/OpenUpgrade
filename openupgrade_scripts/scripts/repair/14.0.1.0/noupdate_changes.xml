@@ -28,4 +28,9 @@
   <record id="seq_repair" model="ir.sequence">
     <field name="company_id" eval="False"/>
   </record>
+<!--  manually added: -->
+  <record id="repair_order_rule" model="ir.rule">
+    <field name="domain_force">[('company_id', 'in', company_ids)]</field>
+    <field name="name">repair order multi-company</field>
+  </record>
 </odoo>
