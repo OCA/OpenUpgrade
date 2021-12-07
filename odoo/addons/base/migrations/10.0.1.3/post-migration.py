@@ -44,7 +44,8 @@ def clean_states_with_no_code(env):
                     'phone_code': 'min',
                     'country_group_ids': 'merge',
                     'state_ids': 'merge',
-                }
+                },
+                method="sql",
             )
 
 
