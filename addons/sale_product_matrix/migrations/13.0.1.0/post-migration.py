@@ -13,7 +13,7 @@ def set_product_template_matrix_add_mode(env):
         env.cr,
         """
         UPDATE product_template pt
-        SET pt.product_add_mode = 'matrix'
+        SET product_add_mode = 'matrix'
         WHERE 2 = (
             SELECT COUNT(*)
             FROM product_template_attribute_line ptal
