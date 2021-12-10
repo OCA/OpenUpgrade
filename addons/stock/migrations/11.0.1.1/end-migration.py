@@ -27,6 +27,7 @@ def merge_quants(env):
             with env.cr.savepoint():
                 openupgrade_merge_records.merge_records(
                     env, 'stock.quant', quants[1:].ids, quants[0].id, QUANT_MERGE_OPS,
+                    method="sql",
                 )
         except ValidationError as error:
             logger.error(
