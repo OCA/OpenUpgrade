@@ -1,6 +1,6 @@
 <?xml version='1.0' encoding='utf-8'?>
 <odoo>
-  <record id="holiday_status_cl" model="hr.leave.type">
+  <!-- <record id="holiday_status_cl" model="hr.leave.type">
     <field name="allocation_notif_subtype_id" ref="mt_leave_allocation"/>
     <field name="leave_notif_subtype_id" ref="mt_leave"/>
     <field name="allocation_validation_type">both</field>
@@ -18,10 +18,10 @@
     <field name="leave_notif_subtype_id" ref="mt_leave_unpaid"/>
     <field name="allocation_validation_type">both</field>
     <field name="leave_validation_type">both</field>
-  </record>
-  <record id="hr_holidays_status_rule_multi_company" model="ir.rule">
-    <!-- <field name="global"/> -->
-  </record>
+  </record> -->
+  <!-- <record id="hr_holidays_status_rule_multi_company" model="ir.rule">
+    <field name="global"/>
+  </record> -->
   <record id="hr_leave_allocation_rule_employee" model="ir.rule">
     <field name="domain_force">[
             '|',
@@ -57,9 +57,9 @@
         ]</field>
     <field name="name">Allocations: holiday user : create/write</field>
   </record>
-  <record id="hr_leave_rule_multicompany" model="ir.rule">
-    <!-- <field name="global"/> -->
-  </record>
+  <!--<record id="hr_leave_rule_multicompany" model="ir.rule">
+     <field name="global"/>
+  </record>-->
   <record id="hr_leave_rule_user_read" model="ir.rule">
     <field name="perm_create" eval="True"/>
     <field name="perm_unlink" eval="True"/>
