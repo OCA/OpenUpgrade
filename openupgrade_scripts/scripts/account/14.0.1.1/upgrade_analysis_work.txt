@@ -1,0 +1,652 @@
+---Models in module 'account'---
+obsolete model account.accrual.accounting.wizard [transient]
+new model account.automatic.entry.wizard [transient]
+# NOTHING TO DO: Accrual Entries and Transfer Entries merged into one wizard
+
+obsolete model account.fiscal.year
+obsolete model account.reconciliation.widget [abstract]
+obsolete model report.account.report_agedpartnerbalance [abstract]
+# NOTHING TO DO: moved to enterprise
+
+new model account.reconcile.model.line
+new model account.reconcile.model.line.template
+# DONE: post-migration: create line records from parent model only for manually created records
+
+new model account.tax.report
+# DONE: post-migration: create parent records from line model
+
+new model account.group.template
+# NOTHING TO DO: new models
+
+new model account.reconcile.model.partner.mapping
+# NOTHING TO DO: New feature for mapping partners according labels
+
+new model account.resequence.wizard [transient]
+new model account.tour.upload.bill [transient]
+new model account.tour.upload.bill.email.confirm [transient]
+new model report.account.report_invoice [abstract]
+new model sequence.mixin [abstract]
+# NOTHING TO DO: abstract and transient models
+
+---Fields in module 'account'---
+account      / account.account          / _order                        : _order is now 'is_off_balance, code, company_id' ('code')
+account      / account.account          / is_off_balance (boolean)      : NEW hasdefault, isfunction: function, stored
+# NOTHING TO DO: new field added to filter accounts.
+
+account      / account.account          / allowed_journal_ids (many2many): NEW relation: account.journal
+# NOTHING TO DO: New feature. In v13 you selected the allowed accounts from the journal form (and still is done this way), but now you also can select the allowed journals from the account form
+
+account      / account.account          / group_id (many2one)           : now a function
+# NOTHING TO DO: The grouping is done automatically by the code of the account instead of manually in the form
+
+account      / account.account.template / group_id (many2one)           : DEL relation: account.group
+account      / account.account.template / root_id (many2one)            : DEL relation: account.root
+# NOTHING TO DO: Computed fields in related models not needed in an account template
+
+account      / account.bank.statement   / _order                        : _order is now 'date desc, name desc, id desc' ('date desc, id desc')
+# NOTHING TO DO
+
+account      / account.bank.statement   / accounting_date (date)        : DEL
+# NOTHING TO DO: obsolete. it was used when automatically creating moves in the reconciliation process
+
+account      / account.bank.statement   / state (selection)             : selection_keys is now '['confirm', 'open', 'posted']' ('['confirm', 'open']')
+# DONE: post-migration: new 'posted' state. the workflow is 'open' (draft) -> 'posted' -> 'confirm'. Marked as 'posted' the 'confirm' entries which have unreconciled lines.
+
+account      / account.bank.statement   / balance_end_real (float)      : now a function
+account      / account.bank.statement   / balance_start (float)         : now a function
+account      / account.bank.statement   / is_valid_balance_start (boolean): NEW isfunction: function, stored
+account      / account.bank.statement   / previous_statement_id (many2one): NEW relation: account.bank.statement, isfunction: function, stored
+# NOTHING TO DO: Fields created and adapted for better usability. Now start balance is computed using the end balance from the previous statement.
+
+account      / account.bank.statement   / sequence_number (integer)     : NEW isfunction: function, stored
+account      / account.bank.statement   / sequence_prefix (char)        : NEW isfunction: function, stored
+# NOTHING TO DO: fields that store the sequence name splitted in prefix and number for fixing ordering bugs.
+
+account      / account.bank.statement.line / _inherits                     : NEW _inherits: {'account.move': 'move_id'}
+account      / account.bank.statement.line / move_id (many2one)            : NEW relation: account.move, required
+account      / account.move             / statement_line_id (many2one)  : NEW relation: account.bank.statement.line
+DONE: # pre-migration: created move_id column and assigned account.move ids when
+DONE: # post-migration: filled move_id where no move_name is is assigned to the bank statement line
+
+account      / account.bank.statement.line / account_id (many2one)         : DEL relation: account.account
+account      / account.bank.statement.line / journal_entry_ids (one2many)  : DEL relation: account.move.line
+account      / account.bank.statement.line / bank_account_id (many2one)    : DEL relation: res.partner.bank
+account      / account.bank.statement.line / move_name (char)              : DEL
+account      / account.bank.statement.line / name (char)                   : not stored anymore
+account      / account.bank.statement.line / name (char)                   : now related
+# NOTHING TO DO: This model uses the fields from the inherited account.move model (move.id field)
+
+account      / account.bank.statement.line / amount_residual (float)       : NEW isfunction: function, stored
+# NOTHING TO DO: filled by Odoo.
+
+account      / account.bank.statement.line / foreign_currency_id (many2one): NEW relation: res.currency
+# DONE: pre-migration: This field is the "currency_id" field from v13. It has been renamed because now, "currency_id" in v14 stores
+# the "journal_currency_id" values from v13.
+
+account      / account.bank.statement.line / is_reconciled (boolean)       : NEW isfunction: function, stored
+# NOTHING TO DO: new feature. Technical field to indicate if statement line is already reconciled for display purposes.
+
+account      / account.bank.statement.line / company_id (many2one)         : not stored anymore
+account      / account.bank.statement.line / date (date)                   : not stored anymore
+account      / account.bank.statement.line / date (date)                   : now related
+account      / account.bank.statement.line / ref (char)                    : not stored anymore
+account      / account.bank.statement.line / ref (char)                    : now related
+account      / account.bank.statement.line / journal_id (many2one)         : not stored anymore
+account      / account.bank.statement.line / journal_id (many2one)         : now required
+# NOTHING TO DO: These fields now are in account.move
+
+account      / account.bank.statement.line / note (text)                   : DEL
+# DONE: post-migration: added note content in the narration field of its account move
+
+account      / account.bank.statement.line / payment_ids (many2many)       : NEW relation: account.payment
+# NOTHING TO DO: Stores payments auto-generated when reconciling lines.
+
+account      / account.bank.statement.line / payment_ref (char)            : NEW required
+# DONE: pre-migration: "payment_ref" is "name" field in v13, also required. Renamed.
+
+account      / account.cash.rounding    / account_id (many2one)         : DEL relation: account.account
+account      / account.cash.rounding    / profit_account_id (many2one)  : NEW relation: account.account, hasdefault
+account      / account.cash.rounding    / loss_account_id (many2one)    : previously in module pos_cash_rounding
+# DONE: pre_migration: "profit_account_id" is a rename of the "account_id" field.
+
+account      / account.chart.template   / account_journal_suspense_account_id (many2one): NEW relation: account.account.template
+# NOTHING TO DO: new features (filled in data on some localization modules)
+
+account      / account.chart.template   / property_cash_basis_base_account_id (many2one): NEW relation: account.account.template
+account      / account.tax.template     / cash_basis_base_account_id (many2one): DEL relation: account.account.template
+# DONE: post-migration: moved from account.tax.template to account.chart.template
+
+account      / account.fiscal.position.account / company_id (many2one)         : NEW relation: res.company, isrelated: related, stored
+account      / account.fiscal.position.tax / company_id (many2one)         : NEW relation: res.company, isrelated: related, stored
+# NOTHING TO DO: filled by Odoo
+
+account      / account.fiscal.year      / company_id (many2one)         : DEL relation: res.company, required, req_default: function
+account      / account.fiscal.year      / date_from (date)              : DEL required
+account      / account.fiscal.year      / date_to (date)                : DEL required
+account      / account.fiscal.year      / name (char)                   : DEL required
+# NOTHING TO DO: preserve data. moved to enterprise.
+
+account      / account.group            / _order                        : _order is now 'code_prefix_start' ('code_prefix')
+account      / account.group            / code_prefix (char)            : DEL
+account      / account.group            / code_prefix_end (char)        : NEW
+account      / account.group            / code_prefix_start (char)      : NEW
+# DONE: pre-migration: renamed code_prefix to code_prefix_start
+# post-migration: assigned same start values to end field
+
+account      / account.group            / company_id (many2one)         : NEW relation: res.company, required, req_default: function, hasdefault
+# DONE: post-migration: assure company is the same as the account.account
+# also duplicate family groups for each company in case of groups shared in accounts spread over several companies
+
+account      / account.group.template   / chart_template_id (many2one)  : NEW relation: account.chart.template, required
+account      / account.group.template   / code_prefix_end (char)        : NEW
+account      / account.group.template   / code_prefix_start (char)      : NEW
+account      / account.group.template   / name (char)                   : NEW required
+account      / account.group.template   / parent_id (many2one)          : NEW relation: account.group.template
+# NOTHING TO DO: new empty model
+
+account      / account.journal          / account_control_ids (many2many): table is now 'journal_account_control_rel' ('account_account_type_rel')
+account      / account.journal          / type_control_ids (many2many)  : table is now 'journal_account_type_control_rel' ('account_journal_type_rel')
+# DONE: pre-migration: renamed tables
+
+account      / account.journal          / default_account_id (many2one) : NEW relation: account.account
+account      / account.journal          / default_credit_account_id (many2one): DEL relation: account.account
+account      / account.journal          / default_debit_account_id (many2one): DEL relation: account.account
+# DONE: post-migration: filled only the records that credit and debit accounts are the same or only one is set
+# TODO: check if necessary to set a default account for the Currency Exchange Difference account, as it's the most common case
+# where debit and credit accounts are both set and different.
+
+account      / account.journal          / inbound_payment_method_ids (many2many): now a function
+account      / account.journal          / outbound_payment_method_ids (many2many): now a function
+# NOTHING TO DO
+
+account      / account.journal          / payment_credit_account_id (many2one): NEW relation: account.account
+account      / account.journal          / payment_debit_account_id (many2one): NEW relation: account.account
+# DONE: filled in post-migration creating new accounts
+
+account      / account.journal          / post_at (selection)           : DEL selection_keys: ['bank_rec', 'pay_val']
+# NOTHING TO DO: Old feature
+
+account      / account.journal          / refund_sequence_id (many2one) : DEL relation: ir.sequence
+account      / account.journal          / sequence_id (many2one)        : DEL relation: ir.sequence, required
+account      / account.journal          / sequence_override_regex (text): NEW
+# TODO: check with some migrations if we need to do something about this
+
+account      / account.journal          / sale_activity_note (text)     : NEW
+account      / account.journal          / sale_activity_type_id (many2one): NEW relation: mail.activity.type, hasdefault
+account      / account.journal          / sale_activity_user_id (many2one): NEW relation: res.users
+# NOTHING TO DO: new feature
+
+account      / account.move             / country_code (char)           : previously in module l10n_id_efaktur
+# NOTHING TO DO: avoids looking for the country code in every localization module.
+
+account      / account.move             / invoice_partner_bank_id (many2one): DEL relation: res.partner.bank
+account      / account.move             / partner_bank_id (many2one)    : NEW relation: res.partner.bank
+account      / account.move             / invoice_payment_ref (char)    : DEL
+account      / account.move             / payment_reference (char)      : NEW
+account      / account.move             / invoice_sent (boolean)        : DEL
+account      / account.move             / is_move_sent (boolean)        : NEW hasdefault
+account      / account.move             / type (selection)              : DEL required, selection_keys: ['entry', 'in_invoice', 'in_receipt', 'in_refund', 'out_invoice', 'out_receipt', 'out_refund'], req_default: function
+account      / account.move             / move_type (selection)         : NEW required, selection_keys: ['entry', 'in_invoice', 'in_receipt', 'in_refund', 'out_invoice', 'out_receipt', 'out_refund'], req_default: function, hasdefault
+account      / account.move             / invoice_payment_state (selection): DEL selection_keys: ['in_payment', 'not_paid', 'paid']
+account      / account.move             / payment_state (selection)     : NEW selection_keys: ['in_payment', 'invoicing_legacy', 'not_paid', 'paid', 'partial', 'reversed'], isfunction: function, stored
+# DONE: pre-migration: renamed fields. New payment states are computed and stored (nothing to do).
+
+account      / account.move             / name (char)                   : now a function
+account      / account.move             / show_name_warning (boolean)   : NEW
+# NOTHING TO DO: new feature. Name account moves automatically to avoid naming issues.
+
+account      / account.move             / posted_before (boolean)       : NEW
+# DONE: set to TRUE for posted moves
+
+account      / account.move             / tax_cash_basis_move_id (many2one): NEW relation: account.move
+# TODO: check if we need to create this kind of moves
+
+account      / account.move             / qr_code_method (selection)    : NEW selection_keys: function
+# NOTHING TO DO
+
+account      / account.move             / sequence_number (integer)     : NEW isfunction: function, stored
+account      / account.move             / sequence_prefix (char)        : NEW isfunction: function, stored
+# NOTHING TO DO: sequence.mixin model fields, filled by Odoo.
+
+account      / account.move.line        / account_internal_type (selection): not stored anymore
+# NOTHING TO DO: not stored to improve performance
+
+account      / account.move.line        / analytic_account_id (many2one): now a function
+account      / account.move.line        / analytic_tag_ids (many2many)  : now a function
+# NOTHING TO DO: filled by Odoo
+
+account      / account.move.line        / currency_id (many2one)        : now required
+# DONE: filled with company currency if empty
+
+account      / account.move.line        / matching_number (char)        : NEW isfunction: function, stored
+# NOTHING TO DO
+
+account      / account.move.line        / payment_id (many2one)         : now related
+account      / account.move.line        / statement_line_id (many2one)  : now related
+# DONE: post-migration: related to their account.move parents
+
+account      / account.move.line        / tag_ids (many2many)           : DEL relation: account.account.tag
+account      / account.move.line        / tax_tag_ids (many2many)       : NEW relation: account.account.tag
+# DONE: pre-migration: field renamed
+
+account      / account.partial.reconcile / amount_currency (float)       : DEL
+account      / account.partial.reconcile / credit_amount_currency (float): NEW
+account      / account.partial.reconcile / debit_amount_currency (float) : NEW
+# NOTHING TO DO
+
+account      / account.partial.reconcile / credit_currency_id (many2one) : NEW relation: res.currency, isfunction: function, stored
+account      / account.partial.reconcile / debit_currency_id (many2one)  : NEW relation: res.currency, isfunction: function, stored
+account      / account.partial.reconcile / currency_id (many2one)        : DEL relation: res.currency
+# NOTHING TO DO: filled by Odoo.
+
+account      / account.payment          / _inherits                     : NEW _inherits: {'account.move': 'move_id'}
+account      / account.payment          / move_id (many2one)            : NEW relation: account.move, required
+account      / account.move             / payment_id (many2one)         : NEW relation: account.payment
+DONE: # pre-migration: created move_id column and assigned account.move ids when move_name exists
+DONE: # post-migration: filled move_id where no move_name or payment_reference is assigned to the payment.
+
+account      / account.payment          / _order                        : _order is now 'date desc, name desc' ('payment_date desc, name desc')
+# NOTHING TO DO
+
+account      / account.payment          / currency_id (many2one)        : now a function
+account      / account.payment          / destination_account_id (many2one): is now stored
+# NOTHING TO DO
+
+account      / account.payment          / is_internal_transfer (boolean): NEW isfunction: function, stored
+account      / account.payment          / is_matched (boolean)          : NEW isfunction: function, stored
+account      / account.payment          / is_reconciled (boolean)       : NEW isfunction: function, stored
+# NOTHING TO DO: new features
+
+account      / account.payment          / journal_id (many2one)         : not stored anymore
+account      / account.payment          / journal_id (many2one)         : now related
+account      / account.payment          / name (char)                   : not stored anymore
+account      / account.payment          / name (char)                   : now related
+account      / account.payment          / state (selection)             : not stored anymore
+account      / account.payment          / state (selection)             : now related
+account      / account.payment          / state (selection)             : now required
+account      / account.payment          / state (selection)             : selection_keys is now 'function' ('['cancelled', 'draft', 'posted', 'reconciled', 'sent']')
+account      / account.payment          / destination_journal_id (many2one): DEL relation: account.journal
+account      / account.payment          / invoice_ids (many2many)       : DEL relation: account.move
+# NOTHING TO DO: now the model uses the fields and relations from account.move
+
+account      / account.payment          / communication (char)          : DEL
+# DONE: post-migration: added communication content in the narration field of its account move
+
+account      / account.payment          / move_line_ids (one2many)      : DEL relation: account.move.line
+account      / account.payment          / move_name (char)              : DEL
+# NOTHING TO DO: now the relation is made with the new field move_id
+
+account      / account.payment          / partner_bank_account_id (many2one): DEL relation: res.partner.bank
+account      / account.payment          / partner_bank_id (many2one)    : NEW relation: res.partner.bank, isfunction: function, stored
+account      / account.payment          / partner_id (many2one)         : now a function
+# NOTHING TO DO: automated field filling
+
+account      / account.payment          / partner_type (selection)      : now required, req_default: function
+# DONE: pre-migration: ensuring empty records are filled with default value ('customer')
+
+account      / account.payment          / payment_date (date)           : DEL required, req_default: function
+# NOTHING TO DO: not used anymore in _order
+
+account      / account.payment          / payment_difference_handling (selection): DEL selection_keys: ['open', 'reconcile']
+# NOTHING TO DO
+
+account      / account.payment          / payment_method_id (many2one)  : now a function
+# NOTHING TO DO
+
+account      / account.payment          / payment_type (selection)      : selection_keys is now '['inbound', 'outbound']' ('['inbound', 'outbound', 'transfer']')
+# TODO: transfer records should be changed to 'inbound' or 'outbound', but if we do that, we should remove two account move lines
+# (see https://github.com/odoo/odoo/commit/a30cfee04eaf48b581d2e327c1b56e115a1c751f)
+# DONE pre-migration: filled partner_id with journal_id.company_id.partner_id to detect transfers
+
+account      / account.payment          / writeoff_account_id (many2one): DEL relation: account.account
+account      / account.payment          / writeoff_label (char)         : DEL
+# NOTHING TO DO
+
+account      / account.payment.method   / _order                        : _order is now 'sequence' ('id')
+account      / account.payment.method   / sequence (integer)            : NEW hasdefault
+# NOTHING TO DO: new feature
+
+account      / account.reconcile.model  / active (boolean)              : NEW hasdefault
+# NOTHING TO DO: during loading, will be filled with the default True
+
+account      / account.reconcile.model  / account_id (many2one)         : DEL relation: account.account
+account      / account.reconcile.model  / amount (float)                : DEL required, req_default: function
+account      / account.reconcile.model  / force_tax_included (boolean)  : DEL
+account      / account.reconcile.model  / amount_type (selection)       : DEL required, selection_keys: ['fixed', 'percentage', 'regex'], req_default: function
+account      / account.reconcile.model  / analytic_account_id (many2one): DEL relation: account.analytic.account
+account      / account.reconcile.model  / analytic_tag_ids (many2many)  : DEL relation: account.analytic.tag
+account      / account.reconcile.model  / journal_id (many2one)         : DEL relation: account.journal
+account      / account.reconcile.model  / label (char)                  : DEL
+account      / account.reconcile.model  / tax_ids (many2many)           : DEL relation: account.tax
+account      / account.reconcile.model  / line_ids (one2many)           : NEW relation: account.reconcile.model.line
+account      / account.reconcile.model.line / account_id (many2one)         : NEW relation: account.account, required
+account      / account.reconcile.model.line / amount (float)                : NEW isfunction: function, stored
+account      / account.reconcile.model.line / amount_string (char)          : NEW required, req_default: function, hasdefault
+account      / account.reconcile.model.line / amount_type (selection)       : NEW required, selection_keys: ['fixed', 'percentage', 'regex'], req_default: function, hasdefault
+account      / account.reconcile.model.line / analytic_account_id (many2one): NEW relation: account.analytic.account
+account      / account.reconcile.model.line / analytic_tag_ids (many2many)  : NEW relation: account.analytic.tag
+account      / account.reconcile.model.line / company_id (many2one)         : NEW relation: res.company, hasdefault, isrelated: related, stored
+account      / account.reconcile.model.line / force_tax_included (boolean)  : NEW
+account      / account.reconcile.model.line / journal_id (many2one)         : NEW relation: account.journal
+account      / account.reconcile.model.line / label (char)                  : NEW
+account      / account.reconcile.model.line / model_id (many2one)           : NEW relation: account.reconcile.model
+account      / account.reconcile.model.line / sequence (integer)            : NEW required, req_default: function, hasdefault
+account      / account.reconcile.model.line / tax_ids (many2many)           : NEW relation: account.tax
+account      / account.reconcile.model  / second_account_id (many2one)  : DEL relation: account.account
+account      / account.reconcile.model  / second_amount (float)         : DEL required, req_default: function
+account      / account.reconcile.model  / second_amount_from_label_regex (char): DEL
+account      / account.reconcile.model  / second_amount_type (selection): DEL required, selection_keys: ['fixed', 'percentage', 'regex'], req_default: function
+account      / account.reconcile.model  / second_analytic_account_id (many2one): DEL relation: account.analytic.account
+account      / account.reconcile.model  / second_analytic_tag_ids (many2many): DEL relation: account.analytic.tag
+account      / account.reconcile.model  / second_journal_id (many2one)  : DEL relation: account.journal
+account      / account.reconcile.model  / second_label (char)           : DEL
+account      / account.reconcile.model  / second_tax_ids (many2many)    : DEL relation: account.tax
+account      / account.reconcile.model  / has_second_line (boolean)     : DEL
+account      / account.reconcile.model  / force_second_tax_included (boolean): DEL
+account      / account.reconcile.model  / amount_from_label_regex (char): DEL
+# DONE: post-migration: Created corresponding account.reconcile.model.line for each account.reconcile.model
+
+account      / account.reconcile.model  / match_text_location_label (boolean): NEW hasdefault
+account      / account.reconcile.model  / match_text_location_note (boolean): NEW hasdefault
+account      / account.reconcile.model  / match_text_location_reference (boolean): NEW hasdefault
+account      / account.reconcile.model  / matching_order (selection)    : NEW required, selection_keys: ['new_first', 'old_first'], req_default: function, hasdefault
+account      / account.reconcile.model  / past_months_limit (integer)   : NEW hasdefault
+# NOTHING TO DO: new feature
+
+account      / account.reconcile.model.template / account_id (many2one)         : DEL relation: account.account.template
+account      / account.reconcile.model.template / amount (float)                : DEL required, req_default: function
+account      / account.reconcile.model.template / amount_type (selection)       : DEL required, selection_keys: ['fixed', 'percentage', 'regex'], req_default: function
+account      / account.reconcile.model.template / force_tax_included (boolean)  : DEL
+account      / account.reconcile.model.template / label (char)                  : DEL
+account      / account.reconcile.model.template / line_ids (one2many)           : NEW relation: account.reconcile.model.line.template
+account      / account.reconcile.model.template / tax_ids (many2many)           : DEL relation: account.tax.template
+account      / account.reconcile.model.line.template / account_id (many2one)         : NEW relation: account.account.template
+account      / account.reconcile.model.line.template / amount_string (char)          : NEW
+account      / account.reconcile.model.line.template / amount_type (selection)       : NEW required, selection_keys: ['fixed', 'percentage', 'regex'], req_default: function, hasdefault
+account      / account.reconcile.model.line.template / force_tax_included (boolean)  : NEW
+account      / account.reconcile.model.line.template / label (char)                  : NEW
+account      / account.reconcile.model.line.template / model_id (many2one)           : NEW relation: account.reconcile.model.template
+account      / account.reconcile.model.line.template / sequence (integer)            : NEW required, req_default: function, hasdefault
+account      / account.reconcile.model.line.template / tax_ids (many2many)           : NEW relation: account.tax.template
+account      / account.reconcile.model.template / amount_from_label_regex (char): DEL
+account      / account.reconcile.model.template / has_second_line (boolean)     : DEL
+account      / account.reconcile.model.template / force_second_tax_included (boolean): DEL
+account      / account.reconcile.model.template / second_account_id (many2one)  : DEL relation: account.account.template
+account      / account.reconcile.model.template / second_amount (float)         : DEL required, req_default: function
+account      / account.reconcile.model.template / second_amount_from_label_regex (char): DEL
+account      / account.reconcile.model.template / second_amount_type (selection): DEL required, selection_keys: ['fixed', 'percentage', 'regex'], req_default: function
+account      / account.reconcile.model.template / second_label (char)           : DEL
+account      / account.reconcile.model.template / second_tax_ids (many2many)    : DEL relation: account.tax.template
+# DONE: post-migration: same situation as with account.reconcile.model and account.reconcile.model.line
+
+account      / account.reconcile.model.partner.mapping / narration_regex (char)        : NEW
+account      / account.reconcile.model.partner.mapping / partner_id (many2one)         : NEW relation: res.partner, required
+account      / account.reconcile.model.partner.mapping / payment_ref_regex (char)      : NEW
+account      / account.reconcile.model.partner.mapping / model_id (many2one)           : NEW relation: account.reconcile.model, required
+account      / account.reconcile.model  / partner_mapping_line_ids (one2many): NEW relation: account.reconcile.model.partner.mapping
+# NOTHING TO DO: new model fields and the relation between partner mapping and model records
+
+account      / account.reconcile.model.template / match_text_location_label (boolean): NEW hasdefault
+account      / account.reconcile.model.template / match_text_location_note (boolean): NEW hasdefault
+account      / account.reconcile.model.template / match_text_location_reference (boolean): NEW hasdefault
+account      / account.reconcile.model.template / matching_order (selection)    : NEW selection_keys: ['new_first', 'old_first']
+# NOTHING TO DO: new features
+
+account      / account.tax              / tax_scope (selection)         : NEW selection_keys: ['consu', 'service']
+account      / account.tax.template     / tax_scope (selection)         : NEW selection_keys: ['consu', 'service']
+# NOTHING TO DO: New feature
+
+account      / account.tax.repartition.line / company_id (many2one)         : now a function
+# NOTHING TO DO
+
+account      / account.tax.repartition.line / use_in_tax_closing (boolean)  : NEW
+account      / account.tax.repartition.line.template / use_in_tax_closing (boolean)  : NEW
+# NOTHING TO DO: new feature
+
+account      / account.tax.report       / country_id (many2one)         : NEW relation: res.country, required, req_default: function, hasdefault
+account      / account.tax.report.line  / country_id (many2one)         : DEL relation: res.country, required, req_default: function
+account      / account.tax.report       / line_ids (one2many)           : NEW relation: account.tax.report.line
+account      / account.tax.report       / name (char)                   : NEW required
+account      / account.tax.report       / root_line_ids (one2many)      : NEW relation: account.tax.report.line
+account      / account.tax.report.line  / report_id (many2one)          : NEW relation: account.tax.report, required
+# DONE: post-migration: created account.tax.report records based on account.tax.report.lines
+
+account      / res.company              / account_bank_reconciliation_start (date): DEL
+# NOTHING TO DO: removed bank reconciliation threshold date
+
+account      / res.company              / account_cash_basis_base_account_id (many2one): NEW relation: account.account
+account      / account.tax              / cash_basis_base_account_id (many2one): DEL relation: account.account
+# DONE: moved field from account.tax to res.company
+
+account      / res.company              / account_journal_suspense_account_id (many2one): NEW relation: account.account
+account      / account.journal          / suspense_account_id (many2one): NEW relation: account.account, isfunction: function, stored
+# DONE: post-migration: create an account for each company with a chart template (and fill journals)
+
+account      / res.company              / account_onboarding_create_invoice_state (selection): NEW selection_keys: ['done', 'just_done', 'not_done'], hasdefault
+account      / res.company              / account_onboarding_sample_invoice_state (selection): DEL selection_keys: ['done', 'just_done', 'not_done']
+account      / res.company              / accrual_default_journal_id (many2one): DEL relation: account.journal
+account      / res.company              / automatic_entry_default_journal_id (many2one): NEW relation: account.journal
+# DONE: pre-migration: field renamed
+
+account      / res.company              / account_opening_date (date)   : is now stored
+account      / res.company              / account_opening_date (date)   : not related anymore
+account      / res.company              / account_opening_date (date)   : now required, req_default: function
+# NOTHING TO DO: computed and stored with default
+
+account      / res.company              / account_setup_bill_state (selection): NEW selection_keys: ['done', 'just_done', 'not_done'], hasdefault
+# NOTHING TO DO: new field to fix tour
+
+account      / res.company              / account_tax_fiscal_country_id (many2one): NEW relation: res.country, isfunction: function, stored
+# NOTHING TO DO
+
+account      / res.company              / expense_currency_exchange_account_id (many2one): is now stored
+account      / res.company              / expense_currency_exchange_account_id (many2one): not related anymore
+account      / res.company              / income_currency_exchange_account_id (many2one): is now stored
+account      / res.company              / income_currency_exchange_account_id (many2one): not related anymore
+# NOTHING TO DO: adaptation of account.journal change, where debit and credit account fields are now a unique field.
+
+account      / res.partner              / currency_id (many2one)        : module is now 'test_access_rights' ('account')
+account      / res.users                / currency_id (many2one)        : module is now 'test_access_rights' ('account')
+# NOTHING TO DO: moved fields
+
+---XML records in module 'account'---
+NEW account.incoterms: account.incoterm_DPU
+# NOTHING TO DO: noupdate="0" record
+
+DEL account.incoterms: account.incoterm_DAF
+DEL account.incoterms: account.incoterm_DAT
+DEL account.incoterms: account.incoterm_DDU
+DEL account.incoterms: account.incoterm_DEQ
+DEL account.incoterms: account.incoterm_DES
+# NOTHING TO DO: noupdate="0" records
+
+NEW digest.tip: account.digest_tip_account_0
+NEW ir.actions.act_window: account.account_automatic_entry_wizard_action
+NEW ir.actions.act_window: account.action_account_resequence
+NEW ir.actions.act_window: account.action_open_account_onboarding_create_invoice
+# NOTHING TO DO: noupdate="0" records
+
+DEL ir.actions.act_window: account.account_accrual_accounting_wizard_action
+DEL ir.actions.act_window: account.account_tag_action
+DEL ir.actions.act_window: account.action_account_bank_journal_form
+DEL ir.actions.act_window: account.action_account_common_menu
+DEL ir.actions.act_window: account.action_account_fiscal_position_template_form
+DEL ir.actions.act_window: account.action_account_group_tree
+DEL ir.actions.act_window: account.action_account_template_form
+DEL ir.actions.act_window: account.action_bank_statement_draft_tree
+DEL ir.actions.act_window: account.action_move_line_graph
+DEL ir.actions.act_window: account.action_move_line_graph_posted
+DEL ir.actions.act_window: account.action_move_line_select_by_partner
+DEL ir.actions.act_window: account.action_move_line_select_tax_audit
+DEL ir.actions.act_window: account.action_open_account_onboarding_sample_invoice
+DEL ir.actions.act_window: account.action_tax_group
+DEL ir.actions.act_window: account.actions_account_fiscal_year
+DEL ir.actions.act_window: account_analytic_default.action_product_default_list
+DEL ir.actions.client: account.action_bank_reconcile
+DEL ir.actions.client: account.action_manual_reconcile
+DEL ir.actions.client: account.action_manual_reconciliation
+DEL ir.actions.client: account.action_view_account_move_line_reconcile
+DEL ir.actions.report: account.action_report_aged_partner_balance
+DEL ir.actions.server: account.action_accrual_entry
+# NOTHING TO DO: noupdate="0" records
+
+NEW ir.actions.act_window: account.action_analytic_default_list [renamed from account_analytic_default module]
+DEL ir.actions.act_window: account_analytic_default.action_analytic_default_list [renamed to account module]
+NEW ir.actions.act_window: account.analytic_rule_action_user [renamed from account_analytic_default module]
+DEL ir.actions.act_window: account_analytic_default.analytic_rule_action_user [renamed to account module]
+# NOTHING TO DO: noupdate="0" records, no name changed.
+
+NEW ir.actions.server: account.action_automatic_entry
+NEW ir.model.access: account.access_account_account_tax_readonly
+NEW ir.model.access: account.access_account_account_type_readonly
+NEW ir.model.access: account.access_account_analytic_line_readonly
+NEW ir.model.access: account.access_account_automatic_entry_wizard
+NEW ir.model.access: account.access_account_bank_statement_closebalance
+NEW ir.model.access: account.access_account_bank_statement_group_readonly
+NEW ir.model.access: account.access_account_bank_statement_line_group_readonly
+NEW ir.model.access: account.access_account_cash_rounding_readonly
+NEW ir.model.access: account.access_account_common_journal_report
+NEW ir.model.access: account.access_account_common_report
+NEW ir.model.access: account.access_account_financial_year_op
+NEW ir.model.access: account.access_account_full_reconcile_group_readonly
+NEW ir.model.access: account.access_account_group_template
+NEW ir.model.access: account.access_account_invoice_report_readonly
+NEW ir.model.access: account.access_account_invoice_send
+NEW ir.model.access: account.access_account_journal_readonly
+NEW ir.model.access: account.access_account_move_line_readonly
+NEW ir.model.access: account.access_account_move_readonly
+NEW ir.model.access: account.access_account_move_reversal
+NEW ir.model.access: account.access_account_partial_reconcile_readonly
+NEW ir.model.access: account.access_account_payment_method_readonly
+NEW ir.model.access: account.access_account_payment_readonly
+NEW ir.model.access: account.access_account_payment_register
+NEW ir.model.access: account.access_account_print_journal
+NEW ir.model.access: account.access_account_reconcile_model_line
+NEW ir.model.access: account.access_account_reconcile_model_line_billing
+NEW ir.model.access: account.access_account_reconcile_model_line_readonly
+NEW ir.model.access: account.access_account_reconcile_model_line_template
+NEW ir.model.access: account.access_account_reconcile_model_partner_mapping
+NEW ir.model.access: account.access_account_reconcile_model_partner_mapping_billing
+NEW ir.model.access: account.access_account_reconcile_model_partner_mapping_readonly
+NEW ir.model.access: account.access_account_reconcile_model_readonly
+NEW ir.model.access: account.access_account_resequence
+NEW ir.model.access: account.access_account_setup_bank_manual_config
+NEW ir.model.access: account.access_account_tax_group_readonly
+NEW ir.model.access: account.access_account_tax_invoice
+NEW ir.model.access: account.access_account_tax_readonly
+NEW ir.model.access: account.access_account_tax_repartition_line_readonly
+NEW ir.model.access: account.access_account_tax_report_ac_user
+NEW ir.model.access: account.access_account_tax_report_invoice
+NEW ir.model.access: account.access_account_tax_report_line_readonly
+NEW ir.model.access: account.access_account_tour_upload_bill
+NEW ir.model.access: account.access_account_tour_upload_bill_email_confirm
+NEW ir.model.access: account.access_account_unreconcile
+NEW ir.model.access: account.access_cash_box_out
+NEW ir.model.access: account.access_tax_adjustments_wizard
+NEW ir.model.access: account.access_validate_account_move
+# NOTHING TO DO: noupdate="0" records
+
+NEW ir.model.access: account.access_account_analytic_default [renamed from account_analytic_default module]
+DEL ir.model.access: account_analytic_default.access_account_analytic_default [renamed to account module]
+NEW ir.model.access: account.access_account_analytic_default_analytic [renamed from account_analytic_default module]
+DEL ir.model.access: account_analytic_default.access_account_analytic_default_analytic [renamed to account module]
+NEW ir.model.access: account.access_account_analytic_default_invoice [renamed from account_analytic_default module]
+DEL ir.model.access: account_analytic_default.access_account_analytic_default_invoice [renamed to account module]
+# NOTHING TO DO: noupdate="0" records, no name changed
+
+DEL ir.model.access: account.access_account_account_type
+DEL ir.model.access: account.access_account_fiscal_year_manager
+DEL ir.model.access: account.access_account_fiscal_year_user
+DEL ir.model.access: account.access_account_invoice_report_user
+DEL ir.model.access: account.access_account_journal_user
+DEL ir.model.access: account.access_account_payment_term
+DEL ir.model.access: account.access_account_payment_term_line
+DEL ir.model.access: account.access_account_tax
+DEL ir.model.access: account.access_account_tax_report_line_invoice
+# NOTHING TO DO: noupdate="0" records
+
+ir.rule: account.account_analytic_line_rule_billing_user (noupdate) (noupdate switched)
+# DONE: pre-migration: noupdate changed to "1"
+
+NEW ir.rule: account.account_group_comp_rule (noupdate)
+NEW ir.rule: account.account_invoice_send_rule_group_invoice (noupdate)
+NEW ir.rule: account.account_move_line_rule_group_invoice (noupdate)
+NEW ir.rule: account.account_move_line_rule_group_readonly (noupdate)
+NEW ir.rule: account.account_move_rule_group_invoice (noupdate)
+NEW ir.rule: account.account_move_rule_group_readonly (noupdate)
+NEW ir.rule: account.account_reconcile_model_line_template_comp_rule (noupdate)
+# NOTHING TO DO
+
+NEW ir.rule: account.analytic_default_comp_rule [renamed from account_analytic_default module] (noupdate)
+DEL ir.rule: account_analytic_default.analytic_default_comp_rule [renamed to account module] (noupdate)
+# NOTHING TO DO: account_analytic_default is merged in account (done in base)
+
+DEL ir.sequence: account.sequence_payment_customer_invoice (noupdate)
+DEL ir.sequence: account.sequence_payment_customer_refund (noupdate)
+DEL ir.sequence: account.sequence_payment_supplier_invoice (noupdate)
+DEL ir.sequence: account.sequence_payment_supplier_refund (noupdate)
+DEL ir.sequence: account.sequence_payment_transfer (noupdate)
+# DONE: post-migration: try to delete
+
+NEW ir.ui.menu: account.account_banks_menu
+NEW ir.ui.menu: account.menu_product_product_categories
+# NOTHING TO DO: noupdate="0" records
+
+DEL ir.ui.menu: account.menu_action_account_invoice_bank_journal_form
+DEL ir.ui.menu: account.menu_action_manual_reconciliation
+# NOTHING TO DO: noupdate="0" records
+
+NEW ir.ui.view: account.account_automatic_entry_wizard_form
+NEW ir.ui.view: account.account_resequence_view
+NEW ir.ui.view: account.account_tax_report_form
+NEW ir.ui.view: account.account_tax_report_search
+NEW ir.ui.view: account.account_tax_report_tree
+NEW ir.ui.view: account.account_tour_upload_bill
+NEW ir.ui.view: account.account_tour_upload_bill_email_confirm
+NEW ir.ui.view: account.dashboard_onboarding_bill_step
+NEW ir.ui.view: account.onboarding_create_invoice_step
+NEW ir.ui.view: account.res_currency_form_inherit
+NEW ir.ui.view: account.view_account_analytic_default_form
+NEW ir.ui.view: account.view_account_analytic_default_form_search
+NEW ir.ui.view: account.view_account_analytic_default_kanban
+NEW ir.ui.view: account.view_account_analytic_default_tree
+NEW ir.ui.view: account.view_account_payment_register_form
+NEW ir.ui.view: account.view_account_reconcile_model_line_form
+NEW ir.ui.view: account.view_company_form
+NEW ir.ui.view: account.view_in_invoice_tree
+NEW ir.ui.view: account.view_out_invoice_tree
+# NOTHING TO DO: noupdate="0" records
+
+DEL ir.ui.view: account.account_accrual_accounting_wizard_form_view
+DEL ir.ui.view: account.account_bank_journal_view_kanban
+DEL ir.ui.view: account.account_tax_report_line_search
+DEL ir.ui.view: account.action_account_fiscal_year_form
+DEL ir.ui.view: account.action_account_fiscal_year_search
+DEL ir.ui.view: account.action_account_fiscal_year_tree
+DEL ir.ui.view: account.dashboard_onboarding_company_step
+DEL ir.ui.view: account.email_compose_onboarding_sample_invoice
+DEL ir.ui.view: account.onboarding_sample_invoice_step
+DEL ir.ui.view: account.partner_view_short_extra
+DEL ir.ui.view: account.report_invoice_document_with_payments
+DEL ir.ui.view: account.view_account_bank_journal_form
+DEL ir.ui.view: account.view_account_bank_journal_tree
+DEL ir.ui.view: account.view_account_payment_form_multi
+DEL ir.ui.view: account.view_account_payment_invoice_form
+DEL ir.ui.view: account_analytic_default.view_account_analytic_default_form
+DEL ir.ui.view: account_analytic_default.view_account_analytic_default_form_search
+DEL ir.ui.view: account_analytic_default.view_account_analytic_default_kanban
+DEL ir.ui.view: account_analytic_default.view_account_analytic_default_tree
+# NOTHING TO DO: noupdate="0" records
+
+NEW res.groups: account.group_account_readonly
+NEW res.groups: account.group_purchase_receipts
+NEW res.groups: account.group_sale_receipts
+# NOTHING TO DO
+
+
+DEL res.groups: account.group_fiscal_year
+# NOTHING TO DO
+
+DEL ir.ui.menu: account_analytic_default.menu_analytic_default_list [renamed to account module]
+NEW ir.ui.menu: account.menu_analytic_default_list [renamed from account_analytic_default module]
+# NOTHING TO DO: noupdate="0" records, no name changed
