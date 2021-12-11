@@ -7,10 +7,12 @@ def fill_hr_employee_company_id(env):
     openupgrade.logged_query(
         env.cr,
         """
-        UPDATE hr_employee hr
-        SET company_id = ru.company_id
-        FROM res_users ru
-        WHERE ru.id = hr.create_uid AND hr.company_id is NULL
+        UPDATE hr_employee he
+        SET company_id = COALESCE(hd.company_id, ru.company_id)
+        FROM hr_employee he2
+        JOIN res_users ru ON ru.id = COALESCE(he2.create_uid, 1)
+        LEFT JOIN hr_department hd ON hd.id = he2.department_id
+        WHERE he.id = he2.id AND he.company_id is NULL
         """,
     )
 
