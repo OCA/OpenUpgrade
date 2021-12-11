@@ -1,0 +1,40 @@
+---Models in module 'hr_timesheet'---
+new model project.task.create.timesheet [transient]
+---Fields in module 'hr_timesheet'---
+hr_timesheet / account.analytic.line    / project_id (many2one)         : now a function
+hr_timesheet / account.analytic.line    / task_id (many2one)            : now a function
+hr_timesheet / project.project          / allow_timesheets (boolean)    : now a function
+# NOTHING TO DO: Computed writables fields whose dependencies are not changed
+
+hr_timesheet / project.task             / analytic_account_active (boolean): now a function
+hr_timesheet / project.task             / analytic_account_active (boolean): not related anymore
+# NOTHING TO DO: This was previously a related non stored field
+
+hr_timesheet / project.project          / timesheet_ids (one2many)      : NEW relation: account.analytic.line
+# NOTHING TO DO: Inverse relation from existing many2one
+
+hr_timesheet / project.task             / overtime (float)              : NEW isfunction: function, stored
+# DONE: pre-migration: pre-computed by SQL for avoiding overhead and to recompute `progress` field
+
+---XML records in module 'hr_timesheet'---
+NEW ir.actions.act_window: hr_timesheet.timesheet_action_project
+NEW ir.actions.act_window: hr_timesheet.timesheet_action_task
+NEW ir.actions.act_window.view: hr_timesheet.timesheet_action_view_all_kanban
+NEW ir.actions.act_window.view: hr_timesheet.timesheet_action_view_all_pivot
+NEW ir.config_parameter: hr_timesheet.ir_config_parameter_timesheet_min_duration (noupdate)
+NEW ir.config_parameter: hr_timesheet.ir_config_parameter_timesheet_rounding (noupdate)
+NEW ir.model.access: hr_timesheet.access_project_task_create_timesheet
+NEW ir.rule: hr_timesheet.timesheet_line_rule_approver (noupdate)
+# NOTHING TO DO
+
+ir.rule: hr_timesheet.timesheet_line_rule_user (noupdate) (noupdate switched)
+res.groups: hr_timesheet.group_hr_timesheet_approver (noupdate) (noupdate switched)
+res.groups: hr_timesheet.group_timesheet_manager (noupdate) (noupdate switched)
+# DONE: pre-migration: switched noupdate
+
+NEW ir.ui.view: hr_timesheet.hr_timesheet_line_my_timesheet_search
+NEW ir.ui.view: hr_timesheet.portal_subtask_timesheet_tables
+NEW ir.ui.view: hr_timesheet.project_task_create_timesheet_view_form
+NEW ir.ui.view: hr_timesheet.project_task_view_search
+DEL web_tour.tour: hr_timesheet.web_tour_project_consumed_by_admin
+# NOTHING TO DO
