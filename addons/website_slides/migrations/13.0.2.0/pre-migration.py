@@ -53,3 +53,7 @@ def migrate(env, version):
         False,
     )
     openupgrade.add_fields(env, [("user_id", "slide.channel", "slide_channel", "many2one", False, "website_slides")])
+    # Disappeared constraint
+    openupgrade.logged_query(
+        env.cr, "ALTER TABLE slide_slide DROP CONSTRAINT slide_slide_name_uniq"
+    )
