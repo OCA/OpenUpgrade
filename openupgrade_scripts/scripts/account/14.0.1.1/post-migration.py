@@ -76,7 +76,7 @@ def create_account_reconcile_model_lines(env):
             sequence, account_id, journal_id, label, amount_type,
             force_tax_included, amount, amount_string, analytic_account_id,
             create_uid, create_date, write_uid, write_date)
-        SELECT id, company_id, sequence, account_id, journal_id, label,
+        SELECT id, company_id, 10, account_id, journal_id, label,
             amount_type, force_tax_included,
             CASE WHEN amount_type = 'regex' THEN 0 ELSE amount END as amount,
             CASE WHEN amount_type = 'regex' THEN amount_from_label_regex
@@ -90,7 +90,7 @@ def create_account_reconcile_model_lines(env):
         WHERE rule_type != 'invoice_matching' OR (rule_type = 'invoice_matching'
             AND match_total_amount AND match_total_amount_param < 100.0)
         UNION ALL
-        SELECT id, company_id, sequence, second_account_id, second_journal_id,
+        SELECT id, company_id, 20, second_account_id, second_journal_id,
             second_label, second_amount_type, force_second_tax_included,
             CASE WHEN second_amount_type = 'regex' THEN 0
                 ELSE second_amount END as amount,
@@ -161,10 +161,10 @@ def create_account_reconcile_model_template_lines(env):
             sequence, account_id, label, amount_type,
             force_tax_included, amount_string,
             create_uid, create_date, write_uid, write_date)
-        SELECT id, sequence, account_id, label,
+        SELECT id, 10, account_id, label,
             amount_type, force_tax_included,
             CASE WHEN amount_type = 'regex' THEN amount_from_label_regex
-                ELSE amount || '' END as amount_string,
+                ELSE amount::varchar END as amount_string,
             create_uid, create_date, write_uid, write_date
         FROM (
             SELECT armt.* FROM account_reconcile_model_template armt
@@ -175,10 +175,10 @@ def create_account_reconcile_model_template_lines(env):
         WHERE rule_type != 'invoice_matching' OR (rule_type = 'invoice_matching'
             AND match_total_amount AND match_total_amount_param < 100.0)
         UNION ALL
-        SELECT id, sequence, second_account_id,
+        SELECT id, 20, second_account_id,
             second_label, second_amount_type, force_second_tax_included,
             CASE WHEN second_amount_type = 'regex' THEN second_amount_from_label_regex
-                ELSE second_amount || '' END as amount_string,
+                ELSE second_amount::varchar END as amount_string,
             create_uid, create_date, write_uid, write_date
         FROM (
             SELECT armt.* FROM account_reconcile_model_template armt

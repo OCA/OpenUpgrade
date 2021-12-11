@@ -10,14 +10,16 @@ obsolete model report.account.report_agedpartnerbalance [abstract]
 
 new model account.reconcile.model.line
 new model account.reconcile.model.line.template
-# DONE: post-migration: create line records from parent model
+# DONE: post-migration: create line records from parent model only for manually created records
 
 new model account.tax.report
 # DONE: post-migration: create parent records from line model
 
 new model account.group.template
-new model account.reconcile.model.partner.mapping
 # NOTHING TO DO: new models
+
+new model account.reconcile.model.partner.mapping
+# NOTHING TO DO: New feature for mapping partners according labels
 
 new model account.resequence.wizard [transient]
 new model account.tour.upload.bill [transient]
@@ -48,7 +50,7 @@ account      / account.bank.statement   / accounting_date (date)        : DEL
 # NOTHING TO DO: obsolete. it was used when automatically creating moves in the reconciliation process
 
 account      / account.bank.statement   / state (selection)             : selection_keys is now '['confirm', 'open', 'posted']' ('['confirm', 'open']')
-# DONE: new 'posted' state. the workflow is 'open' (draft) -> 'posted' -> 'confirm'. Marked as 'posted' the 'confirm' entries which have unreconciled lines.
+# DONE: post-migration: new 'posted' state. the workflow is 'open' (draft) -> 'posted' -> 'confirm'. Marked as 'posted' the 'confirm' entries which have unreconciled lines.
 
 account      / account.bank.statement   / balance_end_real (float)      : now a function
 account      / account.bank.statement   / balance_start (float)         : now a function
