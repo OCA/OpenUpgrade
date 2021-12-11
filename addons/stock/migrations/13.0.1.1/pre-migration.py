@@ -86,6 +86,17 @@ def prefill_stock_picking_type_sequence_code(env):
 @openupgrade.migrate()
 def migrate(env, version):
     openupgrade.copy_columns(env.cr, _column_copies)
+    if openupgrade.table_exists(env.cr, 'report_stock_quantity'):
+        # OCA module `stock_forecast_report` was installed
+        # Renaming model and table for not collapsing with the following renames
+        openupgrade.rename_models(
+            env.cr, [("report.stock.quantity", "report.stock.quantity.ou")]
+        )
+        openupgrade.rename_tables(
+            env.cr, [("report_stock_quantity", "report_stock_quantity_ou")]
+        )
+        # Remove duplicated access
+        env.ref("stock.access_report_stock_quantity").unlink()
     openupgrade.rename_models(env.cr, _model_renames)
     openupgrade.rename_tables(env.cr, _table_renames)
     openupgrade.rename_fields(env, _field_renames)
