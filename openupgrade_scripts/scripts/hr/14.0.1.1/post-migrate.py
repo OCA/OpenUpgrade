@@ -39,5 +39,5 @@ def migrate(env, version):
         env.cr, "hr", ["mail_template_data_unknown_employee_email_address"]
     )
     openupgrade.delete_records_safely_by_xml_id(
-        env.cr, ["hr.mail_template_data_unknown_employee_email_address"]
+        env, ["hr.mail_template_data_unknown_employee_email_address"]
     )
