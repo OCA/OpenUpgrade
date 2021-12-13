@@ -328,6 +328,9 @@ probably.</p></li>
 <span class="sig-prename descclassname"><span class="pre">openupgradelib.openupgrade.</span></span><span class="sig-name descname"><span class="pre">delete_records_safely_by_xml_id</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">env</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">xml_ids</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#openupgradelib.openupgrade.delete_records_safely_by_xml_id" title="Permalink to this definition">¶</a></dt>
 <dd><p>This removes in the safest possible way the records whose XML-IDs are
 passed as argument.</p>
+<p>If not possible to be removed, and the record is an updatable one
+(noupdate=0), it’s switched to noupdate=1, for avoiding a later error when
+Odoo performs the regular update cleanup and trying to remove it as well.</p>
 <dl class="field-list simple">
 <dt class="field-odd">Parameters</dt>
 <dd class="field-odd"><p><strong>xml_ids</strong> – List of XML-ID string identifiers of the records to remove.</p>
