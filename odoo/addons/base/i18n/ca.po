@@ -3379,6 +3379,15 @@ msgid ""
 "that have no counterpart in the general financial accounts.\n"
 "    "
 msgstr ""
+"\n"
+"Mòdul per a definir l'objecte de comptabilitat analítica.\n"
+"================================================\n"
+"\n"
+"A Odoo, els comptes analítics s'enllacen a comptes generals, però es tracten\n"
+"de manera completament independent. Per tant, podeu introduir diferents\n"
+"operacions analítiques que no tinguin contrapartida als comptes financers\n"
+"generals.\n"
+"    "
 
 #. module: base
 #: model:ir.module.module,description:base.module_resource
@@ -4343,6 +4352,9 @@ msgid ""
 "The module adds the possibility to display data from Odoo in Google Spreadsheets in real time.\n"
 "=================================================================================================\n"
 msgstr ""
+"\n"
+"El mòdul afegeix la possibilitat de mostrar dades de Odoo a fulls de càlcul Google Spreadsheets en temps real.\n"
+"=================================================================================================\n"
 
 #. module: base
 #: model:ir.module.module,description:base.module_l10n_fr_pos_cert
@@ -7542,8 +7554,8 @@ msgid ""
 "Appears by default on the top right corner of your printed documents (report"
 " header)."
 msgstr ""
-"Apareix per defecte a la cantonada superior dret dels documents impresos "
-"(encapçalament de la informació)."
+"Apareix per defecte a la cantonada superior dreta dels documents impresos "
+"(capçalera de l'informe)"
 
 #. module: base
 #: model:ir.model,name:base.model_ir_module_category
@@ -8741,8 +8753,8 @@ msgid ""
 "Changing the type of a field is not yet supported. Please drop it and create"
 " it again!"
 msgstr ""
-"El canvi del tipus d'un camp encara no està suportat. Esborreu la columna i "
-"creeu de nou!"
+"El canvi del tipus d'un camp encara no està suportat. Esborreu-lo i creeu-lo"
+" de nou"
 
 #. module: base
 #: selection:ir.property,type:0
@@ -9129,7 +9141,7 @@ msgstr "Empreses"
 #. module: base
 #: model_terms:ir.ui.view,arch_db:base.view_users_form
 msgid "Companies count"
-msgstr "Comptador de companyies"
+msgstr "Nombre de companyies"
 
 #. module: base
 #: code:addons/base/models/ir_qweb_fields.py:396
@@ -9311,7 +9323,7 @@ msgstr "Configuració"
 #. module: base
 #: model_terms:ir.ui.view,arch_db:base.res_config_installer
 msgid "Configuration Installer"
-msgstr "Configurar l'instal·lador "
+msgstr "Instal·lador de la configuració"
 
 #. module: base
 #: model:ir.actions.act_window,name:base.act_ir_actions_todo_form
@@ -13213,8 +13225,8 @@ msgid ""
 "Helps you handle your accounting needs, if you are not an accountant, we "
 "suggest you to install only the Invoicing."
 msgstr ""
-"L'ajuda a gestionar les seves necessitats de comptabilitat, si vostè no és "
-"comptable, li suggerim que instal només la facturació."
+"Us ajuda a gestionar les necessitats de comptabilitat. Si no sou comptable, "
+"us suggerim instal·lar només la facturació."
 
 #. module: base
 #: model:ir.module.category,description:base.module_category_sales_management
@@ -13429,7 +13441,7 @@ msgstr ""
 #: model_terms:ir.ui.view,arch_db:base.view_model_fields_form
 #: model_terms:ir.ui.view,arch_db:base.view_model_form
 msgid "How to define a computed field"
-msgstr "Com definir un camp computat"
+msgstr "Com definir un camp calculat"
 
 #. module: base
 #: model:ir.module.module,shortdesc:base.module_hr_recruitment_survey
@@ -13670,8 +13682,7 @@ msgstr ""
 #. module: base
 #: model:ir.model.fields,help:base.field_ir_rule__global
 msgid "If no group is specified the rule is global and applied to everyone"
-msgstr ""
-"Si no s'especifica cap grup, la regla és global i s'aplica a tot el món."
+msgstr "Si no s'especifica cap grup, la regla és global i s'aplica a tothom."
 
 #. module: base
 #: model:ir.model.fields,help:base.field_ir_property__res_id
@@ -16299,7 +16310,7 @@ msgstr "Multi companyies"
 #. module: base
 #: model:res.groups,name:base.group_multi_currency
 msgid "Multi Currencies"
-msgstr "Monedes múltiples"
+msgstr "Multi-divisa"
 
 #. module: base
 #: model:ir.module.module,shortdesc:base.module_l10n_multilang
@@ -16667,7 +16678,7 @@ msgstr "Nombre d'aplicacions"
 #. module: base
 #: model:ir.model.fields,field_description:base.field_ir_cron__numbercall
 msgid "Number of Calls"
-msgstr "Nombre de trucades"
+msgstr "Nombre de crides"
 
 #. module: base
 #: model:ir.model.fields,field_description:base.field_res_users__companies_count

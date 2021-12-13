@@ -14,10 +14,11 @@
 # Topi Aura <topi@aurat.fi>, 2018
 # Tuomo Aura <tuomo.aura@web-veistamo.fi>, 2019
 # Jenni Heikkilä <jenni.heikkila@sv-oy.fi>, 2019
-# Johanna Valkonen <johanna.valkonen@sv-oy.fi>, 2019
+# Johanna Valkonen <johanna@vividi.fi>, 2019
 # Sari Mäyrä <sari.mayra@sv-oy.fi>, 2019
 # Pekko Tuomisto <pekko.tuomisto@web-veistamo.fi>, 2019
-# Jarmo Kortetjärvi <jarmo.kortetjarvi@gmail.com>, 2020
+# Jarmo Kortetjärvi <jarmo.kortetjarvi@gmail.com>, 2021
+# Miika Nissi <miika.nissi@tawasta.fi>, 2021
 # 
 msgid ""
 msgstr ""
@@ -25,7 +26,7 @@ msgstr ""
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2019-03-29 10:10+0000\n"
 "PO-Revision-Date: 2018-08-24 09:18+0000\n"
-"Last-Translator: Jarmo Kortetjärvi <jarmo.kortetjarvi@gmail.com>, 2020\n"
+"Last-Translator: Miika Nissi <miika.nissi@tawasta.fi>, 2021\n"
 "Language-Team: Finnish (https://www.transifex.com/odoo/teams/41243/fi/)\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
@@ -37,13 +38,13 @@ msgstr ""
 #: code:addons/gamification/models/challenge.py:594
 #, python-format
 msgid "%s has joined the challenge"
-msgstr ""
+msgstr "%s on liittynyt haasteeseen"
 
 #. module: gamification
 #: code:addons/gamification/models/challenge.py:603
 #, python-format
 msgid "%s has refused the challenge"
-msgstr ""
+msgstr "%s on hylännyt haasteen"
 
 #. module: gamification
 #: model:mail.template,body_html:gamification.email_template_badge_received
@@ -153,7 +154,7 @@ msgstr ""
 #: code:addons/gamification/models/challenge.py:660
 #, python-format
 msgid "<br/> %(rank)d. %(user_name)s - %(reward_name)s"
-msgstr ""
+msgstr "<br/> %(rank)d. %(user_name)s - %(reward_name)s"
 
 #. module: gamification
 #: code:addons/gamification/models/challenge.py:657
@@ -162,6 +163,8 @@ msgid ""
 "<br/>Nobody has succeeded to reach every goal, no badge is rewarded for this"
 " challenge."
 msgstr ""
+"<br/>Kukaan ei ole onnistunut saavuttamaan kaikkia tavoitteita, joten tästä "
+"haasteesta ei ole vielä myönnetty ansiomerkkejä."
 
 #. module: gamification
 #: code:addons/gamification/models/challenge.py:655
@@ -200,6 +203,8 @@ msgid ""
 "<i role=\"img\" class=\"fa fa-clock-o fa-3x\" title=\"Goal in Progress\" "
 "aria-label=\"Goal in Progress\"/>"
 msgstr ""
+"<i role=\"img\" class=\"fa fa-clock-o fa-3x\" title=\"Keskeneräinen "
+"tavoite\" aria-label=\"Keskeneräinen tavoite\"/>"
 
 #. module: gamification
 #: model_terms:ir.ui.view,arch_db:gamification.goal_kanban_view
@@ -207,6 +212,8 @@ msgid ""
 "<i role=\"img\" class=\"o_green fa fa-check fa-3x\" title=\"Goal Reached\" "
 "aria-label=\"Goal Reached\"/>"
 msgstr ""
+"<i role=\"img\" class=\"o_green fa fa-check fa-3x\" title=\"Tavoite "
+"saavutettu\" aria-label=\"Tavoite saavutettu\"/>"
 
 #. module: gamification
 #: model_terms:ir.ui.view,arch_db:gamification.goal_kanban_view
@@ -214,6 +221,8 @@ msgid ""
 "<i role=\"img\" class=\"o_red fa fa-times fa-3x\" title=\"Goal Failed\" "
 "aria-label=\"Goal Failed\"/>"
 msgstr ""
+"<i role=\"img\" class=\"o_red fa fa-times fa-3x\" title=\"Tavoite "
+"epäonnistunut\" aria-label=\"Tavoite epäonnistunut\"/>"
 
 #. module: gamification
 #: model_terms:ir.ui.view,arch_db:gamification.challenge_form_view
@@ -221,6 +230,8 @@ msgid ""
 "<span class=\"o_stat_text\">Related</span>\n"
 "                                <span class=\"o_stat_text\">Goals</span>"
 msgstr ""
+"<span class=\"o_stat_text\">Liittyvät</span>\n"
+"                                <span class=\"o_stat_text\">tavoitteet</span>"
 
 #. module: gamification
 #: model:mail.template,body_html:gamification.simple_report_template
@@ -430,6 +441,9 @@ msgid ""
 "                It can be deserved automatically when some conditions are met or manually by users.\n"
 "                Some badges are harder than others to get with specific conditions."
 msgstr ""
+"Ansiomerkki on symbolinen tunnus, joka myönnetään käyttäjälle palkkion merkiksi.\n"
+"                Se voidaan ansaita automaattisesti, kun jotkin ehdot täyttyvät, tai manuaalisesti käyttäjien toimesta.\n"
+"                Joitakin merkkejä on vaikeampi saada tietyissä tapauksissa."
 
 #. module: gamification
 #: model_terms:ir.actions.act_window,help:gamification.goal_definition_list_action
@@ -446,6 +460,8 @@ msgid ""
 "A goal is considered as completed when the current value is compared to the "
 "value to reach"
 msgstr ""
+"Tavoitteen katsotaan toteutuneen, kun nykyistä arvoa verrataan "
+"saavutettavaan arvoon"
 
 #. module: gamification
 #: model_terms:ir.actions.act_window,help:gamification.goal_list_action
@@ -453,6 +469,8 @@ msgid ""
 "A goal is defined by a user and a goal definition.\n"
 "                Goals can be created automatically by using challenges."
 msgstr ""
+"Tavoitteen määrittelevät käyttäjä ja tavoitteen määritelmä.\n"
+"                Tavoitteita voidaan luoda automaattisesti käyttämällä haasteita."
 
 #. module: gamification
 #: selection:gamification.badge,rule_auth:0
@@ -488,7 +506,7 @@ msgstr "Lupa myöntää"
 #. module: gamification
 #: model:ir.model.fields,help:gamification.field_gamification_challenge__user_domain
 msgid "Alternative to a list of users"
-msgstr ""
+msgstr "Vaihtoehto käyttäjäluettelolle"
 
 #. module: gamification
 #: model:ir.model.fields,field_description:gamification.field_gamification_challenge__category
@@ -507,6 +525,9 @@ msgid ""
 "                The challenge can use a period (weekly, monthly...) for automatic creation of goals.\n"
 "                The goals are created for the specified users or member of the group."
 msgstr ""
+"Määritä valituille käyttäjille luettelo tavoitteista niiden arvioimiseksi.\n"
+"                Haaste voi käyttää ajanjaksoa (viikoittain, kuukausittain...) tavoitteiden automaattiseen luomiseen.\n"
+"                Tavoitteet luodaan määritetyille käyttäjille tai ryhmän jäsenille."
 
 #. module: gamification
 #: model:ir.model.fields,field_description:gamification.field_gamification_badge__message_attachment_count
@@ -527,12 +548,12 @@ msgstr "Automaattinen: aja määritelty Python-koodi"
 #. module: gamification
 #: selection:gamification.goal.definition,computation_mode:0
 msgid "Automatic: number of records"
-msgstr ""
+msgstr "Automaattinen: tietueiden määrä"
 
 #. module: gamification
 #: selection:gamification.goal.definition,computation_mode:0
 msgid "Automatic: sum on a field"
-msgstr ""
+msgstr "Automaattinen: summa kentällä"
 
 #. module: gamification
 #: model:ir.model.fields,field_description:gamification.field_gamification_badge__name
@@ -586,7 +607,7 @@ msgstr ""
 #. module: gamification
 #: model:ir.model.fields,field_description:gamification.field_gamification_goal_definition__batch_mode
 msgid "Batch Mode"
-msgstr ""
+msgstr "Erätila"
 
 #. module: gamification
 #: model:gamification.badge,name:gamification.badge_idea
@@ -652,6 +673,8 @@ msgid ""
 "Challenge that generated the goal, assign challenge to users to generate "
 "goals with a value in this field."
 msgstr ""
+"Haaste, joka loi tavoitteen, anna käyttäjille haaste luoda tavoitteita, "
+"joilla on arvo tässä kentässä."
 
 #. module: gamification
 #: model:ir.actions.act_window,name:gamification.challenge_list_action
@@ -707,22 +730,22 @@ msgstr "Luo käyttäjä"
 #. module: gamification
 #: model_terms:ir.actions.act_window,help:gamification.badge_list_action
 msgid "Create a new badge"
-msgstr ""
+msgstr "Luo uusi ansiomerkki"
 
 #. module: gamification
 #: model_terms:ir.actions.act_window,help:gamification.challenge_list_action
 msgid "Create a new challenge"
-msgstr ""
+msgstr "Luo uusi haaste"
 
 #. module: gamification
 #: model_terms:ir.actions.act_window,help:gamification.goal_list_action
 msgid "Create a new goal"
-msgstr ""
+msgstr "Luo uusi tavoite"
 
 #. module: gamification
 #: model_terms:ir.actions.act_window,help:gamification.goal_definition_list_action
 msgid "Create a new goal definition"
-msgstr ""
+msgstr "Luo uusi tavoitteen määritelmä"
 
 #. module: gamification
 #: model_terms:ir.actions.act_window,help:gamification.action_new_simplified_res_users
@@ -851,12 +874,12 @@ msgstr "Näyttönimi"
 #: model:ir.model.fields,field_description:gamification.field_gamification_goal__definition_display
 #: model:ir.model.fields,field_description:gamification.field_gamification_goal_definition__display_mode
 msgid "Displayed as"
-msgstr ""
+msgstr "Näytetään muodossa"
 
 #. module: gamification
 #: model:ir.model.fields,field_description:gamification.field_gamification_goal_definition__batch_distinctive_field
 msgid "Distinctive field for batch user"
-msgstr ""
+msgstr "Erottuva kenttä eräkäyttäjälle"
 
 #. module: gamification
 #: model:ir.model.fields,help:gamification.field_gamification_goal_definition__domain
@@ -889,12 +912,12 @@ msgstr "Päättymispäivä"
 #. module: gamification
 #: model:ir.model.fields,help:gamification.field_gamification_goal_definition__batch_mode
 msgid "Evaluate the expression in batch instead of once for each user"
-msgstr ""
+msgstr "Arvioi lauseke erässä kunkin käyttäjän sijasta"
 
 #. module: gamification
 #: model:ir.model.fields,field_description:gamification.field_gamification_goal_definition__batch_user_expression
 msgid "Evaluated expression for batch mode"
-msgstr ""
+msgstr "Arvioitu lauseke eräajotilalle"
 
 #. module: gamification
 #: selection:gamification.badge,rule_auth:0
@@ -914,7 +937,7 @@ msgstr "Epäonnistui"
 #. module: gamification
 #: model:ir.model.fields,field_description:gamification.field_gamification_goal_definition__field_id
 msgid "Field to Sum"
-msgstr ""
+msgstr "Kentästä summaan"
 
 #. module: gamification
 #: model:ir.model.fields,field_description:gamification.field_gamification_goal_definition__domain
@@ -957,7 +980,7 @@ msgstr "3. käyttäjälle"
 #. module: gamification
 #: model:ir.model.fields,field_description:gamification.field_gamification_challenge__reward_id
 msgid "For Every Succeeding User"
-msgstr ""
+msgstr "Jokaiselle onnistuneelle käyttäjälle"
 
 #. module: gamification
 #: model_terms:ir.ui.view,arch_db:gamification.goal_definition_form_view
@@ -977,7 +1000,7 @@ msgstr "Yksikkö"
 #. module: gamification
 #: model:ir.model,name:gamification.model_gamification_badge
 msgid "Gamification Badge"
-msgstr ""
+msgstr "Pelillistämisen ansiomerkki"
 
 #. module: gamification
 #: model:ir.model,name:gamification.model_gamification_challenge
@@ -987,17 +1010,17 @@ msgstr "Pelillistämishaaste"
 #. module: gamification
 #: model:ir.model,name:gamification.model_gamification_goal
 msgid "Gamification Goal"
-msgstr ""
+msgstr "Pelillistämisen tavoite"
 
 #. module: gamification
 #: model:ir.model,name:gamification.model_gamification_goal_definition
 msgid "Gamification Goal Definition"
-msgstr ""
+msgstr "Pelillistämisen tavoitteen määritelmä"
 
 #. module: gamification
 #: model:ir.model,name:gamification.model_gamification_goal_wizard
 msgid "Gamification Goal Wizard"
-msgstr ""
+msgstr "Pelillistämisen tavoitteen wizardi"
 
 #. module: gamification
 #: model:ir.ui.menu,name:gamification.gamification_menu
@@ -1007,17 +1030,17 @@ msgstr "Pelillistämistyökalut"
 #. module: gamification
 #: model:ir.model,name:gamification.model_gamification_badge_user
 msgid "Gamification User Badge"
-msgstr ""
+msgstr "Pelillistämisen käyttäjän ansiomerkki"
 
 #. module: gamification
 #: model:ir.model,name:gamification.model_gamification_badge_user_wizard
 msgid "Gamification User Badge Wizard"
-msgstr ""
+msgstr "Pelillistämisen käyttäjän ansiomerkki wizardi"
 
 #. module: gamification
 #: model:ir.model,name:gamification.model_gamification_challenge_line
 msgid "Gamification generic goal for challenge"
-msgstr ""
+msgstr "Pelillistämisen yleinen tavoite haasteelle"
 
 #. module: gamification
 #: model:ir.actions.server,name:gamification.ir_cron_check_challenge_ir_actions_server
@@ -1179,7 +1202,7 @@ msgstr "Käyttäjän ID-kenttä"
 #. module: gamification
 #: model:ir.model.fields,help:gamification.field_gamification_badge__remaining_sending
 msgid "If a maximum is set"
-msgstr ""
+msgstr "Jos maksimi on asetettu"
 
 #. module: gamification
 #: model:ir.model.fields,help:gamification.field_gamification_badge__message_unread
@@ -1220,6 +1243,8 @@ msgid ""
 "In batch mode, the domain is evaluated globally. If enabled, do not use "
 "keyword 'user' in above filter domain."
 msgstr ""
+"Erätilassa toimialue arvioidaan globaalisti. Jos tämä on käytössä, älä käytä"
+" avainsanaa \"käyttäjä\" yllä olevassa suodattimessa."
 
 #. module: gamification
 #: model:ir.model.fields,help:gamification.field_gamification_goal_definition__batch_distinctive_field
@@ -1235,6 +1260,9 @@ msgid ""
 "for a while (defined in challenge). Ignored in case of non-manual goal or "
 "goal not linked to a challenge."
 msgstr ""
+"Manuaalisessa tavoitteessa lähetetään muistutuksia, jos tavoitetta ei ole "
+"päivitetty vähään aikaan (määritelty haasteessa). Ohitetaan, jos tavoite on "
+"ei-manuaalinen tai tavoite ei liity haasteeseen."
 
 #. module: gamification
 #: selection:gamification.goal,state:0
@@ -1432,7 +1460,7 @@ msgstr "Älä muistuta, jos arvoa ei määriteltynä tai määritelty arvo on no
 #. module: gamification
 #: model:mail.template,subject:gamification.email_template_badge_received
 msgid "New badge ${object.badge_id.name} granted"
-msgstr ""
+msgstr "Uusi ansiomerkki ${object.badge_id.name} myönnetty"
 
 #. module: gamification
 #: model:ir.model.fields,field_description:gamification.field_gamification_challenge__next_report_date
@@ -1442,7 +1470,7 @@ msgstr "Seuraava raportointipäivä"
 #. module: gamification
 #: model_terms:ir.actions.act_window,help:gamification.goals_from_challenge_act
 msgid "No goal found"
-msgstr ""
+msgstr "Tavoitetta ei löytynyt"
 
 #. module: gamification
 #: model_terms:ir.ui.view,arch_db:gamification.badge_form_view
@@ -1457,7 +1485,7 @@ msgstr "Kukaan ei ratkaise haasteita kuin sinä."
 #. module: gamification
 #: selection:gamification.badge,rule_auth:0
 msgid "No one, assigned through challenges"
-msgstr ""
+msgstr "Ei kukaan, haasteiden kautta määrätty"
 
 #. module: gamification
 #: code:addons/gamification/models/challenge.py:672
@@ -1475,7 +1503,7 @@ msgstr "Ei toistuva"
 #. module: gamification
 #: model:ir.model.fields,field_description:gamification.field_gamification_challenge__remind_update_delay
 msgid "Non-updated manual goals will be reminded after"
-msgstr ""
+msgstr "Päivittämättömät manuaaliset tavoitteet muistutetaan tämän jälkeen"
 
 #. module: gamification
 #: model_terms:ir.ui.view,arch_db:gamification.challenge_form_view
@@ -1565,6 +1593,8 @@ msgid ""
 "Period of automatic goal assigment. If none is selected, should be launched "
 "manually."
 msgstr ""
+"Automaattisen tavoitteen määrityksen jakso. Jos mitään ei ole valittu, se "
+"tulee käynnistää manuaalisesti."
 
 #. module: gamification
 #: model:ir.model.fields,field_description:gamification.field_gamification_challenge__period
@@ -1631,17 +1661,17 @@ msgstr "Liittyvä käyttäjätunnus resurssille sen oikeuksien määrittämiseks
 #. module: gamification
 #: model:ir.model.fields,field_description:gamification.field_gamification_badge__remaining_sending
 msgid "Remaining Sending Allowed"
-msgstr ""
+msgstr "Jäljellä oleva lähetys sallittu"
 
 #. module: gamification
 #: model:ir.model.fields,field_description:gamification.field_gamification_goal__remind_update_delay
 msgid "Remind delay"
-msgstr ""
+msgstr "Muistutuksen viive"
 
 #. module: gamification
 #: model_terms:ir.ui.view,arch_db:gamification.challenge_form_view
 msgid "Reminders for Manual Goals"
-msgstr ""
+msgstr "Muistutukset manuaalisille tavoitteille"
 
 #. module: gamification
 #: model:ir.model.fields,field_description:gamification.field_gamification_challenge__report_message_frequency
@@ -1661,7 +1691,7 @@ msgstr "Vaaditut ansiomerkit"
 #. module: gamification
 #: model_terms:ir.ui.view,arch_db:gamification.goal_form_view
 msgid "Reset Completion"
-msgstr ""
+msgstr "Nollaa suoritukset"
 
 #. module: gamification
 #: model:ir.model.fields,field_description:gamification.field_gamification_challenge__manager_id
@@ -1673,6 +1703,7 @@ msgstr "Vastuuhenkilö"
 #, python-format
 msgid "Retrieving progress for personal challenge without user information"
 msgstr ""
+"Haetaan edistymistä henkilökohtaiseen haasteeseen ilman käyttäjätietoja"
 
 #. module: gamification
 #: model_terms:ir.ui.view,arch_db:gamification.challenge_form_view
@@ -1766,7 +1797,7 @@ msgstr "Järjestys"
 #. module: gamification
 #: model:ir.model.fields,help:gamification.field_gamification_challenge_line__sequence
 msgid "Sequence number for ordering"
-msgstr ""
+msgstr "Järjestysnumero tilausta varten"
 
 #. module: gamification
 #: model_terms:ir.ui.view,arch_db:gamification.view_goal_wizard_update_current
@@ -1794,7 +1825,7 @@ msgstr "Aseta aikavyöhykkeesi"
 #. module: gamification
 #: selection:gamification.challenge,category:0
 msgid "Settings / Gamification Tools"
-msgstr ""
+msgstr "Asetukset / Pelillistämisen työkalut"
 
 #. module: gamification
 #: model:gamification.challenge,name:gamification.challenge_base_configure
@@ -1860,7 +1891,7 @@ msgstr "Tavoite: vähemmän kuin"
 #. module: gamification
 #: model:ir.model.fields,help:gamification.field_gamification_goal_definition__action_id
 msgid "The action that will be called to update the goal value."
-msgstr ""
+msgstr "Toiminto, jota kutsutaan päivittämään tavoitearvo."
 
 #. module: gamification
 #: code:addons/gamification/models/challenge.py:651
@@ -1878,7 +1909,7 @@ msgstr "Rahayksikkö ja pääte"
 #. module: gamification
 #: model:ir.model.fields,help:gamification.field_gamification_goal_definition__field_date_id
 msgid "The date to use for the time period evaluated"
-msgstr ""
+msgstr "Arvioidulle ajanjaksolle käytettävä päivämäärä"
 
 #. module: gamification
 #: model:ir.model.fields,help:gamification.field_gamification_challenge__end_date
@@ -1886,6 +1917,8 @@ msgid ""
 "The day a new challenge will be automatically closed. If no periodicity is "
 "set, will use this date as the goal end date."
 msgstr ""
+"Päivä, jolloin uusi haaste suljetaan automaattisesti. Jos jaksotusta ei ole "
+"asetettu, tätä päivämäärää käytetään tavoitteen päättymispäivänä."
 
 #. module: gamification
 #: model:ir.model.fields,help:gamification.field_gamification_challenge__start_date
@@ -1893,6 +1926,8 @@ msgid ""
 "The day a new challenge will be automatically started. If no periodicity is "
 "set, will use this date as the goal start date."
 msgstr ""
+"Päivä. jolloin uusi haaste alkaa automaattisesti. Jos jaksotusta ei ole "
+"asetettu, tätä päivämäärää käytetään tavoitteen aloituspäivänä."
 
 #. module: gamification
 #: code:addons/gamification/models/goal.py:93
@@ -1906,7 +1941,7 @@ msgstr ""
 #. module: gamification
 #: model:ir.model.fields,help:gamification.field_gamification_goal_definition__field_id
 msgid "The field containing the value to evaluate"
-msgstr ""
+msgstr "Kenttä, joka sisältää arvioitavan arvon"
 
 #. module: gamification
 #: model:ir.model.fields,help:gamification.field_gamification_goal_definition__res_id_field
@@ -1923,7 +1958,7 @@ msgstr "Mitä korkeampi, sitä parempi"
 #. module: gamification
 #: model:ir.model.fields,help:gamification.field_gamification_badge__owner_ids
 msgid "The list of instances of this badge granted to users"
-msgstr ""
+msgstr "Luettelo käyttäjistä, joille tämä ansiomerkki on myönnetty"
 
 #. module: gamification
 #: model:ir.model.fields,help:gamification.field_gamification_badge__unique_owner_ids
@@ -1973,6 +2008,8 @@ msgid ""
 "The number of days after which the user assigned to a manual goal will be "
 "reminded. Never reminded if no value is specified."
 msgstr ""
+"Päivien määrä, jonka jälkeen manuaalisen tavoitteen määrittämää käyttäjää "
+"muistutetaan. Ei koskaan muistuteta, jos arvoa ei ole määritetty."
 
 #. module: gamification
 #: model:ir.model.fields,help:gamification.field_gamification_badge__stat_my_this_month
@@ -2014,13 +2051,13 @@ msgstr "Kertojen määrä, jolloin tämä arvomerkki on saatu."
 #: model:ir.model.fields,help:gamification.field_gamification_challenge_line__definition_monetary
 #: model:ir.model.fields,help:gamification.field_gamification_goal_definition__monetary
 msgid "The target and current value are defined in the company currency."
-msgstr ""
+msgstr "Tavoite- ja nykyarvo määritellään yhtiön valuutassa."
 
 #. module: gamification
 #: model:ir.model.fields,help:gamification.field_gamification_challenge_line__definition_suffix
 #: model:ir.model.fields,help:gamification.field_gamification_goal_definition__suffix
 msgid "The unit of the target and current values"
-msgstr ""
+msgstr "Tavoite- ja nykyarvojen yksikkö"
 
 #. module: gamification
 #: model:ir.model.fields,help:gamification.field_gamification_challenge__manager_id
@@ -2048,6 +2085,9 @@ msgid ""
 "reference to 'user' which is a browse record of the current user, e.g. "
 "user.id, user.partner_id.id..."
 msgstr ""
+"Erottuvaan kenttään verrattava arvo. Lauseke voi sisältää viittauksen "
+"\"käyttäjään\", joka on nykyisen käyttäjän selaustietue, esim. user.id, "
+"user.partner_id.id..."
 
 #. module: gamification
 #: model_terms:ir.actions.act_window,help:gamification.goals_from_challenge_act
@@ -2086,7 +2126,7 @@ msgstr "Saavutettava määrä"
 #. module: gamification
 #: model:ir.model.fields,field_description:gamification.field_gamification_goal__to_update
 msgid "To update"
-msgstr ""
+msgstr "Päivittää"
 
 #. module: gamification
 #: model:ir.model.fields,field_description:gamification.field_gamification_badge__stat_count
@@ -2189,7 +2229,7 @@ msgstr ""
 #. module: gamification
 #: model:gamification.badge,description:gamification.badge_idea
 msgid "With your brilliant ideas, you are an inspiration to others."
-msgstr ""
+msgstr "Loistavilla ideoillasi olet inspiraationa muille."
 
 #. module: gamification
 #: selection:gamification.challenge,period:0
@@ -2207,13 +2247,13 @@ msgstr "Et ole hyväksyttyjen käyttäjien listalla."
 #: code:addons/gamification/wizard/grant_badge.py:25
 #, python-format
 msgid "You can not grant a badge to yourself."
-msgstr ""
+msgstr "Et voi myöntää ansiomerkkiä itsellesi."
 
 #. module: gamification
 #: code:addons/gamification/models/challenge.py:196
 #, python-format
 msgid "You can not reset a challenge with unfinished goals."
-msgstr ""
+msgstr "Et voi nollata haastetta keskeneräisten tavoitteiden kanssa."
 
 #. module: gamification
 #: model_terms:ir.ui.view,arch_db:gamification.badge_form_view
@@ -2223,7 +2263,7 @@ msgstr "Voit silti myöntää"
 #. module: gamification
 #: model:gamification.badge,description:gamification.badge_good_job
 msgid "You did great at your job."
-msgstr ""
+msgstr "Olet onnistunut työssäsi loistavasti."
 
 #. module: gamification
 #: code:addons/gamification/models/badge.py:212
@@ -2240,7 +2280,7 @@ msgstr "Olet jo lähettänyt tämän ansiomerkin liian monta kertaa tässä kuus
 #. module: gamification
 #: model:gamification.badge,description:gamification.badge_hidden
 msgid "You have found the hidden badge"
-msgstr ""
+msgstr "Olet löytänyt piilotetun ansiomerkin"
 
 #. module: gamification
 #: model_terms:ir.ui.view,arch_db:gamification.badge_form_view
