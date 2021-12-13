@@ -3,10 +3,10 @@
 # 	* stock
 # 
 # Translators:
+# Константин Коровин <korovin74@gmail.com>, 2019
 # Victor Safronovich <vsafronovich@suvit.ru>, 2019
 # Denis Trepalin <zekarious@gmail.com>, 2019
 # Oleg Kuryan <oleg@ventor.tech>, 2019
-# Константин Коровин <korovin74@gmail.com>, 2019
 # Andrey Samorukov <andrey.samorukov@me.com>, 2019
 # Андрей Гусев <gaussgss@gmail.com>, 2019
 # Max Belyanin <maxbelyanin@gmail.com>, 2019
@@ -17,7 +17,7 @@
 # Sergey Vilizhanin, 2019
 # Vasiliy Korobatov <korobatov@gmail.com>, 2019
 # Pavel Kedrinskiy <pavel.py3@gmail.com>, 2019
-# Ivan Yelizariev // IEL <yelizariev@itpp.dev>, 2020
+# Ivan Yelizariev // IEL (ellui) <yelizariev@itpp.dev>, 2020
 # Martin Trigaux, 2020
 # Polina Alexandrova <polinaalexnder@gmail.com>, 2020
 # Ekaterina <nawsikaya@bk.ru>, 2020
@@ -1665,8 +1665,8 @@ msgstr "Места хранения заказчиков"
 
 #. module: stock
 #: model:ir.model.fields,field_description:stock.field_res_config_settings__module_delivery_dhl
-msgid "DHL Connector"
-msgstr "Коннектор DHL"
+msgid "DHL Express Connector"
+msgstr ""
 
 #. module: stock
 #: model:ir.model.fields,field_description:stock.field_report_stock_quantity__date
@@ -3069,15 +3069,24 @@ msgstr "Есть ли величина редактированной"
 #: code:addons/stock/models/stock_quant.py:0
 #, python-format
 msgid ""
-"It is not possible to reserve more products of %s than you have in stock."
-msgstr "Невозможно заказать больше товаров %s чем у вас на складе."
+"It is not possible to unreserve more products of %s than you have in "
+"stock.The correction could unreserve some operations with problematics "
+"products."
+msgstr ""
 
 #. module: stock
 #: code:addons/stock/models/stock_quant.py:0
 #, python-format
 msgid ""
-"It is not possible to unreserve more products of %s than you have in stock."
-msgstr "Невозможно восстановить больше товаров %s чем у вас на складе."
+"It is not possible to unreserve more products of %s than you have in stock. "
+"Contact an administrator."
+msgstr ""
+
+#. module: stock
+#: code:addons/stock/models/stock_quant.py:0
+#, python-format
+msgid "Try our automated action to fix it"
+msgstr ""
 
 #. module: stock
 #: model:ir.model.fields,help:stock.field_stock_picking__move_type
