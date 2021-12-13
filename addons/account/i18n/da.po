@@ -27,7 +27,7 @@
 # jonas jensen <j.jensen@tcomp.dk>, 2020
 # Sanne Kristensen <sanne@vkdata.dk>, 2020
 # Mads Søndergaard, 2020
-# Mads Søndergaard <mads@vkdata.dk>, 2021
+# Mads Søndergaard, 2021
 # 
 msgid ""
 msgstr ""
@@ -35,7 +35,7 @@ msgstr ""
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2020-07-01 12:20+0000\n"
 "PO-Revision-Date: 2019-08-26 09:06+0000\n"
-"Last-Translator: Mads Søndergaard <mads@vkdata.dk>, 2021\n"
+"Last-Translator: Mads Søndergaard, 2021\n"
 "Language-Team: Danish (https://www.transifex.com/odoo/teams/41243/da/)\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
@@ -379,12 +379,12 @@ msgstr ""
 #: model_terms:ir.ui.view,arch_db:account.portal_my_invoices
 msgid ""
 "<span class=\"badge badge-pill badge-info\"><i class=\"fa fa-fw fa-clock-o\""
-" aria-label=\"Opened\" title=\"Opened\" role=\"img\"/><span class=\"d-none d"
-"-md-inline\"> Waiting for Payment</span></span>"
+" aria-label=\"Opened\" title=\"Opened\" role=\"img\"/><span class=\"d-none "
+"d-md-inline\"> Waiting for Payment</span></span>"
 msgstr ""
 "<span class=\"badge badge-pill badge-info\"><i class=\"fa fa-fw fa-clock-o\""
-" aria-label=\"Opened\" title=\"Opened\" role=\"img\"/><span class=\"d-none d"
-"-md-inline\"> Afventer betaling</span></span>"
+" aria-label=\"Opened\" title=\"Opened\" role=\"img\"/><span class=\"d-none "
+"d-md-inline\"> Afventer betaling</span></span>"
 
 #. module: account
 #: model_terms:ir.ui.view,arch_db:account.portal_my_invoices
@@ -1951,11 +1951,11 @@ msgid ""
 "                Sheet and the Profit and Loss report use the category\n"
 "                (profit/loss or balance sheet)."
 msgstr ""
-"En kontotype bruges til at bestemme, hvordan en konto bruges i"
-"                 hver journal. Udskydelsesmetoden for en kontotype bestemmer"
-"                 processen for den årlige lukning. Rapporter som Balance"
-"                 og Resultatopgørelsen bruger kategorien                 "
-"(Gevinst / tab eller balance)."
+"En kontotype bruges til at bestemme, hvordan en konto bruges "
+"i                 hver journal. Udskydelsesmetoden for en kontotype "
+"bestemmer                 processen for den årlige lukning. Rapporter som "
+"Balance                 og Resultatopgørelsen bruger "
+"kategorien                 (Gevinst / tab eller balance)."
 
 #. module: account
 #: code:addons/account/models/account_move.py:0
@@ -3035,8 +3035,8 @@ msgstr ""
 msgid ""
 "Check this option if you want the user to reconcile entries in this account."
 msgstr ""
-"Kryds denne indstilling af, hvis du vil have brugeren til at afstemme poster"
-" på denne konto."
+"Kryds denne indstilling af, hvis du vil have brugeren til at afstemme "
+"poster på denne konto."
 
 #. module: account
 #: model_terms:ir.ui.view,arch_db:account.res_config_settings_view_form
@@ -9852,8 +9852,8 @@ msgid ""
 msgstr ""
 "Indstil dette til forkert, hvis du ikke vil have denne skabelon aktivt brugt"
 " i guiden, der genererer kontooversigter fra skabeloner. Dette er nyttigt, "
-"hvis du kun vil generere konti for denne skabelon, når du læser dets "
-"oprindeligses skabelon."
+"hvis du kun vil generere konti for denne skabelon, når du læser "
+"dets oprindeligses skabelon."
 
 #. module: account
 #. openerp-web
@@ -10731,7 +10731,7 @@ msgid ""
 "matching amount in any supsense account."
 msgstr ""
 "Teknisk felt brugt til at vise en alarm på faktura, hvis der er mindst ét "
-"matchende mængde i en given spændingskonto."
+"matchende mængde i en given mellemregningskonto."
 
 #. module: account
 #: model:ir.model.fields,help:account.field_account_move_line__exclude_from_invoice_tab
@@ -13186,7 +13186,8 @@ msgstr "Du har"
 #: model_terms:ir.ui.view,arch_db:account.view_move_form
 msgid "You have suspense account moves that match this invoice."
 msgstr ""
-"Du har en spændingskonto flytning der stemmer overens med denne faktura."
+"Du har en mellemregningskonto flytning der stemmer overens med denne "
+"faktura."
 
 #. module: account
 #: code:addons/account/models/account_payment.py:0

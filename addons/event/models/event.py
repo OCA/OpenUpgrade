@@ -3,7 +3,7 @@
 import logging
 import pytz
 
-from odoo import _, api, fields, models
+from odoo import _, api, fields, models, SUPERUSER_ID
 from odoo.tools import format_datetime
 from odoo.exceptions import AccessError, UserError, ValidationError
 from odoo.tools.translate import html_translate
@@ -436,7 +436,11 @@ class EventRegistration(models.Model):
 
     @api.model
     def check_access_rights(self, operation, raise_exception=True):
-        if not self.env.is_admin() and not self.user_has_groups('event.group_event_user'):
+        if operation == 'read' and not self.env.is_admin() and not self.user_has_groups('base.group_user'):
+            if raise_exception:
+                raise AccessError(_('Only internal users are allowed to read registrations.'))
+            return False
+        elif operation != 'read' and not self.env.is_admin() and not self.user_has_groups('event.group_event_user'):
             if raise_exception:
                 raise AccessError(_('Only event users or managers are allowed to create or update registrations.'))
             return False
@@ -474,7 +478,7 @@ class EventRegistration(models.Model):
         # auto-trigger after_sub (on subscribe) mail schedulers, if needed
         onsubscribe_schedulers = self.event_id.event_mail_ids.filtered(
             lambda s: s.interval_type == 'after_sub')
-        onsubscribe_schedulers.execute()
+        onsubscribe_schedulers.with_user(SUPERUSER_ID).execute()
 
     def button_reg_close(self):
         """ Close Registration """
