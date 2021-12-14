@@ -103,6 +103,7 @@ DEL ir.model.access: mrp.access_mrp_routing
 DEL ir.model.access: mrp.access_mrp_routing_manager
 DEL ir.model.access: mrp.access_mrp_workorder_line_mrp_manager
 DEL ir.model.access: mrp.access_mrp_workorder_line_mrp_user
+NEW ir.model.constraint: mrp.constraint_mrp_bom_qty_positive
 DEL ir.rule: mrp.mrp_routing_rule (noupdate)
 DEL ir.sequence: mrp.sequence_mrp_route (noupdate)
 NEW ir.ui.menu: mrp.menu_procurement_compute_mrp

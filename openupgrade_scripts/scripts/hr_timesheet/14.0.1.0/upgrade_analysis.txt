@@ -16,6 +16,7 @@ NEW ir.actions.act_window.view: hr_timesheet.timesheet_action_view_all_pivot
 NEW ir.config_parameter: hr_timesheet.ir_config_parameter_timesheet_min_duration (noupdate)
 NEW ir.config_parameter: hr_timesheet.ir_config_parameter_timesheet_rounding (noupdate)
 NEW ir.model.access: hr_timesheet.access_project_task_create_timesheet
+NEW ir.model.constraint: hr_timesheet.constraint_project_task_create_timesheet_time_positive
 NEW ir.rule: hr_timesheet.timesheet_line_rule_approver (noupdate)
 ir.rule: hr_timesheet.timesheet_line_rule_user (noupdate) (noupdate switched)
 NEW ir.ui.view: hr_timesheet.hr_timesheet_line_my_timesheet_search

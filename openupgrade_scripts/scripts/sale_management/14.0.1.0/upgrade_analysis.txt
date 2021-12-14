@@ -8,4 +8,5 @@ sale_management / sale.order.template.option / price_unit (float)            : D
 ---XML records in module 'sale_management'---
 NEW digest.tip: sale_management.digest_tip_sale1_management_0 (noupdate)
 NEW digest.tip: sale_management.digest_tip_sale_management_1 (noupdate)
+ir.model.constraint: sale_management.constraint_sale_order_template_line_non_accountable_fields_null (changed definition: is now 'check(display_type is null or(product_id is null and product_uom_qty = 0 and product_uom_id is null))' ('check(display_type is null or(product_id is null and price_unit = 0 and product_uom_qty = 0 and product_uom_id is null))'))
 ir.rule: sale_management.sale_order_template_rule_company (noupdate) (noupdate switched)

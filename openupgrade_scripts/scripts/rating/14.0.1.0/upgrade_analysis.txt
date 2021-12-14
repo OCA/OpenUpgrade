@@ -4,6 +4,7 @@ rating       / rating.rating            / is_internal (boolean)         : NEW is
 ---XML records in module 'rating'---
 NEW ir.actions.act_window: rating.rating_rating_view
 DEL ir.actions.act_window: rating.action_view_rating
+ir.model.constraint: rating.constraint_rating_rating_rating_range (changed definition: is now 'check(rating >= 0 and rating <= 5)' ('check(rating >= 0 and rating <= 10)'))
 NEW ir.ui.menu: rating.rating_rating_menu_technical
 NEW ir.ui.view: rating.assets_frontend
 NEW ir.ui.view: rating.mail_message_view_form

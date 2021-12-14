@@ -6,3 +6,4 @@ test_uninstall / test_uninstall.model     / ref (many2one)                : NEW 
 test_uninstall / test_uninstall.model     / rel (many2many)               : NEW relation: res.users
 ---XML records in module 'test_uninstall'---
 NEW ir.model.access: test_uninstall.access_test_uninstall_model
+NEW ir.model.constraint: test_uninstall.constraint_test_uninstall_model_name_uniq

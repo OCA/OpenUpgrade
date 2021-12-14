@@ -22,6 +22,7 @@ sale_project / sale.order.line          / task_id (many2one)            : previo
 NEW ir.actions.server: sale_project.project_task_server_action_batch_invoice
 NEW ir.model.access: sale_project.access_sale_order_line_project_manager [renamed from sale_timesheet module]
 NEW ir.model.access: sale_project.access_sale_order_project_manager [renamed from sale_timesheet module]
+NEW ir.model.constraint: sale_project.constraint_project_project_sale_order_required_if_sale_line [renamed from sale_timesheet module]
 NEW ir.rule: sale_project.sale_order_line_rule_project_manager [renamed from sale_timesheet module] (noupdate)
 NEW ir.ui.view: sale_project.product_template_form_view_invoice_policy_inherit_sale_project
 NEW ir.ui.view: sale_project.project_project_view_tree_inherit_sale_project

@@ -18,6 +18,7 @@ NEW ir.actions.act_window: google_calendar.google_calendar_reset_account_action
 NEW ir.model.access: google_calendar.google_calendar_account_reset
 DEL ir.model.access: google_calendar.access_google_calendar
 DEL ir.model.access: google_calendar.access_google_calendar_all
+DEL ir.model.constraint: google_calendar.constraint_calendar_attendee_google_id_uniq
 NEW ir.ui.view: google_calendar.google_calendar_reset_account_view_form
 NEW ir.ui.view: google_calendar.qunit_mobile_suite
 NEW ir.ui.view: google_calendar.view_google_calendar_event

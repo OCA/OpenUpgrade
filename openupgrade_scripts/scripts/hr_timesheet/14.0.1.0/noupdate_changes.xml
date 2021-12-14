@@ -19,6 +19,9 @@
     <field name="category_id" ref="base.module_category_services_timesheets"/>
     <!-- <field name="implied_ids" eval="[(4, ref('hr_timesheet.group_hr_timesheet_approver')), (4, ref('hr.group_hr_user'))]"/> -->
   </record>
+  <!-- <record id="project.group_project_manager" model="res.groups"> -->
+    <!-- <field name="implied_ids" eval="[(4, ref('hr_timesheet.group_hr_timesheet_approver'))]"/> -->
+  <!-- </record> -->
   <!-- <record id="timesheet_line_rule_manager" model="ir.rule">
     <field name="perm_create"/>
     <field name="perm_read"/>

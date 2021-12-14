@@ -49,6 +49,8 @@ NEW ir.model.access: sale_timesheet.access_project_create_sale_order_line
 NEW ir.model.access: sale_timesheet.access_project_task_create_sale_order
 DEL ir.model.access: sale_timesheet.access_sale_order_line_project_manager [renamed to sale_project module]
 DEL ir.model.access: sale_timesheet.access_sale_order_project_manager [renamed to sale_project module]
+NEW ir.model.constraint: sale_timesheet.constraint_project_project_timesheet_product_required_if_billable_and_timesheets
+DEL ir.model.constraint: sale_timesheet.constraint_project_project_sale_order_required_if_sale_line [renamed to sale_project module]
 DEL ir.rule: sale_timesheet.sale_order_line_rule_project_manager [renamed to sale_project module] (noupdate)
 NEW ir.ui.view: sale_timesheet.portal_my_timesheets_inherit
 NEW ir.ui.view: sale_timesheet.project_project_view_form_salesman

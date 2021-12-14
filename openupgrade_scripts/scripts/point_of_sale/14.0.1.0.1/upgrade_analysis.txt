@@ -44,6 +44,7 @@ NEW ir.model.access: point_of_sale.access_product_product_attribute_pos_manager
 NEW ir.model.access: point_of_sale.access_product_template_attribute_exclusion_pos_manager
 NEW ir.model.access: point_of_sale.access_product_template_attribute_line_pos_manager
 DEL ir.model.access: pos_cash_rounding.access_account_cash_rounding
+DEL ir.model.constraint: point_of_sale.constraint_res_partner_unique_barcode
 ir.rule: point_of_sale.rule_pos_bank_statement_account_user (noupdate) (noupdate switched)
 ir.rule: point_of_sale.rule_pos_bank_statement_line_account_user (noupdate) (noupdate switched)
 ir.rule: point_of_sale.rule_pos_bank_statement_line_user (noupdate) (noupdate switched)
