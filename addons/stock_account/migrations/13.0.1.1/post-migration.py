@@ -96,6 +96,7 @@ def get_product_price_history(env, company_id, product_id):
                 SELECT id, create_date, COUNT(*) OVER(PARTITION BY create_date) AS qty
                 FROM account_move
                 WHERE stock_move_id IS NULL
+                    AND type = 'entry' AND company_id = %s
             ) foo
             WHERE qty = 1
         )
@@ -105,7 +106,7 @@ def get_product_price_history(env, company_id, product_id):
         LEFT JOIN account_move_rel rel ON rel.create_date = pph.create_date
         WHERE pph.company_id = %s AND pph.product_id = %s
         ORDER BY pph.datetime, pph.id
-    """, (company_id, product_id))
+    """, (company_id, company_id, product_id))
     return env.cr.dictfetchall()
 
 
@@ -117,6 +118,7 @@ def get_stock_moves(env, company_id, product_id):
                 SELECT id, stock_move_id, COUNT(*) OVER(PARTITION BY stock_move_id) AS qty
                 FROM account_move
                 WHERE stock_move_id IS NOT NULL
+                    AND type = 'entry' AND company_id = %s
             ) foo
             WHERE qty = 1
         )
@@ -139,7 +141,7 @@ def get_stock_moves(env, company_id, product_id):
         WHERE sm.company_id = %s AND sm.product_id = %s
             AND state = 'done'
         ORDER BY sm.date, sm.id
-    """, (company_id, product_id))
+    """, (company_id, company_id, product_id))
     return env.cr.dictfetchall()
 
 
