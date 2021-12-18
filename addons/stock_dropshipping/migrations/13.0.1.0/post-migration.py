@@ -103,33 +103,36 @@ def run_dropshipping_functions(env):
     ]).unlink()
     # now, we redirect referenced records to new records if needed company-wise
     for company in companies[1:]:
-        openupgrade_merge_records._change_foreign_key_refs(
-            env,
-            "ir.sequence",
-            sequence.ids,
-            mapping[company.id]["sequence"].id,
-            [],
-            "ir_sequence",
-            extra_where=" AND company_id = %s" % company.id,
-        )
-        openupgrade_merge_records._change_foreign_key_refs(
-            env,
-            "stock.picking.type",
-            picking_type.ids,
-            mapping[company.id]["picking_type"].id,
-            [],
-            "stock_picking_type",
-            extra_where=" AND company_id = %s" % company.id,
-        )
-        openupgrade_merge_records._change_foreign_key_refs(
-            env,
-            "stock.rule",
-            stock_rule.ids,
-            mapping[company.id]["stock_rule"].id,
-            [],
-            "stock_rule",
-            extra_where=" AND company_id = %s" % company.id,
-        )
+        if sequence and sequence.exists():
+            openupgrade_merge_records._change_foreign_key_refs(
+                env,
+                "ir.sequence",
+                sequence.ids,
+                mapping[company.id]["sequence"].id,
+                [],
+                "ir_sequence",
+                extra_where=" AND company_id = %s" % company.id,
+            )
+        if picking_type and picking_type.exists():
+            openupgrade_merge_records._change_foreign_key_refs(
+                env,
+                "stock.picking.type",
+                picking_type.ids,
+                mapping[company.id]["picking_type"].id,
+                [],
+                "stock_picking_type",
+                extra_where=" AND company_id = %s" % company.id,
+            )
+        if stock_rule and stock_rule.exists():
+            openupgrade_merge_records._change_foreign_key_refs(
+                env,
+                "stock.rule",
+                stock_rule.ids,
+                mapping[company.id]["stock_rule"].id,
+                [],
+                "stock_rule",
+                extra_where=" AND company_id = %s" % company.id,
+            )
 
 
 @openupgrade.migrate()
