@@ -134,8 +134,7 @@ account      / account.group            / code_prefix_start (char)      : NEW
 # post-migration: assigned same start values to end field
 
 account      / account.group            / company_id (many2one)         : NEW relation: res.company, required, req_default: function, hasdefault
-# DONE: post-migration: assure company is the same as the account.account
-# also duplicate family groups for each company in case of groups shared in accounts spread over several companies
+# DONE: post-migration: Unfold manual groups per company + proper company assignation
 
 account      / account.group.template   / chart_template_id (many2one)  : NEW relation: account.chart.template, required
 account      / account.group.template   / code_prefix_end (char)        : NEW
