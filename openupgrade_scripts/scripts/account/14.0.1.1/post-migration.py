@@ -317,75 +317,62 @@ def fill_company_account_cash_basis_base_account_id(env):
     )
 
 
-def fix_group_company_and_create_groups_for_each_company_if_necessary(env):
-    def _get_all_ordered_children(groups):
-        children = groups
-        for child_group in groups:
-            group_childs = env["account.group"].search(
-                [("parent_id", "in", child_group.ids)]
-            )
-            if group_childs:
-                children |= _get_all_ordered_children(group_childs)
-        return children
+def populate_account_groups(env):
+    """Generate the generic account groups for each company. Later code will
+    do it for manually created groups.
+    """
+    companies = env["res.company"].with_context(active_test=False).search([])
+    for company in companies.filtered("chart_template_id"):
+        company.chart_template_id.generate_account_groups(company)
 
-    all_parent_groups = env["account.group"].search([("parent_id", "=", False)])
-    compute_parent_path = False
-    for parent_group in all_parent_groups:
-        group_plus_childs = _get_all_ordered_children(parent_group)
-        accounts = env["account.account"].search(
-            [("group_id", "in", group_plus_childs.ids)]
-        )
-        companies = accounts.mapped("company_id")
-        if len(companies) == 1:
-            group_plus_childs.filtered(lambda g: g.company_id != companies).write(
-                {"company_id": companies.id}
+
+def unfold_manual_account_groups(env):
+    """For manually created groups, we check if such group is used in more than
+    one company. If so, we unfold it. We also assure proper company for existing one.
+    """
+    env.cr.execute(
+        """SELECT ag.id FROM account_group ag
+        LEFT JOIN ir_model_data imd
+            ON ag.id = imd.res_id AND imd.model = 'account.group'
+                AND imd.module != '__export__'
+        WHERE imd.id IS NULL
+        ORDER BY ag.parent_path"""
+    )
+    AccountGroup = env["account.group"]
+    for group_id in [x[0] for x in env.cr.fetchall()]:
+        group = AccountGroup.browse(group_id)
+        accounts = env["account.account"].search([("group_id", "=", group.id)])
+        companies = accounts.mapped("company_id").sorted()
+        relation_dict = {}
+        for i, company in companies:
+            relation_dict[company] = {}
+            if i == 0:
+                if group.company_id != company:
+                    group.company_id = company.id
+                relation_dict[company][group] = group
+                continue
+            # Done by SQL for avoiding ORM derived problems
+            env.cr.execute(
+                """INSERT INTO account_group (parent_id, parent_path, name,
+                code_prefix_start, code_prefix_end, company_id,
+                create_uid, write_uid, create_date, write_date)
+            SELECT {parent_id}, parent_path, name, code_prefix_start,
+                code_prefix_end, {company_id}, create_uid,
+                write_uid, create_date, write_date
+            FROM account_group
+            WHERE id = {id}
+            RETURNING id
+            """.format(
+                    id=group.id,
+                    company_id=company.id,
+                    parent_id=group.parent_id
+                    and relation_dict[company][group.parent_id].id
+                    or "NULL",
+                )
             )
-        elif len(companies) > 1:
-            compute_parent_path = True
-            companies = companies.sorted()
-            relation_dict = {}
-            for company in companies:
-                relation_dict[company.id] = {}
-                if company == companies[0]:
-                    for group in group_plus_childs:
-                        relation_dict[company.id][group.id] = group
-                    group_plus_childs.filtered(lambda g: g.company_id != company).write(
-                        {"company_id": company.id}
-                    )
-                    continue
-                for group in group_plus_childs:
-                    # doing query to avoid "adapt" redirection methods in "create"
-                    # method of account groups. This way, we have more control of
-                    # everything instead of delegating to odoo.
-                    env.cr.execute(
-                        """
-                    INSERT INTO account_group (parent_id, parent_path, name,
-                        code_prefix_start, code_prefix_end, company_id,
-                        create_uid, write_uid, create_date, write_date)
-                    SELECT {parent_id}, parent_path, name, code_prefix_start,
-                        code_prefix_end, {company_id}, create_uid,
-                        write_uid, create_date, write_date
-                    FROM account_group
-                    WHERE id = {id}
-                    RETURNING id
-                    """.format(
-                            id=group.id,
-                            company_id=company.id,
-                            parent_id=group.parent_id
-                            and relation_dict[company.id][group.parent_id.id].id
-                            or "NULL",
-                        )
-                    )
-                    new_group = env["account.group"].browse(env.cr.fetchone())
-                    relation_dict[company.id][group.id] = new_group
-            for account in accounts.filtered(
-                lambda a: a.group_id != relation_dict[a.company_id.id][a.group_id.id]
-            ):
-                account.group_id = relation_dict[account.company_id.id][
-                    account.group_id.id
-                ]
-    if compute_parent_path:
-        env["account.group"]._parent_store_compute()
+            new_group = AccountGroup.browse(env.cr.fetchone())
+            relation_dict[company][group] = new_group
+    AccountGroup._parent_store_compute()
 
 
 def fill_company_account_journal_suspense_account_id(env):
@@ -752,7 +739,10 @@ def migrate(env, version):
     fill_account_move_line_date(env)
     openupgrade.load_data(env.cr, "account", "14.0.1.1/noupdate_changes.xml")
     try_delete_noupdate_records(env)
-    fix_group_company_and_create_groups_for_each_company_if_necessary(env)
+    populate_account_groups(env)
+    unfold_manual_account_groups(env)
+    # Launch a recomputation of the account groups after previous changes
+    env["account.account"].search([])._compute_account_group()
     fill_company_account_journal_suspense_account_id(env)
     fill_statement_lines_with_no_move(env)
     fill_account_journal_payment_credit_debit_account_id(env)
