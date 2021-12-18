@@ -1,0 +1,9 @@
+---Models in module 'hr_attendance'---
+---Fields in module 'hr_attendance'---
+---XML records in module 'hr_attendance'---
+NEW res.groups: hr_attendance.group_hr_attendance_kiosk
+# NOTHING TO DO: New group is already implied for old attendance users, so no "feature lost" on migration, but better granularity
+
+DEL ir.ui.menu: hr_attendance.menu_hr_attendance_kiosk_mode
+NEW ir.ui.menu: hr_attendance.menu_hr_attendance_kiosk_no_user_mode
+# DONE: pre-migration: XML-IDs renamed. Not strictly needed, but this way we can keep further customizations on top of this menu
