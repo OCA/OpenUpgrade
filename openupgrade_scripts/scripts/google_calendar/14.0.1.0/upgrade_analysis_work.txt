@@ -1,0 +1,44 @@
+---Models in module 'google_calendar'---
+obsolete model google.calendar [abstract]
+new model google.calendar.account.reset [transient]
+new model google.calendar.sync [abstract]
+# NOTHING TO DO: New abstract and transient models
+
+---Fields in module 'google_calendar'---
+google_calendar / calendar.attendee        / google_internal_event_id (char): DEL
+# NOTHING TO DO: The matching is now done by email
+
+google_calendar / calendar.attendee        / oe_synchro_date (datetime)    : DEL
+# NOTHING TO DO: Synchronization flag is now controlled at event level, not attendee one
+
+google_calendar / calendar.event           / google_id (char)              : NEW isfunction: function, stored
+google_calendar / calendar.recurrence      / google_id (char)              : NEW
+# DONE: Pre-create columns for avoiding any computation, as they are used as transient for recognizing the base event
+
+google_calendar / calendar.event           / need_sync (boolean)           : NEW hasdefault
+google_calendar / calendar.event           / oe_update_date (datetime)     : DEL
+# NOTHING TO DO: Instead of putting a date, the synchronization process is now controlled by flags in this part and token in Google.
+
+google_calendar / calendar.recurrence      / active (boolean)              : NEW hasdefault
+# NOTHING TO DO: Existing ones will be considered as active
+
+google_calendar / calendar.recurrence      / need_sync (boolean)           : NEW hasdefault
+# NOTHING TO DO: A full sync will be performed first time
+
+google_calendar / res.users                / google_calendar_last_sync_date (datetime): DEL
+# NOTHING TO DO: There's no cutting date for synchronizing now, but controlled by tokens
+
+google_calendar / res.users                / google_calendar_sync_token (char): NEW
+# NOTHING TO DO: If empty, a full sync will be performed first time, and then assign this field
+
+
+
+---XML records in module 'google_calendar'---
+NEW ir.actions.act_window: google_calendar.google_calendar_reset_account_action
+NEW ir.model.access: google_calendar.google_calendar_account_reset
+DEL ir.model.access: google_calendar.access_google_calendar
+DEL ir.model.access: google_calendar.access_google_calendar_all
+NEW ir.ui.view: google_calendar.google_calendar_reset_account_view_form
+NEW ir.ui.view: google_calendar.qunit_mobile_suite
+NEW ir.ui.view: google_calendar.view_google_calendar_event
+# NOTHING TO DO: new noupdate=0 internal stuff records
