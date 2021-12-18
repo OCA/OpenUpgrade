@@ -68,9 +68,9 @@ def run_dropshipping_functions(env):
             supplier_location = stock_rule.location_src_id
             customer_location = stock_rule.location_id
             if supplier_location.usage != "supplier":
-                supplier_location = env.ref('stock.stock_location_suppliers').id
+                supplier_location = env.ref('stock.stock_location_suppliers')
             if customer_location.usage != "customer":
-                customer_location = env.ref('stock.stock_location_customers').id
+                customer_location = env.ref('stock.stock_location_customers')
             dropship_picking_type = mapping[company.id]["picking_type"]
             vals = ({
                 "route_id": dropship_route.id,
