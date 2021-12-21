@@ -3,6 +3,9 @@
 # License AGPL-3.0 or later (http://www.gnu.org/licenses/agpl.html).
 from openupgradelib import openupgrade
 from psycopg2 import sql
+import logging
+
+_logger = logging.getLogger(__name__)
 
 
 def fill_account_reconcile_model_second_analytic_tag_rel_table(env):
@@ -464,7 +467,15 @@ def compute_balance_for_draft_invoice_lines(env):
         )
         draft_invoices.line_ids.read()
         draft_invoices.line_ids._onchange_price_subtotal()
-        draft_invoices._recompute_dynamic_lines(recompute_all_taxes=True)
+        for draft_invoice in draft_invoices:
+            try:
+                draft_invoice._recompute_dynamic_lines(recompute_all_taxes=True)
+            except Exception as e:
+                _logger.error(
+                    "Error while recomputing draft invoice %s: %s",
+                    draft_invoice.id,
+                    repr(e),
+                )
 
 
 def migration_voucher_moves(env):
