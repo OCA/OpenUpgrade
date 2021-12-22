@@ -40,7 +40,7 @@ def _fill_res_users_m2m_tables(env):
         """
         INSERT INTO project_allowed_portal_users_rel
         (project_project_id, res_users_id)
-        SELECT pp.id, ru.id
+        SELECT DISTINCT pp.id, ru.id
         FROM project_project pp
         JOIN mail_followers mf ON mf.res_model = 'project.project' AND mf.res_id = pp.id
         JOIN res_partner rp ON mf.partner_id = rp.id
