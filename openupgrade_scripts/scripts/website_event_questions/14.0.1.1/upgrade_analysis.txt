@@ -26,6 +26,7 @@ DEL ir.model.access: website_event_questions.event_answer_all
 DEL ir.model.access: website_event_questions.event_answer_event_user
 DEL ir.model.access: website_event_questions.event_question_report_all
 DEL ir.model.access: website_event_questions.event_registration_answer_all
+NEW ir.model.constraint: website_event_questions.constraint_event_registration_answer_value_check
 NEW ir.rule: website_event_questions.ir_rule_event_question_answer_event_user (noupdate)
 NEW ir.rule: website_event_questions.ir_rule_event_question_answer_published (noupdate)
 NEW ir.rule: website_event_questions.ir_rule_event_question_event_user (noupdate)

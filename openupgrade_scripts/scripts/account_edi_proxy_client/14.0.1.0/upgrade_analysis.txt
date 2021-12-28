@@ -11,3 +11,5 @@ account_edi_proxy_client / account_edi_proxy_client.user / refresh_token (char) 
 account_edi_proxy_client / res.company              / account_edi_proxy_client_ids (one2many): NEW relation: account_edi_proxy_client.user
 ---XML records in module 'account_edi_proxy_client'---
 NEW ir.model.access: account_edi_proxy_client.access_account_edi_proxy_user
+NEW ir.model.constraint: account_edi_proxy_client.constraint_account_edi_proxy_client_user_unique_edi_identification_per_format
+NEW ir.model.constraint: account_edi_proxy_client.constraint_account_edi_proxy_client_user_unique_id_client

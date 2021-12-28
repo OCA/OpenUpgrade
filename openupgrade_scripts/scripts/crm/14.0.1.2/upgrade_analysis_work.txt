@@ -89,6 +89,12 @@ NEW ir.model.access: crm.access_crm_lead_lost
 NEW ir.model.access: crm.access_crm_merge_opportunity
 NEW ir.model.access: crm.crm_recurring_plan_access_manager
 NEW ir.model.access: crm.crm_recurring_plan_access_salesman
+NEW ir.model.constraint: crm.constraint_crm_recurring_plan_check_number_of_months
+# NOTHING TO DO: New records
+
+DEL ir.model.constraint: crm.constraint_crm_lead_tag_name_uniq
+# DONE: pre-migration: deleted obsolete constraint
+
 NEW ir.ui.menu: crm.crm_lead_menu_my_activities
 NEW ir.ui.menu: crm.crm_recurring_plan_menu_config
 NEW ir.ui.view: crm.crm_lead_view_list_activities

@@ -105,10 +105,13 @@ test_new_api / test_new_api.category    / parent (many2one)             : NEW re
 test_new_api / test_new_api.category    / parent_path (char)            : NEW
 test_new_api / test_new_api.city        / country_id (many2one)         : NEW relation: test_new_api.country
 test_new_api / test_new_api.city        / name (char)                   : NEW
+test_new_api / test_new_api.company     / count (integer)               : NEW hasdefault
 test_new_api / test_new_api.company     / date (date)                   : NEW hasdefault
 test_new_api / test_new_api.company     / foo (char)                    : NEW hasdefault
 test_new_api / test_new_api.company     / moment (datetime)             : NEW hasdefault
+test_new_api / test_new_api.company     / phi (float)                   : NEW hasdefault
 test_new_api / test_new_api.company     / tag_id (many2one)             : NEW relation: test_new_api.multi.tag, hasdefault
+test_new_api / test_new_api.company     / truth (boolean)               : NEW hasdefault
 test_new_api / test_new_api.company.attr / bar (char)                    : NEW isfunction: function, stored
 test_new_api / test_new_api.company.attr / company (many2one)            : NEW relation: test_new_api.company
 test_new_api / test_new_api.company.attr / quantity (integer)            : NEW
@@ -397,6 +400,7 @@ NEW ir.model.access: test_new_api.access_test_new_api_selection
 NEW ir.model.access: test_new_api.access_test_new_api_trigger_left
 NEW ir.model.access: test_new_api.access_test_new_api_trigger_middle
 NEW ir.model.access: test_new_api.access_test_new_api_trigger_right
+NEW ir.model.constraint: test_new_api.constraint_test_new_api_category_positive_color
 NEW ir.rule: test_new_api.ir_rule_test_new_api_model_shared_cache_compute_line (noupdate)
 NEW ir.ui.menu: test_new_api.menu_categories
 NEW ir.ui.menu: test_new_api.menu_config

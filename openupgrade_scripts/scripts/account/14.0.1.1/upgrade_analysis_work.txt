@@ -564,6 +564,17 @@ DEL ir.model.access: account.access_account_tax
 DEL ir.model.access: account.access_account_tax_report_line_invoice
 # NOTHING TO DO: noupdate="0" records
 
+NEW ir.model.constraint: account.constraint_account_group_check_length_prefix
+NEW ir.model.constraint: account.constraint_account_payment_check_amount_not_negative
+# NOTHING TO DO
+
+ir.model.constraint: account.constraint_account_move_line_check_amount_currency_balance_sign (changed definition: is now 'check(   (    (currency_id != company_currency_id)    and    (    (debit - credit <= 0 and amount_currency <= 0)     or    (debit - credit >= 0 and amount_currency >= 0)    )    )    or   (    currency_id = company_currency_id    and    round(debit - credit - amount_currency,2) = 0    )   )' ('check(    currency_id is null    or    company_currency_id is null    or   (    (currency_id != company_currency_id)    and    (    (balance > 0 and amount_currency > 0)     or(balance <= 0 and amount_currency <= 0)     or(balance >= 0 and amount_currency >= 0)    )    )   )'))
+# DONE: pre-migration: deleted in order to let odoo add it again directly with the new definition
+
+ir.model.constraint: account.constraint_account_tax_name_company_uniq (changed definition: is now 'unique(name,company_id,type_tax_use,tax_scope)' ('unique(name,company_id,type_tax_use)'))
+ir.model.constraint: account.constraint_account_tax_template_name_company_uniq (changed definition: is now 'unique(name,type_tax_use,tax_scope,chart_template_id)' ('unique(name,type_tax_use,chart_template_id)'))
+# NOTHING TO DO: done automatically by odoo
+
 ir.rule: account.account_analytic_line_rule_billing_user (noupdate) (noupdate switched)
 # DONE: pre-migration: noupdate changed to "1"
 

@@ -77,3 +77,4 @@ calendar     / calendar.recurrence      / we (boolean)                  : NEW
 calendar     / calendar.recurrence      / weekday (selection)           : NEW selection_keys: ['FR', 'MO', 'SA', 'SU', 'TH', 'TU', 'WE']
 ---XML records in module 'calendar'---
 NEW ir.model.access: calendar.access_calendar_recurrence
+NEW ir.model.constraint: calendar.constraint_calendar_recurrence_month_day

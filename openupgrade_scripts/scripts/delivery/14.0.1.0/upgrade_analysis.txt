@@ -6,6 +6,7 @@ delivery     / stock.picking            / volume (float)                : DEL
 ---XML records in module 'delivery'---
 NEW ir.model.access: delivery.access_choose_delivery_carrier
 NEW ir.model.access: delivery.access_choose_delivery_package
+ir.model.constraint: delivery.constraint_product_packaging_positive_length (changed definition: is now 'check(packaging_length>=0)' ('check(length>=0)'))
 NEW ir.ui.view: delivery.delivery_stock_report_delivery_no_package_section_line
 NEW ir.ui.view: delivery.stock_report_delivery_aggregated_move_lines_inherit_delivery
 NEW ir.ui.view: delivery.stock_report_delivery_has_serial_move_line_inherit_delivery

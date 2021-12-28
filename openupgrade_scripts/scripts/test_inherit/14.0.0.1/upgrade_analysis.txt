@@ -22,6 +22,8 @@ test_inherit / test_new_api.selection   / state (False)                 : NEW se
 NEW ir.model.access: test_inherit.access_test_inherit_daughter
 NEW ir.model.access: test_inherit.access_test_inherit_mother
 NEW ir.model.access: test_inherit.access_test_inherit_property
+NEW ir.model.constraint: test_inherit.constraint_test_inherit_child_unique_foo
+NEW ir.model.constraint: test_inherit.constraint_test_inherit_parent_unique_foo
 NEW test.inherit.mother: test_inherit.mother_a
 NEW test.inherit.mother: test_inherit.mother_b
 NEW test.inherit.mother: test_inherit.mother_c

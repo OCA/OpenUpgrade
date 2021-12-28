@@ -91,6 +91,14 @@ DEL ir.model.access: survey.access_survey_label_all
 DEL ir.model.access: survey.access_survey_label_survey_manager
 DEL ir.model.access: survey.access_survey_label_survey_user
 DEL ir.model.access: survey.access_survey_label_user
+NEW ir.model.constraint: survey.constraint_survey_question_positive_answer_score
+NEW ir.model.constraint: survey.constraint_survey_question_scored_date_have_answers
+NEW ir.model.constraint: survey.constraint_survey_question_scored_datetime_have_answers
+NEW ir.model.constraint: survey.constraint_survey_survey_certification_check
+NEW ir.model.constraint: survey.constraint_survey_survey_scoring_success_min_check
+NEW ir.model.constraint: survey.constraint_survey_survey_session_code_unique
+ir.model.constraint: survey.constraint_survey_user_input_unique_token (changed definition: is now 'unique(access_token)' ('unique(token)'))
+DEL ir.model.constraint: survey.constraint_survey_survey_certificate_check
 NEW ir.rule: survey.survey_question_answer_rule_survey_manager (noupdate)
 NEW ir.rule: survey.survey_question_answer_rule_survey_user_cw (noupdate)
 NEW ir.rule: survey.survey_question_answer_rule_survey_user_read (noupdate)

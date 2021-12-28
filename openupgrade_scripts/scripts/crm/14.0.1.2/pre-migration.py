@@ -20,3 +20,12 @@ def migrate(env, version):
         ],
     )
     openupgrade.rename_tables(env.cr, [("crm_lead_tag_rel", "crm_tag_rel")])
+    # Disappeared constraint
+    openupgrade.logged_query(
+        env.cr,
+        """ALTER TABLE crm_lead
+           DROP CONSTRAINT IF EXISTS crm_lead_tag_name_uniq""",
+    )
+    openupgrade.delete_records_safely_by_xml_id(
+        env, ["crm.constraint_crm_lead_tag_name_uniq"]
+    )

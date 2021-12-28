@@ -20,6 +20,8 @@ NEW ir.model.access: account_edi.access_account_edi_document_group_invoice
 NEW ir.model.access: account_edi.access_account_edi_document_readonly
 NEW ir.model.access: account_edi.access_account_edi_format_group_invoice
 NEW ir.model.access: account_edi.access_account_edi_format_readonly
+NEW ir.model.constraint: account_edi.constraint_account_edi_document_unique_edi_document_by_move_by_format
+NEW ir.model.constraint: account_edi.constraint_account_edi_format_unique_code
 NEW ir.ui.view: account_edi.account_invoice_send_inherit_account_wizard_form
 NEW ir.ui.view: account_edi.view_account_journal_form_inherited
 NEW ir.ui.view: account_edi.view_move_form_inherit

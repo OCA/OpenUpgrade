@@ -11,6 +11,7 @@ NEW ir.actions.act_window: sales_team.sales_team_crm_tag_action
 NEW ir.model.access: sales_team.access_crm_tag
 NEW ir.model.access: sales_team.access_crm_tag_manager
 NEW ir.model.access: sales_team.access_crm_tag_salesman
+NEW ir.model.constraint: sales_team.constraint_crm_tag_name_uniq
 ir.rule: sales_team.crm_rule_all_salesteam (noupdate) (noupdate switched)
 ir.rule: sales_team.sale_team_comp_rule (noupdate) (noupdate switched)
 NEW ir.ui.view: sales_team.sales_team_crm_tag_view_form

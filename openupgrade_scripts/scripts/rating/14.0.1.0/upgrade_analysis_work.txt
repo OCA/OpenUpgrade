@@ -9,6 +9,9 @@ NEW ir.ui.view: rating.assets_frontend
 NEW ir.ui.view: rating.mail_message_view_form
 # NOTHING TO DO: noupdate = "0" records
 
+ir.model.constraint: rating.constraint_rating_rating_rating_range (changed definition: is now 'check(rating >= 0 and rating <= 5)' ('check(rating >= 0 and rating <= 10)'))
+# DONE: pre-migration: the value of rating is updated
+
 DEL ir.actions.act_window: rating.action_view_rating
 NEW ir.actions.act_window: rating.rating_rating_view
 # DONE: pre-migration: Rename XML-ID

@@ -74,6 +74,8 @@ NEW ir.model.access: crm.crm_recurring_plan_access_salesman
 DEL ir.model.access: crm.access_crm_lead_tag
 DEL ir.model.access: crm.access_crm_lead_tag_manager
 DEL ir.model.access: crm.access_crm_lead_tag_salesman
+NEW ir.model.constraint: crm.constraint_crm_recurring_plan_check_number_of_months
+DEL ir.model.constraint: crm.constraint_crm_lead_tag_name_uniq
 NEW ir.ui.menu: crm.crm_lead_menu_my_activities
 NEW ir.ui.menu: crm.crm_recurring_plan_menu_config
 NEW ir.ui.view: crm.crm_lead_view_list_activities
