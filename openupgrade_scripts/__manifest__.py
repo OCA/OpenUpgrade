@@ -8,7 +8,7 @@
     "maintainers": ["MiquelRForgeFlow", "StefanRijnhart", "pedrobaeza"],
     "website": "https://github.com/OCA/openupgrade",
     "category": "Migration",
-    "version": "14.0.1.0.0",
+    "version": "14.0.1.0.1",
     "license": "AGPL-3",
     "depends": ["base"],
     "images": ["static/description/banner.jpg"],
