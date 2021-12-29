@@ -98,6 +98,7 @@ merged_modules = {
     'website_logo': 'website',
     'website_megamenu': 'website',
     'website_snippet_anchor': 'website',
+    'website_anchor_smooth_scroll': 'website',
     # muk-it/muk_base - Agreed to move to OCA
     'muk_attachment_lobject': 'dms',
     'muk_security': 'dms',
