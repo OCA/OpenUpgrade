@@ -1,0 +1,13 @@
+---Models in module 'microsoft_account'---
+new model microsoft.service [abstract]
+# NOTHING TO DO
+
+---Fields in module 'microsoft_account'---
+microsoft_account / res.users                / microsoft_calendar_rtoken (char): NEW
+microsoft_account / res.users                / microsoft_calendar_token (char): NEW
+microsoft_account / res.users                / microsoft_calendar_token_validity (datetime): NEW
+# NOTHING TO DO
+
+---XML records in module 'microsoft_account'---
+NEW ir.config_parameter: microsoft_account.config_microsoft_redirect_uri (noupdate)
+# NOTHING TO DO
