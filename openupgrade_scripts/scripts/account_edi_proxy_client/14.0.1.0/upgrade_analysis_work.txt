@@ -1,0 +1,20 @@
+---Models in module 'account_edi_proxy_client'---
+new model account_edi_proxy_client.user
+# NOTHING TO DO
+
+---Fields in module 'account_edi_proxy_client'---
+account_edi_proxy_client / account_edi_proxy_client.user / active (boolean)              : NEW hasdefault
+account_edi_proxy_client / account_edi_proxy_client.user / company_id (many2one)         : NEW relation: res.company, required, req_default: function, hasdefault
+account_edi_proxy_client / account_edi_proxy_client.user / edi_format_id (many2one)      : NEW relation: account.edi.format, required
+account_edi_proxy_client / account_edi_proxy_client.user / edi_identification (char)     : NEW required
+account_edi_proxy_client / account_edi_proxy_client.user / id_client (char)              : NEW required
+account_edi_proxy_client / account_edi_proxy_client.user / private_key (binary)          : NEW required, attachment: False
+account_edi_proxy_client / account_edi_proxy_client.user / refresh_token (char)          : NEW
+account_edi_proxy_client / res.company              / account_edi_proxy_client_ids (one2many): NEW relation: account_edi_proxy_client.user
+# NOTHING TO DO
+
+---XML records in module 'account_edi_proxy_client'---
+NEW ir.model.access: account_edi_proxy_client.access_account_edi_proxy_user
+NEW ir.model.constraint: account_edi_proxy_client.constraint_account_edi_proxy_client_user_unique_edi_identification_per_format
+NEW ir.model.constraint: account_edi_proxy_client.constraint_account_edi_proxy_client_user_unique_id_client
+# NOTHING TO DO
