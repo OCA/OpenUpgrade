@@ -1,7 +1,9 @@
 # Copyright 2020 Payam Yasaie <https://www.tashilgostar.com>
 # Copyright 2020 ForgeFlow <https://www.forgeflow.com>
 # License AGPL-3.0 or later (http://www.gnu.org/licenses/agpl.html).
+from lxml.html import fromstring
 from openupgradelib import openupgrade
+from openupgradelib.openupgrade_tools import convert_html_fragment
 
 
 def _fill_website_logo(env):
@@ -24,8 +26,29 @@ def _convert_favicon(env):
         env["website"].browse(website_id).write({"favicon": favicon.tobytes()})
 
 
+def _set_data_anchor_xml_attribute(env):
+    """Ensures all anchors in the website (including those in elements
+    inserted from the website editor) have a smooth scrolling and easy link
+    to them using website editor"""
+    website_views = (
+        env["ir.ui.view"]
+        .with_context(active_test=False)
+        .search([("page_ids", "!=", False)])
+    )
+    for view in website_views:
+        doc = fromstring(view.arch_db)
+        links = doc.cssselect("a[href^=\#]:not([href=\#])")
+        if links:
+            replacement = {
+                "selector": ", ".join([link.attrib["href"] for link in links]),
+                "attr_add": {"data-anchor": "true"},
+            }
+            view.arch_db = convert_html_fragment(view.arch_db, [replacement])
+
+
 @openupgrade.migrate()
 def migrate(env, version):
     _fill_website_logo(env)
     _convert_favicon(env)
     openupgrade.load_data(env.cr, 'website', 'migrations/13.0.1.0/noupdate_changes.xml')
+    _set_data_anchor_xml_attribute(env)
