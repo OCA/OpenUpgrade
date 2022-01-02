@@ -109,13 +109,27 @@
   <record id="mt_salesteam_order_sent" model="mail.message.subtype">
     <field name="parent_id" ref="sale.mt_order_sent"/>
   </record>
-  <record id="sale_order_comp_rule" model="ir.rule">
+<!--  <record id="sale_order_comp_rule" model="ir.rule">
     <field name="global"/>
+  </record> -->
+<!--  <record id="sale_order_line_comp_rule" model="ir.rule">
+    <field name="global"/>
+  </record> -->
+<!--  <record id="sale_order_report_comp_rule" model="ir.rule">
+    <field name="global"/>
+  </record> -->
+  <!-- Added due to the renaming of the XML-IDs -->
+  <record id="account_invoice_rule_see_all" model="ir.rule">
+    <field name="domain_force">[('move_type', 'in', ('out_invoice', 'out_refund'))]</field>
   </record>
-  <record id="sale_order_line_comp_rule" model="ir.rule">
-    <field name="global"/>
+  <record id="account_invoice_rule_see_personal" model="ir.rule">
+    <field name="name">Personal Invoices</field>
+    <field name="domain_force">[('move_type', 'in', ('out_invoice', 'out_refund')), '|', ('invoice_user_id', '=', user.id), ('invoice_user_id', '=', False)]</field>
   </record>
-  <record id="sale_order_report_comp_rule" model="ir.rule">
-    <field name="global"/>
+  <record id="account_invoice_line_rule_see_all" model="ir.rule">
+    <field name="domain_force">[('move_id.move_type', 'in', ('out_invoice', 'out_refund'))]</field>
+  </record>
+  <record id="account_invoice_line_rule_see_personal" model="ir.rule">
+    <field name="domain_force">[('move_id.move_type', 'in', ('out_invoice', 'out_refund')), '|', ('move_id.invoice_user_id', '=', user.id), ('move_id.invoice_user_id', '=', False)]</field>
   </record>
 </odoo>
