@@ -1,0 +1,18 @@
+---Models in module 'sale_management'---
+---Fields in module 'sale_management'---
+sale_management / res.company              / sale_order_template_id (many2one): NEW relation: sale.order.template
+# NOTHING TO DO: new feature
+
+sale_management / sale.order.template.line / discount (float)              : DEL
+sale_management / sale.order.template.line / price_unit (float)            : DEL required
+sale_management / sale.order.template.option / discount (float)              : DEL
+sale_management / sale.order.template.option / price_unit (float)            : DEL required
+# NOTHING TO DO: obsolete
+
+---XML records in module 'sale_management'---
+NEW digest.tip: sale_management.digest_tip_sale1_management_0 (noupdate)
+NEW digest.tip: sale_management.digest_tip_sale_management_1 (noupdate)
+# NOTHING TO DO
+
+ir.rule: sale_management.sale_order_template_rule_company (noupdate) (noupdate switched)
+# DONE: pre-migration: switched noupdate
