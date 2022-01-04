@@ -13,6 +13,20 @@ def fill_bill_type(env):
     )
 
 
+def _fill_project_timesheet_product(env):
+    """Fill the proper timesheet product once it has been populated in the DB.
+    It should be done before filling `allow_billable` for avoiding the constraint.
+    """
+    product = env.ref("sale_timesheet.time_product")
+    openupgrade.logged_query(
+        env.cr,
+        """UPDATE project_project pp
+        SET timesheet_product_id = %s
+        WHERE pp.pricing_type IS NOT NULL AND pp.allow_timesheets""",
+        (product.id,),
+    )
+
+
 def fill_allow_billable(env):
     openupgrade.logged_query(
         env.cr,
@@ -26,5 +40,6 @@ def fill_allow_billable(env):
 @openupgrade.migrate()
 def migrate(env, version):
     fill_bill_type(env)
+    _fill_project_timesheet_product(env)
     fill_allow_billable(env)
     openupgrade.load_data(env.cr, "sale_timesheet", "14.0.1.0/noupdate_changes.xml")

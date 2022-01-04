@@ -23,10 +23,11 @@ sale_timesheet / project.project          / bill_type (selection)         : NEW 
 
 sale_timesheet / project.project          / billable_type (selection)     : DEL selection_keys: ['employee_rate', 'no', 'task_rate']
 sale_timesheet / project.project          / pricing_type (selection)      : NEW selection_keys: ['employee_rate', 'fixed_rate'], hasdefault
-# DONE: pre-migration: renamed field and remap some keys
+# DONE: pre-migration: Copied column for preserving values, rename field and remap some keys
 
 sale_timesheet / project.project          / timesheet_product_id (many2one): NEW relation: product.product, hasdefault, isfunction: function, stored
-# NOTHING TO DO: filled with the default
+# DONE: pre-migration: Pre-create the column for avoiding the compute
+# DONE: post-migration: fill it with the default product that is already present
 
 sale_timesheet / project.sale.line.employee.map / currency_id (many2one)        : NEW relation: res.currency, isfunction: function, stored
 sale_timesheet / project.sale.line.employee.map / price_unit (float)            : is now stored
