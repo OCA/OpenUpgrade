@@ -1,0 +1,20 @@
+---Models in module 'account_check_printing'---
+---Fields in module 'account_check_printing'---
+account_check_printing / account.move             / preferred_payment_method_id (many2one): NEW relation: account.payment.method, isfunction: function, stored
+# DONE: pre-migration: created preferred_payment_method_id column and set the value
+
+account_check_printing / account.payment          / check_amount_in_words (char)  : now a function
+account_check_printing / account.payment          / check_number (char)           : now a function
+# NOTHING TO DO: automated field filling
+
+account_check_printing / res.company              / account_check_printing_layout (selection): selection_keys is now '['disabled']' ('['action_print_check_bottom', 'action_print_check_middle', 'action_print_check_top', 'disabled']')
+# DONE: pre-migration: ensuring records are filled with default value ('disabled')
+
+account_check_printing / res.partner              / property_payment_method_id (many2one): NEW relation: account.payment.method, hasdefault
+# NOTHING TO DO
+
+---XML records in module 'account_check_printing'---
+NEW ir.model.access: account_check_printing.access_print_prenumbered_checks
+NEW ir.ui.view: account_check_printing.view_account_invoice_filter
+NEW ir.ui.view: account_check_printing.view_partner_property_form
+# NOTHING TO DO: noupdate="0" records
