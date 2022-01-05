@@ -330,6 +330,27 @@ def add_move_id_field_account_payment(env):
     )
 
 
+def add_edi_state_field_account_move(env):
+    """
+    Module account_edi: Created edi_state column and set the default value is false
+    """
+    if not openupgrade.column_exists(env.cr, "account_move", "edi_state"):
+        openupgrade.logged_query(
+            env.cr,
+            """
+            ALTER TABLE account_move
+            ADD COLUMN edi_state varchar
+            """,
+        )
+    openupgrade.logged_query(
+        env.cr,
+        """
+        UPDATE account_move
+        SET edi_state = false
+        """,
+    )
+
+
 def fill_empty_partner_type_account_payment(env):
     openupgrade.logged_query(
         env.cr,
@@ -383,6 +404,7 @@ def migrate(env, version):
     remove_constrains_reconcile_models(env)
     add_move_id_field_account_payment(env)
     add_move_id_field_account_bank_statement_line(env)
+    add_edi_state_field_account_move(env)
     fill_empty_partner_type_account_payment(env)
     fill_account_move_line_currency_id(env)
     fill_account_payment_partner_id(env)
