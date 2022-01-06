@@ -1,0 +1,15 @@
+---Models in module 'account_edi_facturx'---
+---Fields in module 'account_edi_facturx'---
+---XML records in module 'account_edi_facturx'---
+NEW account.edi.format: account_edi_facturx.edi_facturx_1_0_05
+# NOTHING TO DO
+
+NEW ir.ui.view: account_edi_facturx.account_invoice_facturx_export
+NEW ir.ui.view: account_edi_facturx.account_invoice_line_facturx_export
+NEW ir.ui.view: account_edi_facturx.account_invoice_partner_facturx_export
+NEW ir.ui.view: account_edi_facturx.account_invoice_pdfa_3_facturx_metadata
+DEL ir.ui.view: account_facturx.account_invoice_facturx_export
+DEL ir.ui.view: account_facturx.account_invoice_line_facturx_export
+DEL ir.ui.view: account_facturx.account_invoice_partner_facturx_export
+DEL ir.ui.view: account_facturx.account_invoice_pdfa_3_facturx_metadata
+# NOTHING TO DO: noupdate="0" records, no name changed.
