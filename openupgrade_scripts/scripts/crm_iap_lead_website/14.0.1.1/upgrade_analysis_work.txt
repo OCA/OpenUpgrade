@@ -1,0 +1,13 @@
+---Models in module 'crm_iap_lead_website'---
+---Fields in module 'crm_iap_lead_website'---
+crm_iap_lead_website / crm.reveal.rule          / tag_ids (many2many)           : column2 is now 'crm_tag_id' ('crm_lead_tag_id') [crm_lead_tag_crm_reveal_rule_rel]
+crm_iap_lead_website / crm.reveal.rule          / tag_ids (many2many)           : relation is now 'crm.tag' ('crm.lead.tag') [nothing to do]
+crm_iap_lead_website / crm.reveal.rule          / tag_ids (many2many)           : table is now 'crm_reveal_rule_crm_tag_rel' ('crm_lead_tag_crm_reveal_rule_rel')
+# DONE: pre-migration: renamed tables and columns
+
+---XML records in module 'crm_iap_lead_website'---
+NEW ir.ui.view: crm_iap_lead_website.crm_lead_view_graph
+NEW ir.ui.view: crm_iap_lead_website.crm_lead_view_graph_report_lead
+NEW ir.ui.view: crm_iap_lead_website.crm_lead_view_graph_report_opportunity
+NEW ir.ui.view: crm_iap_lead_website.crm_lead_view_pivot
+# NOTHING TO DO: noupdate="0" records
