@@ -68,6 +68,19 @@ def fill_payment_id_and_statement_line_id_fields(env):
     )
 
 
+def fill_partial_reconcile_debit_and_credit_amounts(env):
+    openupgrade.logged_query(
+        env.cr,
+        """
+        UPDATE account_partial_reconcile
+        SET debit_amount_currency = amount, credit_amount_currency = amount
+        WHERE debit_amount_currency IS NULL AND credit_amount_currency is NULL
+            AND credit_currency_id = debit_currency_id
+       """,
+    )
+    # TODO: compute debit and credit amount when currencies are different
+
+
 def create_account_reconcile_model_lines(env):
     openupgrade.logged_query(
         env.cr,
@@ -728,6 +741,7 @@ def migrate(env, version):
     fill_code_prefix_end_field(env)
     fill_default_account_id_field(env)
     fill_payment_id_and_statement_line_id_fields(env)
+    fill_partial_reconcile_debit_and_credit_amounts(env)
     create_account_reconcile_model_lines(env)
     create_account_reconcile_model_template_lines(env)
     create_account_tax_report_lines(env)
