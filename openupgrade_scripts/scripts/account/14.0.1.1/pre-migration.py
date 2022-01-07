@@ -211,19 +211,31 @@ def add_move_id_field_account_bank_statement_line(env):
         WHERE aml.move_id = am.id AND aml.statement_line_id IS NOT NULL
         """,
     )
+    # 1. set move_id from move_ids where statement_line_id is defined
+    openupgrade.logged_query(
+        env.cr,
+        """
+        UPDATE account_bank_statement_line absl
+        SET move_id = am.id
+        FROM account_move am
+        WHERE am.statement_line_id = absl.id
+        """,
+    )
+    # 2. try to match on statement move_name or payment_ref (if move_name empty)
     openupgrade.logged_query(
         env.cr,
         """
         UPDATE account_bank_statement_line absl
         SET move_id = am.id
         FROM account_move am, account_bank_statement bs
-        WHERE absl.statement_id = bs.id AND (
-                (am.name NOT IN ('', '/') AND COALESCE(
-                    NULLIF(absl.move_name, ''), absl.payment_ref) = am.name
-                AND am.company_id = bs.company_id)
-            OR am.statement_line_id = absl.id)
+        WHERE absl.statement_id = bs.id
+            AND absl.move_id IS NULL
+            AND am.name NOT IN ('', '/')
+            AND COALESCE(NULLIF(absl.move_name, ''), absl.payment_ref) = am.name
+            AND am.company_id = bs.company_id
         """,
     )
+    # 3. match on statement payment_ref with payment communication
     openupgrade.logged_query(
         env.cr,
         """
@@ -237,6 +249,7 @@ def add_move_id_field_account_bank_statement_line(env):
             AND absl.payment_ref = ap.communication
         """,
     )
+    # 4. match on statement account number and move ref
     openupgrade.logged_query(
         env.cr,
         """
