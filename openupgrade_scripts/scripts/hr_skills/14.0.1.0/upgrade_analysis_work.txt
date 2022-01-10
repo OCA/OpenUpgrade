@@ -1,0 +1,13 @@
+---Models in module 'hr_skills'---
+---Fields in module 'hr_skills'---
+---XML records in module 'hr_skills'---
+ir.rule: hr_skills.hr_resume_rule_employee (noupdate) (noupdate switched)
+ir.rule: hr_skills.hr_resume_rule_employee_hr_user (noupdate) (noupdate switched)
+ir.rule: hr_skills.hr_skill_rule_employee (noupdate) (noupdate switched)
+ir.rule: hr_skills.hr_skill_rule_employee_update (noupdate) (noupdate switched)
+ir.rule: hr_skills.hr_skill_rule_hr_user (noupdate) (noupdate switched)
+ir.rule: hr_skills.hr_skills_rule_employee_update (noupdate) (noupdate switched)
+# DONE: pre-migration: noupdate changed to "1"
+
+DEL ir.ui.view: hr_skills.resume_line_view_search
+# NOTHING TO DO
