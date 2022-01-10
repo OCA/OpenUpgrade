@@ -211,7 +211,7 @@ def add_move_id_field_account_bank_statement_line(env):
         WHERE aml.move_id = am.id AND aml.statement_line_id IS NOT NULL
         """,
     )
-    # 1. set move_id from move_ids where statement_line_id is defined
+    # 1. set move_id from moves where statement_line_id is defined
     openupgrade.logged_query(
         env.cr,
         """
