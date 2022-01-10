@@ -42,6 +42,7 @@ class Record(models.Model):
             readonly=True)
     noupdate = fields.Boolean(readonly=True)
     domain = fields.Char(readonly=True)
+    definition = fields.Char(readonly=True)
     prefix = fields.Char(compute='_compute_prefix_and_suffix')
     suffix = fields.Char(compute='_compute_prefix_and_suffix')
     model_original_module = fields.Char(

@@ -1386,6 +1386,11 @@ class IrModelConstraint(models.Model):
                 data_list.append(dict(xml_id=xml_id, record=record))
 
         self.env['ir.model.data']._update_xmlids(data_list)
+        # OpenUpgrade: log entry of _sql_constraints
+        for data in data_list:
+            xml_id = data.get("xml_id")
+            module = xml_id.split('.')[0]
+            openupgrade_log.log_xml_id(self.env.cr, module, xml_id)
 
 
 class IrModelRelation(models.Model):
