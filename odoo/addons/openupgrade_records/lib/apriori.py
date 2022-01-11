@@ -60,7 +60,8 @@ merged_modules = {
     # OCA/account-analytic
     # although model is defined in "analytic", logic is in "account"
     'account_analytic_distribution': 'account',
-    'account_asset_analytic': 'account_asset_management',
+    'account_analytic_asset': 'account_asset_management',
+    'account_asset_analytic': 'account_asset_management',  # (from <= v10)
     # OCA/account-financial-reporting
     'customer_activity_statement': 'partner_statement',
     'customer_outstanding_statement': 'partner_statement',
