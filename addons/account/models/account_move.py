@@ -1516,9 +1516,9 @@ class AccountMove(models.Model):
         if res:
             raise ValidationError(_('Posted journal entry must have an unique sequence number per company.'))
 
-    @api.constrains('ref', 'type', 'partner_id', 'journal_id', 'invoice_date')
+    @api.constrains('ref', 'type', 'partner_id', 'journal_id', 'invoice_date', 'state')
     def _check_duplicate_supplier_reference(self):
-        moves = self.filtered(lambda move: move.is_purchase_document() and move.ref)
+        moves = self.filtered(lambda move: move.state == 'posted' and move.is_purchase_document() and move.ref)
         if not moves:
             return
 
@@ -2129,15 +2129,18 @@ class AccountMove(models.Model):
                 refund_repartition_line = tax_repartition_lines_mapping[invoice_repartition_line]
 
                 # Find the right account.
-                account_id = self.env['account.move.line']._get_default_tax_account(refund_repartition_line).id
-                if not account_id:
-                    if not invoice_repartition_line.account_id:
-                        # Keep the current account as the current one comes from the base line.
-                        account_id = line_vals['account_id']
-                    else:
-                        tax = invoice_repartition_line.invoice_tax_id
-                        base_line = self.line_ids.filtered(lambda line: tax in line.tax_ids.flatten_taxes_hierarchy())[0]
-                        account_id = base_line.account_id.id
+                if cancel:
+                    account_id = line_vals['account_id']
+                else:
+                    account_id = self.env['account.move.line']._get_default_tax_account(refund_repartition_line).id
+                    if not account_id:
+                        if not invoice_repartition_line.account_id:
+                            # Keep the current account as the current one comes from the base line.
+                            account_id = line_vals['account_id']
+                        else:
+                            tax = invoice_repartition_line.invoice_tax_id
+                            base_line = self.line_ids.filtered(lambda line: tax in line.tax_ids.flatten_taxes_hierarchy())[0]
+                            account_id = base_line.account_id.id
 
                 tags = refund_repartition_line.tag_ids
                 if line_vals.get('tax_ids'):
@@ -2649,7 +2652,7 @@ class AccountMoveLine(models.Model):
         help="The move of this entry line.")
     move_name = fields.Char(string='Number', related='move_id.name', store=True, index=True)
     date = fields.Date(related='move_id.date', store=True, readonly=True, index=True, copy=False, group_operator='min')
-    ref = fields.Char(related='move_id.ref', store=True, copy=False, index=True, readonly=False)
+    ref = fields.Char(related='move_id.ref', store=True, copy=False, index=True, readonly=True)
     parent_state = fields.Selection(related='move_id.state', store=True, readonly=True)
     journal_id = fields.Many2one(related='move_id.journal_id', store=True, index=True, copy=False)
     company_id = fields.Many2one(related='move_id.company_id', store=True, readonly=True)
