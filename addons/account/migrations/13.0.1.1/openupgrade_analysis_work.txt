@@ -301,7 +301,7 @@ account      / account.journal          / post_at_bank_rec (boolean)    : DEL
 
 account      / account.journal          / update_posted (boolean)       : DEL
 account      / account.journal          / restrict_mode_hash_table (boolean): NEW
-# DONE: post-migration: filled restrict_mode_hash_table reusing update_posted
+# NOTHING TO DO: probably better to leave this field to be set directly after migration (see https://github.com/OCA/OpenUpgrade/pull/3086)
 
 account      / account.journal          / secure_sequence_id (many2one) : NEW relation: ir.sequence
 account      / account.journal          / website_message_ids (one2many): NEW relation: mail.message
