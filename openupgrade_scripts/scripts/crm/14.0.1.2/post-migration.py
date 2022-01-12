@@ -7,5 +7,5 @@ from openupgradelib import openupgrade
 def migrate(env, version):
     openupgrade.load_data(env.cr, "crm", "14.0.1.2/noupdate_changes.xml")
     openupgrade.delete_records_safely_by_xml_id(
-        env, [("crm.crm_pls_rebuild_threshold_param")]
+        env, ["crm.crm_pls_rebuild_threshold_param"]
     )
