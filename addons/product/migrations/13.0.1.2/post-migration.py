@@ -65,6 +65,67 @@ def empty_template_pricelist_company(env):
         )
 
 
+def adapt_pricelist_settings(env):
+    """In v12, if pricelist setting was marked it implied group_sale_pricelist,
+    and if the setting was 'percentage' it also implied group_product_pricelist.
+    In v13, if pricelist setting was marked it implies group_product_pricelist,
+    and if the setting is 'advanced', then it has also group_sale_pricelist.
+    And about the options, 'percentage' has become 'basic' and 'formula' has become 'advanced'."""
+    group_user = env.ref("base.group_user").sudo()
+    group_product_pricelist = env.ref("product.group_product_pricelist").sudo()
+    group_sale_pricelist = env.ref("product.group_sale_pricelist").sudo()
+    ir_config_param = env["ir.config_parameter"].sudo()
+    sale_installed = openupgrade.table_exists(env.cr, "sale_order")
+    pos_installed = openupgrade.table_exists(env.cr, "pos_order")
+    sale_pricelist_setting = ir_config_param.get_param(
+        "sale.sale_pricelist_setting", ""
+    )
+    pos_pricelist_setting = ir_config_param.get_param(
+        "point_of_sale.pos_pricelist_setting", ""
+    )
+    # multi_sales_price = sale_pricelist_setting and sale_pricelist_setting in ['percentage', 'formula']
+    pos_sales_price = ir_config_param.get_param("point_of_sale.pos_sales_price")
+    with env.norecompute():
+        if (
+            (
+                group_product_pricelist in group_user.implied_ids
+                and group_sale_pricelist in group_user.implied_ids
+                and not sale_installed
+                and not pos_installed
+            )
+            or (
+                sale_installed
+                and sale_pricelist_setting == "percentage"
+                and pos_pricelist_setting != "formula"
+            )
+            or (
+                pos_installed
+                and pos_sales_price
+                and pos_pricelist_setting == "percentage"
+                and sale_pricelist_setting != "formula"
+            )
+        ):
+            # 'basic' case
+            group_user.write({"implied_ids": [(3, group_sale_pricelist.id)]})
+            group_sale_pricelist.write({"users": [(5,)]})
+            ir_config_param.set_param("product.product_pricelist_setting", "basic")
+        elif (
+            (
+                group_product_pricelist not in group_user.implied_ids
+                and group_sale_pricelist in group_user.implied_ids
+                and not sale_installed
+                and not pos_installed
+            )
+            or (sale_installed and sale_pricelist_setting == "formula")
+            or (
+                pos_installed and pos_sales_price and pos_pricelist_setting == "formula"
+            )
+        ):
+            # 'advanced' case
+            group_user.write({"implied_ids": [(4, group_product_pricelist.id)]})
+            ir_config_param.set_param("product.product_pricelist_setting", "advanced")
+
+
 @openupgrade.migrate()
 def migrate(env, version):
     fill_product_variant_combination_table(env)
@@ -72,6 +133,7 @@ def migrate(env, version):
         env.cr, "product", "migrations/13.0.1.2/noupdate_changes.xml")
     convert_image_attachments(env)
     empty_template_pricelist_company(env)
+    adapt_pricelist_settings(env)
     sql.drop_index(
         env.cr, 'product_template_attribute_value_ou_migration_idx',
         "product_template_attribute_value")
