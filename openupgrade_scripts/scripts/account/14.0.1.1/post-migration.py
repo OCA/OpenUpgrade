@@ -91,13 +91,13 @@ def fill_partial_reconcile_debit_and_credit_amounts(env):
         .filtered(lambda line: line.credit_currency_id != line.debit_currency_id)
     )
     for line in partial_reconcile_lines:
-        line.debit_amount_currency = line.credit_currency_id._convert(
+        line.debit_amount_currency = line.company_currency_id._convert(
             line.amount,
             line.debit_currency_id,
             line.company_id,
             line.credit_move_id.date,
         )
-        line.credit_amount_currency = line.debit_currency_id._convert(
+        line.credit_amount_currency = line.company_currency_id._convert(
             line.amount,
             line.credit_currency_id,
             line.company_id,
