@@ -215,7 +215,7 @@ account      / account.move.line        / analytic_tag_ids (many2many)  : now a 
 # NOTHING TO DO: filled by Odoo
 
 account      / account.move.line        / currency_id (many2one)        : now required
-# DONE: filled with company currency if empty
+# DONE: filled with company currency if empty and recalculate amount residual when set
 
 account      / account.move.line        / matching_number (char)        : NEW isfunction: function, stored
 # NOTHING TO DO

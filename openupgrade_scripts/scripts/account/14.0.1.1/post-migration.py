@@ -709,6 +709,24 @@ def fill_account_move_line_amounts(env):
             aml.debit + aml.credit > 0 AND (
                 aml.amount_currency = 0 OR aml.amount_currency IS NULL)""",
     )
+    # Recompute residual amounts
+    # This may need to be optimized further
+    # see https://github.com/OCA/OpenUpgrade/pull/3088
+    lines = (
+        env["account.move.line"]
+        .search(
+            [
+                ("full_reconcile_id", "=", False),
+                ("account_internal_type", "in", ("payable", "receivable")),
+                ("parent_state", "=", "posted"),
+                ("balance", "!=", 0),
+            ]
+        )
+        .filtered(lambda line: line.currency_id == line.company_currency_id)
+    )
+    lines.with_context(
+        tracking_disable=True, skip_account_move_synchronization=True
+    )._compute_amount_residual()
 
 
 def fill_account_move_line_date(env):
