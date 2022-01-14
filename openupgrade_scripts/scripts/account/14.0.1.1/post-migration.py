@@ -330,6 +330,13 @@ def unfold_manual_account_groups(env):
     """For manually created groups, we check if such group is used in more than
     one company. If so, we unfold it. We also assure proper company for existing one.
     """
+
+    def _get_all_children(groups):
+        children = env["account.group"].search([("parent_id", "in", groups.ids)])
+        if children:
+            children |= _get_all_children(children)
+        return children
+
     AccountGroup = env["account.group"]
     AccountGroup._parent_store_compute()
     env.cr.execute(
@@ -343,13 +350,8 @@ def unfold_manual_account_groups(env):
     relation_dict = {}
     for group_id in [x[0] for x in env.cr.fetchall()]:
         group = AccountGroup.browse(group_id)
-        accounts = env["account.account"].search([("group_id", "=", group.id)])
-        children = env["account.group"].search([("parent_id", "=", group.id)])
-        if children:
-            children_accounts = env["account.account"].search(
-                [("group_id", "in", children.ids)]
-            )
-            accounts |= children_accounts
+        subgroups = group | _get_all_children(group)
+        accounts = env["account.account"].search([("group_id", "in", subgroups.ids)])
         companies = accounts.mapped("company_id").sorted()
         for i, company in enumerate(companies):
             if company not in relation_dict:
