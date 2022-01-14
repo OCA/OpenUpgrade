@@ -344,7 +344,7 @@ def unfold_manual_account_groups(env):
         accounts = env["account.account"].search([("group_id", "=", group.id)])
         companies = accounts.mapped("company_id").sorted()
         relation_dict = {}
-        for i, company in companies:
+        for i, company in enumerate(companies):
             relation_dict[company] = {}
             if i == 0:
                 if group.company_id != company:
