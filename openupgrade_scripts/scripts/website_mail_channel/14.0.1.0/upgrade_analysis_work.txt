@@ -1,0 +1,14 @@
+---Models in module 'website_mail_channel'---
+---Fields in module 'website_mail_channel'---
+---XML records in module 'website_mail_channel'---
+NEW ir.ui.view: website_mail_channel.assets_snippet_s_channel_js_000
+NEW ir.ui.view: website_mail_channel.assets_wysiwyg
+NEW ir.ui.view: website_mail_channel.s_channel
+NEW ir.ui.view: website_mail_channel.s_channel_options
+NEW ir.ui.view: website_mail_channel.snippets
+DEL ir.ui.view: website_mail_channel.assets_editor
+DEL ir.ui.view: website_mail_channel.subscribe
+# NOTHING TO DO
+
+DEL website.menu: website_mail_channel.menu_mailing_list (noupdate)
+# DONE: post-migration: try to delete
