@@ -1,0 +1,17 @@
+---Models in module 'website_event_sale'---
+---Fields in module 'website_event_sale'---
+---XML records in module 'website_event_sale'---
+DEL ir.model.access: website_event_sale.access_event_event_ticket_public [renamed to website_event module]
+DEL ir.model.access: website_event_sale.access_event_product_product_public
+DEL ir.model.access: website_event_sale.access_event_product_template_public
+# NOTHING TO DO
+
+ir.rule: website_event_sale.event_product_template_public (noupdate) (noupdate switched)
+# DONE: pre-migration: noupdate changed to "1"
+
+DEL ir.rule: website_event_sale.event_event_ticket_public
+# NOTHING TO DO
+
+DEL ir.ui.view: website_event_sale.index
+DEL ir.ui.view: website_event_sale.registration_complete_inherit_website_event_sale
+# NOTHING TO DO
