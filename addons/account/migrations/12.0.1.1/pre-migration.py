@@ -120,6 +120,18 @@ def prefill_account_chart_template_transfer_account_prefix(env):
                 "SET transfer_account_code_prefix = 'OUB'")
 
 
+def drop_obsolete_constraint_wizard_multi_charts_accounts(env):
+    """We remove the constraints on wizard_multi_charts_accounts
+    to avoid not null error if account chart changed and account template has
+    been removed.
+    For exemple l10n_fr.pcg_58 has been removed between 11.0 and 12.0
+    and is used as default transfer_account_id.
+    Note : wizard_multi_charts_accounts is an obsolete table. Model
+    has been removed in V12.0
+    """
+    openupgrade.remove_tables_fks(env.cr, ['wizard_multi_charts_accounts'])
+
+
 @openupgrade.migrate()
 def migrate(env, version):
     cr = env.cr
@@ -143,5 +155,6 @@ def migrate(env, version):
             ALTER TABLE res_company ADD COLUMN incoterm_id INTEGER""",
         )
     prefill_account_chart_template_transfer_account_prefix(env)
+    drop_obsolete_constraint_wizard_multi_charts_accounts(env)
     openupgrade.set_xml_ids_noupdate_value(
         env, 'account', ['account_analytic_line_rule_billing_user'], False)
