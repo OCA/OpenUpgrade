@@ -20,9 +20,9 @@ _table_renames = [
 ]
 
 xmlid_renames = [
-    ('mrp_repair.mrp_repair_rule', 'repair.repair_rule'),
-    ('mrp_repair.seq_mrp_repair', 'repair.seq_repair'),
-    ('mrp_repair.mail_template_mrp_repair_quotation',
+    ('repair.mrp_repair_rule', 'repair.repair_rule'),
+    ('repair.seq_mrp_repair', 'repair.seq_repair'),
+    ('repair.mail_template_mrp_repair_quotation',
      'repair.mail_template_repair_quotation'),
 ]
 
