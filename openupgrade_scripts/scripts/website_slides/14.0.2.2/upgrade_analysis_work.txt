@@ -1,0 +1,100 @@
+---Models in module 'website_slides'---
+new model slide.slide.resource
+---Fields in module 'website_slides'---
+website_slides / gamification.challenge   / category (False)              : DEL selection_keys: ['certification', 'forum', 'hr', 'other', 'slides'], mode: modify
+website_slides / gamification.challenge   / challenge_category (False)    : NEW selection_keys: ['certification', 'forum', 'hr', 'other', 'slides'], mode: modify
+# NOTHING TO DO: done in gamification module
+
+website_slides / slide.answer             / _order                        : _order is now 'question_id, sequence' ('question_id, id')
+website_slides / slide.answer             / comment (text)                : NEW
+website_slides / slide.answer             / sequence (integer)            : NEW
+website_slides / slide.channel            / activity_ids (one2many)       : NEW relation: mail.activity
+# NOTHING TO DO: new feature
+
+website_slides / slide.channel            / description_short (text)      : NEW
+# DONE: post-migration fill data from description field
+
+website_slides / slide.channel            / promote_strategy (selection)  : selection_keys is now '['latest', 'most_viewed', 'most_voted', 'none', 'specific']' ('['latest', 'most_viewed', 'most_voted']')
+website_slides / slide.channel            / promoted_slide_id (many2one)  : NEW relation: slide.slide
+website_slides / slide.channel            / seo_name (char)               : NEW
+# NOTHING TO DO: new feature
+
+website_slides / slide.channel.partner    / completed_slides_count (integer): NEW
+# DONE: post-migration recompute completion field and completed_slides_count field
+
+website_slides / slide.channel.tag        / color (integer)               : NEW
+website_slides / slide.question           / _order                        : _order is now 'sequence' ('id')
+website_slides / slide.slide              / seo_name (char)               : NEW
+website_slides / slide.slide              / slide_resource_downloadable (boolean): NEW hasdefault
+website_slides / slide.slide              / slide_resource_ids (one2many) : NEW relation: slide.slide.resource
+website_slides / slide.slide.resource     / data (binary)                 : NEW attachment: True
+website_slides / slide.slide.resource     / name (char)                   : NEW required
+website_slides / slide.slide.resource     / slide_id (many2one)           : NEW relation: slide.slide, required
+# NOTHING TO DO: new feature
+
+---XML records in module 'website_slides'---
+NEW ir.model.access: website_slides.access_slide_answer_officer
+NEW ir.model.access: website_slides.access_slide_channel_invite
+NEW ir.model.access: website_slides.access_slide_channel_manager
+NEW ir.model.access: website_slides.access_slide_channel_officer
+NEW ir.model.access: website_slides.access_slide_question_officer
+NEW ir.model.access: website_slides.access_slide_slide_link_officer
+NEW ir.model.access: website_slides.access_slide_slide_manager
+NEW ir.model.access: website_slides.access_slide_slide_officer
+NEW ir.model.access: website_slides.access_slide_slide_resource_all
+NEW ir.model.access: website_slides.access_slide_slide_resource_public
+NEW ir.model.access: website_slides.access_slide_slide_resource_publisher
+NEW ir.model.access: website_slides.access_slide_tag_officer
+DEL ir.model.access: website_slides.access_slide_answer_publisher
+DEL ir.model.access: website_slides.access_slide_channel_publisher
+DEL ir.model.access: website_slides.access_slide_question_publisher
+DEL ir.model.access: website_slides.access_slide_slide_link_publisher
+DEL ir.model.access: website_slides.access_slide_slide_publisher
+DEL ir.model.access: website_slides.access_slide_tag_publisher
+# NOTHING TO DO
+
+ir.rule: website_slides.rule_slide_channel_global (noupdate) (noupdate switched)
+NEW ir.rule: website_slides.rule_slide_channel_manager (noupdate)
+ir.rule: website_slides.rule_slide_channel_not_website (noupdate) (noupdate switched)
+NEW ir.rule: website_slides.rule_slide_channel_officer_cw (noupdate)
+NEW ir.rule: website_slides.rule_slide_channel_officer_r (noupdate)
+NEW ir.rule: website_slides.rule_slide_channel_partner_manager (noupdate)
+NEW ir.rule: website_slides.rule_slide_channel_partner_officer (noupdate)
+ir.rule: website_slides.rule_slide_slide_global (noupdate) (noupdate switched)
+NEW ir.rule: website_slides.rule_slide_slide_manager (noupdate)
+ir.rule: website_slides.rule_slide_slide_not_website (noupdate) (noupdate switched)
+# DONE pre-migration: switched noupdate
+
+NEW ir.rule: website_slides.rule_slide_slide_officer_cw (noupdate)
+NEW ir.rule: website_slides.rule_slide_slide_officer_r (noupdate)
+NEW ir.rule: website_slides.rule_slide_slide_partner_manager (noupdate)
+NEW ir.rule: website_slides.rule_slide_slide_partner_officer (noupdate)
+NEW ir.rule: website_slides.rule_slide_slide_resource_downloadable (noupdate)
+DEL ir.rule: website_slides.rule_slide_channel_website
+DEL ir.rule: website_slides.rule_slide_slide_website
+NEW ir.ui.menu: website_slides.website_slides_menu_config_course_groups
+DEL ir.ui.menu: website_slides.website_slides_menu_config_course_tags
+NEW ir.ui.view: website_slides.course_card_information
+NEW ir.ui.view: website_slides.course_card_information_arrow
+NEW ir.ui.view: website_slides.course_promoted_slide
+NEW ir.ui.view: website_slides.course_slides_list_sample
+NEW ir.ui.view: website_slides.join_course_link
+NEW ir.ui.view: website_slides.lesson_content_quiz_add_buttons
+NEW ir.ui.view: website_slides.lesson_content_quiz_question
+NEW ir.ui.view: website_slides.mail_notification_channel_invite (noupdate)
+NEW ir.ui.view: website_slides.slide_share_link
+NEW ir.ui.view: website_slides.slide_share_modal
+NEW ir.ui.view: website_slides.slide_share_modal_body
+NEW ir.ui.view: website_slides.slide_share_modal_header
+NEW ir.ui.view: website_slides.slide_share_social
+NEW ir.ui.view: website_slides.website_slides_tests
+DEL ir.ui.view: website_slides.slide_social_media
+DEL ir.ui.view: website_slides.slides_share
+NEW mail.activity.type: website_slides.mail_activity_data_access_request (noupdate)
+NEW res.groups: website_slides.group_website_slides_manager
+NEW res.groups: website_slides.group_website_slides_officer
+NEW slide.channel.tag: website_slides.slide_channel_tag_level_advanced (noupdate)
+NEW slide.channel.tag: website_slides.slide_channel_tag_level_basic (noupdate)
+NEW slide.channel.tag: website_slides.slide_channel_tag_level_intermediate (noupdate)
+NEW slide.channel.tag.group: website_slides.slide_channel_tag_group_level (noupdate)
+# NOTHING TO DO
