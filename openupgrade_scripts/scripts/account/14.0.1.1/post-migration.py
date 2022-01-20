@@ -391,10 +391,42 @@ def unfold_manual_account_groups(env):
     AccountGroup._parent_store_compute()
 
 
+def create_account_account(env, company):
+    """Create new accounts in v14"""
+    liquidity_account_type = env.ref(
+        "account.data_account_type_liquidity", raise_if_not_found=False
+    )
+    openupgrade.logged_query(
+        env.cr,
+        """
+        UPDATE account_account
+        SET code = '1125', name = 'Bank'
+        WHERE code = '1121';
+        INSERT INTO account_account
+        ( name, code, user_type_id,
+        company_id, internal_type, internal_group, reconcile)
+        VALUES
+        ('Foreign currencies', '1122', {0}, {1}, '{2}', '{3}', false),
+        ('Monetary Gold', '1123', {0}, {1}, '{2}', '{3}', false),
+        ('Bank', '1125', {0}, {1}, '{2}', '{3}', false)
+        """.format(
+            liquidity_account_type.id,
+            company.id,
+            liquidity_account_type.type,
+            liquidity_account_type.internal_group,
+        ),
+    )
+
+
 def fill_company_account_journal_suspense_account_id(env):
     companies = env["res.company"].search([("chart_template_id", "!=", False)])
     for company in companies:
         chart = company.chart_template_id
+        if (
+            env.ref("l10n_vn.vn_template", raise_if_not_found=False)
+            and chart.id == env.ref("l10n_vn.vn_template").id
+        ):
+            create_account_account(env, company)
         account = chart._create_liquidity_journal_suspense_account(
             company, chart.code_digits
         )
