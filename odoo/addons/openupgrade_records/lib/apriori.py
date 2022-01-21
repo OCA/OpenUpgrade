@@ -58,6 +58,7 @@ merged_modules = {
     # OCA/e-commerce
     'website_sale_category_description': 'website_sale',
     # OCA/event
+    'event_activity': 'event',
     'website_event_share': 'website_event',
     # OCA/l10n-spain
     'l10n_es_account_invoice_sequence': 'l10n_es',
