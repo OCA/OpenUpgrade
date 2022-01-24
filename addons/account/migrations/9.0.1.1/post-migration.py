@@ -444,20 +444,50 @@ def map_account_tax_template_type(cr):
         table='account_tax_template', write='sql')
 
 
-def migrate_account_sequence_fiscalyear(cr):
+def migrate_account_sequence_fiscalyear(env):
     """ Migrate subsequences from fiscalyears to sequence date ranges
     so that the next number is aligned with the last assigned number """
+    cr = env.cr
+    openupgrade.logged_query(
+        env.cr, "ALTER TABLE ir_sequence_date_range ADD old_sequence_id int4"
+    )
     openupgrade.logged_query(
         cr,
         """ \
         INSERT into ir_sequence_date_range
-        (sequence_id, date_from, date_to, number_next)
+        (sequence_id, date_from, date_to, number_next, old_sequence_id)
         SELECT sequence_main_id, af.date_start, af.date_stop,
-            irs.number_next
+            irs.number_next, irs.id
         FROM account_sequence_fiscalyear asf,
             account_fiscalyear af, ir_sequence irs
         WHERE asf.fiscalyear_id = af.id
-             and asf.sequence_id = irs.id; """)
+             and asf.sequence_id = irs.id
+        RETURNING id, sequence_id, old_sequence_id""")
+    # Adjust next numbers
+    for row in cr.fetchall():
+        seq_range = env["ir.sequence.date_range"].browse(row[0])
+        sequence = env["ir.sequence"].browse(row[1])
+        old_sequence = env["ir.sequence"].browse(row[2])
+        old_seq_name = "ir_sequence_%03d" % row[2]
+        new_seq_name = "ir_sequence_%03d_%03d" % (row[1], row[0])
+        if old_sequence.implementation == 'no_gap':
+            if sequence.implementation == 'standard':
+                # For this case, no PG sequence exists, so let's create it
+                cr.execute(
+                    "CREATE SEQUENCE %s INCREMENT BY %%s START WITH %%s" % new_seq_name,
+                    (sequence.number_increment, old_sequence.number_next or 1))
+        elif old_sequence.implementation == 'standard':
+            if sequence.implementation == 'no_gap':
+                # Adjust number next according PG sequence next value
+                cr.execute("SELECT last_value FROM %s" % old_seq_name)
+                seq_range.number_next = (
+                    cr.fetchone()[0] + sequence.number_increment)
+            elif sequence.implementation == 'standard':
+                # Rename existing sequence to new sequence name
+                cr.execute(
+                    "ALTER SEQUENCE %s RENAME TO %s" % (old_seq_name, new_seq_name)
+                )
+    # Rename prefixes
     openupgrade.logged_query(
         cr,
         """ \
@@ -1375,7 +1405,7 @@ def migrate(env, version):
     account_internal_type(env)
     map_account_tax_type(cr)
     map_account_tax_template_type(cr)
-    migrate_account_sequence_fiscalyear(cr)
+    migrate_account_sequence_fiscalyear(env)
     migrate_account_auto_fy_sequence(env)
     fill_move_taxes(env)
     fill_account_invoice_tax_taxes(env)
