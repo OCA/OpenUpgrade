@@ -39,7 +39,7 @@ product      / product.template.attribute.value / ptav_product_variant_ids (many
 product      / product.product          / product_template_attribute_value_ids (many2many): is now stored
 product      / product.product          / product_template_attribute_value_ids (many2many): not a function anymore
 product      / product.product          / product_template_attribute_value_ids (many2many): table is now 'product_variant_combination' ('False')
-# DONE: post-migration: filled table 'product_variant_combination' using the old many2many
+# DONE: pre-migration: created and filled table 'product_variant_combination' using the old relations
 
 product      / product.template         / can_image_1024_be_zoomed (boolean): NEW isfunction: function, stored
 product      / product.product          / can_image_variant_1024_be_zoomed (boolean): NEW isfunction: function, stored

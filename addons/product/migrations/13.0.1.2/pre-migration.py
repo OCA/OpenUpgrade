@@ -192,6 +192,31 @@ def calculate_product_product_combination_indices(env):
     )
 
 
+def create_and_fill_product_variant_combination(env):
+    if not openupgrade.table_exists(env.cr, "product_variant_combination"):
+        openupgrade.logged_query(
+            env.cr, """
+            CREATE TABLE product_variant_combination (
+                product_product_id INTEGER, product_template_attribute_value_id INTEGER)""",
+        )
+        openupgrade.logged_query(
+            env.cr, """
+            INSERT INTO product_variant_combination
+                (product_product_id, product_template_attribute_value_id)
+            SELECT pavppr.product_product_id, ptav.id
+            FROM product_attribute_value_product_product_rel pavppr
+            JOIN product_attribute_value pav
+                ON pav.id = pavppr.product_attribute_value_id
+            JOIN product_product pp
+                ON pp.id = pavppr.product_product_id
+            JOIN product_template_attribute_value ptav
+                ON (ptav.product_attribute_value_id = pav.id
+                    AND pp.product_tmpl_id = ptav.product_tmpl_id
+                    AND ptav.attribute_id = pav.attribute_id)
+            GROUP BY pavppr.product_product_id, ptav.id""",
+        )
+
+
 def fill_product_template_attribute_value_attribute_line_id(env):
     """Done in pre because the field attribute_line_id of ptav is required."""
     openupgrade.logged_query(
@@ -245,3 +270,4 @@ def migrate(env, version):
     insert_missing_product_template_attribute_value(env)
     fill_product_template_attribute_value__attribute_id_related(env)
     calculate_product_product_combination_indices(env)
+    create_and_fill_product_variant_combination(env)

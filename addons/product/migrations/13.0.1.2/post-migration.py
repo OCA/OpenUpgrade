@@ -5,25 +5,6 @@ from openupgradelib import openupgrade
 from odoo.tools import sql
 
 
-def fill_product_variant_combination_table(env):
-    openupgrade.logged_query(
-        env.cr, """
-        INSERT INTO product_variant_combination
-        (product_product_id, product_template_attribute_value_id)
-        SELECT pavppr.product_product_id, ptav.id
-        FROM product_attribute_value_product_product_rel pavppr
-        JOIN product_attribute_value pav
-            ON pav.id = pavppr.product_attribute_value_id
-        JOIN product_product pp
-            ON pp.id = pavppr.product_product_id
-        JOIN product_template_attribute_value ptav
-            ON ptav.product_attribute_value_id = pav.id
-                AND pp.product_tmpl_id = ptav.product_tmpl_id
-                AND ptav.attribute_id = pav.attribute_id
-        GROUP BY pavppr.product_product_id, ptav.id""",
-    )
-
-
 def convert_image_attachments(env):
     mapping = {
         'product.product': "image_variant",
@@ -128,7 +109,6 @@ def adapt_pricelist_settings(env):
 
 @openupgrade.migrate()
 def migrate(env, version):
-    fill_product_variant_combination_table(env)
     openupgrade.load_data(
         env.cr, "product", "migrations/13.0.1.2/noupdate_changes.xml")
     convert_image_attachments(env)
