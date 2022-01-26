@@ -58,7 +58,7 @@ mrp          / stock.warehouse          / pbm_type_id (many2one)        : NEW re
 mrp          / stock.warehouse          / sam_loc_id (many2one)         : NEW relation: stock.location
 mrp          / stock.warehouse          / sam_rule_id (many2one)        : NEW relation: stock.rule
 mrp          / stock.warehouse          / sam_type_id (many2one)        : NEW relation: stock.picking.type
-# DONE: post-migration: called the post_init_hook to fill the values
+# DONE: post-migration: call the post_init_hook to fill the values (only if manufacture_to_resupply = True)
 
 ---XML records in module 'mrp'---
 NEW ir.actions.act_window: mrp.action_mrp_unbuild_move_line
