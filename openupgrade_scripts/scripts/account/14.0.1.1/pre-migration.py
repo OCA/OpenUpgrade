@@ -366,13 +366,6 @@ def add_edi_state_field_account_move(env):
             ADD COLUMN edi_state varchar
             """,
         )
-    openupgrade.logged_query(
-        env.cr,
-        """
-        UPDATE account_move
-        SET edi_state = false
-        """,
-    )
 
 
 def fill_empty_partner_type_account_payment(env):
