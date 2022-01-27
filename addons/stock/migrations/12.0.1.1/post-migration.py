@@ -145,6 +145,7 @@ def fill_stock_package_level(env):
 def merge_stock_putaway_product(cr):
     if openupgrade.table_exists(cr, 'stock_product_putaway_strategy'):
         column_name = openupgrade.get_legacy_name('old_strat_id')
+        # first, we add the ones with product variant
         openupgrade.logged_query(cr, sql.SQL(
             """INSERT INTO stock_fixed_putaway_strat (product_id, putaway_id,
                 fixed_location_id, sequence,
@@ -154,18 +155,21 @@ def merge_stock_putaway_product(cr):
             FROM stock_product_putaway_strategy
             WHERE product_product_id IS NOT NULL"""
         ).format(sql.Identifier(column_name)))
-        # We put sequence + 1 for giving more priority by default to product
-        # specific rules
+        # second, we add the ones with product product template
         openupgrade.logged_query(cr, sql.SQL(
             """INSERT INTO stock_fixed_putaway_strat (product_id, putaway_id,
                 fixed_location_id, sequence,
                 create_uid, create_date, write_uid, write_date, {})
             SELECT pp.id, spps.putaway_id, spps.fixed_location_id,
-                spps.sequence + 1, spps.create_uid, spps.create_date,
+                spps.sequence, spps.create_uid, spps.create_date,
                 spps.write_uid, spps.write_date, spps.id
             FROM stock_product_putaway_strategy spps
             JOIN product_template pt ON pt.id = spps.product_tmpl_id
-            JOIN product_product pp ON pp.product_tmpl_id = pt.id"""
+            JOIN product_product pp ON pp.product_tmpl_id = pt.id
+            LEFT JOIN stock_fixed_putaway_strat sfps ON (
+                sfps.product_id = pp.id AND sfps.putaway_id = spps.putaway_id AND
+                sfps.fixed_location_id = spps.fixed_location_id)
+            WHERE sfps.putaway_id IS NULL"""
         ).format(sql.Identifier(column_name)))
 
 
