@@ -877,7 +877,7 @@ class BaseModel(MetaModel('DummyModel', (object,), {'_register': False})):
                         # a comma-separated list of xids in a single cell
                         if import_compatible and field.type == 'many2many' and len(path) > 1 and path[1] == 'id':
                             xml_ids = [xid for _, xid in value.__ensure_xml_id()]
-                            current[i] = ','.join(xml_ids) or False
+                            current[i] = ','.join(xml_ids)
                             continue
 
                         # recursively export the fields that follow name; use
@@ -893,7 +893,7 @@ class BaseModel(MetaModel('DummyModel', (object,), {'_register': False})):
                             # append the other lines at the end
                             lines += lines2[1:]
                         else:
-                            current[i] = False
+                            current[i] = ''
 
         # if any xid should be exported, only do so at toplevel
         if _is_toplevel_call and any(f[-1] == 'id' for f in fields):
@@ -4144,6 +4144,14 @@ Fields:
                 to_create.append(data)
                 continue
             d_id, d_module, d_name, d_model, d_res_id, d_noupdate, r_id = row
+            if self._name != d_model:
+                _logger.warning((
+                    "For external id %s "
+                    "when trying to create/update a record of model %s "
+                    "found record of different model %s (%s)"
+                    "\nUpdating record %s of target model %s"),
+                    xml_id, self._name, d_model, d_id, d_id, self._name
+                )
             record = self.browse(d_res_id)
             if update and d_noupdate:
                 data['record'] = record
