@@ -94,6 +94,7 @@ merged_modules = {
     'web_widget_many2many_tags_multi_selection': 'web',
     # OCA/website
     'website_adv_image_optimization': 'website',
+    'website_blog_excerpt_img': 'website',
     'website_canonical_url': 'website',
     'website_form_builder': 'website_form',
     'website_logo': 'website',
