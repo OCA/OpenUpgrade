@@ -68,9 +68,9 @@ for each tuple:</p>
 <li><p>SQL table name: Put <cite>False</cite> if the model is already loaded in the
 registry and thus the SQL table name can be obtained that way.</p></li>
 <li><p>field type: binary, boolean, char, date, datetime, float, html,
-integer, many2many, many2one, monetary, one2many, reference,
-selection, text, serialized. The list can vary depending on Odoo
-version or custom added field types.</p></li>
+integer, many2many, many2one, many2one_reference, monetary, one2many,
+reference, selection, text, serialized. The list can vary depending on
+Odoo version or custom added field types.</p></li>
 <li><p>SQL field type: If the field type is custom or it’s one of the special
 cases (see below), you need to indicate here the SQL type to use
 (from the valid PostgreSQL types):
@@ -328,6 +328,9 @@ probably.</p></li>
 <span class="sig-prename descclassname"><span class="pre">openupgradelib.openupgrade.</span></span><span class="sig-name descname"><span class="pre">delete_records_safely_by_xml_id</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">env</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">xml_ids</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#openupgradelib.openupgrade.delete_records_safely_by_xml_id" title="Permalink to this definition">¶</a></dt>
 <dd><p>This removes in the safest possible way the records whose XML-IDs are
 passed as argument.</p>
+<p>If not possible to be removed, and the record is an updatable one
+(noupdate=0), it’s switched to noupdate=1, for avoiding a later error when
+Odoo performs the regular update cleanup and trying to remove it as well.</p>
 <dl class="field-list simple">
 <dt class="field-odd">Parameters</dt>
 <dd class="field-odd"><p><strong>xml_ids</strong> – List of XML-ID string identifiers of the records to remove.</p>
@@ -1120,7 +1123,7 @@ type is allowed not to exist anymore, except when running unit tests.
       &copy;2012-2021, Odoo Community Association (OCA) / The OpenUpgrade developers.
       
       |
-      Powered by <a href="http://sphinx-doc.org/">Sphinx 4.3.0</a>
+      Powered by <a href="http://sphinx-doc.org/">Sphinx 4.4.0</a>
       &amp; <a href="https://github.com/bitprophet/alabaster">Alabaster 0.7.12</a>
       
       |
