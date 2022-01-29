@@ -16,6 +16,10 @@ def switch_noupdate_records(env):
             "mt_req_created",
             "mt_req_status",
             "equipment_team_maintenance",
+            "stage_0",
+            "stage_1",
+            "stage_3",
+            "stage_4",
         ],
         True,
     )
