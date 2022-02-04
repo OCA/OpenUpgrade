@@ -132,6 +132,35 @@ def drop_obsolete_constraint_wizard_multi_charts_accounts(env):
     openupgrade.remove_tables_fks(env.cr, ['wizard_multi_charts_accounts'])
 
 
+def fix_double_membership(cr):
+    # avoid error raised by new function '_check_one_user_type'
+
+    # we arbitrarily keep the tax included
+    group_to_remove = "group_show_line_subtotals_tax_excluded"
+    group_to_keep = "group_show_line_subtotals_tax_included"
+    openupgrade.logged_query(
+        cr, """
+            DELETE FROM res_groups_users_rel
+            WHERE
+            gid = (
+                SELECT res_id
+                FROM ir_model_data
+                WHERE module = 'account' AND name = %s
+            )
+            AND uid IN (
+                SELECT uid FROM res_groups_users_rel WHERE gid IN (
+                    SELECT res_id
+                    FROM ir_model_data
+                    WHERE module = 'account'
+                    AND name IN (%s, %s)
+                )
+                GROUP BY uid
+                HAVING count(*) > 1
+            );
+        """, (group_to_remove, group_to_remove, group_to_keep)
+    )
+
+
 @openupgrade.migrate()
 def migrate(env, version):
     cr = env.cr
@@ -158,3 +187,6 @@ def migrate(env, version):
     drop_obsolete_constraint_wizard_multi_charts_accounts(env)
     openupgrade.set_xml_ids_noupdate_value(
         env, 'account', ['account_analytic_line_rule_billing_user'], False)
+
+    # Fix potentiel duplicates in res_groups_users_rel
+    fix_double_membership(env.cr)
