@@ -155,16 +155,19 @@ def merge_stock_putaway_product(cr):
             FROM stock_product_putaway_strategy
             WHERE product_product_id IS NOT NULL"""
         ).format(sql.Identifier(column_name)))
-        # second, we add the ones with product product template
+        # second, we add the ones with product template
+        # We put sequence + 1000 for giving more priority by default to product
+        # specific rules
         openupgrade.logged_query(cr, sql.SQL(
             """INSERT INTO stock_fixed_putaway_strat (product_id, putaway_id,
                 fixed_location_id, sequence,
                 create_uid, create_date, write_uid, write_date, {})
             SELECT pp.id, spps.putaway_id, spps.fixed_location_id,
-                spps.sequence, spps.create_uid, spps.create_date,
+                spps.sequence + 1000, spps.create_uid, spps.create_date,
                 spps.write_uid, spps.write_date, spps.id
             FROM stock_product_putaway_strategy spps
-            JOIN product_template pt ON pt.id = spps.product_tmpl_id
+            JOIN product_template pt ON
+                (pt.id = spps.product_tmpl_id AND spps.product_product_id IS NULL)
             JOIN product_product pp ON pp.product_tmpl_id = pt.id
             LEFT JOIN stock_fixed_putaway_strat sfps ON (
                 sfps.product_id = pp.id AND sfps.putaway_id = spps.putaway_id AND
