@@ -14,6 +14,11 @@ renamed_modules = {
     # OCA/hr
     # TODO: Transform possible data
     'hr_skill': 'hr_skills',
+    # OCA/iot
+    'iot': 'iot_oca',
+    'iot_amqp': 'iot_amqp_oca',
+    'iot_input': 'iot_input_oca',
+    'iot_output': 'iot_output_oca',
     # OCA/manufacture
     'quality_control': 'quality_control_oca',
     'quality_control_mrp': 'quality_control_mrp_oca',
