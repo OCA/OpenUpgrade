@@ -283,9 +283,8 @@ def map_stock_locations(env, main_company):
         'stock.scrap': ['scrap_location_id'],
         'stock.rule': ['location_src_id', 'location_id'],
         'stock.warehouse.orderpoint': ['location_id'],
-        # 'stock.quant': is dependant of location,
-        # same goes for locations, products, packages and lots.
-        # we need to think a way to handle them if needed
+        'stock.quant': ['location_id'],
+        'stock.quant.package': ['location_id'],
     }
     for model, locations in affected_models.items():
         table = env[model]._table
@@ -320,6 +319,14 @@ def map_stock_locations(env, main_company):
                                location=location, value=value,
                                xmlid_name=xmlid_name, condition=condition)
                 )
+
+    # Update related / computed fields
+    openupgrade.logged_query(env.cr, """
+        UPDATE stock_quant sq
+        SET company_id = sl.company_id
+        FROM stock_location sl
+        WHERE sq.location_id = sl.id""")
+    env["stock.quant.package"].search([])._compute_package_info()
 
     # xmlids are deprecated in v13
     openupgrade.logged_query(env.cr, """
