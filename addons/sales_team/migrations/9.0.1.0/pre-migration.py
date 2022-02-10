@@ -25,3 +25,7 @@ def migrate(env, version):
     openupgrade.rename_tables(cr, [('crm_case_section', 'crm_team')])
     openupgrade.rename_models(cr, [('crm.case.section', 'crm.team')])
     openupgrade.rename_fields(env, field_renames)
+    openupgrade.add_fields(
+        env,
+        [("company_id", "crm.team", "crm_team", "many2one", None, "sales_team")]
+    )

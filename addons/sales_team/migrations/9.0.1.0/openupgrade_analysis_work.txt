@@ -1,7 +1,7 @@
 ---Fields in module 'sales_team'---
-sales_team   / crm.team                 / active (boolean)              : NEW 
-sales_team   / crm.team                 / code (char)                   : NEW 
-sales_team   / crm.team                 / color (integer)               : NEW 
+sales_team   / crm.team                 / active (boolean)              : NEW
+sales_team   / crm.team                 / code (char)                   : NEW
+sales_team   / crm.team                 / color (integer)               : NEW
 sales_team   / crm.team                 / name (char)                   : NEW required: required
 sales_team   / crm.team                 / reply_to (char)               : NEW
 sales_team   / crm.team                 / user_id (many2one)            : NEW relation: res.users
@@ -9,14 +9,14 @@ sales_team   / crm.team                 / working_hours (float)         : NEW
 #Done: Rename model and table from crm_case_section to crm_team
 
 sales_team   / crm.team                 / company_id (many2one)         : NEW relation: res.company
-#Nothing To Do : New functionality added.
+# DONE: pre-migration: pre-create the field for avoiding the default value
 
 sales_team   / crm.team                 / member_ids (one2many)         : NEW relation: res.users
 #Done: use existing default section field on user model
 
 sales_team   / crm.team                 / message_follower_ids (one2many): NEW relation: mail.followers
 sales_team   / crm.team                 / message_ids (one2many)        : NEW relation: mail.message
-sales_team   / crm.team                 / message_last_post (datetime)  : NEW 
+sales_team   / crm.team                 / message_last_post (datetime)  : NEW
 #Nothing To Do : New functionality added.
 
 
