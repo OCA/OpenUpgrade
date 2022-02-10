@@ -44,6 +44,8 @@ _xmlid_renames = [
     ('stock.access_stock_fixed_putaway_strat', 'stock.access_stock_putaway_manager'),
     ('stock.access_stock_fixed_putaway_user', 'stock.access_stock_putaway_all'),
     ('stock.access_stock_forecast_user', 'stock.access_report_stock_quantity'),
+    # from stock_production_lot_multi_company module
+    ('stock.production_lot_comp_rule', 'stock.stock_production_lot_rule'),
 ]
 
 

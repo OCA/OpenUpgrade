@@ -353,6 +353,13 @@ def map_stock_locations(env, main_company):
     """)
 
 
+def stock_production_lot_multi_company_migration(env):
+    rule = env.ref("stock.stock_production_lot_rule", raise_if_not_found=False)
+    if 'user' in rule.domain_force:
+        rule.write({"name": "Stock Production Lot multi-company",
+                    "domain_force": "[('company_id','in', company_ids)]"})
+
+
 def recompute_stock_location_complete_name(env):
     # In 12.0, the displayed name of the locations was obtained by the
     # name_get method. This method limited the location path up to a parent
@@ -376,6 +383,7 @@ def migrate(env, version):
     map_stock_locations(env, main_company)
     convert_many2one_stock_inventory_product_and_location(env)
     openupgrade.load_data(env.cr, 'stock', 'migrations/13.0.1.1/noupdate_changes.xml')
+    stock_production_lot_multi_company_migration(env)
     if openupgrade.table_exists(env.cr, 'delivery_carrier'):
         openupgrade.load_data(
             env.cr, "stock", "migrations/13.0.1.1/noupdate_changes2.xml")
