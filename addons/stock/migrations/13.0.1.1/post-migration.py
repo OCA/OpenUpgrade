@@ -266,6 +266,22 @@ def map_stock_locations(env, main_company):
     env['res.company'].create_missing_production_location()
     env['res.company'].create_missing_scrap_location()
 
+    # company of quant is related to company of its location_id
+    # but the specific locations we are dealing don't have company!
+    # thus, we put temporarily a company from their product/lots
+    openupgrade.logged_query(env.cr, """
+        UPDATE stock_quant sq
+        SET company_id = pt.company_id
+        FROM product_product pp
+        JOIN product_template pt ON pp.product_tmpl_id = pt.id
+        WHERE sq.product_id = pp.id AND pt.company_id IS NOT NULL
+            AND sq.company_id IS NULL""")
+    openupgrade.logged_query(env.cr, """
+        UPDATE stock_quant sq
+        SET company_id = ppl.company_id
+        FROM stock_production_lot ppl
+        WHERE sq.lot_id = ppl.id AND sq.company_id IS NULL""")
+
     conditions = {
         'location_inventory':
             "sl2.usage = 'inventory' AND sl2.scrap_location IS NOT TRUE",
@@ -284,7 +300,6 @@ def map_stock_locations(env, main_company):
         'stock.rule': ['location_src_id', 'location_id'],
         'stock.warehouse.orderpoint': ['location_id'],
         'stock.quant': ['location_id'],
-        'stock.quant.package': ['location_id'],
     }
     for model, locations in affected_models.items():
         table = env[model]._table
