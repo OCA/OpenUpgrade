@@ -1,0 +1,11 @@
+---Models in module 'pos_restaurant'---
+---Fields in module 'pos_restaurant'---
+pos_restaurant / pos.order.line           / mp_skip (boolean)             : NEW
+pos_restaurant / pos.order.line           / note (char)                   : NEW
+pos_restaurant / restaurant.printer       / printer_type (selection)      : NEW selection_keys: ['iot'], hasdefault
+# NOTHING TO DO: New features with proper default/null values
+
+---XML records in module 'pos_restaurant'---
+NEW ir.ui.view: pos_restaurant.assets_backend
+NEW ir.ui.view: pos_restaurant.assets_tests
+# NOTHING TO DO: noupdate=0 new IR records
