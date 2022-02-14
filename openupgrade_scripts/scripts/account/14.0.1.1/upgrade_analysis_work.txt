@@ -231,7 +231,7 @@ account      / account.move.line        / tax_tag_ids (many2many)       : NEW re
 account      / account.partial.reconcile / amount_currency (float)       : DEL
 account      / account.partial.reconcile / credit_amount_currency (float): NEW
 account      / account.partial.reconcile / debit_amount_currency (float) : NEW
-# NOTHING TO DO
+# DONE: post-migration set new fields.
 
 account      / account.partial.reconcile / credit_currency_id (many2one) : NEW relation: res.currency, isfunction: function, stored
 account      / account.partial.reconcile / debit_currency_id (many2one)  : NEW relation: res.currency, isfunction: function, stored
