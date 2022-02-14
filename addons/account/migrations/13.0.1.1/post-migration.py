@@ -86,21 +86,6 @@ def map_account_journal_post_at_bank_rec(env):
     )
 
 
-def fill_account_journal_restrict_mode_hash_table(env):
-    openupgrade.logged_query(
-        env.cr, """
-        UPDATE account_journal
-        SET restrict_mode_hash_table = TRUE
-        WHERE {} != TRUE
-        RETURNING id
-        """.format(openupgrade.get_legacy_name('update_posted'))
-    )
-    ids = [x[0] for x in env.cr.fetchall()]
-    if ids:
-        env['account.journal'].browse(ids)._create_secure_sequence(
-            ['secure_sequence_id'])
-
-
 def archive_account_tax_type_tax_use_adjustment(env):
     openupgrade.logged_query(
         env.cr, """
@@ -1039,7 +1024,6 @@ def migrate(env, version):
     fill_account_fiscal_position_company_id(env)
     fill_account_account_type_internal_group(env)
     map_account_journal_post_at_bank_rec(env)
-    fill_account_journal_restrict_mode_hash_table(env)
     archive_account_tax_type_tax_use_adjustment(env)
     fill_account_journal_invoice_reference_type(env)
     fill_account_move_line_missing_fields(env)
