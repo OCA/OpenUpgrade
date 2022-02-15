@@ -591,6 +591,45 @@ def fill_account_journal_payment_credit_debit_account_id(env):
         )
 
 
+def create_new_counterpart_account_payment_transfer(env):
+    # Create new counterpart payment with account payment transfer
+    openupgrade.logged_query(
+        env.cr,
+        """
+        INSERT INTO account_payment (move_id, is_internal_transfer, partner_type,
+            payment_type,
+            amount, currency_id,
+            destination_account_id, partner_id, journal_id,
+            create_uid, create_date, write_uid, write_date)
+        SELECT move.id, true, ap.partner_type,
+            CASE
+            WHEN journal.id = ap.destination_journal_id THEN 'inbound' ELSE 'outbound'
+            END,
+            ap.amount, ap.currency_id,
+            ap.destination_account_id, ap.partner_id, move.journal_id,
+            ap.create_uid, ap.create_date, ap.write_uid, ap.write_date
+        FROM account_payment ap
+        JOIN account_move move
+            ON (move.payment_id = ap.id AND move.id != ap.move_id)
+        JOIN account_journal journal ON journal.id = move.journal_id
+        WHERE ap.payment_type = 'transfer'
+        """,
+    )
+
+
+def map_account_payment_transfer(env):
+    # map payment_type from transfer to 'inbound'/'outbound'
+    # and set is_internal_transfer as true on account payment transfer
+    openupgrade.logged_query(
+        env.cr,
+        """
+        UPDATE account_payment ap
+        SET is_internal_transfer = true, payment_type = 'outbound'
+        WHERE ap.payment_type = 'transfer'
+        """,
+    )
+
+
 def fill_account_payment_with_no_move(env):
     p_data = {}
     p_dates_by_company = {}
@@ -752,6 +791,8 @@ def migrate(env, version):
     fill_company_account_journal_suspense_account_id(env)
     fill_statement_lines_with_no_move(env)
     fill_account_journal_payment_credit_debit_account_id(env)
+    create_new_counterpart_account_payment_transfer(env)
+    map_account_payment_transfer(env)
     fill_account_payment_with_no_move(env)
     _delete_hooks(env)
     openupgrade.delete_record_translations(
