@@ -40,7 +40,13 @@ def fill_calendar_recurrence_table(env):
             FROM calendar_event
             WHERE recurrency AND recurrence_id IS NULL
                 AND (recurrent_id IS NULL OR recurrent_id = 0)
-                AND (mo OR tu OR we OR th OR fr OR sa OR su)
+                AND (
+                    rrule_type != 'weekly'
+                    OR (
+                        rrule_type = 'weekly' AND
+                        (mo OR tu OR we OR th OR fr OR sa OR su)
+                    )
+                )
             RETURNING id,base_event_id
         )
         UPDATE calendar_event ce
