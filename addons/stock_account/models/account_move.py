@@ -123,10 +123,10 @@ class AccountMove(models.Model):
                 debit_interim_account = accounts['stock_output']
                 credit_expense_account = accounts['expense']
                 if not credit_expense_account:
-                    if self.type == 'out_refund':
-                        credit_expense_account = self.journal_id.default_credit_account_id
+                    if move.type == 'out_refund':
+                        credit_expense_account = move.journal_id.default_credit_account_id
                     else: # out_invoice/out_receipt
-                        credit_expense_account = self.journal_id.default_debit_account_id
+                        credit_expense_account = move.journal_id.default_debit_account_id
                 if not debit_interim_account or not credit_expense_account:
                     continue
 
@@ -139,6 +139,7 @@ class AccountMove(models.Model):
                 lines_vals_list.append({
                     'name': line.name[:64],
                     'move_id': move.id,
+                    'partner_id': move.commercial_partner_id.id,
                     'product_id': line.product_id.id,
                     'product_uom_id': line.product_uom_id.id,
                     'quantity': line.quantity,
@@ -154,6 +155,7 @@ class AccountMove(models.Model):
                 lines_vals_list.append({
                     'name': line.name[:64],
                     'move_id': move.id,
+                    'partner_id': move.commercial_partner_id.id,
                     'product_id': line.product_id.id,
                     'product_uom_id': line.product_uom_id.id,
                     'quantity': line.quantity,
