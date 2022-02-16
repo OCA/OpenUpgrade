@@ -1,3 +1,35 @@
+---Models in module 'account'---
+obsolete model account.aged.trial.balance [transient]
+obsolete model account.balance.report [transient]
+obsolete model account.bank.accounts.wizard [transient]
+obsolete model account.common.account.report [transient]
+obsolete model account.common.partner.report [transient]
+obsolete model account.financial.report
+obsolete model accounting.report [transient]
+obsolete model account.move.line.reconcile [transient]
+obsolete model account.move.line.reconcile.writeoff [transient]
+obsolete model account.opening [transient]
+obsolete model account.report.general.ledger [transient]
+obsolete model account.report.partner.ledger [transient]
+obsolete model account.tax.report [transient]
+obsolete model report.account.report_financial [abstract]
+obsolete model report.account.report_generalledger [abstract]
+obsolete model report.account.report_overdue [abstract]
+obsolete model report.account.report_partnerledger [abstract]
+obsolete model report.account.report_tax [abstract]
+obsolete model report.account.report_trialbalance [abstract]
+obsolete model wizard.multi.charts.accounts [transient]
+# DONE: pre-migration: removed tables fks
+
+new model account.fiscal.year
+new model account.incoterms (renamed from stock.incoterms in module stock)
+new model account.invoice.import.wizard [transient]
+new model account.invoice.send [transient]
+new model account.reconciliation.widget [abstract]
+new model account.setup.bank.manual.config [transient]
+new model report.account.report_invoice_with_payments [abstract]
+# NOTHING TO DO
+
 ---Fields in module 'account'---
 account      / account.account          / internal_group (selection)    : NEW selection_keys: function
 account      / account.account.type     / internal_group (selection)    : NEW selection_keys: ['asset', 'equity', 'expense', 'income', 'liability']
@@ -27,6 +59,7 @@ account      / account.chart.template   / transfer_account_code_prefix (char): N
 account      / account.chart.template   / transfer_account_id (many2one): DEL relation: account.account.template, required: required
 account      / account.chart.template   / company_id (many2one)         : DEL relation: res.company
 # DONE: post-migration: tried to fill all of them
+# DONE: pre-migration: lifted constraint
 
 account      / account.fiscal.year      / company_id (many2one)         : NEW relation: res.company, required: required, req_default: function
 account      / account.fiscal.year      / date_from (date)              : NEW required: required
@@ -161,8 +194,10 @@ account      / account.tax.template     / cash_basis_account (many2one) : was re
 
 account      / account.tax              / cash_basis_base_account_id (many2one): previously in module account_cash_basis_base_account
 account      / account.tax.template     / cash_basis_base_account_id (many2one): NEW relation: account.account.template
-account      / account.tax.template     / company_id (many2one)         : DEL relation: res.company
 # NOTHING TO DO
+
+account      / account.tax.template     / company_id (many2one)         : DEL relation: res.company
+# DONE: pre-migration: lifted constraint
 
 account      / account.tax              / tax_adjustment (boolean)      : DEL
 account      / account.tax              / type_tax_use (selection)      : selection_keys is now '['adjustment', 'none', 'purchase', 'sale']' ('['none', 'purchase', 'sale']')
