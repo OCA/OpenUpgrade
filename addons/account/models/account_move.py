@@ -451,6 +451,7 @@ class AccountMove(models.Model):
             'analytic_account_id': tax_line.tax_line_id.analytic and tax_line.analytic_account_id.id,
             'tax_ids': [(6, 0, tax_line.tax_ids.ids)],
             'tag_ids': [(6, 0, tax_line.tag_ids.ids)],
+            'partner_id': tax_line.partner_id.id,
         }
 
     @api.model
@@ -471,6 +472,7 @@ class AccountMove(models.Model):
             'analytic_account_id': tax_vals['analytic'] and base_line.analytic_account_id.id,
             'tax_ids': [(6, 0, tax_vals['tax_ids'])],
             'tag_ids': [(6, 0, tax_vals['tag_ids'])],
+            'partner_id': base_line.partner_id.id,
         }
 
     def _get_tax_force_sign(self):
@@ -667,7 +669,6 @@ class AccountMove(models.Model):
                     **to_write_on_line,
                     'name': tax.name,
                     'move_id': self.id,
-                    'partner_id': line.partner_id.id,
                     'company_id': line.company_id.id,
                     'company_currency_id': line.company_currency_id.id,
                     'quantity': 1.0,
@@ -1418,7 +1419,6 @@ class AccountMove(models.Model):
                 move.amount_by_group = []
                 continue
 
-            lang_env = move.with_context(lang=move.partner_id.lang).env
             balance_multiplicator = -1 if move.is_inbound() else 1
 
             tax_lines = move.line_ids.filtered('tax_line_id')
@@ -1458,8 +1458,8 @@ class AccountMove(models.Model):
                     tax_group.name,
                     tax_group_vals['tax_amount'],
                     tax_group_vals['base_amount'],
-                    formatLang(lang_env, tax_group_vals['tax_amount'], currency_obj=move.currency_id),
-                    formatLang(lang_env, tax_group_vals['base_amount'], currency_obj=move.currency_id),
+                    formatLang(self.env, tax_group_vals['tax_amount'], currency_obj=move.currency_id),
+                    formatLang(self.env, tax_group_vals['base_amount'], currency_obj=move.currency_id),
                     len(tax_group_mapping),
                     tax_group.id
                 ))
@@ -1615,7 +1615,7 @@ class AccountMove(models.Model):
         self.ensure_one()
 
         line_currency = self.currency_id if self.currency_id != self.company_id.currency_id else False
-        for line in self.line_ids:
+        for line in self.line_ids.filtered(lambda l: not l.display_type):
             # Do something only on invoice lines.
             if line.exclude_from_invoice_tab:
                 continue
@@ -1623,7 +1623,7 @@ class AccountMove(models.Model):
             # Shortcut to load the demo data.
             # Doing line.account_id triggers a default_get(['account_id']) that could returns a result.
             # A section / note must not have an account_id set.
-            if not line._cache.get('account_id') and not line.display_type and not line._origin:
+            if not line._cache.get('account_id') and not line._origin:
                 line.account_id = line._get_computed_account()
                 if not line.account_id:
                     if self.is_sale_document(include_receipts=True):
@@ -2119,7 +2119,11 @@ class AccountMove(models.Model):
                 'credit': balance < 0.0 and -balance or 0.0,
             })
 
-            if not is_refund:
+            if not is_refund or self.tax_cash_basis_rec_id:
+                # We don't map tax repartition for non-refund operations, nor for cash basis entries.
+                # Indeed, cancelling a cash basis entry usually happens when unreconciling and invoice,
+                # in which case we always want the reverse entry to totally cancel the original one, keeping the same accounts,
+                # tags and repartition lines
                 continue
 
             # ==== Map tax repartition lines ====
@@ -2131,18 +2135,15 @@ class AccountMove(models.Model):
                 refund_repartition_line = tax_repartition_lines_mapping[invoice_repartition_line]
 
                 # Find the right account.
-                if cancel:
-                    account_id = line_vals['account_id']
-                else:
-                    account_id = self.env['account.move.line']._get_default_tax_account(refund_repartition_line).id
-                    if not account_id:
-                        if not invoice_repartition_line.account_id:
-                            # Keep the current account as the current one comes from the base line.
-                            account_id = line_vals['account_id']
-                        else:
-                            tax = invoice_repartition_line.invoice_tax_id
-                            base_line = self.line_ids.filtered(lambda line: tax in line.tax_ids.flatten_taxes_hierarchy())[0]
-                            account_id = base_line.account_id.id
+                account_id = self.env['account.move.line']._get_default_tax_account(refund_repartition_line).id
+                if not account_id:
+                    if not invoice_repartition_line.account_id:
+                        # Keep the current account as the current one comes from the base line.
+                        account_id = line_vals['account_id']
+                    else:
+                        tax = invoice_repartition_line.invoice_tax_id
+                        base_line = self.line_ids.filtered(lambda line: tax in line.tax_ids.flatten_taxes_hierarchy())[0]
+                        account_id = base_line.account_id.id
 
                 tags = refund_repartition_line.tag_ids
                 if line_vals.get('tax_ids'):
