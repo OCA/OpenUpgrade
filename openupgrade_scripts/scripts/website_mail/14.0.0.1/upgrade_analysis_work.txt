@@ -1,0 +1,10 @@
+---Models in module 'website_mail'---
+---Fields in module 'website_mail'---
+website_mail / mail.mail                / description (char)            : module is now 'mail' ('website_mail')
+website_mail / mail.message             / description (char)            : module is now 'mail' ('website_mail')
+website_mail / mail.message             / website_published (boolean)   : DEL
+# NOTHING TO DO
+
+---XML records in module 'website_mail'---
+DEL ir.rule: website_mail.mail_message_rule_public (noupdate)
+# DONE: post-migration: try to delete
