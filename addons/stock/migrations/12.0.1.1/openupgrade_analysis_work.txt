@@ -1,3 +1,17 @@
+---Models in module 'stock'---
+obsolete model procurement.rule (renamed to stock.rule)
+obsolete model stock.incoterms (renamed to account.incoterms in module account)
+obsolete model stock.location.path (renamed to stock.rule)
+new model product.replenish [transient]
+new model report.stock.report_stock_rule [abstract]
+new model stock.package.destination [transient]
+new model stock.package_level
+new model stock.rule (renamed from procurement.rule)
+new model stock.rules.report [transient]
+new model stock.track.confirmation [transient]
+new model stock.track.line [transient]
+# NOTHING TO DO
+
 ---Fields in module 'stock'---
 stock        / product.putaway          / product_location_ids (one2many): NEW relation: stock.fixed.putaway.strat
 stock        / stock.fixed.putaway.strat / product_id (many2one)         : NEW relation: product.product
@@ -60,7 +74,7 @@ stock        / stock.picking.type       / barcode (char)                : NEW
 # DONE: post-migration: Filled the same way Odoo does
 
 stock        / stock.picking.type       / barcode_nomenclature_id (many2one): DEL relation: barcode.nomenclature
-# NOTHING TO DO: handled in barcodes module
+# pre-migration: lifted constraint. the moved content is handled in barcodes module
 
 stock        / stock.production.lot     / activity_ids (one2many)       : NEW relation: mail.activity
 stock        / stock.production.lot     / message_last_post (datetime)  : DEL
@@ -90,7 +104,7 @@ stock        / stock.warehouse          / mto_pull_id (many2one)        : relati
 # DONE: post-migration (merge stock.location.path into stock.rule)
 
 stock        / stock.warehouse          / default_resupply_wh_id (many2one): DEL relation: stock.warehouse
-# NOTHING TO DO
+# pre-migration: lifted constraint
 
 ---XML records in module 'stock'---
 NEW ir.actions.act_window: stock.action_product_replenish

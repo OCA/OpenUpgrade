@@ -71,6 +71,7 @@ xmlid_renames = [
 ]
 
 _obsolete_tables = (
+    "sale_layout_category",
     "stock_location_path",
 )
 

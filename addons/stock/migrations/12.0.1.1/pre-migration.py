@@ -50,6 +50,12 @@ def switch_stock_xml_id_noupdate(cr):
     )
 
 
+def lift_fk_constrains_deleted_many2ones(cr):
+    # deleted fields
+    openupgrade.lift_constraints(cr, "barcode_nomenclature", "barcode_nomenclature_id")
+    openupgrade.lift_constraints(cr, "stock_warehouse", "default_resupply_wh_id")
+
+
 @openupgrade.migrate(use_env=False)
 def migrate(cr, version):
     openupgrade.copy_columns(cr, _column_copies)
@@ -57,6 +63,7 @@ def migrate(cr, version):
     openupgrade.rename_models(cr, _model_renames)
     openupgrade.rename_tables(cr, _table_renames)
     switch_stock_xml_id_noupdate(cr)
+    lift_fk_constrains_deleted_many2ones(cr)
     cr.execute(
         """
         ALTER TABLE stock_rule

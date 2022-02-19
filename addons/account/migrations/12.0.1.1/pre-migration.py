@@ -120,7 +120,7 @@ def prefill_account_chart_template_transfer_account_prefix(env):
                 "SET transfer_account_code_prefix = 'OUB'")
 
 
-def drop_obsolete_constraint_wizard_multi_charts_accounts(env):
+def drop_obsolete_fk_constraints(env):
     """We remove the constraints on wizard_multi_charts_accounts
     to avoid not null error if account chart changed and account template has
     been removed.
@@ -129,7 +129,29 @@ def drop_obsolete_constraint_wizard_multi_charts_accounts(env):
     Note : wizard_multi_charts_accounts is an obsolete table. Model
     has been removed in V12.0
     """
-    openupgrade.remove_tables_fks(env.cr, ['wizard_multi_charts_accounts'])
+    openupgrade.remove_tables_fks(env.cr, [
+        'wizard_multi_charts_accounts',
+        'account_aged_trial_balance',
+        'account_aged_trial_balance_account_journal_rel',
+        'account_balance_report',
+        'account_balance_report_journal_rel',
+        'account_bank_accounts_wizard',
+        'account_common_account_report',
+        'account_common_partner_report',
+        'account_financial_report',
+        'accounting_report',
+        'account_move_line_reconcile',
+        'account_move_line_reconcile_writeoff',
+        'account_opening',
+        'account_report_general_ledger',
+        'account_report_general_ledger_journal_rel',
+        'account_report_partner_ledger',
+        'account_tax_report',
+    ])
+    # also, we lift some obsolete fk constraints from mny2ones
+    openupgrade.lift_constraints(env.cr, "account_chart_template", "transfer_account_id")
+    openupgrade.lift_constraints(env.cr, "account_chart_template", "company_id")
+    openupgrade.lift_constraints(env.cr, "account_tax_template", "company_id")
 
 
 @openupgrade.migrate()
@@ -155,6 +177,6 @@ def migrate(env, version):
             ALTER TABLE res_company ADD COLUMN incoterm_id INTEGER""",
         )
     prefill_account_chart_template_transfer_account_prefix(env)
-    drop_obsolete_constraint_wizard_multi_charts_accounts(env)
+    drop_obsolete_fk_constraints(env)
     openupgrade.set_xml_ids_noupdate_value(
         env, 'account', ['account_analytic_line_rule_billing_user'], False)

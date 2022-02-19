@@ -103,6 +103,9 @@ def migrate(env, version):
         # from sale_payment module
         openupgrade.rename_columns(env.cr, _column_renames)
         rename_sale_payment_config_parameters(env.cr, _config_param_renames)
+        openupgrade.lift_constraints(env.cr, "sale_order", "payment_tx_id")
+        openupgrade.lift_constraints(env.cr, "sale_order ", "payment_acquirer_id")
+        openupgrade.lift_constraints(env.cr, "payment_transaction ", "sale_order_id")
     if openupgrade.column_exists(env.cr, 'sale_order', 'requested_date'):
         # from sale_order_dates module
         openupgrade.rename_fields(env, _field_renames_order_dates)
