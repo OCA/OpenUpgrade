@@ -134,6 +134,17 @@ def use_new_taxes_and_repartition_lines_on_move_lines(env):
 
 
 def update_account_tags(env):
+    def _check_fiscalyear_lock_date(self):
+        return True
+
+    def _check_tax_lock_date(self):
+        return True
+    # create hooks
+    _check_fiscalyear_lock_date._original_method = type(env['account.move'])._check_fiscalyear_lock_date
+    type(env['account.move'])._check_fiscalyear_lock_date = _check_fiscalyear_lock_date
+    _check_tax_lock_date._original_method = type(env['account.move.line'])._check_tax_lock_date
+    type(env['account.move.line'])._check_tax_lock_date = _check_tax_lock_date
+
     xmlids = {
         "mod_115_02_03": ["mod_115_02", "mod_115_03"],
         "mod_303_01_03": ["mod_303_01", "mod_303_03"],
@@ -155,14 +166,24 @@ def update_account_tags(env):
         "mod_303_38_39": ["mod_303_38", "mod_303_39"],
         "mod_303_40_41": ["mod_303_40", "mod_303_41"],
     }
+    # in theory, all tags on accounts are of applicability = 'accounts'
+    # and all split tags in this module are of applicability ='taxes'
+    # so, theoretically, we don't need to put the account m2m tables,
+    # but we put them in the following dict just in case someone has 'taxes' tags on accounts
     tables = {
+        # move lines
         "account_account_tag_account_move_line_rel": "account_move_line_id",
+        # repartition lines
         "account_account_tag_account_tax_repartition_line_rel": "account_tax_repartition_line_id",
-        "account_account_account_tag": "account_account_id",
         "account_tax_repartition_financial_tags": "account_tax_repartition_line_template_id",
+        # accounts
+        "account_account_account_tag": "account_account_id",
         "account_account_template_account_tag": "account_account_template_id",
     }
+    affected_repartition_lines = env["account.tax.repartition.line"]
+    affected_move_lines = env["account.move.line"]
     old_tags = env["account.account.tag"]
+    new_tags = env["account.account.tag"]
     for old_xmlid, data_new in xmlids.items():
         old_tag = env.ref("l10n_es." + old_xmlid, raise_if_not_found=False)
         if not old_tag:
@@ -170,6 +191,7 @@ def update_account_tags(env):
         old_tags |= old_tag
         for new_xmlid in data_new:
             new_tag = env.ref("l10n_es." + new_xmlid)
+            new_tags |= new_tag
             for table, field in tables.items():
                 openupgrade.logged_query(
                     env.cr, sql.SQL(
@@ -178,7 +200,8 @@ def update_account_tags(env):
                         SELECT rel.{field}, %(new_tag)s
                         FROM {table} rel
                         WHERE rel.account_account_tag_id = %(old_tag)s
-                        ON CONFLICT DO NOTHING"""
+                        ON CONFLICT DO NOTHING
+                        RETURNING {field}"""
                     ).format(
                         table=sql.Identifier(table),
                         field=sql.Identifier(field),
@@ -187,6 +210,12 @@ def update_account_tags(env):
                         "new_tag": new_tag.id,
                     }
                 )
+                if table == "account_account_tag_account_move_line_rel":
+                    affected_move_lines |= env["account.move.line"].browse(
+                        [x[0] for x in env.cr.fetchall()])
+                elif table == "account_account_tag_account_tax_repartition_line_rel":
+                    affected_repartition_lines |= env["account.tax.repartition.line"].browse(
+                        [x[0] for x in env.cr.fetchall()])
     # Pre-deleting m2m links for avoiding ondelete="restrict" constraint when unlinking
     if old_tags:
         for table, field in tables.items():
@@ -201,20 +230,59 @@ def update_account_tags(env):
             )
     openupgrade.delete_records_safely_by_xml_id(
         env, ["l10n_es." + x for x in xmlids.keys()])
-    # Make sure remaining tags that can't be removed don't fail when updating l10n_es
-    # module and Odoo tries to remove them
-    openupgrade.logged_query(
-        env.cr, """
-        UPDATE ir_model_data imd
-        SET noupdate = TRUE
-        WHERE model = 'account.account.tag' AND module = 'l10n_es'
-            AND name IN %s
-        """, (tuple(xmlids), ),
-    )
+
+    # we fix tags of repartition lines (using  their templates):
+    taxes = affected_repartition_lines.tax_id
+    taxes_metadata = taxes.get_metadata()
+    for tax_metadata in taxes_metadata:
+        tax = env["account.tax"].browse(tax_metadata["id"])
+        if not tax_metadata["xmlid"]:
+            continue
+        if len(tax_metadata["xmlid"].split('.' + str(tax.company_id.id) + '_', 1)) != 2:
+            continue
+        module = tax_metadata["xmlid"].split('.' + str(tax.company_id.id) + '_', 1)[0]
+        xml_id = tax_metadata["xmlid"].split('.' + str(tax.company_id.id) + '_', 1)[1]
+        tax_template = env.ref(module + '.' + xml_id, raise_if_not_found=False)
+        if tax and tax_template:
+            for repartition_ids in ("invoice_repartition_line_ids", "refund_repartition_line_ids"):
+                for repartition_line_tmpl in tax_template[repartition_ids]:
+                    repartition_lines = tax[repartition_ids].filtered(
+                        lambda l: l.repartition_type == repartition_line_tmpl.repartition_type
+                        and l.factor_percent == repartition_line_tmpl.factor_percent)
+                    for repartition_line in repartition_lines:
+                        tags = repartition_line.tag_ids.filtered(lambda t: t not in new_tags)
+                        for tag in repartition_line.tag_ids.filtered(lambda t: t in new_tags):
+                            for tag2 in repartition_line_tmpl.tag_ids:
+                                if tag.name == tag2.name and tag.country_id == tag2.country_id:
+                                    tags |= tag
+                        repartition_line.tag_ids = tags
+    # we fix tags of move lines:
+    move_type_rel = {"invoice_repartition_line_ids": ('in_invoice', 'out_invoice'),
+                     "refund_repartition_line_ids": ('in_refund', 'out_refund')}
+    for repartition_ids, move_types in move_type_rel.items():
+        for move_line in affected_move_lines.filtered(lambda l: l.move_id.type in move_types):
+            repartition_type = 'base'
+            tax_field = 'tax_line_id'
+            if move_line.tax_ids:
+                repartition_type = 'tax'
+                tax_field = 'tax_ids'
+            elif not move_line.tax_line_id:
+                continue
+            repartition_line = move_line[tax_field][repartition_ids].filtered(
+                lambda l: l.repartition_type == repartition_type)
+            tags = move_line.tag_ids.filtered(lambda t: t not in new_tags)
+            for tag in move_line.tag_ids.filtered(lambda t: t in new_tags):
+                for tag2 in repartition_line.tag_ids:
+                    if tag.name == tag2.name and tag.country_id == tag2.country_id:
+                        tags |= tag
+            move_line.tag_ids = tags
+    # delete hooks
+    type(env['account.move'])._check_fiscalyear_lock_date = _check_fiscalyear_lock_date._original_method
+    type(env['account.move.line'])._check_tax_lock_date = _check_tax_lock_date._original_method
 
 
 @openupgrade.migrate()
 def migrate(env, version):
     use_new_taxes_and_repartition_lines_on_move_lines(env)
     update_account_tags(env)
-    # ALERT: remember to run after account_chart_update from OCA/account-financial-tools
+    # ALERT: remember to run after account_chart_update from OCA/account-financial-tools to be sure about your data
