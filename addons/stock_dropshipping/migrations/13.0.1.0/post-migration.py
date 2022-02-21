@@ -39,6 +39,7 @@ def run_dropshipping_functions(env):
             vals = {
                 "sequence_id": mapping[company.id]["sequence"].id,
                 "company_id": company.id,
+                "warehouse_id": False,
             }
             if picking_type.default_location_dest_id.usage != "customer":
                 vals["default_location_dest_id"] = env.ref('stock.stock_location_customers').id
