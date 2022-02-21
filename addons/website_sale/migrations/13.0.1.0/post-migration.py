@@ -3,6 +3,10 @@
 # Copyright 2020 Tecnativa - Pedro M. Baeza
 # License AGPL-3.0 or later (http://www.gnu.org/licenses/agpl.html).
 from openupgradelib import openupgrade
+import logging
+
+
+_logger = logging.getLogger(__name__)
 
 _unlink_by_xmlid = [
     # ir.rule
@@ -24,7 +28,16 @@ def convert_image_attachments(env):
             ('res_id', '!=', False),
         ])
         for attachment in attachments:
-            Model.browse(attachment.res_id).image_1920 = attachment.datas
+            try:
+                Model.browse(attachment.res_id).image_1920 = attachment.datas
+            except Exception as e:
+                _logger.error(
+                    "Error while recovering %s>%s for %s: %s",
+                    model,
+                    field,
+                    attachment.res_id,
+                    repr(e),
+                )
 
 
 def move_fields_from_invoice_to_moves(env):
