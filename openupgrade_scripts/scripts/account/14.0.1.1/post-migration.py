@@ -1,13 +1,50 @@
 # Copyright 2021 ForgeFlow S.L.  <https://www.forgeflow.com>
 # License AGPL-3.0 or later (http://www.gnu.org/licenses/agpl.html).
 import logging
-from datetime import timedelta
 
 from openupgradelib import openupgrade
 
 from odoo.tools.translate import _
 
 _logger = logging.getLogger(__name__)
+
+
+def _create_hooks(env):
+    def _check_fiscalyear_lock_date(self):
+        return True
+
+    def _check_tax_lock_date(self):
+        return True
+
+    def _check_reconciliation(self):
+        return True
+
+    # create hooks
+    _check_fiscalyear_lock_date._original_method = type(
+        env["account.move"]
+    )._check_fiscalyear_lock_date
+    type(env["account.move"])._check_fiscalyear_lock_date = _check_fiscalyear_lock_date
+    _check_tax_lock_date._original_method = type(
+        env["account.move.line"]
+    )._check_tax_lock_date
+    type(env["account.move.line"])._check_tax_lock_date = _check_tax_lock_date
+    _check_reconciliation._original_method = type(
+        env["account.move.line"]
+    )._check_reconciliation
+    type(env["account.move.line"])._check_reconciliation = _check_reconciliation
+
+
+def _delete_hooks(env):
+    # delete hooks
+    type(env["account.move"])._check_fiscalyear_lock_date = type(
+        env["account.move"]
+    )._check_fiscalyear_lock_date._original_method
+    type(env["account.move.line"])._check_tax_lock_date = type(
+        env["account.move.line"]
+    )._check_tax_lock_date._original_method
+    type(env["account.move.line"])._check_reconciliation = type(
+        env["account.move.line"]
+    )._check_reconciliation._original_method
 
 
 def fill_account_journal_posted_before(env):
@@ -447,7 +484,6 @@ def fill_company_account_journal_suspense_account_id(env):
 def fill_statement_lines_with_no_move(env):
     stl_dates = {}
     stl_dates_by_company = {}
-    company_dates = {}
     env.cr.execute(
         """
         SELECT id, %s, company_id
@@ -463,33 +499,10 @@ def fill_statement_lines_with_no_move(env):
             )
         else:
             stl_dates_by_company[stl_company] = stl_date
-    if stl_dates_by_company:
-        env.cr.execute(
-            """
-            SELECT id, period_lock_date, fiscalyear_lock_date
-            FROM res_company
-            WHERE id in (%s)"""
-            % (", ".join([str(x) for x in stl_dates_by_company]),)
-        )
-        for rc_id, rc_period_date, rc_fy_date in env.cr.fetchall():
-            company_dates[rc_id] = [rc_period_date, rc_fy_date]
-            temporal_date = (stl_dates_by_company[rc_id] - timedelta(days=1)).strftime(
-                "%Y-%m-%d"
-            )
-            # use temporal_date to avoid _check_fiscalyear_lock_date
-            env.cr.execute(
-                """
-                UPDATE res_company
-                SET period_lock_date = TO_DATE(%s, 'YYYY-MM-DD'),
-                    fiscalyear_lock_date = TO_DATE(%s, 'YYYY-MM-DD')
-                WHERE id = %s""",
-                (temporal_date, temporal_date, rc_id),
-            )
-        env["res.company"].invalidate_cache(
-            ["period_lock_date", "fiscalyear_lock_date"], list(company_dates.keys())
-        )
     st_lines = env["account.bank.statement.line"].browse(list(stl_dates.keys()))
-    for st_line in st_lines.with_context(check_move_validity=False):
+    for st_line in st_lines.with_context(
+        check_move_validity=False, tracking_disable=True
+    ):
         move = env["account.move"].create(
             {
                 "name": "/",
@@ -533,29 +546,6 @@ def fill_statement_lines_with_no_move(env):
         st_line.move_id.with_context(skip_account_move_synchronization=True).write(
             to_write
         )
-    # restore lock dates
-    for rc_id in company_dates:
-        env.cr.execute(
-            """
-            UPDATE res_company
-            SET period_lock_date = {}, fiscalyear_lock_date = {}
-            WHERE id = {}""".format(
-                "TO_DATE('"
-                + company_dates[rc_id][0].strftime("%Y-%m-%d")
-                + "', 'YYYY-MM-DD')"
-                if company_dates[rc_id][0]
-                else "NULL",
-                "TO_DATE('"
-                + company_dates[rc_id][1].strftime("%Y-%m-%d")
-                + "', 'YYYY-MM-DD')"
-                if company_dates[rc_id][1]
-                else "NULL",
-                rc_id,
-            ),
-        )
-    env["res.company"].invalidate_cache(
-        ["period_lock_date", "fiscalyear_lock_date"], list(company_dates.keys())
-    )
 
 
 def fill_account_journal_payment_credit_debit_account_id(env):
@@ -609,7 +599,6 @@ def fill_account_journal_payment_credit_debit_account_id(env):
 def fill_account_payment_with_no_move(env):
     p_data = {}
     p_dates_by_company = {}
-    company_dates = {}
     env.cr.execute(
         """
         SELECT ap.id, ap.%s, ap.%s, ap.%s, aj.company_id
@@ -635,33 +624,10 @@ def fill_account_payment_with_no_move(env):
             )
         else:
             p_dates_by_company[p_company] = p_payment_date
-    if p_dates_by_company:
-        env.cr.execute(
-            """
-            SELECT id, period_lock_date, fiscalyear_lock_date
-            FROM res_company
-            WHERE id in (%s)"""
-            % (", ".join([str(x) for x in p_dates_by_company]),)
-        )
-        for rc_id, rc_period_date, rc_fy_date in env.cr.fetchall():
-            company_dates[rc_id] = [rc_period_date, rc_fy_date]
-            temporal_date = (p_dates_by_company[rc_id] - timedelta(days=1)).strftime(
-                "%Y-%m-%d"
-            )
-            # use temporal_date to avoid _check_fiscalyear_lock_date
-            env.cr.execute(
-                """
-                UPDATE res_company
-                SET period_lock_date = TO_DATE(%s, 'YYYY-MM-DD'),
-                    fiscalyear_lock_date = TO_DATE(%s, 'YYYY-MM-DD')
-                WHERE id = %s""",
-                (temporal_date, temporal_date, rc_id),
-            )
-        env["res.company"].invalidate_cache(
-            ["period_lock_date", "fiscalyear_lock_date"], list(company_dates.keys())
-        )
     payments = env["account.payment"].browse(list(p_data.keys()))
-    for payment in payments.with_context(check_move_validity=False):
+    for payment in payments.with_context(
+        check_move_validity=False, tracking_disable=True
+    ):
         journal = env["account.journal"].browse(p_data[payment.id]["journal_id"])
         move = env["account.move"].create(
             {
@@ -711,29 +677,6 @@ def fill_account_payment_with_no_move(env):
         payment.move_id.with_context(skip_account_move_synchronization=True).write(
             to_write
         )
-    # restore lock dates
-    for rc_id in company_dates:
-        env.cr.execute(
-            """
-            UPDATE res_company
-            SET period_lock_date = {}, fiscalyear_lock_date = {}
-            WHERE id = {}""".format(
-                "TO_DATE('"
-                + company_dates[rc_id][0].strftime("%Y-%m-%d")
-                + "', 'YYYY-MM-DD')"
-                if company_dates[rc_id][0]
-                else "NULL",
-                "TO_DATE('"
-                + company_dates[rc_id][1].strftime("%Y-%m-%d")
-                + "', 'YYYY-MM-DD')"
-                if company_dates[rc_id][1]
-                else "NULL",
-                rc_id,
-            ),
-        )
-    env["res.company"].invalidate_cache(
-        ["period_lock_date", "fiscalyear_lock_date"], list(company_dates.keys())
-    )
 
 
 def try_delete_noupdate_records(env):
@@ -793,6 +736,7 @@ def migrate(env, version):
     fill_account_move_line_date(env)
     openupgrade.load_data(env.cr, "account", "14.0.1.1/noupdate_changes.xml")
     try_delete_noupdate_records(env)
+    _create_hooks(env)
     populate_account_groups(env)
     unfold_manual_account_groups(env)
     # Launch a recomputation of the account groups after previous changes
@@ -801,6 +745,7 @@ def migrate(env, version):
     fill_statement_lines_with_no_move(env)
     fill_account_journal_payment_credit_debit_account_id(env)
     fill_account_payment_with_no_move(env)
+    _delete_hooks(env)
     openupgrade.delete_record_translations(
         env.cr,
         "account",
