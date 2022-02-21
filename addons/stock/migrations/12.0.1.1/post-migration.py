@@ -72,12 +72,14 @@ def merge_stock_location_path_stock_rule(env):
     )
     env.cr.execute(
         """
-        SELECT DISTINCT sm.rule_id, sr.id
-        FROM stock_move sm
-        INNER JOIN stock_rule sr ON sm.%s = sr.%s
-        WHERE sr.%s IS NOT NULL AND sm.rule_id IS NOT NULL
+        SELECT DISTINCT sr2.id, sr.id
+        FROM stock_rule sr
+        JOIN stock_rule sr2 ON (sr.location_id = sr2.location_id
+            AND sr.location_src_id = sr2.location_src_id
+            AND sr.route_id = sr2.route_id
+            AND sr.picking_type_id = sr2.picking_type_id)
+        WHERE sr.%s IS NOT NULL AND sr2.%s IS NULL
         """, (
-            AsIs(openupgrade.get_legacy_name('push_rule_id')),
             AsIs(openupgrade.get_legacy_name('loc_path_id')),
             AsIs(openupgrade.get_legacy_name('loc_path_id')),
         ),
