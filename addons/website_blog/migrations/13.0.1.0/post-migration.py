@@ -33,7 +33,7 @@ def _preserve_post_covers(env):
             post.write(
                 {
                     "cover_properties": json.dumps(
-                        dict(properties, resize_class=list(resize_classes))
+                        dict(properties, resize_class=" ".join(resize_classes))
                     )
                 }
             )
