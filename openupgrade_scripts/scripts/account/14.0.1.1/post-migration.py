@@ -546,6 +546,15 @@ def fill_statement_lines_with_no_move(env):
         st_line.move_id.with_context(skip_account_move_synchronization=True).write(
             to_write
         )
+    openupgrade.logged_query(
+        env.cr,
+        """
+        UPDATE account_move am
+        SET partner_bank_id = absl.bank_account_id
+        FROM account_bank_statement_line absl
+        WHERE am.statement_line_id = absl.id AND am.partner_bank_id IS NULL
+            AND absl.bank_account_id IS NOT NULL""",
+    )
 
 
 def fill_account_journal_payment_credit_debit_account_id(env):

@@ -70,11 +70,13 @@ DONE: # post-migration: filled move_id where no move_name is is assigned to the 
 
 account      / account.bank.statement.line / account_id (many2one)         : DEL relation: account.account
 account      / account.bank.statement.line / journal_entry_ids (one2many)  : DEL relation: account.move.line
-account      / account.bank.statement.line / bank_account_id (many2one)    : DEL relation: res.partner.bank
 account      / account.bank.statement.line / move_name (char)              : DEL
 account      / account.bank.statement.line / name (char)                   : not stored anymore
 account      / account.bank.statement.line / name (char)                   : now related
 # NOTHING TO DO: This model uses the fields from the inherited account.move model (move.id field)
+
+account      / account.bank.statement.line / bank_account_id (many2one)    : DEL relation: res.partner.bank
+# DONE: pre/post: filled partner_bank_id of linked account moves
 
 account      / account.bank.statement.line / amount_residual (float)       : NEW isfunction: function, stored
 # NOTHING TO DO: filled by Odoo.
