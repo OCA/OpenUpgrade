@@ -95,6 +95,8 @@ renamed_models = {
     "sale.coupon.rule": "coupon.rule",
     "survey.user_input_line": "survey.user_input.line",
     "survey.label": "survey.question.answer",
+    # OCA/bank-statement-import
+    "account.bank.statement.import": "account.statement.import",
     # OCA/server-tools
     "openupgrade.analysis.wizard": "upgrade.analysis",
     "openupgrade.attribute": "upgrade.attribute",

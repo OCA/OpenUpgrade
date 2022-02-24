@@ -435,3 +435,9 @@ def migrate(env, version):
     openupgrade.delete_records_safely_by_xml_id(
         env, ["account.constraint_account_move_line_check_amount_currency_balance_sign"]
     )
+    openupgrade.remove_tables_fks(
+        env.cr, ["account_bank_statement_import_ir_attachment_rel"]
+    )
+    openupgrade.lift_constraints(
+        env.cr, "account_bank_statement_line", "partner_account_id"
+    )
