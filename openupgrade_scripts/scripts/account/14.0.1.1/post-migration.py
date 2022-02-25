@@ -610,7 +610,7 @@ def fill_account_payment_with_no_move(env):
     p_dates_by_company = {}
     env.cr.execute(
         """
-        SELECT ap.id, ap.%s, ap.%s, ap.%s, aj.company_id
+        SELECT ap.id, ap.%s, ap.%s, ap.%s, ap.state, aj.company_id
         FROM account_payment ap
         JOIN account_journal aj ON ap.journal_id = aj.id
         WHERE ap.move_id IS NULL
@@ -621,10 +621,18 @@ def fill_account_payment_with_no_move(env):
             openupgrade.get_legacy_name("payment_date"),
         )
     )
-    for p_id, p_journal_id, p_name, p_payment_date, p_company in env.cr.fetchall():
+    for (
+        p_id,
+        p_journal_id,
+        p_name,
+        p_payment_date,
+        p_state,
+        p_company,
+    ) in env.cr.fetchall():
         p_data[p_id] = {
             "journal_id": p_journal_id,
             "name": p_name,
+            "state": p_state,
             "payment_date": p_payment_date,
         }
         if p_company in p_dates_by_company:
@@ -641,6 +649,11 @@ def fill_account_payment_with_no_move(env):
         move = env["account.move"].create(
             {
                 "name": "/",
+                # map old payment's state to move's state:
+                # draft -> draft, cancelled -> cancel
+                "state": "cancel"
+                if p_data[payment.id]["state"] == "cancelled"
+                else "draft",
                 "date": p_data[payment.id]["payment_date"],
                 "payment_id": payment.id,
                 "move_type": "entry",
