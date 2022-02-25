@@ -7,7 +7,6 @@ from openupgradelib import openupgrade
 def assign_account_tags_to_move_lines_from_expenses(env):
     """ Migrate all account.account.tag's of move lines that are a result of expenses.
     """
-    # move lines with expenses
     openupgrade.logged_query(env.cr, """
         INSERT INTO account_account_tag_account_move_line_rel (
             account_move_line_id, account_account_tag_id)
