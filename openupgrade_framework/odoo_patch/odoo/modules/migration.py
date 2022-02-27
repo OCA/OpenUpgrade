@@ -9,14 +9,15 @@ def migrate_module(self, pkg, stage):
     argument in the migrate decorator (explained in the docstring)
     to decide if we want to do something if a new module is installed
     during the migration.
-    We trick Odoo into running the scripts by setting the update attribute if necessary.
+    We trick Odoo into running the scripts by temporarily changing the module
+    state.
     """
-    has_update = hasattr(pkg, "update")
-    if not has_update:
-        pkg.update = True
+    to_install = pkg.state == "to install"
+    if to_install:
+        pkg.state = "to upgrade"
     MigrationManager.migrate_module._original_method(self, pkg, stage)
-    if not has_update:
-        delattr(pkg, "update")
+    if to_install:
+        pkg.state = "to install"
 
 
 migrate_module._original_method = MigrationManager.migrate_module
