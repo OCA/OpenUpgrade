@@ -1,0 +1,40 @@
+---Models in module 'sale_project'---
+---Fields in module 'sale_project'---
+sale_project / product.product          / project_id (many2one)         : previously in module sale_timesheet
+sale_project / product.product          / project_template_id (many2one): previously in module sale_timesheet
+sale_project / product.product          / service_tracking (selection)  : previously in module sale_timesheet
+sale_project / product.template         / project_id (many2one)         : previously in module sale_timesheet
+sale_project / product.template         / project_template_id (many2one): previously in module sale_timesheet
+sale_project / product.template         / service_tracking (selection)  : previously in module sale_timesheet
+sale_project / project.project          / sale_line_id (many2one)       : previously in module sale_timesheet
+sale_project / project.project          / sale_order_id (many2one)      : previously in module sale_timesheet
+sale_project / project.task             / sale_line_id (many2one)       : previously in module sale_timesheet
+sale_project / project.task             / sale_order_id (many2one)      : previously in module sale_timesheet
+sale_project / sale.order               / project_id (many2one)         : previously in module sale_timesheet
+sale_project / sale.order               / project_ids (many2many)       : previously in module sale_timesheet
+sale_project / sale.order               / tasks_count (integer)         : previously in module sale_timesheet
+sale_project / sale.order               / tasks_ids (many2many)         : previously in module sale_timesheet
+sale_project / sale.order               / visible_project (boolean)     : previously in module sale_timesheet
+sale_project / sale.order.line          / is_service (boolean)          : previously in module sale_timesheet
+sale_project / sale.order.line          / project_id (many2one)         : previously in module sale_timesheet
+sale_project / sale.order.line          / task_id (many2one)            : previously in module sale_timesheet
+# NOTHING TO DO
+
+---XML records in module 'sale_project'---
+NEW ir.actions.server: sale_project.project_task_server_action_batch_invoice
+# NOTHING TO DO
+
+NEW ir.model.access: sale_project.access_sale_order_line_project_manager [renamed from sale_timesheet module]
+NEW ir.model.access: sale_project.access_sale_order_project_manager [renamed from sale_timesheet module]
+NEW ir.model.constraint: sale_project.constraint_project_project_sale_order_required_if_sale_line [renamed from sale_timesheet module]
+NEW ir.rule: sale_project.sale_order_line_rule_project_manager [renamed from sale_timesheet module] (noupdate)
+# Done: pre-migration rename xml_id
+
+NEW ir.ui.view: sale_project.product_template_form_view_invoice_policy_inherit_sale_project
+NEW ir.ui.view: sale_project.project_project_view_tree_inherit_sale_project
+NEW ir.ui.view: sale_project.project_task_view_form_inherit_sale_line_editable
+NEW ir.ui.view: sale_project.project_task_view_search
+NEW ir.ui.view: sale_project.view_edit_project_inherit_form
+NEW ir.ui.view: sale_project.view_order_form_inherit_sale_project
+NEW ir.ui.view: sale_project.view_sale_project_inherit_form
+# NOTHING TO DO
