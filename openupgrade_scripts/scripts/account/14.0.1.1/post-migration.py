@@ -521,17 +521,7 @@ def fill_statement_lines_with_no_move(env):
             _logger.error("Failed for statement line with id %s: %s", st_line.id, e)
             raise
         deprecated_accounts.deprecated = True
-        to_write = {
-            "line_ids": [
-                (0, 0, line_vals)
-                for line_vals in st_line._prepare_move_line_default_vals(
-                    counterpart_account_id=False
-                )
-            ]
-        }
-        st_line.move_id.with_context(skip_account_move_synchronization=True).write(
-            to_write
-        )
+
     openupgrade.logged_query(
         env.cr,
         """
@@ -674,17 +664,6 @@ def fill_account_payment_with_no_move(env):
             _logger.error("Failed for payment with id %s: %s", payment.id, e)
             raise
         deprecated_accounts.deprecated = True
-        to_write = {
-            "line_ids": [
-                (0, 0, line_vals)
-                for line_vals in payment._prepare_move_line_default_vals(
-                    write_off_line_vals=False
-                )
-            ]
-        }
-        payment.move_id.with_context(skip_account_move_synchronization=True).write(
-            to_write
-        )
 
 
 def try_delete_noupdate_records(env):
