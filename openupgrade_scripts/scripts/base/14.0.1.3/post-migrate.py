@@ -3,6 +3,8 @@
 # License AGPL-3.0 or later (https://www.gnu.org/licenses/agpl).
 from openupgradelib import openupgrade
 
+import odoo
+
 
 def fix_module_category_parent_id(env):
     # due to renames, we need to correct the parent_id
@@ -44,8 +46,25 @@ def fix_module_category_parent_id(env):
     )
 
 
+def delete_module_not_exist(env):
+    env.cr.execute("SELECT id, name from ir_module_module")
+    modules_to_delete = []
+    for module in env.cr.dictfetchall():
+        info = odoo.modules.module.load_information_from_description_file(
+            module["name"]
+        )
+        if info and info["installable"]:
+            continue
+        elif module != "studio_customization":
+            modules_to_delete.append(module["id"])
+    modules_to_delete = env["ir.module.module"].browse(modules_to_delete)
+    modules_to_delete.module_uninstall()
+    modules_to_delete.sudo().unlink()
+
+
 @openupgrade.migrate()
 def migrate(env, version):
     fix_module_category_parent_id(env)
     # Load noupdate changes
     openupgrade.load_data(env.cr, "base", "14.0.1.3/noupdate_changes.xml")
+    delete_module_not_exist(env)
