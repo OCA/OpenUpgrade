@@ -8,6 +8,10 @@ from psycopg2 import sql
 from datetime import datetime
 from openupgradelib import openupgrade
 from odoo import fields
+import logging
+
+
+_logger = logging.getLogger(__name__)
 
 
 def fix_res_partner_image(env):
@@ -18,7 +22,14 @@ def fix_res_partner_image(env):
         ('res_id', '!=', False),
     ])
     for attachment in attachments:
-        ResPartner.browse(attachment.res_id).image_1920 = attachment.datas
+        try:
+            ResPartner.browse(attachment.res_id).image_1920 = attachment.datas
+        except Exception as e:
+            _logger.error(
+                "Error while recovering res.partner>image for %s: %s",
+                attachment.res_id,
+                repr(e),
+            )
 
 
 def res_lang_week_start_map_values(env):

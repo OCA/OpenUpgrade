@@ -2,6 +2,10 @@
 from openupgradelib import openupgrade
 from psycopg2 import sql
 import uuid
+import logging
+
+
+_logger = logging.getLogger(__name__)
 
 _unlink_by_xmlid = [
     # ir.actions.act_url
@@ -28,7 +32,16 @@ def convert_image_attachments(env):
             ('res_id', '!=', False),
         ])
         for attachment in attachments:
-            Model.browse(attachment.res_id).image_1920 = attachment.datas
+            try:
+                Model.browse(attachment.res_id).image_1920 = attachment.datas
+            except Exception as e:
+                _logger.error(
+                    "Error while recovering %s>%s for %s: %s",
+                    model,
+                    field,
+                    attachment.res_id,
+                    repr(e),
+                )
 
 
 def fill_slide_sequence(env):

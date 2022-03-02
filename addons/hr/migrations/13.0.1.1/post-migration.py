@@ -1,6 +1,10 @@
 # Copyright 2020 Payam Yasaie <https://www.tashilgostar.com>
 # License AGPL-3.0 or later (http://www.gnu.org/licenses/agpl.html).
 from openupgradelib import openupgrade
+import logging
+
+
+_logger = logging.getLogger(__name__)
 
 
 def convert_image_attachments(env):
@@ -15,9 +19,16 @@ def convert_image_attachments(env):
             ('res_id', '!=', False),
         ])
         for attachment in attachments:
-            # for not having dangling attachments
-            attachment.res_field = "image_1920"
-            Model.browse(attachment.res_id).image_1920 = attachment.datas
+            try:
+                Model.browse(attachment.res_id).image_1920 = attachment.datas
+            except Exception as e:
+                _logger.error(
+                    "Error while recovering %s>%s for %s: %s",
+                    model,
+                    field,
+                    attachment.res_id,
+                    repr(e),
+                )
 
 
 @openupgrade.migrate()
