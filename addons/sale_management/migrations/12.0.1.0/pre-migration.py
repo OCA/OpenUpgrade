@@ -142,4 +142,6 @@ def migrate(env, version):
         put_in_correct_module(cr, _white_list_fields)
         openupgrade.rename_models(cr, _model_renames)
         openupgrade.rename_tables(cr, _table_renames)
+        for _old, model in _model_renames:
+            openupgrade.update_module_moved_models(cr, model, 'sale_quotation_builder', 'sale_management')
         fill_sale_order_template_line_sections(cr)
