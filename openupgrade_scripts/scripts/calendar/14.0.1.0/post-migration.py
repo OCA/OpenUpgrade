@@ -70,9 +70,10 @@ def fill_calendar_recurrence_table(env):
 def create_recurrent_events(env):
     """In v14, now all occurrences of recurrent events are created as real records, not
     virtual ones, so we need to regenerate them for all the existing ones.
+    But we do not create an activity on the real records.
     """
     recs = env["calendar.recurrence"].search([("base_event_id", "!=", False)])
-    recs._apply_recurrence()
+    recs.with_context(default_activity_ids=[(6, 0, [])])._apply_recurrence()
 
 
 @openupgrade.migrate()
