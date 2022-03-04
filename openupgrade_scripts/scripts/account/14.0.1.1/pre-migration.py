@@ -380,12 +380,16 @@ def fill_empty_partner_type_account_payment(env):
 
 
 def fill_account_move_line_currency_id(env):
+    # Disappeared constraint
     openupgrade.logged_query(
         env.cr,
         """
         ALTER TABLE account_move_line
         DROP CONSTRAINT IF EXISTS account_move_line_check_amount_currency_balance_sign
         """,
+    )
+    openupgrade.delete_records_safely_by_xml_id(
+        env, ["account.constraint_account_move_line_check_amount_currency_balance_sign"]
     )
     openupgrade.logged_query(
         env.cr,
@@ -425,16 +429,6 @@ def migrate(env, version):
     fill_empty_partner_type_account_payment(env)
     fill_account_move_line_currency_id(env)
     fill_account_payment_partner_id(env)
-    # Disappeared constraint
-    openupgrade.logged_query(
-        env.cr,
-        """ALTER TABLE account_move_line
-           DROP CONSTRAINT IF EXISTS
-           account_move_line_check_amount_currency_balance_sign""",
-    )
-    openupgrade.delete_records_safely_by_xml_id(
-        env, ["account.constraint_account_move_line_check_amount_currency_balance_sign"]
-    )
     openupgrade.remove_tables_fks(
         env.cr, ["account_bank_statement_import_ir_attachment_rel"]
     )
