@@ -4,6 +4,9 @@
 from lxml.html import fromstring
 from openupgradelib import openupgrade
 from openupgradelib.openupgrade_tools import convert_html_fragment
+import logging
+
+_logger = logging.getLogger(__name__)
 
 
 def _fill_website_logo(env):
@@ -23,7 +26,14 @@ def _convert_favicon(env):
     """
     env.cr.execute("SELECT id, favicon FROM website WHERE favicon IS NOT NULL")
     for website_id, favicon in env.cr.fetchall():
-        env["website"].browse(website_id).write({"favicon": favicon.tobytes()})
+        try:
+            env["website"].browse(website_id).write({"favicon": favicon.tobytes()})
+        except Exception as e:
+            _logger.error(
+                "Error while recomputing favicon for website %s: %s",
+                website_id,
+                repr(e),
+            )
 
 
 def _set_data_anchor_xml_attribute(env):
