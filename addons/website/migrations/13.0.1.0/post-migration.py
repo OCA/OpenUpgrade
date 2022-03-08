@@ -10,13 +10,14 @@ _logger = logging.getLogger(__name__)
 
 
 def _fill_website_logo(env):
-    """V13 introduces website.logo, where v12 used res.company.logo."""
+    """V13 introduces website.logo, where v12 used res.company.logo. We do it this way
+    for being tolerable to already stored logos (for example, through the website_logo
+    OCA module).
+    """
     default_logo = env["website"]._default_logo()
-    websites_with_default_logo = env["website"].search([
-        ('logo', '=', default_logo),
-    ])
-    for website in websites_with_default_logo:
-        website.logo = website.company_id.logo
+    for website in env["website"].search([]):
+        if website.logo == default_logo:
+            website.logo = website.company_id.logo
 
 
 def _convert_favicon(env):
