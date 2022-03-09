@@ -1,8 +1,6 @@
 ---Models in module 'hr_holidays'---
 ---Fields in module 'hr_holidays'---
 hr_holidays  / hr.employee              / hr_icon_display (False)       : NEW selection_keys: ['presence_absent', 'presence_absent_active', 'presence_holiday_absent', 'presence_holiday_present', 'presence_present', 'presence_to_define', 'presence_undetermined'], mode: modify
-hr_holidays  / hr.leave                 / private_name (char)           : NEW
-hr_holidays  / hr.leave.allocation      / private_name (char)           : NEW
 # NOTHING TO DO: new features
 
 hr_holidays  / hr.leave                 / message_has_sms_error (boolean): module is now 'sms' ('hr_holidays')
@@ -21,7 +19,12 @@ hr_holidays  / hr.leave                 / employee_id (many2one)        : now a 
 hr_holidays  / hr.leave                 / holiday_status_id (many2one)  : now a function
 hr_holidays  / hr.leave                 / manager_id (many2one)         : now a function
 hr_holidays  / hr.leave                 / mode_company_id (many2one)    : now a function
+# NOTHING TO DO
+
+hr_holidays  / hr.leave                 / private_name (char)           : NEW
 hr_holidays  / hr.leave                 / name (char)                   : not stored anymore
+# DONE: pre-migration: rename name > private_name
+
 hr_holidays  / hr.leave                 / name (char)                   : now a function
 hr_holidays  / hr.leave                 / number_of_days (float)        : now a function
 hr_holidays  / hr.leave                 / request_unit_custom (boolean) : now a function
@@ -37,7 +40,12 @@ hr_holidays  / hr.leave.allocation      / interval_number (integer)     : now a 
 hr_holidays  / hr.leave.allocation      / interval_unit (selection)     : now a function
 hr_holidays  / hr.leave.allocation      / manager_id (many2one)         : now a function
 hr_holidays  / hr.leave.allocation      / mode_company_id (many2one)    : now a function
+# NOTHING TO DO
+
+hr_holidays  / hr.leave.allocation      / private_name (char)           : NEW
 hr_holidays  / hr.leave.allocation      / name (char)                   : not stored anymore
+# DONE: pre-migration: rename name > private_name
+
 hr_holidays  / hr.leave.allocation      / name (char)                   : now a function
 hr_holidays  / hr.leave.allocation      / number_of_days (float)        : now a function
 hr_holidays  / hr.leave.allocation      / number_per_interval (float)   : now a function
