@@ -35,6 +35,7 @@ renamed_modules = {
     'stock_pack_operation_auto_fill': 'stock_move_line_auto_fill',
     # OCA/web
     'web_advanced_filters': 'web_advanced_filter',
+    'web_tree_image': 'web_tree_image_tooltip',
     # OCA/l10n-brazil
     'l10n_br_account_payment': 'l10n_br_account_payment_order',
     'l10n_br_account_product': 'l10n_br_fiscal',
