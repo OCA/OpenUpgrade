@@ -4,7 +4,9 @@
 from openupgradelib import openupgrade
 
 _column_copies = {
-    "hr_leave_type": [("validation_type", "allocation_validation_type", "varchar")]
+    "hr_leave_type": [("validation_type", "allocation_validation_type", "varchar")],
+    "hr_leave": [("name", "private_name", "varchar")],
+    "hr_leave_allocation": [("name", "private_name", "varchar")],
 }
 
 _field_renames = [
