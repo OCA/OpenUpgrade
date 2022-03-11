@@ -104,6 +104,8 @@ merged_modules = {
     'product_brand_sale_report': 'product_brand',
     'sale_proforma_report': 'sale',
     'sale_reporting_weight': 'product_weight_through_uom',
+    # OCA/sale-workflow
+    'sale_revert_done': 'sale',
     # OCA/social:
     'mail_activity': 'mail',
     'mail_activity_crm': 'crm',
