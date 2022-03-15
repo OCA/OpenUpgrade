@@ -37,9 +37,7 @@
                     ('project_id.allowed_internal_user_ids', 'in', user.ids),
                     ('task_id.allowed_user_ids', 'in', user.ids)
             ]</field>
-    <!-- <field name="perm_create"/>
+    <!-- perm_read was False in v13 and is True in v14 -->
     <field name="perm_read"/>
-    <field name="perm_unlink"/>
-    <field name="perm_write"/> -->
   </record>
 </odoo>
