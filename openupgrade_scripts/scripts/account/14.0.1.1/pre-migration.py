@@ -158,6 +158,7 @@ def copy_fields(env):
                 ("journal_id", None, None),
                 ("name", None, None),
                 ("payment_date", None, None),
+                ("currency_id", None, None),
             ],
         },
     )
@@ -274,16 +275,6 @@ def add_move_id_field_account_bank_statement_line(env):
 
 
 def add_move_id_field_account_payment(env):
-    openupgrade.logged_query(
-        env.cr,
-        """
-        UPDATE account_payment ap
-        SET currency_id = COALESCE(aj.currency_id, rc.currency_id)
-        FROM account_journal aj
-        JOIN res_company rc ON aj.company_id = rc.id
-        WHERE ap.journal_id = aj.id
-        """,
-    )
     if not openupgrade.column_exists(env.cr, "account_payment", "move_id"):
         openupgrade.logged_query(
             env.cr,
@@ -353,6 +344,17 @@ def add_move_id_field_account_payment(env):
         FROM account_payment ap
         WHERE am.id = ap.move_id AND am.payment_id IS NULL
         """,
+    )
+    openupgrade.logged_query(
+        env.cr,
+        """
+        UPDATE account_move am
+        SET currency_id = ap.{0}
+        FROM account_payment ap
+        WHERE am.id = ap.move_id AND am.currency_id != ap.{0}
+        """.format(
+            openupgrade.get_legacy_name("currency_id"),
+        ),
     )
 
 
