@@ -905,6 +905,32 @@ def move_tags_from_taxes_to_repartition_lines(env):
 
 
 def assign_tax_repartition_line_to_move_lines(env):
+    # Use tax_line_id to find repartition line by default
+    openupgrade.logged_query(
+        env.cr, """
+        UPDATE account_move_line aml
+        SET tax_repartition_line_id = atrl.id
+        FROM account_move_line aml2
+        JOIN account_move am ON aml2.move_id = am.id
+        JOIN account_tax_repartition_line atrl ON (
+            balance >= 0
+            AND atrl.invoice_tax_id = aml2.tax_line_id
+            AND atrl.repartition_type = 'tax')
+        WHERE aml.id = aml2.id"""
+    )
+    openupgrade.logged_query(
+        env.cr, """
+        UPDATE account_move_line aml
+        SET tax_repartition_line_id = atrl.id
+        FROM account_move_line aml2
+        JOIN account_move am ON aml2.move_id = am.id
+        JOIN account_tax_repartition_line atrl ON (
+            balance < 0
+            AND atrl.refund_tax_id = aml2.tax_line_id
+            AND atrl.repartition_type = 'tax')
+        WHERE aml.id = aml2.id"""
+    )
+    # Use old_invoice_tax_id on account.invoice.tax for invoices (and refunds)
     openupgrade.logged_query(
         env.cr, """
         UPDATE account_move_line aml
