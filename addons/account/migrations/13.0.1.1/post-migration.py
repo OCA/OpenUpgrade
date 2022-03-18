@@ -750,14 +750,12 @@ def try_to_fill_account_account_tag_country_id(env):
 def create_account_tax_repartition_lines(env):
     # account_tax_repartition_line
     all_taxes = env['account.tax'].with_context(active_test=False).search([])
-    taxes_with_children = env['account.tax'].with_context(active_test=False).search(
-        [('children_tax_ids', '!=', False)])
     # taxes_children = taxes_with_children.mapped('children_tax_ids')
     complete_taxes = env['account.tax.repartition.line'].search(
         [('invoice_tax_id', '!=', False)]).mapped('invoice_tax_id') | env[
         'account.tax.repartition.line'].search(
         [('refund_tax_id', '!=', False)]).mapped('refund_tax_id')
-    tax_ids = (all_taxes - taxes_with_children - complete_taxes).ids
+    tax_ids = (all_taxes - complete_taxes).ids
     if tax_ids:
         openupgrade.logged_query(
             env.cr, """
@@ -818,14 +816,12 @@ def create_account_tax_repartition_lines(env):
     # account_tax_repartition_line_template
     all_taxes = env['account.tax.template'].with_context(
         active_test=False).search([])
-    taxes_with_children = env['account.tax.template'].with_context(
-        active_test=False).search([('children_tax_ids', '!=', False)])
     # taxes_children = taxes_with_children('children_tax_ids')
     complete_taxes = env['account.tax.repartition.line.template'].search(
         [('invoice_tax_id', '!=', False)]).mapped('invoice_tax_id') | env[
         'account.tax.repartition.line.template'].search(
         [('refund_tax_id', '!=', False)]).mapped('refund_tax_id')
-    tax_ids = (all_taxes - taxes_with_children - complete_taxes).ids
+    tax_ids = (all_taxes - complete_taxes).ids
     if tax_ids:
         openupgrade.logged_query(
             env.cr, """
