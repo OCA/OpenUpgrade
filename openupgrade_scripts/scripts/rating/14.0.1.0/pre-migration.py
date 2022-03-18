@@ -10,7 +10,7 @@ def update_rating_value(env):
         env.cr,
         """
         UPDATE rating_rating
-        SET rating = round(rating / 2)
+        SET rating = round(rating / 2.0)
         WHERE rating IS NOT NULL""",
     )
 
