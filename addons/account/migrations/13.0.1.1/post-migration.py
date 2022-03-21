@@ -913,7 +913,7 @@ def assign_tax_repartition_line_to_move_lines(env):
         FROM account_move_line aml2
         JOIN account_move am ON aml2.move_id = am.id
         JOIN account_tax_repartition_line atrl ON (
-            balance >= 0
+            aml2.balance >= 0
             AND atrl.invoice_tax_id = aml2.tax_line_id
             AND atrl.repartition_type = 'tax')
         WHERE aml.id = aml2.id"""
@@ -925,7 +925,7 @@ def assign_tax_repartition_line_to_move_lines(env):
         FROM account_move_line aml2
         JOIN account_move am ON aml2.move_id = am.id
         JOIN account_tax_repartition_line atrl ON (
-            balance < 0
+            aml2.balance < 0
             AND atrl.refund_tax_id = aml2.tax_line_id
             AND atrl.repartition_type = 'tax')
         WHERE aml.id = aml2.id"""
