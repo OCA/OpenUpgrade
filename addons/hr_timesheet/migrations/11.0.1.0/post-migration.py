@@ -36,6 +36,23 @@ def migrate_project_issue_sheet(env):
     )
 
 
+def migrate_timesheet_managers(env):
+    """The group with xmlid group_hr_timesheet_user used to be "Officer"
+    group in 10.0. This is now replaced with the "Manager" group, while
+    the xmlid group_hr_timesheet_user is now used for the "User" group.
+    This moves all users of the "Officer" to the "Manager" group.
+    """
+    user_group_id = env.ref('hr_timesheet.group_hr_timesheet_user').id
+    manager_group_id = env.ref('hr_timesheet.group_timesheet_manager').id
+    root_user_id = env.ref('base.user_root').id
+    openupgrade.logged_query(
+        env.cr, """
+        UPDATE res_groups_users_rel SET gid = %s
+        WHERE gid = %s AND uid != %s""",
+        (manager_group_id, user_group_id, root_user_id)
+    )
+
+
 def recompute_tasks_from_issues_fields(env):
     """This module adds several computed stored fields to project.task (for
     example, effective_hours and remaining_hours). Issues converted to tasks,
@@ -59,4 +76,5 @@ def migrate(env, version):
     )
     update_employee_id(env)
     migrate_project_issue_sheet(env)
+    migrate_timesheet_managers(env)
     recompute_tasks_from_issues_fields(env)
