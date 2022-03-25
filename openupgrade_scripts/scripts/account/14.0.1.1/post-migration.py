@@ -92,6 +92,7 @@ def fill_payment_id_and_statement_line_id_fields(env):
         SET payment_id = am.payment_id
         FROM account_move am
         WHERE am.id = aml.move_id AND am.payment_id IS NOT NULL
+            AND aml.payment_id IS NULL
         """,
     )
     openupgrade.logged_query(
@@ -101,6 +102,7 @@ def fill_payment_id_and_statement_line_id_fields(env):
         SET statement_line_id = am.statement_line_id
         FROM account_move am
         WHERE am.id = aml.move_id AND am.statement_line_id IS NOT NULL
+            AND aml.statement_line_id IS NULL
         """,
     )
 

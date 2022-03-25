@@ -209,6 +209,7 @@ def add_move_id_field_account_bank_statement_line(env):
         SET statement_line_id = aml.statement_line_id
         FROM account_move_line aml
         WHERE aml.move_id = am.id AND aml.statement_line_id IS NOT NULL
+            AND am.statement_line_id IS NULL
         """,
     )
     # 1. set move_id from moves where statement_line_id is defined
@@ -218,7 +219,7 @@ def add_move_id_field_account_bank_statement_line(env):
         UPDATE account_bank_statement_line absl
         SET move_id = am.id
         FROM account_move am
-        WHERE am.statement_line_id = absl.id
+        WHERE am.statement_line_id = absl.id AND absl.move_id IS NULL
         """,
     )
     # 2. try to match on statement move_name or payment_ref (if move_name empty)
@@ -246,7 +247,7 @@ def add_move_id_field_account_bank_statement_line(env):
             account_bank_statement bs
         WHERE absl.statement_id = bs.id AND aj.company_id = bs.company_id
             AND absl.move_id IS NULL AND absl.payment_ref NOT IN ('', '/')
-            AND absl.payment_ref = ap.communication
+            AND absl.payment_ref = ap.communication AND ap.move_id IS NOT NULL
         """,
     )
     # 4. match on statement account number and move ref
@@ -306,6 +307,7 @@ def add_move_id_field_account_payment(env):
         SET payment_id = aml.payment_id
         FROM account_move_line aml
         WHERE aml.move_id = am.id AND aml.payment_id IS NOT NULL
+            AND am.payment_id IS NULL
         """,
     )
     # 1. set move_id from moves where payment_id is defined
@@ -315,7 +317,7 @@ def add_move_id_field_account_payment(env):
         UPDATE account_payment ap
         SET move_id = am.id
         FROM account_move am
-        WHERE am.payment_id = ap.id""",
+        WHERE am.payment_id = ap.id AND ap.move_id IS NULL""",
     )
     # 2. try to match on payment move_name or payment_reference (if move_name empty)
     openupgrade.logged_query(
@@ -349,7 +351,7 @@ def add_move_id_field_account_payment(env):
         UPDATE account_move am
         SET payment_id = ap.id
         FROM account_payment ap
-        WHERE am.id = ap.move_id
+        WHERE am.id = ap.move_id AND am.payment_id IS NULL
         """,
     )
 
