@@ -1,0 +1,19 @@
+---Fields in module 'maintenance'---
+maintenance  / maintenance.equipment    / activity_ids (one2many)       : NEW relation: mail.activity
+maintenance  / maintenance.request      / activity_ids (one2many)       : NEW relation: mail.activity
+# NOTHING TO DO: New feature: activities
+
+maintenance  / maintenance.team         / member_ids (many2many)        : NEW relation: res.users
+# NOTHING TO DO: New informative field with no functionality attached
+
+maintenance  / maintenance.team         / partner_id (many2one)         : DEL relation: res.partner
+# NOTHING TO DO: Feature lost, mostly unused, but without replacement
+
+---XML records in module 'maintenance'---
+NEW ir.actions.act_window: maintenance.maintenance_request_action_reports
+NEW ir.ui.menu: maintenance.maintenance_reporting
+NEW ir.ui.menu: maintenance.maintenance_request_reporting
+NEW ir.ui.view: maintenance.hr_equipment_stage_view_kanban
+NEW ir.ui.view: maintenance.maintenance_team_view_kanban
+NEW ir.ui.view: maintenance.view_maintenance_equipment_category_kanban
+# NOTHING TO DO: New ir records
