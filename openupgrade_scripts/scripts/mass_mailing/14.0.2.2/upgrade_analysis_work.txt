@@ -1,0 +1,57 @@
+---Models in module 'mass_mailing'---
+---Fields in module 'mass_mailing'---
+mass_mailing / mailing.contact          / message_has_sms_error (boolean): previously in module sms
+mass_mailing / mailing.contact          / website_message_ids (one2many): previously in module portal
+mass_mailing / mailing.mailing          / message_has_sms_error (boolean): previously in module sms
+mass_mailing / mailing.mailing          / website_message_ids (one2many): previously in module portal
+# NOTHING TO DO: handled by ORM
+
+mass_mailing / mailing.mailing          / copyvalue (char)              : NEW
+mass_mailing / mailing.mailing          / lang (char)                   : NEW
+mass_mailing / mailing.mailing          / model_object_field (many2one) : NEW relation: ir.model.fields
+mass_mailing / mailing.mailing          / null_value (char)             : NEW
+mass_mailing / mailing.mailing          / sub_model_object_field (many2one): NEW relation: ir.model.fields
+mass_mailing / mailing.mailing          / sub_object (many2one)         : NEW relation: ir.model
+# NOTHING TO DO: fields of mail.render.mixin
+
+
+mass_mailing / mailing.mailing          / kpi_mail_required (boolean)   : NEW
+mass_mailing / mailing.mailing          / preview (char)                : NEW
+# NOTHING TO DO: new features
+
+mass_mailing / mailing.mailing          / mailing_domain (char)         : now a function
+mass_mailing / mailing.mailing          / mailing_model_id (many2one)   : now required, req_default: function
+mass_mailing / mailing.mailing          / medium_id (many2one)          : now a function
+mass_mailing / mailing.mailing          / reply_to (char)               : now a function
+mass_mailing / mailing.mailing          / reply_to_mode (selection)     : now a function
+# NOTHING TO DO: computed in load
+
+---XML records in module 'mass_mailing'---
+DEL ir.actions.act_window: mass_mailing.link_tracker_action_mass_mailing
+DEL ir.actions.act_window: mass_mailing.link_tracker_action_mass_mailing_campaign
+NEW ir.model.access: mass_mailing.access_mail_blacklist_remove_mass_mailing_user
+NEW ir.model.access: mass_mailing.access_mailing_list_merge
+NEW ir.model.access: mass_mailing.access_mailing_mailing_schedule_date
+NEW ir.model.access: mass_mailing.access_mailing_mailing_test
+NEW ir.ui.view: mass_mailing.assets_common
+NEW ir.ui.view: mass_mailing.mass_mailing_kpi_link_trackers (noupdate)
+NEW ir.ui.view: mass_mailing.s_mail_block_header_view
+NEW ir.ui.view: mass_mailing.social_links
+NEW ir.ui.view: mass_mailing.view
+NEW mailing.contact: mass_mailing.mass_mailing_contact_0 (noupdate)
+NEW mailing.list: mass_mailing.mailing_list_data (noupdate)
+# NOTHING TO DO
+
+NEW ir.ui.view: mass_mailing.mailing_contact_view_form
+NEW ir.ui.view: mass_mailing.mailing_contact_view_graph
+NEW ir.ui.view: mass_mailing.mailing_contact_view_kanban
+NEW ir.ui.view: mass_mailing.mailing_contact_view_pivot
+NEW ir.ui.view: mass_mailing.mailing_contact_view_search
+NEW ir.ui.view: mass_mailing.mailing_contact_view_tree
+DEL ir.ui.view: mass_mailing.view_mail_mass_mailing_contact_form
+DEL ir.ui.view: mass_mailing.view_mail_mass_mailing_contact_graph
+DEL ir.ui.view: mass_mailing.view_mail_mass_mailing_contact_kanban
+DEL ir.ui.view: mass_mailing.view_mail_mass_mailing_contact_pivot
+DEL ir.ui.view: mass_mailing.view_mail_mass_mailing_contact_search
+DEL ir.ui.view: mass_mailing.view_mail_mass_mailing_contact_tree
+# DONE: pre-migration: renamed xmlids
