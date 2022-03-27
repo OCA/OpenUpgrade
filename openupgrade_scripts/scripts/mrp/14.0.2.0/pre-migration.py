@@ -10,6 +10,32 @@ _column_copies = {
 }
 
 
+def switch_flexible_consumption_to_warning(env):
+    """For benefiting from this new feature."""
+    openupgrade.logged_query(
+        env.cr,
+        "UPDATE mrp_bom SET consumption = 'warning' WHERE consumption='flexible'",
+    )
+    openupgrade.logged_query(
+        env.cr,
+        "UPDATE mrp_workorder SET consumption = 'warning' WHERE consumption='flexible'",
+    )
+
+
+def fill_mrp_production__consumption(env):
+    openupgrade.logged_query(
+        env.cr, "ALTER TABLE mrp_production ADD consumption VARCHAR"
+    )
+    openupgrade.logged_query(
+        env.cr,
+        """UPDATE mrp_production mp
+        SET consumption = mb.consumption
+        FROM mrp_bom mb
+        WHERE mb.id = mp.bom_id
+        """,
+    )
+
+
 def fill_mrp_routing_workcenter_bom_id(env):
     openupgrade.logged_query(
         env.cr,
@@ -104,4 +130,6 @@ def fill_mrp_routing_workcenter_bom_id(env):
 @openupgrade.migrate()
 def migrate(env, version):
     openupgrade.copy_columns(env.cr, _column_copies)
+    switch_flexible_consumption_to_warning(env)
+    fill_mrp_production__consumption(env)
     fill_mrp_routing_workcenter_bom_id(env)

@@ -45,11 +45,49 @@ def map_mrp_production_state_planned(env):
     env["mrp.production"].search([("state", "=", "planned")])._compute_state()
 
 
+def generate_workorders_for_draft_orders(env):
+    """Recreate workorders for draft production orders, as in v13, this is only done
+    later when planning production.
+    """
+    env.cr.execute(
+        "SELECT id, routing_id FROM mrp_production "
+        "WHERE state = 'draft' AND routing_id IS NOT NULL"
+    )
+    for production_id, routing_id in env.cr.fetchall():
+        production = env["mrp.production"].browse(production_id)
+        workorders_values = []
+        env.cr.execute(
+            """
+            SELECT mrw.id, mrw.name, mrw.workcenter_id
+            FROM mrp_routing_workcenter mrw
+            WHERE mrw.routing_id = %s AND mrw.bom_id = %s
+            """,
+            (routing_id, production.bom_id.id),
+        )
+        # TODO: If there are phantom BoMs with other routings, it won't be covered
+        for operation_id, operation_name, workcenter_id in env.cr.fetchall():
+            workorders_values += [
+                {
+                    "name": operation_name,
+                    "production_id": production_id,
+                    "workcenter_id": workcenter_id,
+                    "product_uom_id": production.product_uom_id.id,
+                    "operation_id": operation_id,
+                    "state": "pending",
+                    "consumption": production.consumption,
+                }
+            ]
+        workorders = production.workorder_ids.create(workorders_values)
+        for workorder in workorders:
+            workorder.duration_expected = workorder._get_duration_expected()
+
+
 @openupgrade.migrate()
 def migrate(env, version):
     merge_priorities(env)
     map_stock_move_line_lot_produced_ids(env)
     map_mrp_production_state_planned(env)
+    generate_workorders_for_draft_orders(env)
     openupgrade.load_data(env.cr, "mrp", "14.0.2.0/noupdate_changes.xml")
     openupgrade.delete_records_safely_by_xml_id(
         env, ["mrp.mrp_routing_rule", "mrp.sequence_mrp_route"]

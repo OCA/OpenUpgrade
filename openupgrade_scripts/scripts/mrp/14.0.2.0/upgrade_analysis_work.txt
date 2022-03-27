@@ -11,7 +11,6 @@ new model mrp.production.backorder [transient]
 new model mrp.production.backorder.line [transient]
 # NOTHING TO DO: abstract + transient models
 
-obsolete model mrp.routing
 obsolete model mrp.workorder.line
 # NOTHING TO DO: obsolete models
 
@@ -24,23 +23,27 @@ mrp          / mrp.document             / website_url (char)            : previo
 
 mrp          / mrp.bom                  / consumption (selection)       : now required, req_default: function
 mrp          / mrp.bom                  / consumption (selection)       : selection_keys is now '['flexible', 'strict', 'warning']' ('['flexible', 'strict']')
-# NOTHING TO DO: new default value 'warning'
+mrp          / mrp.workorder            / consumption (selection)       : selection_keys is now '['flexible', 'strict', 'warning']' ('['flexible', 'strict']')
+# DONE: pre-migration: Switch 'flexible' to 'warning' for benefiting from this new feature
 
 mrp          / mrp.production           / consumption (selection)       : NEW required, selection_keys: ['flexible', 'strict', 'warning'], req_default: function, hasdefault
-mrp          / mrp.workorder            / consumption (selection)       : selection_keys is now '['flexible', 'strict', 'warning']' ('['flexible', 'strict']')
-# NOTHING TO DO: new features
+# DONE: pre-migration: Init the field with its related BoM value
 
+obsolete model mrp.routing
 mrp          / mrp.bom                  / operation_ids (one2many)      : NEW relation: mrp.routing.workcenter
 mrp          / mrp.routing              / operation_ids (one2many)      : DEL relation: mrp.routing.workcenter
 mrp          / mrp.routing.workcenter   / bom_id (many2one)             : NEW relation: mrp.bom
 mrp          / mrp.routing.workcenter   / routing_id (many2one)         : DEL relation: mrp.routing, required
-# DONE: pre-migration: duplicate mrp.routing.workcenter records and fill bom_id
-
 mrp          / mrp.bom                  / routing_id (many2one)         : DEL relation: mrp.routing
+# DONE: pre-migration: duplicate mrp.routing.workcenter records per assigned BoM, filling bom_id
+# TODO: There can be mrp.routing without assigned BoMs that will be in a limbo after this migration. This will be highlighted through mrp.routing.workcenter having nulls in `bom_id` field. One possible strategy is to create fake BoMs for that routings with a wildcard product.
+
 mrp          / mrp.bom.byproduct        / routing_id (many2one)         : DEL relation: mrp.routing
 mrp          / mrp.bom.line             / routing_id (many2one)         : DEL relation: mrp.routing
-mrp          / mrp.production           / routing_id (many2one)         : DEL relation: mrp.routing
 # NOTHING TO DO: mrp.routing model is obsolete
+
+mrp          / mrp.production           / routing_id (many2one)         : DEL relation: mrp.routing
+# DONE: post-migration: Populate workorders for draft production orders from old routing
 
 mrp          / mrp.production           / _order                        : _order is now 'priority desc, date_planned_start asc,id' ('date_planned_start asc,id')
 # NOTHING TO DO
@@ -117,7 +120,7 @@ mrp          / mrp.workorder.line       / qty_reserved (float)          : DEL
 mrp          / mrp.workorder.line       / qty_to_consume (float)        : DEL
 mrp          / mrp.workorder.line       / raw_workorder_id (many2one)   : DEL relation: mrp.workorder
 mrp          / mrp.workorder            / finished_workorder_line_ids (one2many): DEL relation: mrp.workorder.line
-# NOTHING TO DO: obsolete model
+# TODO: Not clear if there should be any conversion
 
 mrp          / procurement.group        / mrp_production_ids (one2many) : NEW relation: mrp.production
 # NOTHING TO DO: one2many
