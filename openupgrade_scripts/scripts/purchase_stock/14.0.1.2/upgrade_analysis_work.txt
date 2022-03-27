@@ -1,0 +1,25 @@
+---Models in module 'purchase_stock'---
+new model vendor.delay.report [sql_view]
+---Fields in module 'purchase_stock'---
+purchase_stock / product.product          / purchase_order_line_ids (one2many): NEW relation: purchase.order.line
+purchase_stock / purchase.order           / effective_date (datetime)     : NEW isfunction: function, stored
+purchase_stock / purchase.order.line      / product_description_variants (char): NEW
+purchase_stock / purchase.order.line      / propagate_date (boolean)      : DEL
+purchase_stock / purchase.order.line      / propagate_date_minimum_delta (integer): DEL
+purchase_stock / res.company              / days_to_purchase (float)      : NEW
+purchase_stock / res.partner              / purchase_line_ids (one2many)  : NEW relation: purchase.order.line
+purchase_stock / stock.warehouse.orderpoint / supplier_id (many2one)        : NEW relation: product.supplierinfo
+---XML records in module 'purchase_stock'---
+NEW ir.actions.act_window: purchase_stock.action_purchase_vendor_delay_report
+DEL ir.actions.act_window: purchase_stock.purchase_open_picking
+NEW ir.model.access: purchase_stock.access_report_purchase_order
+NEW ir.model.access: purchase_stock.access_report_purchase_order_user
+DEL ir.model.access: purchase_stock.access_stock_location_purchase_manager
+NEW ir.ui.view: purchase_stock.assets_backend
+NEW ir.ui.view: purchase_stock.product_category_view_form
+NEW ir.ui.view: purchase_stock.purchase_report_product_product_replenishment
+NEW ir.ui.view: purchase_stock.res_partner_view_purchase_buttons_inherit
+NEW ir.ui.view: purchase_stock.vendor_delay_report_filter
+NEW ir.ui.view: purchase_stock.vendor_delay_report_view_graph
+NEW ir.ui.view: purchase_stock.view_warehouse_orderpoint_tree_editable_inherited_mrp
+# NOTHING TO DO
