@@ -1,0 +1,8 @@
+---Models in module 'hr_maintenance'---
+---Fields in module 'hr_maintenance'---
+hr_maintenance / maintenance.equipment    / department_id (many2one)      : now a function
+hr_maintenance / maintenance.equipment    / employee_id (many2one)        : now a function
+hr_maintenance / maintenance.request      / department_id (many2one)      : DEL relation: hr.department
+# NOTHING TO DO
+
+---XML records in module 'hr_maintenance'---
