@@ -1,0 +1,23 @@
+---Models in module 'stock_account'---
+obsolete model stock.change.standard.price [transient]
+new model stock.valuation.layer.revaluation [transient]
+---Fields in module 'stock_account'---
+---XML records in module 'stock_account'---
+DEL ir.actions.act_window: stock_account.action_stock_inventory_valuation
+DEL ir.actions.act_window: stock_account.action_view_change_standard_price
+NEW ir.model.access: stock_account.access_account_journal_stock_manager
+NEW ir.model.access: stock_account.access_stock_move_invoicing_payments_readonly
+NEW ir.model.access: stock_account.access_stock_picking_invoicing_payments_readonly
+NEW ir.model.access: stock_account.access_stock_valuation_layer_revaluation
+DEL ir.model.access: stock_account.access_account_tag_stock_user
+NEW ir.ui.view: stock_account.stock_account_report_product_product_replenishment
+NEW ir.ui.view: stock_account.stock_valuation_layer_revaluation_form_view
+DEL ir.ui.view: stock_account.product_product_normal_form_view_inherit
+DEL ir.ui.view: stock_account.product_variant_easy_edit_view_inherit
+DEL ir.ui.view: stock_account.stock_valuation_layer_search
+DEL ir.ui.view: stock_account.view_change_standard_price
+DEL ir.ui.view: stock_account.view_template_property_form
+# NOTHING TO DO
+
+ir.rule: stock_account.stock_valuation_layer_company_rule (noupdate) (noupdate switched)
+# DONE: pre-migration: switched noupdate
