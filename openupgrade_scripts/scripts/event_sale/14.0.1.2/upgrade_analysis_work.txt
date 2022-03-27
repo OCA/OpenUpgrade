@@ -1,0 +1,73 @@
+---Models in module 'event_sale'---
+model event.event.ticket (moved to event)
+# NOTHING TO DO
+
+---Fields in module 'event_sale'---
+event_sale   / event.event              / event_ticket_ids (one2many)   : module is now 'event' ('event_sale')
+event_sale   / event.event              / event_ticket_ids (one2many)   : now a function
+event_sale   / event.event              / sale_order_lines_ids (one2many): NEW relation: sale.order.line
+# NOTHING TO DO: has been processed inside the event module
+
+event_sale   / event.event.ticket       / __last_update (datetime)      : module is now 'event' ('event_sale')
+event_sale   / event.event.ticket       / _order                        : module is now 'event' ('event_sale')
+event_sale   / event.event.ticket       / company_id (many2one)         : module is now 'event' ('event_sale')
+event_sale   / event.event.ticket       / deadline (date)               : DEL
+event_sale   / event.event.ticket       / display_name (char)           : module is now 'event' ('event_sale')
+event_sale   / event.event.ticket       / event_id (many2one)           : module is now 'event' ('event_sale')
+event_sale   / event.event.ticket       / event_id (many2one)           : now required
+event_sale   / event.event.ticket       / event_type_id (many2one)      : module is now 'event' ('event_sale')
+event_sale   / event.event.ticket       / is_expired (boolean)          : module is now 'event' ('event_sale')
+event_sale   / event.event.ticket       / name (char)                   : module is now 'event' ('event_sale')
+event_sale   / event.event.ticket       / price (float)                 : now a function
+event_sale   / event.event.ticket       / registration_ids (one2many)   : module is now 'event' ('event_sale')
+event_sale   / event.event.ticket       / seats_availability (selection): DEL required, selection_keys: ['limited', 'unlimited'], req_default: function
+event_sale   / event.event.ticket       / seats_available (integer)     : module is now 'event' ('event_sale')
+event_sale   / event.event.ticket       / seats_max (integer)           : module is now 'event' ('event_sale')
+event_sale   / event.event.ticket       / seats_reserved (integer)      : module is now 'event' ('event_sale')
+event_sale   / event.event.ticket       / seats_unconfirmed (integer)   : module is now 'event' ('event_sale')
+event_sale   / event.event.ticket       / seats_used (integer)          : module is now 'event' ('event_sale')
+# NOTHING TO DO: has been processed inside the event module
+
+event_sale   / event.registration       / campaign_id (many2one)        : DEL relation: utm.campaign
+event_sale   / event.registration       / event_ticket_id (many2one)    : module is now 'event' ('event_sale')
+event_sale   / event.registration       / is_paid (boolean)             : NEW
+event_sale   / event.registration       / medium_id (many2one)          : DEL relation: utm.medium
+event_sale   / event.registration       / source_id (many2one)          : DEL relation: utm.source
+# NOTHING TO DO
+
+event_sale   / event.type               / event_ticket_ids (one2many)   : DEL relation: event.event.ticket
+event_sale   / event.type               / use_ticketing (boolean)       : DEL
+# NOTHING TO DO
+
+event_sale   / event.type.ticket        / price (float)                 : NEW isfunction: function, stored
+event_sale   / event.type.ticket        / product_id (many2one)         : NEW relation: product.product, required, req_default: function, hasdefault
+# NOTHING TO DO: automated field filling
+
+---XML records in module 'event_sale'---
+DEL event.type: event_sale.event_type_data_sale (noupdate)
+# DONE: post-migration: safely deleted xmlid
+
+NEW ir.model.access: event_sale.access_event_event_configurator
+NEW ir.model.access: event_sale.access_registration_editor
+NEW ir.model.access: event_sale.access_registration_editor_line
+DEL ir.model.access: event_sale.access_event_event_ticket_admin
+DEL ir.model.access: event_sale.access_event_event_ticket_user [renamed to event module]
+# NOTHING TO DO: noupdate="0" records, no name changed
+
+NEW ir.ui.view: event_sale.event_event_ticket_form_view
+NEW ir.ui.view: event_sale.event_event_ticket_view_form_from_event
+NEW ir.ui.view: event_sale.event_event_ticket_view_kanban_from_event
+NEW ir.ui.view: event_sale.event_event_ticket_view_tree_from_event
+NEW ir.ui.view: event_sale.event_registration_ticket_view_form
+NEW ir.ui.view: event_sale.event_registration_view_kanban
+NEW ir.ui.view: event_sale.event_ticket_id_change_exception
+NEW ir.ui.view: event_sale.event_type_ticket_view_form_from_type
+NEW ir.ui.view: event_sale.event_type_ticket_view_tree_from_type
+DEL ir.ui.view: event_sale.event_ticket_form_view
+DEL ir.ui.view: event_sale.event_type_view_form_inherit_sale
+DEL ir.ui.view: event_sale.view_event_registration_ticket_form
+DEL ir.ui.view: event_sale.view_event_registration_ticket_search
+# NOTHING TO DO: noupdate="0" records, no name changed
+
+product.product: event_sale.product_product_event (noupdate switched)
+# NOTHING TO DO: unknown error in analysis (this xmlid is noupdate=True both in v13 and v14)
