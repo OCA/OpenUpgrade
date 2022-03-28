@@ -117,7 +117,9 @@ DEL ir.ui.view: base.view_base_document_layout
 DEL ir.ui.view: base.view_menu
 DEL ir.ui.view: base.view_partner_short_form
 NEW res.country.group: base.sepa_zone (noupdate)
-NEW res.groups: base.group_allow_export
 NEW res.lang: base.lang_en_IN
 DEL res.lang: base.lang_fil
 # Done: switch partners to Tagalog
+
+NEW res.groups: base.group_allow_export
+# DONE: post-migration: put all users in this group to maintain previous behavior

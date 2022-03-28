@@ -44,8 +44,26 @@ def fix_module_category_parent_id(env):
     )
 
 
+def users_should_export(env):
+    # maintain same behavior as previous versions
+    export_group = env.ref("base.group_allow_export").id
+    user_group = env.ref("base.group_user").id
+    openupgrade.logged_query(
+        env.cr,
+        """
+        INSERT INTO res_groups_users_rel (uid, gid)
+        SELECT rel.uid, %s
+        FROM res_groups_users_rel rel
+        WHERE rel.gid = %s
+        ON CONFLICT DO NOTHING
+        """,
+        (export_group, user_group),
+    )
+
+
 @openupgrade.migrate()
 def migrate(env, version):
     fix_module_category_parent_id(env)
+    users_should_export(env)
     # Load noupdate changes
     openupgrade.load_data(env.cr, "base", "14.0.1.3/noupdate_changes.xml")
