@@ -13,8 +13,10 @@ mrp          / mrp.production           / message_main_attachment_id (many2one):
 # NOTHING TO DO: computed on mail end-migration script
 
 mrp          / mrp.production           / product_uom_id (many2one)     : relation is now 'uom.uom' ('product.uom') [nothing to do]
+# NOTHING TO DO
+
 mrp          / mrp.production           / product_uom_qty (float)       : NEW isfunction: function, stored
-# NOTHING TO DO: computed field
+# DONE: pre-migration: Speed up this computation doing it by SQL
 
 mrp          / mrp.unbuild              / activity_date_deadline (date) : not related anymore
 mrp          / mrp.unbuild              / activity_date_deadline (date) : not stored anymore
