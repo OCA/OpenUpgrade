@@ -1,0 +1,21 @@
+---Models in module 'sale_stock'---
+---Fields in module 'sale_stock'---
+sale_stock   / res.users                / property_warehouse_id (many2one): NEW relation: stock.warehouse, hasdefault
+sale_stock   / sale.order.line          / warehouse_id (many2one)       : not a function anymore
+sale_stock   / sale.order.line          / warehouse_id (many2one)       : now related
+# NOTHING TO DO
+
+---XML records in module 'sale_stock'---
+NEW ir.model.access: sale_stock.access_stock_picking_portal [renamed from stock module]
+# NOTHING TO DO: done in stock
+
+ir.rule: sale_stock.stock_picking_rule_portal (noupdate) (noupdate switched)
+# DONE: pre-migration: switched noupdate xmlid
+
+DEL ir.model.access: sale_stock.access_product_packaging_manager
+NEW ir.ui.view: sale_stock.res_users_view_form
+NEW ir.ui.view: sale_stock.res_users_view_form_preferences
+NEW ir.ui.view: sale_stock.res_users_view_simple_form
+NEW ir.ui.view: sale_stock.sale_order_cancel_view_form_inherit
+NEW ir.ui.view: sale_stock.sale_report_product_product_replenishment
+# NOTHING TO DO: noupdate=0 ir records
