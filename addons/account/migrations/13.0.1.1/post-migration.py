@@ -258,10 +258,23 @@ def migration_invoice_moves(env):
         env.cr,
         query.format(
             where=(sql.SQL(minimal_where + """
+            AND ail.name = aml.name
             AND ail.account_id = aml.account_id
             AND ai.commercial_partner_id = aml.partner_id
             AND ((ail.account_analytic_id IS NULL AND aml.analytic_account_id IS NULL)
                 OR ail.account_analytic_id = aml.analytic_account_id)"""))
+        ),
+    )
+    openupgrade.logged_query(
+        env.cr,
+        query.format(
+            where=(sql.SQL(minimal_where + """
+            AND substring(split_part(ail.name, chr(10), 1) from 1 for 64) = aml.name
+            AND ail.account_id = aml.account_id
+            AND ai.commercial_partner_id = aml.partner_id
+            AND ((ail.account_analytic_id IS NULL AND aml.analytic_account_id IS NULL)
+                OR ail.account_analytic_id = aml.analytic_account_id)
+            AND aml.old_invoice_line_id IS NULL"""))
         ),
     )
     # Try now with a more relaxed criteria, as it's possible that users change some data on amls
