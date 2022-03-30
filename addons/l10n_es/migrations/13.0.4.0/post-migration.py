@@ -99,12 +99,17 @@ def use_new_taxes_and_repartition_lines_on_move_lines(env):
             WHERE at.id IN %s AND at2.id IN %s
             ON CONFLICT DO NOTHING""", (tuple(children_tax_ids), tuple(taxes_with_children.ids)),
         )
-        openupgrade.logged_query(
-            env.cr, """
-            DELETE FROM account_move_line_account_tax_rel
-            WHERE account_tax_id IN %s
-            """, (tuple(children_tax_ids), ),
-        )
+        other_parents = env["account.tax"].with_context(active_test=False).search(
+            [("children_tax_ids", "in", children_tax_ids)]).filtered(lambda t: t not in taxes_with_children)
+        obsolete_children = [x for x in children_tax_ids if x not in other_parents.mapped(
+            'children_tax_ids').filtered(lambda t: t.id in children_tax_ids).ids]
+        if obsolete_children:
+            openupgrade.logged_query(
+                env.cr, """
+                DELETE FROM account_move_line_account_tax_rel
+                WHERE account_tax_id IN %s
+                """, (tuple(obsolete_children), ),
+            )
         # update account move line tax_repartition_line_id
         for tax_column in ("invoice_tax_id", "refund_tax_id"):
             openupgrade.logged_query(
