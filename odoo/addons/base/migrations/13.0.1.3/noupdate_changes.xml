@@ -1,7 +1,14 @@
 <?xml version='1.0' encoding='utf-8'?>
 <odoo>
+  <record id="ANG" model="res.currency">
+    <field name="position">before</field>
+  </record>
   <record id="CLP" model="res.currency">
     <field name="rounding">1</field>
+    <field name="position">before</field>
+  </record>
+  <record id="HNL" model="res.currency">
+    <field name="currency_unit_label">Lempiras</field>
     <field name="position">before</field>
   </record>
   <record id="IDR" model="res.currency">
@@ -27,6 +34,9 @@
   </record>
   <record id="co" model="res.country">
     <field name="vat_label">NIT</field>
+  </record>
+  <record id="hn" model="res.country">
+    <field name="vat_label">RTN</field>
   </record>
   <record id="hr" model="res.country">
     <field eval="'%(street)s\n%(street2)s\n%(zip)s %(city)s \n%(country_name)s'" name="address_format"/>
