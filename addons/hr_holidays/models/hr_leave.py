@@ -548,7 +548,9 @@ class HolidaysRequest(models.Model):
         """ Returns a float equals to the timedelta between two dates given as string."""
         if employee_id:
             employee = self.env['hr.employee'].browse(employee_id)
-            return employee._get_work_days_data_batch(date_from, date_to)[employee.id]
+            # We force the company in the domain as we are more than likely in a compute_sudo
+            domain = [('company_id', 'in', self.env.company.ids + self.env.context.get('allowed_company_ids', []))]
+            return employee._get_work_days_data_batch(date_from, date_to, domain=domain)[employee.id]
 
         today_hours = self.env.company.resource_calendar_id.get_work_hours_count(
             datetime.combine(date_from.date(), time.min),
@@ -791,11 +793,10 @@ class HolidaysRequest(models.Model):
     # Business methods
     ####################################################
 
-    def _create_resource_leave(self):
-        """ This method will create entry in resource calendar time off object at the time of holidays validated
-        :returns: created `resource.calendar.leaves`
+    def _prepare_resource_leave_vals_list(self):
+        """Hook method for others to inject data
         """
-        vals_list = [{
+        return [{
             'name': leave.name,
             'date_from': leave.date_from,
             'holiday_id': leave.id,
@@ -803,7 +804,13 @@ class HolidaysRequest(models.Model):
             'resource_id': leave.employee_id.resource_id.id,
             'calendar_id': leave.employee_id.resource_calendar_id.id,
             'time_type': leave.holiday_status_id.time_type,
-        } for leave in self]
+            } for leave in self]
+
+    def _create_resource_leave(self):
+        """ This method will create entry in resource calendar time off object at the time of holidays validated
+        :returns: created `resource.calendar.leaves`
+        """
+        vals_list = self._prepare_resource_leave_vals_list()
         return self.env['resource.calendar.leaves'].sudo().create(vals_list)
 
     def _remove_resource_leave(self):
