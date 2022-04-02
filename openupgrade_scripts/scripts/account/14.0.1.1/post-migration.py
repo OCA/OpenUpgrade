@@ -731,6 +731,19 @@ def fill_account_move_line_amounts(env):
     )
 
 
+def fill_account_move_line_amount_residual_currency(env):
+    openupgrade.logged_query(
+        env.cr,
+        """
+        UPDATE account_move_line aml
+        SET amount_residual_currency = aml.amount_residual
+        WHERE aml.company_currency_id = aml.currency_id
+            AND aml.amount_residual != 0
+            AND (aml.amount_residual_currency = 0
+                OR aml.amount_residual_currency IS NULL);""",
+    )
+
+
 def fill_account_move_line_date(env):
     openupgrade.logged_query(
         env.cr,
@@ -757,6 +770,7 @@ def migrate(env, version):
     pass_payment_to_journal_entry_narration(env)
     fill_company_account_cash_basis_base_account_id(env)
     fill_account_move_line_amounts(env)
+    fill_account_move_line_amount_residual_currency(env)
     fill_account_move_line_date(env)
     openupgrade.load_data(env.cr, "account", "14.0.1.1/noupdate_changes.xml")
     try_delete_noupdate_records(env)
