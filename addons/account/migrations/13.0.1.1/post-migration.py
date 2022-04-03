@@ -461,6 +461,7 @@ def compute_balance_for_draft_invoice_lines(env):
 
 def migration_voucher_moves(env):
     openupgrade.logged_query(
+        env.cr,
         "ALTER TABLE account_voucher ADD COLUMN "
         "IF NOT EXISTS message_main_attachment_id int4"
     )
