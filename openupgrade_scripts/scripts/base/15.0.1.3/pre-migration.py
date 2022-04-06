@@ -34,3 +34,4 @@ def migrate(cr, version):
             "recommended to run the Odoo with --load=openupgrade_framework "
             "when migrating your database."
         )
+        openupgrade.rename_xmlids(cr, [("mail.icp_mail_catchall_alias", "base.icp_mail_catchall_alias")])
