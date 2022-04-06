@@ -73,6 +73,8 @@ merged_modules = {
     # OCA/project
     "project_description": "project",
     "project_stage_closed": "project",
+    # OCA/sale-workflow
+    "sale_order_price_recalculation": "sale",
     # OCA/survey
     "survey_description": "survey",
     # OCA/web
