@@ -93,7 +93,7 @@ stock        / stock.move               / push_rule_id (many2one)       : DEL re
 stock        / stock.move               / rule_id (many2one)            : relation is now 'stock.rule' ('procurement.rule')
 
 stock        / procurement.rule         / action (selection)            : selection_keys is now '['pull', 'pull_push', 'push']' ('['move']')
-# DONE: post-migration: mapped 'move' to 'pull_push'
+# DONE: post-migration: mapped 'move' to 'pull'
 
 stock        / procurement.rule         / location_id (many2one)        : now required
 ??????
