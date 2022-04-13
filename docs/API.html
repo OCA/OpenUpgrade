@@ -551,6 +551,18 @@ Old value True represents “is set”, False “is not set”.</p></li>
 </dd></dl>
 
 <dl class="py function">
+<dt class="sig sig-object py" id="openupgradelib.openupgrade.merge_models">
+<span class="sig-prename descclassname"><span class="pre">openupgradelib.openupgrade.</span></span><span class="sig-name descname"><span class="pre">merge_models</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">cr</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">old_model</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">new_model</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">ref_field</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#openupgradelib.openupgrade.merge_models" title="Permalink to this definition">¶</a></dt>
+<dd><p>Update model references for models that have merged to an existing model.
+:param old_model: old model
+:param new_model: destination model
+:param ref_field: name of the field in new model that references
+the id of the old model. Usually created before calling this method.</p>
+<p>WARNING: This method doesn’t move the records from old_model to new_model
+tables. You should have to do that previously in the migration scripts.</p>
+</dd></dl>
+
+<dl class="py function">
 <dt class="sig sig-object py" id="openupgradelib.openupgrade.message">
 <span class="sig-prename descclassname"><span class="pre">openupgradelib.openupgrade.</span></span><span class="sig-name descname"><span class="pre">message</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">cr</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">module</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">table</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">column</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">message</span></span></em>, <em class="sig-param"><span class="o"><span class="pre">*</span></span><span class="n"><span class="pre">args</span></span></em>, <em class="sig-param"><span class="o"><span class="pre">**</span></span><span class="n"><span class="pre">kwargs</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#openupgradelib.openupgrade.message" title="Permalink to this definition">¶</a></dt>
 <dd><p>Log handler for non-critical notifications about the upgrade.
