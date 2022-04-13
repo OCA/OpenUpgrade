@@ -7,7 +7,8 @@ def website_cookie_notice_post_migration(env):
     cookie_message = env.ref("website.cookie_message", raise_if_not_found=False)
     if cookie_message:
         websites = env["website"].search([])
-        websites.write({"cookies_bar": True})
+        for website in websites:
+            website.write({"cookies_bar": True})
         env.cr.execute(
             """WITH keys AS (
                 SELECT key
