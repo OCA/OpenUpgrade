@@ -62,14 +62,7 @@ def merge_stock_location_path_stock_rule(env):
         FROM stock_location_path
         """, (AsIs(openupgrade.get_legacy_name('loc_path_id')), ),
     )
-    openupgrade.logged_query(
-        env.cr, """
-        UPDATE ir_model_data imd
-        SET model = 'stock.rule', res_id = sr.id
-        FROM stock_rule sr
-        WHERE imd.res_id = sr.%s AND model = 'stock.location.path'
-        """, (AsIs(openupgrade.get_legacy_name('loc_path_id')), ),
-    )
+    openupgrade.merge_models(env.cr, 'stock.location.path', 'stock.rule', openupgrade.get_legacy_name('loc_path_id'))
     env.cr.execute(
         """
         SELECT DISTINCT sr2.id, sr.id
@@ -176,6 +169,7 @@ def merge_stock_putaway_product(cr):
                 sfps.fixed_location_id = spps.fixed_location_id)
             WHERE sfps.putaway_id IS NULL"""
         ).format(sql.Identifier(column_name)))
+        openupgrade.merge_models(cr, 'stock.product.putaway.strategy', 'stock.fixed.putaway.strat', column_name)
 
 
 @openupgrade.migrate()
