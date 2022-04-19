@@ -345,6 +345,7 @@ def migration_invoice_moves(env):
         JOIN account_account aa ON ai.account_id = aa.id
         WHERE aa.internal_type in ('receivable', 'payable')""",
     )
+    openupgrade.merge_models(env.cr, 'account.invoice.line', 'account.move.line', 'old_invoice_line_id')
     # Not Draft or Cancel Invoice Taxes
     openupgrade.logged_query(
         env.cr, """
@@ -378,6 +379,7 @@ def migration_invoice_moves(env):
         LEFT JOIN account_move am ON am.old_invoice_id = ai.id
         WHERE COALESCE(ai.move_id, am.id) IS NOT NULL""",
     )
+    openupgrade.merge_models(env.cr, 'account.invoice.tax', 'account.move.line', 'old_invoice_tax_id')
     openupgrade.logged_query(
         env.cr, """
         INSERT INTO account_invoice_payment_rel
@@ -551,6 +553,7 @@ def migration_voucher_moves(env):
         LEFT JOIN account_move am ON am.old_voucher_id = av.id
         WHERE COALESCE(av.move_id, am.id) IS NOT NULL""",
     )
+    openupgrade.merge_models(env.cr, 'account.voucher.line', 'account.move.line', 'old_voucher_line_id')
     openupgrade.logged_query(
         env.cr, """
         INSERT INTO account_analytic_tag_account_move_line_rel (
