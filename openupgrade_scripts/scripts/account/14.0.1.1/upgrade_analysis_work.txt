@@ -133,10 +133,10 @@ account      / account.group            / code_prefix (char)            : DEL
 account      / account.group            / code_prefix_end (char)        : NEW
 account      / account.group            / code_prefix_start (char)      : NEW
 # DONE: pre-migration: renamed code_prefix to code_prefix_start
-# post-migration: assigned same start values to end field
+# DONE: post-migration: assigned same start values to end field
 
 account      / account.group            / company_id (many2one)         : NEW relation: res.company, required, req_default: function, hasdefault
-# DONE: post-migration: Unfold manual groups per company + proper company assignation
+# DONE: end-migration: Unfold manual groups per company + proper company assignation
 
 account      / account.group.template   / chart_template_id (many2one)  : NEW relation: account.chart.template, required
 account      / account.group.template   / code_prefix_end (char)        : NEW
