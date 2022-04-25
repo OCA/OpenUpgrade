@@ -37,13 +37,22 @@ def use_new_taxes_and_repartition_lines_on_move_lines(env):
     companies_ids = [x[0] for x in env.cr.fetchall()]
     if not companies_ids:
         return
+    # assure update amount_type for cases where 'group' -> something else
+    for company_id in companies_ids:
+        for tax_xmlid in xmlid_names:
+            tax = env.ref('l10n_es.' + str(company_id) + '_' + tax_xmlid, raise_if_not_found=False)
+            tax_template = env.ref('l10n_es.' + tax_xmlid, raise_if_not_found=False)
+            if tax and tax_template:
+                tax.amount = tax_template.amount
+                tax.amount_type = tax_template.amount_type
     # select taxes with children that don't have repartition lines
     taxes_with_children = env['account.tax'].with_context(
         active_test=False).search(
         [('children_tax_ids', '!=', False), ('company_id', 'in', companies_ids)]
     ).filtered(lambda t: not t.invoice_repartition_line_ids
                and not t.refund_repartition_line_ids)
-    tax_ids = taxes_with_children.ids
+    domain = [('model', '=', 'account.tax'), ('res_id', 'in', taxes_with_children.ids), ('module', '=', 'l10n_es')]
+    tax_ids = env['account.tax'].browse(env['ir.model.data'].search(domain).mapped('res_id')).ids
     # create tax repartition lines
     if tax_ids:
         refund_account_query = (
@@ -73,7 +82,8 @@ def use_new_taxes_and_repartition_lines_on_move_lines(env):
                 WHERE id IN %%s""" % column, (tuple(tax_ids), ),
             )
     domain = [('model', '=', 'account.tax'), ('res_id', 'in', taxes_with_children.ids), ('module', '!=', '__export__')]
-    taxes_with_children = env['account.tax'].browse(env['ir.model.data'].search(domain).mapped('res_id'))
+    parent_taxes = env['account.tax'].browse(env['ir.model.data'].search(domain).mapped('res_id')).filtered(
+        lambda t: t.amount_type != 'group')
     children_tax_ids = taxes_with_children.mapped('children_tax_ids').ids
     if children_tax_ids:
         # assure children taxes are not parent taxes
@@ -82,6 +92,17 @@ def use_new_taxes_and_repartition_lines_on_move_lines(env):
             DELETE FROM account_tax_filiation_rel rel
             WHERE rel.parent_tax IN %s
             """, (tuple(children_tax_ids), ),
+        )
+        # update account move line tax_line_id
+        openupgrade.logged_query(
+            env.cr, """
+            UPDATE account_move_line aml
+            SET tax_line_id = at2.id
+            FROM account_tax at
+            JOIN account_tax_filiation_rel fil ON fil.child_tax = at.id
+            JOIN account_tax at2 ON fil.parent_tax = at2.id
+            WHERE aml.tax_line_id = at.id AND at.id IN %s AND at2.id IN %s
+            """, (tuple(children_tax_ids), tuple(parent_taxes.ids)),
         )
         # update account move line tax_ids
         openupgrade.logged_query(
@@ -96,14 +117,20 @@ def use_new_taxes_and_repartition_lines_on_move_lines(env):
             JOIN account_tax_filiation_rel fil ON fil.child_tax = at.id
             JOIN account_tax at2 ON fil.parent_tax = at2.id
             WHERE at.id IN %s AND at2.id IN %s
-            ON CONFLICT DO NOTHING""", (tuple(children_tax_ids), tuple(taxes_with_children.ids)),
+            ON CONFLICT DO NOTHING""", (tuple(children_tax_ids), tuple(parent_taxes.ids)),
         )
-        openupgrade.logged_query(
-            env.cr, """
-            DELETE FROM account_move_line_account_tax_rel
-            WHERE account_tax_id IN %s
-            """, (tuple(children_tax_ids), ),
-        )
+        other_parents = env["account.tax"].with_context(active_test=False).search(
+            [("children_tax_ids", "in", children_tax_ids)]).filtered(
+            lambda t: t in taxes_with_children and t not in parent_taxes)
+        obsolete_children = [x for x in children_tax_ids if x not in other_parents.mapped(
+            'children_tax_ids').filtered(lambda t: t.id in children_tax_ids).ids]
+        if obsolete_children:
+            openupgrade.logged_query(
+                env.cr, """
+                DELETE FROM account_move_line_account_tax_rel
+                WHERE account_tax_id IN %s
+                """, (tuple(obsolete_children), ),
+            )
         # update account move line tax_repartition_line_id
         for tax_column in ("invoice_tax_id", "refund_tax_id"):
             openupgrade.logged_query(
@@ -121,16 +148,8 @@ def use_new_taxes_and_repartition_lines_on_move_lines(env):
                     AND SIGN(at.amount) = SIGN(atrl2.factor_percent))
                 WHERE aml.tax_repartition_line_id = atrl.id AND at.id IN %s AND at2.id IN %s
                 """).format(column=sql.Identifier(tax_column)),
-                (tuple(children_tax_ids), tuple(taxes_with_children.ids)),
+                (tuple(children_tax_ids), tuple(parent_taxes.ids)),
             )
-        # update amount of parent taxes:
-        for company_id in companies_ids:
-            for tax_xmlid in xmlid_names:
-                tax = env.ref('l10n_es.' + str(company_id) + '_' + tax_xmlid, raise_if_not_found=False)
-                tax_template = env.ref('l10n_es.' + tax_xmlid, raise_if_not_found=False)
-                if tax and tax_template:
-                    tax.amount = tax_template.amount
-                    tax.amount_type = tax_template.amount_type
 
 
 def update_account_tags(env):
