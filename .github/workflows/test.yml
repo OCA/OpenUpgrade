@@ -7,8 +7,12 @@ name: Test OpenUpgrade migration
 
 on:
   push:
-    branches: ["14.0*"]
+    branches:
+      - "14.0"
+      - "14.0-ocabot-*"
   pull_request:
+    branches:
+      - "14.0*"
 
 jobs:
   test:
