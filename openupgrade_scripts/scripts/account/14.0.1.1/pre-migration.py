@@ -275,6 +275,16 @@ def add_move_id_field_account_bank_statement_line(env):
 
 
 def add_move_id_field_account_payment(env):
+    openupgrade.logged_query(
+        env.cr,
+        """
+        UPDATE account_payment ap
+        SET currency_id = COALESCE(aj.currency_id, rc.currency_id)
+        FROM account_journal aj
+        JOIN res_company rc ON aj.company_id = rc.id
+        WHERE ap.journal_id = aj.id
+        """,
+    )
     if not openupgrade.column_exists(env.cr, "account_payment", "move_id"):
         openupgrade.logged_query(
             env.cr,
