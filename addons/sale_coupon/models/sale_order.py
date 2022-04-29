@@ -133,6 +133,9 @@ class SaleOrder(models.Model):
         else:
             return fixed_amount
 
+    def _get_coupon_program_domain(self):
+        return []
+
     def _get_cheapest_line(self):
         # Unit prices tax included
         return min(self.order_line.filtered(lambda x: not x.is_reward_line and x.price_reduce > 0), key=lambda x: x['price_reduce'])
@@ -157,7 +160,8 @@ class SaleOrder(models.Model):
             }]
         reward_dict = {}
         lines = self._get_paid_order_lines()
-        amount_total = sum(self._get_base_order_lines(program).mapped('price_subtotal'))
+        amount_total = sum([any(line.tax_id.mapped('price_include')) and line.price_total or line.price_subtotal
+                            for line in self._get_base_order_lines(program)])
         if program.discount_apply_on == 'cheapest_product':
             line = self._get_cheapest_line()
             if line:
