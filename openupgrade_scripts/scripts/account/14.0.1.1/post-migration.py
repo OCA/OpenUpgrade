@@ -108,40 +108,24 @@ def fill_payment_id_and_statement_line_id_fields(env):
 
 
 def fill_partial_reconcile_debit_and_credit_amounts(env):
-    # compute debit and credit amount when currencies are the same
     openupgrade.logged_query(
         env.cr,
         """
         UPDATE account_partial_reconcile
-        SET debit_amount_currency = amount, credit_amount_currency = amount
-        WHERE debit_amount_currency IS NULL AND credit_amount_currency is NULL
-            AND credit_currency_id = debit_currency_id
+        SET debit_amount_currency = COALESCE(amount_currency, amount),
+            debit_currency_id = COALESCE(currency_id, debit_currency_id)
+        WHERE debit_amount_currency IS NULL
        """,
     )
-    # compute debit and credit amount when currencies are different
-    partial_reconcile_lines = (
-        env["account.partial.reconcile"]
-        .search(
-            [
-                ("debit_amount_currency", "=", False),
-                ("credit_amount_currency", "=", False),
-            ]
-        )
-        .filtered(lambda line: line.credit_currency_id != line.debit_currency_id)
+    openupgrade.logged_query(
+        env.cr,
+        """
+        UPDATE account_partial_reconcile
+        SET credit_amount_currency = COALESCE(amount_currency, amount),
+            credit_currency_id = COALESCE(currency_id, credit_currency_id)
+        WHERE credit_amount_currency IS NULL
+       """,
     )
-    for line in partial_reconcile_lines:
-        line.debit_amount_currency = line.company_currency_id._convert(
-            line.amount,
-            line.debit_currency_id,
-            line.company_id,
-            line.credit_move_id.date,
-        )
-        line.credit_amount_currency = line.company_currency_id._convert(
-            line.amount,
-            line.credit_currency_id,
-            line.company_id,
-            line.debit_move_id.date,
-        )
 
 
 def create_account_reconcile_model_lines(env):
