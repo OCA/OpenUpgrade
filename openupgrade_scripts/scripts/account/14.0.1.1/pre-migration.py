@@ -158,6 +158,7 @@ def copy_fields(env):
                 ("journal_id", None, None),
                 ("name", None, None),
                 ("payment_date", None, None),
+                ("currency_id", None, None),
             ],
         },
     )
@@ -353,6 +354,17 @@ def add_move_id_field_account_payment(env):
         FROM account_payment ap
         WHERE am.id = ap.move_id AND am.payment_id IS NULL
         """,
+    )
+    openupgrade.logged_query(
+        env.cr,
+        """
+        UPDATE account_move am
+        SET currency_id = ap.{0}
+        FROM account_payment ap
+        WHERE am.id = ap.move_id AND am.currency_id != ap.{0}
+        """.format(
+            openupgrade.get_legacy_name("currency_id"),
+        ),
     )
 
 
