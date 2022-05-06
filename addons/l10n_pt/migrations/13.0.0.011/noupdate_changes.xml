@@ -2,23 +2,26 @@
 <odoo>
   <record id="compiva0" model="account.tax.template">
     <!-- <field name="tag_ids"/> -->
-    <field name="invoice_repartition_line_ids" eval="[(5, 0, 0),                 (0,0, {                     'factor_percent': 100,                     'repartition_type': 'base',                 }),                  (0,0, {                     'factor_percent': 100,                     'repartition_type': 'tax',                 }),             ]"/>
-    <field name="refund_repartition_line_ids" eval="[(5, 0, 0),                 (0,0, {                     'factor_percent': 100,                     'repartition_type': 'base',                 }),                  (0,0, {                     'factor_percent': 100,                     'repartition_type': 'tax',                 }),             ]"/>
+    <field name="invoice_repartition_line_ids" eval="[(5, 0, 0),                 (0,0, {                     'factor_percent': 100,                     'repartition_type': 'base',                 }),                  (0,0, {                     'factor_percent': 100,                     'repartition_type': 'tax',                     'account_id': ref('chart_2432'),                 }),             ]"/>
+    <field name="refund_repartition_line_ids" eval="[(5, 0, 0),                 (0,0, {                     'factor_percent': 100,                     'repartition_type': 'base',                 }),                  (0,0, {                     'factor_percent': 100,                     'repartition_type': 'tax',                     'account_id': ref('chart_2432'),                 }),             ]"/>
   </record>
   <record id="compiva13" model="account.tax.template">
+    <field name="description">IVA13 compra (taxa intermédia Portugal Continental)</field>
     <!-- <field name="tag_ids"/> -->
-    <field name="invoice_repartition_line_ids" eval="[(5, 0, 0),                 (0,0, {                     'factor_percent': 100,                     'repartition_type': 'base',                 }),                  (0,0, {                     'factor_percent': 100,                     'repartition_type': 'tax',                 }),             ]"/>
-    <field name="refund_repartition_line_ids" eval="[(5, 0, 0),                 (0,0, {                     'factor_percent': 100,                     'repartition_type': 'base',                 }),                  (0,0, {                     'factor_percent': 100,                     'repartition_type': 'tax',                 }),             ]"/>
+    <field name="invoice_repartition_line_ids" eval="[(5, 0, 0),                 (0,0, {                     'factor_percent': 100,                     'repartition_type': 'base',                 }),                  (0,0, {                     'factor_percent': 100,                     'repartition_type': 'tax',                     'account_id': ref('chart_2432'),                 }),             ]"/>
+    <field name="refund_repartition_line_ids" eval="[(5, 0, 0),                 (0,0, {                     'factor_percent': 100,                     'repartition_type': 'base',                 }),                  (0,0, {                     'factor_percent': 100,                     'repartition_type': 'tax',                     'account_id': ref('chart_2432'),                 }),             ]"/>
   </record>
   <record id="compiva23" model="account.tax.template">
+    <field name="description">IVA23 compra (taxa normal Portugal Continental)</field>
     <!-- <field name="tag_ids"/> -->
-    <field name="invoice_repartition_line_ids" eval="[(5, 0, 0),                 (0,0, {                     'factor_percent': 100,                     'repartition_type': 'base',                 }),                  (0,0, {                     'factor_percent': 100,                     'repartition_type': 'tax',                 }),             ]"/>
-    <field name="refund_repartition_line_ids" eval="[(5, 0, 0),                 (0,0, {                     'factor_percent': 100,                     'repartition_type': 'base',                 }),                  (0,0, {                     'factor_percent': 100,                     'repartition_type': 'tax',                 }),             ]"/>
+    <field name="invoice_repartition_line_ids" eval="[(5, 0, 0),                 (0,0, {                     'factor_percent': 100,                     'repartition_type': 'base',                 }),                  (0,0, {                     'factor_percent': 100,                     'repartition_type': 'tax',                     'account_id': ref('chart_2432'),                 }),             ]"/>
+    <field name="refund_repartition_line_ids" eval="[(5, 0, 0),                 (0,0, {                     'factor_percent': 100,                     'repartition_type': 'base',                 }),                  (0,0, {                     'factor_percent': 100,                     'repartition_type': 'tax',                     'account_id': ref('chart_2432'),                 }),             ]"/>
   </record>
   <record id="compiva6" model="account.tax.template">
+    <field name="description">IVA6 compra (taxa reduzida Portugal Continental)</field>
     <!-- <field name="tag_ids"/> -->
-    <field name="invoice_repartition_line_ids" eval="[(5, 0, 0),                 (0,0, {                     'factor_percent': 100,                     'repartition_type': 'base',                 }),                  (0,0, {                     'factor_percent': 100,                     'repartition_type': 'tax',                 }),             ]"/>
-    <field name="refund_repartition_line_ids" eval="[(5, 0, 0),                 (0,0, {                     'factor_percent': 100,                     'repartition_type': 'base',                 }),                  (0,0, {                     'factor_percent': 100,                     'repartition_type': 'tax',                 }),             ]"/>
+    <field name="invoice_repartition_line_ids" eval="[(5, 0, 0),                 (0,0, {                     'factor_percent': 100,                     'repartition_type': 'base',                 }),                  (0,0, {                     'factor_percent': 100,                     'repartition_type': 'tax',                     'account_id': ref('chart_2432'),                 }),             ]"/>
+    <field name="refund_repartition_line_ids" eval="[(5, 0, 0),                 (0,0, {                     'factor_percent': 100,                     'repartition_type': 'base',                 }),                  (0,0, {                     'factor_percent': 100,                     'repartition_type': 'tax',                     'account_id': ref('chart_2432'),                 }),             ]"/>
   </record>
   <record id="fiscal_position_foreign_eu" model="account.fiscal.position.template">
     <field name="auto_apply" eval="True"/>
@@ -38,22 +41,29 @@
   </record>
   <record id="iva0" model="account.tax.template">
     <!-- <field name="tag_ids"/> -->
-    <field name="invoice_repartition_line_ids" eval="[(5, 0, 0),                 (0,0, {                     'factor_percent': 100,                     'repartition_type': 'base',                 }),                  (0,0, {                     'factor_percent': 100,                     'repartition_type': 'tax',                 }),             ]"/>
-    <field name="refund_repartition_line_ids" eval="[(5, 0, 0),                 (0,0, {                     'factor_percent': 100,                     'repartition_type': 'base',                 }),                  (0,0, {                     'factor_percent': 100,                     'repartition_type': 'tax',                 }),             ]"/>
+    <field name="invoice_repartition_line_ids" eval="[(5, 0, 0),                 (0,0, {                     'factor_percent': 100,                     'repartition_type': 'base',                 }),                  (0,0, {                     'factor_percent': 100,                     'repartition_type': 'tax',                     'account_id': ref('chart_2433'),                 }),             ]"/>
+    <field name="refund_repartition_line_ids" eval="[(5, 0, 0),                 (0,0, {                     'factor_percent': 100,                     'repartition_type': 'base',                 }),                  (0,0, {                     'factor_percent': 100,                     'repartition_type': 'tax',                     'account_id': ref('chart_2433'),                 }),             ]"/>
+    <field name="type_tax_use">sale</field>
   </record>
   <record id="iva13" model="account.tax.template">
+    <field name="description">IVA13 (taxa intermédia Portugal Continental)</field>
     <!-- <field name="tag_ids"/> -->
-    <field name="invoice_repartition_line_ids" eval="[(5, 0, 0),                 (0,0, {                     'factor_percent': 100,                     'repartition_type': 'base',                 }),                  (0,0, {                     'factor_percent': 100,                     'repartition_type': 'tax',                 }),             ]"/>
-    <field name="refund_repartition_line_ids" eval="[(5, 0, 0),                 (0,0, {                     'factor_percent': 100,                     'repartition_type': 'base',                 }),                  (0,0, {                     'factor_percent': 100,                     'repartition_type': 'tax',                 }),             ]"/>
+    <field name="invoice_repartition_line_ids" eval="[(5, 0, 0),                 (0,0, {                     'factor_percent': 100,                     'repartition_type': 'base',                 }),                  (0,0, {                     'factor_percent': 100,                     'repartition_type': 'tax',                     'account_id': ref('chart_2433'),                 }),             ]"/>
+    <field name="refund_repartition_line_ids" eval="[(5, 0, 0),                 (0,0, {                     'factor_percent': 100,                     'repartition_type': 'base',                 }),                  (0,0, {                     'factor_percent': 100,                     'repartition_type': 'tax',                     'account_id': ref('chart_2433'),                 }),             ]"/>
+    <field name="type_tax_use">sale</field>
   </record>
   <record id="iva23" model="account.tax.template">
+    <field name="description">IVA23 (taxa normal Portugal Continental)</field>
     <!-- <field name="tag_ids"/> -->
-    <field name="invoice_repartition_line_ids" eval="[(5, 0, 0),                 (0,0, {                     'factor_percent': 100,                     'repartition_type': 'base',                 }),                  (0,0, {                     'factor_percent': 100,                     'repartition_type': 'tax',                 }),             ]"/>
-    <field name="refund_repartition_line_ids" eval="[(5, 0, 0),                 (0,0, {                     'factor_percent': 100,                     'repartition_type': 'base',                 }),                  (0,0, {                     'factor_percent': 100,                     'repartition_type': 'tax',                 }),             ]"/>
+    <field name="invoice_repartition_line_ids" eval="[(5, 0, 0),                 (0,0, {                     'factor_percent': 100,                     'repartition_type': 'base',                 }),                  (0,0, {                     'factor_percent': 100,                     'repartition_type': 'tax',                     'account_id': ref('chart_2433'),                 }),             ]"/>
+    <field name="refund_repartition_line_ids" eval="[(5, 0, 0),                 (0,0, {                     'factor_percent': 100,                     'repartition_type': 'base',                 }),                  (0,0, {                     'factor_percent': 100,                     'repartition_type': 'tax',                     'account_id': ref('chart_2433'),                 }),             ]"/>
+    <field name="type_tax_use">sale</field>
   </record>
   <record id="iva6" model="account.tax.template">
+    <field name="description">IVA6 (taxa reduzida Portugal Continental)</field>
     <!-- <field name="tag_ids"/> -->
-    <field name="invoice_repartition_line_ids" eval="[(5, 0, 0),                 (0,0, {                     'factor_percent': 100,                     'repartition_type': 'base',                 }),                  (0,0, {                     'factor_percent': 100,                     'repartition_type': 'tax',                 }),             ]"/>
-    <field name="refund_repartition_line_ids" eval="[(5, 0, 0),                 (0,0, {                     'factor_percent': 100,                     'repartition_type': 'base',                 }),                  (0,0, {                     'factor_percent': 100,                     'repartition_type': 'tax',                 }),             ]"/>
+    <field name="invoice_repartition_line_ids" eval="[(5, 0, 0),                 (0,0, {                     'factor_percent': 100,                     'repartition_type': 'base',                 }),                  (0,0, {                     'factor_percent': 100,                     'repartition_type': 'tax',                     'account_id': ref('chart_2433'),                 }),             ]"/>
+    <field name="refund_repartition_line_ids" eval="[(5, 0, 0),                 (0,0, {                     'factor_percent': 100,                     'repartition_type': 'base',                 }),                  (0,0, {                     'factor_percent': 100,                     'repartition_type': 'tax',                     'account_id': ref('chart_2433'),                 }),             ]"/>
+    <field name="type_tax_use">sale</field>
   </record>
 </odoo>

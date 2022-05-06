@@ -3,6 +3,9 @@
   <record id="mail_template_data_project_task" model="mail.template">
     <field name="lang">${object.partner_id.lang}</field>
   </record>
+  <record id="mt_task_rating" model="mail.message.subtype">
+    <field name="default" eval="False"/>
+  </record>
   <record id="project_comp_rule" model="ir.rule">
     <field name="domain_force">[('company_id', 'in', company_ids)]</field>
   </record>
