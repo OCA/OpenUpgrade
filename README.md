@@ -5,4 +5,4 @@
 OpenUpgrade
 ===========
 
-This <a href="https://odoo-community.org">OCA</a> project aims to provide an Open Source upgrade path for <a href="https://github.com/odoo/odoo">Odoo</a>. It is hosted at <a href="https://github.com/oca/openupgrade">GitHub</a>. For documentation, see <a href="https://doc.therp.nl/openupgrade">here</a>.
+This <a href="https://odoo-community.org">OCA</a> project aims to provide an Open Source upgrade path for <a href="https://github.com/odoo/odoo">Odoo</a>. It is hosted at <a href="https://github.com/oca/openupgrade">GitHub</a>. For documentation, see <a href="https://github.com/OCA/OpenUpgrade.git">here</a>.
