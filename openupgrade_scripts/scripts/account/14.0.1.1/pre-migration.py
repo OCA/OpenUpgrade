@@ -409,7 +409,8 @@ def fill_account_move_line_currency_id(env):
         env.cr,
         """
         UPDATE account_move_line
-        SET currency_id = company_currency_id
+        SET currency_id = company_currency_id,
+            amount_residual_currency = amount_residual
         WHERE currency_id IS NULL
         """,
     )
