@@ -3,11 +3,14 @@
 # Copyright 2016 Opener B.V. <https://opener.am>
 # License AGPL-3.0 or later (http://www.gnu.org/licenses/agpl).
 
+import logging
 import os
 from odoo.modules import get_module_path
 
 from odoo import fields, models
 from odoo.addons.openupgrade_records.lib import compare
+
+_logger = logging.getLogger(__name__)
 
 
 class AnalysisWizard(models.TransientModel):
@@ -143,6 +146,7 @@ class AnalysisWizard(models.TransientModel):
                 error = write_file(
                     key, modules[key].installed_version, contents)
                 if error:
+                    _logger.error(error)
                     general += error
                     general += contents
             else:
