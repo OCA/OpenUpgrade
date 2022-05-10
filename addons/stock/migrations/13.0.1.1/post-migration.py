@@ -360,6 +360,18 @@ def stock_production_lot_multi_company_migration(env):
                     "domain_force": "[('company_id','in', company_ids)]"})
 
 
+def stock_putaway_rule_multi_company_migration(env):
+    # once location_in_id is correctly set and company of locations are correctly set
+    # in previous methods, we can safely proceed with:
+    openupgrade.logged_query(
+        env.cr, """
+        UPDATE stock_putaway_rule spr
+        SET company_id = sl.company_id
+        FROM stock_location sl
+        WHERE spr.location_in_id = sl.id AND sl.company_id IS NOT NULL"""
+    )
+
+
 def recompute_stock_location_complete_name(env):
     # In 12.0, the displayed name of the locations was obtained by the
     # name_get method. This method limited the location path up to a parent
@@ -384,6 +396,7 @@ def migrate(env, version):
     convert_many2one_stock_inventory_product_and_location(env)
     openupgrade.load_data(env.cr, 'stock', 'migrations/13.0.1.1/noupdate_changes.xml')
     stock_production_lot_multi_company_migration(env)
+    stock_putaway_rule_multi_company_migration(env)
     if openupgrade.table_exists(env.cr, 'delivery_carrier'):
         openupgrade.load_data(
             env.cr, "stock", "migrations/13.0.1.1/noupdate_changes2.xml")
