@@ -46,10 +46,10 @@ def _raise_view_error(
             self.write({"active": False})
 
 
-def _postprocess_view(self, node, model, validate=True, editable=True):
+def _postprocess_view(self, node, model, editable=True):
     """Don't validate views, _raise_view_error is mutted"""
     return View._postprocess_view._original_method(
-        self, node, model, validate=False, editable=editable
+        self, node, model, editable=editable
     )
 
 
