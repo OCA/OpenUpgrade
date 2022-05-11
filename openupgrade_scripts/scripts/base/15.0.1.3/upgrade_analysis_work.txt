@@ -90,9 +90,10 @@ NEW ir.ui.view: base.ir_profile_view_form
 NEW ir.ui.view: base.ir_profile_view_list
 NEW ir.ui.view: base.ir_profile_view_search
 NEW res.country.group: base.gulf_cooperation_council (noupdate)
-NEW res.country.state: base.state_ec_01
-NEW res.country.state: base.state_ec_02
-NEW res.country.state: base.state_ec_03
+# Done: rename_xmlids
+NEW res.country.state: base.state_ec_01 [renamed from l10n_ec module.state_ec_1]
+NEW res.country.state: base.state_ec_02 [renamed from l10n_ec module.state_ec_2]
+NEW res.country.state: base.state_ec_03 ...
 NEW res.country.state: base.state_ec_04
 NEW res.country.state: base.state_ec_05
 NEW res.country.state: base.state_ec_06
