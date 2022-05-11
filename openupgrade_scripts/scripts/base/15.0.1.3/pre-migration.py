@@ -36,3 +36,6 @@ def migrate(cr, version):
         )
     openupgrade.rename_xmlids(cr, [("mail.icp_mail_catchall_alias", "base.icp_mail_catchall_alias")])
     openupgrade.rename_xmlids(cr, [("mail.icp_mail_bounce_alias", "base.icp_mail_bounce_alias")])
+
+    openupgrade.update_module_names(cr, renamed_modules.items())
+    openupgrade.update_module_names(cr, merged_modules.items(), merge_modules=True)
