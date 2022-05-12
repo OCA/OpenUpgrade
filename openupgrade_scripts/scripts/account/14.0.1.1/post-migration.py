@@ -112,7 +112,7 @@ def fill_partial_reconcile_debit_and_credit_amounts(env):
         env.cr,
         """
         UPDATE account_partial_reconcile
-        SET debit_amount_currency = COALESCE(amount_currency, amount),
+        SET debit_amount_currency = COALESCE(NULLIF(amount_currency, 0.0), amount),
             debit_currency_id = COALESCE(currency_id, debit_currency_id)
         WHERE debit_amount_currency IS NULL
        """,
@@ -121,7 +121,7 @@ def fill_partial_reconcile_debit_and_credit_amounts(env):
         env.cr,
         """
         UPDATE account_partial_reconcile
-        SET credit_amount_currency = COALESCE(amount_currency, amount),
+        SET credit_amount_currency = COALESCE(NULLIF(amount_currency, 0.0), amount),
             credit_currency_id = COALESCE(currency_id, credit_currency_id)
         WHERE credit_amount_currency IS NULL
        """,
