@@ -48,7 +48,7 @@ rename_xmlids = [
     ("l10n_ec.state_ec_24", "base.state_ec_24"),
     # From mail
     ("mail.icp_mail_catchall_alias", "base.icp_mail_catchall_alias"),
-    ("mail.icp_mail_bounce_alias", "base.icp_mail_bounce_alias")
+    ("mail.icp_mail_bounce_alias", "base.icp_mail_bounce_alias"),
 ]
 
 
