@@ -45,6 +45,7 @@ def _raise_view_error(
             )
             self.write({"active": False})
 
+
 _check_xml._original_method = View._check_xml
 View._check_xml = _check_xml
 _raise_view_error._original_method = View._raise_view_error
