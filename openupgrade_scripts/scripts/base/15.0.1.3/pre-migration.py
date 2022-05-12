@@ -20,6 +20,37 @@ except ImportError:
         " The upgrade process will not work properly."
     )
 
+rename_xmlids = [
+    # From l10n_ec
+    ("l10n_ec.state_ec_1", "base.state_ec_01"),
+    ("l10n_ec.state_ec_2", "base.state_ec_02"),
+    ("l10n_ec.state_ec_3", "base.state_ec_03"),
+    ("l10n_ec.state_ec_4", "base.state_ec_04"),
+    ("l10n_ec.state_ec_5", "base.state_ec_05"),
+    ("l10n_ec.state_ec_6", "base.state_ec_06"),
+    ("l10n_ec.state_ec_7", "base.state_ec_07"),
+    ("l10n_ec.state_ec_8", "base.state_ec_08"),
+    ("l10n_ec.state_ec_9", "base.state_ec_09"),
+    ("l10n_ec.state_ec_10", "base.state_ec_10"),
+    ("l10n_ec.state_ec_11", "base.state_ec_11"),
+    ("l10n_ec.state_ec_12", "base.state_ec_12"),
+    ("l10n_ec.state_ec_13", "base.state_ec_13"),
+    ("l10n_ec.state_ec_14", "base.state_ec_14"),
+    ("l10n_ec.state_ec_15", "base.state_ec_15"),
+    ("l10n_ec.state_ec_16", "base.state_ec_16"),
+    ("l10n_ec.state_ec_17", "base.state_ec_17"),
+    ("l10n_ec.state_ec_18", "base.state_ec_18"),
+    ("l10n_ec.state_ec_19", "base.state_ec_19"),
+    ("l10n_ec.state_ec_20", "base.state_ec_20"),
+    ("l10n_ec.state_ec_21", "base.state_ec_21"),
+    ("l10n_ec.state_ec_22", "base.state_ec_22"),
+    ("l10n_ec.state_ec_23", "base.state_ec_23"),
+    ("l10n_ec.state_ec_24", "base.state_ec_24"),
+    # From mail
+    ("mail.icp_mail_catchall_alias", "base.icp_mail_catchall_alias"),
+    ("mail.icp_mail_bounce_alias", "base.icp_mail_bounce_alias")
+]
+
 
 @openupgrade.migrate(use_env=False)
 def migrate(cr, version):
@@ -35,39 +66,7 @@ def migrate(cr, version):
             "when migrating your database."
         )
 
-    openupgrade.rename_xmlids(
-        cr,
-        [
-            # From l10n_ec
-            ("l10n_ec.state_ec_1", "base.state_ec_01"),
-            ("l10n_ec.state_ec_2", "base.state_ec_02"),
-            ("l10n_ec.state_ec_3", "base.state_ec_03"),
-            ("l10n_ec.state_ec_4", "base.state_ec_04"),
-            ("l10n_ec.state_ec_5", "base.state_ec_05"),
-            ("l10n_ec.state_ec_6", "base.state_ec_06"),
-            ("l10n_ec.state_ec_7", "base.state_ec_07"),
-            ("l10n_ec.state_ec_8", "base.state_ec_08"),
-            ("l10n_ec.state_ec_9", "base.state_ec_09"),
-            ("l10n_ec.state_ec_10", "base.state_ec_10"),
-            ("l10n_ec.state_ec_11", "base.state_ec_11"),
-            ("l10n_ec.state_ec_12", "base.state_ec_12"),
-            ("l10n_ec.state_ec_13", "base.state_ec_13"),
-            ("l10n_ec.state_ec_14", "base.state_ec_14"),
-            ("l10n_ec.state_ec_15", "base.state_ec_15"),
-            ("l10n_ec.state_ec_16", "base.state_ec_16"),
-            ("l10n_ec.state_ec_17", "base.state_ec_17"),
-            ("l10n_ec.state_ec_18", "base.state_ec_18"),
-            ("l10n_ec.state_ec_19", "base.state_ec_19"),
-            ("l10n_ec.state_ec_20", "base.state_ec_20"),
-            ("l10n_ec.state_ec_21", "base.state_ec_21"),
-            ("l10n_ec.state_ec_22", "base.state_ec_22"),
-            ("l10n_ec.state_ec_23", "base.state_ec_23"),
-            ("l10n_ec.state_ec_24", "base.state_ec_24"),
-            # From mail
-            ("mail.icp_mail_catchall_alias", "base.icp_mail_catchall_alias"),
-            ("mail.icp_mail_bounce_alias", "base.icp_mail_bounce_alias")
-        ]
-    )
+    openupgrade.rename_xmlids(cr, rename_xmlids)
 
     openupgrade.update_module_names(cr, renamed_modules.items())
     openupgrade.update_module_names(cr, merged_modules.items(), merge_modules=True)
