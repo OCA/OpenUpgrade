@@ -295,7 +295,8 @@ account      / account.payment          / payment_method_id (many2one)  : now a 
 # NOTHING TO DO
 
 account      / account.payment          / payment_type (selection)      : selection_keys is now '['inbound', 'outbound']' ('['inbound', 'outbound', 'transfer']')
-# TODO: transfer records should be changed to 'inbound' or 'outbound', but if we do that, we should remove two account move lines
+# DONE post-migration: mapped payment_type from 'transfer' to 'inbound'/'outbound' for account payment tranfer
+# created new counterpart payment with account payment transfer
 # (see https://github.com/odoo/odoo/commit/a30cfee04eaf48b581d2e327c1b56e115a1c751f)
 # DONE pre-migration: filled partner_id with journal_id.company_id.partner_id to detect transfers
 
