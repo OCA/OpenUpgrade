@@ -274,6 +274,55 @@ def fill_planned_datetime(env):
     """)
 
 
+def _get_main_company(cr):
+    cr.execute("""SELECT id, name FROM res_company ORDER BY id""")
+    return cr.fetchone()
+
+
+def map_mrp_locations(env, main_company):
+    conditions = {
+        'location_inventory':
+            "sl2.usage = 'inventory' AND sl2.scrap_location IS NOT TRUE",
+        'location_production': "sl2.usage = 'production'",
+        'stock_location_scrapped':
+            "sl2.usage = 'inventory' AND sl2.scrap_location IS TRUE",
+    }
+    affected_models = {
+        'mrp.production': ['location_src_id', 'location_dest_id'],
+        'mrp.unbuild': ['location_id', 'location_dest_id'],
+    }
+    for model, locations in affected_models.items():
+        table = env[model]._table
+        for location in locations:
+            for xmlid_name, condition in conditions.items():
+                openupgrade.logged_query(
+                    env.cr, """
+            UPDATE {table} tab
+            SET {location} = (
+                SELECT sl2.id
+                FROM stock_location sl2
+                LEFT JOIN ir_model_data imd2 ON (imd2.module = 'stock' and
+                    imd2.model = 'stock.location' and imd2.res_id = sl2.id)
+                LEFT JOIN res_users ru2 ON ru2.id = sl2.create_uid
+                WHERE {condition}
+                    AND imd2.name IS NULL AND
+                    COALESCE(sl2.company_id, ru2.company_id) =
+                        COALESCE(tab.company_id, ru.company_id)
+                LIMIT 1
+                )
+            FROM stock_location sl
+            JOIN ir_model_data imd ON (imd.module = 'stock' and
+                imd.model = 'stock.location' and imd.res_id = sl.id)
+            LEFT JOIN res_users ru ON sl.create_uid = ru.id
+            WHERE tab.{location} = sl.id AND
+                tab.company_id != {main_company_id} AND
+                imd.name = '{xmlid_name}'
+                        """.format(table=table, main_company_id=main_company[0],
+                                   location=location,
+                                   xmlid_name=xmlid_name, condition=condition)
+                )
+
+
 @openupgrade.migrate()
 def migrate(env, version):
     fill_bom_product_template_attribute_value(env)
@@ -287,6 +336,8 @@ def migrate(env, version):
     fill_manufacture_mto_pull(env)
     fill_mrp_workorder_product_uom_id(env.cr)
     update_consumption(env)
+    main_company = _get_main_company(env.cr)
+    map_mrp_locations(env, main_company)
     openupgrade.load_data(env.cr, 'mrp', 'migrations/13.0.2.0/noupdate_changes.xml')
     openupgrade.delete_records_safely_by_xml_id(env, _unlink_by_xmlid)
     enable_group_mrp_byproducts(env)
