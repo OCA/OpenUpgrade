@@ -43,7 +43,7 @@ jobs:
         run: createdb $DB
       - name: DB Restore
         run: |
-          # psql -d $DB -c "DROP SCHEMA IF EXISTS PUBLIC;"
+          psql -d $DB -c "DROP SCHEMA IF EXISTS PUBLIC;"
           wget -q -O- $DOWNLOADS/14.0.psql | pg_restore -d $DB --no-owner
           # TODO: create test data in Odoo 14.0 which does not support yml
           # anymore
