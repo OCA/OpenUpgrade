@@ -20,8 +20,7 @@ except ImportError:
         " The upgrade process will not work properly."
     )
 
-rename_xmlids = [
-    # From l10n_ec
+rename_xmlids_l10n_ec = [
     ("l10n_ec.state_ec_1", "base.state_ec_01"),
     ("l10n_ec.state_ec_2", "base.state_ec_02"),
     ("l10n_ec.state_ec_3", "base.state_ec_03"),
@@ -46,7 +45,8 @@ rename_xmlids = [
     ("l10n_ec.state_ec_22", "base.state_ec_22"),
     ("l10n_ec.state_ec_23", "base.state_ec_23"),
     ("l10n_ec.state_ec_24", "base.state_ec_24"),
-    # From mail
+]
+rename_xmlids_mail = [
     ("mail.icp_mail_catchall_alias", "base.icp_mail_catchall_alias"),
     ("mail.icp_mail_bounce_alias", "base.icp_mail_bounce_alias"),
 ]
@@ -66,7 +66,11 @@ def migrate(cr, version):
             "when migrating your database."
         )
 
-    openupgrade.rename_xmlids(cr, rename_xmlids)
+    if openupgrade.is_module_installed(cr, "l10n_ec"):
+        openupgrade.rename_xmlids(cr, rename_xmlids_l10n_ec)
+
+    if openupgrade.is_module_installed(cr, "mail"):
+        openupgrade.rename_xmlids(cr, rename_xmlids_mail)
 
     openupgrade.update_module_names(cr, renamed_modules.items())
     openupgrade.update_module_names(cr, merged_modules.items(), merge_modules=True)
