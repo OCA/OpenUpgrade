@@ -4,7 +4,7 @@
 from openupgradelib import openupgrade
 
 _field_renames = [
-    ('calendar.alarm ', 'calendar_alarm ', 'type', 'alarm_type'),
+    ('calendar.alarm', 'calendar_alarm', 'type', 'alarm_type'),
 ]
 
 
