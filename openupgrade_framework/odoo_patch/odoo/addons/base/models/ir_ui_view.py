@@ -5,7 +5,7 @@ import logging
 from odoo import api
 from odoo.tools import mute_logger
 
-from odoo.addons.base.models.ir_ui_view import View
+from odoo.addons.base.models.ir_ui_view import NameManager, View
 
 _logger = logging.getLogger(__name__)
 
@@ -15,6 +15,21 @@ def _check_xml(self):
     """Mute warnings about views which are common during migration"""
     with mute_logger("odoo.addons.base.models.ir_ui_view"):
         return View._check_xml._original_method(self)
+
+
+def _check(self, view):
+    """Because we captured the exception in _raise_view_error and archived that view,
+    so info is None, but it is called to info.get('select') in NameManager.check,
+    which will raise an exception AttributeError,
+    so we need to override to not raise an exception
+    """
+    try:
+        return NameManager.check._original_method(self, view)
+    except AttributeError as e:
+        if e.args[0] == "'NoneType' object has no attribute 'get'":
+            pass
+        else:
+            raise
 
 
 def _raise_view_error(
