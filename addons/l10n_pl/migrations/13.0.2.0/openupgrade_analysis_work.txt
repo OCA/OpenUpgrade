@@ -1,0 +1,148 @@
+---Models in module 'l10n_pl'---
+---Fields in module 'l10n_pl'---
+---XML records in module 'l10n_pl'---
+DEL account.account.tag: l10n_pl.tag_pl_01 (noupdate)
+DEL account.account.tag: l10n_pl.tag_pl_02 (noupdate)
+DEL account.account.tag: l10n_pl.tag_pl_03 (noupdate)
+DEL account.account.tag: l10n_pl.tag_pl_04 (noupdate)
+DEL account.account.tag: l10n_pl.tag_pl_05 (noupdate)
+DEL account.account.tag: l10n_pl.tag_pl_06 (noupdate)
+DEL account.account.tag: l10n_pl.tag_pl_07 (noupdate)
+DEL account.account.tag: l10n_pl.tag_pl_08 (noupdate)
+DEL account.account.tag: l10n_pl.tag_pl_09 (noupdate)
+DEL account.account.tag: l10n_pl.tag_pl_10 (noupdate)
+DEL account.account.tag: l10n_pl.tag_pl_11 (noupdate)
+DEL account.account.tag: l10n_pl.tag_pl_12 (noupdate)
+DEL account.account.tag: l10n_pl.tag_pl_13 (noupdate)
+DEL account.account.tag: l10n_pl.tag_pl_14 (noupdate)
+DEL account.account.tag: l10n_pl.tag_pl_15 (noupdate)
+DEL account.account.tag: l10n_pl.tag_pl_16 (noupdate)
+DEL account.account.tag: l10n_pl.tag_pl_17 (noupdate)
+DEL account.account.tag: l10n_pl.tag_pl_18 (noupdate)
+DEL account.account.tag: l10n_pl.tag_pl_19 (noupdate)
+DEL account.account.tag: l10n_pl.tag_pl_20 (noupdate)
+DEL account.account.tag: l10n_pl.tag_pl_21 (noupdate)
+DEL account.account.tag: l10n_pl.tag_pl_22 (noupdate)
+DEL account.account.tag: l10n_pl.tag_pl_23 (noupdate)
+DEL account.account.tag: l10n_pl.tag_pl_24 (noupdate)
+DEL account.account.tag: l10n_pl.tag_pl_25 (noupdate)
+DEL account.account.tag: l10n_pl.tag_pl_26 (noupdate)
+DEL account.account.tag: l10n_pl.tag_pl_27 (noupdate)
+DEL account.account.tag: l10n_pl.tag_pl_28 (noupdate)
+DEL account.account.tag: l10n_pl.tag_pl_29 (noupdate)
+DEL account.account.tag: l10n_pl.tag_pl_30 (noupdate)
+DEL account.account.tag: l10n_pl.tag_pl_31 (noupdate)
+DEL account.account.tag: l10n_pl.tag_pl_32 (noupdate)
+DEL account.account.tag: l10n_pl.tag_pl_33 (noupdate)
+DEL account.account.tag: l10n_pl.tag_pl_34 (noupdate)
+DEL account.account.tag: l10n_pl.tag_pl_35 (noupdate)
+DEL account.account.tag: l10n_pl.tag_pl_36 (noupdate)
+DEL account.account.tag: l10n_pl.tag_pl_37 (noupdate)
+DEL account.account.tag: l10n_pl.tag_pl_38 (noupdate)
+DEL account.account.tag: l10n_pl.tag_pl_39 (noupdate)
+DEL account.account.tag: l10n_pl.tag_pl_40 (noupdate)
+DEL account.account.tag: l10n_pl.tag_pl_41 (noupdate)
+DEL account.account.tag: l10n_pl.tag_pl_42 (noupdate)
+DEL account.account.tag: l10n_pl.tag_pl_43 (noupdate)
+DEL account.account.tag: l10n_pl.tag_pl_44 (noupdate)
+DEL account.account.tag: l10n_pl.tag_pl_45 (noupdate)
+DEL account.account.tag: l10n_pl.tag_pl_46 (noupdate)
+DEL account.account.tag: l10n_pl.tag_pl_47 (noupdate)
+DEL account.account.tag: l10n_pl.tag_pl_48 (noupdate)
+DEL account.account.tag: l10n_pl.tag_pl_49 (noupdate)
+DEL account.account.tag: l10n_pl.tag_pl_50 (noupdate)
+# DONE: pre-migration: noupdate off
+
+NEW account.account.template: l10n_pl.chart20000100
+# NOTHING TO DO: new record
+
+DEL account.account.type: l10n_pl.account_type_nonbalance (noupdate)
+DEL account.account.type: l10n_pl.account_type_tax (noupdate)
+# DONE: pre-migration: noupdate off and remove relations to account.account
+
+account.chart.template: l10n_pl.pl_chart_template (noupdate switched)
+# DONE: pre-migration: noupdate off
+
+NEW account.fiscal.position.template: l10n_pl.fiscal_position_template_4 (noupdate)
+NEW account.tax.report.line: l10n_pl.account_tax_report_line_art_28b
+NEW account.tax.report.line: l10n_pl.account_tax_report_line_art_33a
+NEW account.tax.report.line: l10n_pl.account_tax_report_line_do_US
+NEW account.tax.report.line: l10n_pl.account_tax_report_line_do_przeniesienia
+NEW account.tax.report.line: l10n_pl.account_tax_report_line_do_zwrotu_180_dni
+NEW account.tax.report.line: l10n_pl.account_tax_report_line_do_zwrotu_25_dni
+NEW account.tax.report.line: l10n_pl.account_tax_report_line_do_zwrotu_60_dni
+NEW account.tax.report.line: l10n_pl.account_tax_report_line_dostawa_towarow
+NEW account.tax.report.line: l10n_pl.account_tax_report_line_eksport_towarow
+NEW account.tax.report.line: l10n_pl.account_tax_report_line_import_uslug
+NEW account.tax.report.line: l10n_pl.account_tax_report_line_kasy_rejestrujace
+NEW account.tax.report.line: l10n_pl.account_tax_report_line_kraj_22_lub_23
+NEW account.tax.report.line: l10n_pl.account_tax_report_line_kraj_3_lub_5
+NEW account.tax.report.line: l10n_pl.account_tax_report_line_kraj_7_lub_8
+NEW account.tax.report.line: l10n_pl.account_tax_report_line_kraj_zwolnione
+NEW account.tax.report.line: l10n_pl.account_tax_report_line_nabycie_towarow
+NEW account.tax.report.line: l10n_pl.account_tax_report_line_nad_naleznym
+NEW account.tax.report.line: l10n_pl.account_tax_report_line_pl_03_01_01_04_02
+NEW account.tax.report.line: l10n_pl.account_tax_report_line_podatek_art_14_5
+NEW account.tax.report.line: l10n_pl.account_tax_report_line_podatek_art_28b
+NEW account.tax.report.line: l10n_pl.account_tax_report_line_podatek_art_33a
+NEW account.tax.report.line: l10n_pl.account_tax_report_line_podatek_deklaracji
+NEW account.tax.report.line: l10n_pl.account_tax_report_line_podatek_do_zwrotu
+NEW account.tax.report.line: l10n_pl.account_tax_report_line_podatek_import_uslug
+NEW account.tax.report.line: l10n_pl.account_tax_report_line_podatek_kraj_22_lub_23
+NEW account.tax.report.line: l10n_pl.account_tax_report_line_podatek_kraj_3_lub_5
+NEW account.tax.report.line: l10n_pl.account_tax_report_line_podatek_kraj_7_lub_8
+NEW account.tax.report.line: l10n_pl.account_tax_report_line_podatek_nabycie_towarow
+NEW account.tax.report.line: l10n_pl.account_tax_report_line_podatek_okresie
+NEW account.tax.report.line: l10n_pl.account_tax_report_line_podatek_podatnik_nabywca
+NEW account.tax.report.line: l10n_pl.account_tax_report_line_podatek_pozostalych_nabyc
+NEW account.tax.report.line: l10n_pl.account_tax_report_line_podatek_razem_c
+NEW account.tax.report.line: l10n_pl.account_tax_report_line_podatek_razem_d
+NEW account.tax.report.line: l10n_pl.account_tax_report_line_podatek_s_trwale
+NEW account.tax.report.line: l10n_pl.account_tax_report_line_podatek_s_trwalych
+NEW account.tax.report.line: l10n_pl.account_tax_report_line_podatek_transp_termin
+NEW account.tax.report.line: l10n_pl.account_tax_report_line_podatek_uslug_pozostalych
+NEW account.tax.report.line: l10n_pl.account_tax_report_line_podatnik_nabywca
+NEW account.tax.report.line: l10n_pl.account_tax_report_line_poza_kraj
+NEW account.tax.report.line: l10n_pl.account_tax_report_line_razem_c
+NEW account.tax.report.line: l10n_pl.account_tax_report_line_razem_d
+NEW account.tax.report.line: l10n_pl.account_tax_report_line_towary_art_129
+NEW account.tax.report.line: l10n_pl.account_tax_report_line_uslug_pozostalych
+NEW account.tax.report.line: l10n_pl.account_tax_report_line_uslug_s_trwale
+NEW account.tax.report.line: l10n_pl.account_tax_report_line_uslugi_art_100_1_4
+NEW account.tax.report.line: l10n_pl.account_tax_report_line_uslugi_kraj_0
+NEW account.tax.report.line: l10n_pl.account_tax_report_line_zaniechaniem_poboru
+# NOTHING TO DO: new records
+
+DEL account.tax.template: l10n_pl.vp_leas_purchase_1
+DEL account.tax.template: l10n_pl.vp_leas_purchase_2
+DEL account.tax.template: l10n_pl.vp_leas_sale_1
+DEL account.tax.template: l10n_pl.vp_leas_sale_2
+DEL account.tax.template: l10n_pl.vz_imp_tow_podatek_nalezny
+DEL account.tax.template: l10n_pl.vz_imp_tow_podatek_naliczony
+DEL account.tax.template: l10n_pl.vz_impu_podatek_nalezny
+DEL account.tax.template: l10n_pl.vz_impu_podatek_naliczony
+DEL account.tax.template: l10n_pl.vz_nabu_2
+DEL account.tax.template: l10n_pl.vz_nabu_podatek_naliczony
+DEL account.tax.template: l10n_pl.vz_stal_podatek_nalezny
+DEL account.tax.template: l10n_pl.vz_stal_podatek_naliczony
+DEL account.tax.template: l10n_pl.vz_unia_podatek_nalezny
+DEL account.tax.template: l10n_pl.vz_unia_podatek_naliczony
+# NOTHING TO DO: noupdate=0 records
+
+DEL res.country.state: l10n_pl.CA01 (noupdate)
+DEL res.country.state: l10n_pl.CA02 (noupdate)
+DEL res.country.state: l10n_pl.CA03 (noupdate)
+DEL res.country.state: l10n_pl.CA04 (noupdate)
+DEL res.country.state: l10n_pl.CA05 (noupdate)
+DEL res.country.state: l10n_pl.CA06 (noupdate)
+DEL res.country.state: l10n_pl.CA07 (noupdate)
+DEL res.country.state: l10n_pl.CA08 (noupdate)
+DEL res.country.state: l10n_pl.CA09 (noupdate)
+DEL res.country.state: l10n_pl.CA10 (noupdate)
+DEL res.country.state: l10n_pl.CA11 (noupdate)
+DEL res.country.state: l10n_pl.CA12 (noupdate)
+DEL res.country.state: l10n_pl.CA13 (noupdate)
+DEL res.country.state: l10n_pl.CA14 (noupdate)
+DEL res.country.state: l10n_pl.CA15 (noupdate)
+DEL res.country.state: l10n_pl.CA16 (noupdate)
+# DONE: pre-migration: noupdate off
