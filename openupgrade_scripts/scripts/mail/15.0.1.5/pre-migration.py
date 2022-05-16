@@ -1,4 +1,3 @@
-
 # Copyright 2020 Odoo Community Association (OCA)
 # Copyright 2020 Opener B.V. <stefan@opener.am>
 # License AGPL-3.0 or later (https://www.gnu.org/licenses/agpl).
@@ -9,11 +8,11 @@ from openupgradelib import openupgrade
 _logger = logging.getLogger(__name__)
 
 
-@openupgrade.migrate(use_env=False)
-def migrate(cr, version):
+@openupgrade.migrate()
+def migrate(env, version):
     # Cleanup potential duplicates
     openupgrade.logged_query(
-        cr,
+        env.cr,
         """
         DELETE FROM mail_channel_partner mcp
         WHERE
