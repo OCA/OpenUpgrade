@@ -521,6 +521,20 @@ def fill_statement_lines_with_no_move(env):
             _logger.error("Failed for statement line with id %s: %s", st_line.id, e)
             raise
         deprecated_accounts.deprecated = True
+        to_write = {
+            "line_ids": [
+                (
+                    0,
+                    0,
+                    st_line._prepare_move_line_default_vals(
+                        counterpart_account_id=False
+                    )[0],
+                )
+            ]
+        }
+        st_line.move_id.with_context(skip_account_move_synchronization=True).write(
+            to_write
+        )
 
     openupgrade.logged_query(
         env.cr,
