@@ -1,0 +1,44 @@
+---Models in module 'hr_attendance'---
+new model hr.attendance.overtime
+new model hr.attendance.report [sql_view]
+---Fields in module 'hr_attendance'---
+hr_attendance / hr.attendance.overtime   / adjustment (boolean)          : NEW hasdefault
+hr_attendance / hr.attendance.overtime   / date (date)                   : NEW
+hr_attendance / hr.attendance.overtime   / duration (float)              : NEW required, req_default: function, hasdefault
+hr_attendance / hr.attendance.overtime   / duration_real (float)         : NEW hasdefault
+hr_attendance / hr.attendance.overtime   / employee_id (many2one)        : NEW relation: hr.employee, required, req_default: function, hasdefault
+hr_attendance / hr.employee              / overtime_ids (one2many)       : NEW relation: hr.attendance.overtime
+hr_attendance / res.company              / hr_attendance_overtime (boolean): NEW
+hr_attendance / res.company              / overtime_company_threshold (integer): NEW hasdefault
+hr_attendance / res.company              / overtime_employee_threshold (integer): NEW hasdefault
+hr_attendance / res.company              / overtime_start_date (date)    : NEW
+# NOTHING TO DO: new fields for new feature
+
+---XML records in module 'hr_attendance'---
+NEW ir.actions.act_window: hr_attendance.hr_attendance_action_overview
+NEW ir.actions.act_window: hr_attendance.hr_attendance_overtime_action
+NEW ir.actions.act_window: hr_attendance.hr_attendance_report_action
+NEW ir.actions.act_window: hr_attendance.hr_attendance_report_action_filtered
+DEL ir.actions.act_window: hr_attendance.hr_attendance_action_graph
+DEL ir.actions.act_window: hr_attendance.hr_attendance_action_graph_filtered
+NEW ir.model.access: hr_attendance.access_hr_attendance_overtime_system_user
+NEW ir.model.access: hr_attendance.access_hr_attendance_overtime_user
+NEW ir.model.access: hr_attendance.access_hr_attendance_report_user
+NEW ir.rule: hr_attendance.hr_attendance_overtime_rule_employee_company (noupdate)
+NEW ir.rule: hr_attendance.hr_attendance_report_rule_multi_company (noupdate)
+NEW ir.rule: hr_attendance.hr_attendance_rule_attendance_manual (noupdate)
+NEW ir.rule: hr_attendance.hr_attendance_rule_attendance_overtime_employee (noupdate)
+NEW ir.rule: hr_attendance.hr_attendance_rule_attendance_overtime_manager (noupdate)
+NEW ir.ui.menu: hr_attendance.menu_hr_attendance_attendances_overview
+DEL ir.ui.menu: hr_attendance.menu_hr_attendance_manage_attendances
+DEL ir.ui.menu: hr_attendance.menu_hr_attendance_view_employees_kanban
+NEW ir.ui.view: hr_attendance.hr_attendance_report_view_graph
+NEW ir.ui.view: hr_attendance.hr_attendance_report_view_pivot
+NEW ir.ui.view: hr_attendance.hr_attendance_report_view_search
+NEW ir.ui.view: hr_attendance.view_attendance_overtime_search
+NEW ir.ui.view: hr_attendance.view_attendance_overtime_tree
+DEL ir.ui.view: hr_attendance.assets_backend
+DEL ir.ui.view: hr_attendance.hr_attendance_view_graph
+DEL ir.ui.view: hr_attendance.hr_attendance_view_pivot
+DEL ir.ui.view: hr_attendance.qunit_suite
+# NOTHING TO DO
