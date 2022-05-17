@@ -46,6 +46,7 @@ rename_xmlids_l10n_ec = [
     ("l10n_ec.state_ec_23", "base.state_ec_23"),
     ("l10n_ec.state_ec_24", "base.state_ec_24"),
 ]
+
 rename_xmlids_mail = [
     ("mail.icp_mail_catchall_alias", "base.icp_mail_catchall_alias"),
     ("mail.icp_mail_bounce_alias", "base.icp_mail_bounce_alias"),
@@ -55,7 +56,7 @@ rename_xmlids_mail = [
 @openupgrade.migrate(use_env=False)
 def migrate(cr, version):
     """
-    Don't request an env for the base pre migration as flushing the env in
+    Don't request an env for the base pre-migration as flushing the env in
     odoo/modules/registry.py will break on the 'base' module not yet having
     been instantiated.
     """
@@ -66,11 +67,16 @@ def migrate(cr, version):
             "when migrating your database."
         )
 
-    if openupgrade.is_module_installed(cr, "l10n_ec"):
-        openupgrade.rename_xmlids(cr, rename_xmlids_l10n_ec)
-
-    if openupgrade.is_module_installed(cr, "mail"):
-        openupgrade.rename_xmlids(cr, rename_xmlids_mail)
+    openupgrade.rename_xmlids(cr, rename_xmlids_l10n_ec)
+    openupgrade.rename_xmlids(cr, rename_xmlids_mail)
 
     openupgrade.update_module_names(cr, renamed_modules.items())
     openupgrade.update_module_names(cr, merged_modules.items(), merge_modules=True)
+
+    openupgrade.convert_field_to_html(
+        cr, "res_company", "report_footer", "report_footer"
+    )
+    openupgrade.convert_field_to_html(
+        cr, "res_company", "report_header", "report_header"
+    )
+    openupgrade.convert_field_to_html(cr, "res_partner", "comment", "comment")
