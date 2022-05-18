@@ -551,6 +551,18 @@ Old value True represents “is set”, False “is not set”.</p></li>
 </dd></dl>
 
 <dl class="py function">
+<dt class="sig sig-object py" id="openupgradelib.openupgrade.merge_models">
+<span class="sig-prename descclassname"><span class="pre">openupgradelib.openupgrade.</span></span><span class="sig-name descname"><span class="pre">merge_models</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">cr</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">old_model</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">new_model</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">ref_field</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#openupgradelib.openupgrade.merge_models" title="Permalink to this definition">¶</a></dt>
+<dd><p>Update model references for models that have merged to an existing model.
+:param old_model: old model
+:param new_model: destination model
+:param ref_field: name of the field in new model that references
+the id of the old model. Usually created before calling this method.</p>
+<p>WARNING: This method doesn’t move the records from old_model to new_model
+tables. You should have to do that previously in the migration scripts.</p>
+</dd></dl>
+
+<dl class="py function">
 <dt class="sig sig-object py" id="openupgradelib.openupgrade.message">
 <span class="sig-prename descclassname"><span class="pre">openupgradelib.openupgrade.</span></span><span class="sig-name descname"><span class="pre">message</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">cr</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">module</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">table</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">column</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">message</span></span></em>, <em class="sig-param"><span class="o"><span class="pre">*</span></span><span class="n"><span class="pre">args</span></span></em>, <em class="sig-param"><span class="o"><span class="pre">**</span></span><span class="n"><span class="pre">kwargs</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#openupgradelib.openupgrade.message" title="Permalink to this definition">¶</a></dt>
 <dd><p>Log handler for non-critical notifications about the upgrade.
@@ -843,6 +855,17 @@ Odoo and OpenUpgrade natively.</p>
 </dd></dl>
 
 <dl class="py function">
+<dt class="sig sig-object py" id="openupgradelib.openupgrade.update_module_moved_models">
+<span class="sig-prename descclassname"><span class="pre">openupgradelib.openupgrade.</span></span><span class="sig-name descname"><span class="pre">update_module_moved_models</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">cr</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">model</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">old_module</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">new_module</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#openupgradelib.openupgrade.update_module_moved_models" title="Permalink to this definition">¶</a></dt>
+<dd><p>Update module for model definition in general tables that have been
+moved from one module to another.
+:param cr: Database cursor
+:param model: Model name
+:param old_module: Previous module of the models
+:param new_module: New module of the models</p>
+</dd></dl>
+
+<dl class="py function">
 <dt class="sig sig-object py" id="openupgradelib.openupgrade.update_module_names">
 <span class="sig-prename descclassname"><span class="pre">openupgradelib.openupgrade.</span></span><span class="sig-name descname"><span class="pre">update_module_names</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">cr</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">namespec</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">merge_modules</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">False</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#openupgradelib.openupgrade.update_module_names" title="Permalink to this definition">¶</a></dt>
 <dd><p>Deal with changed module names, making all the needed changes on the
@@ -1123,7 +1146,7 @@ type is allowed not to exist anymore, except when running unit tests.
       &copy;2012-2021, Odoo Community Association (OCA) / The OpenUpgrade developers.
       
       |
-      Powered by <a href="http://sphinx-doc.org/">Sphinx 4.4.0</a>
+      Powered by <a href="http://sphinx-doc.org/">Sphinx 4.5.0</a>
       &amp; <a href="https://github.com/bitprophet/alabaster">Alabaster 0.7.12</a>
       
       |
