@@ -43,15 +43,15 @@ jobs:
         run: createdb $DB
       - name: DB Restore
         run: |
-          # psql -d $DB -c "DROP SCHEMA IF EXISTS PUBLIC;"
-          wget -q -O- $DOWNLOADS/13.0.psql | pg_restore -d $DB --no-owner
-          # TODO: create test data in Odoo 13.0 which does not support yml
+          psql -d $DB -c "DROP SCHEMA IF EXISTS PUBLIC;"
+          wget -q -O- $DOWNLOADS/14.0.psql | pg_restore -d $DB --no-owner
+          # TODO: create test data in Odoo 14.0 which does not support yml
           # anymore
           # Roundtrip to previous release to update the test database with
           # additional test data
-          # - git fetch --depth 2 origin 13.0
+          # - git fetch --depth 2 origin 14.0
           # - git reset --hard `git ls-remote \
-          #       | grep refs/heads/13.0 \
+          #       | grep refs/heads/14.0 \
           #       | awk '{print $1}'`
           # - pip install -q -r requirements.txt
           # Line below may fail quite often due to Travis bug:

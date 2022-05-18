@@ -499,6 +499,9 @@
   <record id="ZWL" model="res.currency">
     <field name="full_name">Zimbabwean dollar</field>
   </record>
+
+
+<!--
   <record id="api_key_admin" model="ir.rule">
     <field name="groups" eval="[Command.link(ref('base.group_system'))]"/>
   </record>
@@ -586,4 +589,5 @@
   <record id="user_root" model="res.users">
     <field name="company_ids" eval="[Command.link(ref('main_company'))]"/>
   </record>
+-->
 </odoo>

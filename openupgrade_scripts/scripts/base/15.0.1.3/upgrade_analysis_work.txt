@@ -1,0 +1,148 @@
+---Models in module 'base'---
+new model avatar.mixin [abstract]
+new model base.enable.profiling.wizard [transient]
+new model ir.asset
+new model ir.cron.trigger
+new model ir.profile
+---Fields in module 'base'---
+base         / ir.asset                 / active (boolean)              : NEW hasdefault
+base         / ir.asset                 / bundle (char)                 : NEW required
+base         / ir.asset                 / directive (selection)         : NEW selection_keys: ['after', 'append', 'before', 'include', 'prepend', 'remove', 'replace'], hasdefault
+base         / ir.asset                 / name (char)                   : NEW required
+base         / ir.asset                 / path (char)                   : NEW required
+base         / ir.asset                 / sequence (integer)            : NEW required, req_default: function, hasdefault
+base         / ir.asset                 / target (char)                 : NEW
+# NOTHING TO DO: new model
+
+base         / ir.cron.trigger          / call_at (datetime)            : NEW
+base         / ir.cron.trigger          / cron_id (many2one)            : NEW relation: ir.cron
+# NOTHING TO DO: new model
+
+base         / ir.mail_server           / from_filter (char)            : NEW
+base         / ir.mail_server           / smtp_authentication (selection): NEW required, selection_keys: ['certificate', 'login'], req_default: function, hasdefault
+base         / ir.mail_server           / smtp_ssl_certificate (binary) : NEW attachment: False
+base         / ir.mail_server           / smtp_ssl_private_key (binary) : NEW attachment: False
+# NOTHING TO DO: new features
+
+base         / ir.profile               / duration (float)              : NEW
+base         / ir.profile               / entry_count (integer)         : NEW
+base         / ir.profile               / init_stack_trace (text)       : NEW
+base         / ir.profile               / name (char)                   : NEW
+base         / ir.profile               / qweb (text)                   : NEW
+base         / ir.profile               / session (char)                : NEW
+base         / ir.profile               / sql (text)                    : NEW
+base         / ir.profile               / traces_async (text)           : NEW
+base         / ir.profile               / traces_sync (text)            : NEW
+# NOTHING TO DO: new model used for profiling
+
+base         / report.paperformat       / disable_shrinking (boolean)   : NEW
+# NOTHING TO DO: new feature
+
+base         / res.company              / bank_ids (one2many)           : not stored anymore
+base         / res.company              / bank_ids (one2many)           : now related
+base         / res.company              / company_details (html)        : NEW
+base         / res.company              / company_registry (char)       : now a function
+base         / res.company              / layout_background (selection) : NEW required, selection_keys: ['Blank', 'Custom', 'Geometric'], req_default: function, hasdefault
+base         / res.company              / layout_background_image (binary): NEW attachment: True
+base         / res.company              / mobile (char)                 : NEW isrelated: related, stored
+# NOTHING TO DO: new features
+
+base         / res.company              / report_footer (text)          : type is now 'html' ('text')
+base         / res.company              / report_header (text)          : type is now 'html' ('text')
+# DONE: pre-migration: fields converted to html
+
+base         / res.currency             / full_name (char)              : NEW
+# NOTHING TO DO: New optional fields. Those related to xml ids will be populated by loading noupdate_changes.xml
+
+base         / res.partner              / comment (text)                : type is now 'html' ('text')
+# DONE: pre-migration: fields converted to html
+
+base         / res.partner              / country_code (char)           : previously in module l10n_id_efaktur
+# NOTHING TO DO
+
+base         / res.users                / comment (text)                : type is now 'html' ('text')
+base         / res.users                / country_code (char)           : previously in module l10n_id_efaktur
+# NOTHING TO DO: inherited from res.partner
+
+---XML records in module 'base'---
+NEW ir.actions.act_window: base.action_asset
+NEW ir.actions.act_window: base.action_menu_ir_profile
+NEW ir.actions.act_window: base.ir_cron_trigger_action
+DEL ir.actions.act_window: base.action_currency_all_form
+# NOTHING TO DO
+
+NEW ir.config_parameter: base.icp_mail_bounce_alias [renamed from mail module] (noupdate)
+NEW ir.config_parameter: base.icp_mail_catchall_alias [renamed from mail module] (noupdate)
+# DONE: pre-migration: renamed xmlids
+
+NEW ir.config_parameter: base.icp_mail_default_from (noupdate)
+NEW ir.model.access: base.access_base_enable_profiling_wizard
+NEW ir.model.access: base.access_ir_asset_group_system
+NEW ir.model.access: base.access_ir_cron_trigger_group_cron
+NEW ir.model.access: base.access_ir_profile
+NEW ir.module.category: base.module_category_services_field_service
+NEW ir.module.module: base.module_appointment (noupdate)
+NEW ir.module.module: base.module_industry_fsm (noupdate)
+DEL ir.module.module: base.module_website_calendar (noupdate)
+NEW ir.ui.menu: base.ir_cron_trigger_menu
+NEW ir.ui.menu: base.menu_action_asset
+NEW ir.ui.menu: base.menu_ir_profile
+NEW ir.ui.view: base.asset_view_form
+NEW ir.ui.view: base.asset_view_search
+NEW ir.ui.view: base.asset_view_tree
+NEW ir.ui.view: base.enable_profiling_wizard
+NEW ir.ui.view: base.ir_cron_trigger_view_form
+NEW ir.ui.view: base.ir_cron_trigger_view_search
+NEW ir.ui.view: base.ir_cron_trigger_view_tree
+NEW ir.ui.view: base.ir_profile_view_form
+NEW ir.ui.view: base.ir_profile_view_list
+NEW ir.ui.view: base.ir_profile_view_search
+NEW res.country.group: base.gulf_cooperation_council (noupdate)
+ # NOTHING TO DO
+
+NEW res.country.state: base.state_ec_01 [renamed from l10n_ec module.state_ec_1]
+NEW res.country.state: base.state_ec_02 [renamed from l10n_ec module.state_ec_2]
+NEW res.country.state: base.state_ec_03 ...
+NEW res.country.state: base.state_ec_04
+NEW res.country.state: base.state_ec_05
+NEW res.country.state: base.state_ec_06
+NEW res.country.state: base.state_ec_07
+NEW res.country.state: base.state_ec_08
+NEW res.country.state: base.state_ec_09
+NEW res.country.state: base.state_ec_10 [renamed from l10n_ec module]
+NEW res.country.state: base.state_ec_11 [renamed from l10n_ec module]
+NEW res.country.state: base.state_ec_12 [renamed from l10n_ec module]
+NEW res.country.state: base.state_ec_13 [renamed from l10n_ec module]
+NEW res.country.state: base.state_ec_14 [renamed from l10n_ec module]
+NEW res.country.state: base.state_ec_15 [renamed from l10n_ec module]
+NEW res.country.state: base.state_ec_16 [renamed from l10n_ec module]
+NEW res.country.state: base.state_ec_17 [renamed from l10n_ec module]
+NEW res.country.state: base.state_ec_18 [renamed from l10n_ec module]
+NEW res.country.state: base.state_ec_19 [renamed from l10n_ec module]
+NEW res.country.state: base.state_ec_20 [renamed from l10n_ec module]
+NEW res.country.state: base.state_ec_21 [renamed from l10n_ec module]
+NEW res.country.state: base.state_ec_22 [renamed from l10n_ec module]
+NEW res.country.state: base.state_ec_23 [renamed from l10n_ec module]
+NEW res.country.state: base.state_ec_24 [renamed from l10n_ec module]
+# Done: pre-migration: rename_xmlids
+
+NEW res.currency: base.CLF (noupdate)
+NEW res.currency: base.COU (noupdate)
+NEW res.currency: base.CUC (noupdate)
+NEW res.currency: base.SOS (noupdate)
+NEW res.currency: base.STN (noupdate)
+NEW res.currency: base.UYI (noupdate)
+NEW res.currency: base.UYW (noupdate)
+NEW res.currency: base.VES (noupdate)
+DEL res.currency: base.CYP (noupdate)
+DEL res.currency: base.ECS (noupdate)
+DEL res.currency: base.ITL (noupdate)
+DEL res.currency: base.PLZ (noupdate)
+DEL res.currency: base.QTQ (noupdate)
+DEL res.currency: base.RUR (noupdate)
+DEL res.currency: base.SKK (noupdate)
+DEL res.currency: base.SOD (noupdate)
+DEL res.currency: base.UAG (noupdate)
+DEL res.currency: base.YUM (noupdate)
+DEL res.currency: base.ZRZ (noupdate)
+# NOTHING TO DO
