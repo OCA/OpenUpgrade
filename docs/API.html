@@ -855,6 +855,17 @@ Odoo and OpenUpgrade natively.</p>
 </dd></dl>
 
 <dl class="py function">
+<dt class="sig sig-object py" id="openupgradelib.openupgrade.update_module_moved_models">
+<span class="sig-prename descclassname"><span class="pre">openupgradelib.openupgrade.</span></span><span class="sig-name descname"><span class="pre">update_module_moved_models</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">cr</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">model</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">old_module</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">new_module</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#openupgradelib.openupgrade.update_module_moved_models" title="Permalink to this definition">¶</a></dt>
+<dd><p>Update module for model definition in general tables that have been
+moved from one module to another.
+:param cr: Database cursor
+:param model: Model name
+:param old_module: Previous module of the models
+:param new_module: New module of the models</p>
+</dd></dl>
+
+<dl class="py function">
 <dt class="sig sig-object py" id="openupgradelib.openupgrade.update_module_names">
 <span class="sig-prename descclassname"><span class="pre">openupgradelib.openupgrade.</span></span><span class="sig-name descname"><span class="pre">update_module_names</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">cr</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">namespec</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">merge_modules</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">False</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#openupgradelib.openupgrade.update_module_names" title="Permalink to this definition">¶</a></dt>
 <dd><p>Deal with changed module names, making all the needed changes on the
