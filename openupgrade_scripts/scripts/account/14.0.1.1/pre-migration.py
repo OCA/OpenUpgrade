@@ -429,6 +429,20 @@ def fill_account_payment_partner_id(env):
     )
 
 
+def delete_xmlid_existing_groups(env):
+    env.cr.execute(
+        """DELETE FROM ir_model_data imd
+        USING account_group ag
+        WHERE ag.id = imd.res_id AND imd.model = 'account.group'
+            AND imd.module != '__export__'
+        RETURNING imd.res_id"""
+    )
+    # end-migration script will:
+    # - populate account groups from the templates
+    # - unfold manual groups per company + proper company assignation
+    # - merge repeated groups
+
+
 @openupgrade.migrate()
 def migrate(env, version):
     openupgrade.set_xml_ids_noupdate_value(
@@ -444,6 +458,7 @@ def migrate(env, version):
     fill_empty_partner_type_account_payment(env)
     fill_account_move_line_currency_id(env)
     fill_account_payment_partner_id(env)
+    delete_xmlid_existing_groups(env)
     openupgrade.remove_tables_fks(
         env.cr, ["account_bank_statement_import_ir_attachment_rel"]
     )

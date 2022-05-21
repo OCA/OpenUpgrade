@@ -377,80 +377,6 @@ def fill_company_account_cash_basis_base_account_id(env):
     )
 
 
-def populate_account_groups(env):
-    """Generate the generic account groups for each company. Later code will
-    do it for manually created groups.
-    """
-    companies = env["res.company"].with_context(active_test=False).search([])
-    for company in companies.filtered("chart_template_id"):
-        company.chart_template_id.generate_account_groups(company)
-
-
-def unfold_manual_account_groups(env):
-    """For manually created groups, we check if such group is used in more than
-    one company. If so, we unfold it. We also assure proper company for existing one.
-    """
-
-    def _get_all_children(groups):
-        children = env["account.group"].search([("parent_id", "in", groups.ids)])
-        if children:
-            children |= _get_all_children(children)
-        return children
-
-    def _get_all_parents(groups):
-        parents = groups.mapped("parent_id")
-        if parents:
-            parents |= _get_all_parents(parents)
-        return parents
-
-    AccountGroup = env["account.group"]
-    AccountGroup._parent_store_compute()
-    env.cr.execute(
-        """SELECT ag.id FROM account_group ag
-        LEFT JOIN ir_model_data imd
-            ON ag.id = imd.res_id AND imd.model = 'account.group'
-                AND imd.module != '__export__'
-        WHERE imd.id IS NULL"""
-    )
-    all_groups = AccountGroup.browse([x[0] for x in env.cr.fetchall()])
-    all_groups = all_groups | _get_all_parents(all_groups)
-    relation_dict = {}
-    for group in all_groups.sorted(key="parent_path"):
-        subgroups = group | _get_all_children(group)
-        accounts = env["account.account"].search([("group_id", "in", subgroups.ids)])
-        companies = accounts.mapped("company_id").sorted()
-        for i, company in enumerate(companies):
-            if company not in relation_dict:
-                relation_dict[company] = {}
-            if i == 0:
-                if group.company_id != company:
-                    group.company_id = company.id
-                relation_dict[company][group] = group
-                continue
-            # Done by SQL for avoiding ORM derived problems
-            env.cr.execute(
-                """INSERT INTO account_group (parent_id, parent_path, name,
-                code_prefix_start, code_prefix_end, company_id,
-                create_uid, write_uid, create_date, write_date)
-            SELECT {parent_id}, parent_path, name, code_prefix_start,
-                code_prefix_end, {company_id}, create_uid,
-                write_uid, create_date, write_date
-            FROM account_group
-            WHERE id = {id}
-            RETURNING id
-            """.format(
-                    id=group.id,
-                    company_id=company.id,
-                    parent_id=group.parent_id
-                    and relation_dict[company][group.parent_id].id
-                    or "NULL",
-                )
-            )
-            new_group = AccountGroup.browse(env.cr.fetchone())
-            relation_dict[company][group] = new_group
-    AccountGroup._parent_store_compute()
-
-
 def fill_company_account_journal_suspense_account_id(env):
     companies = env["res.company"].search([("chart_template_id", "!=", False)])
     for company in companies:
@@ -777,10 +703,6 @@ def migrate(env, version):
     openupgrade.load_data(env.cr, "account", "14.0.1.1/noupdate_changes.xml")
     try_delete_noupdate_records(env)
     _create_hooks(env)
-    populate_account_groups(env)
-    unfold_manual_account_groups(env)
-    # Launch a recomputation of the account groups after previous changes
-    env["account.account"].search([])._compute_account_group()
     fill_company_account_journal_suspense_account_id(env)
     fill_statement_lines_with_no_move(env)
     fill_account_journal_payment_credit_debit_account_id(env)
