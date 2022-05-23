@@ -31,7 +31,11 @@ new model mailing.mailing.schedule.date [transient]
 ---Fields in module 'mass_mailing'---
 mass_mailing / link.tracker             / mass_mailing_campaign_id (many2one): DEL relation: mail.mass_mailing.campaign
 mass_mailing / link.tracker.click       / mass_mailing_campaign_id (many2one): DEL relation: mail.mass_mailing.campaign
-# NOTHING TO DO: As the link is linked to a mailing, and this mailing has a campaign, there's no loss of data
+mass_mailing / mail.mass_mailing        / mass_mailing_campaign_id (many2one): DEL relation: mail.mass_mailing.campaign
+mass_mailing / mail.mail.statistics     / mass_mailing_campaign_id (many2one): DEL relation: mail.mass_mailing.campaign
+mass_mailing / mailing.trace            / campaign_id (many2one)        : NEW relation: utm.campaign, isrelated: related, stored
+mass_mailing / mail.mass_mailing.campaign / campaign_id (many2one)        : DEL relation: utm.campaign, required
+# DONE: post-migration: filled campaign_id fields when empty
 
 mass_mailing / link.tracker             / mass_mailing_id (many2one)    : relation is now 'mailing.mailing' ('mail.mass_mailing') [nothing to do]
 mass_mailing / link.tracker.click       / mass_mailing_id (many2one)    : relation is now 'mailing.mailing' ('mail.mass_mailing') [nothing to do]
@@ -55,8 +59,6 @@ mass_mailing / mail.mail                / mailing_trace_ids (one2many)  : NEW re
 mass_mailing / mail.mail                / statistics_ids (one2many)     : DEL relation: mail.mail.statistics
 mass_mailing / mail.mass_mailing        / statistics_ids (one2many)     : DEL relation: mail.mail.statistics
 mass_mailing / mailing.mailing          / mailing_trace_ids (one2many)  : NEW relation: mailing.trace
-mass_mailing / mail.mail.statistics     / mass_mailing_campaign_id (many2one): DEL relation: mail.mass_mailing.campaign
-mass_mailing / mailing.trace            / campaign_id (many2one)        : NEW relation: utm.campaign, isrelated: related, stored
 mass_mailing / mail.mass_mailing.campaign / mass_mailing_ids (one2many)   : DEL relation: mail.mass_mailing
 mass_mailing / utm.campaign             / mailing_mail_ids (one2many)   : NEW relation: mailing.mailing
 # DONE: pre-migration: renamed fields
@@ -95,7 +97,6 @@ mass_mailing / mailing.mailing          / body_arch (html)              : NEW
 # NOTHING TO DO: Content is filled from body_html when editing via UI, and it's only a "transient" field.
 
 mass_mailing / mailing.list             / subscription_ids (one2many)   : NEW relation: mailing.contact.subscription
-mass_mailing / mail.mass_mailing        / mass_mailing_campaign_id (many2one): DEL relation: mail.mass_mailing.campaign
 mass_mailing / mailing.mailing          / activity_ids (one2many)       : NEW relation: mail.activity
 mass_mailing / mailing.mailing          / mailing_type (selection)      : NEW required, selection_keys: ['mail'], req_default: function, hasdefault
 mass_mailing / mailing.mailing          / message_follower_ids (one2many): NEW relation: mail.followers
@@ -110,7 +111,6 @@ mass_mailing / mailing.mailing          / subject (char)                : NEW re
 # DONE: pre-migration: Put utm.source.name content and copy translations
 
 mass_mailing / mail.mass_mailing.campaign / _inherits (False)             : DEL
-mass_mailing / mail.mass_mailing.campaign / campaign_id (many2one)        : DEL relation: utm.campaign, required
 mass_mailing / mail.mass_mailing.campaign / color (integer)               : module is now 'utm' ('mass_mailing')
 mass_mailing / mail.mass_mailing.campaign / medium_id (many2one)          : DEL relation: utm.medium
 mass_mailing / mail.mass_mailing.campaign / source_id (many2one)          : DEL relation: utm.source
