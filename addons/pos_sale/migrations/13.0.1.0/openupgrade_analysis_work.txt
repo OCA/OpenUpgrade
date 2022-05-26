@@ -7,7 +7,7 @@ pos_sale     / crm.team                 / team_type (False)             : DEL se
 # NOTHING TO DO: removed field, every team should be able to handle a POS or a website for example
 
 pos_sale     / pos.order                / crm_team_id (many2one)        : NEW relation: crm.team
-# NOTHING TO DO: new feature
+# DONE: post-migration: Map to config team relation. Before that relation was the one used to group in the sales report.
 
 pos_sale     / pos.order                / currency_rate (float)         : module is now 'point_of_sale' ('pos_sale')
 # NOTHING TO DO: Will be handled by ORM on module update
