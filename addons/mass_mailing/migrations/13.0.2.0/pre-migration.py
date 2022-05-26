@@ -110,3 +110,8 @@ def migrate(env, version):
         True,
     )
     fill_mailing_subject(env)
+    # This xml_id dissapears. Prevent deleting the linked mailing list
+    env["ir.model.data"].search([
+        ("module", "=", "mass_mailing"),
+        ("name", "=", "mass_mail_list_1"),
+    ]).unlink()
