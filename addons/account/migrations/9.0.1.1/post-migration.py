@@ -477,15 +477,17 @@ def migrate_account_sequence_fiscalyear(env):
                     "CREATE SEQUENCE %s INCREMENT BY %%s START WITH %%s" % new_seq_name,
                     (sequence.number_increment, old_sequence.number_next or 1))
         elif old_sequence.implementation == 'standard':
+            cr.execute("SELECT last_value FROM %s" % old_seq_name)
+            next = cr.fetchone()[0]
             if sequence.implementation == 'no_gap':
                 # Adjust number next according PG sequence next value
-                cr.execute("SELECT last_value FROM %s" % old_seq_name)
-                seq_range.number_next = (
-                    cr.fetchone()[0] + sequence.number_increment)
+                seq_range.number_next = next + sequence.number_increment
             elif sequence.implementation == 'standard':
-                # Rename existing sequence to new sequence name
+                # Create sequence instead of renaming the existing one, as the old
+                # sequence may be used in several fiscal year elements
                 cr.execute(
-                    "ALTER SEQUENCE %s RENAME TO %s" % (old_seq_name, new_seq_name)
+                    "CREATE SEQUENCE %s INCREMENT BY %%s START WITH %%s" % new_seq_name,
+                    (sequence.number_increment, next + sequence.number_increment),
                 )
     # Rename prefixes
     openupgrade.logged_query(
