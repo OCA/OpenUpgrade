@@ -242,7 +242,7 @@ ir.ui.view: mass_mailing.mass_mailing_mail_layout (noupdate) (noupdate switched)
 # DONE: pre-migration noupdate enabled
 
 DEL mail.mass_mailing.list: mass_mailing.mass_mail_list_1 (noupdate)
-# DONE: post-migration
+# DONE: pre-migration delete ir.model.data to avoid deleting the actual mailing list record
 
 DEL mail.mass_mailing.stage: mass_mailing.campaign_stage_1 [renamed to utm module] (noupdate)
 DEL mail.mass_mailing.stage: mass_mailing.campaign_stage_2 [renamed to utm module] (noupdate)
