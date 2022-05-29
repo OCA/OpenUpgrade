@@ -37,14 +37,6 @@ def use_new_taxes_and_repartition_lines_on_move_lines(env):
     companies_ids = [x[0] for x in env.cr.fetchall()]
     if not companies_ids:
         return
-    # assure update amount_type for cases where 'group' -> something else
-    for company_id in companies_ids:
-        for tax_xmlid in xmlid_names:
-            tax = env.ref('l10n_es.' + str(company_id) + '_' + tax_xmlid, raise_if_not_found=False)
-            tax_template = env.ref('l10n_es.' + tax_xmlid, raise_if_not_found=False)
-            if tax and tax_template:
-                tax.amount = tax_template.amount
-                tax.amount_type = tax_template.amount_type
     # select taxes with children that don't have repartition lines
     taxes_with_children = env['account.tax'].with_context(
         active_test=False).search(
@@ -81,8 +73,7 @@ def use_new_taxes_and_repartition_lines_on_move_lines(env):
                 WHERE id IN %%s""" % column, (tuple(tax_ids), ),
             )
     domain = [('model', '=', 'account.tax'), ('res_id', 'in', taxes_with_children.ids), ('module', '!=', '__export__')]
-    parent_taxes = env['account.tax'].browse(env['ir.model.data'].search(domain).mapped('res_id')).filtered(
-        lambda t: t.amount_type != 'group')
+    taxes_with_children = env['account.tax'].browse(env['ir.model.data'].search(domain).mapped('res_id'))
     children_tax_ids = taxes_with_children.mapped('children_tax_ids').ids
     if children_tax_ids:
         # assure children taxes are not parent taxes
@@ -116,11 +107,10 @@ def use_new_taxes_and_repartition_lines_on_move_lines(env):
             JOIN account_tax_filiation_rel fil ON fil.child_tax = at.id
             JOIN account_tax at2 ON fil.parent_tax = at2.id
             WHERE at.id IN %s AND at2.id IN %s
-            ON CONFLICT DO NOTHING""", (tuple(children_tax_ids), tuple(parent_taxes.ids)),
+            ON CONFLICT DO NOTHING""", (tuple(children_tax_ids), tuple(taxes_with_children.ids)),
         )
         other_parents = env["account.tax"].with_context(active_test=False).search(
-            [("children_tax_ids", "in", children_tax_ids)]).filtered(
-            lambda t: t in taxes_with_children and t not in parent_taxes)
+            [("children_tax_ids", "in", children_tax_ids)]).filtered(lambda t: t not in taxes_with_children)
         obsolete_children = [x for x in children_tax_ids if x not in other_parents.mapped(
             'children_tax_ids').filtered(lambda t: t.id in children_tax_ids).ids]
         if obsolete_children:
@@ -147,8 +137,16 @@ def use_new_taxes_and_repartition_lines_on_move_lines(env):
                     AND SIGN(at.amount) = SIGN(atrl2.factor_percent))
                 WHERE aml.tax_repartition_line_id = atrl.id AND at.id IN %s AND at2.id IN %s
                 """).format(column=sql.Identifier(tax_column)),
-                (tuple(children_tax_ids), tuple(parent_taxes.ids)),
+                (tuple(children_tax_ids), tuple(taxes_with_children.ids)),
             )
+        # update amount of parent taxes:
+        for company_id in companies_ids:
+            for tax_xmlid in xmlid_names:
+                tax = env.ref('l10n_es.' + str(company_id) + '_' + tax_xmlid, raise_if_not_found=False)
+                tax_template = env.ref('l10n_es.' + tax_xmlid, raise_if_not_found=False)
+                if tax and tax_template:
+                    tax.amount = tax_template.amount
+                    tax.amount_type = tax_template.amount_type
 
 
 def update_account_tags(env):
