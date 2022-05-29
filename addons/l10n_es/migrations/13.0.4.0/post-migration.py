@@ -51,8 +51,7 @@ def use_new_taxes_and_repartition_lines_on_move_lines(env):
         [('children_tax_ids', '!=', False), ('company_id', 'in', companies_ids)]
     ).filtered(lambda t: not t.invoice_repartition_line_ids
                and not t.refund_repartition_line_ids)
-    domain = [('model', '=', 'account.tax'), ('res_id', 'in', taxes_with_children.ids), ('module', '=', 'l10n_es')]
-    tax_ids = env['account.tax'].browse(env['ir.model.data'].search(domain).mapped('res_id')).ids
+    tax_ids = taxes_with_children.ids
     # create tax repartition lines
     if tax_ids:
         refund_account_query = (
