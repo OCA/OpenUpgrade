@@ -82,6 +82,14 @@ def type_change_account_fiscal_position_zips(env):
             })
 
 
+def drop_obsolete_transient_table_payment_register(env):
+    """M2M field was moved to another transient model"""
+    openupgrade.logged_query(
+        env.cr, """
+        DROP TABLE account_invoice_account_register_payments_rel"""
+    )
+
+
 def create_account_invoice_amount_tax_company_signed(env):
     if not openupgrade.column_exists(
             env.cr, "account_invoice", "amount_tax_company_signed"):
@@ -330,6 +338,7 @@ def migrate(env, version):
     openupgrade.rename_tables(cr, _table_renames)
     openupgrade.add_fields(env, _field_adds)
     type_change_account_fiscal_position_zips(env)
+    drop_obsolete_transient_table_payment_register(env)
     create_account_invoice_amount_tax_company_signed(env)
     create_account_move_new_columns(env)
     fill_account_move_line(env)
