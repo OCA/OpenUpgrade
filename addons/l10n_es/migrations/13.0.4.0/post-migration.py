@@ -104,8 +104,8 @@ def use_new_taxes_and_repartition_lines_on_move_lines(env):
             JOIN account_tax at ON rel.account_tax_id = at.id
             JOIN account_tax_filiation_rel fil ON fil.child_tax = at.id
             JOIN account_tax at2 ON fil.parent_tax = at2.id
-            WHERE at.id IN %s AND at2.id IN %s
-            ON CONFLICT DO NOTHING""", (tuple(children_tax_ids), tuple(taxes_with_children.ids)),
+            WHERE at.id IN %s
+            ON CONFLICT DO NOTHING""", (tuple(children_tax_ids), ),
         )
         other_parents = env["account.tax"].with_context(active_test=False).search(
             [("children_tax_ids", "in", children_tax_ids)]).filtered(lambda t: t not in taxes_with_children)
@@ -133,9 +133,9 @@ def use_new_taxes_and_repartition_lines_on_move_lines(env):
                     atrl2.{column} = at2.id
                     AND atrl2.repartition_type = atrl.repartition_type
                     AND SIGN(at.amount) = SIGN(atrl2.factor_percent))
-                WHERE aml.tax_repartition_line_id = atrl.id AND at.id IN %s AND at2.id IN %s
+                WHERE aml.tax_repartition_line_id = atrl.id AND at.id IN %s
                 """).format(column=sql.Identifier(tax_column)),
-                (tuple(children_tax_ids), tuple(taxes_with_children.ids)),
+                (tuple(children_tax_ids), ),
             )
         # update amount of parent taxes:
         for company_id in companies_ids:
