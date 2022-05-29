@@ -81,17 +81,6 @@ def use_new_taxes_and_repartition_lines_on_move_lines(env):
             WHERE rel.parent_tax IN %s
             """, (tuple(children_tax_ids), ),
         )
-        # update account move line tax_line_id
-        openupgrade.logged_query(
-            env.cr, """
-            UPDATE account_move_line aml
-            SET tax_line_id = at2.id
-            FROM account_tax at
-            JOIN account_tax_filiation_rel fil ON fil.child_tax = at.id
-            JOIN account_tax at2 ON fil.parent_tax = at2.id
-            WHERE aml.tax_line_id = at.id AND at.id IN %s AND at2.id IN %s
-            """, (tuple(children_tax_ids), tuple(parent_taxes.ids)),
-        )
         # update account move line tax_ids
         openupgrade.logged_query(
             env.cr, """
