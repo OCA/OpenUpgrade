@@ -48,6 +48,46 @@ the full power of OpenUpgrade was unleashed to successfully overcome the
 https://github.com/OCA/OpenUpgrade/pull/2275/files.
 
 
+Handling of the renaming and merging of custom modules with a Custom Configuration File
+---------------------------------------------------------------------------------------
+
+To handle custom code, you can create a custom configuration file
+(ex: ``openupgrade-15.conf``) which can be part of your custom repo.
+
+This file can be used to store the renaming and merge of custom modules.
+The expected content structure of the file is the following:
+
+.. code-block:: txt
+
+  [renamed_modules]
+  old_module_name_1=new_module_name_1
+  old_module_name_2=new_module_name_2
+  [merged_modules]
+  merged_module_1=new_module_merged_1
+
+Then, you must declare this custom configuration file into your Odoo
+configuration file (``odoo.cfg`` or ``odoo.conf``) like this:
+
+.. code-block:: txt
+
+    [openupgrade]
+    config_path=../config/openupgrade-15.conf
+
+The purpose of using a configurable path is to allow you adding the openupgrade
+custom configuration file into the repo where your custom modules are so you can commit
+it.
+
+When running the upgrade, the configurations ``renamed_modules`` and ``merged_modules``
+will be taken into account as one of the first step of the migration as part of the
+pre-migration script of the module ``base``:
+
+.. code-block:: python
+
+    openupgrade.update_module_names(cr, renamed_modules.items())
+    openupgrade.update_module_names(cr, merged_modules.items(), merge_modules=True)
+
+
+
 Learn from existing migration scrips
 ------------------------------------
 
@@ -113,6 +153,20 @@ Note that for the time being, this is not available in all versions
 It is available only for 12 and 13:
 https://github.com/OCA/OpenUpgrade/pulls?q=is%3Apr+%5BFIX%5D+reset+exception
 
+
+Re-upgrade an upgraded module
+.............................
+
+In some cases, you might want to try forcing the upgrade of a module which was already
+upgraded by resetting the version of the module to a past version.
+
+You might want to do that if you fix the migration script of a module after it was
+migrated.
+
+Example to update the known version of ``base`` to 14.0 so OpenUpgrade will try
+to re-upgrade it to version 15:
+
+``update ir_module_module set latest_version='14.0' where name='base';``
 
 Learning resources
 ------------------
