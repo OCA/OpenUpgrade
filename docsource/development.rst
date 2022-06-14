@@ -57,7 +57,7 @@ To handle custom code, you can create a custom configuration file
 This file can be used to store the renaming and merge of custom modules.
 The expected content structure of the file is the following:
 
-.. code-block:: txt
+.. code-block:: text
 
   [renamed_modules]
   old_module_name_1=new_module_name_1
@@ -68,7 +68,7 @@ The expected content structure of the file is the following:
 Then, you must declare this custom configuration file into your Odoo
 configuration file (``odoo.cfg`` or ``odoo.conf``) like this:
 
-.. code-block:: txt
+.. code-block:: text
 
     [openupgrade]
     config_path=../config/openupgrade-15.conf
