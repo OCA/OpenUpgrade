@@ -1,0 +1,85 @@
+---Models in module 'calendar'---
+obsolete model calendar.contacts
+new model calendar.filters
+# DONE: pre-migration: renamed model 'calendar.contacts' to 'calendar.filters', renamed table 'calendar_contacts' to 'calendar_filters'
+
+---Fields in module 'calendar'---
+calendar     / calendar.alarm           / body (text)                   : NEW
+calendar     / calendar.alarm           / mail_template_id (many2one)   : NEW relation: mail.template, isfunction: function, stored
+# NOTHING TO DO: new feature
+
+calendar     / calendar.attendee        / _order                        : _order is now 'create_date ASC' ('id')
+# NOTHING TO DO
+
+calendar     / calendar.contacts        / active (boolean)              : DEL
+calendar     / calendar.contacts        / partner_id (many2one)         : DEL relation: res.partner, required
+calendar     / calendar.contacts        / user_id (many2one)            : DEL relation: res.users, required, req_default: function
+# DONE: pre-migration: renamed model 'calendar.contacts' to 'calendar.filters', renamed table 'calendar_contacts' to 'calendar_filters'
+
+calendar     / calendar.event           / description (text)            : type is now 'html' ('text')
+# DONE: pre-migration: convert text to html
+
+
+calendar     / calendar.event           / videocall_location (char)     : NEW
+# NOTHING TO DO: new feature
+
+calendar     / calendar.event           / weekday (selection)           : selection_keys is now '['FRI', 'MON', 'SAT', 'SUN', 'THU', 'TUE', 'WED']' ('['FR', 'MO', 'SA', 'SU', 'TH', 'TU', 'WE']')
+# NOTHING TO DO: non-stored field
+
+calendar     / calendar.event.type      / color (integer)               : NEW hasdefault
+# NOTHING TO DO: new feature
+
+calendar     / calendar.filters         / active (boolean)              : NEW hasdefault
+calendar     / calendar.filters         / partner_id (many2one)         : NEW relation: res.partner, required
+calendar     / calendar.filters         / user_id (many2one)            : NEW relation: res.users, required, req_default: function, hasdefault
+# DONE: pre-migration: renamed model 'calendar.contacts' to 'calendar.filters', renamed table 'calendar_contacts' to 'calendar_filters'
+
+calendar     / calendar.filters         / partner_checked (boolean)     : NEW hasdefault
+# DONE: pre-migration: create column column with type bool and set the default value 'True'
+
+
+calendar     / calendar.recurrence      / fr (boolean)                  : DEL
+calendar     / calendar.recurrence      / fri (boolean)                 : NEW
+calendar     / calendar.recurrence      / mo (boolean)                  : DEL
+calendar     / calendar.recurrence      / mon (boolean)                 : NEW
+calendar     / calendar.recurrence      / sa (boolean)                  : DEL
+calendar     / calendar.recurrence      / sat (boolean)                 : NEW
+calendar     / calendar.recurrence      / su (boolean)                  : DEL
+calendar     / calendar.recurrence      / sun (boolean)                 : NEW
+calendar     / calendar.recurrence      / th (boolean)                  : DEL
+calendar     / calendar.recurrence      / thu (boolean)                 : NEW
+calendar     / calendar.recurrence      / tu (boolean)                  : DEL
+calendar     / calendar.recurrence      / tue (boolean)                 : NEW
+calendar     / calendar.recurrence      / we (boolean)                  : DEL
+calendar     / calendar.recurrence      / wed (boolean)                 : NEW
+# DONE: pre-migration: renamed columns
+
+calendar     / calendar.recurrence      / weekday (selection)           : selection_keys is now '['FRI', 'MON', 'SAT', 'SUN', 'THU', 'TUE', 'WED']' ('['FR', 'MO', 'SA', 'SU', 'TH', 'TU', 'WE']')
+# DONE: pre-migration: change the value of key
+
+calendar     / mail.activity.type       / category (False)              : selection_keys is now '['default', 'meeting', 'phonecall', 'upload_file']' ('['default', 'meeting', 'upload_file']')
+# NOTHING TO DO: not processed in this module
+
+calendar     / res.partner              / meeting_count (integer)       : previously in module crm
+calendar     / res.partner              / meeting_ids (many2many)       : previously in module crm
+calendar     / res.users                / meeting_count (integer)       : previously in module crm
+calendar     / res.users                / meeting_ids (many2many)       : previously in module crm
+# NOTHING TO DO: Handled by ORM when crm was installed
+
+---XML records in module 'calendar'---
+NEW ir.model.access: calendar.access_calendar_filters
+NEW ir.model.access: calendar.access_calendar_filters_all
+DEL ir.model.access: calendar.access_calendar_contacts
+DEL ir.model.access: calendar.access_calendar_contacts_all
+DEL ir.model.constraint: calendar.constraint_calendar_contacts_user_id_partner_id_unique
+DEL ir.model.constraint: calendar.constraint_calendar_event_type_name_uniq
+DEL ir.model.constraint: calendar.constraint_calendar_recurrence_month_day
+NEW ir.ui.menu: calendar.calendar_menu_config
+NEW ir.ui.menu: calendar.calendar_submenu_reminders
+NEW ir.ui.view: calendar.res_partner_kanban_view
+NEW ir.ui.view: calendar.res_users_view_form
+NEW ir.ui.view: calendar.view_partners_form
+DEL ir.ui.view: calendar.assets_backend
+DEL ir.ui.view: calendar.qunit_suite
+NEW mail.template: calendar.calendar_template_meeting_update (noupdate)
+# NOTHING TO DO
