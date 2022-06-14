@@ -1,11 +1,13 @@
-import logging
-
 import configparser as ConfigParser
+import logging
 
 import odoo
 
+
 def load_custom_config():
-    openupgrade_config_path = odoo.tools.config.misc.get("openupgrade").get("config_path")
+    openupgrade_config_path = odoo.tools.config.misc.get("openupgrade").get(
+        "config_path"
+    )
     res = {}
     if openupgrade_config_path:
         logging.info("load_custom_config from %s: ", openupgrade_config_path)
@@ -15,9 +17,9 @@ def load_custom_config():
             for sec in p.sections():
                 res.setdefault(sec, {})
                 for (name, value) in p.items(sec):
-                    if value=='True' or value=='true':
+                    if value == "True" or value == "true":
                         value = True
-                    if value=='False' or value=='false':
+                    if value == "False" or value == "false":
                         value = False
                     res[sec][name] = value
         except IOError:
@@ -29,10 +31,13 @@ def load_custom_config():
 
     return res
 
+
 custom_config = load_custom_config()
+
 
 def _get(config_name, config_base):
     return config_base | custom_config.get(config_name, {})
+
 
 # ######################################################################################
 # Encode any known changes to the database here to help the matching process
