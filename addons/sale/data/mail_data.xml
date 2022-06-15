@@ -56,7 +56,7 @@
     </data>
     <!-- Template and notification section -->
     <data noupdate="1">
-        <template id="mail_notification_paynow_online" inherit_id="mail.mail_notification_paynow"
+<!--        <template id="mail_notification_paynow_online" inherit_id="mail.mail_notification_paynow"
                 name="Mail: Pay Now mail notification template">
             <xpath expr="//t[@t-set='access_name']" position="after">
                 <t t-if="record._name == 'sale.order'">
@@ -72,7 +72,7 @@
                     </t>
                 </t>
             </xpath>
-        </template>
+        </template>-->
 
         <record id="email_template_edi_sale" model="mail.template">
             <field name="name">Sales Order: Send by email</field>
