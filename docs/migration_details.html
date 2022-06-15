@@ -1,7 +1,7 @@
 
 <!DOCTYPE html>
 
-<html>
+<html lang="en">
   <head>
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
@@ -11,6 +11,7 @@
     <script data-url_root="./" id="documentation_options" src="_static/documentation_options.js"></script>
     <script src="_static/jquery.js"></script>
     <script src="_static/underscore.js"></script>
+    <script src="_static/_sphinx_javascript_frameworks_compat.js"></script>
     <script src="_static/doctools.js"></script>
     <link rel="index" title="Index" href="genindex.html" />
     <link rel="search" title="Search" href="search.html" />
@@ -33,14 +34,14 @@
           <div class="body" role="main">
             
   <div class="section" id="running-the-migration">
-<h1>Running the migration<a class="headerlink" href="#running-the-migration" title="Permalink to this headline">¶</a></h1>
+<h1>Running the migration<a class="headerlink" href="#running-the-migration" title="Permalink to this heading">¶</a></h1>
 <p>Check out the code manually and upgrade your database by calling odoo-bin,
 (or openerp-server) directly. You will want to do this when you are working on
 developing migration scripts for uncovered modules.</p>
 <div class="section" id="get-the-code-from-openupgrade-and-dependencies">
-<h2>1. Get the code from OpenUpgrade and dependencies<a class="headerlink" href="#get-the-code-from-openupgrade-and-dependencies" title="Permalink to this headline">¶</a></h2>
+<h2>1. Get the code from OpenUpgrade and dependencies<a class="headerlink" href="#get-the-code-from-openupgrade-and-dependencies" title="Permalink to this heading">¶</a></h2>
 <div class="section" id="openupgrade">
-<h3>OpenUpgrade<a class="headerlink" href="#openupgrade" title="Permalink to this headline">¶</a></h3>
+<h3>OpenUpgrade<a class="headerlink" href="#openupgrade" title="Permalink to this heading">¶</a></h3>
 <p>Make the <cite>openupgrade_framework</cite> and the <cite>openupgrade_scripts</cite> modules
 available in the addons path in the Odoo instance of the new version.</p>
 <p>Or, for older versions: check out the OpenUpgrade source code from Github
@@ -53,7 +54,7 @@ OpenUpgrade in order. Skipping versions is not supported.</p>
 <p><a class="reference external" href="https://github.com/OCA/openupgrade">https://github.com/OCA/openupgrade</a></p>
 </div>
 <div class="section" id="openupgradelib">
-<h3>openupgradelib<a class="headerlink" href="#openupgradelib" title="Permalink to this headline">¶</a></h3>
+<h3>openupgradelib<a class="headerlink" href="#openupgradelib" title="Permalink to this heading">¶</a></h3>
 <ul>
 <li><p>When installing the openupgradelib make sure you check out the latest version
 from github to get the latest updates and fixes:</p>
@@ -65,7 +66,7 @@ from github to get the latest updates and fixes:</p>
 </div>
 </div>
 <div class="section" id="check-coverage-of-the-migration-scripts-for-your-installed-modules">
-<h2>2. Check coverage of the migration scripts for your installed modules<a class="headerlink" href="#check-coverage-of-the-migration-scripts-for-your-installed-modules" title="Permalink to this headline">¶</a></h2>
+<h2>2. Check coverage of the migration scripts for your installed modules<a class="headerlink" href="#check-coverage-of-the-migration-scripts-for-your-installed-modules" title="Permalink to this heading">¶</a></h2>
 <p>Check if there are migration scripts provided for the set of modules that
 are installed in your Odoo database. If there are modules for which no
 migration scripts have been developed yet, your migration may fail or the
@@ -74,19 +75,19 @@ this documentation under <a class="reference internal" href="status.html"><span 
 documentation to add the missing migration scripts.</p>
 </div>
 <div class="section" id="make-a-copy-of-the-database-to-migrate">
-<h2>3. Make a copy of the database to migrate<a class="headerlink" href="#make-a-copy-of-the-database-to-migrate" title="Permalink to this headline">¶</a></h2>
+<h2>3. Make a copy of the database to migrate<a class="headerlink" href="#make-a-copy-of-the-database-to-migrate" title="Permalink to this heading">¶</a></h2>
 <p>Decide which database you are going to upgrade. You absolutely <em>must</em> make a
 backup of your live database before you start this process!</p>
 </div>
 <div class="section" id="adjust-the-configuration-for-odoo-and-openupgrade">
-<h2>4. Adjust the configuration for Odoo and OpenUpgrade<a class="headerlink" href="#adjust-the-configuration-for-odoo-and-openupgrade" title="Permalink to this headline">¶</a></h2>
+<h2>4. Adjust the configuration for Odoo and OpenUpgrade<a class="headerlink" href="#adjust-the-configuration-for-odoo-and-openupgrade" title="Permalink to this heading">¶</a></h2>
 <p>Edit the configuration files and command line parameters to point to the
 database you are going to upgrade. The recommended command line parameters are the
 <code class="docutils literal notranslate"><span class="pre">--update</span> <span class="pre">all</span> <span class="pre">--stop-after-init</span> <span class="pre">--load=base,web,openupgrade_framework</span></code> flags.</p>
 <p>For versions earlier than 14.0 that are running the OpenUpgrade fork rather
 than Odoo itself, you do not pass the <cite>load</cite> parameter.</p>
 <div class="section" id="configuration-options">
-<h3>Configuration options<a class="headerlink" href="#configuration-options" title="Permalink to this headline">¶</a></h3>
+<h3>Configuration options<a class="headerlink" href="#configuration-options" title="Permalink to this heading">¶</a></h3>
 <ul>
 <li><p>When migrating across several versions of Odoo, setting the target version
 as an environment variable allows OpenUpgrade to skip methods that are called
@@ -100,7 +101,7 @@ target version available to OpenUpgrade with:</p>
 </ul>
 </div>
 <div class="section" id="obsolete-options-in-the-odoo-configuration-file">
-<h3>Obsolete options in the Odoo configuration file<a class="headerlink" href="#obsolete-options-in-the-odoo-configuration-file" title="Permalink to this headline">¶</a></h3>
+<h3>Obsolete options in the Odoo configuration file<a class="headerlink" href="#obsolete-options-in-the-odoo-configuration-file" title="Permalink to this heading">¶</a></h3>
 <p>Versions of OpenUpgrade earlier than 14.0 allow for the following configuration
 options. Add these options to a separate stanza in the server configuration
 file under a header <em>[openupgrade]</em></p>
@@ -119,14 +120,14 @@ introduce a circular dependency using this directive.</p></li>
 </div>
 </div>
 <div class="section" id="run-the-upgrade-fix-data-and-repeat">
-<h2>5. Run the upgrade, fix data and repeat…<a class="headerlink" href="#run-the-upgrade-fix-data-and-repeat" title="Permalink to this headline">¶</a></h2>
+<h2>5. Run the upgrade, fix data and repeat…<a class="headerlink" href="#run-the-upgrade-fix-data-and-repeat" title="Permalink to this heading">¶</a></h2>
 <p>Run the upgrade and check for errors. You will probably learn a lot about
 your data and have to do some manual clean up before and after the upgrade.
 Expect to repeat the process several times as you encounter errors, clean up
 your data, and try again. If necessary, ask for help or report bugs on
 Github.</p>
 <div class="section" id="write-the-missing-migration-scripts">
-<h3>Write the missing migration scripts<a class="headerlink" href="#write-the-missing-migration-scripts" title="Permalink to this headline">¶</a></h3>
+<h3>Write the missing migration scripts<a class="headerlink" href="#write-the-missing-migration-scripts" title="Permalink to this heading">¶</a></h3>
 <p>At this stage, if some of your modules don’t have yet migration scripts,
 you might need to add them yourself.
 Read more about the development of migrations scripts in <a class="reference internal" href="development.html"><span class="doc">Migration script development</span></a></p>
@@ -192,7 +193,7 @@ Read more about the development of migrations scripts in <a class="reference int
     </form>
     </div>
 </div>
-<script>$('#searchbox').show(0);</script>
+<script>document.getElementById('searchbox').style.display = "block"</script>
 
 
 
@@ -209,7 +210,7 @@ Read more about the development of migrations scripts in <a class="reference int
       &copy;2012-2021, Odoo Community Association (OCA) / The OpenUpgrade developers.
       
       |
-      Powered by <a href="http://sphinx-doc.org/">Sphinx 4.5.0</a>
+      Powered by <a href="http://sphinx-doc.org/">Sphinx 5.0.1</a>
       &amp; <a href="https://github.com/bitprophet/alabaster">Alabaster 0.7.12</a>
       
       |

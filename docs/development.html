@@ -1,7 +1,7 @@
 
 <!DOCTYPE html>
 
-<html>
+<html lang="en">
   <head>
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
@@ -11,6 +11,7 @@
     <script data-url_root="./" id="documentation_options" src="_static/documentation_options.js"></script>
     <script src="_static/jquery.js"></script>
     <script src="_static/underscore.js"></script>
+    <script src="_static/_sphinx_javascript_frameworks_compat.js"></script>
     <script src="_static/doctools.js"></script>
     <link rel="index" title="Index" href="genindex.html" />
     <link rel="search" title="Search" href="search.html" />
@@ -33,9 +34,9 @@
           <div class="body" role="main">
             
   <div class="section" id="migration-script-development">
-<h1>Migration script development<a class="headerlink" href="#migration-script-development" title="Permalink to this headline">¶</a></h1>
+<h1>Migration script development<a class="headerlink" href="#migration-script-development" title="Permalink to this heading">¶</a></h1>
 <div class="section" id="overview">
-<h2>Overview<a class="headerlink" href="#overview" title="Permalink to this headline">¶</a></h2>
+<h2>Overview<a class="headerlink" href="#overview" title="Permalink to this heading">¶</a></h2>
 <p>The execution of the migration scripts is triggered by the “Migration Manager”:
 <a class="reference internal" href="migrationmanager.html"><span class="doc">The Odoo Migration Manager</span></a>.</p>
 <p>As explained with more detail in the page <a class="reference internal" href="migrationmanager.html"><span class="doc">The Odoo Migration Manager</span></a>, the migration scripts
@@ -72,7 +73,7 @@ the full power of OpenUpgrade was unleashed to successfully overcome the
 <a class="reference external" href="https://github.com/OCA/OpenUpgrade/pull/2275/files">https://github.com/OCA/OpenUpgrade/pull/2275/files</a>.</p>
 </div>
 <div class="section" id="learn-from-existing-migration-scrips">
-<h2>Learn from existing migration scrips<a class="headerlink" href="#learn-from-existing-migration-scrips" title="Permalink to this headline">¶</a></h2>
+<h2>Learn from existing migration scrips<a class="headerlink" href="#learn-from-existing-migration-scrips" title="Permalink to this heading">¶</a></h2>
 <p>Since version 14, the migration scripts are located in:</p>
 <p><code class="docutils literal notranslate"><span class="pre">openupgrade_scripts/scripts/&lt;module-name&gt;</span></code></p>
 <p>During the review for a given module, you can follow this process:</p>
@@ -87,13 +88,13 @@ planned to do.</p></li>
 you are aware of the changes.</p>
 </div>
 <div class="section" id="learn-from-code-review-of-open-prs">
-<h2>Learn from code review of open PRs<a class="headerlink" href="#learn-from-code-review-of-open-prs" title="Permalink to this headline">¶</a></h2>
+<h2>Learn from code review of open PRs<a class="headerlink" href="#learn-from-code-review-of-open-prs" title="Permalink to this heading">¶</a></h2>
 <p><a class="reference external" href="https://github.com/OCA/OpenUpgrade/pulls">https://github.com/OCA/OpenUpgrade/pulls</a></p>
 <p>This will engage you in a discussion with other contributors and help you understand
 how developers selected one way or another to implement the migration scripts.</p>
 </div>
 <div class="section" id="the-trial-and-error-process-for-the-development-of-your-scripts">
-<h2>The Trial and error process for the development of your scripts<a class="headerlink" href="#the-trial-and-error-process-for-the-development-of-your-scripts" title="Permalink to this headline">¶</a></h2>
+<h2>The Trial and error process for the development of your scripts<a class="headerlink" href="#the-trial-and-error-process-for-the-development-of-your-scripts" title="Permalink to this heading">¶</a></h2>
 <p>Basically, this is the happening during the step when you try to run the upgrade
 described in <a class="reference internal" href="migration_details.html"><span class="doc">Running the migration</span></a>:</p>
 <ul class="simple">
@@ -112,7 +113,7 @@ this step will leave your database in an inconsistent state.</p></li>
 dependent modules have been upgraded.</p></li>
 </ul>
 <div class="section" id="restart-the-upgrade-of-the-failed-module-instead-of-upgrading-all-systematically">
-<h3>Restart the upgrade of the failed module instead of upgrading all systematically<a class="headerlink" href="#restart-the-upgrade-of-the-failed-module-instead-of-upgrading-all-systematically" title="Permalink to this headline">¶</a></h3>
+<h3>Restart the upgrade of the failed module instead of upgrading all systematically<a class="headerlink" href="#restart-the-upgrade-of-the-failed-module-instead-of-upgrading-all-systematically" title="Permalink to this heading">¶</a></h3>
 <p><strong>As an alternative to the step [C] mentioned above…</strong></p>
 <p>In case of error, fix the error (adding or editing migration
 scripts), then rerun <strong>without</strong> the <code class="docutils literal notranslate"><span class="pre">--update</span> <span class="pre">all</span></code>:
@@ -128,7 +129,7 @@ It is available only for 12 and 13:
 </div>
 </div>
 <div class="section" id="learning-resources">
-<h2>Learning resources<a class="headerlink" href="#learning-resources" title="Permalink to this headline">¶</a></h2>
+<h2>Learning resources<a class="headerlink" href="#learning-resources" title="Permalink to this heading">¶</a></h2>
 <div class="toctree-wrapper compound">
 <ul>
 <li class="toctree-l1"><a class="reference internal" href="migrationmanager.html">The Odoo Migration Manager</a></li>
@@ -203,7 +204,7 @@ It is available only for 12 and 13:
     </form>
     </div>
 </div>
-<script>$('#searchbox').show(0);</script>
+<script>document.getElementById('searchbox').style.display = "block"</script>
 
 
 
@@ -220,7 +221,7 @@ It is available only for 12 and 13:
       &copy;2012-2021, Odoo Community Association (OCA) / The OpenUpgrade developers.
       
       |
-      Powered by <a href="http://sphinx-doc.org/">Sphinx 4.5.0</a>
+      Powered by <a href="http://sphinx-doc.org/">Sphinx 5.0.1</a>
       &amp; <a href="https://github.com/bitprophet/alabaster">Alabaster 0.7.12</a>
       
       |

@@ -1,7 +1,7 @@
 
 <!DOCTYPE html>
 
-<html>
+<html lang="en">
   <head>
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
@@ -11,6 +11,7 @@
     <script data-url_root="./" id="documentation_options" src="_static/documentation_options.js"></script>
     <script src="_static/jquery.js"></script>
     <script src="_static/underscore.js"></script>
+    <script src="_static/_sphinx_javascript_frameworks_compat.js"></script>
     <script src="_static/doctools.js"></script>
     <link rel="index" title="Index" href="genindex.html" />
     <link rel="search" title="Search" href="search.html" />
@@ -32,7 +33,7 @@
           <div class="body" role="main">
             
   <div class="section" id="openupgrade-api">
-<h1>OpenUpgrade API<a class="headerlink" href="#openupgrade-api" title="Permalink to this headline">¶</a></h1>
+<h1>OpenUpgrade API<a class="headerlink" href="#openupgrade-api" title="Permalink to this heading">¶</a></h1>
 <p>The OpenUpgrade library contains all kinds of helper functions for your pre and
 post scripts, in OpenUpgrade itself or in the migration scripts of your own
 module (in either major or minor version upgrades). It can be installed with</p>
@@ -44,7 +45,7 @@ module (in either major or minor version upgrades). It can be installed with</p>
 </pre></div>
 </div>
 <div class="section" id="module-openupgradelib.openupgrade">
-<span id="general-methods"></span><h2>General methods<a class="headerlink" href="#module-openupgradelib.openupgrade" title="Permalink to this headline">¶</a></h2>
+<span id="general-methods"></span><h2>General methods<a class="headerlink" href="#module-openupgradelib.openupgrade" title="Permalink to this heading">¶</a></h2>
 <dl class="py function">
 <dt class="sig sig-object py" id="openupgradelib.openupgrade.add_fields">
 <span class="sig-prename descclassname"><span class="pre">openupgradelib.openupgrade.</span></span><span class="sig-name descname"><span class="pre">add_fields</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">env</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">field_spec</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#openupgradelib.openupgrade.add_fields" title="Permalink to this definition">¶</a></dt>
@@ -931,7 +932,7 @@ Use orm, so call from the post script.</p>
 
 </div>
 <div class="section" id="methods-for-openupgrade-7-0">
-<h2>Methods for OpenUpgrade 7.0<a class="headerlink" href="#methods-for-openupgrade-7-0" title="Permalink to this headline">¶</a></h2>
+<h2>Methods for OpenUpgrade 7.0<a class="headerlink" href="#methods-for-openupgrade-7-0" title="Permalink to this heading">¶</a></h2>
 <p>The following specific methods for 7.0 are available. These have been
 developed to cover specific needs as per data model changes in that
 release.</p>
@@ -963,7 +964,7 @@ release.</p>
 
 </div>
 <div class="section" id="methods-for-openupgrade-8-0">
-<h2>Methods for OpenUpgrade 8.0<a class="headerlink" href="#methods-for-openupgrade-8-0" title="Permalink to this headline">¶</a></h2>
+<h2>Methods for OpenUpgrade 8.0<a class="headerlink" href="#methods-for-openupgrade-8-0" title="Permalink to this heading">¶</a></h2>
 <p>The following specific methods for 8.0 are available. These have been
 developed to cover specific needs as per data model changes in that
 release.</p>
@@ -1028,7 +1029,7 @@ in the model’s create() method.</p>
 
 </div>
 <div class="section" id="methods-for-openupgrade-9-0">
-<h2>Methods for OpenUpgrade 9.0<a class="headerlink" href="#methods-for-openupgrade-9-0" title="Permalink to this headline">¶</a></h2>
+<h2>Methods for OpenUpgrade 9.0<a class="headerlink" href="#methods-for-openupgrade-9-0" title="Permalink to this heading">¶</a></h2>
 <p>The following specific methods for 9.0 are available. These have been
 developed to cover specific needs as per data model changes in that
 release.</p>
@@ -1129,7 +1130,7 @@ type is allowed not to exist anymore, except when running unit tests.
     </form>
     </div>
 </div>
-<script>$('#searchbox').show(0);</script>
+<script>document.getElementById('searchbox').style.display = "block"</script>
 
 
 
@@ -1146,7 +1147,7 @@ type is allowed not to exist anymore, except when running unit tests.
       &copy;2012-2021, Odoo Community Association (OCA) / The OpenUpgrade developers.
       
       |
-      Powered by <a href="http://sphinx-doc.org/">Sphinx 4.5.0</a>
+      Powered by <a href="http://sphinx-doc.org/">Sphinx 5.0.1</a>
       &amp; <a href="https://github.com/bitprophet/alabaster">Alabaster 0.7.12</a>
       
       |
