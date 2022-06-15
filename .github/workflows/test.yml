@@ -102,7 +102,7 @@ jobs:
               openupgrade/docsource/modules140-150.rst \
               | grep "Done\|Partial\|Nothing" \
               | grep -v "theme_" \
-              | sed -rn 's/((^\| *\|del\| *)|^\|)([0-9a-z_]*) *\|.*$/\3/g p' \
+              | sed -rn 's/((^\| *\|del\| *)|^\| *)([0-9a-z_]*)[ \|].*/\3/g p' \
               | sed '/^\s*$/d' \
               | paste -d, -s)
           MODULES_NEW=base,$(\
@@ -110,7 +110,7 @@ jobs:
               openupgrade/docsource/modules140-150.rst \
               | grep "Done\|Partial\|Nothing" \
               | grep -v "theme_" \
-              | sed -rn 's/((^\| *\|new\| *)|^\|)([0-9a-z_]*) *\|.*$/\3/g p' \
+              | sed -rn 's/((^\| *\|new\| *)|^\| *)([0-9a-z_]*)[ \|].*/\3/g p' \
               | sed '/^\s*$/d' \
               | paste -d, -s)
           psql $DB -c "update ir_module_module set state='uninstalled' \
