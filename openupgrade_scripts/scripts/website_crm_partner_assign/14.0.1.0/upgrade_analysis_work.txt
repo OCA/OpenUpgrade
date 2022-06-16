@@ -1,0 +1,28 @@
+---Models in module 'website_crm_partner_assign'---
+---Fields in module 'website_crm_partner_assign'---
+website_crm_partner_assign / crm.lead                 / date_assign (date)            : DEL
+website_crm_partner_assign / crm.lead                 / date_partner_assign (date)    : NEW isfunction: function, stored
+# DONE: pre-migration: renamed columns
+
+website_crm_partner_assign / res.partner              / partner_weight (integer)      : now a function
+website_crm_partner_assign / res.partner.grade        / _order                        : _order is now 'sequence' ('id')
+# NOTHING TO DO
+
+---XML records in module 'website_crm_partner_assign'---
+NEW ir.model.access: website_crm_partner_assign.access_crm_lead_assignation
+NEW ir.model.access: website_crm_partner_assign.access_crm_lead_forward_to_partner
+NEW ir.model.access: website_crm_partner_assign.access_res_partner_grade_invoicing_payment_readonly
+# NOTHING TO DO
+
+ir.rule: website_crm_partner_assign.assigned_lead_portal_rule_1 (noupdate) (noupdate switched)
+ir.rule: website_crm_partner_assign.res_partner_grade_rule_portal_public (noupdate) (noupdate switched)
+# DONE: pre-migration: noupdate changed to "1"
+
+NEW ir.ui.view: website_crm_partner_assign.crm_lead_view_graph
+NEW ir.ui.view: website_crm_partner_assign.crm_lead_view_graph_report_lead
+NEW ir.ui.view: website_crm_partner_assign.crm_lead_view_graph_report_opportunity
+NEW ir.ui.view: website_crm_partner_assign.crm_lead_view_pivot
+# NOTHING TO DO
+
+DEL website.menu: website_crm_partner_assign.menu_resellers (noupdate)
+# DONE: post-migration: try to delete
