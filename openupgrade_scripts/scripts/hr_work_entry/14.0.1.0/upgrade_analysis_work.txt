@@ -1,0 +1,13 @@
+---Models in module 'hr_work_entry'---
+---Fields in module 'hr_work_entry'---
+hr_work_entry / hr.work.entry            / date_stop (datetime)          : now a function
+# NOTHING TO DO: automated field filling
+
+---XML records in module 'hr_work_entry'---
+NEW ir.model.access: hr_work_entry.access_hr_work_entry_system
+NEW ir.ui.view: hr_work_entry.resource_calendar_attendance_view_form
+NEW ir.ui.view: hr_work_entry.resource_calendar_attendance_view_tree
+NEW ir.ui.view: hr_work_entry.resource_calendar_leave_view_form
+NEW ir.ui.view: hr_work_entry.resource_calendar_leave_view_tree
+NEW ir.ui.view: hr_work_entry.resource_calendar_view_form
+# NOTHING TO DO: noupdate="0" records
