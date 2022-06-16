@@ -1,0 +1,31 @@
+---Models in module 'sms'---
+---Fields in module 'sms'---
+sms          / hr.contract              / message_has_sms_error (boolean): previously in module hr_contract
+sms          / hr.leave                 / message_has_sms_error (boolean): previously in module hr_holidays
+sms          / hr.leave.allocation      / message_has_sms_error (boolean): previously in module hr_holidays
+sms          / mail.test.activity       / message_has_sms_error (boolean): previously in module test_mail
+sms          / mail.test.cc             / message_has_sms_error (boolean): previously in module test_mail
+sms          / mail.test.gateway        / message_has_sms_error (boolean): previously in module test_mail
+sms          / mail.test.multi.company  / message_has_sms_error (boolean): previously in module test_mail
+sms          / mail.test.simple         / message_has_sms_error (boolean): previously in module test_mail
+sms          / mail.test.track          / message_has_sms_error (boolean): previously in module test_mail
+sms          / mailing.contact          / message_has_sms_error (boolean): module is now 'mass_mailing' ('sms')
+sms          / mailing.mailing          / message_has_sms_error (boolean): module is now 'mass_mailing' ('sms')
+# NOTHING TO DO: handled by ORM
+
+sms          / mail.message             / message_type (False)          : selection_keys is now '['comment', 'email', 'notification', 'sms', 'user_notification']' ('['comment', 'email', 'notification', 'sms', 'snailmail', 'user_notification']')
+# NOTHING TO DO: the 'snailmail' is added in snailmail module
+
+sms          / mail.notification        / failure_type (False)          : selection_keys is now '['BOUNCE', 'RECIPIENT', 'SMTP', 'UNKNOWN', 'sms_acc', 'sms_credit', 'sms_number_format', 'sms_number_missing', 'sms_server']' ('['BOUNCE', 'RECIPIENT', 'SMTP', 'UNKNOWN', 'sms_credit', 'sms_number_format', 'sms_number_missing', 'sms_server']')
+sms          / sms.sms                  / error_code (selection)        : selection_keys is now '['sms_acc', 'sms_blacklist', 'sms_credit', 'sms_duplicate', 'sms_number_format', 'sms_number_missing', 'sms_server']' ('['sms_blacklist', 'sms_credit', 'sms_duplicate', 'sms_number_format', 'sms_number_missing', 'sms_server']')
+# NOTHING TO DO: new 'sms_acc' option
+
+---XML records in module 'sms'---
+NEW ir.model.access: sms.access_sms_cancel
+NEW ir.model.access: sms.access_sms_composer
+NEW ir.model.access: sms.access_sms_resend
+NEW ir.model.access: sms.access_sms_resend_recipient
+NEW ir.model.access: sms.access_sms_template_preview
+NEW ir.ui.view: sms.mail_notification_view_form
+NEW ir.ui.view: sms.mail_notification_view_tree
+# NOTHING TO DO
