@@ -1,0 +1,62 @@
+---Models in module 'website_event_questions'---
+obsolete model event.answer (renamed to event.question.answer)
+obsolete model event.question.report [sql_view]
+new model event.question.answer (renamed from event.answer)
+# DONE: pre-migration: renamed tables
+
+---Fields in module 'website_event_questions'---
+website_event_questions / event.event              / question_ids (one2many)       : now a function
+# NOTHING TO DO
+
+website_event_questions / event.question           / answer_ids (one2many)         : relation is now 'event.question.answer' ('event.answer') [nothing to do]
+website_event_questions / event.question           / is_individual (boolean)       : DEL
+website_event_questions / event.question           / once_per_order (boolean)      : NEW
+website_event_questions / event.question           / question_type (selection)     : NEW required, selection_keys: ['simple_choice', 'text_box'], req_default: function, hasdefault
+# NOTHING TO DO
+
+website_event_questions / event.registration       / answer_ids (many2many)        : DEL relation: event.answer
+website_event_questions / event.registration       / registration_answer_ids (one2many): NEW relation: event.registration.answer
+# NOTHING TO DO
+
+website_event_questions / event.registration.answer / event_answer_id (many2one)    : DEL relation: event.answer, required
+website_event_questions / event.registration.answer / event_registration_id (many2one): DEL relation: event.registration, required
+website_event_questions / event.registration.answer / question_id (many2one)        : NEW relation: event.question, required
+website_event_questions / event.registration.answer / registration_id (many2one)    : NEW relation: event.registration, required
+website_event_questions / event.registration.answer / value_answer_id (many2one)    : NEW relation: event.question.answer
+website_event_questions / event.registration.answer / value_text_box (text)         : NEW
+# DONE: pre-migration: field renamed and fill value
+
+---XML records in module 'website_event_questions'---
+NEW ir.actions.act_window: website_event_questions.action_event_registration_report
+DEL ir.actions.act_window: website_event_questions.action_event_question_report
+NEW ir.model.access: website_event_questions.event_question_answer_all
+NEW ir.model.access: website_event_questions.event_question_answer_event_user
+NEW ir.model.access: website_event_questions.event_registration_answer_event_user
+DEL ir.model.access: website_event_questions.event_answer_all
+DEL ir.model.access: website_event_questions.event_answer_event_user
+DEL ir.model.access: website_event_questions.event_question_report_all
+DEL ir.model.access: website_event_questions.event_registration_answer_all
+NEW ir.model.constraint: website_event_questions.constraint_event_registration_answer_value_check
+NEW ir.rule: website_event_questions.ir_rule_event_question_answer_event_user (noupdate)
+NEW ir.rule: website_event_questions.ir_rule_event_question_answer_published (noupdate)
+NEW ir.rule: website_event_questions.ir_rule_event_question_event_user (noupdate)
+NEW ir.rule: website_event_questions.ir_rule_event_question_published (noupdate)
+DEL ir.ui.menu: website_event_questions.menu_report_event_questions
+NEW ir.ui.view: website_event_questions.assets_tests
+NEW ir.ui.view: website_event_questions.event_event_view_form
+NEW ir.ui.view: website_event_questions.event_question_view_form
+NEW ir.ui.view: website_event_questions.event_registration_answer_view_graph
+NEW ir.ui.view: website_event_questions.event_registration_answer_view_pivot
+NEW ir.ui.view: website_event_questions.event_registration_answer_view_search
+NEW ir.ui.view: website_event_questions.event_registration_answer_view_tree
+NEW ir.ui.view: website_event_questions.event_registration_view_form_inherit_question
+NEW ir.ui.view: website_event_questions.registration_event_question
+DEL ir.ui.view: website_event_questions.view_event_answer_simplified_form
+DEL ir.ui.view: website_event_questions.view_event_form_inherit_question
+DEL ir.ui.view: website_event_questions.view_event_question_form
+DEL ir.ui.view: website_event_questions.view_event_question_report_graph
+DEL ir.ui.view: website_event_questions.view_event_question_report_pivot
+DEL ir.ui.view: website_event_questions.view_event_question_report_search
+DEL ir.ui.view: website_event_questions.view_event_registration_form_inherit_question
+DEL ir.ui.view: website_event_questions.view_registration_search_inherit_question
+# NOTHING TO DO
