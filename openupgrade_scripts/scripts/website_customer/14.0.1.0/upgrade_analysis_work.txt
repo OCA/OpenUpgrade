@@ -1,0 +1,11 @@
+---Models in module 'website_customer'---
+---Fields in module 'website_customer'---
+---XML records in module 'website_customer'---
+ir.rule: website_customer.website_customer_res_partner_tag_public (noupdate) (noupdate switched)
+# DONE: pre-migration: noupdate changed to "1"
+
+NEW ir.ui.view: website_customer.contact_edit_options
+# NOTHING TO DO
+
+DEL website.menu: website_customer.menu_customers (noupdate)
+# DONE: post-migration: try to delete
