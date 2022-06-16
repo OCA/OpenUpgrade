@@ -11,7 +11,7 @@
     </field>
   </record>
   <record id="rule_slide_channel_global" model="ir.rule">
-    <field name="global"/>
+    <!-- <field name="global"/> -->
   </record>
   <record id="rule_slide_channel_not_website" model="ir.rule">
     <field name="name">Channel: public/portal/user: restricted to published and (public or member only)</field>
@@ -21,7 +21,7 @@
     <field name="perm_write" eval="0"/>
   </record>
   <record id="rule_slide_slide_global" model="ir.rule">
-    <field name="global"/>
+    <!-- <field name="global"/> -->
   </record>
   <record id="rule_slide_slide_not_website" model="ir.rule">
     <field name="perm_create" eval="0"/>
