@@ -1,0 +1,25 @@
+---Models in module 'website_blog'---
+---Fields in module 'website_blog'---
+website_blog / blog.blog                / blog_post_ids (one2many)      : NEW relation: blog.post
+website_blog / blog.blog                / seo_name (char)               : NEW
+website_blog / blog.post                / author_name (char)            : NEW isrelated: related, stored
+website_blog / blog.post                / seo_name (char)               : NEW
+website_blog / blog.post                / website_id (many2one)         : is now stored
+website_blog / blog.tag                 / seo_name (char)               : NEW
+# NOTHING TO DO
+
+---XML records in module 'website_blog'---
+ir.rule: website_blog.website_blog_post_public (noupdate) (noupdate switched)
+# DONE: pre-migration: noupdate changed to "1"
+
+NEW ir.rule: website_blog.website_blog_public (noupdate)
+NEW ir.ui.view: website_blog.assets_snippet_s_latest_posts_css_000
+NEW ir.ui.view: website_blog.assets_snippet_s_latest_posts_css_001
+NEW ir.ui.view: website_blog.assets_snippet_s_latest_posts_js_000
+NEW ir.ui.view: website_blog.assets_wysiwyg
+NEW ir.ui.view: website_blog.s_latest_posts_card_template
+NEW ir.ui.view: website_blog.s_latest_posts_horizontal_template
+NEW ir.ui.view: website_blog.snippet_options
+DEL ir.ui.view: website_blog._assets_primary_variables
+DEL ir.ui.view: website_blog.s_latest_posts_big_picture
+# NOTHING TO DO
