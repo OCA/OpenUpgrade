@@ -1,0 +1,8 @@
+---Models in module 'stock_sms'---
+---Fields in module 'stock_sms'---
+---XML records in module 'stock_sms'---
+NEW ir.model.access: stock_sms.access_confirm_stock_sms
+# NOTHING TO DO
+
+ir.rule: stock_sms.ir_rule_sms_template_stock_manager (noupdate) (noupdate switched)
+# DONE: pre-migration: noupdate changed to "1"
