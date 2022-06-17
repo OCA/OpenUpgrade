@@ -1,9 +1,11 @@
 <?xml version='1.0' encoding='utf-8'?>
 <odoo>
   <record id="delivery_carrier_comp_rule" model="ir.rule">
-    <field name="global"/>
+<!-- Writing global is useless, a it is a computed field -->
+<!--     <field name="global"/> -->
   </record>
   <record id="product_product_delivery" model="product.product">
-    <field name="invoice_policy">order</field>
+<!-- do not change value that is valid and can be used in production -->
+<!--     <field name="invoice_policy">order</field> -->
   </record>
 </odoo>
