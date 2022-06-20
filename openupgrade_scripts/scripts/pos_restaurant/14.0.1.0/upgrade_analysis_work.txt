@@ -1,0 +1,11 @@
+---Models in module 'pos_restaurant'---
+---Fields in module 'pos_restaurant'---
+pos_restaurant / pos.config               / set_tip_after_payment (boolean): NEW
+# New feature. Nothing to do.
+
+pos_restaurant / restaurant.floor         / active (boolean)              : NEW hasdefault
+# New active field on pos.restaurant (default=True). Nothing to do.
+
+---XML records in module 'pos_restaurant'---
+NEW ir.ui.view: pos_restaurant.qunit_suite_tests
+NEW ir.ui.view: pos_restaurant.view_restaurant_floor_search
