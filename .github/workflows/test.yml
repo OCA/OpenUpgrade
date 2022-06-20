@@ -24,6 +24,7 @@ jobs:
       PGHOST: "localhost"
       PGPASSWORD: "odoo"
       PGUSER: "odoo"
+      OPENUPGRADE_USE_DEMO: "yes"
     steps:
       - name: Set up Python
         uses: actions/setup-python@v2
