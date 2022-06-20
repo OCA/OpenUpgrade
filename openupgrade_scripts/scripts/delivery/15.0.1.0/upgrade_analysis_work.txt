@@ -1,0 +1,23 @@
+---Models in module 'delivery'---
+---Fields in module 'delivery'---
+delivery     / product.packaging        / height (integer)              : DEL
+delivery     / product.packaging        / max_weight (float)            : DEL
+delivery     / product.packaging        / package_carrier_type (selection): DEL selection_keys: ['none']
+delivery     / product.packaging        / packaging_length (integer)    : DEL
+delivery     / product.packaging        / shipper_package_code (char)   : DEL
+delivery     / product.packaging        / width (integer)               : DEL
+delivery     / stock.package.type       / package_carrier_type (selection): NEW selection_keys: ['none'], hasdefault
+delivery     / stock.package.type       / shipper_package_code (char)   : NEW
+# DONE: post-migration: move data from product_packaging table to stock_package_type
+
+---XML records in module 'delivery'---
+DEL ir.actions.act_window: delivery.action_delivery_packaging_view
+DEL ir.ui.menu: delivery.menu_delivery [renamed to stock module]
+DEL ir.ui.menu: delivery.menu_delivery_packagings
+NEW ir.ui.view: delivery.stock_package_type_form_delivery
+NEW ir.ui.view: delivery.stock_package_type_tree_delivery
+NEW ir.ui.view: delivery.view_move_line_tree_detailed_delivery
+DEL ir.ui.view: delivery.product_packaging_delivery_form
+DEL ir.ui.view: delivery.product_packaging_delivery_tree
+DEL ir.ui.view: delivery.view_quant_package_packaging_tree
+# NOTHING TO DO: noupdate="0" records
