@@ -1,0 +1,7 @@
+<?xml version='1.0' encoding='utf-8'?>
+<odoo>
+  <record id="ir_cron_edi_network" model="ir.cron">
+    <field name="code">model._cron_process_documents_web_services(job_count=20)</field>
+    <field name="interval_type">days</field>
+  </record>
+</odoo>
