@@ -1,0 +1,19 @@
+---Models in module 'hr_holidays_attendance'---
+---Fields in module 'hr_holidays_attendance'---
+hr_holidays_attendance / hr.leave                 / overtime_id (many2one)        : NEW relation: hr.attendance.overtime
+hr_holidays_attendance / hr.leave.allocation      / overtime_id (many2one)        : NEW relation: hr.attendance.overtime
+hr_holidays_attendance / hr.leave.type            / overtime_deductible (boolean) : NEW hasdefault
+# NOTHING TO DO: new feature allowing convert extra hours to leave allocation
+
+---XML records in module 'hr_holidays_attendance'---
+NEW hr.leave.type: hr_holidays_attendance.holiday_status_extra_hours (noupdate)
+NEW ir.actions.act_window: hr_holidays_attendance.hr_leave_allocation_overtime_action
+NEW ir.actions.act_window: hr_holidays_attendance.hr_leave_allocation_overtime_manager_action
+NEW ir.ui.view: hr_holidays_attendance.hr_attendance_holidays_hr_leave_allocation_view_form_inherit
+NEW ir.ui.view: hr_holidays_attendance.hr_employee_view_form_inherit
+NEW ir.ui.view: hr_holidays_attendance.hr_leave_allocation_overtime_manager_view_form
+NEW ir.ui.view: hr_holidays_attendance.hr_leave_allocation_overtime_view_form
+NEW ir.ui.view: hr_holidays_attendance.hr_leave_type_view_form
+NEW ir.ui.view: hr_holidays_attendance.hr_leave_view_form
+NEW ir.ui.view: hr_holidays_attendance.res_users_view_form
+# NOTHING TO DO
