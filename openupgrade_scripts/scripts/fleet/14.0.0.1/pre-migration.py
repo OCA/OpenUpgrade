@@ -9,3 +9,6 @@ def migrate(env, version):
         env.cr,
         {"fleet_vehicle_log_contract": [("state", None, None), ("name", None, None)]},
     )
+    openupgrade.remove_tables_fks(
+        env.cr, ["fleet_vehicle_cost", "fleet_vehicle_log_fuel"]
+    )
