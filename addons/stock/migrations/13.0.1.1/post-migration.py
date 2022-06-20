@@ -188,14 +188,22 @@ def map_stock_location_usage(env):
 def fill_stock_picking_type_sequence_code(env):
     """Deduce sequence code from current sequence pattern """
     picking_types = env["stock.picking.type"].with_context(active_text=False).search([])
+    spt_seq_codes = []
     for picking_type in picking_types:
         prefix = picking_type.sequence_id.prefix
         if picking_type.warehouse_id:
             groups = re.findall(r"(.*)\/(.*)\/", prefix)
             if groups and len(groups[0]) == 2:
-                picking_type.sequence_code = groups[0][1]
+                spt_seq_codes += [(picking_type.id, groups[0][1])]
         else:
-            picking_type.sequence_code = prefix
+            spt_seq_codes += [(picking_type.id, prefix)]
+    for picking_type_id, prefix in spt_seq_codes:
+        env.cr.execute("""
+            UPDATE stock_picking_type spt
+            SET sequence_code = %s
+            WHERE spt.id = %s
+            """, (prefix, picking_type_id)
+        )
 
 
 def convert_many2one_stock_inventory_product_and_location(env):
