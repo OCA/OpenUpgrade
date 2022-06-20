@@ -1,5 +1,7 @@
 # Copyright Odoo Community Association (OCA)
 # License AGPL-3.0 or later (http://www.gnu.org/licenses/agpl).
+import os
+
 import odoo
 from odoo.modules.graph import Graph
 
@@ -7,6 +9,8 @@ from odoo.modules.graph import Graph
 def update_from_db(self, cr):
     """Prevent reloading of demo data from the new version on major upgrade"""
     Graph.update_from_db._original_method(self, cr)
+    if os.environ.get("OPENUPGRADE_USE_DEMO", "") == "yes":
+        return
     if (
         "base" in self
         and self["base"].dbdemo
