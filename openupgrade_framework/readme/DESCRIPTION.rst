@@ -17,6 +17,9 @@ OpenUpgrade migration scripts:
 * Run migration scripts for modules that are installed as new dependencies
   of upgraded modules (when there are such scripts for those particular
   modules)
+* Production databases generated with demo data, will be transformed to
+  non-demo ones. If you want to avoid that, you have to pass through the
+  environment variable OPENUPGRADE_USE_DEMO, the value "yes".
 
 For detailed documentation see:
 
