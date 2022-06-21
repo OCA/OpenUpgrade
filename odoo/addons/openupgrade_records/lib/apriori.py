@@ -69,11 +69,16 @@ merged_modules = {
     # OCA/l10n-spain
     'l10n_es_account_invoice_sequence': 'l10n_es',
     'l10n_es_aeat_sii': 'l10n_es_aeat_sii_oca',
+    # OCA/manufacture
+    'repair_calendar_view': 'base_repair',
     # OCA/multi-company
     'stock_production_lot_multi_company': 'stock',
     # OCA/partner-contact
     'base_vat_sanitized': 'base_vat',
     'partner_group': 'partner_company_group',
+    # OCA/payroll
+    'hr_payroll': 'payroll',
+    'hr_payroll_account': 'payroll_account',
     # OCA/product-attribute
     'product_pricelist_show_product_ref': 'product',
     # OCA/product-variant
@@ -132,9 +137,6 @@ merged_modules = {
     'muk_dms_mail': 'dms',
     'muk_dms_thumbnails': 'dms',
     'muk_dms_view': 'dms',
-    # OCA/payroll
-    'hr_payroll': 'payroll',
-    'hr_payroll_account': 'payroll_account',
 }
 
 # only used here for openupgrade_records analysis:
