@@ -1,9 +1,15 @@
 ---Models in module 'sale'---
 ---Fields in module 'sale'---
 sale         / product.packaging        / sales (boolean)               : NEW hasdefault
+# NOTHING TO DO: new feature
+
 sale         / sale.order               / note (text)                   : type is now 'html' ('text')
+# DONE: pre-migration: convert text to html
+
 sale         / sale.order.line          / product_packaging_id (many2one): NEW relation: product.packaging, hasdefault
 sale         / sale.order.line          / product_packaging_qty (float) : NEW
+# NOTHING TO DO: handled in sale_stock module (renamed column from product_packaging to product_packaging_id)
+
 ---XML records in module 'sale'---
 NEW ir.actions.act_window: sale.action_accrued_revenue_entry
 NEW ir.actions.act_window: sale.action_sale_order_form_view
@@ -23,3 +29,4 @@ DEL ir.ui.view: sale.assets_tests
 DEL ir.ui.view: sale.crm_team_salesteams_view_kanban
 DEL ir.ui.view: sale.qunit_suite
 DEL ir.ui.view: sale.report_assets_common_inherit_sale
+# NOTHING TO DO: noupdate="0" records
