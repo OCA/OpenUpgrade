@@ -1,0 +1,13 @@
+---Models in module 'purchase_stock'---
+---Fields in module 'purchase_stock'---
+purchase_stock / purchase.order           / picking_count (integer)       : DEL
+# NOTHING TO DO: alternative field no store
+
+purchase_stock / stock.warehouse.orderpoint / vendor_id (many2one)          : NEW relation: res.partner, isrelated: related, stored
+# NOTHING TO DO: handle by ORM
+
+---XML records in module 'purchase_stock'---
+NEW ir.ui.view: purchase_stock.product_supplierinfo_replenishment_tree_view
+NEW ir.ui.view: purchase_stock.view_stock_replenishment_info_stock_purchase_inherit
+DEL ir.ui.view: purchase_stock.assets_backend
+# NOTHING TO DO: noupdate="0" records
