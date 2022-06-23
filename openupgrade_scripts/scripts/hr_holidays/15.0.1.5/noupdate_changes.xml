@@ -2,7 +2,7 @@
 <odoo>
   <record id="holiday_status_cl" model="hr.leave.type">
     <field name="allocation_validation_type">officer</field>
-    <field name="color_name"/>
+    <!--<field name="color_name"/>-->
     <field name="color">2</field>
     <field name="employee_requests">no</field>
     <field name="icon_id" ref="hr_holidays.icon_14"/>
@@ -10,7 +10,7 @@
   </record>
   <record id="holiday_status_comp" model="hr.leave.type">
     <field name="allocation_validation_type">officer</field>
-    <field name="color_name"/>
+    <!--<field name="color_name"/>-->
     <field name="color">4</field>
     <field name="employee_requests">yes</field>
     <field name="icon_id" ref="hr_holidays.icon_4"/>
@@ -24,7 +24,7 @@
   </record>
   <record id="holiday_status_unpaid" model="hr.leave.type">
     <field name="allocation_validation_type">officer</field>
-    <field name="color_name"/>
+    <!--<field name="color_name"/>-->
     <field name="color">5</field>
     <field name="icon_id" ref="hr_holidays.icon_28"/>
     <field name="requires_allocation">no</field>
