@@ -1,0 +1,27 @@
+---Models in module 'hr_recruitment'---
+---Fields in module 'hr_recruitment'---
+hr_recruitment / hr.applicant             / description (text)            : type is now 'html' ('text')
+# DONE: pre-migration: convert text fields to html
+
+hr_recruitment / hr.applicant             / meeting_ids (one2many)        : NEW relation: calendar.event
+# NOTHING TO DO: support count mettings in smart button with compute not store
+
+hr_recruitment / hr.applicant.refuse.reason / template_id (many2one)        : NEW relation: mail.template
+hr_recruitment / hr.job                   / _order                        : _order is now 'sequence, state desc, name asc' ('state desc, name asc')
+hr_recruitment / hr.recruitment.stage     / hired_stage (boolean)         : NEW
+# NOTHING TO DO: New feature do not affect old data
+
+---XML records in module 'hr_recruitment'---
+DEL ir.model.constraint: hr_recruitment.constraint_hr_applicant_category_name_uniq
+DEL ir.model.constraint: hr_recruitment.constraint_hr_recruitment_degree_name_uniq
+# NOTHING TO DO
+
+ir.ui.view: hr_recruitment.applicant_hired_template (noupdate) (noupdate switched)
+# DONE: pre-migration: noupdate change to 1
+
+NEW ir.ui.view: hr_recruitment.hr_recruitment_source_kanban
+DEL ir.ui.view: hr_recruitment.assets_backend
+DEL ir.ui.view: hr_recruitment.assets_tests
+NEW mail.message.subtype: hr_recruitment.mt_job_applicant_new (noupdate)
+NEW mail.template: hr_recruitment.email_template_data_applicant_not_interested (noupdate)
+# NOTHING TO DO
