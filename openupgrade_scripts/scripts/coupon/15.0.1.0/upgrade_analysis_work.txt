@@ -1,0 +1,11 @@
+---Models in module 'coupon'---
+---Fields in module 'coupon'---
+coupon       / coupon.program           / company_id (many2one)         : now required, req_default: function
+# NOTHING TO DO: company_id has default
+
+---XML records in module 'coupon'---
+DEL ir.model.constraint: coupon.constraint_coupon_coupon_unique_coupon_code
+# NOTHING TO DO
+
+DEL mail.template: coupon.mail_template_sale_coupon [renamed to sale_coupon module] (noupdate)
+# DONE: post-migration: safely deleted xmlids
