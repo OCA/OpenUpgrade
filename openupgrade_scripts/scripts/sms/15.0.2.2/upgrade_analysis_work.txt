@@ -1,0 +1,16 @@
+---Models in module 'sms'---
+---Fields in module 'sms'---
+sms          / mail.notification        / failure_type (False)          : selection_keys is now '['mail_email_invalid', 'mail_email_missing', 'mail_smtp', 'sms_acc', 'sms_credit', 'sms_number_format', 'sms_number_missing', 'sms_server', 'unknown']' ('['BOUNCE', 'RECIPIENT', 'SMTP', 'UNKNOWN', 'sms_acc', 'sms_credit', 'sms_number_format', 'sms_number_missing', 'sms_server']')
+sms          / res.partner              / phone_mobile_search (char)    : NEW
+# NOTHING TO DO: non-stored fiield
+
+sms          / sms.sms                  / error_code (selection)        : DEL selection_keys: ['sms_acc', 'sms_blacklist', 'sms_credit', 'sms_duplicate', 'sms_number_format', 'sms_number_missing', 'sms_server']
+sms          / sms.sms                  / failure_type (selection)      : NEW selection_keys: ['sms_acc', 'sms_blacklist', 'sms_credit', 'sms_duplicate', 'sms_number_format', 'sms_number_missing', 'sms_optout', 'sms_server']
+# DONE: pre-migration: rename filed error_code to failure_type
+
+---XML records in module 'sms'---
+NEW ir.actions.server: sms.ir_actions_server_sms_sms_resend
+NEW ir.ui.view: sms.res_partner_view_search
+DEL ir.ui.view: sms.assets_backend
+DEL ir.ui.view: sms.qunit_suite
+# NOTHING TO DO
