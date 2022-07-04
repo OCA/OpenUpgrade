@@ -1,4 +1,8 @@
+import logging
+
 from openupgradelib import openupgrade
+
+_logger = logging.getLogger(__name__)
 
 
 @openupgrade.migrate()
@@ -25,4 +29,10 @@ def migrate(env, version):
                     "value": pad_configs[0]["pad_key"],
                 },
             ]
+        )
+    else:
+        _logger.warning(
+            "Pad: The system has multiple pad servers. \
+                Odoo 15.0 supports only 1. No pad settings have been changed. \
+                    This may require manual configuration after migration."
         )
