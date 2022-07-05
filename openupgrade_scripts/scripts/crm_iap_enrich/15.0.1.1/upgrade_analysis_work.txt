@@ -1,0 +1,19 @@
+---Models in module 'crm_iap_enrich'---
+model iap.enrich.api (moved to iap) [abstract]
+---Fields in module 'crm_iap_enrich'---
+---XML records in module 'crm_iap_enrich'---
+NEW ir.actions.server: crm_iap_enrich.action_enrich_mail [renamed from crm_iap_lead_enrich module]
+DEL ir.actions.server: crm_iap_lead_enrich.action_enrich_mail [renamed to crm_iap_enrich module]
+NEW ir.cron: crm_iap_enrich.ir_cron_lead_enrichment [renamed from crm_iap_lead_enrich module]
+DEL ir.cron: crm_iap_lead_enrich.ir_cron_lead_enrichment [renamed to crm_iap_enrich module]
+NEW ir.ui.view: crm_iap_enrich.crm_lead_view_form
+NEW ir.ui.view: crm_iap_enrich.mail_message_lead_enrich_no_credit
+NEW ir.ui.view: crm_iap_enrich.mail_message_lead_enrich_no_email
+NEW ir.ui.view: crm_iap_enrich.mail_message_lead_enrich_notfound
+NEW ir.ui.view: crm_iap_enrich.res_config_settings_view_form
+DEL ir.ui.view: crm_iap_lead_enrich.crm_lead_view_form
+DEL ir.ui.view: crm_iap_lead_enrich.mail_message_lead_enrich_no_credit
+DEL ir.ui.view: crm_iap_lead_enrich.mail_message_lead_enrich_no_email
+DEL ir.ui.view: crm_iap_lead_enrich.mail_message_lead_enrich_notfound
+DEL ir.ui.view: crm_iap_lead_enrich.res_config_settings_view_form
+# NOTHING TO DO: noupdate="0" records
