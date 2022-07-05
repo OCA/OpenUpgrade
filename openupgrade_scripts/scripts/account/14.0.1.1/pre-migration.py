@@ -132,6 +132,11 @@ def copy_fields(env):
             "account_journal": [
                 ("default_credit_account_id", None),
                 ("default_debit_account_id", None),
+                # We keep the M2O ir.sequence fields for those who
+                # want to use the OCA v14 module 'account_move_name_sequence'
+                # from OCA/account-financial-tools
+                ("sequence_id", None),
+                ("refund_sequence_id", None),
             ],
         },
     )
