@@ -113,13 +113,16 @@ jobs:
               | sed -rn 's/((^\| *\|new\| *)|^\| *)([0-9a-z_]*)[ \|].*/\3/g p' \
               | sed '/^\s*$/d' \
               | paste -d, -s)
-          psql $DB -c "update ir_module_module set state='uninstalled' \
+          REQUEST="update ir_module_module set state='uninstalled' \
               where name not in ('$(echo $MODULES_OLD | sed -e "s/,/','/g")')"
+          echo Set the modules as not installable if they are not in the following list : $MODULES_OLD
+          echo Running $REQUEST
+          psql $DB -c "$REQUEST"
           ADDONS_PATHS="\
               $GITHUB_WORKSPACE/odoo/addons \
               $GITHUB_WORKSPACE/odoo/odoo/addons \
               $GITHUB_WORKSPACE/openupgrade"
-          echo Testing modules $MODULES_NEW
+          echo Execution of Openupgrade with the update of the following modules : $MODULES_NEW
           # Silence redundant logs from unlinking records (1 line is enough)
           # to prevent log overflow
           OPENUPGRADE_TESTS=1 $ODOO \
