@@ -59,8 +59,24 @@ def _delete_channel_follower_records(env):
     )
 
 
+def _delete_mail_channel_partner_duplicate_records(env):
+    # Cleanup potential duplicates to comply with
+    # the new constraint mail_channel_partner_partner_unique
+    openupgrade.logged_query(
+        env.cr,
+        """
+        DELETE FROM mail_channel_partner mcp1
+        USING mail_channel_partner mcp2
+        WHERE mcp1.id < mcp2.id
+            AND mcp1.partner_id = mcp2.partner_id
+            AND mcp1.channel_id = mcp2.channel_id;
+        """,
+    )
+
+
 @openupgrade.migrate()
 def migrate(env, version):
+    _delete_mail_channel_partner_duplicate_records(env)
     _copy_columns(env)
     _rename_tables(env)
     _rename_fields(env)
