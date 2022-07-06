@@ -29,7 +29,8 @@ merged_modules = {
     "website_event_track_exhibitor": "website_event_exhibitor",
     "website_form": "website",
     "website_sale_management": "website_sale",
-    # OCA/...
+    # OCA/web
+    "web_decimal_numpad_dot": "web",
 }
 
 # only used here for upgrade_analysis
