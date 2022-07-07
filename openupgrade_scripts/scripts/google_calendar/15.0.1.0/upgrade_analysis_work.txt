@@ -1,0 +1,32 @@
+---Models in module 'google_calendar'---
+new model google.calendar.credentials
+---Fields in module 'google_calendar'---
+google_calendar / google.calendar.credentials / calendar_cal_id (char)        : NEW
+google_calendar / google.calendar.credentials / calendar_rtoken (char)        : NEW
+google_calendar / google.calendar.credentials / calendar_sync_token (char)    : NEW
+google_calendar / google.calendar.credentials / calendar_token (char)         : NEW
+google_calendar / google.calendar.credentials / calendar_token_validity (datetime): NEW
+google_calendar / google.calendar.credentials / synchronization_stopped (boolean): NEW
+google_calendar / google.calendar.credentials / user_ids (one2many)           : NEW relation: res.users, required
+google_calendar / res.users                / google_cal_account_id (many2one): NEW relation: google.calendar.credentials
+# NOTHING TO DO: new feature
+
+google_calendar / res.users                / google_calendar_cal_id (char) : not stored anymore
+google_calendar / res.users                / google_calendar_cal_id (char) : now related
+google_calendar / res.users                / google_calendar_rtoken (char) : not stored anymore
+google_calendar / res.users                / google_calendar_rtoken (char) : now related
+google_calendar / res.users                / google_calendar_sync_token (char): not stored anymore
+google_calendar / res.users                / google_calendar_sync_token (char): now related
+google_calendar / res.users                / google_calendar_token (char)  : not stored anymore
+google_calendar / res.users                / google_calendar_token (char)  : now related
+google_calendar / res.users                / google_calendar_token_validity (datetime): not stored anymore
+google_calendar / res.users                / google_calendar_token_validity (datetime): now related
+# DONE: move credentials from res_user table to google_calendar_credentials table
+
+---XML records in module 'google_calendar'---
+NEW ir.model.access: google_calendar.access_google_calendar_credentials
+NEW ir.model.access: google_calendar.google_calendar_manager
+DEL ir.ui.view: google_calendar.assets_backend
+DEL ir.ui.view: google_calendar.qunit_mobile_suite
+DEL ir.ui.view: google_calendar.qunit_suite
+# NOTHING TO DO: noupdate="0" records
