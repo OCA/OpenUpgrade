@@ -1,0 +1,21 @@
+---Models in module 'sale_project'---
+---Fields in module 'sale_project'---
+sale_project / project.project          / sale_line_id (many2one)       : now a function
+sale_project / project.project          / sale_order_id (many2one)      : not stored anymore
+sale_project / project.project          / sale_order_id (many2one)      : now related
+sale_project / project.task             / sale_order_id (many2one)      : now a function
+# NOTHING TO DO: Handle by ORM
+
+---XML records in module 'sale_project'---
+DEL ir.actions.server: sale_project.project_task_server_action_batch_invoice
+# NOTHING TO DO: noupdate="0" records
+
+DEL ir.model.constraint: sale_project.constraint_project_project_sale_order_required_if_sale_line
+# NOTHING TO DO: auto remove
+
+NEW ir.ui.view: sale_project.portal_tasks_list_inherit
+NEW ir.ui.view: sale_project.project_project_view_inherit_project_filter
+NEW ir.ui.view: sale_project.project_sharing_inherit_project_task_view_form
+NEW ir.ui.view: sale_project.project_sharing_inherit_project_task_view_search
+NEW ir.ui.view: sale_project.view_task_project_user_search_inherited
+# NOTHING TO DO: noupdate="0" records
