@@ -1,0 +1,9 @@
+---Models in module 'pad_project'---
+---Fields in module 'pad_project'---
+pad_project  / project.project          / pad_availability (selection)  : DEL required, selection_keys: ['internal', 'portal'], req_default: function
+# NOTHING TO DO: not used anymore
+
+---XML records in module 'pad_project'---
+DEL ir.ui.view: pad_project.portal_my_task
+DEL ir.ui.view: pad_project.project_portal_assets_frontend
+# NOTHING TO DO
