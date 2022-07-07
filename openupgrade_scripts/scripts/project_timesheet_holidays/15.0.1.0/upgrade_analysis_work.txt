@@ -1,0 +1,10 @@
+---Models in module 'project_timesheet_holidays'---
+---Fields in module 'project_timesheet_holidays'---
+project_timesheet_holidays / account.analytic.line    / global_leave_id (many2one)    : NEW relation: resource.calendar.leaves
+project_timesheet_holidays / resource.calendar.leaves / timesheet_ids (one2many)      : NEW relation: account.analytic.line
+# NOTHING TO DO: new feature
+
+project_timesheet_holidays / res.company              / leave_timesheet_project_id (many2one): DEL relation: project.project
+# DONE: pre-migration: change data from 'leave_timesheet_project_id' to 'internal_project_id' (now hr_timesheet)
+
+---XML records in module 'project_timesheet_holidays'---
