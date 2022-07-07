@@ -1,0 +1,11 @@
+---Models in module 'partner_autocomplete'---
+new model iap.autocomplete.api [abstract]
+---Fields in module 'partner_autocomplete'---
+partner_autocomplete / res.company              / iap_enrich_auto_done (boolean): NEW
+# NOTHING TO DO: new feature
+
+---XML records in module 'partner_autocomplete'---
+DEL ir.ui.view: partner_autocomplete.assets_backend
+DEL ir.ui.view: partner_autocomplete.qunit_suite
+DEL ir.ui.view: partner_autocomplete.tests_assets
+# NOTHING TO DO
