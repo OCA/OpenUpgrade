@@ -5,7 +5,7 @@ import logging
 
 from openupgradelib import openupgrade
 
-from odoo import tools
+from odoo import modules, tools
 
 _logger = logging.getLogger(__name__)
 
@@ -53,6 +53,23 @@ rename_xmlids_mail = [
 ]
 
 
+def update_uninstallable_modules_state(cr):
+    cr.execute("SELECT name FROM ir_module_module WHERE state = 'installed'")
+    module_list = [name for (name,) in cr.fetchall()]
+    uninstallable_modules = []
+    for module in module_list:
+        info = modules.module.load_information_from_description_file(module)
+        if module != "studio_customization" and (not info or not info["installable"]):
+            uninstallable_modules.append(module)
+    if uninstallable_modules:
+        cr.execute(
+            """UPDATE ir_module_module
+            SET state='uninstallable'
+            WHERE name IN %s AND state='installed'""",
+            (tuple(uninstallable_modules),),
+        )
+
+
 @openupgrade.migrate(use_env=False)
 def migrate(cr, version):
     """
@@ -72,6 +89,7 @@ def migrate(cr, version):
 
     openupgrade.update_module_names(cr, renamed_modules.items())
     openupgrade.update_module_names(cr, merged_modules.items(), merge_modules=True)
+    update_uninstallable_modules_state(cr)
 
     openupgrade.convert_field_to_html(
         cr, "res_company", "report_footer", "report_footer"
