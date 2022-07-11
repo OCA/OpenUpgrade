@@ -29,6 +29,10 @@ merged_modules = {
     "website_event_track_exhibitor": "website_event_exhibitor",
     "website_form": "website",
     "website_sale_management": "website_sale",
+    # OCA/account-financial-tools
+    "stock_account_prepare_anglo_saxon_out_lines_hook": "stock_account",
+    # OCA/stock-logistics-workflow
+    "stock_move_assign_picking_hook": "stock",
     # OCA/web
     "web_decimal_numpad_dot": "web",
 }
