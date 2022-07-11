@@ -34,16 +34,16 @@ def _raise_view_error(
                 from_exception=from_exception,
                 from_traceback=from_traceback,
             )
-        except ValueError:
+        except ValueError as e:
             _logger.warning(
                 "Can't render custom view %s for model %s. "
-                "Assuming you are migrating between major versions of "
-                "Odoo, this view is now set to inactive. Please "
-                "review the view contents manually after the migration.",
+                "Assuming you are migrating between major versions of Odoo. "
+                "Please review the view contents manually after the migration.\n"
+                "Error: %s",
                 self.xml_id,
                 self.model,
+                e,
             )
-            self.write({"active": False})
 
 
 _check_xml._original_method = View._check_xml
