@@ -54,7 +54,8 @@ def fill_fleet_vehicle_log_contract_service_ids(env):
         (fleet_vehicle_log_contract_id, fleet_service_type_id)
         SELECT fvlc.id, fvc.cost_subtype_id
         FROM fleet_vehicle_log_contract fvlc
-        JOIN fleet_vehicle_cost fvc ON fvc.contract_id = fvlc.id
+        JOIN fleet_vehicle_cost fvc ON fvc.parent_id = fvlc.cost_id
+        WHERE fvc.cost_subtype_id IS NOT NULL
         """,
     )
 
