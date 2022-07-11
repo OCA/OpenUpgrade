@@ -63,6 +63,8 @@ merged_modules = {
     "pos_kitchen_printer": "pos_restaurant",
     "pos_reprint": "point_of_sale",
     "website_theme_install": "website",
+    # OCA/event
+    "website_event_questions_free_text": "website_event_questions",
     # OCA/margin-analysis
     "sale_order_margin_percent": "sale_margin",
     # OCA/partner-contact
