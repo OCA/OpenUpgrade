@@ -1043,6 +1043,22 @@ def fill_account_move_line_missing_fields(env):
     """)
 
 
+def _empty_move_partner_field(env):
+    """On pre-v13, account.move>partner_id was a related stored field that pointed to
+    the first partner found on lines, but now on v13, this field points only to the
+    partner of the invoices, being empty when you fill a regular entry.
+
+    For consistency, and also for avoiding problems like duplicating a journal entry,
+    change the parter on the lines, and get a different partner on header vs lines,
+    we should empty the partner in all the existing regular entries.
+    """
+    openupgrade.logged_query(
+        env.cr,
+        """UPDATE account_move SET partner_id=NULL
+        WHERE partner_id IS NOT NULL AND type = 'entry'"""
+    )
+
+
 @openupgrade.migrate()
 def migrate(env, version):
     fill_account_reconcile_model_second_analytic_tag_rel_table(env)
@@ -1067,6 +1083,7 @@ def migrate(env, version):
     assign_account_tags_to_move_lines(env)
     compute_balance_for_draft_invoice_lines(env)
     _recompute_move_entries_totals(env)
+    _empty_move_partner_field(env)
     openupgrade.load_data(
         env.cr, "account", "migrations/13.0.1.1/noupdate_changes.xml")
     openupgrade.delete_record_translations(
