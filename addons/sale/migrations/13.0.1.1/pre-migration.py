@@ -11,6 +11,10 @@ _table_renames = [
 _field_renames = [
     ('product.attribute', 'product_attribute',
      'type', 'display_type'),
+    ('product.template', 'product_template',
+     'hide_expense_policy', 'visible_expense_policy'),
+    ('product.product', 'product_product',
+     'hide_expense_policy', 'visible_expense_policy'),
 ]
 
 _column_renames = {
