@@ -29,6 +29,13 @@ sale         / crm.team                 / use_invoices (boolean)        : DEL
 
 sale         / product.attribute        / display_type (selection)      : NEW required, selection_keys: ['color', 'radio', 'select'], req_default: function, hasdefault
 sale         / product.attribute        / type (selection)              : DEL required, selection_keys: ['color', 'radio', 'select'], req_default: function
+
+sale         / product.template        / visible_expense_policy (Boolean) : NEW
+sale         / product.template        / hide_expense_policy (Boolean)    : DEL required,
+
+sale         / product.product        / visible_expense_policy (Boolean) : NEW
+sale         / product.product        / hide_expense_policy (Boolean)    : DEL required,
+
 # DONE: pre-migration: Rename field
 
 sale         / product.attribute.custom.value / attribute_value_id (many2one) : DEL relation: product.attribute.value
