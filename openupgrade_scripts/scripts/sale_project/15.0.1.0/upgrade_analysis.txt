@@ -6,6 +6,7 @@ sale_project / project.project          / sale_order_id (many2one)      : now re
 sale_project / project.task             / sale_order_id (many2one)      : now a function
 ---XML records in module 'sale_project'---
 DEL ir.actions.server: sale_project.project_task_server_action_batch_invoice
+DEL ir.model.constraint: sale_project.constraint_project_project_sale_order_required_if_sale_line
 NEW ir.ui.view: sale_project.portal_tasks_list_inherit
 NEW ir.ui.view: sale_project.project_project_view_inherit_project_filter
 NEW ir.ui.view: sale_project.project_sharing_inherit_project_task_view_form

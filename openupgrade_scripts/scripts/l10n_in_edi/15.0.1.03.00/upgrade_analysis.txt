@@ -1,0 +1,14 @@
+---Models in module 'l10n_in_edi'---
+---Fields in module 'l10n_in_edi'---
+l10n_in_edi  / account.move             / l10n_in_edi_cancel_reason (selection): NEW selection_keys: ['1', '2', '3', '4']
+l10n_in_edi  / account.move             / l10n_in_edi_cancel_remarks (char): NEW
+l10n_in_edi  / res.company              / l10n_in_edi_password (char)   : NEW
+l10n_in_edi  / res.company              / l10n_in_edi_production_env (boolean): NEW
+l10n_in_edi  / res.company              / l10n_in_edi_token (char)      : NEW
+l10n_in_edi  / res.company              / l10n_in_edi_token_validity (datetime): NEW
+l10n_in_edi  / res.company              / l10n_in_edi_username (char)   : NEW
+---XML records in module 'l10n_in_edi'---
+NEW account.edi.format: l10n_in_edi.edi_in_einvoice_json_1_03
+NEW ir.ui.view: l10n_in_edi.invoice_form_inherit_l10n_in_edi
+NEW ir.ui.view: l10n_in_edi.l10n_in_einvoice_report_invoice_document_inherit
+NEW ir.ui.view: l10n_in_edi.res_config_settings_view_form_inherit_l10n_in_edi

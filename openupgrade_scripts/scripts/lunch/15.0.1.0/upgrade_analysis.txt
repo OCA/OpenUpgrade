@@ -62,6 +62,7 @@ DEL ir.cron: lunch.ir_cron_lunch_alerts (noupdate)
 DEL ir.model.access: lunch.lunch_product_report_user
 NEW ir.rule: lunch.ir_rule_lunch_order_multi_company (noupdate)
 DEL ir.rule: lunch.ir_rule_lunch_product_report_multi_company (noupdate)
+NEW ir.ui.view: lunch.lunch_product_view_tree_order
 DEL ir.ui.view: lunch.assets_backend
 DEL ir.ui.view: lunch.lunch_product_report_view_search
 DEL ir.ui.view: lunch.lunch_product_report_view_tree

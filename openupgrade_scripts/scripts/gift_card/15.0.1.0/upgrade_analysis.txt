@@ -11,6 +11,8 @@ gift_card    / product.template         / detailed_type (False)         : NEW se
 ---XML records in module 'gift_card'---
 NEW ir.actions.act_window: gift_card.gift_card_action
 NEW ir.model.access: gift_card.access_gift_card_all
+NEW ir.model.constraint: gift_card.constraint_gift_card_check_amount
+NEW ir.model.constraint: gift_card.constraint_gift_card_unique_gift_card_code
 NEW ir.ui.view: gift_card.gift_card_view_form
 NEW ir.ui.view: gift_card.gift_card_view_search
 NEW ir.ui.view: gift_card.gift_card_view_tree

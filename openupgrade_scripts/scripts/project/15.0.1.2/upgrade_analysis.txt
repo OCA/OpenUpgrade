@@ -81,6 +81,7 @@ NEW ir.actions.act_window.view: project.project_sharing_tree_action_view
 NEW ir.actions.act_window.view: project.rating_rating_action_project_report_kanban
 NEW ir.model.access: project.access_project_collaborator_manager
 NEW ir.model.access: project.access_project_collaborator_portal
+NEW ir.model.access: project.access_project_collaborator_user
 NEW ir.model.access: project.access_project_milestone_portal
 NEW ir.model.access: project.access_project_milestone_project_manager
 NEW ir.model.access: project.access_project_milestone_project_user
@@ -95,8 +96,13 @@ NEW ir.model.access: project.access_project_update_portal
 NEW ir.model.access: project.access_project_update_project_manager
 NEW ir.model.access: project.access_project_update_project_user
 NEW ir.model.access: project.access_project_update_user
+NEW ir.model.constraint: project.constraint_project_collaborator_unique_collaborator
+NEW ir.model.constraint: project.constraint_project_task_user_rel_project_personal_stage_unique
 NEW ir.rule: project.ir_rule_private_task (noupdate)
 NEW ir.rule: project.ir_rule_project_personal_stage_my (noupdate)
+NEW ir.rule: project.milestone_comp_rule (noupdate)
+NEW ir.rule: project.milestone_visibility_project_admin (noupdate)
+NEW ir.rule: project.milestone_visibility_rule (noupdate)
 NEW ir.rule: project.project_collaborator_rule_portal (noupdate)
 NEW ir.rule: project.project_task_rule_portal_project_sharing (noupdate)
 NEW ir.rule: project.task_type_manager_rule (noupdate)
@@ -108,12 +114,14 @@ NEW ir.rule: project.update_visibility_rule (noupdate)
 NEW ir.ui.menu: project.menu_project_config_project_stage
 NEW ir.ui.menu: project.menu_projects_group_stage
 NEW ir.ui.view: project.milestone_deadline
+NEW ir.ui.view: project.personal_task_type_edit
 NEW ir.ui.view: project.portal_my_task_planned_hours_template
 NEW ir.ui.view: project.portal_my_tasks_priority_widget_template
 NEW ir.ui.view: project.portal_my_tasks_state_widget_template
 NEW ir.ui.view: project.portal_tasks_list
 NEW ir.ui.view: project.project_collaborator_view_form
 NEW ir.ui.view: project.project_collaborator_view_search
+NEW ir.ui.view: project.project_message_user_assigned (noupdate)
 NEW ir.ui.view: project.project_milestone_view_form
 NEW ir.ui.view: project.project_milestone_view_tree
 NEW ir.ui.view: project.project_project_stage_view_form

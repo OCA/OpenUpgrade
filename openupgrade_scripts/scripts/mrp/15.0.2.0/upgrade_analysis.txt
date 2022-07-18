@@ -43,6 +43,7 @@ NEW ir.actions.act_window: mrp.act_assign_serial_numbers_production
 NEW ir.actions.report: mrp.label_production_order
 NEW ir.model.access: mrp.access_mrp_workcenter_tag_group_user
 NEW ir.model.access: mrp.access_mrp_workcenter_tag_manager
+NEW ir.model.constraint: mrp.constraint_mrp_workcenter_tag_tag_name_unique
 NEW ir.ui.view: mrp.mrp_routing_workcenter_bom_tree_view
 NEW ir.ui.view: mrp.mrp_routing_workcenter_copy_to_bom_tree_view
 NEW ir.ui.view: mrp.mrp_routing_workcenter_filter

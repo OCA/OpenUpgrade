@@ -111,11 +111,18 @@ NEW ir.model.access: hr_holidays.access_hr_leave_accrual_level_user
 NEW ir.model.access: hr_holidays.access_hr_leave_accrual_plan_manager
 NEW ir.model.access: hr_holidays.access_hr_leave_accrual_plan_user
 NEW ir.model.access: hr_holidays.access_hr_leave_employee_type_report
+NEW ir.model.constraint: hr_holidays.constraint_hr_leave_accrual_level_added_value_greater_than_zero
+NEW ir.model.constraint: hr_holidays.constraint_hr_leave_accrual_level_check_dates
+NEW ir.model.constraint: hr_holidays.constraint_hr_leave_accrual_level_start_count_check
+ir.model.constraint: hr_holidays.constraint_hr_leave_allocation_duration_check (changed definition: is now 'check(( number_of_days > 0 and allocation_type='regular') or(allocation_type != 'regular'))' ('check( number_of_days >= 0 )'))
+ir.model.constraint: hr_holidays.constraint_hr_leave_allocation_type_value (changed definition: is now 'check((holiday_type='employee' and(employee_id is not null or multi_employee is true)) or(holiday_type='category' and category_id is not null) or(holiday_type='department' and department_id is not null) or(holiday_type='company' and mode_company_id is not null))' ('check((holiday_type='employee' and employee_id is not null) or(holiday_type='category' and category_id is not null) or(holiday_type='department' and department_id is not null) or(holiday_type='company' and mode_company_id is not null))'))
+ir.model.constraint: hr_holidays.constraint_hr_leave_type_value (changed definition: is now 'check((holiday_type='employee' and(employee_id is not null or multi_employee is true)) or(holiday_type='company' and mode_company_id is not null) or(holiday_type='category' and category_id is not null) or(holiday_type='department' and department_id is not null) )' ('check((holiday_type='employee' and employee_id is not null) or(holiday_type='company' and mode_company_id is not null) or(holiday_type='category' and category_id is not null) or(holiday_type='department' and department_id is not null) )'))
+DEL ir.model.constraint: hr_holidays.constraint_hr_leave_allocation_interval_number_check
+DEL ir.model.constraint: hr_holidays.constraint_hr_leave_allocation_number_per_interval_check
 NEW ir.rule: hr_holidays.hr_leave_report_rule_group_holiday_user (noupdate)
 NEW ir.rule: hr_holidays.hr_leave_report_rule_group_user (noupdate)
 NEW ir.ui.menu: hr_holidays.hr_holidays_accrual_menu_configuration
 NEW ir.ui.menu: hr_holidays.hr_holidays_public_time_off_menu_configuration
-NEW ir.ui.menu: hr_holidays.menu_hr_holidays_report_employee_time_off
 NEW ir.ui.view: hr_holidays.hr_accrual_level_view_form
 NEW ir.ui.view: hr_holidays.hr_accrual_plan_view_form
 NEW ir.ui.view: hr_holidays.hr_accrual_plan_view_tree

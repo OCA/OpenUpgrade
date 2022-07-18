@@ -1,6 +1,6 @@
 ---Models in module 'stock'---
-obsolete model stock.inventory
-obsolete model stock.inventory.line
+obsolete model stock.inventory (renamed to stock.quant)
+obsolete model stock.inventory.line (renamed to stock.quant)
 new model report.stock.label_product_product_view [abstract]
 new model report.stock.report_reception [abstract]
 new model stock.inventory.adjustment.name [transient]
@@ -88,8 +88,9 @@ stock        / stock.quant              / inventory_date (date)         : NEW is
 stock        / stock.quant              / inventory_diff_quantity (float): NEW isfunction: function, stored
 stock        / stock.quant              / inventory_quantity (float)    : is now stored
 stock        / stock.quant              / inventory_quantity (float)    : not a function anymore
-stock        / stock.quant              / inventory_quantity_set (boolean): NEW isfunction: function, stored
+stock        / stock.quant              / inventory_quantity_set (boolean): NEW hasdefault, isfunction: function, stored
 stock        / stock.quant              / user_id (many2one)            : NEW relation: res.users
+stock        / stock.quant.package      / name (char)                   : now required, req_default: function
 stock        / stock.quant.package      / package_type_id (many2one)    : NEW relation: stock.package.type
 stock        / stock.quant.package      / package_use (selection)       : NEW required, selection_keys: ['disposable', 'reusable'], req_default: function, hasdefault
 stock        / stock.quant.package      / packaging_id (many2one)       : DEL relation: product.packaging
@@ -128,6 +129,7 @@ NEW ir.actions.server: stock.action_view_inventory_tree
 NEW ir.actions.server: stock.action_view_set_quants_tree
 DEL ir.actions.server: stock.model_stock_inventory_line_action_recompute_quantity
 DEL ir.actions.server: stock.model_stock_inventory_line_action_reset_product_qty
+DEL ir.actions.server: stock.stock_quant_stock_move_line_desynchronization
 NEW ir.model.access: stock.access_stock_inventory_adjustment_name
 NEW ir.model.access: stock.access_stock_inventory_conflict
 NEW ir.model.access: stock.access_stock_inventory_warning
@@ -144,6 +146,18 @@ DEL ir.model.access: stock.access_stock_inventory_line_user
 DEL ir.model.access: stock.access_stock_inventory_manager
 DEL ir.model.access: stock.access_stock_inventory_user
 DEL ir.model.access: stock.access_stock_quant_manager
+NEW ir.model.constraint: stock.constraint_stock_location_inventory_freq_nonneg
+NEW ir.model.constraint: stock.constraint_stock_package_type_barcode_uniq
+NEW ir.model.constraint: stock.constraint_stock_package_type_positive_height
+NEW ir.model.constraint: stock.constraint_stock_package_type_positive_length
+NEW ir.model.constraint: stock.constraint_stock_package_type_positive_max_weight
+NEW ir.model.constraint: stock.constraint_stock_package_type_positive_width
+NEW ir.model.constraint: stock.constraint_stock_storage_category_capacity_positive_quantity
+NEW ir.model.constraint: stock.constraint_stock_storage_category_capacity_unique_package_type
+NEW ir.model.constraint: stock.constraint_stock_storage_category_capacity_unique_product
+NEW ir.model.constraint: stock.constraint_stock_storage_category_positive_max_weight
+NEW ir.model.constraint: stock.constraint_stock_warehouse_orderpoint_product_location_check
+NEW ir.rule: stock.stock_storage_category_rule (noupdate)
 DEL ir.rule: stock.stock_inventory_comp_rule (noupdate)
 DEL ir.rule: stock.stock_inventory_line_comp_rule (noupdate)
 DEL ir.sequence: stock.sequence_tracking (noupdate)
