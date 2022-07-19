@@ -39,6 +39,31 @@ def _map_mail_notification_failure_type(env):
     )
 
 
+def finish_migration_to_mail_group(env):
+    env.cr.execute(
+        """
+        SELECT 1 FROM ir_module_module
+        WHERE name = 'mail_group' AND state = 'to install'""",
+    )
+    will_have_mail_group = env.cr.rowcount
+    if not will_have_mail_group:
+        return
+    openupgrade.logged_query(
+        env.cr,
+        """
+        DELETE FROM ir_attachment ia
+        USING mail_channel mc
+        WHERE ia.res_model = 'mail.channel' AND ia.res_id = mc.id
+            AND mc.email_send AND ia.res_field = 'image_128'""",
+    )
+    openupgrade.logged_query(
+        env.cr,
+        """
+        DELETE FROM mail_channel
+        WHERE email_send""",
+    )
+
+
 @openupgrade.migrate()
 def migrate(env, version):
     openupgrade.load_data(env.cr, "mail", "15.0.1.5/noupdate_changes.xml")
@@ -52,3 +77,4 @@ def migrate(env, version):
             "mail.ir_cron_mail_notify_channel_moderators",
         ],
     )
+    finish_migration_to_mail_group(env)
