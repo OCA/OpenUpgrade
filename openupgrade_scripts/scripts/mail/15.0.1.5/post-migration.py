@@ -42,11 +42,9 @@ def _map_mail_notification_failure_type(env):
 @openupgrade.migrate()
 def migrate(env, version):
     openupgrade.load_data(env.cr, "mail", "15.0.1.5/noupdate_changes.xml")
-
     _map_activity_type_chaining_type_field(env)
     _map_activity_type_res_model_field(env)
     _map_mail_notification_failure_type(env)
-
     openupgrade.delete_records_safely_by_xml_id(
         env,
         [

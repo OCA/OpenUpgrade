@@ -1,5 +1,5 @@
 ---Models in module 'mail'---
-obsolete model mail.moderation
+obsolete model mail.moderation (renamed to mail.group.moderation in module mail_group)
 new model mail.channel.rtc.session
 new model mail.composer.mixin [abstract]
 new model mail.guest
@@ -141,10 +141,13 @@ mail         / mail.message.reaction    / message_id (many2one)         : NEW re
 mail         / mail.message.reaction    / partner_id (many2one)         : NEW relation: res.partner
 # NOTHING TO DO: new feature
 
+mail         / mail.moderation          / __last_update (datetime)      : module is now 'mail_group' ('mail')
+mail         / mail.moderation          / _order                        : module is now 'mail_group' ('mail')
 mail         / mail.moderation          / channel_id (many2one)         : DEL relation: mail.channel, required
-mail         / mail.moderation          / email (char)                  : DEL required
-mail         / mail.moderation          / status (selection)            : DEL required, selection_keys: ['allow', 'ban']
-# NOTHING TO DO: new feature
+mail         / mail.moderation          / display_name (char)           : module is now 'mail_group' ('mail')
+mail         / mail.moderation          / email (char)                  : module is now 'mail_group' ('mail')
+mail         / mail.moderation          / status (selection)            : module is now 'mail_group' ('mail')
+# NOTHING TO DO: renamed model and moved to mail_group
 
 mail         / mail.notification        / failure_type (selection)      : selection_keys is now '['mail_email_invalid', 'mail_email_missing', 'mail_smtp', 'unknown']' ('['BOUNCE', 'RECIPIENT', 'SMTP', 'UNKNOWN']')
 # DONE: post-migration: map old values to new values
@@ -195,6 +198,7 @@ DEL ir.config_parameter: mail.icp_mail_catchall_alias [renamed to base module] (
 DEL ir.cron: mail.ir_cron_mail_notify_channel_moderators (noupdate)
 # DONE: post-migration: safely remove
 
+NEW ir.model.access: mail.access_mail_channel_admin
 NEW ir.model.access: mail.access_mail_channel_rtc_session_all
 NEW ir.model.access: mail.access_mail_channel_rtc_session_system
 NEW ir.model.access: mail.access_mail_guest_all
@@ -210,19 +214,26 @@ NEW ir.model.access: mail.access_res_users_settings_user
 NEW ir.model.access: mail.access_res_users_settings_volumes_all
 NEW ir.model.access: mail.access_res_users_settings_volumes_user
 DEL ir.model.access: mail.access_mail_moderation_user
+NEW ir.model.constraint: mail.constraint_bus_presence_partner_or_guest_exists
+NEW ir.model.constraint: mail.constraint_mail_channel_partner_partner_or_guest_exists
+NEW ir.model.constraint: mail.constraint_mail_channel_rtc_session_channel_partner_unique
+NEW ir.model.constraint: mail.constraint_mail_channel_uuid_unique
+NEW ir.model.constraint: mail.constraint_mail_message_reaction_partner_or_guest_exists
+NEW ir.model.constraint: mail.constraint_mail_notification_notification_partner_required
+NEW ir.model.constraint: mail.constraint_res_users_settings_unique_user_id
+NEW ir.model.constraint: mail.constraint_res_users_settings_volumes_partner_or_guest_exists
 # NOTHING TO DO
-
-DEL ir.model.constraint: mail.constraint_mail_alias_alias_unique
-DEL ir.model.constraint: mail.constraint_mail_blacklist_unique_email
-DEL ir.model.constraint: mail.constraint_mail_moderation_channel_email_uniq
-DEL ir.model.constraint: mail.constraint_mail_followers_mail_followers_res_partner_res_model_id_uniq
-# NOTHING TO DO: not remove
 
 DEL ir.model.constraint: mail.constraint_mail_followers_mail_followers_res_channel_res_model_id_uniq
 DEL ir.model.constraint: mail.constraint_mail_followers_partner_xor_channel
 DEL ir.model.constraint: mail.constraint_mail_message_res_partner_needaction_rel_notification_partner_required
+DEL ir.model.constraint: mail.constraint_mail_moderation_channel_email_uniq
 # DONE pre-migration: deleted obsolete constraint
 
+NEW ir.rule: mail.ir_rule_mail_channel_partner_group_system (noupdate)
+NEW ir.rule: mail.mail_channel_admin (noupdate)
+NEW ir.rule: mail.mail_template_editor_rule (noupdate)
+NEW ir.rule: mail.mail_template_employee_rule (noupdate)
 NEW ir.rule: mail.res_users_settings_rule_admin (noupdate)
 NEW ir.rule: mail.res_users_settings_rule_user (noupdate)
 NEW ir.rule: mail.res_users_settings_volumes_rule_admin (noupdate)
