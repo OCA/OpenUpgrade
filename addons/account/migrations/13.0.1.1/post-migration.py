@@ -575,6 +575,55 @@ def migration_voucher_moves(env):
     )
 
 
+def fill_account_move_line_tax_exigible(env):
+    # Compute the 'tax_exigible' field of newly created account move lines
+    # 1. Set tax_exigible = False for any lines (x) which have x.tax_line_id.tax_exigibility == 'on_payment'
+    openupgrade.logged_query(
+        env.cr, """
+        UPDATE account_move_line aml
+        SET tax_exigible = FALSE
+        FROM account_tax at
+        WHERE aml.tax_line_id = at.id
+            AND at.tax_exigibility = 'on_payment'
+            AND aml.tax_exigible IS NULL
+        """
+    )
+    # 2. Set tax_exigible = False for any lines (x) which have
+    #    any(tax.tax_exigibility == 'on_payment'
+    #        or (tax.amount_type == 'group'
+    #            and 'on_payment' in tax.mapped('children_tax_ids.tax_exigibility'))
+    #        for tax in x.tax_ids)
+    openupgrade.logged_query(
+        env.cr, """
+        WITH account_tax_exigible AS (
+            SELECT tax.id,
+                CASE WHEN tax.tax_exigibility = 'on_payment' THEN FALSE
+                    WHEN tax.amount_type = 'group' AND (
+                        SELECT COUNT(*) FROM account_tax_filiation_rel atfr
+                        JOIN account_tax ctax ON atfr.child_tax = ctax.id
+                        WHERE atfr.parent_tax = tax.id
+                        AND ctax.tax_exigibility = 'on_payment') > 0 THEN FALSE
+                    ELSE TRUE
+                END AS tax_exigible
+            FROM account_tax tax)
+        UPDATE account_move_line aml
+        SET tax_exigible = FALSE
+        WHERE aml.tax_exigible IS NULL AND (
+            SELECT COUNT(*) FROM account_move_line_account_tax_rel amlatr
+            JOIN account_tax_exigible ate ON amlatr.account_tax_id = ate.id
+            WHERE amlatr.account_move_line_id = aml.id AND ate.tax_exigible = FALSE) > 0
+        """
+    )
+    # 3. Set tax_exigible = TRUE for the remaining lines
+    openupgrade.logged_query(
+        env.cr, """
+        UPDATE account_move_line aml
+        SET tax_exigible = TRUE
+        WHERE aml.tax_exigible IS NULL
+        """
+    )
+
+
 def _move_model_in_data(env, old_model, new_model, field):
     renames = [
         ('mail_message', 'model', 'res_id'),
@@ -1057,6 +1106,7 @@ def migrate(env, version):
     migration_invoice_moves(env)
     if openupgrade.table_exists(env.cr, 'account_voucher'):
         migration_voucher_moves(env)
+    fill_account_move_line_tax_exigible(env)
     fill_account_move_reversed_entry_id(env)
     fill_account_move_type(env)
     fill_res_partner_ranks(env)
