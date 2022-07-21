@@ -34,9 +34,9 @@ event_booth  / event.type.booth         / booth_category_id (many2one)  : NEW re
 event_booth  / event.type.booth         / event_type_id (many2one)      : NEW relation: event.type, required
 event_booth  / event.type.booth         / name (char)                   : NEW required
 ---XML records in module 'event_booth'---
-NEW event.booth.category: event_booth.event_booth_category_premium
-NEW event.booth.category: event_booth.event_booth_category_standard
-NEW event.booth.category: event_booth.event_booth_category_vip
+NEW event.booth.category: event_booth.event_booth_category_premium (noupdate)
+NEW event.booth.category: event_booth.event_booth_category_standard (noupdate)
+NEW event.booth.category: event_booth.event_booth_category_vip (noupdate)
 NEW ir.actions.act_window: event_booth.event_booth_action
 NEW ir.actions.act_window: event_booth.event_booth_action_from_event
 NEW ir.actions.act_window: event_booth.event_booth_category_action

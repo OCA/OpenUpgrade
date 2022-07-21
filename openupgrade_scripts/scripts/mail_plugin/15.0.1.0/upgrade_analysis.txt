@@ -10,6 +10,7 @@ mail_plugin  / res.partner.iap          / partner_id (many2one)         : NEW re
 NEW ir.actions.act_window: mail_plugin.res_partner_iap_action
 DEL ir.actions.server: mail_client_extension.lead_creation_prefilled_action [renamed to crm_mail_plugin module]
 NEW ir.model.access: mail_plugin.access_res_partner_iap
+NEW ir.model.constraint: mail_plugin.constraint_res_partner_iap_unique_partner_id
 NEW ir.ui.menu: mail_plugin.res_partner_iap_menu
 NEW ir.ui.view: mail_plugin.app_auth
 NEW ir.ui.view: mail_plugin.res_partner_iap_view_form

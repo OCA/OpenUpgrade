@@ -5,6 +5,7 @@ survey       / survey.survey            / user_id (many2one)            : NEW re
 survey       / survey.user_input        / _order                        : _order is now 'create_date desc' ('id')
 survey       / survey.user_input        / end_datetime (datetime)       : NEW
 ---XML records in module 'survey'---
+DEL ir.model.constraint: survey.constraint_survey_survey_give_badge_check
 NEW ir.ui.view: survey.certification_preview
 DEL ir.ui.view: survey.assets_backend
 DEL ir.ui.view: survey.assets_backend_inherit_survey

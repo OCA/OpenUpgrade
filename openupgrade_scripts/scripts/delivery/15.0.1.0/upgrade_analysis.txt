@@ -10,6 +10,10 @@ delivery     / stock.package.type       / package_carrier_type (selection): NEW 
 delivery     / stock.package.type       / shipper_package_code (char)   : NEW
 ---XML records in module 'delivery'---
 DEL ir.actions.act_window: delivery.action_delivery_packaging_view
+DEL ir.model.constraint: delivery.constraint_product_packaging_positive_height
+DEL ir.model.constraint: delivery.constraint_product_packaging_positive_length
+DEL ir.model.constraint: delivery.constraint_product_packaging_positive_max_weight
+DEL ir.model.constraint: delivery.constraint_product_packaging_positive_width
 DEL ir.ui.menu: delivery.menu_delivery [renamed to stock module]
 DEL ir.ui.menu: delivery.menu_delivery_packagings
 NEW ir.ui.view: delivery.stock_package_type_form_delivery

@@ -10,6 +10,7 @@ renamed_modules = {
     "l10n_eu_service": "l10n_eu_oss",
     "mail_client_extension": "mail_plugin",
     "payment_ingenico": "payment_ogone",
+    "website_mail_channel": "website_mail_group",
     # OCA/project
     "project_stage_state": "project_task_stage_state",
     # OCA/...
@@ -40,8 +41,13 @@ merged_modules = {
 # only used here for upgrade_analysis
 renamed_models = {
     # odoo
+    "calendar.contacts": "calendar.filters",
+    "mail.moderation": "mail.group.moderation",
     # OCA/...
 }
 
 # only used here for upgrade_analysis
-merged_models = {}
+merged_models = {
+    "stock.inventory": "stock.quant",
+    "stock.inventory.line": "stock.quant",
+}

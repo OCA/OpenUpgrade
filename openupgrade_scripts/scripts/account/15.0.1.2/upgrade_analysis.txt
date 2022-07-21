@@ -31,6 +31,7 @@ account      / account.move             / always_tax_exigible (boolean) : NEW is
 account      / account.move             / amount_total_in_currency_signed (float): NEW isfunction: function, stored
 account      / account.move             / narration (text)              : now a function
 account      / account.move             / narration (text)              : type is now 'html' ('text')
+account      / account.move             / partner_bank_id (many2one)    : not a function anymore
 account      / account.move             / tax_cash_basis_created_move_ids (one2many): NEW relation: account.move
 account      / account.move             / tax_cash_basis_move_id (many2one): DEL relation: account.move
 account      / account.move             / tax_cash_basis_origin_move_id (many2one): NEW relation: account.move
@@ -103,6 +104,8 @@ NEW ir.model.access: account.access_account_payment_method_line
 NEW ir.model.access: account.access_account_payment_method_line_readonly
 NEW ir.model.access: account.access_account_tax_carryover_line_ac_user
 NEW ir.model.access: account.access_account_tax_carryover_line_readonly
+ir.model.constraint: account.constraint_account_journal_code_company_uniq (changed definition: is now 'unique(code,company_id)' ('unique(code,name,company_id)'))
+NEW ir.model.constraint: account.constraint_account_payment_method_name_code_unique
 NEW ir.rule: account.account_tax_carryover_line_comp_rule (noupdate)
 NEW ir.ui.menu: account.menu_action_tax_group
 NEW ir.ui.view: account.account_analytic_account_view_form_inherit

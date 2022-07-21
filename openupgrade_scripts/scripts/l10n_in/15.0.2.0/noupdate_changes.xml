@@ -21,4 +21,13 @@
   <record id="sgst_group" model="account.tax.group">
     <field name="country_id" ref="base.in"/>
   </record>
+  <record id="uom.product_uom_millimeter" model="uom.uom">
+    <field name="l10n_in_code">MLT-MILILITRE</field>
+  </record>
+  <record id="uom.uom_square_foot" model="uom.uom">
+    <field name="l10n_in_code">OTH-OTHERS</field>
+  </record>
+  <record id="uom.uom_square_meter" model="uom.uom">
+    <field name="l10n_in_code">SQM-SQUARE METERS</field>
+  </record>
 </odoo>

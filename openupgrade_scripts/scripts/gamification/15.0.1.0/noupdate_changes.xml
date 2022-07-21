@@ -106,7 +106,7 @@
   </record>
   <record id="email_template_goal_reminder" model="mail.template">
     <field name="body_html" type="html">
-      <div><strong>Reminder <t t-out="object.name or ''"/></strong><br/>
+      <div><strong>Reminder</strong><br/>
     You have not updated your progress for the goal <t t-out="object.definition_id.name or ''"/> (currently reached at <t t-out="object.completeness or ''"/>%) for at least <t t-out="object.remind_update_delay or ''"/> days. Do not forget to do it.
     <br/><br/>
     Thank you,

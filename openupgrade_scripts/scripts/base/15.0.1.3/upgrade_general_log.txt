@@ -8,24 +8,27 @@ obsolete model adyen.shareholder [module adyen_platforms]
 obsolete model adyen.store [module pos_adyen]
 obsolete model adyen.terminal [module pos_adyen]
 obsolete model adyen.transaction [module adyen_platforms]
-obsolete model calendar.contacts [module calendar]
+obsolete model calendar.contacts (renamed to calendar.filters) [module calendar]
 obsolete model closing.balance.confirm.wizard [module point_of_sale]
+obsolete model export.computed.binary [module test_xlsx_export]
 obsolete model l10n_eu_service.service_tax_rate [module l10n_eu_oss]
 obsolete model l10n_eu_service.wizard [module l10n_eu_oss]
 obsolete model lunch.product.report [module lunch]
-obsolete model mail.moderation [module mail]
+obsolete model mail.moderation (renamed to mail.group.moderation) [module mail]
 obsolete model phone.validation.mixin [module phone_validation]
 obsolete model project.task.create.sale.order [module sale_timesheet]
-obsolete model stock.inventory [module stock]
-obsolete model stock.inventory.line [module stock]
+obsolete model stock.inventory (renamed to stock.quant) [module stock]
+obsolete model stock.inventory.line (renamed to stock.quant) [module stock]
 obsolete model website.mass_mailing.popup [module website_mass_mailing]
 new model account.accrued.orders.wizard [module account]
+new model account.edi.xml.ubl_nl [module account_edi_ubl_cii]
 new model account.payment.method.line [module account]
 new model account.tax.carryover.line [module account]
 new model auth_totp.device [module auth_totp]
+new model auth.totp.rate.limit.log [module auth_totp_mail_enforce]
 new model avatar.mixin [module base]
 new model base.enable.profiling.wizard [module base]
-new model calendar.filters [module calendar]
+new model calendar.filters (renamed from calendar.contacts) [module calendar]
 new model coupon.share [module website_sale_coupon]
 new model crm.lead.pls.update [module crm]
 new model crm.team.member [module sales_team]
@@ -53,16 +56,23 @@ new model ir.asset [module base]
 new model ir.cron.trigger [module base]
 new model ir.profile [module base]
 new model l10n_ec.sri.payment [module l10n_ec]
+new model l10n_eg_edi.activity.type [module l10n_eg_edi_eta]
+new model l10n_eg_edi.thumb.drive [module l10n_eg_edi_eta]
+new model l10n_eg_edi.uom.code [module l10n_eg_edi_eta]
+new model l10n_eg.eta.account.tax.mixin [module l10n_eg]
 new model mail.channel.rtc.session [module mail]
 new model mail.composer.mixin [module mail]
 new model mail.group [module mail_group]
 new model mail.group.member [module mail_group]
 new model mail.group.message [module mail_group]
 new model mail.group.message.reject [module mail_group]
-new model mail.group.moderation [module mail_group]
+new model mail.group.moderation (renamed from mail.moderation) [module mail_group]
 new model mail.guest [module mail]
 new model mail.ice.server [module mail]
 new model mail.message.reaction [module mail]
+new model mail.test.composer.mixin [module test_mail]
+new model mail.test.lang [module test_mail]
+new model mail.test.track.monetary [module test_mail]
 new model mailing.contact.to.list [module mass_mailing]
 new model mrp.workcenter.tag [module mrp]
 new model payment.refund.wizard [module payment]
@@ -93,18 +103,22 @@ new model stock.replenishment.info [module stock]
 new model stock.request.count [module stock]
 new model stock.storage.category [module stock]
 new model stock.storage.category.capacity [module stock]
+new model test_inherit.mixin [module test_inherit]
+new model test_new_api.model_constrained_unlinks [module test_new_api]
+new model test_read_group.task [module test_read_group]
+new model test_read_group.user [module test_read_group]
 new model theme.ir.asset [module website]
 new model website.base.unit [module website_sale]
 new model website.configurator.feature [module website]
 new model website.searchable.mixin [module website]
 ---Fields in module 'general'---
-# 10818 fields matched,
-# Direct match: 10712
-# Found in other module: 106
+# 12743 fields matched,
+# Direct match: 12629
+# Found in other module: 114
 # Found with different type: 0
-# In obsolete models: 236
-# New columns: 1698
-# Not matched: 596
+# In obsolete models: 166
+# New columns: 1871
+# Not matched: 618
 ---XML records in module 'general'---
 ERROR: module not in list of installed modules:
 ---Models in module 'adyen_platforms'---
@@ -218,6 +232,7 @@ DEL ir.model.access: adyen_platforms.access_adyen_bank_account_group_erp_manager
 DEL ir.model.access: adyen_platforms.access_adyen_payout_group_erp_manager
 DEL ir.model.access: adyen_platforms.access_adyen_shareholder_group_erp_manager
 DEL ir.model.access: adyen_platforms.access_adyen_transaction_group_erp_manager
+DEL ir.model.constraint: adyen_platforms.constraint_adyen_account_adyen_uuid_uniq
 DEL ir.ui.view: adyen_platforms.adyen_account_view_form
 DEL ir.ui.view: adyen_platforms.adyen_bank_account_view_form
 DEL ir.ui.view: adyen_platforms.adyen_payout_view_form
@@ -275,6 +290,7 @@ DEL ir.actions.act_window: crm_iap_lead_website.crm_reveal_view_action [renamed 
 DEL ir.cron: crm_iap_lead_website.ir_cron_crm_reveal_lead [renamed to website_crm_iap_reveal module] (noupdate)
 DEL ir.model.access: crm_iap_lead_website.access_crm_reveal_rule
 DEL ir.model.access: crm_iap_lead_website.access_crm_reveal_view
+DEL ir.model.constraint: crm_iap_lead_website.constraint_crm_reveal_rule_limit_extra_contacts [renamed to website_crm_iap_reveal module]
 DEL ir.ui.menu: crm_iap_lead_website.crm_reveal_rule_menu_action [renamed to website_crm_iap_reveal module]
 DEL ir.ui.menu: crm_iap_lead_website.crm_reveal_view_menu_action [renamed to website_crm_iap_reveal module]
 DEL ir.ui.view: crm_iap_lead_website.crm_lead_view_graph
@@ -303,6 +319,16 @@ ERROR: module not in list of installed modules:
 ---XML records in module 'odoo_referral'---
 DEL ir.ui.view: odoo_referral.assets_backend
 ERROR: module not in list of installed modules:
+---Models in module 'payment_adyen_paybylink'---
+---Fields in module 'payment_adyen_paybylink'---
+payment_adyen_paybylink / payment.acquirer         / adyen_api_key (char)          : module is now 'payment_adyen' ('payment_adyen_paybylink')
+payment_adyen_paybylink / payment.acquirer         / adyen_checkout_api_url (char) : module is now 'payment_adyen' ('payment_adyen_paybylink')
+payment_adyen_paybylink / payment.acquirer         / adyen_hmac_key (char)         : module is now 'payment_adyen' ('payment_adyen_paybylink')
+payment_adyen_paybylink / payment.acquirer         / adyen_skin_code (False)       : DEL mode: modify
+payment_adyen_paybylink / payment.acquirer         / adyen_skin_hmac_key (False)   : DEL mode: modify
+---XML records in module 'payment_adyen_paybylink'---
+DEL ir.ui.view: payment_adyen_paybylink.acquirer_form_adyen
+ERROR: module not in list of installed modules:
 ---Models in module 'payment_odoo_by_adyen'---
 ---Fields in module 'payment_odoo_by_adyen'---
 payment_odoo_by_adyen / payment.acquirer         / odoo_adyen_payout_id (many2one): DEL relation: adyen.payout
@@ -312,23 +338,3 @@ payment_odoo_by_adyen / payment.token            / odoo_adyen_payment_method_typ
 ---XML records in module 'payment_odoo_by_adyen'---
 DEL ir.ui.view: payment_odoo_by_adyen.acquirer_form_odoo_by_adyen
 DEL ir.ui.view: payment_odoo_by_adyen.odoo_by_adyen_form (noupdate)
-ERROR: module not in list of installed modules:
----Models in module 'website_mail_channel'---
----Fields in module 'website_mail_channel'---
----XML records in module 'website_mail_channel'---
-DEL ir.ui.view: website_mail_channel.assets_frontend
-DEL ir.ui.view: website_mail_channel.assets_snippet_s_channel_js_000
-DEL ir.ui.view: website_mail_channel.assets_wysiwyg
-DEL ir.ui.view: website_mail_channel.confirmation_subscription
-DEL ir.ui.view: website_mail_channel.group_message
-DEL ir.ui.view: website_mail_channel.group_messages
-DEL ir.ui.view: website_mail_channel.invalid_token_subscription
-DEL ir.ui.view: website_mail_channel.mail_channels
-DEL ir.ui.view: website_mail_channel.messages_short
-DEL ir.ui.view: website_mail_channel.not_subscribed
-DEL ir.ui.view: website_mail_channel.remove_external_snippets
-DEL ir.ui.view: website_mail_channel.s_channel
-DEL ir.ui.view: website_mail_channel.s_channel_options
-DEL ir.ui.view: website_mail_channel.snippets
-DEL mail.template: website_mail_channel.mail_template_list_subscribe [renamed to mail_group module]
-DEL mail.template: website_mail_channel.mail_template_list_unsubscribe [renamed to mail_group module]

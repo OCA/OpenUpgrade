@@ -148,9 +148,11 @@ NEW ir.attachment: website.s_mega_menu_thumbnails_default_image_7 (noupdate)
 NEW ir.attachment: website.s_mega_menu_thumbnails_default_image_8 (noupdate)
 NEW ir.attachment: website.s_mega_menu_thumbnails_default_image_9 (noupdate)
 NEW ir.attachment: website.s_quotes_carousel_demo_image_0 (noupdate)
+NEW ir.cron: website.website_disable_unused_snippets_assets
 DEL ir.filters: website.dynamic_snippet_country_filter
 NEW ir.model.access: website.access_theme_ir_asset_group_system
 NEW ir.model.access: website.access_website_configurator_feature_designer
+NEW ir.model.access: website.access_website_ir_asset_designer
 NEW ir.ui.view: website.aboutus
 NEW ir.ui.view: website.asset_view_form_inherit_website
 NEW ir.ui.view: website.footer_copyright_company_name
