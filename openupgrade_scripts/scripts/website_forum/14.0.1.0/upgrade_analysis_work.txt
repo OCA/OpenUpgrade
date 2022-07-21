@@ -1,0 +1,50 @@
+---Models in module 'website_forum'---
+---Fields in module 'website_forum'---
+website_forum / forum.forum              / authorized_group_id (many2one): NEW relation: res.groups
+website_forum / forum.forum              / menu_id (many2one)            : NEW relation: website.menu
+website_forum / forum.forum              / privacy (selection)           : NEW selection_keys: ['connected', 'private', 'public'], hasdefault
+# NOTHING TO DO: new features
+
+website_forum / forum.forum              / teaser (text)                 : NEW isfunction: function, stored
+website_forum / forum.forum              / seo_name (char)               : NEW
+website_forum / forum.post               / seo_name (char)               : NEW
+website_forum / forum.tag                / seo_name (char)               : NEW
+# NOTHING TO DO: new features
+
+website_forum / forum.post.reason        / reason_type (char)            : selection_keys is now '['basic', 'offensive']' ('False')
+website_forum / forum.post.reason        / reason_type (char)            : type is now 'selection' ('char')
+# NOTHING TO DO
+
+website_forum / gamification.challenge   / category (False)              : DEL selection_keys: ['certification', 'forum', 'hr', 'other'], mode: modify
+website_forum / gamification.challenge   / challenge_category (False)    : NEW selection_keys: ['certification', 'forum', 'hr', 'other'], mode: modify
+# DONE: pre-migration: renamed field
+
+website_forum / website                  / forums_count (integer)        : is now stored
+website_forum / website                  / forums_count (integer)        : not a function anymore
+# NOTHING TO DO: will be automatically filled
+
+---XML records in module 'website_forum'---
+NEW ir.actions.act_window: website_forum.action_forum_favorites
+NEW ir.actions.act_window: website_forum.action_forum_posts
+NEW ir.actions.act_window: website_forum.forum_post_reasons_action
+NEW ir.rule: website_forum.website_forum_connected (noupdate)
+NEW ir.rule: website_forum.website_forum_connected_post (noupdate)
+NEW ir.rule: website_forum.website_forum_connected_tag (noupdate)
+NEW ir.rule: website_forum.website_forum_create_website_designer (noupdate)
+NEW ir.rule: website_forum.website_forum_private (noupdate)
+NEW ir.rule: website_forum.website_forum_private_post (noupdate)
+NEW ir.rule: website_forum.website_forum_private_tag (noupdate)
+NEW ir.rule: website_forum.website_forum_public (noupdate)
+NEW ir.rule: website_forum.website_forum_public_post (noupdate)
+NEW ir.rule: website_forum.website_forum_public_tag (noupdate)
+NEW ir.ui.menu: website_forum.menu_forum_badges
+NEW ir.ui.menu: website_forum.menu_forum_post_reasons
+NEW ir.ui.view: website_forum.default_faq
+NEW ir.ui.view: website_forum.faq_karma
+NEW ir.ui.view: website_forum.forum_filter_tag
+NEW ir.ui.view: website_forum.forum_post_options
+NEW ir.ui.view: website_forum.forum_post_reason_view_list
+NEW ir.ui.view: website_forum.opt_last_post
+NEW ir.ui.view: website_forum.opt_list_view
+NEW ir.ui.view: website_forum.opt_post_count
+# NOTHING TO DO: new features
