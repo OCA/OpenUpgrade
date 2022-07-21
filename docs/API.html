@@ -340,6 +340,16 @@ Odoo performs the regular update cleanup and trying to remove it as well.</p>
 </dd></dl>
 
 <dl class="py function">
+<dt class="sig sig-object py" id="openupgradelib.openupgrade.delete_sql_constraint_safely">
+<span class="sig-prename descclassname"><span class="pre">openupgradelib.openupgrade.</span></span><span class="sig-name descname"><span class="pre">delete_sql_constraint_safely</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">env</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">module</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">table</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">name</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#openupgradelib.openupgrade.delete_sql_constraint_safely" title="Permalink to this definition">¶</a></dt>
+<dd><p>In case of obsolete constraints, run this in pre-migration script.
+Useful from v14 onwards.
+:param module: Module where the sql constraint was declared
+:param table: Table where the sql constraint belongs
+:param name: Name of the sql constraint as it was declared</p>
+</dd></dl>
+
+<dl class="py function">
 <dt class="sig sig-object py" id="openupgradelib.openupgrade.disable_invalid_filters">
 <span class="sig-prename descclassname"><span class="pre">openupgradelib.openupgrade.</span></span><span class="sig-name descname"><span class="pre">disable_invalid_filters</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">env</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#openupgradelib.openupgrade.disable_invalid_filters" title="Permalink to this definition">¶</a></dt>
 <dd><p>It analyzes all the existing active filters to check if they are still
