@@ -1,0 +1,26 @@
+---Models in module 'website_hr_recruitment'---
+---Fields in module 'website_hr_recruitment'---
+website_hr_recruitment / hr.job                   / seo_name (char)               : NEW
+# NOTHING TO DO
+
+---XML records in module 'website_hr_recruitment'---
+ir.rule: website_hr_recruitment.hr_department_public (noupdate) (noupdate switched)
+ir.rule: website_hr_recruitment.hr_job_officer (noupdate) (noupdate switched)
+ir.rule: website_hr_recruitment.hr_job_portal (noupdate) (noupdate switched)
+ir.rule: website_hr_recruitment.hr_job_public (noupdate) (noupdate switched)
+# DONE: pre-migration: noupdate changed to "1"
+
+NEW ir.ui.view: website_hr_recruitment.assets_frontend
+NEW ir.ui.view: website_hr_recruitment.job_edit_options
+NEW ir.ui.view: website_hr_recruitment.job_filter_by_countries
+NEW ir.ui.view: website_hr_recruitment.job_filter_by_departments
+NEW ir.ui.view: website_hr_recruitment.job_filter_by_offices
+NEW ir.ui.view: website_hr_recruitment.job_right_side_bar
+NEW ir.ui.view: website_hr_recruitment.view_hr_job_kanban_referal_extends
+DEL ir.ui.view: website_hr_recruitment.job_countries
+DEL ir.ui.view: website_hr_recruitment.job_departments
+DEL ir.ui.view: website_hr_recruitment.job_offices
+# NOTHING TO DO
+
+DEL website.menu: website_hr_recruitment.menu_jobs (noupdate)
+# DONE: post-migration: safely deleted xmlid
