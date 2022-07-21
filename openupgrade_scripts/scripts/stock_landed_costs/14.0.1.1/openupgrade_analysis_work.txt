@@ -1,0 +1,9 @@
+---Models in module 'stock_landed_costs'---
+---Fields in module 'stock_landed_costs'---
+stock_landed_costs / product.template         / split_method_landed_cost (selection): NEW selection_keys: ['by_current_cost_price', 'by_quantity', 'by_volume', 'by_weight', 'equal']
+stock_landed_costs / stock.landed.cost        / target_model (selection)      : NEW required, selection_keys: ['picking'], req_default: function, hasdefault
+# NOTHING TO DO
+
+---XML records in module 'stock_landed_costs'---
+ir.rule: stock_landed_costs.stock_landed_cost_rule (noupdate) (noupdate switched)
+# DONE: pre-migration: switched noupdate
