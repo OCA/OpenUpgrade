@@ -46,6 +46,13 @@ def _rename_fields(env):
 
 
 def _rename_tables(env):
+    openupgrade.delete_sql_constraint_safely(
+        env,
+        "mail",
+        "mail_message_res_partner_needaction_rel",
+        "notification_partner_required",
+    )
+    # we delete sql constraint before table rename
     openupgrade.rename_tables(
         env.cr, [("mail_message_res_partner_needaction_rel", "mail_notification")]
     )
@@ -65,7 +72,6 @@ def delete_obsolete_constraints(env):
     _contraints = [
         ("mail", "mail_followers", "mail_followers_res_channel_res_model_id_uniq"),
         ("mail", "mail_followers", "partner_xor_channel"),
-        ("mail", "mail_notification", "notification_partner_required"),
         ("mail", "mail_moderation", "channel_email_uniq"),
     ]
     for module, table, name in _contraints:
