@@ -1,0 +1,16 @@
+---Models in module 'website_livechat'---
+---Fields in module 'website_livechat'---
+website_livechat / mail.channel             / livechat_active (boolean)     : module is now 'im_livechat' ('website_livechat')
+# NOTHING TO DO: the website_livechat module depends on im_livechat module
+
+---XML records in module 'website_livechat'---
+ir.rule: website_livechat.im_livechat_channel_rule_public (noupdate) (noupdate switched)
+# DONE: pre-migration: noupdate changed to "1"
+
+
+NEW ir.ui.view: website_livechat.assets_tests
+NEW ir.ui.view: website_livechat.qunit_suite
+# NOTHING TO DO
+
+DEL website.menu: website_livechat.menu_livechat (noupdate)
+# DONE: post-migration: safely deleted xmlid
