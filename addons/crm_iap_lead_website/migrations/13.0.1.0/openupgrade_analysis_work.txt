@@ -1,0 +1,70 @@
+---Models in module 'crm_iap_lead_website'---
+model crm.reveal.rule (moved from crm_reveal)
+model crm.reveal.view (moved from crm_reveal)
+# NOTHING TO DO
+
+---Fields in module 'crm_iap_lead_website'---
+crm_iap_lead_website / crm.lead                 / reveal_iap_credits (integer)  : previously in module crm_reveal
+crm_iap_lead_website / crm.lead                 / reveal_ip (char)              : previously in module crm_reveal
+crm_iap_lead_website / crm.lead                 / reveal_rule_id (many2one)     : previously in module crm_reveal
+crm_iap_lead_website / crm.reveal.rule          / __last_update (datetime)      : previously in module crm_reveal
+crm_iap_lead_website / crm.reveal.rule          / _order                        : previously in module crm_reveal
+crm_iap_lead_website / crm.reveal.rule          / active (boolean)              : previously in module crm_reveal
+crm_iap_lead_website / crm.reveal.rule          / company_size_max (integer)    : previously in module crm_reveal
+crm_iap_lead_website / crm.reveal.rule          / company_size_min (integer)    : previously in module crm_reveal
+crm_iap_lead_website / crm.reveal.rule          / country_ids (many2many)       : previously in module crm_reveal
+crm_iap_lead_website / crm.reveal.rule          / display_name (char)           : previously in module crm_reveal
+crm_iap_lead_website / crm.reveal.rule          / extra_contacts (integer)      : previously in module crm_reveal
+crm_iap_lead_website / crm.reveal.rule          / industry_tag_ids (many2many)  : previously in module crm_reveal
+crm_iap_lead_website / crm.reveal.rule          / lead_for (selection)          : previously in module crm_reveal
+crm_iap_lead_website / crm.reveal.rule          / lead_ids (one2many)           : previously in module crm_reveal
+crm_iap_lead_website / crm.reveal.rule          / lead_type (selection)         : previously in module crm_reveal
+crm_iap_lead_website / crm.reveal.rule          / leads_count (integer)         : previously in module crm_reveal
+crm_iap_lead_website / crm.reveal.rule          / name (char)                   : previously in module crm_reveal
+crm_iap_lead_website / crm.reveal.rule          / opportunity_count (integer)   : previously in module crm_reveal
+crm_iap_lead_website / crm.reveal.rule          / other_role_ids (many2many)    : previously in module crm_reveal
+crm_iap_lead_website / crm.reveal.rule          / preferred_role_id (many2one)  : previously in module crm_reveal
+crm_iap_lead_website / crm.reveal.rule          / priority (selection)          : previously in module crm_reveal
+crm_iap_lead_website / crm.reveal.rule          / regex_url (char)              : previously in module crm_reveal
+crm_iap_lead_website / crm.reveal.rule          / seniority_id (many2one)       : previously in module crm_reveal
+crm_iap_lead_website / crm.reveal.rule          / sequence (integer)            : previously in module crm_reveal
+crm_iap_lead_website / crm.reveal.rule          / suffix (char)                 : previously in module crm_reveal
+crm_iap_lead_website / crm.reveal.rule          / tag_ids (many2many)           : previously in module crm_reveal
+crm_iap_lead_website / crm.reveal.rule          / team_id (many2one)            : previously in module crm_reveal
+crm_iap_lead_website / crm.reveal.rule          / user_id (many2one)            : previously in module crm_reveal
+crm_iap_lead_website / crm.reveal.view          / __last_update (datetime)      : previously in module crm_reveal
+crm_iap_lead_website / crm.reveal.view          / _order                        : previously in module crm_reveal
+crm_iap_lead_website / crm.reveal.view          / display_name (char)           : previously in module crm_reveal
+crm_iap_lead_website / crm.reveal.view          / reveal_ip (char)              : previously in module crm_reveal
+crm_iap_lead_website / crm.reveal.view          / reveal_rule_id (many2one)     : previously in module crm_reveal
+crm_iap_lead_website / crm.reveal.view          / reveal_state (selection)      : previously in module crm_reveal
+# NOTHING TO DO
+
+crm_iap_lead_website / crm.reveal.rule          / contact_filter_type (selection): NEW required, selection_keys: ['role', 'seniority'], req_default: function, hasdefault
+# DONE: post-migration (in crm_iap_lead): set correct type
+
+crm_iap_lead_website / crm.reveal.rule          / filter_on_size (boolean)      : NEW hasdefault
+# NOTHING TO DO: they have defaults
+
+crm_iap_lead_website / crm.reveal.rule          / state_ids (many2many)         : NEW relation: res.country.state
+crm_iap_lead_website / crm.reveal.rule          / website_id (many2one)         : NEW relation: website
+# NOTHING TO DO: new features
+
+---XML records in module 'crm_iap_lead_website'---
+NEW ir.actions.act_window: crm_iap_lead_website.crm_reveal_rule_action [renamed from crm_reveal module]
+NEW ir.actions.act_window: crm_iap_lead_website.crm_reveal_view_action [renamed from crm_reveal module]
+NEW ir.cron: crm_iap_lead_website.ir_cron_crm_reveal_lead [renamed from crm_reveal module] (noupdate)
+NEW ir.model.access: crm_iap_lead_website.access_crm_reveal_rule [renamed from crm_reveal module]
+NEW ir.model.access: crm_iap_lead_website.access_crm_reveal_view [renamed from crm_reveal module]
+NEW ir.ui.menu: crm_iap_lead_website.crm_reveal_rule_menu_action [renamed from crm_reveal module]
+NEW ir.ui.menu: crm_iap_lead_website.crm_reveal_view_menu_action [renamed from crm_reveal module]
+# DONE: pre-migration (in crm_iap_lead): renamed xmlids
+
+NEW ir.ui.view: crm_iap_lead_website.crm_reveal_lead_opportunity_form
+NEW ir.ui.view: crm_iap_lead_website.crm_reveal_rule_form
+NEW ir.ui.view: crm_iap_lead_website.crm_reveal_rule_tree
+NEW ir.ui.view: crm_iap_lead_website.crm_reveal_rule_view_search
+NEW ir.ui.view: crm_iap_lead_website.crm_reveal_view_form
+NEW ir.ui.view: crm_iap_lead_website.crm_reveal_view_tree
+NEW ir.ui.view: crm_iap_lead_website.res_config_settings_view_form
+# NOTHING TO DO
