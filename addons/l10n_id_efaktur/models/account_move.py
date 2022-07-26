@@ -31,6 +31,7 @@ class AccountMove(models.Model):
             ('02', '02 Kepada Pemungut Bendaharawan (Dinas Kepemerintahan)'),
             ('03', '03 Kepada Pemungut Selain Bendaharawan (BUMN)'),
             ('04', '04 DPP Nilai Lain (PPN 1%)'),
+            ('05', '05 Besaran Tertentu'),
             ('06', '06 Penyerahan Lainnya (Turis Asing)'),
             ('07', '07 Penyerahan yang PPN-nya Tidak Dipungut (Kawasan Ekonomi Khusus/ Batam)'),
             ('08', '08 Penyerahan yang PPN-nya Dibebaskan (Impor Barang Tertentu)'),
@@ -209,9 +210,10 @@ class AccountMove(models.Model):
                     if tax.amount > 0:
                         tax_line += line.price_subtotal * (tax.amount / 100.0)
 
-                invoice_line_unit_price = line.price_unit
-
-                invoice_line_total_price = invoice_line_unit_price * line.quantity
+                discount = 1 - (line.discount / 100)
+                # guarantees price to be tax-excluded
+                invoice_line_total_price = line.price_subtotal / discount if discount else 0
+                invoice_line_unit_price = invoice_line_total_price / line.quantity if line.quantity else 0
 
                 line_dict = {
                     'KODE_OBJEK': line.product_id.default_code or '',
