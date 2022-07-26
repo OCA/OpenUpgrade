@@ -159,7 +159,12 @@ class PickingType(models.Model):
         args = args or []
         domain = []
         if name:
-            domain = ['|', ('name', operator, name), ('warehouse_id.name', operator, name)]
+            # Try to reverse the `name_get` structure
+            parts = name.split(': ')
+            if len(parts) == 2:
+                domain = [('warehouse_id.name', operator, parts[0]), ('name', operator, parts[1])]
+            else:
+                domain = ['|', ('name', operator, name), ('warehouse_id.name', operator, name)]
         picking_ids = self._search(expression.AND([domain, args]), limit=limit, access_rights_uid=name_get_uid)
         return models.lazy_name_get(self.browse(picking_ids).with_user(name_get_uid))
 
@@ -576,18 +581,6 @@ class Picking(models.Model):
                     'title': ("Warning for %s") % partner.name,
                     'message': partner.picking_warn_msg
                 }}
-
-    @api.onchange('location_id', 'location_dest_id', 'picking_type_id')
-    def onchange_locations(self):
-        from_wh = self.location_id.get_warehouse()
-        to_wh = self.location_dest_id.get_warehouse()
-        is_immediate = self.immediate_transfer if self.id else self._context.get('default_immediate_transfer')
-        if self.picking_type_id.code == 'internal' and not is_immediate and from_wh and to_wh and from_wh != to_wh:
-            return {'warning': {
-                'title': _("Warning"),
-                'message': _("You should not use a planned internal transfer to move some products between two warehouses. "
-                             "Instead, use an immediate internal transfer or the resupply route.")
-            }}
 
     @api.model
     def create(self, vals):

@@ -226,9 +226,6 @@ class Website(models.Model):
         company = self.company_id or pricelist.company_id
         if company:
             values['company_id'] = company.id
-            if self.env['ir.config_parameter'].sudo().get_param('sale.use_sale_note'):
-                values['note'] = company.sale_note or ""
-
         return values
 
     def sale_get_order(self, force_create=False, code=None, update_pricelist=False, force_pricelist=False):
@@ -301,6 +298,9 @@ class Website(models.Model):
                     sale_order.onchange_partner_shipping_id()
 
             request.session['sale_order_id'] = sale_order.id
+
+            # The order was created with SUPERUSER_ID, revert back to request user.
+            sale_order = sale_order.with_user(self.env.user).sudo()
 
         # case when user emptied the cart
         if not request.session.get('sale_order_id'):

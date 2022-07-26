@@ -9,6 +9,7 @@
 # Ghaith Gammar <g.gammar@saharaifs.net>, 2019
 # Mustafa Rawi <mustafa@cubexco.com>, 2019
 # hoxhe Aits <hoxhe0@gmail.com>, 2019
+# Malaz Abuidris <msea@odoo.com>, 2022
 # 
 msgid ""
 msgstr ""
@@ -16,7 +17,7 @@ msgstr ""
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2020-04-27 09:22+0000\n"
 "PO-Revision-Date: 2019-08-26 09:15+0000\n"
-"Last-Translator: hoxhe Aits <hoxhe0@gmail.com>, 2019\n"
+"Last-Translator: Malaz Abuidris <msea@odoo.com>, 2022\n"
 "Language-Team: Arabic (https://www.transifex.com/odoo/teams/41243/ar/)\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
@@ -32,12 +33,12 @@ msgstr ""
 #. module: website_event_sale
 #: model_terms:ir.ui.view,arch_db:website_event_sale.registration_template
 msgid "<i class=\"fa fa-ban mr-2\"/>Sold Out"
-msgstr ""
+msgstr "<i class=\"fa fa-ban mr-2\"/>نفدت الكمية "
 
 #. module: website_event_sale
 #: model_terms:ir.ui.view,arch_db:website_event_sale.registration_template
 msgid "<i class=\"fa fa-check mr-2\"/>Registered"
-msgstr ""
+msgstr "<i class=\"fa fa-check mr-2\"/>تم التسجيل "
 
 #. module: website_event_sale
 #: code:addons/website_event_sale/models/product_pricelist.py:0
@@ -46,6 +47,8 @@ msgid ""
 "A pricelist item with a positive min. quantity cannot be applied to this "
 "event tickets product."
 msgstr ""
+"لا يمكن تطبيق عنصر قائمة التسعير ذو حد أدنى موجب للكمية في منتج تذاكر هذه "
+"الفعالية. "
 
 #. module: website_event_sale
 #: code:addons/website_event_sale/models/product_pricelist.py:0
@@ -54,6 +57,8 @@ msgid ""
 "A pricelist item with a positive min. quantity will not be applied to the "
 "event tickets products."
 msgstr ""
+"لن يتم تطبيق عنصر قائمة تسعير ذو حد أدنى موجب للكمية في منتج تذاكر هذه "
+"الفعالية. "
 
 #. module: website_event_sale
 #: model:ir.model.fields,field_description:website_event_sale.field_product_product__event_ticket_ids
@@ -78,7 +83,7 @@ msgstr "فقط"
 #. module: website_event_sale
 #: model:ir.model,name:website_event_sale.model_product_pricelist_item
 msgid "Pricelist Rule"
-msgstr ""
+msgstr "قاعدة قائمة الأسعار "
 
 #. module: website_event_sale
 #: model:ir.model,name:website_event_sale.model_product_product
@@ -114,7 +119,7 @@ msgstr "بند أمر المبيعات"
 #. module: website_event_sale
 #: model_terms:ir.ui.view,arch_db:website_event_sale.registration_template
 msgid "Sales end on"
-msgstr ""
+msgstr "تنتهي المبيعات في "
 
 #. module: website_event_sale
 #: model_terms:ir.ui.view,arch_db:website_event_sale.index
@@ -125,7 +130,7 @@ msgstr " بيعت كلها"
 #: code:addons/website_event_sale/models/sale_order.py:0
 #, python-format
 msgid "Sorry, The %(ticket)s tickets for the %(event)s event are sold out."
-msgstr ""
+msgstr "عذراًن لقد بيعت كافة تذاكر %(ticket)s للفعالية %(event)s. "
 
 #. module: website_event_sale
 #: code:addons/website_event_sale/models/sale_order.py:0
@@ -134,6 +139,8 @@ msgid ""
 "Sorry, only %(remaining_seats)d seats are still available for the %(ticket)s"
 " ticket for the %(event)s event."
 msgstr ""
+"عذراً، مقاعد %(remaining_seats)d فقط هي المتوفرة لتذكرة %(ticket)s للفعالية "
+"%(event)s. "
 
 #. module: website_event_sale
 #: code:addons/website_event_sale/models/sale_order.py:0
