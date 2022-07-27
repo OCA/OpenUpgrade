@@ -1,0 +1,93 @@
+---Models in module 'fleet'---
+new model fleet.vehicle.model.category
+# NOTHING TO DO: new feature to categorize vehicle models
+
+---Fields in module 'fleet'---
+fleet        / fleet.vehicle            / co2 (float)                   : now a function
+fleet        / fleet.vehicle            / co2_standard (char)           : NEW isfunction: function, stored
+fleet        / fleet.vehicle            / color (char)                  : now a function
+# NOTHING TO DO
+
+fleet        / fleet.vehicle            / description (text)            : type is now 'html' ('text')
+# DONE: pre-migration, converted to html
+
+fleet        / fleet.vehicle            / doors (integer)               : now a function
+fleet        / fleet.vehicle            / electric_assistance (boolean) : NEW isfunction: function, stored
+fleet        / fleet.vehicle            / frame_size (float)            : NEW
+fleet        / fleet.vehicle            / frame_type (selection)        : NEW selection_keys: ['diamant', 'trapez', 'wave']
+fleet        / fleet.vehicle            / fuel_type (selection)         : now a function
+# NOTHING TO DO: handle by ORM
+
+fleet        / fleet.vehicle            / fuel_type (selection)         : selection_keys is now '['cng', 'diesel', 'electric', 'full_hybrid_gasoline', 'gasoline', 'hybrid', 'hydrogen', 'lpg', 'plug_in_hybrid_diesel', 'plug_in_hybrid_gasoline']' ('['diesel', 'electric', 'gasoline', 'hybrid', 'lpg']')
+# NOTHING TO DO: new feature
+
+fleet        / fleet.vehicle            / horsepower (integer)          : now a function
+fleet        / fleet.vehicle            / horsepower_tax (float)        : now a function
+fleet        / fleet.vehicle            / manager_id (many2one)         : not a function anymore
+fleet        / fleet.vehicle            / model_year (char)             : now a function
+fleet        / fleet.vehicle            / plan_to_change_bike (boolean) : NEW isrelated: related, stored
+fleet        / fleet.vehicle            / power (integer)               : now a function
+fleet        / fleet.vehicle            / seats (integer)               : now a function
+fleet        / fleet.vehicle            / trailer_hook (boolean)        : NEW hasdefault, isfunction: function, stored
+fleet        / fleet.vehicle            / transmission (selection)      : now a function
+# NOTHING TO DO: handle by ORM
+
+fleet        / fleet.vehicle.log.contract / notes (text)                  : type is now 'html' ('text')
+# DONE: pre-migration, converted to html
+
+fleet        / fleet.vehicle.log.services / state (selection)             : selection_keys is now '['cancelled', 'done', 'new', 'running']' ('['cancelled', 'done', 'running', 'todo']')
+# DONE: post-migration, mapped 'todo' to 'new'
+
+fleet        / fleet.vehicle.model      / category_id (many2one)        : NEW relation: fleet.vehicle.model.category
+fleet        / fleet.vehicle.model      / co2_standard (char)           : NEW
+fleet        / fleet.vehicle.model      / color (char)                  : NEW
+fleet        / fleet.vehicle.model      / default_co2 (float)           : NEW
+fleet        / fleet.vehicle.model      / default_fuel_type (selection) : NEW selection_keys: ['cng', 'diesel', 'electric', 'full_hybrid_gasoline', 'gasoline', 'hybrid', 'hydrogen', 'lpg', 'plug_in_hybrid_diesel', 'plug_in_hybrid_gasoline'], hasdefault
+fleet        / fleet.vehicle.model      / doors (integer)               : NEW
+fleet        / fleet.vehicle.model      / electric_assistance (boolean) : NEW hasdefault
+fleet        / fleet.vehicle.model      / horsepower (integer)          : NEW
+fleet        / fleet.vehicle.model      / horsepower_tax (float)        : NEW
+fleet        / fleet.vehicle.model      / manager_id (many2one)         : DEL relation: res.users
+fleet        / fleet.vehicle.model      / model_year (integer)          : NEW
+fleet        / fleet.vehicle.model      / power (integer)               : NEW
+fleet        / fleet.vehicle.model      / seats (integer)               : NEW
+fleet        / fleet.vehicle.model      / trailer_hook (boolean)        : NEW hasdefault
+fleet        / fleet.vehicle.model      / transmission (selection)      : NEW selection_keys: ['automatic', 'manual']
+# NOTHING TO DO: new feature
+
+fleet        / fleet.vehicle.model.brand / _order                        : _order is now 'name asc' ('model_count desc, name asc')
+# NOTHING TO DO
+
+fleet        / fleet.vehicle.model.category / name (char)                   : NEW required
+fleet        / fleet.vehicle.model.category / sequence (integer)            : NEW
+# NOTHING TO DO : new feature to categorize vehicle models
+
+fleet        / res.partner              / plan_to_change_bike (boolean) : NEW hasdefault
+# NOTHING TO DO : new feature
+
+---XML records in module 'fleet'---
+NEW ir.actions.act_window: fleet.fleet_vehicle_model_category_action
+NEW ir.model.access: fleet.fleet_vehicle_model_brand_category_right_user
+NEW ir.model.access: fleet.fleet_vehicle_model_category_access_right
+# NOTHING TO DO
+
+DEL ir.model.constraint: fleet.constraint_fleet_vehicle_state_fleet_state_name_unique
+DEL ir.model.constraint: fleet.constraint_fleet_vehicle_tag_name_uniq
+# NOTHING TO DO: constrains are not removed
+
+NEW ir.rule: fleet.ir_rule_fleet_report (noupdate)
+NEW ir.rule: fleet.ir_rule_fleet_vehicle_log_contract (noupdate)
+# NOTHING TO DO
+
+DEL ir.rule: fleet.ir_rule_fleet_log_contract (noupdate)
+# DONE post-migration, safely deleted xmlids
+
+NEW ir.ui.menu: fleet.fleet_vehicle_model_category_menu
+NEW ir.ui.view: fleet.fleet_vechicle_costs_report_view_tree
+NEW ir.ui.view: fleet.fleet_vehicle_log_contract_view_pivot
+NEW ir.ui.view: fleet.fleet_vehicle_log_services_view_pivot
+NEW ir.ui.view: fleet.fleet_vehicle_model_brand_view_search
+NEW ir.ui.view: fleet.fleet_vehicle_model_category_view_form
+NEW ir.ui.view: fleet.fleet_vehicle_model_category_view_tree
+NEW ir.ui.view: fleet.fleet_vehicle_view_pivot
+# NOTHING TO DO
