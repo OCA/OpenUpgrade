@@ -1,0 +1,12 @@
+---Models in module 'gamification'---
+---Fields in module 'gamification'---
+gamification / gamification.badge       / description (text)            : type is now 'html' ('text')
+# DONE: pre-migration: convert text fields to html
+
+---XML records in module 'gamification'---
+DEL ir.model.constraint: gamification.constraint_gamification_karma_rank_karma_min_check
+DEL ir.ui.view: gamification.assets_backend
+# NOTHING TO DO
+
+mail.template: gamification.mail_template_data_new_rank_reached (noupdate) (noupdate switched)
+#DONE: pre-migration: noupdate change to 1
