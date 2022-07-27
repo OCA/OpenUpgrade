@@ -1,0 +1,22 @@
+---Models in module 'im_livechat'---
+---Fields in module 'im_livechat'---
+im_livechat  / im_livechat.channel      / script_external (text)        : type is now 'html' ('text')
+# NOTHING TO DO: non-stored field
+
+im_livechat  / mail.channel             / channel_type (False)          : selection_keys is now '['channel', 'chat', 'group', 'livechat']' ('['channel', 'chat', 'livechat']')
+im_livechat  / res.users.settings       / is_discuss_sidebar_category_livechat_open (boolean): NEW hasdefault
+# NOTHING TO DO
+
+---XML records in module 'im_livechat'---
+NEW ir.actions.act_window: im_livechat.rating_rating_action_livechat
+DEL ir.actions.act_window: im_livechat.rating_rating_action_view_livechat_rating
+NEW ir.actions.act_window.view: im_livechat.rating_rating_action_livechat_report_view_form
+NEW ir.actions.act_window.view: im_livechat.rating_rating_action_livechat_report_view_kanban
+NEW ir.actions.act_window.view: im_livechat.rating_rating_action_livechat_view_form
+NEW ir.actions.act_window.view: im_livechat.rating_rating_action_livechat_view_kanban
+DEL ir.model.constraint: im_livechat.constraint_mail_channel_livechat_operator_id
+NEW ir.ui.view: im_livechat.rating_rating_view_form_livechat
+DEL ir.ui.view: im_livechat.assets_backend
+DEL ir.ui.view: im_livechat.external_lib
+DEL ir.ui.view: im_livechat.qunit_suite
+# NOTHING TO DO
