@@ -7,6 +7,7 @@ sale         / sale.order.line          / product_packaging_qty (float) : NEW
 ---XML records in module 'sale'---
 NEW ir.actions.act_window: sale.action_accrued_revenue_entry
 NEW ir.actions.act_window: sale.action_sale_order_form_view
+NEW ir.cron: sale.send_invoice_cron (noupdate)
 DEL ir.model.access: sale.access_product_group_res_partner_sale_manager
 NEW ir.ui.view: sale.account_invoice_report_view_tree
 NEW ir.ui.view: sale.badge_extra_price

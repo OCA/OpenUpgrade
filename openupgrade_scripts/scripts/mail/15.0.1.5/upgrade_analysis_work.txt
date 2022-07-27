@@ -1,0 +1,284 @@
+---Models in module 'mail'---
+obsolete model mail.moderation (renamed to mail.group.moderation in module mail_group)
+# DONE: pre-migration: renamed model and table
+
+new model mail.channel.rtc.session
+new model mail.composer.mixin [abstract]
+new model mail.guest
+new model mail.ice.server
+new model mail.message.reaction
+new model res.users.settings
+new model res.users.settings.volumes
+# NOTHING TO DO
+
+---Fields in module 'mail'---
+mail         / bus.presence             / guest_id (many2one)           : NEW relation: mail.guest
+# NOTHING TO DO: new feature
+
+mail         / ir.actions.server        / channel_ids (many2many)       : DEL relation: mail.channel
+# NOTHING TO DO: feature removed
+
+mail         / mail.activity.type       / category (selection)          : selection_keys is now '['default', 'phonecall', 'upload_file']' ('['default', 'upload_file']')
+# NOTHING TO DO: new feature
+
+mail         / mail.activity.type       / force_next (boolean)          : DEL
+mail         / mail.activity.type       / chaining_type (selection)     : NEW required, selection_keys: ['suggest', 'trigger'], req_default: function, hasdefault
+# DONE: post-migration, mapped old field values force_next (true -> trigger, false -> suggest)
+
+mail         / mail.activity.type       / default_note (html)           : NEW
+mail         / mail.activity.type       / default_description (html)    : DEL
+# DONE: pre-migration, rename fields default_description -> default_note
+
+mail         / mail.activity.type       / res_model (selection)         : NEW selection_keys: function
+mail         / mail.activity.type       / res_model_id (many2one)       : DEL relation: ir.model
+# DONE: post-migration: mapped values res_model_id to res_model
+
+mail         / mail.activity.type       / next_type_ids (many2many)     : DEL relation: mail.activity.type
+mail         / mail.activity.type       / default_next_type_id (many2one): DEL relation: mail.activity.type
+mail         / mail.activity.type       / suggested_next_type_ids (many2many): NEW relation: mail.activity.type, isfunction: function, stored
+mail         / mail.activity.type       / triggered_next_type_id (many2one): NEW relation: mail.activity.type, isfunction: function, stored
+# DONE: pre-migration, rename fields (default_next_type_id -> triggered_next_type_id, next_type_ids -> suggested_next_type_ids)
+
+mail         / mail.channel             / channel_message_ids (many2many): DEL relation: mail.message
+# DONE: pre-migration: used to create mail.group.message records
+
+mail         / mail.channel             / channel_partner_ids (many2many): not stored anymore
+mail         / mail.channel             / channel_partner_ids (many2many): now a function
+mail         / mail.channel             / channel_partner_ids (many2many): table is now 'False' ('mail_channel_partner')
+# DONE: pre-migration: used to create mail.group.member records
+
+mail         / mail.channel             / channel_type (selection)      : selection_keys is now '['channel', 'chat', 'group']' ('['channel', 'chat']')
+# NOTHING TO DO: new feature
+
+mail         / mail.channel             / rtc_session_ids (one2many)    : NEW relation: mail.channel.rtc.session
+mail         / mail.channel             / default_display_mode (selection): NEW selection_keys: ['video_full_screen']
+# NOTHING TO DO: new feature call audio and video
+
+mail         / mail.channel             / email_send (boolean)          : DEL
+# DONE: pre-migration: created mail.group records from the ones with email_send = True
+# DONE: post-migration: deleted records that have email_send = True (they are now mail.group records)
+
+mail         / mail.channel             / moderation (boolean)          : DEL
+mail         / mail.channel             / moderation_guidelines (boolean): DEL
+mail         / mail.channel             / moderation_guidelines_msg (text): DEL
+mail         / mail.channel             / moderation_ids (one2many)     : DEL relation: mail.moderation
+mail         / mail.channel             / moderation_notify (boolean)   : DEL
+mail         / mail.channel             / moderation_notify_msg (text)  : DEL
+mail         / mail.channel             / moderator_ids (many2many)     : DEL relation: res.users
+# DONE: pre-migration: used this fields to fill mail.group model
+
+mail         / mail.channel.partner     / channel_id (many2one)         : now required
+# NOTHING DO TO: nocase in v14 that this field is null
+
+mail         / mail.channel.partner     / guest_id (many2one)           : NEW relation: mail.guest
+mail         / mail.channel.partner     / last_interest_dt (datetime)   : NEW hasdefault
+# NOTHING TO DO: new feature
+
+mail         / mail.channel.partner     / rtc_inviting_session_id (many2one): NEW relation: mail.channel.rtc.session
+mail         / mail.channel.partner     / rtc_session_ids (one2many)    : NEW relation: mail.channel.rtc.session
+mail         / mail.channel.rtc.session / channel_id (many2one)         : NEW relation: mail.channel, isrelated: related, stored
+mail         / mail.channel.rtc.session / channel_partner_id (many2one) : NEW relation: mail.channel.partner, required
+mail         / mail.channel.rtc.session / is_camera_on (boolean)        : NEW
+mail         / mail.channel.rtc.session / is_deaf (boolean)             : NEW
+mail         / mail.channel.rtc.session / is_muted (boolean)            : NEW
+mail         / mail.channel.rtc.session / is_screen_sharing_on (boolean): NEW
+# NOTHING TO DO: new feature call audio and video
+
+mail         / mail.followers           / channel_id (many2one)         : DEL relation: mail.channel
+mail         / mail.followers           / email (char)                  : not a function anymore
+mail         / mail.followers           / email (char)                  : now related
+mail         / mail.followers           / is_active (boolean)           : not a function anymore
+mail         / mail.followers           / is_active (boolean)           : now related
+mail         / mail.followers           / name (char)                   : not a function anymore
+mail         / mail.followers           / name (char)                   : now related
+# NOTHING TO DO: handle by ORM
+
+mail         / mail.followers           / partner_id (many2one)         : now required
+# DONE: pre-migration: delete all channel follower
+
+mail         / mail.guest               / access_token (char)           : NEW required, req_default: function, hasdefault
+mail         / mail.guest               / channel_ids (many2many)       : NEW relation: mail.channel
+mail         / mail.guest               / country_id (many2one)         : NEW relation: res.country
+mail         / mail.guest               / image_1024 (binary)           : NEW attachment: True, isrelated: related, stored
+mail         / mail.guest               / image_128 (binary)            : NEW attachment: True, isrelated: related, stored
+mail         / mail.guest               / image_1920 (binary)           : NEW attachment: True
+mail         / mail.guest               / image_256 (binary)            : NEW attachment: True, isrelated: related, stored
+mail         / mail.guest               / image_512 (binary)            : NEW attachment: True, isrelated: related, stored
+mail         / mail.guest               / lang (selection)              : NEW selection_keys: function
+mail         / mail.guest               / name (char)                   : NEW required
+mail         / mail.guest               / timezone (selection)          : NEW selection_keys: function
+# NOTHING TO DO: new feature
+
+mail         / mail.ice.server          / credential (char)             : NEW
+mail         / mail.ice.server          / server_type (selection)       : NEW required, selection_keys: ['stun', 'turn'], req_default: function, hasdefault
+mail         / mail.ice.server          / uri (char)                    : NEW required
+mail         / mail.ice.server          / username (char)               : NEW
+# NOTHING TO DO: new feature call audio and video
+
+mail         / mail.mail                / failure_type (selection)      : NEW selection_keys: ['mail_bl', 'mail_dup', 'mail_email_invalid', 'mail_email_missing', 'mail_optout', 'mail_smtp', 'unknown']
+# NOTHING DO DO
+
+mail         / mail.mail                / is_notification (boolean)     : NEW
+mail         / mail.mail                / notification (boolean)        : DEL
+# DONE: pre-migration: rename fields notification -> is_notification
+
+mail         / mail.message             / author_guest_id (many2one)    : NEW relation: mail.guest
+# NOTHING TO DO: new feature
+
+mail         / mail.message             / channel_ids (many2many)       : DEL relation: mail.channel
+# NOTHING TO DO: feature removed
+
+mail         / mail.message             / moderation_status (selection) : DEL selection_keys: ['accepted', 'pending_moderation', 'rejected']
+mail         / mail.message             / moderator_id (many2one)       : DEL relation: res.users
+# NOTHING TO DO: transfer data to model mail_group_message
+
+mail         / mail.message             / notified_partner_ids (many2many): table is now 'mail_notification' ('mail_message_res_partner_needaction_rel')
+# DONE: pre-migration: rename table
+
+mail         / mail.message             / reaction_ids (one2many)       : NEW relation: mail.message.reaction
+# NOTHING TO DO: new feature
+
+mail         / mail.message             / no_auto_thread (boolean)      : DEL
+mail         / mail.message             / reply_to_force_new (boolean)  : NEW
+# DONE: pre-migration: rename fields no_auto_thread -> reply_to_force_new
+
+mail         / mail.message.reaction    / content (char)                : NEW required
+mail         / mail.message.reaction    / guest_id (many2one)           : NEW relation: mail.guest
+mail         / mail.message.reaction    / message_id (many2one)         : NEW relation: mail.message, required
+mail         / mail.message.reaction    / partner_id (many2one)         : NEW relation: res.partner
+# NOTHING TO DO: new feature
+
+mail         / mail.moderation          / __last_update (datetime)      : module is now 'mail_group' ('mail')
+mail         / mail.moderation          / _order                        : module is now 'mail_group' ('mail')
+mail         / mail.moderation          / channel_id (many2one)         : DEL relation: mail.channel, required
+mail         / mail.moderation          / display_name (char)           : module is now 'mail_group' ('mail')
+mail         / mail.moderation          / email (char)                  : module is now 'mail_group' ('mail')
+mail         / mail.moderation          / status (selection)            : module is now 'mail_group' ('mail')
+# DONE: pre-migration: renamed model and table
+
+mail         / mail.notification        / failure_type (selection)      : selection_keys is now '['mail_email_invalid', 'mail_email_missing', 'mail_smtp', 'unknown']' ('['BOUNCE', 'RECIPIENT', 'SMTP', 'UNKNOWN']')
+# DONE: post-migration: map old values to new values
+
+mail         / mail.notification        / mail_id (many2one)            : DEL relation: mail.mail
+mail         / mail.notification        / mail_mail_id (many2one)       : NEW relation: mail.mail
+# DONE: rename field in pre-migration
+
+mail         / mail.tracking.value      / currency_id (many2one)        : NEW relation: res.currency
+# NOTHING TO DO: can't check past currency in record to write script
+
+mail         / res.users                / moderation_channel_ids (many2many): DEL relation: mail.channel
+# NOTHING TO DO
+
+mail         / res.users                / res_users_settings_ids (one2many): NEW relation: res.users.settings
+# NOTHING TO DO: new feature
+
+mail         / res.users.settings       / is_discuss_sidebar_category_channel_open (boolean): NEW hasdefault
+mail         / res.users.settings       / is_discuss_sidebar_category_chat_open (boolean): NEW hasdefault
+mail         / res.users.settings       / push_to_talk_key (char)       : NEW
+mail         / res.users.settings       / use_push_to_talk (boolean)    : NEW hasdefault
+mail         / res.users.settings       / user_id (many2one)            : NEW relation: res.users, required
+mail         / res.users.settings       / voice_active_duration (integer): NEW
+mail         / res.users.settings       / volume_settings_ids (one2many): NEW relation: res.users.settings.volumes
+# NOTHING TO DO: new feature
+
+mail         / res.users.settings.volumes / guest_id (many2one)           : NEW relation: res.partner
+mail         / res.users.settings.volumes / partner_id (many2one)         : NEW relation: res.partner
+mail         / res.users.settings.volumes / user_setting_id (many2one)    : NEW relation: res.users.settings, required
+mail         / res.users.settings.volumes / volume (float)                : NEW hasdefault
+# NOTHING TO DO: new feature
+
+---XML records in module 'mail'---
+NEW ir.actions.act_window: mail.action_ice_servers
+NEW ir.actions.act_window: mail.mail_channel_rtc_session_action
+NEW ir.actions.act_window: mail.mail_guest_action
+NEW ir.actions.act_window: mail.mail_message_reaction_action
+NEW ir.actions.act_window: mail.res_users_settings_action
+DEL ir.actions.act_window: mail.mail_moderation_action
+NEW ir.actions.act_window.view: mail.mail_activity_action_view_form
+NEW ir.actions.act_window.view: mail.mail_activity_action_view_tree
+# NOTHING TO DO
+
+DEL ir.config_parameter: mail.icp_mail_bounce_alias [renamed to base module] (noupdate)
+DEL ir.config_parameter: mail.icp_mail_catchall_alias [renamed to base module] (noupdate)
+# NOTHING TO DO
+
+DEL ir.cron: mail.ir_cron_mail_notify_channel_moderators (noupdate)
+# DONE: post-migration: safely remove
+
+NEW ir.model.access: mail.access_mail_channel_admin
+NEW ir.model.access: mail.access_mail_channel_rtc_session_all
+NEW ir.model.access: mail.access_mail_channel_rtc_session_system
+NEW ir.model.access: mail.access_mail_guest_all
+NEW ir.model.access: mail.access_mail_guest_system
+NEW ir.model.access: mail.access_mail_guest_user
+NEW ir.model.access: mail.access_mail_ice_server_all
+NEW ir.model.access: mail.access_mail_ice_server_system
+NEW ir.model.access: mail.access_mail_message_reaction_all
+NEW ir.model.access: mail.access_mail_message_reaction_system
+NEW ir.model.access: mail.access_mail_template_editor
+NEW ir.model.access: mail.access_res_users_settings_all
+NEW ir.model.access: mail.access_res_users_settings_user
+NEW ir.model.access: mail.access_res_users_settings_volumes_all
+NEW ir.model.access: mail.access_res_users_settings_volumes_user
+DEL ir.model.access: mail.access_mail_moderation_user
+NEW ir.model.constraint: mail.constraint_bus_presence_partner_or_guest_exists
+NEW ir.model.constraint: mail.constraint_mail_channel_partner_partner_or_guest_exists
+NEW ir.model.constraint: mail.constraint_mail_channel_rtc_session_channel_partner_unique
+NEW ir.model.constraint: mail.constraint_mail_channel_uuid_unique
+NEW ir.model.constraint: mail.constraint_mail_message_reaction_partner_or_guest_exists
+NEW ir.model.constraint: mail.constraint_mail_notification_notification_partner_required
+NEW ir.model.constraint: mail.constraint_res_users_settings_unique_user_id
+NEW ir.model.constraint: mail.constraint_res_users_settings_volumes_partner_or_guest_exists
+# NOTHING TO DO
+
+DEL ir.model.constraint: mail.constraint_mail_followers_mail_followers_res_channel_res_model_id_uniq
+DEL ir.model.constraint: mail.constraint_mail_followers_partner_xor_channel
+DEL ir.model.constraint: mail.constraint_mail_message_res_partner_needaction_rel_notification_partner_required
+DEL ir.model.constraint: mail.constraint_mail_moderation_channel_email_uniq
+# DONE pre-migration: deleted obsolete constraint
+
+NEW ir.rule: mail.ir_rule_mail_channel_partner_group_system (noupdate)
+NEW ir.rule: mail.mail_channel_admin (noupdate)
+NEW ir.rule: mail.mail_template_editor_rule (noupdate)
+NEW ir.rule: mail.mail_template_employee_rule (noupdate)
+NEW ir.rule: mail.res_users_settings_rule_admin (noupdate)
+NEW ir.rule: mail.res_users_settings_rule_user (noupdate)
+NEW ir.rule: mail.res_users_settings_volumes_rule_admin (noupdate)
+NEW ir.rule: mail.res_users_settings_volumes_rule_user (noupdate)
+# NOTHING TO DO
+
+DEL ir.rule: mail.mail_moderation_rule_user (noupdate)
+# DONE: post-migration: safely remove
+
+NEW ir.ui.menu: mail.mail_channel_ice_servers_menu
+NEW ir.ui.menu: mail.mail_channel_rtc_session_menu
+NEW ir.ui.menu: mail.mail_guest_menu
+NEW ir.ui.menu: mail.mail_message_reaction_menu
+NEW ir.ui.menu: mail.res_users_settings_menu
+DEL ir.ui.menu: mail.mail_moderation_menu
+NEW ir.ui.view: mail.discuss_public_channel_template
+NEW ir.ui.view: mail.discuss_public_layout
+NEW ir.ui.view: mail.mail_activity_view_form
+NEW ir.ui.view: mail.mail_channel_rtc_session_view_form
+NEW ir.ui.view: mail.mail_channel_rtc_session_view_search
+NEW ir.ui.view: mail.mail_channel_rtc_session_view_tree
+NEW ir.ui.view: mail.mail_guest_view_tree
+NEW ir.ui.view: mail.mail_message_reaction_view_tree
+NEW ir.ui.view: mail.res_users_settings_view_form
+NEW ir.ui.view: mail.res_users_settings_view_tree
+NEW ir.ui.view: mail.view_ice_server_form
+NEW ir.ui.view: mail.view_ice_server_tree
+DEL ir.ui.view: mail._assets_primary_variables
+DEL ir.ui.view: mail.assets_backend
+DEL ir.ui.view: mail.assets_backend_prod_only
+DEL ir.ui.view: mail.assets_tests
+DEL ir.ui.view: mail.mail_channel_notify_moderation
+DEL ir.ui.view: mail.mail_channel_send_guidelines
+DEL ir.ui.view: mail.mail_moderation_view_search
+DEL ir.ui.view: mail.mail_moderation_view_tree
+DEL ir.ui.view: mail.qunit_mobile_suite
+DEL ir.ui.view: mail.qunit_suite
+DEL ir.ui.view: mail.tests_assets
+DEL mail.template: mail.email_template_partner
+NEW res.groups: mail.group_mail_template_editor (noupdate)
+# NOTHING TO DO

@@ -10,6 +10,9 @@ renamed_modules = {
     "l10n_eu_service": "l10n_eu_oss",
     "mail_client_extension": "mail_plugin",
     "payment_ingenico": "payment_ogone",
+    "website_mail_channel": "website_mail_group",
+    # OCA/project
+    "project_stage_state": "project_task_stage_state",
     # OCA/...
 }
 
@@ -27,14 +30,24 @@ merged_modules = {
     "website_event_track_exhibitor": "website_event_exhibitor",
     "website_form": "website",
     "website_sale_management": "website_sale",
-    # OCA/...
+    # OCA/account-financial-tools
+    "stock_account_prepare_anglo_saxon_out_lines_hook": "stock_account",
+    # OCA/stock-logistics-workflow
+    "stock_move_assign_picking_hook": "stock",
+    # OCA/web
+    "web_decimal_numpad_dot": "web",
 }
 
 # only used here for upgrade_analysis
 renamed_models = {
     # odoo
+    "calendar.contacts": "calendar.filters",
+    "mail.moderation": "mail.group.moderation",
     # OCA/...
 }
 
 # only used here for upgrade_analysis
-merged_models = {}
+merged_models = {
+    "stock.inventory": "stock.quant",
+    "stock.inventory.line": "stock.quant",
+}

@@ -1,0 +1,6 @@
+<?xml version='1.0' encoding='utf-8'?>
+<odoo>
+  <record id="ir_rule_test_new_api_model_shared_cache_compute_line" model="ir.rule">
+    <field name="groups" eval="[Command.link(ref('base.group_user'))]"/>
+  </record>
+</odoo>

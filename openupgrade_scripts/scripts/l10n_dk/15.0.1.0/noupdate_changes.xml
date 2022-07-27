@@ -1,0 +1,20 @@
+<?xml version='1.0' encoding='utf-8'?>
+<odoo>
+  <record id="tax450" model="account.tax.template">
+    <field name="amount">25</field>
+    <field name="invoice_repartition_line_ids" eval="[(5, 0, 0),             (0,0, {                 'factor_percent': 100,                 'repartition_type': 'base',             }),             (0,0, {                 'factor_percent': 25,                 'repartition_type': 'tax',                 'account_id': ref('a8740'),                 'plus_report_line_ids': [ref('l10n_dk.account_tax_report_line_deduction_purchase_tax')],             }),             (0,0, {                 'factor_percent': 75,                 'repartition_type': 'tax',             }),         ]"/>
+    <field name="refund_repartition_line_ids" eval="[(5, 0, 0),             (0,0, {                 'factor_percent': 100,                 'repartition_type': 'base',             }),             (0,0, {                 'factor_percent': 25,                 'repartition_type': 'tax',                 'account_id': ref('a8740'),                 'plus_report_line_ids': [ref('l10n_dk.account_tax_report_line_deduction_purchase_tax')],             }),             (0,0, {                 'factor_percent': 75,                 'repartition_type': 'tax',             }),         ]"/>
+  </record>
+  <record id="tax710" model="account.tax.template">
+    <field name="amount_type">division</field>
+    <field name="invoice_repartition_line_ids" eval="[(5, 0, 0),             (0,0, {                 'factor_percent': 100,                 'repartition_type': 'base',             }),             (0,0, {                 'factor_percent': 92.83,                 'repartition_type': 'tax',                 'account_id': ref('a8775'),                 'plus_report_line_ids': [ref('l10n_dk.account_tax_report_line_deduction_oil_bottle_tax')],             }),             (0,0, {                 'factor_percent': 7.17,                 'repartition_type': 'tax',             }),         ]"/>
+    <field name="refund_repartition_line_ids" eval="[(5, 0, 0),             (0,0, {                 'factor_percent': 100,                 'repartition_type': 'base',             }),             (0,0, {                 'factor_percent': 92.83,                 'repartition_type': 'tax',                 'account_id': ref('a8775'),                 'minus_report_line_ids': [ref('l10n_dk.account_tax_report_line_deduction_oil_bottle_tax')],             }),             (0,0, {                 'factor_percent': 7.17,                 'repartition_type': 'tax',             }),         ]"/>
+    <field name="price_include" eval="True"/>
+  </record>
+  <record id="tax730" model="account.tax.template">
+    <field name="amount_type">division</field>
+    <field name="invoice_repartition_line_ids" eval="[(5, 0, 0),             (0,0, {                 'factor_percent': 100,                 'repartition_type': 'base',             }),             (0,0, {                 'factor_percent': 92.83,                 'repartition_type': 'tax',                 'account_id': ref('a8780'),                 'plus_report_line_ids': [ref('l10n_dk.account_tax_report_line_deduction_gas_tax')],             }),             (0,0, {                 'factor_percent': 7.17,                 'repartition_type': 'tax',             }),         ]"/>
+    <field name="refund_repartition_line_ids" eval="[(5, 0, 0),             (0,0, {                 'factor_percent': 100,                 'repartition_type': 'base',             }),             (0,0, {                 'factor_percent': 92.83,                 'repartition_type': 'tax',                 'account_id': ref('a8780'),                 'minus_report_line_ids': [ref('l10n_dk.account_tax_report_line_deduction_gas_tax')],             }),             (0,0, {                 'factor_percent': 7.17,                 'repartition_type': 'tax',             }),         ]"/>
+    <field name="price_include" eval="True"/>
+  </record>
+</odoo>

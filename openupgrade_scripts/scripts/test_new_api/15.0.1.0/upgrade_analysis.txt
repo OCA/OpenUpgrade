@@ -1,0 +1,11 @@
+---Models in module 'test_new_api'---
+new model test_new_api.model_constrained_unlinks
+---Fields in module 'test_new_api'---
+test_new_api / test_new_api.model_constrained_unlinks / bar (integer)                 : NEW
+test_new_api / test_new_api.model_constrained_unlinks / foo (char)                    : NEW
+test_new_api / test_new_api.move        / payment_ids (one2many)        : NEW relation: test_new_api.payment
+test_new_api / test_new_api.move        / tag_repeat (integer)          : NEW
+test_new_api / test_new_api.multi       / tags (many2many)              : NEW relation: test_new_api.multi.tag
+---XML records in module 'test_new_api'---
+NEW ir.model.access: test_new_api.access_test_new_api_model_constrained_unlinks
+DEL ir.ui.view: test_new_api.assets_tests

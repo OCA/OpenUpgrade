@@ -45,6 +45,7 @@
   </record>
   <record id="hr_leave_rule_employee_unlink" model="ir.rule">
     <field name="domain_force">[('employee_id.user_id', '=', user.id), ('state', 'in', ['draft', 'confirm'])]</field>
+    <field name="perm_unlink" eval="True"/>
   </record>
   <record id="mail_act_leave_allocation_approval" model="mail.activity.type">
     <field name="res_model">hr.leave.allocation</field>

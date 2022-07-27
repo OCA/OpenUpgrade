@@ -123,6 +123,12 @@ DEL ir.model.access: crm_iap_lead.access_crm_iap_lead_industry [renamed to crm_i
 DEL ir.model.access: crm_iap_lead.access_crm_iap_lead_mining_request [renamed to crm_iap_mine module]
 DEL ir.model.access: crm_iap_lead.access_crm_iap_lead_role [renamed to crm_iap_mine module]
 DEL ir.model.access: crm_iap_lead.access_crm_iap_lead_seniority [renamed to crm_iap_mine module]
+NEW ir.model.constraint: crm_iap_mine.constraint_crm_iap_lead_industry_name_uniq [renamed from crm_iap_lead module]
+NEW ir.model.constraint: crm_iap_mine.constraint_crm_iap_lead_role_name_uniq [renamed from crm_iap_lead module]
+NEW ir.model.constraint: crm_iap_mine.constraint_crm_iap_lead_seniority_name_uniq [renamed from crm_iap_lead module]
+DEL ir.model.constraint: crm_iap_lead.constraint_crm_iap_lead_industry_name_uniq [renamed to crm_iap_mine module]
+DEL ir.model.constraint: crm_iap_lead.constraint_crm_iap_lead_role_name_uniq [renamed to crm_iap_mine module]
+DEL ir.model.constraint: crm_iap_lead.constraint_crm_iap_lead_seniority_name_uniq [renamed to crm_iap_mine module]
 NEW ir.sequence: crm_iap_mine.ir_sequence_crm_iap_mine (noupdate)
 DEL ir.sequence: crm_iap_lead.seq_crm_iap_lead_mining_request (noupdate)
 NEW ir.ui.menu: crm_iap_mine.crm_iap_lead_mining_request_menu_action [renamed from crm_iap_lead module]

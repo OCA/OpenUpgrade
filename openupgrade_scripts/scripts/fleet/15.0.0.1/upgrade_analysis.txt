@@ -13,6 +13,7 @@ fleet        / fleet.vehicle            / fuel_type (selection)         : now a 
 fleet        / fleet.vehicle            / fuel_type (selection)         : selection_keys is now '['cng', 'diesel', 'electric', 'full_hybrid_gasoline', 'gasoline', 'hybrid', 'hydrogen', 'lpg', 'plug_in_hybrid_diesel', 'plug_in_hybrid_gasoline']' ('['diesel', 'electric', 'gasoline', 'hybrid', 'lpg']')
 fleet        / fleet.vehicle            / horsepower (integer)          : now a function
 fleet        / fleet.vehicle            / horsepower_tax (float)        : now a function
+fleet        / fleet.vehicle            / manager_id (many2one)         : not a function anymore
 fleet        / fleet.vehicle            / model_year (char)             : now a function
 fleet        / fleet.vehicle            / plan_to_change_bike (boolean) : NEW isrelated: related, stored
 fleet        / fleet.vehicle            / power (integer)               : now a function
@@ -44,6 +45,7 @@ fleet        / res.partner              / plan_to_change_bike (boolean) : NEW ha
 NEW ir.actions.act_window: fleet.fleet_vehicle_model_category_action
 NEW ir.model.access: fleet.fleet_vehicle_model_brand_category_right_user
 NEW ir.model.access: fleet.fleet_vehicle_model_category_access_right
+NEW ir.model.constraint: fleet.constraint_fleet_vehicle_model_category_name_uniq
 NEW ir.rule: fleet.ir_rule_fleet_report (noupdate)
 NEW ir.rule: fleet.ir_rule_fleet_vehicle_log_contract (noupdate)
 DEL ir.rule: fleet.ir_rule_fleet_log_contract (noupdate)

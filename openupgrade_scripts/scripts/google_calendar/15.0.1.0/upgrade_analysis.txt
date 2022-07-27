@@ -21,6 +21,8 @@ google_calendar / res.users                / google_calendar_token_validity (dat
 google_calendar / res.users                / google_calendar_token_validity (datetime): now related
 ---XML records in module 'google_calendar'---
 NEW ir.model.access: google_calendar.access_google_calendar_credentials
+NEW ir.model.access: google_calendar.google_calendar_manager
+NEW ir.model.constraint: google_calendar.constraint_res_users_google_token_uniq
 DEL ir.ui.view: google_calendar.assets_backend
 DEL ir.ui.view: google_calendar.qunit_mobile_suite
 DEL ir.ui.view: google_calendar.qunit_suite

@@ -1,0 +1,18 @@
+---Models in module 'auth_totp'---
+new model auth_totp.device [sql_view]
+# DONE: post-migration: moved trusted records from res_users_apikeys to auth_totp_device
+
+---Fields in module 'auth_totp'---
+auth_totp    / res.users                / totp_trusted_device_ids (one2many): relation is now 'auth_totp.device' ('res.users.apikeys') [nothing to do]
+# NOTHING TO DO
+
+---XML records in module 'auth_totp'---
+NEW ir.model.access: auth_totp.access_auth_totp_device_access_employee
+NEW ir.model.access: auth_totp.access_auth_totp_device_access_portal
+NEW ir.rule: auth_totp.api_key_admin
+NEW ir.rule: auth_totp.api_key_public
+NEW ir.rule: auth_totp.api_key_user
+NEW ir.ui.view: auth_totp.res_users_view_search
+DEL ir.ui.view: auth_totp.assets_tests
+DEL ir.ui.view: auth_totp.view_totp_list
+# NOTHING TO DO

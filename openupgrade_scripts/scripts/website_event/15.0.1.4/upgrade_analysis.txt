@@ -11,6 +11,7 @@ website_event / website.event.menu       / menu_type (selection)         : selec
 website_event / website.event.menu       / view_id (many2one)            : NEW relation: ir.ui.view
 ---XML records in module 'website_event'---
 NEW ir.model.access: website_event.access_event_event
+NEW ir.model.access: website_event.access_event_event_ticket
 NEW ir.model.access: website_event.access_event_tag
 NEW ir.model.access: website_event.access_event_tag_category
 NEW ir.model.access: website_event.access_event_type [renamed from event module]

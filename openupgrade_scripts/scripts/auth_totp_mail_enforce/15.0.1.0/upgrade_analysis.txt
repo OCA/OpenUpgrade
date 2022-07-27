@@ -1,0 +1,8 @@
+---Models in module 'auth_totp_mail_enforce'---
+new model auth.totp.rate.limit.log [transient]
+---Fields in module 'auth_totp_mail_enforce'---
+---XML records in module 'auth_totp_mail_enforce'---
+NEW ir.model.access: auth_totp_mail_enforce.access_auth_totp_rate_limit_log
+NEW ir.ui.view: auth_totp_mail_enforce.auth_totp_mail_form
+NEW ir.ui.view: auth_totp_mail_enforce.res_config_settings_view_form
+NEW mail.template: auth_totp_mail_enforce.mail_template_totp_mail_code (noupdate)

@@ -3,7 +3,7 @@ new model mail.group
 new model mail.group.member
 new model mail.group.message
 new model mail.group.message.reject [transient]
-new model mail.group.moderation
+new model mail.group.moderation (renamed from mail.moderation in module mail)
 ---Fields in module 'mail_group'---
 mail_group   / mail.group               / _inherits                     : NEW _inherits: {'mail.alias': 'alias_id'}
 mail_group   / mail.group               / access_group_id (many2one)    : NEW relation: res.groups, hasdefault
@@ -33,9 +33,12 @@ mail_group   / mail.group.message       / mail_group_id (many2one)      : NEW re
 mail_group   / mail.group.message       / mail_message_id (many2one)    : NEW relation: mail.message, required
 mail_group   / mail.group.message       / moderation_status (selection) : NEW required, selection_keys: ['accepted', 'pending_moderation', 'rejected'], req_default: function, hasdefault
 mail_group   / mail.group.message       / moderator_id (many2one)       : NEW relation: res.users
-mail_group   / mail.group.moderation    / email (char)                  : NEW required
 mail_group   / mail.group.moderation    / mail_group_id (many2one)      : NEW relation: mail.group, required
-mail_group   / mail.group.moderation    / status (selection)            : NEW required, selection_keys: ['allow', 'ban'], req_default: function, hasdefault
+mail_group   / mail.moderation          / __last_update (datetime)      : previously in module mail
+mail_group   / mail.moderation          / _order                        : previously in module mail
+mail_group   / mail.moderation          / display_name (char)           : previously in module mail
+mail_group   / mail.moderation          / email (char)                  : previously in module mail
+mail_group   / mail.moderation          / status (selection)            : previously in module mail
 ---XML records in module 'mail_group'---
 NEW ir.actions.act_window: mail_group.mail_group_action
 NEW ir.actions.act_window: mail_group.mail_group_member_action
@@ -50,6 +53,8 @@ NEW ir.model.access: mail_group.access_mail_group_message_reject
 NEW ir.model.access: mail_group.access_mail_group_message_user
 NEW ir.model.access: mail_group.access_mail_group_moderation
 NEW ir.model.access: mail_group.access_mail_group_user
+NEW ir.model.constraint: mail_group.constraint_mail_group_member_unique_partner
+NEW ir.model.constraint: mail_group.constraint_mail_group_moderation_mail_group_email_uniq
 NEW ir.rule: mail_group.mail_group_member_rule_administrator (noupdate)
 NEW ir.rule: mail_group.mail_group_member_rule_user (noupdate)
 NEW ir.rule: mail_group.mail_group_message_rule_administrator (noupdate)

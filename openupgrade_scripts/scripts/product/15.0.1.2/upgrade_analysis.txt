@@ -24,6 +24,7 @@ DEL ir.actions.report: product.report_product_label
 DEL ir.actions.report: product.report_product_product_barcode
 DEL ir.actions.report: product.report_product_template_barcode
 NEW ir.model.access: product.access_product_label_layout_user
+NEW ir.model.constraint: product.constraint_product_packaging_positive_qty
 NEW ir.ui.view: product.product_label_layout_form
 NEW ir.ui.view: product.report_productlabel_dymo
 NEW ir.ui.view: product.report_producttemplatelabel_dymo

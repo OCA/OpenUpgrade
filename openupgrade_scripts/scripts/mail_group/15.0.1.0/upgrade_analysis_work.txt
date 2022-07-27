@@ -1,0 +1,107 @@
+---Models in module 'mail_group'---
+new model mail.group
+new model mail.group.member
+new model mail.group.message
+new model mail.group.message.reject [transient]
+new model mail.group.moderation (renamed from mail.moderation in module mail)
+---Fields in module 'mail_group'---
+mail_group   / mail.group               / _inherits                     : NEW _inherits: {'mail.alias': 'alias_id'}
+mail_group   / mail.group               / access_group_id (many2one)    : NEW relation: res.groups, hasdefault
+mail_group   / mail.group               / access_mode (selection)       : NEW required, selection_keys: ['groups', 'members', 'public'], req_default: function, hasdefault
+mail_group   / mail.group               / active (boolean)              : NEW hasdefault
+mail_group   / mail.group               / alias_id (many2one)           : NEW relation: mail.alias, required
+mail_group   / mail.group               / description (text)            : NEW
+mail_group   / mail.group               / image_128 (binary)            : NEW attachment: True
+mail_group   / mail.group               / mail_group_message_ids (one2many): NEW relation: mail.group.message
+mail_group   / mail.group               / member_ids (one2many)         : NEW relation: mail.group.member
+mail_group   / mail.group               / moderation (boolean)          : NEW
+mail_group   / mail.group               / moderation_guidelines (boolean): NEW
+mail_group   / mail.group               / moderation_guidelines_msg (html): NEW
+mail_group   / mail.group               / moderation_notify (boolean)   : NEW
+mail_group   / mail.group               / moderation_notify_msg (html)  : NEW
+mail_group   / mail.group               / moderation_rule_ids (one2many): NEW relation: mail.group.moderation
+mail_group   / mail.group               / moderator_ids (many2many)     : NEW relation: res.users
+mail_group   / mail.group               / name (char)                   : NEW required
+# NOTHING TO DO: Done in mail pre-migration: filled with mail.channel records that had email_send = True
+
+mail_group   / mail.group.member        / email (char)                  : NEW isfunction: function, stored
+mail_group   / mail.group.member        / email_normalized (char)       : NEW isfunction: function, stored
+mail_group   / mail.group.member        / mail_group_id (many2one)      : NEW relation: mail.group, required
+mail_group   / mail.group.member        / partner_id (many2one)         : NEW relation: res.partner
+# NOTHING TO DO: Done in mail pre-migration: filled using old channel_partner_ids of mail.channel
+
+mail_group   / mail.group.message       / email_from_normalized (char)  : NEW isfunction: function, stored
+mail_group   / mail.group.message       / group_message_child_ids (one2many): NEW relation: mail.group.message
+mail_group   / mail.group.message       / group_message_parent_id (many2one): NEW relation: mail.group.message
+mail_group   / mail.group.message       / mail_group_id (many2one)      : NEW relation: mail.group, required
+mail_group   / mail.group.message       / mail_message_id (many2one)    : NEW relation: mail.message, required
+mail_group   / mail.group.message       / moderation_status (selection) : NEW required, selection_keys: ['accepted', 'pending_moderation', 'rejected'], req_default: function, hasdefault
+mail_group   / mail.group.message       / moderator_id (many2one)       : NEW relation: res.users
+# NOTHING TO DO: Done in mail pre-migration: filled using old channel_message_ids of mail.channel
+
+mail_group   / mail.group.moderation    / mail_group_id (many2one)      : NEW relation: mail.group, required
+mail_group   / mail.moderation          / __last_update (datetime)      : previously in module mail
+mail_group   / mail.moderation          / _order                        : previously in module mail
+mail_group   / mail.moderation          / display_name (char)           : previously in module mail
+mail_group   / mail.moderation          / email (char)                  : previously in module mail
+mail_group   / mail.moderation          / status (selection)            : previously in module mail
+# NOTHING TO DO: Done in mail pre-migration: filled mail_group_id using old channel_id field
+
+---XML records in module 'mail_group'---
+NEW ir.actions.act_window: mail_group.mail_group_action
+NEW ir.actions.act_window: mail_group.mail_group_member_action
+NEW ir.actions.act_window: mail_group.mail_group_message_action
+NEW ir.actions.act_window: mail_group.mail_group_message_reject_action
+NEW ir.actions.act_window: mail_group.mail_group_moderation_action
+NEW ir.cron: mail_group.ir_cron_mail_notify_group_moderators
+NEW ir.model.access: mail_group.access_mail_group_all
+NEW ir.model.access: mail_group.access_mail_group_member
+NEW ir.model.access: mail_group.access_mail_group_message_all
+NEW ir.model.access: mail_group.access_mail_group_message_reject
+NEW ir.model.access: mail_group.access_mail_group_message_user
+NEW ir.model.access: mail_group.access_mail_group_moderation
+NEW ir.model.access: mail_group.access_mail_group_user
+NEW ir.model.constraint: mail_group.constraint_mail_group_member_unique_partner
+NEW ir.model.constraint: mail_group.constraint_mail_group_moderation_mail_group_email_uniq
+NEW ir.rule: mail_group.mail_group_member_rule_administrator (noupdate)
+NEW ir.rule: mail_group.mail_group_member_rule_user (noupdate)
+NEW ir.rule: mail_group.mail_group_message_rule_administrator (noupdate)
+NEW ir.rule: mail_group.mail_group_message_rule_public (noupdate)
+NEW ir.rule: mail_group.mail_group_message_rule_user (noupdate)
+NEW ir.rule: mail_group.mail_group_moderation_rule_administrator (noupdate)
+NEW ir.rule: mail_group.mail_group_moderation_rule_user (noupdate)
+NEW ir.rule: mail_group.mail_group_rule_administrator (noupdate)
+NEW ir.rule: mail_group.mail_group_rule_read_all (noupdate)
+NEW ir.rule: mail_group.mail_group_rule_write_all (noupdate)
+NEW ir.ui.menu: mail_group.mail_group_menu
+NEW ir.ui.menu: mail_group.mail_group_moderation_menu
+NEW ir.ui.view: mail_group.confirmation_subscription
+NEW ir.ui.view: mail_group.group_archive_menu
+NEW ir.ui.view: mail_group.group_message
+NEW ir.ui.view: mail_group.group_messages
+NEW ir.ui.view: mail_group.group_name
+NEW ir.ui.view: mail_group.invalid_token_subscription
+NEW ir.ui.view: mail_group.mail_group_footer
+NEW ir.ui.view: mail_group.mail_group_member_view_search
+NEW ir.ui.view: mail_group.mail_group_member_view_tree
+NEW ir.ui.view: mail_group.mail_group_message_reject_form
+NEW ir.ui.view: mail_group.mail_group_message_view_form
+NEW ir.ui.view: mail_group.mail_group_message_view_list
+NEW ir.ui.view: mail_group.mail_group_message_view_search
+NEW ir.ui.view: mail_group.mail_group_moderation_view_search
+NEW ir.ui.view: mail_group.mail_group_moderation_view_tree
+NEW ir.ui.view: mail_group.mail_group_notify_moderation
+NEW ir.ui.view: mail_group.mail_group_view_form
+NEW ir.ui.view: mail_group.mail_group_view_kanban
+NEW ir.ui.view: mail_group.mail_group_view_list
+NEW ir.ui.view: mail_group.mail_group_view_search
+NEW ir.ui.view: mail_group.mail_groups
+NEW ir.ui.view: mail_group.message_attachments
+NEW ir.ui.view: mail_group.message_footer
+NEW ir.ui.view: mail_group.messages_short
+NEW ir.ui.view: mail_group.portal_breadcrumbs_group
+NEW mail.template: mail_group.mail_template_guidelines
+NEW mail.template: mail_group.mail_template_list_subscribe [renamed from website_mail_channel module]
+NEW mail.template: mail_group.mail_template_list_unsubscribe [renamed from website_mail_channel module]
+NEW res.groups: mail_group.group_mail_group_manager (noupdate)
+# NOTHING TO DO

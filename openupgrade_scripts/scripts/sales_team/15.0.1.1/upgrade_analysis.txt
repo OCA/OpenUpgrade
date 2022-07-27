@@ -1,6 +1,7 @@
 ---Models in module 'sales_team'---
 new model crm.team.member
 ---Fields in module 'sales_team'---
+sales_team   / crm.team                 / _order                        : _order is now 'sequence ASC, create_date DESC, id DESC' ('sequence')
 sales_team   / crm.team                 / crm_team_member_all_ids (one2many): NEW relation: crm.team.member
 sales_team   / crm.team                 / crm_team_member_ids (one2many): NEW relation: crm.team.member
 sales_team   / crm.team                 / member_ids (one2many)         : not stored anymore
