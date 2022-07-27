@@ -1,0 +1,24 @@
+---Models in module 'hr_fleet'---
+---Fields in module 'hr_fleet'---
+hr_fleet     / fleet.vehicle            / driver_employee_id (many2one) : NEW relation: hr.employee, isfunction: function, stored
+hr_fleet     / fleet.vehicle            / future_driver_employee_id (many2one): NEW relation: hr.employee, isfunction: function, stored
+# NOTHING TO DO: New feature (filled by Odoo)
+
+hr_fleet     / fleet.vehicle.log.services / purchaser_employee_id (many2one): NEW relation: hr.employee, isfunction: function, stored
+# NOTHING TO DO: New model
+
+hr_fleet     / hr.employee              / car_ids (one2many)            : NEW relation: fleet.vehicle
+# NOTHING TO DO: support for filter
+
+---XML records in module 'hr_fleet'---
+NEW ir.model.access: hr_fleet.hr_fleet_vehicle_access_right_hr_officer
+NEW ir.rule: hr_fleet.hr_fleet_rule_vehicle_visibility_hr_officier (noupdate)
+NEW ir.ui.view: hr_fleet.fleet_vehicle_log_contract_view_form_inherit_hr
+NEW ir.ui.view: hr_fleet.fleet_vehicle_log_contract_view_search_inherit_hr
+NEW ir.ui.view: hr_fleet.fleet_vehicle_log_contract_view_tree_inherit_hr
+NEW ir.ui.view: hr_fleet.fleet_vehicle_log_services_view_form_inherit_hr
+NEW ir.ui.view: hr_fleet.fleet_vehicle_log_services_view_kanban_inherit_hr
+NEW ir.ui.view: hr_fleet.fleet_vehicle_log_services_view_tree_inherit_hr
+NEW ir.ui.view: hr_fleet.fleet_vehicle_odometer_view_tree
+NEW ir.ui.view: hr_fleet.view_employee_filter
+# NOTHING TO DO: new records
