@@ -10,9 +10,9 @@ def _create_crm_team_member(env):
         INSERT INTO crm_team_member AS ctm (user_id, crm_team_id, active,
             create_uid, write_uid, create_date, write_date)
         SELECT ru.id, ru.sale_team_id, TRUE,
-            GREATEST(ru.create_uid, ct.create_uid),
             GREATEST(ru.write_uid, ct.write_uid),
-            GREATEST(ru.create_date, ct.create_date),
+            GREATEST(ru.write_uid, ct.write_uid),
+            GREATEST(ru.write_date, ct.write_date),
             GREATEST(ru.write_date, ct.write_date)
         FROM res_users ru
         JOIN crm_team ct ON ru.sale_team_id = ct.id
