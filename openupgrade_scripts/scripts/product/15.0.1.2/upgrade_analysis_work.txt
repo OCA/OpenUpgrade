@@ -6,7 +6,6 @@ new model report.product.report_producttemplatelabel_dymo [abstract]
 
 ---Fields in module 'product'---
 product      / product.attribute        / display_type (selection)      : selection_keys is now '['color', 'pills', 'radio', 'select']' ('['color', 'radio', 'select']')
-product      / product.attribute.value  / color (integer)               : NEW hasdefault
 product      / product.packaging        / _order                        : _order is now 'product_id, sequence, id' ('sequence')
 product      / product.product          / _order                        : _order is now 'priority desc, default_code, name, id' ('default_code, name, id')
 # NOTHING TO DO
@@ -31,10 +30,11 @@ product      / product.template         / priority (selection)          : NEW se
 # NOTHING TO DO: new fields
 
 product      / product.template.attribute.line / value_count (integer)         : NEW isfunction: function, stored
-# DONE: pre-migration: compute_value_count
+# DONE: pre-migration: fast computed value_count
 
+product      / product.attribute.value  / color (integer)               : NEW hasdefault
 product      / product.template.attribute.value / color (integer)               : NEW hasdefault
-# DONE: post-migration: update random value for color
+# DONE: pre-migration: fast filled random value for color
 
 ---XML records in module 'product'---
 NEW ir.actions.act_window: product.action_open_label_layout
