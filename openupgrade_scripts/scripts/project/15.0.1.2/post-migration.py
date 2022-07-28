@@ -1,14 +1,17 @@
 from openupgradelib import openupgrade
 
 
-def _convert_field_m2o_to_m2m(env):
-    # Convert m2o to m2m in 'project.task'
+def _convert_project_task_assigned_users(env):
     openupgrade.m2o_to_x2m(
-        env.cr, env["project.task"], "project_task", "user_ids", "user_id"
+        env.cr,
+        env["project.task"],
+        "project_task",
+        "user_ids",
+        openupgrade.get_legacy_name("user_id"),
     )
 
 
-def _add_followes_allowed_internal_user_to_project_project(env):
+def _add_followers_to_project_for_allowed_internal_users(env):
     openupgrade.logged_query(
         env.cr,
         """
@@ -24,7 +27,7 @@ def _add_followes_allowed_internal_user_to_project_project(env):
     )
 
 
-def _add_followes_allowed_portal_user_to_project_project(env):
+def _add_followers_to_project_for_allowed_portal_users(env):
     openupgrade.logged_query(
         env.cr,
         """
@@ -40,7 +43,7 @@ def _add_followes_allowed_portal_user_to_project_project(env):
     )
 
 
-def _add_followes_allowed_user_to_project_task(env):
+def _add_followers_to_task_for_allowed_users(env):
     openupgrade.logged_query(
         env.cr,
         """
@@ -69,10 +72,10 @@ def _fill_project_task_display_project_id(env):
 
 @openupgrade.migrate()
 def migrate(env, version):
-    _convert_field_m2o_to_m2m(env)
-    _add_followes_allowed_internal_user_to_project_project(env)
-    _add_followes_allowed_portal_user_to_project_project(env)
-    _add_followes_allowed_user_to_project_task(env)
+    _convert_project_task_assigned_users(env)
+    _add_followers_to_project_for_allowed_internal_users(env)
+    _add_followers_to_project_for_allowed_portal_users(env)
+    _add_followers_to_task_for_allowed_users(env)
     _fill_project_task_display_project_id(env)
     openupgrade.load_data(env.cr, "project", "15.0.1.2/noupdate_changes.xml")
     openupgrade.delete_record_translations(

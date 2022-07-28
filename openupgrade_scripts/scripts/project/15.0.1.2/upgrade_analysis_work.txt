@@ -24,8 +24,10 @@ project      / project.milestone        / project_id (many2one)         : NEW re
 project      / project.milestone        / reached_date (date)           : NEW isfunction: function, stored
 project      / project.milestone        / website_message_ids (one2many): NEW relation: mail.message
 project      / project.project          / activity_ids (one2many)       : NEW relation: mail.activity
-project      / project.project          / allow_task_dependencies (boolean): NEW hasdefault
 # NOTHING TO DO: new feature
+
+project      / project.project          / allow_task_dependencies (boolean): NEW hasdefault
+# DONE: pre-migration: filled as TRUE
 
 project      / project.project          / allowed_internal_user_ids (many2many): DEL relation: res.users
 project      / project.project          / allowed_portal_user_ids (many2many): DEL relation: res.users
@@ -60,7 +62,7 @@ project      / project.task             / allowed_user_ids (many2many)  : DEL re
 # DONE: post-migration: add followers to project task records
 
 project      / project.task             / analytic_account_id (many2one): previously in module sale_timesheet
-# NOTHING TO DO: Handle by ORM
+# NOTHING TO DO: Handled by ORM
 
 project      / project.task             / analytic_tag_ids (many2many)  : NEW relation: account.analytic.tag
 project      / project.task             / depend_on_ids (many2many)     : NEW relation: project.task
@@ -69,15 +71,18 @@ project      / project.task             / personal_stage_type_ids (many2many): N
 # NOTHING TO DO: new feature
 
 project      / project.task             / display_project_id (many2one) : NEW relation: project.project
-# DONE: fill value for project task with parent_id is NULL
+# DONE: post-migration: fill value for project task with parent_id is NULL
 
 project      / project.task             / user_id (many2one)            : DEL relation: res.users
 project      / project.task             / user_ids (many2many)          : NEW relation: res.users, hasdefault
+# DONE: pre-migration: renamed column
 # DONE: post-migration: renamed columns user_id -> user_ids and convert to many2many type
 
 project      / project.task.stage.personal / stage_id (many2one)           : NEW relation: project.task.type
 project      / project.task.stage.personal / task_id (many2one)            : NEW relation: project.task, required
 project      / project.task.stage.personal / user_id (many2one)            : NEW relation: res.users, required
+# NOTHING TO DO: left to ORM to fill automatically stage_id when fits necessary
+
 project      / project.task.type        / user_id (many2one)            : NEW relation: res.users
 project      / project.update           / activity_ids (one2many)       : NEW relation: mail.activity
 project      / project.update           / date (date)                   : NEW hasdefault
