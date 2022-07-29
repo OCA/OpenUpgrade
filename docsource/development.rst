@@ -47,6 +47,14 @@ the full power of OpenUpgrade was unleashed to successfully overcome the
 "acc-pocalypse":
 https://github.com/OCA/OpenUpgrade/pull/2275/files.
 
+Learn from typical Use cases
+----------------------------
+
+.. toctree::
+   :maxdepth: 2
+
+   use_cases/field_renaming
+
 
 Learn from existing migration scrips
 ------------------------------------
