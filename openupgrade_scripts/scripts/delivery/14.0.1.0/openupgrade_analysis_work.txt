@@ -1,0 +1,17 @@
+---Models in module 'delivery'---
+---Fields in module 'delivery'---
+delivery     / product.packaging        / length (integer)              : DEL
+delivery     / product.packaging        / packaging_length (integer)    : NEW
+# DONE: pre-migration: renamed field
+
+delivery     / stock.picking            / volume (float)                : DEL
+# NOTHING TO DO: unused field
+
+---XML records in module 'delivery'---
+NEW ir.model.access: delivery.access_choose_delivery_carrier
+NEW ir.model.access: delivery.access_choose_delivery_package
+NEW ir.ui.view: delivery.delivery_stock_report_delivery_no_package_section_line
+NEW ir.ui.view: delivery.stock_report_delivery_aggregated_move_lines_inherit_delivery
+NEW ir.ui.view: delivery.stock_report_delivery_has_serial_move_line_inherit_delivery
+NEW ir.ui.view: delivery.stock_report_delivery_package_section_line_inherit_delivery
+# NOTHING TO DO
