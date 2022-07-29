@@ -1,0 +1,89 @@
+---Models in module 'website_sale'---
+obsolete model product.style (renamed to product.ribbon)
+new model product.ribbon (renamed from product.style)
+# DONE: pre-migration: renamed models and tables
+
+new model website.sale.extra.field
+# NOTHING TO DO
+
+---Fields in module 'website_sale'---
+website_sale / product.public.category  / _order                        : _order is now 'sequence, name, id' ('sequence, name')
+website_sale / product.public.category  / seo_name (char)               : NEW
+# NOTHING TO DO
+
+website_sale / product.style            / name (char)                   : DEL required
+website_sale / product.ribbon           / html (char)                   : NEW required
+# DONE: pre-migration: renamed fields
+
+website_sale / product.style            / html_class (char)             : now required, req_default: function
+# DONE: pre-migration: set default '' in case is NULL
+
+website_sale / product.ribbon           / bg_color (char)               : NEW
+website_sale / product.ribbon           / text_color (char)             : NEW
+website_sale / product.template         / seo_name (char)               : NEW
+# NOTHING TO DO
+
+website_sale / product.template         / website_ribbon_id (many2one)  : NEW relation: product.ribbon
+website_sale / product.template         / website_style_ids (many2many) : DEL relation: product.style
+# DONE: post-migration: if there is more than one valid website_style_ids, then create a fused ribbon from those styles
+
+website_sale / website                  / shop_extra_field_ids (one2many): NEW relation: website.sale.extra.field
+website_sale / website.sale.extra.field / field_id (many2one)           : NEW relation: ir.model.fields
+website_sale / website.sale.extra.field / sequence (integer)            : NEW hasdefault
+website_sale / website.sale.extra.field / website_id (many2one)         : NEW relation: website
+# NOTHING TO DO: new features
+
+---XML records in module 'website_sale'---
+DEL ir.actions.act_window: website_sale.action_abandoned_orders_ecommerce
+NEW ir.actions.server: website_sale.dynamic_snippet_products_action
+NEW ir.model.access: website_sale.access_ecom_extra_fields_public
+NEW ir.model.access: website_sale.access_ecom_extra_fields_publisher
+NEW ir.model.access: website_sale.access_product_ribbon_sale_manager
+NEW ir.model.access: website_sale.access_website_sale_payment_acquirer_onboarding_wizard
+DEL ir.model.access: website_sale.access_product_supplierinfo
+DEL ir.model.access: website_sale.access_product_supplierinfo_user
+# NOTHING TO DO
+
+DEL ir.model.access: website_sale.access_product_style
+NEW ir.model.access: website_sale.access_product_ribbon_public
+# DONE: pre-migration: renamed xmlids
+
+DEL ir.rule: website_sale.product_supplierinfo_public (noupdate)
+NEW ir.ui.view: website_sale.assets_snippet_s_dynamic_snippet_products_js_000
+NEW ir.ui.view: website_sale.assets_snippet_s_products_searchbar_js_000
+NEW ir.ui.view: website_sale.ecom_show_extra_fields
+NEW ir.ui.view: website_sale.header_cart_link
+NEW ir.ui.view: website_sale.header_hide_empty_cart_link
+NEW ir.ui.view: website_sale.product_custom_text
+NEW ir.ui.view: website_sale.products_images_full
+NEW ir.ui.view: website_sale.s_dynamic_snippet_products
+NEW ir.ui.view: website_sale.s_dynamic_snippet_products_options
+NEW ir.ui.view: website_sale.searchbar_input_snippet_options
+NEW ir.ui.view: website_sale.template_header_boxed
+NEW ir.ui.view: website_sale.template_header_centered_logo
+NEW ir.ui.view: website_sale.template_header_contact
+NEW ir.ui.view: website_sale.template_header_default
+NEW ir.ui.view: website_sale.template_header_hamburger
+NEW ir.ui.view: website_sale.template_header_hamburger_full
+NEW ir.ui.view: website_sale.template_header_image
+NEW ir.ui.view: website_sale.template_header_magazine
+NEW ir.ui.view: website_sale.template_header_minimalist
+NEW ir.ui.view: website_sale.template_header_sidebar
+NEW ir.ui.view: website_sale.template_header_slogan
+NEW ir.ui.view: website_sale.template_header_vertical
+NEW ir.ui.view: website_sale.view_website_sale_website_form
+DEL ir.ui.view: website_sale.404
+DEL ir.ui.view: website_sale.header
+DEL ir.ui.view: website_sale.remove_external_snippets
+DEL ir.ui.view: website_sale.website_sale_pricelist_form_view2
+NEW product.ribbon: website_sale.new_ribbon (noupdate)
+NEW product.ribbon: website_sale.sold_out_ribbon (noupdate)
+NEW website.snippet.filter: website_sale.dynamic_filter_demo_products
+# NOTHING TO DO
+
+DEL product.style: website_sale.image_promo (noupdate)
+NEW product.ribbon: website_sale.sale_ribbon (noupdate)
+# DONE: pre-migration: renamed xmlid (and update values)
+
+DEL product.style: website_sale.image_full (noupdate)
+# DONE: post-migration: deleted safely
