@@ -1,0 +1,103 @@
+---Models in module 'event'---
+---Fields in module 'event'---
+event        / event.event              / badge_back (html)             : DEL
+event        / event.event              / badge_front (html)            : DEL
+event        / event.event              / badge_innerleft (html)        : DEL
+event        / event.event              / badge_innerright (html)       : DEL
+event        / event.event              / event_logo (html)             : DEL
+# NOTHING TO DO: they were fields inaccessible through views
+
+event        / event.event              / note (text)                   : now a function
+event        / event.event              / note (text)                   : type is now 'html' ('text')
+event        / event.type               / note (html)                   : NEW
+# DONE: pre-migration: changed type
+# DONE: post-migration: moved content to event type note
+
+event        / event.event              / ticket_instructions (html)    : NEW isfunction: function, stored
+event        / event.type               / ticket_instructions (html)    : NEW
+# NOTHING TO DO: new feature
+
+event        / event.event.ticket       / end_sale_date (date)          : DEL
+event        / event.event.ticket       / end_sale_datetime (datetime)  : NEW
+event        / event.event.ticket       / start_sale_date (date)        : DEL
+event        / event.event.ticket       / start_sale_datetime (datetime): NEW
+# DONE: post-migration: filled new fields using old ones
+
+event        / event.mail               / done (boolean)                : DEL
+event        / event.mail               / mail_done (boolean)           : NEW
+event        / event.mail               / mail_sent (boolean)           : DEL
+# DONE: pre-migration: renamed field 'done' to 'mail_done'
+
+event        / event.mail               / mail_count_done (integer)     : NEW
+# DONE: pre-migration: computed mail_count_done
+
+event        / event.mail               / template_id (many2one)        : DEL relation: mail.template
+event        / event.mail               / template_ref (reference)      : NEW required
+event        / event.type.mail          / template_id (many2one)        : DEL relation: mail.template
+event        / event.type.mail          / template_ref (reference)      : NEW required
+# DONE: pre-migration: transformed m2o to reference
+
+event        / event.registration       / active (boolean)              : NEW hasdefault
+# DONE: pre-migration: set active = TRUE
+
+event        / event.type               / event_type_mail_ids (one2many): not a function anymore
+event        / event.type               / event_type_ticket_ids (one2many): not a function anymore
+event        / event.type               / use_mail_schedule (boolean)   : DEL
+event        / event.type               / use_ticket (boolean)          : DEL
+event        / event.type               / use_timezone (boolean)        : DEL
+# NOTHING TO DO
+
+---XML records in module 'event'---
+NEW ir.actions.report: event.action_report_event_event_foldable_badge
+NEW ir.actions.report: event.action_report_event_event_full_page_ticket
+NEW ir.actions.report: event.action_report_event_registration_foldable_badge
+NEW ir.actions.report: event.action_report_event_registration_full_page_ticket
+DEL ir.actions.report: event.report_event_event_badge
+DEL ir.actions.report: event.report_event_registration_badge
+NEW ir.model.access: event.access_event_event_registration
+NEW ir.model.access: event.access_event_event_ticket
+NEW ir.model.access: event.access_event_event_ticket_registration
+NEW ir.model.access: event.access_event_mail_registration_registration
+NEW ir.model.access: event.access_event_mail_user
+NEW ir.model.access: event.access_event_registration_manager
+NEW ir.model.access: event.access_event_registration_registration
+NEW ir.model.access: event.access_event_stage_registration
+NEW ir.model.access: event.access_event_tag_category_registration
+NEW ir.model.access: event.access_event_tag_category_user
+NEW ir.model.access: event.access_event_tag_registration
+NEW ir.model.access: event.access_event_tag_user
+NEW ir.model.access: event.access_event_type_mail_manager
+NEW ir.model.access: event.access_event_type_mail_registration
+NEW ir.model.access: event.access_event_type_registration
+NEW ir.model.access: event.access_event_type_ticket_registration
+DEL ir.model.access: event.access_event_category
+DEL ir.model.access: event.access_event_category_manager
+DEL ir.model.access: event.access_event_event_portal
+DEL ir.model.access: event.access_event_event_ticket_manager
+DEL ir.model.access: event.access_event_mail
+DEL ir.model.access: event.access_event_mail_manager
+DEL ir.model.access: event.access_event_registration_all
+DEL ir.model.access: event.access_event_stage_user
+DEL ir.model.access: event.access_event_type [renamed to website_event module]
+DEL ir.model.access: event.access_event_type_mail_event_manager
+DEL ir.model.access: event.access_event_type_mail_event_user
+DEL ir.model.access: event.access_event_type_ticket
+NEW ir.ui.view: event.event_event_report_template_foldable_badge
+NEW ir.ui.view: event.event_event_report_template_full_page_ticket
+NEW ir.ui.view: event.event_registration_report_template_foldable_badge
+NEW ir.ui.view: event.event_registration_report_template_full_page_ticket
+NEW ir.ui.view: event.event_report_full_page_ticket_layout
+NEW ir.ui.view: event.event_report_template_foldable_badge
+NEW ir.ui.view: event.event_report_template_formatted_event_address
+NEW ir.ui.view: event.event_report_template_full_page_ticket
+DEL ir.ui.view: event.assets_backend
+DEL ir.ui.view: event.assets_common
+DEL ir.ui.view: event.event_event_report_template_badge
+DEL ir.ui.view: event.event_registration_report_template_badge
+NEW report.paperformat: event.paperformat_event_foldable_badge
+NEW report.paperformat: event.paperformat_event_full_page_ticket
+NEW res.groups: event.group_event_registration_desk
+# NOTHING TO DO
+
+DEL report.paperformat: event.paperformat_euro_lowmargin
+# DONE: post-migration: deleted ir.model.data to avoid the record getting deleted
