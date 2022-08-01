@@ -33,6 +33,7 @@ def _prepare_common_svl_vals(move, product):
         "remaining_value": 0.0,
         "quantity": 0.0,
         "old_product_price_history_id": None,
+        "account_move_id": move.get("account_move_id", False),
     }
 
 
@@ -82,24 +83,57 @@ def _prepare_man_svl_vals(price_history_rec, previous_price, quantity, company, 
         "remaining_value": 0.0,
         "quantity": 0.0,
         "old_product_price_history_id": price_history_rec["id"],
+        "account_move_id": price_history_rec.get("account_move_id", False),
     }
     return svl_vals
 
 
-def get_product_price_history(env, company_id, product_id):
-    env.cr.execute("""
-        SELECT id, company_id, product_id, datetime, cost, create_uid, write_uid, write_date
-        FROM product_price_history
-        WHERE company_id = %s AND product_id = %s
-        ORDER BY datetime, id
-    """, (company_id, product_id))
+def get_product_price_history(env, company_id, product_id, real_time):
+    minimal_query = """
+        {account_move_table}
+        SELECT pph.id, pph.company_id, pph.product_id, pph.datetime, pph.cost, {account_move_id} AS account_move_id,
+            pph.create_uid, pph.create_date, pph.write_uid, pph.write_date
+        FROM product_price_history pph
+        {account_move_join}
+        WHERE pph.company_id = %s AND pph.product_id = %s
+        ORDER BY pph.datetime, pph.id
+    """
+    account_move_table = ""
+    account_move_join = ""
+    account_move_id = "NULL"
+    args = [company_id, product_id]
+    if real_time:
+        # link account move for real_time valuation product
+        account_move_table = """
+        WITH account_move_rel AS (
+            SELECT id, create_date
+            FROM (
+                SELECT id, create_date, COUNT(*) OVER(PARTITION BY create_date) AS qty
+                FROM account_move
+                WHERE stock_move_id IS NULL
+                    AND type = 'entry' AND company_id = %s
+            ) foo
+            WHERE qty = 1
+        )
+        """
+        account_move_id = "rel.id"
+        account_move_join = """
+            LEFT JOIN account_move_rel rel ON rel.create_date = pph.create_date
+        """
+        args = [company_id] + args
+    query = minimal_query.format(
+        account_move_table=account_move_table,
+        account_move_id=account_move_id,
+        account_move_join=account_move_join)
+    env.cr.execute(query, tuple(args))
     return env.cr.dictfetchall()
 
 
-def get_stock_moves(env, company_id, product_id):
-    env.cr.execute("""
+def get_stock_moves(env, company_id, product_id, real_time):
+    minimal_query = """
+        {account_move_table}
         SELECT sm.id, sm.company_id, sm.product_id, sm.date, sm.product_qty, sm.reference,
-            COALESCE(sm.price_unit, 0.0) AS price_unit,
+            COALESCE(sm.price_unit, 0.0) AS price_unit, {account_move_id} AS account_move_id,
             sm.create_uid, sm.create_date, sm.write_uid, sm.write_date,
             CASE WHEN (sl.usage <> 'internal' AND (sl.usage <> 'transit' OR sl.company_id <> sm.company_id))
                    AND (sld.usage = 'internal' OR (sld.usage = 'transit' AND sld.company_id = sm.company_id))
@@ -113,10 +147,37 @@ def get_stock_moves(env, company_id, product_id):
             END AS move_type
         FROM stock_move sm LEFT JOIN stock_location sl ON sl.id = sm.location_id
             LEFT JOIN stock_location sld ON sld.id = sm.location_dest_id
+            {account_move_join}
         WHERE sm.company_id = %s AND sm.product_id = %s
             AND state = 'done'
         ORDER BY sm.date, sm.id
-    """, (company_id, product_id))
+    """
+    account_move_table = ""
+    account_move_join = ""
+    account_move_id = "NULL"
+    args = [company_id, product_id]
+    if real_time:
+        # link account move for real_time valuation product
+        account_move_table = """
+        WITH account_move_rel AS (
+            SELECT id, stock_move_id
+            FROM (
+                SELECT id, stock_move_id, COUNT(*) OVER(PARTITION BY stock_move_id) AS qty
+                FROM account_move
+                WHERE stock_move_id IS NOT NULL
+                    AND type = 'entry' AND company_id = %s
+            ) foo
+            WHERE qty = 1
+        )
+        """
+        account_move_id = "rel.id"
+        account_move_join = """LEFT JOIN account_move_rel rel ON rel.stock_move_id = sm.id"""
+        args = [company_id] + args
+    query = minimal_query.format(
+        account_move_table=account_move_table,
+        account_move_id=account_move_id,
+        account_move_join=account_move_join)
+    env.cr.execute(query, tuple(args))
     return env.cr.dictfetchall()
 
 
@@ -142,9 +203,10 @@ def generate_stock_valuation_layer(env):
         _logger.info("Doing svl for company_id {}".format(company.id))
         for product in products:
             history_lines = []
+            real_time = product.valuation == 'real_time'
             if product.cost_method != "fifo":
-                history_lines = get_product_price_history(env, company.id, product.id)
-            moves = get_stock_moves(env, company.id, product.id)
+                history_lines = get_product_price_history(env, company.id, product.id, real_time)
+            moves = get_stock_moves(env, company.id, product.id, real_time)
             svl_in_vals_list = []
             svl_out_vals_list = []
             svl_man_vals_list = []
