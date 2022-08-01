@@ -84,6 +84,24 @@ def fill_event_mail_template_ref(env):
         WHERE template_id IS NOT NULL AND notification_type = 'mail'
         """,
     )
+    # case event_sms was installed:
+    if openupgrade.column_exists(env.cr, "event_mail", "sms_template_id"):
+        openupgrade.logged_query(
+            env.cr,
+            """
+            UPDATE event_mail
+            SET template_ref = 'sms.template,' || sms_template_id
+            WHERE sms_template_id IS NOT NULL AND notification_type = 'sms'
+            """,
+        )
+        openupgrade.logged_query(
+            env.cr,
+            """
+            UPDATE event_type_mail
+            SET template_ref = 'sms.template,' || sms_template_id
+            WHERE sms_template_id IS NOT NULL AND notification_type = 'sms'
+            """,
+        )
 
 
 @openupgrade.migrate()
