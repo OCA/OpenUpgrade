@@ -65,10 +65,12 @@ project      / project.task             / analytic_account_id (many2one): previo
 # NOTHING TO DO: Handled by ORM
 
 project      / project.task             / analytic_tag_ids (many2many)  : NEW relation: account.analytic.tag
-project      / project.task             / depend_on_ids (many2many)     : NEW relation: project.task
-project      / project.task             / dependent_ids (many2many)     : NEW relation: project.task
 project      / project.task             / personal_stage_type_ids (many2many): NEW relation: project.task.type
 # NOTHING TO DO: new feature
+
+project      / project.task             / depend_on_ids (many2many)     : NEW relation: project.task
+project      / project.task             / dependent_ids (many2many)     : NEW relation: project.task
+# DONE: pre-migration: if project_task_dependency module was installed, then reuse its m2m
 
 project      / project.task             / display_project_id (many2one) : NEW relation: project.project
 # DONE: post-migration: fill value for project task with parent_id is NULL

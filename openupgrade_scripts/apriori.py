@@ -34,6 +34,8 @@ merged_modules = {
     "stock_account_prepare_anglo_saxon_out_lines_hook": "stock_account",
     # OCA/stock-logistics-workflow
     "stock_move_assign_picking_hook": "stock",
+    # OCA/project
+    "project_task_dependency": "project",
     # OCA/web
     "web_decimal_numpad_dot": "web",
 }
