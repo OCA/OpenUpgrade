@@ -66,5 +66,7 @@ DEL ir.ui.view: crm.qunit_suite
 # NOTHING TO DO
 
 DEL mail.alias: crm.mail_alias_lead_info (noupdate)
+# DONE: post-migration: deleted ir_model_data
+
 DEL mail.template: crm.email_template_opportunity_mail (noupdate)
 # DONE: post-migration: safely deleted xmlids
