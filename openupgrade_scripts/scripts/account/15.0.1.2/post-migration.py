@@ -20,9 +20,43 @@ def _fill_account_analytic_line_category(env):
     )
 
 
+def fill_paired_payment(env):
+    openupgrade.logged_query(
+        env.cr,
+        """
+        UPDATE account_payment ap
+        SET destination_journal_id = aj.id
+        FROM account_journal aj, account_move am
+        WHERE aj.bank_account_id = ap.partner_bank_id AND ap.is_internal_transfer
+            AND ap.move_id = am.id AND am.state = 'posted'
+            AND aj.type in ('bank', 'cash') AND aj.id != am.journal_id""",
+    )
+    payments = env["account.payment"].search(
+        [("state", "=", "posted"), ("destination_journal_id", "!=", False)]
+    )
+    payments_inactive_currency = payments.filtered(
+        lambda p: not p.move_id.currency_id.active
+    )
+    payments_inactive_currency.move_id.currency_id.active = True
+    payments.filtered(
+        lambda pay: pay.is_internal_transfer
+        and not pay.paired_internal_transfer_payment_id
+    )._create_paired_internal_transfer_payment()
+    payments_inactive_currency.move_id.currency_id.active = False
+
+
+def set_res_company_account_setup_taxes_state_done(env):
+    taxes = env["account.tax"].read_group([], ["company_id"], ["company_id"])
+    for tax in taxes:
+        company = env["res.company"].browse(tax["company_id"][0])
+        company.account_setup_taxes_state = "done"
+
+
 @openupgrade.migrate()
 def migrate(env, version):
     _fill_account_analytic_line_category(env)
+    fill_paired_payment(env)
+    set_res_company_account_setup_taxes_state_done(env)
     openupgrade.load_data(env.cr, "account", "15.0.1.2/noupdate_changes.xml")
     openupgrade.delete_record_translations(
         env.cr,
