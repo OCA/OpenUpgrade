@@ -1,0 +1,205 @@
+---Models in module 'project'---
+new model project.collaborator
+new model project.milestone
+new model project.project.stage
+new model project.share.wizard [transient]
+new model project.task.burndown.chart.report [sql_view]
+new model project.task.stage.personal
+new model project.update
+# NOTHING TO DO: new model
+
+---Fields in module 'project'---
+project      / account.analytic.tag     / task_ids (many2many)          : NEW relation: project.task
+project      / project.collaborator     / partner_id (many2one)         : NEW relation: res.partner, required
+project      / project.collaborator     / project_id (many2one)         : NEW relation: project.project, required
+# NOTHING TO DO: new feature
+
+project      / project.milestone        / deadline (date)               : NEW
+project      / project.milestone        / is_reached (boolean)          : NEW hasdefault
+project      / project.milestone        / message_follower_ids (one2many): NEW relation: mail.followers
+project      / project.milestone        / message_ids (one2many)        : NEW relation: mail.message
+project      / project.milestone        / message_main_attachment_id (many2one): NEW relation: ir.attachment
+project      / project.milestone        / name (char)                   : NEW required
+project      / project.milestone        / project_id (many2one)         : NEW relation: project.project, required, req_default: function, hasdefault
+project      / project.milestone        / reached_date (date)           : NEW isfunction: function, stored
+project      / project.milestone        / website_message_ids (one2many): NEW relation: mail.message
+project      / project.project          / activity_ids (one2many)       : NEW relation: mail.activity
+# NOTHING TO DO: new feature
+
+project      / project.project          / allow_task_dependencies (boolean): NEW hasdefault
+# DONE: pre-migration: filled as TRUE
+
+project      / project.project          / allowed_internal_user_ids (many2many): DEL relation: res.users
+project      / project.project          / allowed_portal_user_ids (many2many): DEL relation: res.users
+# DONE: post-migration: add followers to project project records
+
+project      / project.project          / collaborator_ids (one2many)   : NEW relation: project.collaborator
+project      / project.project          / last_update_id (many2one)     : NEW relation: project.update
+# NOTHING TO DO: new feature
+
+project      / project.project          / last_update_status (selection): NEW selection_keys: ['at_risk', 'off_track', 'on_hold', 'on_track'], hasdefault, isfunction: function, stored
+# DONE: pre-migration: new feature, create columns 'last_update_status' and set value default is 'on_track'
+
+project      / project.project          / milestone_ids (one2many)      : NEW relation: project.milestone
+project      / project.project          / stage_id (many2one)           : NEW relation: project.project.stage, hasdefault
+# NOTHING TO DO: new feature
+
+project      / project.project          / subtask_project_id (many2one) : DEL relation: project.project
+# NOTHING TO DO: not used anymore
+
+project      / project.project          / tag_ids (many2many)           : NEW relation: project.tags
+project      / project.project          / update_ids (one2many)         : NEW relation: project.update
+# NOTHING TO DO: new feature
+
+project      / project.project.stage    / active (boolean)              : NEW hasdefault
+project      / project.project.stage    / fold (boolean)                : NEW
+project      / project.project.stage    / mail_template_id (many2one)   : NEW relation: mail.template
+project      / project.project.stage    / name (char)                   : NEW required
+project      / project.project.stage    / sequence (integer)            : NEW hasdefault
+# NOTHING TO DO: new feature
+
+project      / project.task             / allowed_user_ids (many2many)  : DEL relation: res.users
+# DONE: post-migration: add followers to project task records
+
+project      / project.task             / analytic_account_id (many2one): previously in module sale_timesheet
+# NOTHING TO DO: Handled by ORM
+
+project      / project.task             / analytic_tag_ids (many2many)  : NEW relation: account.analytic.tag
+project      / project.task             / personal_stage_type_ids (many2many): NEW relation: project.task.type
+# NOTHING TO DO: new feature
+
+project      / project.task             / depend_on_ids (many2many)     : NEW relation: project.task
+project      / project.task             / dependent_ids (many2many)     : NEW relation: project.task
+# DONE: pre-migration: if project_task_dependency module was installed, then reuse its m2m
+
+project      / project.task             / display_project_id (many2one) : NEW relation: project.project
+# DONE: post-migration: fill value for project task with parent_id is NULL
+
+project      / project.task             / user_id (many2one)            : DEL relation: res.users
+project      / project.task             / user_ids (many2many)          : NEW relation: res.users, hasdefault
+# DONE: pre-migration: renamed column
+# DONE: post-migration: renamed columns user_id -> user_ids and convert to many2many type
+
+project      / project.task.stage.personal / stage_id (many2one)           : NEW relation: project.task.type
+project      / project.task.stage.personal / task_id (many2one)            : NEW relation: project.task, required
+project      / project.task.stage.personal / user_id (many2one)            : NEW relation: res.users, required
+# NOTHING TO DO: left to ORM to fill automatically stage_id when fits necessary
+
+project      / project.task.type        / user_id (many2one)            : NEW relation: res.users
+project      / project.update           / activity_ids (one2many)       : NEW relation: mail.activity
+project      / project.update           / date (date)                   : NEW hasdefault
+project      / project.update           / description (html)            : NEW
+project      / project.update           / email_cc (char)               : NEW
+project      / project.update           / message_follower_ids (one2many): NEW relation: mail.followers
+project      / project.update           / message_ids (one2many)        : NEW relation: mail.message
+project      / project.update           / message_main_attachment_id (many2one): NEW relation: ir.attachment
+project      / project.update           / name (char)                   : NEW required
+project      / project.update           / progress (integer)            : NEW
+project      / project.update           / project_id (many2one)         : NEW relation: project.project, required
+project      / project.update           / status (selection)            : NEW required, selection_keys: ['at_risk', 'off_track', 'on_hold', 'on_track']
+project      / project.update           / user_id (many2one)            : NEW relation: res.users, required, req_default: function, hasdefault
+project      / project.update           / website_message_ids (one2many): NEW relation: mail.message
+# NOTHING TO DO: new feature
+
+---XML records in module 'project'---
+NEW ir.actions.act_window: project.action_project_task_burndown_chart_report
+NEW ir.actions.act_window: project.open_view_project_all_group_stage
+NEW ir.actions.act_window: project.project_collaborator_action
+NEW ir.actions.act_window: project.project_milestone_all
+NEW ir.actions.act_window: project.project_project_stage_configure
+NEW ir.actions.act_window: project.project_share_wizard_action
+NEW ir.actions.act_window: project.project_sharing_project_task_action
+NEW ir.actions.act_window: project.project_update_all_action
+DEL ir.actions.act_window: project.project_task_action_sub_task
+NEW ir.actions.act_window.view: project.project_project_stage_configure_view_form
+NEW ir.actions.act_window.view: project.project_project_stage_configure_view_kanban
+NEW ir.actions.act_window.view: project.project_project_stage_configure_view_tree
+NEW ir.actions.act_window.view: project.project_sharing_form_action_view
+NEW ir.actions.act_window.view: project.project_sharing_kanban_action_view
+NEW ir.actions.act_window.view: project.project_sharing_tree_action_view
+NEW ir.actions.act_window.view: project.rating_rating_action_project_report_kanban
+NEW ir.model.access: project.access_project_collaborator_manager
+NEW ir.model.access: project.access_project_collaborator_portal
+NEW ir.model.access: project.access_project_collaborator_user
+NEW ir.model.access: project.access_project_milestone_portal
+NEW ir.model.access: project.access_project_milestone_project_manager
+NEW ir.model.access: project.access_project_milestone_project_user
+NEW ir.model.access: project.access_project_milestone_user
+NEW ir.model.access: project.access_project_personal_stage
+NEW ir.model.access: project.access_project_project_stage
+NEW ir.model.access: project.access_project_project_stage_manager
+NEW ir.model.access: project.access_project_share_manager
+NEW ir.model.access: project.access_project_sharing_task_portal (noupdate)
+NEW ir.model.access: project.access_project_task_burndown_chart_report
+NEW ir.model.access: project.access_project_update_portal
+NEW ir.model.access: project.access_project_update_project_manager
+NEW ir.model.access: project.access_project_update_project_user
+NEW ir.model.access: project.access_project_update_user
+NEW ir.model.constraint: project.constraint_project_collaborator_unique_collaborator
+NEW ir.model.constraint: project.constraint_project_task_user_rel_project_personal_stage_unique
+NEW ir.rule: project.ir_rule_private_task (noupdate)
+NEW ir.rule: project.ir_rule_project_personal_stage_my (noupdate)
+NEW ir.rule: project.milestone_comp_rule (noupdate)
+NEW ir.rule: project.milestone_visibility_project_admin (noupdate)
+NEW ir.rule: project.milestone_visibility_rule (noupdate)
+NEW ir.rule: project.project_collaborator_rule_portal (noupdate)
+NEW ir.rule: project.project_task_rule_portal_project_sharing (noupdate)
+NEW ir.rule: project.task_type_manager_rule (noupdate)
+NEW ir.rule: project.task_type_own_write_rule (noupdate)
+NEW ir.rule: project.task_type_visibility_rule (noupdate)
+NEW ir.rule: project.update_comp_rule (noupdate)
+NEW ir.rule: project.update_visibility_project_admin (noupdate)
+NEW ir.rule: project.update_visibility_rule (noupdate)
+NEW ir.ui.menu: project.menu_project_config_project_stage
+NEW ir.ui.menu: project.menu_projects_group_stage
+NEW ir.ui.view: project.milestone_deadline
+NEW ir.ui.view: project.personal_task_type_edit
+NEW ir.ui.view: project.portal_my_task_planned_hours_template
+NEW ir.ui.view: project.portal_my_tasks_priority_widget_template
+NEW ir.ui.view: project.portal_my_tasks_state_widget_template
+NEW ir.ui.view: project.portal_tasks_list
+NEW ir.ui.view: project.project_collaborator_view_form
+NEW ir.ui.view: project.project_collaborator_view_search
+NEW ir.ui.view: project.project_message_user_assigned (noupdate)
+NEW ir.ui.view: project.project_milestone_view_form
+NEW ir.ui.view: project.project_milestone_view_tree
+NEW ir.ui.view: project.project_project_stage_view_form
+NEW ir.ui.view: project.project_project_stage_view_form_quick_create
+NEW ir.ui.view: project.project_project_stage_view_kanban
+NEW ir.ui.view: project.project_project_stage_view_search
+NEW ir.ui.view: project.project_project_stage_view_tree
+NEW ir.ui.view: project.project_share_wizard_view_form
+NEW ir.ui.view: project.project_sharing
+NEW ir.ui.view: project.project_sharing_access_view_tree
+NEW ir.ui.view: project.project_sharing_embed
+NEW ir.ui.view: project.project_sharing_portal
+NEW ir.ui.view: project.project_sharing_project_task_view_form
+NEW ir.ui.view: project.project_sharing_project_task_view_kanban
+NEW ir.ui.view: project.project_sharing_project_task_view_search
+NEW ir.ui.view: project.project_sharing_project_task_view_tree
+NEW ir.ui.view: project.project_sharing_quick_create_task_form
+NEW ir.ui.view: project.project_task_burndown_chart_report_view_graph
+NEW ir.ui.view: project.project_task_burndown_chart_report_view_pivot
+NEW ir.ui.view: project.project_task_burndown_chart_report_view_search
+NEW ir.ui.view: project.project_update_default_description
+NEW ir.ui.view: project.project_update_view_form
+NEW ir.ui.view: project.project_update_view_kanban
+NEW ir.ui.view: project.project_update_view_search
+NEW ir.ui.view: project.project_update_view_tree
+NEW ir.ui.view: project.project_view_kanban
+NEW ir.ui.view: project.project_view_kanban_inherit_project
+NEW ir.ui.view: project.report_project_task_user_view_tree
+NEW ir.ui.view: project.task_track_depending_tasks
+NEW ir.ui.view: project.view_task_search_form_extended
+DEL ir.ui.view: project.assets_backend
+DEL ir.ui.view: project.assets_frontend
+NEW mail.message.subtype: project.mt_project_stage_change (noupdate)
+NEW mail.message.subtype: project.mt_project_task_dependency_change (noupdate)
+NEW mail.message.subtype: project.mt_task_dependency_change (noupdate)
+NEW project.project.stage: project.project_project_stage_0
+NEW project.project.stage: project.project_project_stage_1
+NEW project.project.stage: project.project_project_stage_2
+NEW project.project.stage: project.project_project_stage_3
+NEW res.groups: project.group_project_stages
+NEW res.groups: project.group_project_task_dependencies
+# NOTHING TO DO
