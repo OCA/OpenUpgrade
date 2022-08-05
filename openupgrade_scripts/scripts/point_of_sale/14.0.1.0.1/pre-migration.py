@@ -5,32 +5,24 @@ def fill_pos_config_default_picking_type_id(env):
     openupgrade.logged_query(
         env.cr,
         """
-        UPDATE pos_config
-        SET picking_type_id = (SELECT pos_type_id
-                                FROM stock_warehouse
-                                WHERE stock_warehouse.company_id = pos_config.company_id
-                                LIMIT 1)
-        WHERE picking_type_id IS NULL;
-        """,
+        UPDATE pos_config pc
+        SET picking_type_id = sw.pos_type_id
+        FROM stock_warehouse sw
+        WHERE sw.company_id = pc.company_id
+            AND pc.picking_type_id IS NULL""",
     )
 
 
 def delete_constraint(env):
     # Disappeared constraint
-    openupgrade.logged_query(
-        env.cr,
-        """ALTER TABLE res_partner
-           DROP CONSTRAINT IF EXISTS res_partner_unique_barcode""",
-    )
-    openupgrade.delete_records_safely_by_xml_id(
-        env, ["point_of_sale.constraint_res_partner_unique_barcode"]
+    openupgrade.delete_sql_constraint_safely(
+        env, "point_of_sale", "res_partner", "unique_barcode"
     )
 
 
 @openupgrade.migrate()
 def migrate(env, version):
     fill_pos_config_default_picking_type_id(env)
-
     openupgrade.set_xml_ids_noupdate_value(
         env,
         "point_of_sale",
@@ -49,5 +41,4 @@ def migrate(env, version):
         ],
         True,
     )
-
     delete_constraint(env)

@@ -1,10 +1,12 @@
 ---Models in module 'point_of_sale'---
 ---Fields in module 'point_of_sale'---
 point_of_sale / pos.config               / iface_precompute_cash (boolean): DEL
-point_of_sale / pos.config               / manage_orders (boolean)       : NEW
 point_of_sale / pos.config               / manual_discount (boolean)     : NEW hasdefault
 point_of_sale / pos.config               / module_pos_reprint (boolean)  : DEL
 # NOTHING TO DO
+
+point_of_sale / pos.config               / manage_orders (boolean)       : NEW
+# DONE: post-migration: active by default
 
 point_of_sale / pos.config               / picking_type_id (many2one)    : now required, req_default: function
 # DONE: pre-migration fill record having empty field with default value
