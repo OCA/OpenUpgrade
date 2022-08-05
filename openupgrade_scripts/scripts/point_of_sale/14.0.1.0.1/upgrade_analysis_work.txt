@@ -1,0 +1,105 @@
+---Models in module 'point_of_sale'---
+---Fields in module 'point_of_sale'---
+point_of_sale / pos.config               / iface_precompute_cash (boolean): DEL
+point_of_sale / pos.config               / manual_discount (boolean)     : NEW hasdefault
+point_of_sale / pos.config               / module_pos_reprint (boolean)  : DEL
+# NOTHING TO DO
+
+point_of_sale / pos.config               / manage_orders (boolean)       : NEW
+# DONE: post-migration: active by default
+
+point_of_sale / pos.config               / picking_type_id (many2one)    : now required, req_default: function
+# DONE: pre-migration fill record having empty field with default value
+
+point_of_sale / pos.config               / product_configurator (boolean): NEW
+point_of_sale / pos.order                / _order                        : _order is now 'date_order desc, name desc, id desc' ('id desc')
+point_of_sale / pos.order                / is_tipped (boolean)           : NEW
+# NOTHING TO DO
+
+point_of_sale / pos.order                / location_id (many2one)        : DEL relation: stock.location
+# NOTHING TO DO
+
+point_of_sale / pos.order                / picking_id (many2one)         : DEL relation: stock.picking
+point_of_sale / pos.order                / picking_ids (one2many)        : NEW relation: stock.picking
+# DONE: post-migration convert data many2one to one2many
+
+point_of_sale / pos.order                / tip_amount (float)            : NEW
+point_of_sale / pos.order.line           / full_product_name (char)      : NEW
+point_of_sale / pos.payment              / cardholder_name (char)        : NEW
+point_of_sale / pos.payment              / is_change (boolean)           : NEW hasdefault
+point_of_sale / pos.payment              / payment_status (char)         : NEW
+point_of_sale / pos.payment              / ticket (char)                 : NEW
+point_of_sale / pos.payment.method       / active (boolean)              : NEW hasdefault
+point_of_sale / pos.session              / cash_real_difference (float)  : NEW
+point_of_sale / pos.session              / cash_real_expected (float)    : NEW
+point_of_sale / pos.session              / cash_real_transaction (float) : NEW
+point_of_sale / pos.session              / picking_ids (one2many)        : NEW relation: stock.picking
+# NOTHING TO DO
+
+point_of_sale / pos.session              / state (selection)             : selection_keys is now '['closed', 'closing_control', 'opened', 'opening_control']' ('['closed', 'closing_control', 'new_session', 'opened', 'opening_control']')
+# Done: convert new_session state to other state
+
+point_of_sale / pos.session              / update_stock_at_closing (boolean): NEW
+# NOTHING TO DO
+
+point_of_sale / res.company              / point_of_sale_update_stock_quantities (selection): NEW selection_keys: ['closing', 'real'], hasdefault
+# Done: post-migration set value to 'real' corresponding v13 work
+
+point_of_sale / res.partner              / barcode (char)                : module is now 'base' ('point_of_sale')
+point_of_sale / res.partner              / barcode (char)                : not stored anymore
+# NOTHING TO DO
+
+point_of_sale / stock.picking            / pos_order_id (many2one)       : NEW relation: pos.order
+# DONE: post-migration convert data many2one to one2many
+
+point_of_sale / stock.picking            / pos_session_id (many2one)     : NEW relation: pos.session
+# DONE: post-migration fill session following pos order
+
+pos_cash_rounding / account.cash.rounding    / loss_account_id (many2one)    : module is now 'account' ('pos_cash_rounding')
+pos_cash_rounding / account.cash.rounding    / loss_account_id (many2one)    : not stored anymore
+# NOTHING TO DO: handle by ORM
+
+---XML records in module 'point_of_sale'---
+NEW ir.model.access: point_of_sale.access_account_cash_rounding_pos_user
+NEW ir.model.access: point_of_sale.access_closing_balance_confirm_wizard
+NEW ir.model.access: point_of_sale.access_money_in_out_wizard
+NEW ir.model.access: point_of_sale.access_pos_details_wizard
+NEW ir.model.access: point_of_sale.access_pos_make_payment
+NEW ir.model.access: point_of_sale.access_product_attribute_custom_value_pos_manager
+NEW ir.model.access: point_of_sale.access_product_attribute_pos_manager
+NEW ir.model.access: point_of_sale.access_product_attribute_value_pos_manager
+NEW ir.model.access: point_of_sale.access_product_product_attribute_pos_manager
+NEW ir.model.access: point_of_sale.access_product_template_attribute_exclusion_pos_manager
+NEW ir.model.access: point_of_sale.access_product_template_attribute_line_pos_manager
+DEL ir.model.access: pos_cash_rounding.access_account_cash_rounding
+# NOTHING TO DO
+
+DEL ir.model.constraint: point_of_sale.constraint_res_partner_unique_barcode
+# DONE pre-migration: deleted obsolete constraint
+
+ir.rule: point_of_sale.rule_pos_bank_statement_account_user (noupdate) (noupdate switched)
+ir.rule: point_of_sale.rule_pos_bank_statement_line_account_user (noupdate) (noupdate switched)
+ir.rule: point_of_sale.rule_pos_bank_statement_line_user (noupdate) (noupdate switched)
+ir.rule: point_of_sale.rule_pos_bank_statement_user (noupdate) (noupdate switched)
+ir.rule: point_of_sale.rule_pos_cashbox_line_accountant (noupdate) (noupdate switched)
+ir.rule: point_of_sale.rule_pos_config_multi_company (noupdate) (noupdate switched)
+ir.rule: point_of_sale.rule_pos_multi_company (noupdate) (noupdate switched)
+ir.rule: point_of_sale.rule_pos_order_report_multi_company (noupdate) (noupdate switched)
+ir.rule: point_of_sale.rule_pos_payment_method_multi_company (noupdate) (noupdate switched)
+ir.rule: point_of_sale.rule_pos_payment_multi_company (noupdate) (noupdate switched)
+ir.rule: point_of_sale.rule_pos_session_multi_company (noupdate) (noupdate switched)
+# DONE: pre-migration change noupdate
+
+NEW ir.ui.view: point_of_sale.assets_common
+NEW ir.ui.view: point_of_sale.pos_rounding_form_view_inherited
+NEW ir.ui.view: point_of_sale.qunit_suite
+NEW ir.ui.view: point_of_sale.qunit_suite_assets
+NEW ir.ui.view: point_of_sale.qunit_suite_tests
+DEL ir.ui.view: pos_cash_rounding.assets
+DEL ir.ui.view: pos_cash_rounding.pos_config_view_form_inherit_cash_rounding
+DEL ir.ui.view: pos_cash_rounding.pos_order_view_form_inherit_cash_rounding
+DEL ir.ui.view: pos_cash_rounding.pos_rounding_form_view_inherited
+DEL ir.ui.view: pos_cash_rounding.res_config_view_form_inherit_pos_cash_rounding
+DEL ir.ui.view: pos_reprint.assets
+DEL ir.ui.view: pos_reprint.pos_config_view_form_inherit_pos_reprint
+# NOTHING TO DO
