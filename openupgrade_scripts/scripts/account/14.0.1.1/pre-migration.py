@@ -233,7 +233,8 @@ def add_move_id_field_account_bank_statement_line(env):
         WHERE absl.statement_id = bs.id
             AND absl.move_id IS NULL
             AND am.name NOT IN ('', '/')
-            AND COALESCE(NULLIF(absl.move_name, ''), absl.payment_ref) = am.name
+            AND COALESCE(NULLIF(COALESCE(absl.move_name, ''), ''),
+                absl.payment_ref) = am.name
             AND am.company_id = bs.company_id
         """,
     )
@@ -330,7 +331,8 @@ def add_move_id_field_account_payment(env):
         WHERE ap.journal_id = aj.id
             AND ap.move_id IS NULL
             AND am.name NOT IN ('', '/')
-            AND COALESCE(NULLIF(ap.move_name, ''), ap.payment_reference) = am.name
+            AND COALESCE(NULLIF(COALESCE(ap.move_name, ''), ''),
+                ap.payment_reference) = am.name
             AND am.company_id = aj.company_id""",
     )
     # 3. match on payment communication with move payment_reference, ref or name
