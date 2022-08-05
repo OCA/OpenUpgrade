@@ -245,11 +245,13 @@ def add_move_id_field_account_bank_statement_line(env):
         UPDATE account_bank_statement_line absl
         SET move_id = ap.move_id
         FROM account_payment ap
+        JOIN account_move am ON ap.move_id = am.id
         JOIN account_journal aj ON ap.journal_id = aj.id,
             account_bank_statement bs
         WHERE absl.statement_id = bs.id AND aj.company_id = bs.company_id
             AND absl.move_id IS NULL AND absl.payment_ref NOT IN ('', '/')
-            AND absl.payment_ref = ap.communication AND ap.move_id IS NOT NULL
+            AND absl.payment_ref = ap.communication
+            AND am.statement_line_id IS NULL
         """,
     )
     # 4. match on statement account number and move ref
