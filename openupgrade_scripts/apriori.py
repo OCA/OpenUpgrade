@@ -35,6 +35,7 @@ merged_modules = {
     # OCA/stock-logistics-workflow
     "stock_move_assign_picking_hook": "stock",
     # OCA/project
+    "project_mail_chatter": "project",
     "project_task_dependency": "project",
     # OCA/web
     "web_decimal_numpad_dot": "web",
