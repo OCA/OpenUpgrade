@@ -68,5 +68,5 @@ renamed_models = {
 # only used here for upgrade_analysis
 merged_models = {
     "stock.inventory": "stock.quant",
-    "stock.inventory.line": "stock.quant",
+    "stock.inventory.line": "stock.move.line",
 }
