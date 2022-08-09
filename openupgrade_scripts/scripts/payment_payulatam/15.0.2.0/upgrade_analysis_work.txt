@@ -1,0 +1,12 @@
+---Models in module 'payment_payulatam'---
+---Fields in module 'payment_payulatam'---
+payment_payulatam / payment.acquirer         / provider (False)              : selection_keys is now '['adyen', 'alipay', 'authorize', 'buckaroo', 'mollie', 'none', 'ogone', 'paypal', 'payulatam']' ('['adyen', 'alipay', 'authorize', 'buckaroo', 'manual', 'odoo_adyen', 'ogone', 'paypal', 'payulatam']')
+# NOTHING TO DO
+
+---XML records in module 'payment_payulatam'---
+NEW account.payment.method: payment_payulatam.payment_method_payulatam (noupdate)
+NEW ir.ui.view: payment_payulatam.payment_acquirer_form
+NEW ir.ui.view: payment_payulatam.redirect_form
+DEL ir.ui.view: payment_payulatam.payment_acquirer_form_inherit_payment_payulatam
+DEL ir.ui.view: payment_payulatam.payulatam_form
+# NOTHING TO DO
