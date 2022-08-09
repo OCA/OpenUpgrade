@@ -1,0 +1,15 @@
+---Models in module 'payment_transfer'---
+---Fields in module 'payment_transfer'---
+payment_transfer / payment.acquirer         / provider (False)              : selection_keys is now '['adyen', 'alipay', 'authorize', 'buckaroo', 'mollie', 'none', 'ogone', 'paypal', 'payulatam', 'payumoney', 'sips', 'stripe', 'transfer']' ('['adyen', 'alipay', 'authorize', 'buckaroo', 'manual', 'odoo_adyen', 'ogone', 'paypal', 'payulatam', 'payumoney', 'sips', 'stripe', 'transfer']')
+payment_transfer / payment.acquirer         / qr_code (boolean)             : previously in module payment
+# NOTHING TO DO: don't affect old data
+
+---XML records in module 'payment_transfer'---
+NEW ir.ui.view: payment_transfer.payment_acquirer_form
+NEW ir.ui.view: payment_transfer.redirect_form
+NEW ir.ui.view: payment_transfer.transfer_transaction_status
+DEL ir.ui.view: payment_transfer.payment_acquirer_view_form_inherit_transfer
+# NOTHING TO DO
+
+DEL ir.ui.view: payment_transfer.transfer_form (noupdate)
+# DONE: post-migration: deleted safely xmlid
