@@ -1,0 +1,23 @@
+---Models in module 'payment_authorize'---
+---Fields in module 'payment_authorize'---
+payment_authorize / payment.acquirer         / authorize_currency_id (many2one): NEW relation: res.currency
+payment_authorize / payment.acquirer         / authorize_payment_method_type (selection): NEW selection_keys: ['bank_account', 'credit_card'], hasdefault
+payment_authorize / payment.acquirer         / provider (False)              : selection_keys is now '['adyen', 'alipay', 'authorize', 'none']' ('['adyen', 'alipay', 'authorize', 'manual']')
+payment_authorize / payment.token            / authorize_payment_method_type (selection): NEW selection_keys: ['bank_account', 'credit_card']
+payment_authorize / payment.token            / provider (selection)          : module is now 'payment' ('payment_authorize')
+# NOTHING TO DO
+
+---XML records in module 'payment_authorize'---
+NEW account.payment.method: payment_authorize.payment_method_authorize (noupdate)
+NEW ir.ui.view: payment_authorize.inline_form
+NEW ir.ui.view: payment_authorize.payment_acquirer_form
+NEW ir.ui.view: payment_authorize.payment_token_form
+DEL ir.ui.view: payment_authorize.acquirer_form_authorize
+DEL ir.ui.view: payment_authorize.token_form_authorize_net
+# NOTHING TO DO
+
+DEL ir.ui.view: payment_authorize.assets_frontend (noupdate)
+DEL ir.ui.view: payment_authorize.authorize_form (noupdate)
+DEL ir.ui.view: payment_authorize.authorize_s2s_form (noupdate)
+DEL ir.ui.view: payment_authorize.payment_authorize_redirect (noupdate)
+# DONE: post-migration: delete safely xmlid
