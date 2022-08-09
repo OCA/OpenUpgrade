@@ -1,0 +1,12 @@
+---Models in module 'payment_alipay'---
+---Fields in module 'payment_alipay'---
+payment_alipay / payment.acquirer         / provider (False)              : selection_keys is now '['adyen', 'alipay', 'none']' ('['adyen', 'alipay', 'manual']')
+# NOTHING DO DO
+
+---XML records in module 'payment_alipay'---
+NEW account.payment.method: payment_alipay.payment_method_alipay (noupdate)
+NEW ir.ui.view: payment_alipay.payment_acquirer_form
+NEW ir.ui.view: payment_alipay.redirect_form
+DEL ir.ui.view: payment_alipay.alipay_form
+DEL ir.ui.view: payment_alipay.payment_acquirer_view_form_inherit_payment_alipay
+# NOTHING DO DO
