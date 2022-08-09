@@ -1,0 +1,18 @@
+---Models in module 'payment_stripe'---
+---Fields in module 'payment_stripe'---
+payment_stripe / payment.acquirer         / provider (False)              : selection_keys is now '['adyen', 'alipay', 'authorize', 'buckaroo', 'mollie', 'none', 'ogone', 'paypal', 'payulatam', 'payumoney', 'sips', 'stripe']' ('['adyen', 'alipay', 'authorize', 'buckaroo', 'manual', 'odoo_adyen', 'ogone', 'paypal', 'payulatam', 'payumoney', 'sips', 'stripe']')
+payment_stripe / payment.acquirer         / stripe_image_url (char)       : DEL
+payment_stripe / payment.transaction      / stripe_payment_intent_secret (char): DEL
+# NOTHING TO DO
+
+---XML records in module 'payment_stripe'---
+NEW account.payment.method: payment_stripe.payment_method_stripe (noupdate)
+NEW ir.actions.act_window: payment_stripe.action_payment_acquirer_onboarding
+NEW ir.ui.view: payment_stripe.checkout
+NEW ir.ui.view: payment_stripe.manage
+NEW ir.ui.view: payment_stripe.payment_acquirer_form
+DEL ir.ui.view: payment_stripe.acquirer_form_stripe
+DEL ir.ui.view: payment_stripe.assets_frontend
+DEL ir.ui.view: payment_stripe.stripe_form
+DEL ir.ui.view: payment_stripe.stripe_s2s_form
+# NOTHING TO DO
