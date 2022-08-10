@@ -1,14 +1,15 @@
 ---Models in module 'sale'---
 ---Fields in module 'sale'---
 sale         / product.packaging        / sales (boolean)               : NEW hasdefault
-# NOTHING TO DO: new feature
+# DONE: pre-migration: fast filled with True value
 
 sale         / sale.order               / note (text)                   : type is now 'html' ('text')
-# DONE: pre-migration: convert text to html
+# DONE: post-migration: convert text to html
 
 sale         / sale.order.line          / product_packaging_id (many2one): NEW relation: product.packaging, hasdefault
 sale         / sale.order.line          / product_packaging_qty (float) : NEW
-# NOTHING TO DO: handled in sale_stock module (renamed column from product_packaging to product_packaging_id)
+# DONE: pre-migration: renamed from product_packaging (from sale_stock)
+# DONE: end-migration: filled product_packaging_id
 
 ---XML records in module 'sale'---
 NEW ir.actions.act_window: sale.action_accrued_revenue_entry
