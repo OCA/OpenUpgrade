@@ -1,14 +1,14 @@
 ---Models in module 'purchase'---
 ---Fields in module 'purchase'---
 purchase     / product.packaging        / purchase (boolean)            : NEW hasdefault
-# NOTHING TO DO: new feature
+# DONE: pre-migration: fast filled with True value
 
 purchase     / purchase.order           / notes (text)                  : type is now 'html' ('text')
-# DONE: pre-migration: convert plaintext to html
+# DONE: post-migration: convert plaintext to html
 
 purchase     / purchase.order.line      / product_packaging_id (many2one): NEW relation: product.packaging
 purchase     / purchase.order.line      / product_packaging_qty (float) : NEW
-# NOTHING TO DO: new feature
+# DONE: end-migration: filled product_packaging_id
 
 ---XML records in module 'purchase'---
 NEW ir.actions.act_window: purchase.action_accrued_expense_entry
