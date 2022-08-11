@@ -18,7 +18,7 @@ def fill_project_project_allow_task_dependencies(env):
                 "boolean",
                 "bool",
                 "project",
-                "TRUE",
+                True,
             ),
         ],
     )
