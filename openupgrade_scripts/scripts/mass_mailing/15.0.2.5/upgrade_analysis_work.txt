@@ -1,5 +1,7 @@
 ---Models in module 'mass_mailing'---
 new model mailing.contact.to.list [transient]
+# NOTHING TO DO
+
 ---Fields in module 'mass_mailing'---
 mass_mailing / mailing.list             / mailing_ids (many2many)       : NEW relation: mailing.mailing
 mass_mailing / mailing.mailing          / ab_testing_completed (boolean): NEW isrelated: related, stored
@@ -53,13 +55,15 @@ mass_mailing / mailing.trace            / clicked (datetime)            : DEL
 mass_mailing / mailing.trace            / links_click_datetime (datetime): NEW
 # DONE: pre-migration: renamed fields
 
-mass_mailing / utm.campaign             / ab_testing_completed (boolean): NEW
-mass_mailing / utm.campaign             / ab_testing_schedule_datetime (datetime): NEW hasdefault
 mass_mailing / utm.campaign             / ab_testing_winner_selection (selection): NEW selection_keys: ['clicks_ratio', 'manual', 'opened_ratio', 'replied_ratio'], hasdefault
-# NOTHING TO DO: new fields for new feature
+# DONE: pre-migration: set 'manual' as default instead
 
+mass_mailing / utm.campaign             / ab_testing_schedule_datetime (datetime): NEW hasdefault
+# NOTHING TO DO: as ab_testing_winner_selection is set 'manual', then ab_testing_schedule_datetime is avoided
+
+mass_mailing / utm.campaign             / ab_testing_completed (boolean): NEW
 mass_mailing / utm.campaign             / ab_testing_total_pc (integer) : NEW isfunction: function, stored
-# DONE: pre-migration: computed value for this field
+# DONE: pre-migration: computed value for these fields
 
 ---XML records in module 'mass_mailing'---
 NEW ir.actions.act_window: mass_mailing.action_ab_testing_open_winner_mailing
@@ -104,7 +108,11 @@ NEW ir.model.access: mass_mailing.access_ir_model
 NEW ir.model.access: mass_mailing.access_mailing_contact_to_list
 NEW ir.model.access: mass_mailing.access_mailing_schedule_date
 DEL ir.model.access: mass_mailing.access_mailing_mailing_schedule_date
+# NOTHING TO DO
+
 NEW ir.model.constraint: mass_mailing.constraint_mailing_mailing_percentage_valid
+# DONE: pre-migration: made sure this constraint can be added
+
 NEW ir.ui.view: mass_mailing.ab_testing_description
 NEW ir.ui.view: mass_mailing.mailing_contact_to_list_view_form
 NEW ir.ui.view: mass_mailing.mailing_list_view_form_simplified_footer
@@ -112,7 +120,11 @@ NEW ir.ui.view: mass_mailing.mailing_mailing_view_calendar
 NEW ir.ui.view: mass_mailing.mailing_mailing_view_form_full_width
 NEW ir.ui.view: mass_mailing.mailing_trace_report_view_tree
 NEW ir.ui.view: mass_mailing.mailing_trace_view_tree_mail
+# NOTHING TO DO
+
 ir.ui.view: mass_mailing.mass_mailing_kpi_link_trackers (noupdate switched)
+# DONE: pre-migration: switched noupdate
+
 NEW ir.ui.view: mass_mailing.s_alert
 NEW ir.ui.view: mass_mailing.s_alert_options
 NEW ir.ui.view: mass_mailing.s_blockquote

@@ -2,20 +2,21 @@ from openupgradelib import openupgrade
 
 
 def _rename_fields(env):
-    openupgrade.rename_columns(
-        env.cr,
-        {
-            "mailing_mailing": [
-                ("contact_ab_pc", "ab_testing_pc"),
-                ("unique_ab_testing", "ab_testing_enabled"),
-            ],
-            "mailing_trace": [
-                ("sent", "sent_datetime"),
-                ("opened", "open_datetime"),
-                ("replied", "reply_datetime"),
-                ("clicked", "links_click_datetime"),
-            ],
-        },
+    openupgrade.rename_fields(
+        env,
+        [
+            ("mailing.mailing", "mailing_mailing", "contact_ab_pc", "ab_testing_pc"),
+            (
+                "mailing.mailing",
+                "mailing_mailing",
+                "unique_ab_testing",
+                "ab_testing_enabled",
+            ),
+            ("mailing.trace", "mailing_trace", "sent", "sent_datetime"),
+            ("mailing.trace", "mailing_trace", "opened", "open_datetime"),
+            ("mailing.trace", "mailing_trace", "replied", "reply_datetime"),
+            ("mailing.trace", "mailing_trace", "clicked", "links_click_datetime"),
+        ],
     )
 
 
@@ -107,7 +108,29 @@ def _delete_invalid_records_mailing_trace(env):
     )
 
 
-def _compute_ab_testing_total_pc(env):
+def _compute_ab_testing_fields(env):
+    # due to new constraint
+    openupgrade.logged_query(
+        env.cr,
+        """
+        UPDATE mailing_mailing mm
+        SET ab_testing_pc = 100
+        WHERE ab_testing_pc > 100""",
+    )
+    # fill ab_testing_winner_selection
+    openupgrade.logged_query(
+        env.cr,
+        """
+        ALTER TABLE utm_campaign
+        ADD COLUMN IF NOT EXISTS ab_testing_winner_selection varchar""",
+    )
+    openupgrade.logged_query(
+        env.cr,
+        """
+        UPDATE utm_campaign
+        SET ab_testing_winner_selection = 'manual'""",
+    )
+    # fill ab_testing_total_pc
     openupgrade.logged_query(
         env.cr,
         """
@@ -125,6 +148,21 @@ def _compute_ab_testing_total_pc(env):
             WHERE mm.ab_testing_enabled = True AND uc.id = mm.campaign_id
         )""",
     )
+    # fill ab_testing_completed
+    openupgrade.logged_query(
+        env.cr,
+        """
+        ALTER TABLE utm_campaign
+        ADD COLUMN IF NOT EXISTS ab_testing_completed bool
+        """,
+    )
+    openupgrade.logged_query(
+        env.cr,
+        """
+        UPDATE utm_campaign uc
+        SET ab_testing_completed = TRUE
+        WHERE ab_testing_total_pc >= 100""",
+    )
 
 
 @openupgrade.migrate()
@@ -135,4 +173,7 @@ def migrate(env, version):
     _map_mailing_trace_trace_status(env)
     _delete_invalid_records_mailing_trace(env)
     _fill_mailing_mailing_schedule_type(env)
-    _compute_ab_testing_total_pc(env)
+    _compute_ab_testing_fields(env)
+    openupgrade.set_xml_ids_noupdate_value(
+        env, "mass_mailing", ["mass_mailing_kpi_link_trackers"], False
+    )
