@@ -2,7 +2,7 @@
 ---Fields in module 'stock_account'---
 stock_account / stock.inventory          / accounting_date (date)        : DEL
 stock_account / stock.quant              / accounting_date (date)        : NEW
-# NOTHING TO DO: now this fields use in once
+# DONE: post-migration: move the value from inventory to quant
 
 stock_account / stock.move               / analytic_account_line_id (many2one): NEW relation: account.analytic.line
 # NOTHING TO DO: feature for analytic accounting on MO
