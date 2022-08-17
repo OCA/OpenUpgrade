@@ -70,6 +70,8 @@ merged_modules = {
     # OCA/partner-contact
     "base_vat_sanitized": "base_vat",
     "partner_bank_active": "base",
+    # OCA/sale-reporting
+    "report_qweb_pdf_fixed_column": "web",
     # OCA/stock-logistics-warehouse
     "stock_inventory_include_exhausted": "stock",
     # OCA/project
