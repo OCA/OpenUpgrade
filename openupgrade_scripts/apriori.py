@@ -65,6 +65,8 @@ merged_modules = {
     "website_theme_install": "website",
     # OCA/event
     "website_event_questions_free_text": "website_event_questions",
+    # OCA/e-commerce
+    "website_snippet_carousel_product": "website_sale",
     # OCA/margin-analysis
     "sale_order_margin_percent": "sale_margin",
     # OCA/partner-contact
