@@ -27,4 +27,9 @@
   <record id="mrp_workorder_rule" model="ir.rule">
     <field name="global"/>
   </record> -->
+  <!--We need to update the context to the correct value because in v14 the context
+    is not defined in the xml definition.!-->
+  <record id="action_mrp_production_form" model="ir.actions.act_window">
+    <field name="context">{}</field>
+  </record>
 </odoo>
