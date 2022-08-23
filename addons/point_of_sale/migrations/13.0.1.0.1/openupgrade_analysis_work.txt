@@ -53,8 +53,10 @@ point_of_sale / pos.config               / iface_available_categ_ids (many2many)
 point_of_sale / pos.config               / iface_payment_terminal (boolean): DEL
 point_of_sale / pos.config               / limit_categories (boolean)    : NEW
 point_of_sale / pos.config               / other_devices (boolean)       : NEW
-point_of_sale / pos.config               / stock_location_id (many2one)  : DEL relation: stock.location, required, req_default: function
 # NOTHING TO DO
+
+point_of_sale / pos.config               / stock_location_id (many2one)  : DEL relation: stock.location, required, req_default: function
+# DONE: post-migration: for pos configs with picking types which default location is different from the former location, create new picking types with those default locations
 
 point_of_sale / pos.order                / payment_ids (one2many)        : NEW relation: pos.payment
 point_of_sale / pos.order                / statement_ids (one2many)      : DEL relation: account.bank.statement.line

@@ -86,6 +86,35 @@ def delete_pos_order_line_with_empty_order_id(env):
     )
 
 
+def create_pos_picking_types(env):
+    """Create picking types according to former pos.config locations
+    """
+    openupgrade.logged_query(
+        env.cr, """
+        SELECT pc.id, stock_location_id
+        FROM pos_config pc
+        JOIN stock_picking_type spt ON pc.picking_type_id = spt.id
+        WHERE stock_location_id != spt.default_location_src_id
+        """
+    )
+    # Unzip and zip again so we browse all the configs at once
+    try:
+        config_ids, location_ids = zip(*env.cr.fetchall())
+    except ValueError:
+        # No values to unpack so no results were fetched
+        return
+    for config, location_id in zip(
+        env["pos.config"].browse(config_ids),
+        location_ids
+    ):
+        config.picking_type_id = config.picking_type_id.copy({
+            "name": "[OU] {} - {}".format(
+                config.picking_type_id.name, config.name
+            ),
+            "default_location_src_id": location_id,
+        })
+
+
 @openupgrade.migrate()
 def migrate(env, version):
     fill_pos_config_default_cashbox_id(env)
@@ -97,3 +126,4 @@ def migrate(env, version):
     delete_pos_order_line_with_empty_order_id(env)
     openupgrade.delete_records_safely_by_xml_id(env, _unlink_by_xmlid)
     openupgrade.load_data(env.cr, 'point_of_sale', 'migrations/13.0.1.0.1/noupdate_changes.xml')
+    create_pos_picking_types(env)
