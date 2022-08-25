@@ -10,22 +10,22 @@ hr_holidays  / hr.leave                 / attachment_ids (one2many)     : NEW re
 # NOTHING TO DO: non-stored field
 
 hr_holidays  / hr.leave                 / employee_company_id (many2one): NEW relation: res.company, isrelated: related, stored
-# DONE: pre-migration: fast fill employee_company_id's value from employee_id.company_id on hr.leave model
+# NOTHING TO DO: odoo already fills it using queries
 
 hr_holidays  / hr.leave                 / employee_ids (many2many)      : NEW relation: hr.employee, isfunction: function, stored
 # DONE: pre-migration: create table hr_employee_hr_leave_rel and fill data
 
 hr_holidays  / hr.leave                 / holiday_allocation_id (many2one): NEW relation: hr.leave.allocation, isfunction: function, stored
-# DONE: pre-migration: create column; post-migration: fill data
+# NOTHING TO DO (due to https://github.com/odoo/odoo/pull/96545)
 
 hr_holidays  / hr.leave                 / multi_employee (boolean)      : NEW isfunction: function, stored
-# DONE: pre-migration: create column and fill data
+# DONE: pre-migration: created column
 
 hr_holidays  / hr.leave                 / payslip_status (boolean)      : DEL
 # NOTHING TO DO
 
 hr_holidays  / hr.leave                 / state (selection)             : selection_keys is now '['confirm', 'draft', 'refuse', 'validate', 'validate1']' ('['cancel', 'confirm', 'draft', 'refuse', 'validate', 'validate1']')
-# DONE: pre-migration: map cancel -> refuse
+# DONE: post-migration: map cancel -> refuse
 
 hr_holidays  / hr.leave.accrual.level   / accrual_plan_id (many2one)    : NEW relation: hr.leave.accrual.plan, required
 hr_holidays  / hr.leave.accrual.level   / action_with_unused_accruals (selection): NEW required, selection_keys: ['lost', 'postponed'], req_default: function, hasdefault
@@ -75,25 +75,27 @@ hr_holidays  / hr.leave.allocation      / date_to (datetime)            : type i
 # DONE: pre-migration: convert datetime to date
 
 hr_holidays  / hr.leave.allocation      / employee_company_id (many2one): NEW relation: res.company, isrelated: related, stored
-# DONE: pre-migration: fast fill employee_company_id's value from employee_id.company_id on hr.leave.allocation model
+# NOTHING TO DO: odoo already fills it using queries
 
 hr_holidays  / hr.leave.allocation      / employee_ids (many2many)      : NEW relation: hr.employee, isfunction: function, stored
 # DONE: pre-migration: create hr_employee_hr_leave_allocation_rel table and fill data
 
 hr_holidays  / hr.leave.allocation      / interval_number (integer)     : DEL
 hr_holidays  / hr.leave.allocation      / interval_unit (selection)     : DEL selection_keys: ['days', 'months', 'weeks', 'years']
-hr_holidays  / hr.leave.allocation      / lastcall (date)               : NEW hasdefault
 hr_holidays  / hr.leave.allocation      / number_per_interval (float)   : DEL
-# NOTHING TO DO: handled by ORM
+hr_holidays  / hr.leave.allocation      / unit_per_interval (selection) : DEL selection_keys: ['days', 'hours']
+# ??: they should be used to create accrual plans/levels
+
+hr_holidays  / hr.leave.allocation      / lastcall (date)               : NEW hasdefault
+# DONE: pre-migration: set as write_date::date
 
 hr_holidays  / hr.leave.allocation      / multi_employee (boolean)      : NEW isfunction: function, stored
-# DONE: pre-migration: create column and fill data
+# DONE: pre-migration: created column
 
 hr_holidays  / hr.leave.allocation      / state (selection)             : selection_keys is now '['cancel', 'confirm', 'draft', 'refuse', 'validate']' ('['cancel', 'confirm', 'draft', 'refuse', 'validate', 'validate1']')
-# DONE: map validate1 -> confirm
+# DONE: post-migration: map validate1 -> confirm, and call to activity_update()
 
 hr_holidays  / hr.leave.allocation      / taken_leave_ids (one2many)    : NEW relation: hr.leave
-hr_holidays  / hr.leave.allocation      / unit_per_interval (selection) : DEL selection_keys: ['days', 'hours']
 # NOTHING TO DO
 
 hr_holidays  / hr.leave.type            / _order                        : _order is now 'sequence' ('id')
@@ -102,13 +104,13 @@ hr_holidays  / hr.leave.type            / allocation_type (selection)   : DEL se
 # NOTHING TO DO
 
 hr_holidays  / hr.leave.type            / allocation_validation_type (selection): selection_keys is now '['no', 'officer', 'set']' ('['both', 'hr', 'manager']')
-# DONE: pre-migration: map hr -> officer, both / manager -> set
+# DONE: pre-migration: old values been saved. 'officer' if allocation_type = 'fixed_allocation', 'set' if allocation_type = 'fixed', else 'no'
 
 hr_holidays  / hr.leave.type            / employee_requests (selection) : NEW required, selection_keys: ['no', 'yes'], req_default: function, hasdefault
-# DONE: pre-migration: set employee_requests as 'no' if allocation_type = 'no' else 'yes'
+# DONE: pre-migration: set employee_requests as 'yes' if allocation_type = 'fixed_allocation' else 'no'
 
 hr_holidays  / hr.leave.type            / requires_allocation (selection): NEW required, selection_keys: ['no', 'yes'], req_default: function, hasdefault
-# DONE: default='yes', but set to 'no' if raise exception in _check_allocation_id
+# DONE: post-migration: set to 'no' if old allocation_type = 'no'
 
 hr_holidays  / hr.leave.type            / code (char)                   : DEL
 hr_holidays  / hr.leave.type            / color (integer)               : NEW
@@ -164,11 +166,17 @@ NEW ir.model.access: hr_holidays.access_hr_leave_employee_type_report
 NEW ir.model.constraint: hr_holidays.constraint_hr_leave_accrual_level_added_value_greater_than_zero
 NEW ir.model.constraint: hr_holidays.constraint_hr_leave_accrual_level_check_dates
 NEW ir.model.constraint: hr_holidays.constraint_hr_leave_accrual_level_start_count_check
+# NOTHING TO DO
+
 ir.model.constraint: hr_holidays.constraint_hr_leave_allocation_duration_check (changed definition: is now 'check(( number_of_days > 0 and allocation_type='regular') or(allocation_type != 'regular'))' ('check( number_of_days >= 0 )'))
 ir.model.constraint: hr_holidays.constraint_hr_leave_allocation_type_value (changed definition: is now 'check((holiday_type='employee' and(employee_id is not null or multi_employee is true)) or(holiday_type='category' and category_id is not null) or(holiday_type='department' and department_id is not null) or(holiday_type='company' and mode_company_id is not null))' ('check((holiday_type='employee' and employee_id is not null) or(holiday_type='category' and category_id is not null) or(holiday_type='department' and department_id is not null) or(holiday_type='company' and mode_company_id is not null))'))
 ir.model.constraint: hr_holidays.constraint_hr_leave_type_value (changed definition: is now 'check((holiday_type='employee' and(employee_id is not null or multi_employee is true)) or(holiday_type='company' and mode_company_id is not null) or(holiday_type='category' and category_id is not null) or(holiday_type='department' and department_id is not null) )' ('check((holiday_type='employee' and employee_id is not null) or(holiday_type='company' and mode_company_id is not null) or(holiday_type='category' and category_id is not null) or(holiday_type='department' and department_id is not null) )'))
+# DONE: pre-migration: delete constraints and let ORM add them again
+
 DEL ir.model.constraint: hr_holidays.constraint_hr_leave_allocation_interval_number_check
 DEL ir.model.constraint: hr_holidays.constraint_hr_leave_allocation_number_per_interval_check
+# DONE: pre-migration: safely delete constraints
+
 NEW ir.rule: hr_holidays.hr_leave_report_rule_group_holiday_user (noupdate)
 NEW ir.rule: hr_holidays.hr_leave_report_rule_group_user (noupdate)
 NEW ir.ui.menu: hr_holidays.hr_holidays_accrual_menu_configuration

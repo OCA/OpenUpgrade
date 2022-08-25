@@ -1,31 +1,16 @@
 from openupgradelib import openupgrade
 
-
-def _fast_fill_hr_leave_employee_company_id(env):
-    openupgrade.logged_query(
-        env.cr,
-        """
-        ALTER TABLE hr_leave
-        ADD COLUMN IF NOT EXISTS employee_company_id integer""",
-    )
-    openupgrade.logged_query(
-        env.cr,
-        """
-        UPDATE hr_leave hl
-        SET employee_company_id = empl.company_id
-        FROM hr_employee empl
-        WHERE hl.employee_id IS NOT NULL AND hl.employee_id = empl.id""",
-    )
-
-
-def _map_hr_leave_state(env):
-    openupgrade.map_values(
-        env.cr,
-        "state",
-        "state",
-        [("cancel", "refuse")],
-        table="hr_leave",
-    )
+_columns_copy = {
+    "hr_leave_type": [
+        ("allocation_validation_type", None, None),
+    ],
+    "hr_leave": [
+        ("state", None, None),
+    ],
+    "hr_leave_allocation": [
+        ("state", None, None),
+    ],
+}
 
 
 def _map_hr_leave_allocation_approver_id(env):
@@ -39,70 +24,60 @@ def _map_hr_leave_allocation_approver_id(env):
         env.cr,
         """
         UPDATE hr_leave_allocation
-        SET approver_id = CASE
-            WHEN second_approver_id IS NOT NULL THEN second_approver_id
-            ELSE first_approver_id END
+        SET approver_id = COALESCE(second_approver_id, first_approver_id)
         WHERE state in ('refuse', 'validate')""",
     )
 
 
-def _map_hr_leave_allocation_state(env):
-    openupgrade.logged_query(
-        env.cr,
-        """UPDATE hr_leave_allocation
-        SET state = 'confirm'
-        WHERE state = 'validate1'""",
-    )
-
-
 def _convert_datetime_to_date_hr_leave_allocation_date_from(env):
+    openupgrade.rename_columns(env.cr, {"hr_leave_allocation": [("date_from", None)]})
     openupgrade.logged_query(
         env.cr,
-        """
+        """ALTER TABLE hr_leave_allocation ADD COLUMN date_from date""",
+    )
+    openupgrade.logged_query(
+        env.cr,
+        f"""
         UPDATE hr_leave_allocation
-        SET date_from = CASE
-            WHEN date_from IS NOT NULL THEN date_from::date
-            ELSE create_date::date END""",
+        SET date_from = COALESCE({
+        openupgrade.get_legacy_name("date_from")}, create_date)::date""",
     )
 
 
 def _convert_datetime_to_date_hr_leave_allocation_date_to(env):
+    openupgrade.rename_columns(env.cr, {"hr_leave_allocation": [("date_to", None)]})
     openupgrade.logged_query(
         env.cr,
-        """
+        """ALTER TABLE hr_leave_allocation ADD COLUMN date_to date""",
+    )
+    openupgrade.logged_query(
+        env.cr,
+        f"""
         UPDATE hr_leave_allocation
-        SET date_to = date_to::date
-        WHERE date_to IS NOT NULL""",
+        SET date_to = {openupgrade.get_legacy_name("date_to")}::date
+        WHERE {openupgrade.get_legacy_name("date_to")} IS NOT NULL""",
     )
 
 
-def _fast_fill_hr_leave_allocation_employee_company_id(env):
+def _fast_fill_hr_leave_allocation_accrual_plan_id(env):
     openupgrade.logged_query(
         env.cr,
         """
         ALTER TABLE hr_leave_allocation
-        ADD COLUMN IF NOT EXISTS employee_company_id integer""",
-    )
-    openupgrade.logged_query(
-        env.cr,
-        """
-        UPDATE hr_leave hl
-        SET employee_company_id = empl.company_id
-        FROM hr_employee empl
-        WHERE hl.employee_id IS NOT NULL AND hl.employee_id = empl.id""",
+        ADD COLUMN IF NOT EXISTS accrual_plan_id integer""",
     )
 
 
-def _map_hr_leave_type_allocation_validation_type(env):
+def refill_hr_leave_type_allocation_validation_type(env):
     openupgrade.logged_query(
         env.cr,
         """
         UPDATE hr_leave_type
-        SET allocation_validation_type =
-            CASE WHEN allocation_validation_type = 'hr' THEN 'set'
-            ELSE 'officer' END
-        WHERE allocation_validation_type IN ('hr', 'both', 'manager')
-        """,
+        SET allocation_validation_type = CASE
+            WHEN allocation_type = 'fixed_allocation' THEN 'officer'
+            WHEN allocation_type = 'fixed' THEN 'set'
+            ELSE 'no' END
+        WHERE allocation_validation_type IS NOT NULL""",
     )
 
 
@@ -118,7 +93,7 @@ def _fast_fill_hr_leave_type_employee_requests(env):
         """
         UPDATE hr_leave_type
         SET employee_requests =
-            CASE WHEN allocation_type = 'no' THEN 'no' ELSE 'yes' END""",
+            CASE WHEN allocation_type = 'fixed_allocation' THEN 'yes' ELSE 'no' END""",
     )
 
 
@@ -138,7 +113,7 @@ def _fast_fill_hr_leave_employee_ids(env):
         INSERT INTO hr_employee_hr_leave_rel (hr_leave_id, hr_employee_id)
         SELECT hl.id, hl.employee_id
         FROM hr_leave hl
-        WHERE hl.holiday_type = 'employee'
+        WHERE hl.holiday_type = 'employee' AND hl.employee_id IS NOT NULL
         """,
     )
 
@@ -148,18 +123,7 @@ def _fast_fill_hr_leave_multi_employee(env):
         env.cr,
         """
         ALTER TABLE hr_leave
-        ADD COLUMN IF NOT EXISTS multi_employee boolean""",
-    )
-    openupgrade.logged_query(
-        env.cr,
-        """
-        UPDATE hr_leave
-        SET multi_employee =
-            (SELECT COUNT(rel.hr_employee_id) > 1
-            FROM hr_employee_hr_leave_rel rel
-            WHERE hr_leave.id = rel.hr_leave_id
-                AND hr_leave.employee_id = rel.hr_employee_id
-            )""",
+        ADD COLUMN IF NOT EXISTS multi_employee bool""",
     )
 
 
@@ -179,7 +143,7 @@ def _fast_fill_hr_leave_allocation_employee_ids(env):
             hr_leave_allocation_id, hr_employee_id)
         SELECT hla.id, hla.employee_id
         FROM hr_leave_allocation hla
-        WHERE hla.holiday_type = 'employee'
+        WHERE hla.holiday_type = 'employee' AND hla.employee_id IS NOT NULL
         """,
     )
 
@@ -191,42 +155,53 @@ def _fast_fill_hr_leave_allocation_multi_employee(env):
         ALTER TABLE hr_leave_allocation
         ADD COLUMN IF NOT EXISTS multi_employee boolean""",
     )
+
+
+def fill_hr_leave_allocation_lastcall(env):
+    openupgrade.logged_query(
+        env.cr,
+        """
+        ALTER TABLE hr_leave_allocation
+        ADD COLUMN IF NOT EXISTS lastcall date""",
+    )
     openupgrade.logged_query(
         env.cr,
         """
         UPDATE hr_leave_allocation
-        SET multi_employee =
-            (SELECT COUNT(rel.hr_employee_id) > 1
-            FROM hr_employee_hr_leave_allocation_rel rel
-            WHERE hr_leave_allocation.id = rel.hr_leave_allocation_id
-                AND hr_leave_allocation.employee_id = rel.hr_employee_id
-            )""",
+        SET lastcall = write_date::date""",
     )
 
 
-def _create_column_hr_leave_holiday_allocation_id(env):
-    # Manually create column for avoiding the automatic launch of the compute or default
-    openupgrade.logged_query(
-        env.cr,
-        """
-        ALTER TABLE hr_leave
-        ADD COLUMN IF NOT EXISTS holiday_allocation_id integer""",
+def delete_sql_constraints(env):
+    openupgrade.delete_sql_constraint_safely(
+        env, "hr_holidays", "hr_leave_allocation", "duration_check"
+    )
+    openupgrade.delete_sql_constraint_safely(
+        env, "hr_holidays", "hr_leave_allocation", "type_value"
+    )
+    openupgrade.delete_sql_constraint_safely(
+        env, "hr_holidays", "hr_leave", "type_value"
+    )
+    openupgrade.delete_sql_constraint_safely(
+        env, "hr_holidays", "hr_leave_allocation", "interval_number_check"
+    )
+    openupgrade.delete_sql_constraint_safely(
+        env, "hr_holidays", "hr_leave_allocation", "number_per_interval_check"
     )
 
 
 @openupgrade.migrate()
 def migrate(env, version):
-    _fast_fill_hr_leave_employee_company_id(env)
-    _map_hr_leave_state(env)
+    openupgrade.copy_columns(env.cr, _columns_copy)
     _map_hr_leave_allocation_approver_id(env)
-    _map_hr_leave_allocation_state(env)
     _convert_datetime_to_date_hr_leave_allocation_date_from(env)
     _convert_datetime_to_date_hr_leave_allocation_date_to(env)
-    _fast_fill_hr_leave_allocation_employee_company_id(env)
-    _map_hr_leave_type_allocation_validation_type(env)
+    _fast_fill_hr_leave_allocation_accrual_plan_id(env)
+    refill_hr_leave_type_allocation_validation_type(env)
     _fast_fill_hr_leave_type_employee_requests(env)
     _fast_fill_hr_leave_employee_ids(env)
     _fast_fill_hr_leave_multi_employee(env)
     _fast_fill_hr_leave_allocation_employee_ids(env)
     _fast_fill_hr_leave_allocation_multi_employee(env)
-    _create_column_hr_leave_holiday_allocation_id(env)
+    fill_hr_leave_allocation_lastcall(env)
+    delete_sql_constraints(env)
