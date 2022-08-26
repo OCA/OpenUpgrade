@@ -107,12 +107,21 @@ def create_pos_picking_types(env):
         env["pos.config"].browse(config_ids),
         location_ids
     ):
-        config.picking_type_id = config.picking_type_id.copy({
+        picking_type = config.picking_type_id.copy({
             "name": "[OU] {} - {}".format(
                 config.picking_type_id.name, config.name
             ),
             "default_location_src_id": location_id,
         })
+        # Update via SQL to avoid possible open sessions errors. They shouldn't be open
+        # but if only is they'd spoil the whole migration
+        env.cr.execute(
+            """
+            UPDATE pos_config
+            SET picking_type_id = %s WHERE id = %s
+            """,
+            (picking_type.id, config.id),
+        )
 
 
 @openupgrade.migrate()
