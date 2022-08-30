@@ -60,3 +60,4 @@ def _map_hr_employee_departure_reason_to_departure_reason_id(env):
 def migrate(env, version):
     _map_hr_employee_work_location_to_work_location_id(env)
     _map_hr_employee_departure_reason_to_departure_reason_id(env)
+    openupgrade.load_data(env.cr, "hr", "15.0.1.1/noupdate_changes.xml")
