@@ -65,6 +65,8 @@ merged_modules = {
     "pos_kitchen_printer": "pos_restaurant",
     "pos_reprint": "point_of_sale",
     "website_theme_install": "website",
+    # odoo/design-themes
+    "theme_graphene_blog": "theme_graphene",
     # OCA/event
     "website_event_questions_free_text": "website_event_questions",
     # OCA/margin-analysis
