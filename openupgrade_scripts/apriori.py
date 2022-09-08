@@ -7,7 +7,6 @@ renamed_modules = {
     # odoo
     "crm_iap_lead": "crm_iap_mine",
     "crm_iap_lead_enrich": "crm_iap_enrich",
-    "l10n_eu_service": "l10n_eu_oss",
     "mail_client_extension": "mail_plugin",
     "payment_ingenico": "payment_ogone",
     "website_mail_channel": "website_mail_group",
@@ -22,6 +21,7 @@ merged_modules = {
     # odoo
     "account_edi_extended": "account_edi",
     "l10n_be_invoice_bba": "l10n_be",
+    "l10n_eu_service": "l10n_eu_oss",  # due to OCA/account-fiscal-rule
     "l10n_ch_qr_iban": "l10n_ch",
     "l10n_se_ocr": "l10n_se",
     "payment_fix_register_token": "payment",
