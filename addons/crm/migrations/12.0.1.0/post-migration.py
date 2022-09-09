@@ -46,5 +46,6 @@ def migrate(env, version):
             'crm.opp_report_multi_company',
             'crm.email_template_opportunity_reminder_mail',
             'crm.mail_template_data_module_install_crm',
+            'crm.calendar_event_global',
         ],
     )
