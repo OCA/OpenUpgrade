@@ -1,4 +1,4 @@
-from openupgradelib import openupgrade
+from openupgradelib import openupgrade, openupgrade_merge_records
 
 from odoo.tools import sql
 
@@ -84,6 +84,49 @@ def delete_obsolete_constraints(env):
             "mail_message_mail_channel_rel",
         ],
     )
+
+
+def merge_duplicated_mail_channel_partner_records(env):
+    env.cr.execute(
+        """
+        SELECT mcp.id, count(*) OVER (
+            PARTITION BY mcp.channel_id, mcp.partner_id ORDER BY mcp.id DESC) AS c
+        FROM mail_channel_partner mcp
+        JOIN (
+            SELECT channel_id, partner_id
+            FROM mail_channel_partner
+            WHERE partner_id IS NOT NULL
+            GROUP BY channel_id, partner_id
+            HAVING count(*) > 1
+        ) sub ON sub.channel_id = mcp.channel_id AND sub.partner_id = mcp.partner_id"""
+    )
+    data = env.cr.fetchall()
+    records = {}
+    target_id = None
+    for line in data:
+        if line[1] == 1:
+            target_id = line[0]
+            records[line[0]] = []
+        else:
+            records[target_id].append(line[0])
+    for target_id, record_ids in records.items():
+        openupgrade_merge_records.merge_records(
+            env,
+            "mail.channel.partner",
+            record_ids,
+            target_id,
+            field_spec={
+                "is_minimized": "or",
+                "is_pinned": "or",
+                "custom_channel_name": "first_not_null",
+                "fold_state": "first_not_null",
+                "create_date": "max",
+                "write_date": "max",
+            },
+            method="sql",
+            delete=True,
+            model_table="mail_channel_partner",
+        )
 
 
 def migration_to_mail_group(env):
@@ -289,4 +332,5 @@ def migrate(env, version):
     _rename_fields(env)
     _delete_channel_follower_records(env)
     delete_obsolete_constraints(env)
+    merge_duplicated_mail_channel_partner_records(env)
     migration_to_mail_group(env)
