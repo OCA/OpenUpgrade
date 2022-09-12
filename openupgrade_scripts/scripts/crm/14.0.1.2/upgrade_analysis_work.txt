@@ -1,8 +1,10 @@
 ---Models in module 'crm'---
 obsolete model crm.lead.tag (renamed to crm.tag in module sales_team)
-obsolete model crm.partner.binding [transient]
 new model crm.recurring.plan
 # NOTHING TO DO
+
+obsolete model crm.partner.binding [transient]
+# DONE: pre-migration: remove table fks
 
 ---Fields in module 'crm'---
 crm          / crm.lead                 / probability (float)           : now a function
