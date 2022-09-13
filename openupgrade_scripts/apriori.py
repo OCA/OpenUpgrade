@@ -33,6 +33,7 @@ merged_modules = {
     # OCA/account-financial-tools
     "stock_account_prepare_anglo_saxon_out_lines_hook": "stock_account",
     # OCA/stock-logistics-workflow
+    "stock_deferred_assign": "stock",
     "stock_move_assign_picking_hook": "stock",
     # OCA/project
     "project_mail_chatter": "project",
