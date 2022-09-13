@@ -95,6 +95,7 @@ def create_pos_picking_types(env):
         FROM pos_config pc
         JOIN stock_picking_type spt ON pc.picking_type_id = spt.id
         WHERE stock_location_id != spt.default_location_src_id
+        OR spt.default_location_src_id IS NULL
         """
     )
     # Unzip and zip again so we browse all the configs at once
@@ -111,6 +112,7 @@ def create_pos_picking_types(env):
             "name": "[OU] {} - {}".format(
                 config.picking_type_id.name, config.name
             ),
+            "company_id": config.company_id.id,
             "default_location_src_id": location_id,
         })
         # Update via SQL to avoid possible open sessions errors. They shouldn't be open
