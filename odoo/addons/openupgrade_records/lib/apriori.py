@@ -58,6 +58,8 @@ merged_modules = {
     'account_move_chatter': 'account',
     'account_tag_menu': 'account_menu',
     'account_type_menu': 'account_menu',
+    # OCA/account-invoicing
+    'account_invoice_repair_link': 'repair',
     # OCA/account-reconcile
     'account_set_reconcilable': 'account',
     'bank_statement_foreign_currency': 'account',
