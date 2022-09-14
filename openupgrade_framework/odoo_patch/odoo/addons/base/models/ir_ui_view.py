@@ -17,7 +17,7 @@ def _check_xml(self):
         return View._check_xml._original_method(self)
 
 
-def _check(self, view):
+def check(self, view):
     """Because we captured the exception in _raise_view_error and archived that view,
     so info is None, but it is called to info.get('select') in NameManager.check,
     which will raise an exception AttributeError,
@@ -63,7 +63,7 @@ def _raise_view_error(
 
 _check_xml._original_method = View._check_xml
 View._check_xml = _check_xml
-_check._original_method = View._check
-View._check = _check
+check._original_method = NameManager.check
+NameManager.check = check
 _raise_view_error._original_method = View._raise_view_error
 View._raise_view_error = _raise_view_error
