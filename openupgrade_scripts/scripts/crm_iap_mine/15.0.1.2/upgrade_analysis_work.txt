@@ -137,8 +137,6 @@ NEW ir.model.constraint: crm_iap_mine.constraint_crm_iap_lead_seniority_name_uni
 DEL ir.model.constraint: crm_iap_lead.constraint_crm_iap_lead_industry_name_uniq [renamed to crm_iap_mine module]
 DEL ir.model.constraint: crm_iap_lead.constraint_crm_iap_lead_role_name_uniq [renamed to crm_iap_mine module]
 DEL ir.model.constraint: crm_iap_lead.constraint_crm_iap_lead_seniority_name_uniq [renamed to crm_iap_mine module]
-NEW ir.sequence: crm_iap_mine.ir_sequence_crm_iap_mine (noupdate)
-DEL ir.sequence: crm_iap_lead.seq_crm_iap_lead_mining_request (noupdate)
 NEW ir.ui.menu: crm_iap_mine.crm_iap_lead_mining_request_menu_action [renamed from crm_iap_lead module]
 NEW ir.ui.menu: crm_iap_mine.crm_menu_lead_generation [renamed from crm_iap_lead module]
 DEL ir.ui.menu: crm_iap_lead.crm_iap_lead_mining_request_menu_action [renamed to crm_iap_mine module]
@@ -165,3 +163,7 @@ DEL ir.ui.view: crm_iap_lead.res_config_settings_view_form
 NEW mail.template: crm_iap_mine.lead_generation_no_credits [renamed from crm_iap_lead module] (noupdate)
 DEL mail.template: crm_iap_lead.lead_generation_no_credits [renamed to crm_iap_mine module] (noupdate)
 # NOTHING TO DO: noupdate="0" records, no name changed.
+
+NEW ir.sequence: crm_iap_mine.ir_sequence_crm_iap_mine (noupdate)
+DEL ir.sequence: crm_iap_lead.seq_crm_iap_lead_mining_request (noupdate)
+# DONE: pre-migration: renamed xmlids
