@@ -314,14 +314,14 @@ def add_move_id_field_account_payment(env):
             AND am.payment_id IS NULL
         """,
     )
-    # 1. set move_id from moves where payment_id is defined
+    # 1. set move_id from move lines where payment_id is defined
     openupgrade.logged_query(
         env.cr,
         """
         UPDATE account_payment ap
-        SET move_id = am.id
-        FROM account_move am
-        WHERE am.payment_id = ap.id AND ap.move_id IS NULL""",
+        SET move_id = aml.move_id
+        FROM account_move_line aml
+        WHERE aml.payment_id = ap.id AND ap.move_id IS NULL""",
     )
     # 2. try to match on payment move_name or payment_reference (if move_name empty)
     openupgrade.logged_query(
