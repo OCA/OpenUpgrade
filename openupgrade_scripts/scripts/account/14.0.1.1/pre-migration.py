@@ -3,7 +3,7 @@
 from openupgradelib import openupgrade
 
 
-def rename_fields(env):
+def convert_fields(env):
     openupgrade.rename_fields(
         env,
         [
@@ -87,6 +87,44 @@ def rename_fields(env):
             ),
         ],
     )
+    openupgrade.rename_columns(
+        env.cr,
+        {
+            "account_journal": [
+                ("default_credit_account_id", None),
+                ("default_debit_account_id", None),
+            ],
+            "account_bank_statement_line": [
+                ("date", None),
+            ],
+            "account_payment": [
+                ("journal_id", None),
+                ("name", None),
+                ("payment_date", None),
+            ],
+        },
+    )
+    if openupgrade.column_exists(env.cr, "account_move", "move_type"):
+        # see account_tax_balance of OCA
+        openupgrade.rename_fields(
+            env,
+            [
+                (
+                    "account.move",
+                    "account_move",
+                    "move_type",
+                    openupgrade.get_legacy_name("move_type"),
+                ),
+            ],
+        )
+    openupgrade.copy_columns(
+        env.cr,
+        {
+            "account_payment": [
+                ("currency_id", None, None),
+            ],
+        },
+    )
 
 
 def m2m_tables_account_journal_renamed(env):
@@ -122,45 +160,6 @@ def remove_constrains_reconcile_models(env):
         ALTER TABLE account_reconcile_model_analytic_tag_rel
         ADD COLUMN account_reconcile_model_line_id integer
         """,
-    )
-
-
-def copy_fields(env):
-    openupgrade.rename_columns(
-        env.cr,
-        {
-            "account_journal": [
-                ("default_credit_account_id", None),
-                ("default_debit_account_id", None),
-            ],
-        },
-    )
-    if openupgrade.column_exists(env.cr, "account_move", "move_type"):
-        # see account_tax_balance of OCA
-        openupgrade.rename_fields(
-            env,
-            [
-                (
-                    "account.move",
-                    "account_move",
-                    "move_type",
-                    openupgrade.get_legacy_name("move_type"),
-                ),
-            ],
-        )
-    openupgrade.copy_columns(
-        env.cr,
-        {
-            "account_bank_statement_line": [
-                ("date", None, None),
-            ],
-            "account_payment": [
-                ("journal_id", None, None),
-                ("name", None, None),
-                ("payment_date", None, None),
-                ("currency_id", None, None),
-            ],
-        },
     )
 
 
@@ -246,13 +245,13 @@ def add_move_id_field_account_bank_statement_line(env):
         SET move_id = ap.move_id
         FROM account_payment ap
         JOIN account_move am ON ap.move_id = am.id
-        JOIN account_journal aj ON ap.journal_id = aj.id,
+        JOIN account_journal aj ON ap.%s = aj.id,
             account_bank_statement bs
         WHERE absl.statement_id = bs.id AND aj.company_id = bs.company_id
             AND absl.move_id IS NULL AND absl.payment_ref NOT IN ('', '/')
             AND absl.payment_ref = ap.communication
-            AND am.statement_line_id IS NULL
-        """,
+            AND am.statement_line_id IS NULL"""
+        % openupgrade.get_legacy_name("journal_id"),
     )
     # 4. match on statement account number and move ref
     openupgrade.logged_query(
@@ -285,8 +284,8 @@ def add_move_id_field_account_payment(env):
         SET currency_id = COALESCE(aj.currency_id, rc.currency_id)
         FROM account_journal aj
         JOIN res_company rc ON aj.company_id = rc.id
-        WHERE ap.journal_id = aj.id
-        """,
+        WHERE ap.%s = aj.id"""
+        % openupgrade.get_legacy_name("journal_id"),
     )
     if not openupgrade.column_exists(env.cr, "account_payment", "move_id"):
         openupgrade.logged_query(
@@ -330,12 +329,13 @@ def add_move_id_field_account_payment(env):
         UPDATE account_payment ap
         SET move_id = am.id
         FROM account_move am, account_journal aj
-        WHERE ap.journal_id = aj.id
+        WHERE ap.%s = aj.id
             AND ap.move_id IS NULL
             AND am.name NOT IN ('', '/')
             AND COALESCE(NULLIF(COALESCE(ap.move_name, ''), ''),
                 ap.payment_reference) = am.name
-            AND am.company_id = aj.company_id""",
+            AND am.company_id = aj.company_id"""
+        % openupgrade.get_legacy_name("journal_id"),
     )
     # 3. match on payment communication with move payment_reference, ref or name
     openupgrade.logged_query(
@@ -344,11 +344,11 @@ def add_move_id_field_account_payment(env):
         UPDATE account_payment ap
         SET move_id = am.id
         FROM account_move am, account_journal aj
-        WHERE ap.journal_id = aj.id AND am.company_id = aj.company_id AND
+        WHERE ap.%s = aj.id AND am.company_id = aj.company_id AND
             ap.move_id IS NULL AND ap.communication NOT IN ('', '/') AND (
             am.payment_reference = ap.communication OR am.ref = ap.communication
-            OR am.name = ap.communication)
-        """,
+            OR am.name = ap.communication)"""
+        % openupgrade.get_legacy_name("journal_id"),
     )
     openupgrade.logged_query(
         env.cr,
@@ -452,8 +452,7 @@ def migrate(env, version):
     openupgrade.set_xml_ids_noupdate_value(
         env, "account", ["account_analytic_line_rule_billing_user"], True
     )
-    copy_fields(env)
-    rename_fields(env)
+    convert_fields(env)
     m2m_tables_account_journal_renamed(env)
     remove_constrains_reconcile_models(env)
     add_move_id_field_account_payment(env)
