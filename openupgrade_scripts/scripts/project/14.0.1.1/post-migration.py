@@ -33,6 +33,14 @@ def _fill_res_users_m2m_tables(env):
         JOIN mail_followers mf ON mf.res_model = 'project.project' AND mf.res_id = pp.id
         JOIN res_users ru ON ru.partner_id = mf.partner_id AND NOT ru.share
         WHERE pp.privacy_visibility = 'followers'
+        UNION
+        SELECT pp.id, ru.id
+        FROM project_project pp
+        JOIN mail_followers mf ON mf.res_model = 'project.project' AND mf.res_id = pp.id
+        JOIN mail_channel_partner mcp ON mcp.channel_id = mf.channel_id
+        JOIN res_users ru ON ru.partner_id = mcp.partner_id AND NOT ru.share
+        WHERE pp.privacy_visibility = 'followers'
+        ON CONFLICT DO NOTHING
         """,
     )
     openupgrade.logged_query(
@@ -61,6 +69,12 @@ def _fill_res_users_m2m_tables(env):
         SELECT pt.id, rel.res_users_id
         FROM project_allowed_portal_users_rel rel
         JOIN project_task pt ON pt.project_id = rel.project_project_id
+        UNION
+        SELECT pt.id, ru.id AS res_users_id
+        FROM project_task pt
+        JOIN mail_followers mf ON mf.res_model = 'project.task' AND mf.res_id = pt.id
+        JOIN res_users ru ON ru.partner_id = mf.partner_id AND NOT ru.share
+        ON CONFLICT DO NOTHING
         """,
     )
 
