@@ -68,6 +68,8 @@ merged_modules = {
     "website_theme_install": "website",
     # odoo/design-themes
     "theme_graphene_blog": "theme_graphene",
+    # odoo/enterprise
+    "hr_holidays_gantt_calendar": "hr_holidays_gantt",
     # OCA/intrastat-extrastat
     "hs_code_link": "product_harmonized_system_delivery",
     # OCA/event
