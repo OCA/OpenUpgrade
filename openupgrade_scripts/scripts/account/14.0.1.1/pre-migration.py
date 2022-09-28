@@ -169,10 +169,7 @@ def add_move_id_field_account_bank_statement_line(env):
     ):
         openupgrade.logged_query(
             env.cr,
-            """
-            ALTER TABLE account_bank_statement_line
-            ADD COLUMN currency_id integer
-            """,
+            "ALTER TABLE account_bank_statement_line ADD COLUMN currency_id integer",
         )
     openupgrade.logged_query(
         env.cr,
@@ -185,86 +182,27 @@ def add_move_id_field_account_bank_statement_line(env):
         WHERE absl.statement_id = bs.id
         """,
     )
+    # Set the move in the statement line from the link in the aml
     if not openupgrade.column_exists(env.cr, "account_bank_statement_line", "move_id"):
         openupgrade.logged_query(
-            env.cr,
-            """
-            ALTER TABLE account_bank_statement_line
-            ADD COLUMN move_id integer
-            """,
+            env.cr, "ALTER TABLE account_bank_statement_line ADD COLUMN move_id integer"
         )
+    openupgrade.logged_query(
+        env.cr,
+        """
+        UPDATE account_bank_statement_line absl
+        SET move_id = aml.move_id
+        FROM account_move_line aml
+        WHERE aml.statement_line_id = absl.id AND absl.move_id IS NULL
+        """,
+    )
+    # Assign the reverse link from move to statement line
     if not openupgrade.column_exists(env.cr, "account_move", "statement_line_id"):
-        # In v10 existed that field
+        # In v10, the fields exists
         openupgrade.logged_query(
             env.cr,
-            """
-            ALTER TABLE account_move
-            ADD COLUMN statement_line_id integer
-            """,
+            "ALTER TABLE account_move ADD COLUMN statement_line_id integer",
         )
-    openupgrade.logged_query(
-        env.cr,
-        """
-        UPDATE account_move am
-        SET statement_line_id = aml.statement_line_id
-        FROM account_move_line aml
-        WHERE aml.move_id = am.id AND aml.statement_line_id IS NOT NULL
-            AND am.statement_line_id IS NULL
-        """,
-    )
-    # 1. set move_id from moves where statement_line_id is defined
-    openupgrade.logged_query(
-        env.cr,
-        """
-        UPDATE account_bank_statement_line absl
-        SET move_id = am.id
-        FROM account_move am
-        WHERE am.statement_line_id = absl.id AND absl.move_id IS NULL
-        """,
-    )
-    # 2. try to match on statement move_name or payment_ref (if move_name empty)
-    openupgrade.logged_query(
-        env.cr,
-        """
-        UPDATE account_bank_statement_line absl
-        SET move_id = am.id
-        FROM account_move am, account_bank_statement bs
-        WHERE absl.statement_id = bs.id
-            AND absl.move_id IS NULL
-            AND am.name NOT IN ('', '/')
-            AND COALESCE(NULLIF(COALESCE(absl.move_name, ''), ''),
-                absl.payment_ref) = am.name
-            AND am.company_id = bs.company_id
-        """,
-    )
-    # 3. match on statement payment_ref with payment communication
-    openupgrade.logged_query(
-        env.cr,
-        """
-        UPDATE account_bank_statement_line absl
-        SET move_id = ap.move_id
-        FROM account_payment ap
-        JOIN account_move am ON ap.move_id = am.id
-        JOIN account_journal aj ON ap.%s = aj.id,
-            account_bank_statement bs
-        WHERE absl.statement_id = bs.id AND aj.company_id = bs.company_id
-            AND absl.move_id IS NULL AND absl.payment_ref NOT IN ('', '/')
-            AND absl.payment_ref = ap.communication
-            AND am.statement_line_id IS NULL"""
-        % openupgrade.get_legacy_name("journal_id"),
-    )
-    # 4. match on statement account number and move ref
-    openupgrade.logged_query(
-        env.cr,
-        """
-        UPDATE account_bank_statement_line absl
-        SET move_id = am.id
-        FROM account_move am, account_bank_statement bs
-        WHERE absl.statement_id = bs.id AND am.company_id = bs.company_id
-            AND absl.move_id IS NULL AND absl.account_number NOT IN ('', '/')
-            AND absl.account_number = am.ref
-        """,
-    )
     openupgrade.logged_query(
         env.cr,
         """
