@@ -4,6 +4,19 @@ from openupgradelib import openupgrade
 
 
 def convert_fields(env):
+    if openupgrade.column_exists(env.cr, "account_move", "move_type"):
+        # see account_tax_balance of OCA
+        openupgrade.rename_fields(
+            env,
+            [
+                (
+                    "account.move",
+                    "account_move",
+                    "move_type",
+                    openupgrade.get_legacy_name("move_type"),
+                ),
+            ],
+        )
     openupgrade.rename_fields(
         env,
         [
@@ -104,19 +117,6 @@ def convert_fields(env):
             ],
         },
     )
-    if openupgrade.column_exists(env.cr, "account_move", "move_type"):
-        # see account_tax_balance of OCA
-        openupgrade.rename_fields(
-            env,
-            [
-                (
-                    "account.move",
-                    "account_move",
-                    "move_type",
-                    openupgrade.get_legacy_name("move_type"),
-                ),
-            ],
-        )
     openupgrade.copy_columns(
         env.cr,
         {
