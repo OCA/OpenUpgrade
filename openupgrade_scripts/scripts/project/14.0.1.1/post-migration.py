@@ -66,14 +66,26 @@ def _fill_res_users_m2m_tables(env):
         FROM project_allowed_internal_users_rel rel
         JOIN project_task pt ON pt.project_id = rel.project_project_id
         UNION
+        SELECT pt.id, pt.user_id
+        FROM project_task pt
+        JOIN project_project pp ON pp.id = pt.project_id
+        WHERE pp.privacy_visibility = 'followers' AND pt.user_id IS NOT NULL
+        UNION
         SELECT pt.id, rel.res_users_id
         FROM project_allowed_portal_users_rel rel
         JOIN project_task pt ON pt.project_id = rel.project_project_id
+        JOIN mail_followers mf ON mf.res_model = 'project.task' AND mf.res_id = pt.id
+        JOIN res_partner rp ON mf.partner_id = rp.id
+            OR mf.partner_id = rp.commercial_partner_id
+        JOIN res_users ru ON ru.partner_id = rp.id
+            AND ru.share AND ru.id = rel.res_users_id
         UNION
         SELECT pt.id, ru.id AS res_users_id
         FROM project_task pt
         JOIN mail_followers mf ON mf.res_model = 'project.task' AND mf.res_id = pt.id
         JOIN res_users ru ON ru.partner_id = mf.partner_id AND NOT ru.share
+        JOIN project_project pp ON pp.id = pt.project_id
+        WHERE pp.privacy_visibility = 'followers'
         ON CONFLICT DO NOTHING
         """,
     )
