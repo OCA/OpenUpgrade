@@ -233,6 +233,15 @@ def add_move_id_field_account_payment(env):
             ADD COLUMN move_id integer
             """,
         )
+    # Set move_id from move lines where payment_id is defined
+    openupgrade.logged_query(
+        env.cr,
+        """
+        UPDATE account_payment ap
+        SET move_id = aml.move_id
+        FROM account_move_line aml
+        WHERE aml.payment_id = ap.id AND ap.move_id IS NULL""",
+    )
     if not openupgrade.column_exists(env.cr, "account_move", "payment_id"):
         openupgrade.logged_query(
             env.cr,
@@ -245,58 +254,12 @@ def add_move_id_field_account_payment(env):
         env.cr,
         """
         UPDATE account_move am
-        SET payment_id = aml.payment_id
-        FROM account_move_line aml
-        WHERE aml.move_id = am.id AND aml.payment_id IS NOT NULL
-            AND am.payment_id IS NULL
-        """,
-    )
-    # 1. set move_id from move lines where payment_id is defined
-    openupgrade.logged_query(
-        env.cr,
-        """
-        UPDATE account_payment ap
-        SET move_id = aml.move_id
-        FROM account_move_line aml
-        WHERE aml.payment_id = ap.id AND ap.move_id IS NULL""",
-    )
-    # 2. try to match on payment move_name or payment_reference (if move_name empty)
-    openupgrade.logged_query(
-        env.cr,
-        """
-        UPDATE account_payment ap
-        SET move_id = am.id
-        FROM account_move am, account_journal aj
-        WHERE ap.%s = aj.id
-            AND ap.move_id IS NULL
-            AND am.name NOT IN ('', '/')
-            AND COALESCE(NULLIF(COALESCE(ap.move_name, ''), ''),
-                ap.payment_reference) = am.name
-            AND am.company_id = aj.company_id"""
-        % openupgrade.get_legacy_name("journal_id"),
-    )
-    # 3. match on payment communication with move payment_reference, ref or name
-    openupgrade.logged_query(
-        env.cr,
-        """
-        UPDATE account_payment ap
-        SET move_id = am.id
-        FROM account_move am, account_journal aj
-        WHERE ap.%s = aj.id AND am.company_id = aj.company_id AND
-            ap.move_id IS NULL AND ap.communication NOT IN ('', '/') AND (
-            am.payment_reference = ap.communication OR am.ref = ap.communication
-            OR am.name = ap.communication)"""
-        % openupgrade.get_legacy_name("journal_id"),
-    )
-    openupgrade.logged_query(
-        env.cr,
-        """
-        UPDATE account_move am
         SET payment_id = ap.id
         FROM account_payment ap
         WHERE am.id = ap.move_id AND am.payment_id IS NULL
         """,
     )
+    # fix currency
     openupgrade.logged_query(
         env.cr,
         """
