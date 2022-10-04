@@ -10,7 +10,6 @@ obsolete model adyen.terminal [module pos_adyen]
 obsolete model adyen.transaction [module adyen_platforms]
 obsolete model calendar.contacts (renamed to calendar.filters) [module calendar]
 obsolete model closing.balance.confirm.wizard [module point_of_sale]
-obsolete model export.computed.binary [module test_xlsx_export]
 obsolete model l10n_eu_service.service_tax_rate [module l10n_eu_oss]
 obsolete model l10n_eu_service.wizard [module l10n_eu_oss]
 obsolete model lunch.product.report [module lunch]
@@ -70,9 +69,6 @@ new model mail.group.moderation (renamed from mail.moderation) [module mail_grou
 new model mail.guest [module mail]
 new model mail.ice.server [module mail]
 new model mail.message.reaction [module mail]
-new model mail.test.composer.mixin [module test_mail]
-new model mail.test.lang [module test_mail]
-new model mail.test.track.monetary [module test_mail]
 new model mailing.contact.to.list [module mass_mailing]
 new model mrp.workcenter.tag [module mrp]
 new model payment.refund.wizard [module payment]
@@ -103,22 +99,18 @@ new model stock.replenishment.info [module stock]
 new model stock.request.count [module stock]
 new model stock.storage.category [module stock]
 new model stock.storage.category.capacity [module stock]
-new model test_inherit.mixin [module test_inherit]
-new model test_new_api.model_constrained_unlinks [module test_new_api]
-new model test_read_group.task [module test_read_group]
-new model test_read_group.user [module test_read_group]
 new model theme.ir.asset [module website]
 new model website.base.unit [module website_sale]
 new model website.configurator.feature [module website]
 new model website.searchable.mixin [module website]
 ---Fields in module 'general'---
-# 12743 fields matched,
-# Direct match: 12629
+# 10890 fields matched,
+# Direct match: 10776
 # Found in other module: 114
 # Found with different type: 0
-# In obsolete models: 166
-# New columns: 1871
-# Not matched: 618
+# In obsolete models: 162
+# New columns: 1755
+# Not matched: 587
 ---XML records in module 'general'---
 ERROR: module not in list of installed modules:
 ---Models in module 'adyen_platforms'---

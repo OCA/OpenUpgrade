@@ -34,6 +34,26 @@
   <record id="mail_act_sale_upsell" model="mail.activity.type">
     <field name="res_model">sale.order</field>
   </record>
+  <template id="mail_notification_paynow_online" inherit_id="mail.mail_notification_paynow" name="Quotation: Sign and Pay mail notification template">
+    <xpath expr="//t[@t-set='access_name']" position="after">
+      <t t-if="record._name == 'sale.order'">
+        <t t-set="is_transaction_pending" t-value="record.get_portal_last_transaction().state == 'pending'"/>
+        <t t-if="record.has_to_be_signed(include_draft=True)">
+          <t t-if="record.has_to_be_paid()" t-set="access_name">
+            <t t-if="is_transaction_pending">View Quotation</t>
+            <t t-else="">Review, Sign &amp; Pay Quotation</t>
+          </t>
+          <t t-else="" t-set="access_name">Review, Accept &amp; Sign Quotation</t>
+        </t>
+        <t t-elif="record.has_to_be_paid(include_draft=True) and not is_transaction_pending">
+          <t t-set="access_name">Review, Accept &amp; Pay Quotation</t>
+        </t>
+        <t t-elif="record.state in ('draft', 'sent')">
+          <t t-set="access_name">View Quotation</t>
+        </t>
+      </t>
+    </xpath>
+  </template>
   <record id="mail_template_sale_confirmation" model="mail.template">
     <field name="body_html" type="html">
       <div style="margin: 0px; padding: 0px;">
