@@ -39,6 +39,8 @@ merged_modules = {
     "stock_barcode_mobile": "stock_barcode",
     # OCA/account-financial-tools
     "stock_account_prepare_anglo_saxon_out_lines_hook": "stock_account",
+    # OCA/e-commerce
+    "website_sale_product_attribute_filter_visibility": "website_sale",
     "account_menu": "account_usability",
     # OCA/account-invoicing
     "purchase_invoicing_no_zero_line": "purchase",
