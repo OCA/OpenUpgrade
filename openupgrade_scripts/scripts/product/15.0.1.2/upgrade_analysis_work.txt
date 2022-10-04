@@ -1,0 +1,63 @@
+---Models in module 'product'---
+new model product.label.layout [transient]
+new model report.product.report_producttemplatelabel [abstract]
+new model report.product.report_producttemplatelabel_dymo [abstract]
+# NOTHING TO DO
+
+---Fields in module 'product'---
+product      / product.attribute        / display_type (selection)      : selection_keys is now '['color', 'pills', 'radio', 'select']' ('['color', 'radio', 'select']')
+product      / product.packaging        / _order                        : _order is now 'product_id, sequence, id' ('sequence')
+product      / product.product          / _order                        : _order is now 'priority desc, default_code, name, id' ('default_code, name, id')
+# NOTHING TO DO
+
+product      / product.product          / description (text)            : type is now 'html' ('text')
+# NOTHING TO DO: field is from product.template
+
+product      / product.product          / product_template_variant_value_ids (many2many): NEW relation: product.template.attribute.value
+product      / product.template         / _order                        : _order is now 'priority desc, name' ('name')
+# NOTHING TO DO
+
+product      / product.template         / description (text)            : type is now 'html' ('text')
+# DONE: pre-migration: convert text to html
+
+product      / product.template         / detailed_type (selection)     : NEW required, selection_keys: ['consu', 'service'], req_default: function, hasdefault
+# DONE: move value of type to detailed_type
+
+product      / product.template         / type (selection)              : now a function
+# NOTHING TO DO
+
+product      / product.template         / priority (selection)          : NEW selection_keys: ['0', '1'], hasdefault
+# NOTHING TO DO: new fields
+
+product      / product.template.attribute.line / value_count (integer)         : NEW isfunction: function, stored
+# DONE: pre-migration: fast computed value_count
+
+product      / product.attribute.value  / color (integer)               : NEW hasdefault
+product      / product.template.attribute.value / color (integer)               : NEW hasdefault
+# DONE: pre-migration: fast filled random value for color
+
+---XML records in module 'product'---
+NEW ir.actions.act_window: product.action_open_label_layout
+DEL ir.actions.act_window: product.product_attribute_value_action
+NEW ir.actions.report: product.report_product_template_label_dymo
+DEL ir.actions.report: product.report_product_label
+DEL ir.actions.report: product.report_product_product_barcode
+DEL ir.actions.report: product.report_product_template_barcode
+NEW ir.model.access: product.access_product_label_layout_user
+NEW ir.model.constraint: product.constraint_product_packaging_positive_qty
+NEW ir.ui.view: product.product_label_layout_form
+NEW ir.ui.view: product.report_productlabel_dymo
+NEW ir.ui.view: product.report_producttemplatelabel_dymo
+NEW ir.ui.view: product.report_simple_label2x7
+NEW ir.ui.view: product.report_simple_label4x12
+NEW ir.ui.view: product.report_simple_label4x7
+NEW ir.ui.view: product.report_simple_label_dymo
+DEL ir.ui.view: product.assets_backend
+DEL ir.ui.view: product.qunit_suite
+DEL ir.ui.view: product.report_productbarcode
+DEL ir.ui.view: product.report_producttemplatebarcode
+DEL ir.ui.view: product.report_simple_barcode
+DEL ir.ui.view: product.report_simple_label
+NEW report.paperformat: product.paperformat_label_sheet
+NEW report.paperformat: product.paperformat_label_sheet_dymo
+# NOTHING TO DO
