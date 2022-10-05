@@ -7,7 +7,7 @@ name: Test OpenUpgrade migration
 
 on:
   push:
-    branches: ["15.0*"]
+    branches: ["16.0*"]
   pull_request:
 
 jobs:
@@ -45,14 +45,14 @@ jobs:
       - name: DB Restore
         run: |
           psql -d $DB -c "DROP SCHEMA IF EXISTS PUBLIC;"
-          wget -q -O- $DOWNLOADS/14.0.psql | pg_restore -d $DB --no-owner
-          # TODO: create test data in Odoo 14.0 which does not support yml
+          wget -q -O- $DOWNLOADS/15.0.psql | pg_restore -d $DB --no-owner
+          # TODO: create test data in Odoo 15.0 which does not support yml
           # anymore
           # Roundtrip to previous release to update the test database with
           # additional test data
-          # - git fetch --depth 2 origin 14.0
+          # - git fetch --depth 2 origin 15.0
           # - git reset --hard `git ls-remote \
-          #       | grep refs/heads/14.0 \
+          #       | grep refs/heads/15.0 \
           #       | awk '{print $1}'`
           # - pip install -q -r requirements.txt
           # Line below may fail quite often due to Travis bug:
@@ -62,7 +62,7 @@ jobs:
         uses: actions/checkout@v2
         with:
           repository: odoo/odoo
-          ref: "15.0"
+          ref: "16.0"
           fetch-depth: 1
           path: odoo
       - name: Check out OpenUpgrade
