@@ -1,0 +1,10 @@
+---Models in module 'payment_flutterwave'---
+---Fields in module 'payment_flutterwave'---
+payment_flutterwave / payment.provider         / code (False)                  : NEW selection_keys: ['adyen', 'alipay', 'aps', 'asiapay', 'authorize', 'buckaroo', 'custom', 'demo', 'flutterwave', 'none'], mode: modify
+payment_flutterwave / payment.provider         / flutterwave_public_key (char) : NEW
+payment_flutterwave / payment.provider         / flutterwave_secret_key (char) : NEW
+payment_flutterwave / payment.provider         / flutterwave_webhook_secret (char): NEW
+payment_flutterwave / payment.token            / flutterwave_customer_email (char): NEW
+---XML records in module 'payment_flutterwave'---
+NEW ir.ui.view: payment_flutterwave.payment_provider_form
+NEW ir.ui.view: payment_flutterwave.redirect_form

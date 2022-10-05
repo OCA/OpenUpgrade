@@ -1,0 +1,9 @@
+<?xml version='1.0' encoding='utf-8'?>
+<odoo>
+  <record id="base.module_category_human_resources_contracts" model="ir.module.category">
+    <field name="description">Enable the user to see and manage the contracts from Employee application.</field>
+  </record>
+  <record id="group_hr_contract_manager" model="res.groups">
+    <field name="implied_ids" eval="[(4, ref('hr_contract.group_hr_contract_employee_manager')), (4, ref('hr.group_hr_user'))]"/>
+  </record>
+</odoo>

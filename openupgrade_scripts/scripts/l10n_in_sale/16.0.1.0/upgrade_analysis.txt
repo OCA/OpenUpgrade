@@ -1,0 +1,6 @@
+---Models in module 'l10n_in_sale'---
+---Fields in module 'l10n_in_sale'---
+l10n_in_sale / res.partner              / l10n_in_shipping_gstin (char) : DEL
+l10n_in_sale / sale.order               / l10n_in_gst_treatment (selection): selection_keys is now '['composition', 'consumer', 'deemed_export', 'overseas', 'regular', 'special_economic_zone', 'uin_holders', 'unregistered']' ('['composition', 'consumer', 'deemed_export', 'overseas', 'regular', 'special_economic_zone', 'unregistered']')
+---XML records in module 'l10n_in_sale'---
+DEL ir.ui.view: l10n_in_sale.l10n_in_view_partner_form

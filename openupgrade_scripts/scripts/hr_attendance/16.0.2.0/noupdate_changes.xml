@@ -1,0 +1,11 @@
+<?xml version='1.0' encoding='utf-8'?>
+<odoo>
+  <record id="hr_attendance_report_rule_multi_company" model="ir.rule">
+    <field name="domain_force">[('company_id', 'in', company_ids)]</field>
+  </record>
+  <record id="hr_attendance_rule_attendance_employee" model="ir.rule">
+    <field name="name">user: read own attendance only</field>
+    <field name="perm_create" eval="0"/>
+    <field name="perm_write" eval="0"/>
+  </record>
+</odoo>

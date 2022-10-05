@@ -1,0 +1,7 @@
+---Models in module 'mrp_subcontracting_dropshipping'---
+---Fields in module 'mrp_subcontracting_dropshipping'---
+mrp_subcontracting_dropshipping / res.company              / dropship_subcontractor_pick_type_id (many2one): NEW relation: stock.picking.type
+---XML records in module 'mrp_subcontracting_dropshipping'---
+NEW ir.ui.view: mrp_subcontracting_dropshipping.view_purchase_order_inherit
+DEL stock.location.route: mrp_subcontracting_dropshipping.route_subcontracting_dropshipping (noupdate)
+NEW stock.route: mrp_subcontracting_dropshipping.route_subcontracting_dropshipping (noupdate)

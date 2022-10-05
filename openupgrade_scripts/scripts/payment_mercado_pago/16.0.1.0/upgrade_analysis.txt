@@ -1,0 +1,7 @@
+---Models in module 'payment_mercado_pago'---
+---Fields in module 'payment_mercado_pago'---
+payment_mercado_pago / payment.provider         / code (False)                  : NEW selection_keys: ['adyen', 'alipay', 'aps', 'asiapay', 'authorize', 'buckaroo', 'custom', 'demo', 'flutterwave', 'mercado_pago', 'none'], mode: modify
+payment_mercado_pago / payment.provider         / mercado_pago_access_token (char): NEW
+---XML records in module 'payment_mercado_pago'---
+NEW ir.ui.view: payment_mercado_pago.payment_provider_form
+NEW ir.ui.view: payment_mercado_pago.redirect_form

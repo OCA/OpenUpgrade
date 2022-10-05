@@ -1,0 +1,24 @@
+<?xml version='1.0' encoding='utf-8'?>
+<odoo>
+  <record id="offboarding_plan" model="hr.plan">
+    <field name="plan_activity_type_ids"/>
+  </record>
+  <record id="offboarding_setup_compute_out_delais" model="hr.plan.activity.type">
+    <field name="plan_id" ref="offboarding_plan"/>
+  </record>
+  <record id="offboarding_take_back_hr_materials" model="hr.plan.activity.type">
+    <field name="plan_id" ref="offboarding_plan"/>
+  </record>
+  <record id="onboarding_plan" model="hr.plan">
+    <field name="plan_activity_type_ids"/>
+  </record>
+  <record id="onboarding_plan_training" model="hr.plan.activity.type">
+    <field name="plan_id" ref="onboarding_plan"/>
+  </record>
+  <record id="onboarding_setup_it_materials" model="hr.plan.activity.type">
+    <field name="plan_id" ref="onboarding_plan"/>
+  </record>
+  <record id="onboarding_training" model="hr.plan.activity.type">
+    <field name="plan_id" ref="onboarding_plan"/>
+  </record>
+</odoo>

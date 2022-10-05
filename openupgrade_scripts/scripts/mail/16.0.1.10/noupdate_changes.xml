@@ -1,0 +1,22 @@
+<?xml version='1.0' encoding='utf-8'?>
+<odoo>
+  <record id="mail_channel_rule" model="ir.rule">
+    <field name="domain_force">[
+                '|',
+                    '&amp;',
+                        ('channel_type', '!=', 'channel'),
+                        ('is_member', '=', True),
+                    '&amp;',
+                        ('channel_type', '=', 'channel'),
+                        '|',
+                            ('group_public_id', '=', False),
+                            ('group_public_id', 'in', [g.id for g in user.groups_id])]
+            </field>
+  </record>
+  <record id="mt_comment" model="mail.message.subtype">
+    <field name="track_recipients" eval="True"/>
+  </record>
+  <record id="mt_note" model="mail.message.subtype">
+    <field name="track_recipients" eval="True"/>
+  </record>
+</odoo>

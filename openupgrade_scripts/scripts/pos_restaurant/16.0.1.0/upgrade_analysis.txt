@@ -1,0 +1,8 @@
+---Models in module 'pos_restaurant'---
+---Fields in module 'pos_restaurant'---
+pos_restaurant / pos.order.line           / mp_dirty (boolean)            : DEL
+pos_restaurant / pos.order.line           / uuid (char)                   : NEW
+pos_restaurant / restaurant.floor         / _order                        : _order is now 'sequence, name' ('id')
+---XML records in module 'pos_restaurant'---
+NEW ir.ui.view: pos_restaurant.res_config_settings_view_form
+DEL ir.ui.view: pos_restaurant.pos_config_view_form_inherit_restaurant

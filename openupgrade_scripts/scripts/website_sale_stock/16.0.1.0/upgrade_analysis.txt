@@ -1,0 +1,10 @@
+---Models in module 'website_sale_stock'---
+---Fields in module 'website_sale_stock'---
+website_sale_stock / product.product          / stock_notification_partner_ids (many2many): NEW relation: res.partner
+website_sale_stock / sale.order               / warning_stock (char)          : DEL
+website_sale_stock / sale.order.line          / warning_stock (char)          : DEL
+---XML records in module 'website_sale_stock'---
+NEW ir.cron: website_sale_stock.ir_cron_send_availability_email
+NEW ir.ui.view: website_sale_stock.availability_email_body
+NEW ir.ui.view: website_sale_stock.product_pages_tree_view
+DEL ir.ui.view: website_sale_stock.website_sale_stock_payment

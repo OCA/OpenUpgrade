@@ -1,0 +1,87 @@
+<?xml version='1.0' encoding='utf-8'?>
+<odoo>
+  <record id="account_tax_template_purchase_0" model="account.tax.template">
+    <field name="invoice_repartition_line_ids" eval="[(5, 0, 0),             (0,0, {'repartition_type': 'base'}),             (0,0, {                 'repartition_type': 'tax',                 'account_id': ref('account_account_template_2441'),             }),         ]"/>
+    <field name="refund_repartition_line_ids" eval="[(5, 0, 0),             (0,0, {'repartition_type': 'base'}),             (0,0, {                 'repartition_type': 'tax',                 'account_id': ref('account_account_template_2441'),             }),         ]"/>
+  </record>
+  <record id="account_tax_template_purchase_0_vat100" model="account.tax.template">
+    <field name="invoice_repartition_line_ids" eval="[(5, 0, 0),             (0,0, {'repartition_type': 'base'}),             (0,0, {                 'repartition_type': 'tax',                 'account_id': ref('account_account_template_2441'),             }),         ]"/>
+    <field name="refund_repartition_line_ids" eval="[(5, 0, 0),             (0,0, {'repartition_type': 'base'}),             (0,0, {                 'repartition_type': 'tax',                 'account_id': ref('account_account_template_2441'),             }),         ]"/>
+  </record>
+  <record id="account_tax_template_purchase_0_vat14" model="account.tax.template">
+    <field name="invoice_repartition_line_ids" eval="[(5, 0, 0),             (0,0, {'repartition_type': 'base'}),             (0,0, {                 'repartition_type': 'tax',                 'account_id': ref('account_account_template_2441'),             }),         ]"/>
+    <field name="refund_repartition_line_ids" eval="[(5, 0, 0),             (0,0, {'repartition_type': 'base'}),             (0,0, {                 'repartition_type': 'tax',                 'account_id': ref('account_account_template_2441'),             }),         ]"/>
+  </record>
+  <record id="account_tax_template_purchase_0_vat42" model="account.tax.template">
+    <field name="invoice_repartition_line_ids" eval="[(5, 0, 0),             (0,0, {'repartition_type': 'base'}),             (0,0, {                 'repartition_type': 'tax',                 'account_id': ref('account_account_template_2441'),             }),         ]"/>
+    <field name="refund_repartition_line_ids" eval="[(5, 0, 0),             (0,0, {'repartition_type': 'base'}),             (0,0, {                 'repartition_type': 'tax',                 'account_id': ref('account_account_template_2441'),             }),         ]"/>
+  </record>
+  <record id="account_tax_template_purchase_0_vat5" model="account.tax.template">
+    <field name="invoice_repartition_line_ids" eval="[(5, 0, 0),             (0,0, {'repartition_type': 'base'}),             (0,0, {                 'repartition_type': 'tax',                 'account_id': ref('account_account_template_2441'),             }),         ]"/>
+    <field name="refund_repartition_line_ids" eval="[(5, 0, 0),             (0,0, {'repartition_type': 'base'}),             (0,0, {                 'repartition_type': 'tax',                 'account_id': ref('account_account_template_2441'),             }),         ]"/>
+  </record>
+  <record id="account_tax_template_purchase_21" model="account.tax.template">
+    <field name="invoice_repartition_line_ids" eval="[(5, 0, 0),             (0,0, {'repartition_type': 'base'}),             (0,0, {                 'repartition_type': 'tax',                 'account_id': ref('account_account_template_2441'),             }),         ]"/>
+    <field name="refund_repartition_line_ids" eval="[(5, 0, 0),             (0,0, {'repartition_type': 'base'}),             (0,0, {                 'repartition_type': 'tax',                 'account_id': ref('account_account_template_2441'),             }),         ]"/>
+  </record>
+  <record id="account_tax_template_purchase_5" model="account.tax.template">
+    <field name="invoice_repartition_line_ids" eval="[(5, 0, 0),             (0,0, {'repartition_type': 'base'}),             (0,0, {                 'repartition_type': 'tax',                 'account_id': ref('account_account_template_2441'),             }),         ]"/>
+    <field name="refund_repartition_line_ids" eval="[(5, 0, 0),             (0,0, {'repartition_type': 'base'}),             (0,0, {                 'repartition_type': 'tax',                 'account_id': ref('account_account_template_2441'),             }),         ]"/>
+  </record>
+  <record id="account_tax_template_purchase_9" model="account.tax.template">
+    <field name="invoice_repartition_line_ids" eval="[(5, 0, 0),             (0,0, {'repartition_type': 'base'}),             (0,0, {                 'repartition_type': 'tax',                 'account_id': ref('account_account_template_2441'),             }),         ]"/>
+    <field name="refund_repartition_line_ids" eval="[(5, 0, 0),             (0,0, {'repartition_type': 'base'}),             (0,0, {                 'repartition_type': 'tax',                 'account_id': ref('account_account_template_2441'),             }),         ]"/>
+  </record>
+  <record id="account_tax_template_purchase_assumed_21" model="account.tax.template">
+    <field name="invoice_repartition_line_ids" eval="[(5, 0, 0),             (0,0, {'repartition_type': 'base'}),             (0,0, {                 'repartition_type': 'tax',                 'account_id': ref('account_account_template_2441'),             }),             (0,0, {                 'factor_percent': -100,                 'repartition_type': 'tax',                 'account_id': ref('account_account_template_4492'),             }),         ]"/>
+    <field name="refund_repartition_line_ids" eval="[(5, 0, 0),             (0,0, {'repartition_type': 'base'}),             (0,0, {                 'repartition_type': 'tax',                 'account_id': ref('account_account_template_2441'),             }),            (0,0, {                 'factor_percent': -100,                 'repartition_type': 'tax',                 'account_id': ref('account_account_template_4492'),             }),         ]"/>
+  </record>
+  <record id="account_tax_template_purchase_assumed_21_vat16" model="account.tax.template">
+    <field name="invoice_repartition_line_ids" eval="[(5, 0, 0),             (0,0, {'repartition_type': 'base'}),             (0,0, {                 'repartition_type': 'tax',                 'account_id': ref('account_account_template_2441'),             }),            (0,0, {                 'factor_percent': -100,                 'repartition_type': 'tax',                 'account_id': ref('account_account_template_4492'),             }),         ]"/>
+    <field name="refund_repartition_line_ids" eval="[(5, 0, 0),             (0,0, {'repartition_type': 'base'}),             (0,0, {                 'repartition_type': 'tax',                 'account_id': ref('account_account_template_2441'),             }),            (0,0, {                 'factor_percent': -100,                 'repartition_type': 'tax',                 'account_id': ref('account_account_template_4492'),             }),         ]"/>
+  </record>
+  <record id="account_tax_template_purchase_assumed_21_vat20" model="account.tax.template">
+    <field name="invoice_repartition_line_ids" eval="[(5, 0, 0),             (0,0, {'repartition_type': 'base'}),             (0,0, {                 'repartition_type': 'tax',                 'account_id': ref('account_account_template_2441'),             }),            (0,0, {                 'factor_percent': -100,                 'repartition_type': 'tax',                 'account_id': ref('account_account_template_4492'),             }),         ]"/>
+    <field name="refund_repartition_line_ids" eval="[(5, 0, 0),             (0,0, {'repartition_type': 'base'}),             (0,0, {                 'repartition_type': 'tax',                 'account_id': ref('account_account_template_2441'),             }),            (0,0, {                 'factor_percent': -100,                 'repartition_type': 'tax',                 'account_id': ref('account_account_template_4492'),             }),         ]"/>
+  </record>
+  <record id="account_tax_template_purchase_not_deductible_21" model="account.tax.template">
+    <field name="invoice_repartition_line_ids" eval="[(5, 0, 0),             (0,0, {'repartition_type': 'base'}),             (0,0, {                 'repartition_type': 'tax',                 'account_id': ref('account_account_template_63081'),             }),         ]"/>
+    <field name="refund_repartition_line_ids" eval="[(5, 0, 0),             (0,0, {'repartition_type': 'base'}),             (0,0, {                 'repartition_type': 'tax',                 'account_id': ref('account_account_template_63081'),             }),         ]"/>
+  </record>
+  <record id="account_tax_template_purchase_not_deductible_9" model="account.tax.template">
+    <field name="invoice_repartition_line_ids" eval="[(5, 0, 0),             (0,0, {'repartition_type': 'base'}),             (0,0, {                 'repartition_type': 'tax',                 'account_id': ref('account_account_template_63081'),             }),         ]"/>
+    <field name="refund_repartition_line_ids" eval="[(5, 0, 0),             (0,0, {'repartition_type': 'base'}),             (0,0, {                 'repartition_type': 'tax',                 'account_id': ref('account_account_template_63081'),             }),         ]"/>
+  </record>
+  <record id="account_tax_template_purchase_reversed_21" model="account.tax.template">
+    <field name="invoice_repartition_line_ids" eval="[(5, 0, 0),             (0,0, {'repartition_type': 'base'}),             (0,0, {                 'repartition_type': 'tax',                 'account_id': ref('account_account_template_4492'),             }),            (0,0, {                 'factor_percent': -100,                 'repartition_type': 'tax',                 'account_id': ref('account_account_template_4492'),             }),         ]"/>
+    <field name="refund_repartition_line_ids" eval="[(5, 0, 0),             (0,0, {'repartition_type': 'base'}),             (0,0, {                 'repartition_type': 'tax',                 'account_id': ref('account_account_template_4492'),             }),            (0,0, {                 'factor_percent': -100,                 'repartition_type': 'tax',                 'account_id': ref('account_account_template_4492'),             }),         ]"/>
+  </record>
+  <record id="account_tax_template_sales_0_vat12" model="account.tax.template">
+    <field name="invoice_repartition_line_ids" eval="[(5, 0, 0),             (0,0, {'repartition_type': 'base'}),             (0,0, {                 'repartition_type': 'tax',                 'account_id': ref('account_account_template_4492'),             }),         ]"/>
+    <field name="refund_repartition_line_ids" eval="[(5, 0, 0),             (0,0, {'repartition_type': 'base'}),             (0,0, {                 'repartition_type': 'tax',                 'account_id': ref('account_account_template_4492'),             }),         ]"/>
+  </record>
+  <record id="account_tax_template_sales_0_vat13" model="account.tax.template">
+    <field name="invoice_repartition_line_ids" eval="[(5, 0, 0),             (0,0, {'repartition_type': 'base'}),             (0,0, {                 'repartition_type': 'tax',                 'account_id': ref('account_account_template_4492'),             }),         ]"/>
+    <field name="refund_repartition_line_ids" eval="[(5, 0, 0),             (0,0, {'repartition_type': 'base'}),             (0,0, {                 'repartition_type': 'tax',                 'account_id': ref('account_account_template_4492'),             }),         ]"/>
+  </record>
+  <record id="account_tax_template_sales_0_vat15" model="account.tax.template">
+    <field name="invoice_repartition_line_ids" eval="[(5, 0, 0),             (0,0, {'repartition_type': 'base'}),             (0,0, {                 'repartition_type': 'tax',                 'account_id': ref('account_account_template_4492'),             }),         ]"/>
+    <field name="refund_repartition_line_ids" eval="[(5, 0, 0),             (0,0, {'repartition_type': 'base'}),             (0,0, {                 'repartition_type': 'tax',                 'account_id': ref('account_account_template_4492'),             }),         ]"/>
+  </record>
+  <record id="account_tax_template_sales_0_vat5" model="account.tax.template">
+    <field name="invoice_repartition_line_ids" eval="[(5, 0, 0),             (0,0, {'repartition_type': 'base'}),             (0,0, {                 'repartition_type': 'tax',                 'account_id': ref('account_account_template_4492'),             }),         ]"/>
+    <field name="refund_repartition_line_ids" eval="[(5, 0, 0),             (0,0, {'repartition_type': 'base'}),             (0,0, {                 'repartition_type': 'tax',                 'account_id': ref('account_account_template_4492'),             }),         ]"/>
+  </record>
+  <record id="account_tax_template_sales_21" model="account.tax.template">
+    <field name="invoice_repartition_line_ids" eval="[(5, 0, 0),             (0,0, {'repartition_type': 'base'}),             (0,0, {                 'repartition_type': 'tax',                 'account_id': ref('account_account_template_4492'),             }),         ]"/>
+    <field name="refund_repartition_line_ids" eval="[(5, 0, 0),             (0,0, {'repartition_type': 'base'}),             (0,0, {                 'repartition_type': 'tax',                 'account_id': ref('account_account_template_4492'),             }),         ]"/>
+  </record>
+  <record id="account_tax_template_sales_5" model="account.tax.template">
+    <field name="invoice_repartition_line_ids" eval="[(5, 0, 0),             (0,0, {'repartition_type': 'base'}),             (0,0, {                 'repartition_type': 'tax',                 'account_id': ref('account_account_template_4492'),             }),         ]"/>
+    <field name="refund_repartition_line_ids" eval="[(5, 0, 0),             (0,0, {'repartition_type': 'base'}),             (0,0, {                 'repartition_type': 'tax',                 'account_id': ref('account_account_template_4492'),             }),         ]"/>
+  </record>
+  <record id="account_tax_template_sales_reversed_21" model="account.tax.template">
+    <field name="invoice_repartition_line_ids" eval="[(5, 0, 0),             (0,0, {'repartition_type': 'base'}),             (0,0, {                 'repartition_type': 'tax',                 'account_id': ref('account_account_template_4492'),             }),            (0,0, {                 'factor_percent': -100,                 'repartition_type': 'tax',                 'account_id': ref('account_account_template_4492'),             }),         ]"/>
+    <field name="refund_repartition_line_ids" eval="[(5, 0, 0),             (0,0, {'repartition_type': 'base'}),             (0,0, {                 'repartition_type': 'tax',                 'account_id': ref('account_account_template_4492'),             }),            (0,0, {                 'factor_percent': -100,                 'repartition_type': 'tax',                 'account_id': ref('account_account_template_4492'),             }),         ]"/>
+  </record>
+</odoo>

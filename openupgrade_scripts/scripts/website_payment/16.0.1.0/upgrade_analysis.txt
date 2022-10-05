@@ -1,0 +1,10 @@
+---Models in module 'website_payment'---
+---Fields in module 'website_payment'---
+website_payment / payment.acquirer         / website_id (many2one)         : DEL relation: website
+website_payment / payment.provider         / website_id (many2one)         : NEW relation: website
+---XML records in module 'website_payment'---
+NEW ir.actions.server: website_payment.action_stripe_connect_account
+ir.ui.view: website_payment.donation_mail_body (noupdate) (noupdate switched)
+NEW ir.ui.view: website_payment.payment_provider_form
+NEW ir.ui.view: website_payment.res_config_settings_view_form
+DEL ir.ui.view: website_payment.acquirer_form_website

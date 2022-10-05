@@ -1,0 +1,15 @@
+---Models in module 'website_sale_slides'---
+---Fields in module 'website_sale_slides'---
+website_sale_slides / product.template         / detailed_type (False)         : previously in module gift_card
+---XML records in module 'website_sale_slides'---
+NEW ir.ui.view: website_sale_slides.cart_summary_inherit_website_sale_slides
+NEW ir.ui.view: website_sale_slides.course_join
+NEW ir.ui.view: website_sale_slides.course_main
+NEW ir.ui.view: website_sale_slides.course_purchased_confirmation_message
+NEW ir.ui.view: website_sale_slides.slide_channel_view_form_add_inherit_sale_slides
+NEW ir.ui.view: website_sale_slides.slide_channel_view_tree_report
+NEW ir.ui.view: website_sale_slides.snippet_options
+NEW ir.ui.view: website_sale_slides.website_sale_confirmation_slide
+DEL ir.ui.view: website_sale_slides.course_sidebar
+NEW product.category: website_sale_slides.product_category_courses
+NEW product.product: website_sale_slides.default_product_course

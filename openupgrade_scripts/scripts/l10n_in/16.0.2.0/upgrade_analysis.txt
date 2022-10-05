@@ -1,0 +1,79 @@
+---Models in module 'l10n_in'---
+obsolete model l10n_in.account.invoice.report [sql_view]
+obsolete model l10n_in.advances.payment.adjustment.report [sql_view]
+obsolete model l10n_in.advances.payment.report [sql_view]
+obsolete model l10n_in.exempted.report [sql_view]
+obsolete model l10n_in.payment.report [abstract]
+obsolete model l10n_in.product.hsn.report [sql_view]
+---Fields in module 'l10n_in'---
+l10n_in      / account.move             / l10n_in_gst_treatment (selection): selection_keys is now '['composition', 'consumer', 'deemed_export', 'overseas', 'regular', 'special_economic_zone', 'uin_holders', 'unregistered']' ('['composition', 'consumer', 'deemed_export', 'overseas', 'regular', 'special_economic_zone', 'unregistered']')
+l10n_in      / res.partner              / l10n_in_gst_treatment (selection): selection_keys is now '['composition', 'consumer', 'deemed_export', 'overseas', 'regular', 'special_economic_zone', 'uin_holders', 'unregistered']' ('['composition', 'consumer', 'deemed_export', 'overseas', 'regular', 'special_economic_zone', 'unregistered']')
+---XML records in module 'l10n_in'---
+NEW account.account.tag: l10n_in.tax_tag_base_cess
+NEW account.account.tag: l10n_in.tax_tag_base_cess_rc
+NEW account.account.tag: l10n_in.tax_tag_base_cgst
+NEW account.account.tag: l10n_in.tax_tag_base_cgst_rc
+NEW account.account.tag: l10n_in.tax_tag_base_igst
+NEW account.account.tag: l10n_in.tax_tag_base_igst_rc
+NEW account.account.tag: l10n_in.tax_tag_base_sgst
+NEW account.account.tag: l10n_in.tax_tag_base_sgst_rc
+NEW account.account.tag: l10n_in.tax_tag_base_state_cess
+NEW account.account.tag: l10n_in.tax_tag_cess
+NEW account.account.tag: l10n_in.tax_tag_cess_rc
+NEW account.account.tag: l10n_in.tax_tag_cgst
+NEW account.account.tag: l10n_in.tax_tag_cgst_rc
+NEW account.account.tag: l10n_in.tax_tag_exempt
+NEW account.account.tag: l10n_in.tax_tag_igst
+NEW account.account.tag: l10n_in.tax_tag_igst_rc
+NEW account.account.tag: l10n_in.tax_tag_nil_rated
+NEW account.account.tag: l10n_in.tax_tag_non_gst_supplies
+NEW account.account.tag: l10n_in.tax_tag_non_itc_base_cess
+NEW account.account.tag: l10n_in.tax_tag_non_itc_base_cgst
+NEW account.account.tag: l10n_in.tax_tag_non_itc_base_igst
+NEW account.account.tag: l10n_in.tax_tag_non_itc_base_sgst
+NEW account.account.tag: l10n_in.tax_tag_non_itc_cess
+NEW account.account.tag: l10n_in.tax_tag_non_itc_cess_rc
+NEW account.account.tag: l10n_in.tax_tag_non_itc_cgst
+NEW account.account.tag: l10n_in.tax_tag_non_itc_cgst_rc
+NEW account.account.tag: l10n_in.tax_tag_non_itc_igst
+NEW account.account.tag: l10n_in.tax_tag_non_itc_igst_rc
+NEW account.account.tag: l10n_in.tax_tag_non_itc_sgst
+NEW account.account.tag: l10n_in.tax_tag_non_itc_sgst_rc
+NEW account.account.tag: l10n_in.tax_tag_other_non_itc_base_cess
+NEW account.account.tag: l10n_in.tax_tag_other_non_itc_base_cgst
+NEW account.account.tag: l10n_in.tax_tag_other_non_itc_base_igst
+NEW account.account.tag: l10n_in.tax_tag_other_non_itc_base_sgst
+NEW account.account.tag: l10n_in.tax_tag_other_non_itc_cess
+NEW account.account.tag: l10n_in.tax_tag_other_non_itc_cess_rc
+NEW account.account.tag: l10n_in.tax_tag_other_non_itc_cgst
+NEW account.account.tag: l10n_in.tax_tag_other_non_itc_cgst_rc
+NEW account.account.tag: l10n_in.tax_tag_other_non_itc_igst
+NEW account.account.tag: l10n_in.tax_tag_other_non_itc_igst_rc
+NEW account.account.tag: l10n_in.tax_tag_other_non_itc_sgst
+NEW account.account.tag: l10n_in.tax_tag_other_non_itc_sgst_rc
+NEW account.account.tag: l10n_in.tax_tag_sgst
+NEW account.account.tag: l10n_in.tax_tag_sgst_rc
+NEW account.account.tag: l10n_in.tax_tag_state_cess
+NEW account.account.tag: l10n_in.tax_tag_zero_rated
+DEL account.tax.report: l10n_in.tax_report
+DEL account.tax.report.line: l10n_in.tax_report_line_cess
+DEL account.tax.report.line: l10n_in.tax_report_line_cess_rc
+DEL account.tax.report.line: l10n_in.tax_report_line_cgst
+DEL account.tax.report.line: l10n_in.tax_report_line_cgst_rc
+DEL account.tax.report.line: l10n_in.tax_report_line_exempt
+DEL account.tax.report.line: l10n_in.tax_report_line_gst
+DEL account.tax.report.line: l10n_in.tax_report_line_gst_others
+DEL account.tax.report.line: l10n_in.tax_report_line_igst
+DEL account.tax.report.line: l10n_in.tax_report_line_igst_rc
+DEL account.tax.report.line: l10n_in.tax_report_line_igst_root
+DEL account.tax.report.line: l10n_in.tax_report_line_nil_rated
+DEL account.tax.report.line: l10n_in.tax_report_line_non_gst_supplies
+DEL account.tax.report.line: l10n_in.tax_report_line_sgst
+DEL account.tax.report.line: l10n_in.tax_report_line_sgst_rc
+DEL account.tax.report.line: l10n_in.tax_report_line_state_cess
+DEL account.tax.report.line: l10n_in.tax_report_line_zero_rated
+DEL ir.model.access: l10n_in.access_l10n_in_account_invoice_report
+DEL ir.model.access: l10n_in.access_l10n_in_advances_payment_adjustment_report
+DEL ir.model.access: l10n_in.access_l10n_in_advances_payment_report
+DEL ir.model.access: l10n_in.access_l10n_in_exempted_report
+DEL ir.model.access: l10n_in.access_l10n_in_product_hsn_report

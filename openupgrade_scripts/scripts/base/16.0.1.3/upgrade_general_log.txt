@@ -1,0 +1,664 @@
+---Models in module 'general'---
+obsolete model account.account.type [module account]
+obsolete model account.analytic.default [module account]
+obsolete model account.analytic.distribution [module analytic]
+obsolete model account.analytic.group [module analytic]
+obsolete model account.analytic.tag [module analytic]
+obsolete model account.bank.statement.cashbox [module account]
+obsolete model account.bank.statement.closebalance [module account]
+obsolete model account.cashbox.line [module account]
+obsolete model account.common.journal.report [module account]
+obsolete model account.common.report [module account]
+obsolete model account.print.journal [module account]
+obsolete model account.tax.carryover.line [module account]
+obsolete model account.tax.report [module account]
+obsolete model account.tax.report.line [module account]
+obsolete model base.update.translations [module base]
+obsolete model cash.box.out [module account]
+obsolete model coupon.coupon [module coupon]
+obsolete model coupon.generate.wizard [module coupon]
+obsolete model coupon.program [module coupon]
+obsolete model coupon.reward [module coupon]
+obsolete model coupon.rule [module coupon]
+obsolete model gift.card [module gift_card]
+obsolete model google.drive.config [module google_drive]
+obsolete model ir.translation [module base]
+obsolete model l10n_in.account.invoice.report [module l10n_in]
+obsolete model l10n_in.advances.payment.adjustment.report [module l10n_in]
+obsolete model l10n_in.advances.payment.report [module l10n_in]
+obsolete model l10n_in.exempted.report [module l10n_in]
+obsolete model l10n_in.payment.report [module l10n_in]
+obsolete model l10n_in.product.hsn.report [module l10n_in]
+obsolete model mail.channel.partner [module mail]
+obsolete model mail.resend.cancel [module mail]
+obsolete model pad.common [module pad]
+obsolete model payment.acquirer [module payment]
+obsolete model payment.acquirer.onboarding.wizard [module payment]
+obsolete model project.delete.wizard [module project]
+obsolete model project.profitability.report [module sale_timesheet]
+obsolete model project.task.create.timesheet [module hr_timesheet]
+obsolete model report.account.report_journal [module account]
+obsolete model report.all.channels.sales [module sale]
+obsolete model report.coupon.report_coupon [module coupon]
+obsolete model report.sale.report_saleproforma [module sale]
+obsolete model resource.test [module resource]
+obsolete model sale.coupon.apply.code [module sale_coupon]
+obsolete model sale.payment.acquirer.onboarding.wizard [module sale]
+obsolete model sale.product.configurator [module sale_product_configurator]
+obsolete model slide.slide.link [module website_slides]
+obsolete model sms.cancel [module sms]
+obsolete model snailmail.letter.cancel [module snailmail]
+obsolete model stock.location.route [module stock]
+obsolete model stock.production.lot [module stock]
+obsolete model tax.adjustments.wizard [module account]
+obsolete model website.sale.payment.acquirer.onboarding.wizard [module website_sale]
+new model account.analytic.applicability [module analytic]
+new model account.analytic.distribution.model [module analytic]
+new model account.analytic.plan [module analytic]
+new model account.report [module account]
+new model account.report.column [module account]
+new model account.report.expression [module account]
+new model account.report.external.value [module account]
+new model account.report.line [module account]
+new model analytic.mixin [module analytic]
+new model applicant.send.mail [module hr_recruitment]
+new model base.module.install.request [module base_install_request]
+new model base.module.install.review [module base_install_request]
+new model calendar.provider.config [module calendar]
+new model change.password.own [module base]
+new model chatbot.message [module im_livechat]
+new model chatbot.script [module im_livechat]
+new model chatbot.script.answer [module im_livechat]
+new model chatbot.script.step [module im_livechat]
+new model data_recycle.model [module data_recycle]
+new model data_recycle.record [module data_recycle]
+new model delivery.zip.prefix [module delivery]
+new model event.sale.report [module event_sale]
+new model hr.applicant.skill [module hr_recruitment_skills]
+new model hr.employee.skill.log [module hr_skills]
+new model hr.employee.skill.report [module hr_skills]
+new model hr.expense.split [module hr_expense]
+new model hr.expense.split.wizard [module hr_expense]
+new model hr.holidays.cancel.leave [module hr_holidays]
+new model hr.leave.stress.day [module hr_holidays]
+new model ir.binary [module base]
+new model ir.qweb.field.time [module base]
+new model ir.websocket [module bus]
+new model l10n_ch.qr_invoice.wizard [module l10n_ch]
+new model lot.label.layout [module stock]
+new model loyalty.card [module loyalty]
+new model loyalty.generate.wizard [module loyalty]
+new model loyalty.mail [module loyalty]
+new model loyalty.program [module loyalty]
+new model loyalty.reward [module loyalty]
+new model loyalty.rule [module loyalty]
+new model mail.channel.member [module mail]
+new model mail.gateway.allowed [module mail]
+new model mail.link.preview [module mail]
+new model mail.message.schedule [module mail]
+new model mail.template.reset [module mail]
+new model mailing.contact.import [module mass_mailing]
+new model mailing.filter [module mass_mailing]
+new model mrp.production.split [module mrp]
+new model mrp.production.split.line [module mrp]
+new model mrp.production.split.multi [module mrp]
+new model mrp.workcenter.capacity [module mrp]
+new model onboarding.onboarding [module onboarding]
+new model onboarding.onboarding.step [module onboarding]
+new model onboarding.progress [module onboarding]
+new model onboarding.progress.step [module onboarding]
+new model payment.provider [module payment]
+new model payment.provider.onboarding.wizard [module payment]
+new model picking.label.type [module stock]
+new model pos.session.check_product_wizard [module point_of_sale]
+new model privacy.log [module privacy_lookup]
+new model privacy.lookup.wizard [module privacy_lookup]
+new model privacy.lookup.wizard.line [module privacy_lookup]
+new model product.tag [module product]
+new model purchase.order.group [module purchase_requisition]
+new model purchase.requisition.alternative.warning [module purchase_requisition]
+new model purchase.requisition.create.alternative [module purchase_requisition]
+new model res.users.deletion [module base]
+new model sale.loyalty.coupon.wizard [module sale_loyalty]
+new model sale.loyalty.reward.wizard [module sale_loyalty]
+new model sale.order.coupon.points [module sale_loyalty]
+new model sale.payment.provider.onboarding.wizard [module sale]
+new model sms.template.reset [module sms]
+new model spreadsheet.dashboard [module spreadsheet_dashboard]
+new model spreadsheet.dashboard.group [module spreadsheet_dashboard]
+new model stock.lot [module stock]
+new model stock.replenishment.option [module stock]
+new model stock.route [module stock]
+new model template.reset.mixin [module mail]
+new model timesheets.analysis.report [module hr_timesheet]
+new model utm.source.mixin [module utm]
+---Fields in module 'general'---
+# 11777 fields matched,
+# Direct match: 11675
+# Found in other module: 102
+# Found with different type: 0
+# In obsolete models: 436
+# New columns: 1471
+# Not matched: 856
+---XML records in module 'general'---
+ERROR: module not in list of installed modules:
+---Models in module 'account_edi_facturx'---
+---Fields in module 'account_edi_facturx'---
+---XML records in module 'account_edi_facturx'---
+DEL account.edi.format: account_edi_facturx.edi_facturx_1_0_05 [renamed to account_edi_ubl_cii module]
+DEL ir.ui.view: account_edi_facturx.account_invoice_facturx_export
+DEL ir.ui.view: account_edi_facturx.account_invoice_line_facturx_export
+DEL ir.ui.view: account_edi_facturx.account_invoice_partner_facturx_export
+DEL ir.ui.view: account_edi_facturx.account_invoice_pdfa_3_facturx_metadata
+ERROR: module not in list of installed modules:
+---Models in module 'account_edi_ubl'---
+---Fields in module 'account_edi_ubl'---
+---XML records in module 'account_edi_ubl'---
+DEL account.edi.format: account_edi_ubl.edi_ubl_2_1 [renamed to account_edi_ubl_cii module]
+DEL ir.ui.view: account_edi_ubl.export_ubl_invoice
+DEL ir.ui.view: account_edi_ubl.export_ubl_invoice_line
+DEL ir.ui.view: account_edi_ubl.export_ubl_invoice_partner
+ERROR: module not in list of installed modules:
+---Models in module 'account_edi_ubl_bis3'---
+---Fields in module 'account_edi_ubl_bis3'---
+---XML records in module 'account_edi_ubl_bis3'---
+DEL ir.ui.view: account_edi_ubl_bis3.export_bis3_invoice
+DEL ir.ui.view: account_edi_ubl_bis3.export_bis3_invoice_line
+DEL ir.ui.view: account_edi_ubl_bis3.export_bis3_invoice_partner
+ERROR: module not in list of installed modules:
+---Models in module 'account_sale_timesheet'---
+---Fields in module 'account_sale_timesheet'---
+account_sale_timesheet / project.project          / invoice_count (integer)       : module is now 'sale_project' ('account_sale_timesheet')
+---XML records in module 'account_sale_timesheet'---
+DEL ir.ui.view: account_sale_timesheet.project_project_view_form
+ERROR: module not in list of installed modules:
+---Models in module 'base_address_city'---
+model res.city (moved to base_address_extended)
+---Fields in module 'base_address_city'---
+base_address_city / res.city                 / __last_update (datetime)      : module is now 'base_address_extended' ('base_address_city')
+base_address_city / res.city                 / _order                        : module is now 'base_address_extended' ('base_address_city')
+base_address_city / res.city                 / country_id (many2one)         : module is now 'base_address_extended' ('base_address_city')
+base_address_city / res.city                 / display_name (char)           : module is now 'base_address_extended' ('base_address_city')
+base_address_city / res.city                 / name (char)                   : module is now 'base_address_extended' ('base_address_city')
+base_address_city / res.city                 / state_id (many2one)           : module is now 'base_address_extended' ('base_address_city')
+base_address_city / res.city                 / zipcode (char)                : module is now 'base_address_extended' ('base_address_city')
+base_address_city / res.country              / enforce_cities (boolean)      : module is now 'base_address_extended' ('base_address_city')
+base_address_city / res.partner              / city_id (many2one)            : module is now 'base_address_extended' ('base_address_city')
+base_address_city / res.partner              / country_enforce_cities (boolean): module is now 'base_address_extended' ('base_address_city')
+base_address_city / res.users                / city_id (many2one)            : module is now 'base_address_extended' ('base_address_city')
+base_address_city / res.users                / country_enforce_cities (boolean): module is now 'base_address_extended' ('base_address_city')
+---XML records in module 'base_address_city'---
+DEL ir.actions.act_window: base_address_city.action_res_city_tree [renamed to base_address_extended module]
+DEL ir.model.access: base_address_city.access_res_city_group_all [renamed to base_address_extended module]
+DEL ir.model.access: base_address_city.access_res_city_group_user [renamed to base_address_extended module]
+DEL ir.ui.view: base_address_city.view_city_filter
+DEL ir.ui.view: base_address_city.view_city_tree
+DEL ir.ui.view: base_address_city.view_res_country_city_extended_form
+ERROR: module not in list of installed modules:
+---Models in module 'coupon'---
+obsolete model coupon.coupon
+obsolete model coupon.generate.wizard [transient]
+obsolete model coupon.program
+obsolete model coupon.reward
+obsolete model coupon.rule
+obsolete model report.coupon.report_coupon [abstract]
+---Fields in module 'coupon'---
+coupon       / coupon.coupon            / code (char)                   : DEL required, req_default: function
+coupon       / coupon.coupon            / partner_id (many2one)         : DEL relation: res.partner
+coupon       / coupon.coupon            / program_id (many2one)         : DEL relation: coupon.program
+coupon       / coupon.coupon            / state (selection)             : DEL required, selection_keys: ['cancel', 'expired', 'new', 'reserved', 'sent', 'used'], req_default: function
+coupon       / coupon.program           / _inherits                     : DEL _inherits: {'coupon.rule': 'rule_id', 'coupon.reward': 'reward_id'}
+coupon       / coupon.program           / active (boolean)              : DEL
+coupon       / coupon.program           / company_id (many2one)         : DEL relation: res.company, required, req_default: function
+coupon       / coupon.program           / coupon_ids (one2many)         : DEL relation: coupon.coupon
+coupon       / coupon.program           / maximum_use_number (integer)  : DEL
+coupon       / coupon.program           / name (char)                   : DEL required
+coupon       / coupon.program           / program_type (selection)      : DEL selection_keys: ['coupon_program', 'promotion_program']
+coupon       / coupon.program           / promo_applicability (selection): DEL selection_keys: ['on_current_order', 'on_next_order']
+coupon       / coupon.program           / promo_code (char)             : DEL
+coupon       / coupon.program           / promo_code_usage (selection)  : DEL selection_keys: ['code_needed', 'no_code_needed']
+coupon       / coupon.program           / reward_id (many2one)          : DEL relation: coupon.reward, required
+coupon       / coupon.program           / rule_id (many2one)            : DEL relation: coupon.rule, required
+coupon       / coupon.program           / sequence (integer)            : DEL
+coupon       / coupon.program           / validity_duration (integer)   : DEL
+coupon       / coupon.reward            / discount_apply_on (selection) : DEL selection_keys: ['cheapest_product', 'on_order', 'specific_products']
+coupon       / coupon.reward            / discount_fixed_amount (float) : DEL
+coupon       / coupon.reward            / discount_line_product_id (many2one): DEL relation: product.product
+coupon       / coupon.reward            / discount_max_amount (float)   : DEL
+coupon       / coupon.reward            / discount_percentage (float)   : DEL
+coupon       / coupon.reward            / discount_specific_product_ids (many2many): DEL relation: product.product
+coupon       / coupon.reward            / discount_type (selection)     : DEL selection_keys: ['fixed_amount', 'percentage']
+coupon       / coupon.reward            / reward_description (char)     : DEL
+coupon       / coupon.reward            / reward_product_id (many2one)  : DEL relation: product.product
+coupon       / coupon.reward            / reward_product_quantity (integer): DEL
+coupon       / coupon.reward            / reward_type (selection)       : DEL selection_keys: ['discount', 'product']
+coupon       / coupon.rule              / rule_date_from (datetime)     : DEL
+coupon       / coupon.rule              / rule_date_to (datetime)       : DEL
+coupon       / coupon.rule              / rule_min_quantity (integer)   : DEL
+coupon       / coupon.rule              / rule_minimum_amount (float)   : DEL
+coupon       / coupon.rule              / rule_minimum_amount_tax_inclusion (selection): DEL selection_keys: ['tax_excluded', 'tax_included']
+coupon       / coupon.rule              / rule_partners_domain (char)   : DEL
+coupon       / coupon.rule              / rule_products_domain (char)   : DEL
+---XML records in module 'coupon'---
+DEL ir.actions.act_window: coupon.coupon_action
+DEL ir.actions.act_window: coupon.coupon_generate_action
+DEL ir.actions.act_window: coupon.coupon_program_action_coupon_program
+DEL ir.actions.act_window: coupon.coupon_program_action_promo_program
+DEL ir.actions.report: coupon.report_coupon_code
+DEL ir.cron: coupon.expire_coupon_cron (noupdate)
+DEL ir.model.access: coupon.access_coupon_coupon
+DEL ir.model.access: coupon.access_coupon_generate_wizard
+DEL ir.model.access: coupon.access_coupon_program
+DEL ir.model.access: coupon.access_coupon_reward
+DEL ir.model.access: coupon.access_coupon_rule
+DEL ir.model.constraint: coupon.constraint_coupon_coupon_unique_coupon_code
+DEL ir.rule: coupon.sale_coupon_generate_rule (noupdate)
+DEL ir.ui.view: coupon.coupon_generate_view_form
+DEL ir.ui.view: coupon.coupon_program_view_coupon_program_form
+DEL ir.ui.view: coupon.coupon_program_view_form_common
+DEL ir.ui.view: coupon.coupon_program_view_promo_program_form
+DEL ir.ui.view: coupon.coupon_program_view_promo_program_search
+DEL ir.ui.view: coupon.coupon_program_view_promo_program_tree
+DEL ir.ui.view: coupon.coupon_program_view_search
+DEL ir.ui.view: coupon.coupon_program_view_tree
+DEL ir.ui.view: coupon.coupon_view_form
+DEL ir.ui.view: coupon.coupon_view_tree
+DEL ir.ui.view: coupon.report_coupon
+DEL ir.ui.view: coupon.report_coupon_i18n
+DEL ir.ui.view: coupon.view_coupon_program_kanban
+ERROR: module not in list of installed modules:
+---Models in module 'fetchmail'---
+model fetchmail.server (moved to mail)
+---Fields in module 'fetchmail'---
+fetchmail    / fetchmail.server         / __last_update (datetime)      : module is now 'mail' ('fetchmail')
+fetchmail    / fetchmail.server         / _order                        : module is now 'mail' ('fetchmail')
+fetchmail    / fetchmail.server         / active (boolean)              : module is now 'mail' ('fetchmail')
+fetchmail    / fetchmail.server         / attach (boolean)              : module is now 'mail' ('fetchmail')
+fetchmail    / fetchmail.server         / configuration (text)          : module is now 'mail' ('fetchmail')
+fetchmail    / fetchmail.server         / date (datetime)               : module is now 'mail' ('fetchmail')
+fetchmail    / fetchmail.server         / display_name (char)           : module is now 'mail' ('fetchmail')
+fetchmail    / fetchmail.server         / is_ssl (boolean)              : module is now 'mail' ('fetchmail')
+fetchmail    / fetchmail.server         / message_ids (one2many)        : module is now 'mail' ('fetchmail')
+fetchmail    / fetchmail.server         / name (char)                   : module is now 'mail' ('fetchmail')
+fetchmail    / fetchmail.server         / object_id (many2one)          : module is now 'mail' ('fetchmail')
+fetchmail    / fetchmail.server         / original (boolean)            : module is now 'mail' ('fetchmail')
+fetchmail    / fetchmail.server         / password (char)               : module is now 'mail' ('fetchmail')
+fetchmail    / fetchmail.server         / port (integer)                : module is now 'mail' ('fetchmail')
+fetchmail    / fetchmail.server         / priority (integer)            : module is now 'mail' ('fetchmail')
+fetchmail    / fetchmail.server         / script (char)                 : module is now 'mail' ('fetchmail')
+fetchmail    / fetchmail.server         / server (char)                 : module is now 'mail' ('fetchmail')
+fetchmail    / fetchmail.server         / server_type (selection)       : module is now 'mail' ('fetchmail')
+fetchmail    / fetchmail.server         / state (selection)             : module is now 'mail' ('fetchmail')
+fetchmail    / fetchmail.server         / user (char)                   : module is now 'mail' ('fetchmail')
+fetchmail    / mail.mail                / fetchmail_server_id (many2one): module is now 'mail' ('fetchmail')
+---XML records in module 'fetchmail'---
+DEL ir.actions.act_window: fetchmail.act_server_history [renamed to mail module]
+DEL ir.actions.act_window: fetchmail.action_email_server_tree [renamed to mail module]
+DEL ir.cron: fetchmail.ir_cron_mail_gateway_action [renamed to mail module] (noupdate)
+DEL ir.model.access: fetchmail.access_fetchmail_server [renamed to mail module]
+DEL ir.ui.menu: fetchmail.menu_action_fetchmail_server_tree [renamed to mail module]
+DEL ir.ui.view: fetchmail.email_message_tree_view
+DEL ir.ui.view: fetchmail.res_config_settings_view_form
+DEL ir.ui.view: fetchmail.view_email_server_form
+DEL ir.ui.view: fetchmail.view_email_server_search
+DEL ir.ui.view: fetchmail.view_email_server_tree
+ERROR: module not in list of installed modules:
+---Models in module 'fetchmail_gmail'---
+---Fields in module 'fetchmail_gmail'---
+fetchmail_gmail / fetchmail.server         / google_gmail_access_token (char): module is now 'google_gmail' ('fetchmail_gmail')
+fetchmail_gmail / fetchmail.server         / google_gmail_access_token_expiration (integer): module is now 'google_gmail' ('fetchmail_gmail')
+fetchmail_gmail / fetchmail.server         / google_gmail_authorization_code (char): module is now 'google_gmail' ('fetchmail_gmail')
+fetchmail_gmail / fetchmail.server         / google_gmail_refresh_token (char): module is now 'google_gmail' ('fetchmail_gmail')
+fetchmail_gmail / fetchmail.server         / google_gmail_uri (char)       : module is now 'google_gmail' ('fetchmail_gmail')
+fetchmail_gmail / fetchmail.server         / use_google_gmail_service (boolean): DEL
+---XML records in module 'fetchmail_gmail'---
+DEL ir.ui.view: fetchmail_gmail.fetchmail_server_view_form
+ERROR: module not in list of installed modules:
+---Models in module 'fetchmail_outlook'---
+---Fields in module 'fetchmail_outlook'---
+fetchmail_outlook / fetchmail.server         / is_microsoft_outlook_configured (boolean): module is now 'microsoft_outlook' ('fetchmail_outlook')
+fetchmail_outlook / fetchmail.server         / microsoft_outlook_access_token (char): module is now 'microsoft_outlook' ('fetchmail_outlook')
+fetchmail_outlook / fetchmail.server         / microsoft_outlook_access_token_expiration (integer): module is now 'microsoft_outlook' ('fetchmail_outlook')
+fetchmail_outlook / fetchmail.server         / microsoft_outlook_refresh_token (char): module is now 'microsoft_outlook' ('fetchmail_outlook')
+fetchmail_outlook / fetchmail.server         / microsoft_outlook_uri (char)  : module is now 'microsoft_outlook' ('fetchmail_outlook')
+fetchmail_outlook / fetchmail.server         / use_microsoft_outlook_service (boolean): DEL
+---XML records in module 'fetchmail_outlook'---
+DEL ir.ui.view: fetchmail_outlook.fetchmail_server_view_form
+ERROR: module not in list of installed modules:
+---Models in module 'gift_card'---
+obsolete model gift.card
+---Fields in module 'gift_card'---
+gift_card    / gift.card                / code (char)                   : DEL required, req_default: function
+gift_card    / gift.card                / company_id (many2one)         : DEL relation: res.company
+gift_card    / gift.card                / expired_date (date)           : DEL
+gift_card    / gift.card                / initial_amount (float)        : DEL required
+gift_card    / gift.card                / partner_id (many2one)         : DEL relation: res.partner
+gift_card    / gift.card                / state (selection)             : DEL selection_keys: ['expired', 'valid']
+gift_card    / product.template         / detailed_type (False)         : module is now 'website_sale_slides' ('gift_card')
+gift_card    / product.template         / detailed_type (False)         : selection_keys is now '['consu', 'course', 'event', 'product', 'service']' ('['consu', 'gift', 'service']')
+---XML records in module 'gift_card'---
+DEL ir.actions.act_window: gift_card.gift_card_action
+DEL ir.model.access: gift_card.access_gift_card_all
+DEL ir.model.constraint: gift_card.constraint_gift_card_check_amount
+DEL ir.model.constraint: gift_card.constraint_gift_card_unique_gift_card_code
+DEL ir.ui.view: gift_card.gift_card_view_form
+DEL ir.ui.view: gift_card.gift_card_view_search
+DEL ir.ui.view: gift_card.gift_card_view_tree
+DEL product.product: gift_card.gift_card_product_50 [renamed to loyalty module] (noupdate)
+DEL product.product: gift_card.pay_with_gift_card_product (noupdate)
+ERROR: module not in list of installed modules:
+---Models in module 'google_drive'---
+obsolete model google.drive.config
+---Fields in module 'google_drive'---
+google_drive / google.drive.config      / active (boolean)              : DEL
+google_drive / google.drive.config      / filter_id (many2one)          : DEL relation: ir.filters
+google_drive / google.drive.config      / google_drive_template_url (char): DEL required
+google_drive / google.drive.config      / model_id (many2one)           : DEL relation: ir.model, required
+google_drive / google.drive.config      / name (char)                   : DEL required
+google_drive / google.drive.config      / name_template (char)          : DEL required, req_default: function
+---XML records in module 'google_drive'---
+DEL ir.actions.act_window: google_drive.action_google_drive_users_config
+DEL ir.config_parameter: google_drive.config_google_drive_client_id (noupdate)
+DEL ir.config_parameter: google_drive.config_google_drive_client_secret (noupdate)
+DEL ir.model.access: google_drive.access_google_drive
+DEL ir.model.access: google_drive.access_google_drive_all
+DEL ir.ui.view: google_drive.google_drive_auth_code_wizard
+DEL ir.ui.view: google_drive.google_drive_config_view_search
+DEL ir.ui.view: google_drive.res_config_settings_view_form
+DEL ir.ui.view: google_drive.view_google_drive_config_form
+DEL ir.ui.view: google_drive.view_google_drive_config_kanban
+DEL ir.ui.view: google_drive.view_google_drive_config_tree
+ERROR: module not in list of installed modules:
+---Models in module 'google_spreadsheet'---
+---Fields in module 'google_spreadsheet'---
+---XML records in module 'google_spreadsheet'---
+DEL google.drive.config: google_spreadsheet.google_spreadsheet_template
+DEL ir.actions.act_window: google_spreadsheet.action_ir_attachment_google_spreadsheet_tree
+DEL ir.actions.act_window.view: google_spreadsheet.action_ir_attachment_google_spreadsheet_form_view
+DEL ir.actions.act_window.view: google_spreadsheet.action_ir_attachment_google_spreadsheet_tree_view
+DEL ir.ui.menu: google_spreadsheet.menu_reporting_dashboard_google_spreadsheets
+DEL ir.ui.view: google_spreadsheet.res_config_settings_view_form
+DEL ir.ui.view: google_spreadsheet.view_ir_attachment_google_spreadsheet_form
+DEL ir.ui.view: google_spreadsheet.view_ir_attachment_google_spreadsheet_tree
+ERROR: module not in list of installed modules:
+---Models in module 'l10n_be_edi'---
+---Fields in module 'l10n_be_edi'---
+---XML records in module 'l10n_be_edi'---
+DEL account.edi.format: l10n_be_edi.edi_efff_1 [renamed to account_edi_ubl_cii module]
+DEL ir.ui.view: l10n_be_edi.export_efff_invoice
+ERROR: module not in list of installed modules:
+---Models in module 'l10n_de_purchase'---
+---Fields in module 'l10n_de_purchase'---
+---XML records in module 'l10n_de_purchase'---
+---nothing has changed in this module--
+ERROR: module not in list of installed modules:
+---Models in module 'l10n_de_repair'---
+---Fields in module 'l10n_de_repair'---
+---XML records in module 'l10n_de_repair'---
+---nothing has changed in this module--
+ERROR: module not in list of installed modules:
+---Models in module 'l10n_de_sale'---
+---Fields in module 'l10n_de_sale'---
+---XML records in module 'l10n_de_sale'---
+---nothing has changed in this module--
+ERROR: module not in list of installed modules:
+---Models in module 'l10n_de_stock'---
+---Fields in module 'l10n_de_stock'---
+---XML records in module 'l10n_de_stock'---
+---nothing has changed in this module--
+ERROR: module not in list of installed modules:
+---Models in module 'l10n_it_edi_sdicoop'---
+---Fields in module 'l10n_it_edi_sdicoop'---
+l10n_it_edi_sdicoop / account.bank.statement.line / l10n_it_edi_attachment_id (many2one): module is now 'l10n_it_edi' ('l10n_it_edi_sdicoop')
+l10n_it_edi_sdicoop / account.bank.statement.line / l10n_it_edi_transaction (char): module is now 'l10n_it_edi' ('l10n_it_edi_sdicoop')
+l10n_it_edi_sdicoop / account.move             / l10n_it_edi_attachment_id (many2one): module is now 'l10n_it_edi' ('l10n_it_edi_sdicoop')
+l10n_it_edi_sdicoop / account.move             / l10n_it_edi_transaction (char): module is now 'l10n_it_edi' ('l10n_it_edi_sdicoop')
+l10n_it_edi_sdicoop / account.payment          / l10n_it_edi_attachment_id (many2one): module is now 'l10n_it_edi' ('l10n_it_edi_sdicoop')
+l10n_it_edi_sdicoop / account.payment          / l10n_it_edi_transaction (char): module is now 'l10n_it_edi' ('l10n_it_edi_sdicoop')
+---XML records in module 'l10n_it_edi_sdicoop'---
+DEL ir.cron: l10n_it_edi_sdicoop.ir_cron_receive_fattura_pa_invoice [renamed to l10n_it_edi module]
+DEL ir.ui.view: l10n_it_edi_sdicoop.fetchmail_server_form_l10n_it_inherit
+DEL ir.ui.view: l10n_it_edi_sdicoop.res_company_form_l10n_it_inherit
+DEL ir.ui.view: l10n_it_edi_sdicoop.res_config_settings_view_form
+ERROR: module not in list of installed modules:
+---Models in module 'l10n_nl_edi'---
+---Fields in module 'l10n_nl_edi'---
+---XML records in module 'l10n_nl_edi'---
+DEL account.edi.format: l10n_nl_edi.edi_nlcius_1 [renamed to account_edi_ubl_cii module]
+DEL ir.ui.view: l10n_nl_edi.export_nlcius_invoice
+DEL ir.ui.view: l10n_nl_edi.export_nlcius_invoice_partner
+ERROR: module not in list of installed modules:
+---Models in module 'l10n_no_edi'---
+---Fields in module 'l10n_no_edi'---
+---XML records in module 'l10n_no_edi'---
+DEL account.edi.format: l10n_no_edi.edi_ehf_3
+DEL ir.ui.view: l10n_no_edi.export_ehf_3_invoice
+DEL ir.ui.view: l10n_no_edi.export_ehf_3_invoice_partner
+ERROR: module not in list of installed modules:
+---Models in module 'l10n_sa_invoice'---
+---Fields in module 'l10n_sa_invoice'---
+l10n_sa_invoice / account.bank.statement.line / l10n_sa_confirmation_datetime (datetime): module is now 'l10n_sa' ('l10n_sa_invoice')
+l10n_sa_invoice / account.bank.statement.line / l10n_sa_delivery_date (date)  : module is now 'l10n_sa' ('l10n_sa_invoice')
+l10n_sa_invoice / account.bank.statement.line / l10n_sa_qr_code_str (char)    : module is now 'l10n_sa' ('l10n_sa_invoice')
+l10n_sa_invoice / account.bank.statement.line / l10n_sa_show_delivery_date (boolean): module is now 'l10n_sa' ('l10n_sa_invoice')
+l10n_sa_invoice / account.move             / l10n_sa_confirmation_datetime (datetime): module is now 'l10n_sa' ('l10n_sa_invoice')
+l10n_sa_invoice / account.move             / l10n_sa_delivery_date (date)  : module is now 'l10n_sa' ('l10n_sa_invoice')
+l10n_sa_invoice / account.move             / l10n_sa_qr_code_str (char)    : module is now 'l10n_sa' ('l10n_sa_invoice')
+l10n_sa_invoice / account.move             / l10n_sa_show_delivery_date (boolean): module is now 'l10n_sa' ('l10n_sa_invoice')
+l10n_sa_invoice / account.payment          / l10n_sa_confirmation_datetime (datetime): module is now 'l10n_sa' ('l10n_sa_invoice')
+l10n_sa_invoice / account.payment          / l10n_sa_delivery_date (date)  : module is now 'l10n_sa' ('l10n_sa_invoice')
+l10n_sa_invoice / account.payment          / l10n_sa_qr_code_str (char)    : module is now 'l10n_sa' ('l10n_sa_invoice')
+l10n_sa_invoice / account.payment          / l10n_sa_show_delivery_date (boolean): module is now 'l10n_sa' ('l10n_sa_invoice')
+---XML records in module 'l10n_sa_invoice'---
+DEL ir.ui.view: l10n_sa_invoice.arabic_english_invoice
+DEL ir.ui.view: l10n_sa_invoice.view_move_form
+ERROR: module not in list of installed modules:
+---Models in module 'note_pad'---
+---Fields in module 'note_pad'---
+note_pad     / note.note                / note_pad_url (char)           : DEL
+---XML records in module 'note_pad'---
+DEL ir.ui.view: note_pad.view_note_note_pad_form
+ERROR: module not in list of installed modules:
+---Models in module 'pad'---
+obsolete model pad.common [abstract]
+---Fields in module 'pad'---
+---XML records in module 'pad'---
+DEL ir.ui.view: pad.res_config_settings_view_form
+ERROR: module not in list of installed modules:
+---Models in module 'pad_project'---
+---Fields in module 'pad_project'---
+pad_project  / project.project          / description_pad (char)        : DEL
+pad_project  / project.project          / use_pads (boolean)            : DEL
+pad_project  / project.task             / description_pad (char)        : DEL
+---XML records in module 'pad_project'---
+DEL ir.ui.view: pad_project.project_project_view_form
+DEL ir.ui.view: pad_project.res_config_settings_view_form
+DEL ir.ui.view: pad_project.view_task_form2_inherit_pad_project
+ERROR: module not in list of installed modules:
+---Models in module 'payment_transfer'---
+---Fields in module 'payment_transfer'---
+payment_transfer / payment.acquirer         / provider (False)              : DEL selection_keys: ['adyen', 'alipay', 'authorize', 'buckaroo', 'mollie', 'none', 'ogone', 'paypal', 'payulatam', 'payumoney', 'sips', 'stripe', 'transfer'], mode: modify
+payment_transfer / payment.acquirer         / qr_code (boolean)             : DEL
+---XML records in module 'payment_transfer'---
+DEL ir.ui.view: payment_transfer.payment_acquirer_form
+DEL ir.ui.view: payment_transfer.redirect_form
+DEL ir.ui.view: payment_transfer.transfer_transaction_status
+ERROR: module not in list of installed modules:
+---Models in module 'pos_coupon'---
+---Fields in module 'pos_coupon'---
+pos_coupon   / barcode.rule             / type (False)                  : module is now 'pos_loyalty' ('pos_coupon')
+pos_coupon   / barcode.rule             / type (False)                  : selection_keys is now '['alias', 'cashier', 'client', 'coupon', 'discount', 'expiration_date', 'location', 'location_dest', 'lot', 'pack_date', 'package', 'package_type', 'price', 'product', 'quantity', 'use_date', 'weight']' ('['alias', 'cashier', 'client', 'coupon', 'discount', 'expiration_date', 'location', 'location_dest', 'lot', 'package', 'package_type', 'packaging_date', 'price', 'product', 'quantity', 'use_date', 'weight']')
+pos_coupon   / coupon.coupon            / pos_order_id (many2one)       : DEL relation: pos.order
+pos_coupon   / coupon.coupon            / source_pos_order_id (many2one): DEL relation: pos.order
+pos_coupon   / coupon.program           / pos_config_ids (many2many)    : DEL relation: pos.config
+pos_coupon   / coupon.program           / pos_order_ids (many2many)     : DEL relation: pos.order
+pos_coupon   / coupon.program           / pos_order_line_ids (one2many) : DEL relation: pos.order.line
+pos_coupon   / coupon.program           / promo_barcode (char)          : DEL
+pos_coupon   / pos.config               / program_ids (many2many)       : DEL relation: coupon.program
+pos_coupon   / pos.config               / use_coupon_programs (boolean) : DEL
+pos_coupon   / pos.order                / applied_program_ids (many2many): DEL relation: coupon.program
+pos_coupon   / pos.order                / generated_coupon_ids (one2many): DEL relation: coupon.coupon
+pos_coupon   / pos.order                / used_coupon_ids (one2many)    : DEL relation: coupon.coupon
+pos_coupon   / pos.order.line           / coupon_id (many2one)          : module is now 'pos_loyalty' ('pos_coupon')
+pos_coupon   / pos.order.line           / coupon_id (many2one)          : relation is now 'loyalty.card' ('coupon.coupon') [nothing to do]
+pos_coupon   / pos.order.line           / is_program_reward (boolean)   : DEL
+pos_coupon   / pos.order.line           / program_id (many2one)         : DEL relation: coupon.program
+---XML records in module 'pos_coupon'---
+DEL barcode.rule: pos_coupon.barcode_rule_coupon [renamed to pos_loyalty module] (noupdate)
+DEL ir.model.access: pos_coupon.access_coupon_generate_wizard
+DEL ir.model.access: pos_coupon.access_coupon_pos_manager [renamed to pos_loyalty module]
+DEL ir.model.access: pos_coupon.access_coupon_pos_user [renamed to pos_loyalty module]
+DEL ir.model.access: pos_coupon.access_program_pos_manager [renamed to pos_loyalty module]
+DEL ir.model.access: pos_coupon.access_program_pos_user [renamed to pos_loyalty module]
+DEL ir.model.access: pos_coupon.access_reward_pos_manager [renamed to pos_loyalty module]
+DEL ir.model.access: pos_coupon.access_reward_pos_user [renamed to pos_loyalty module]
+DEL ir.model.access: pos_coupon.access_rule_pos_manager
+DEL ir.model.access: pos_coupon.access_rule_pos_user
+DEL ir.ui.menu: pos_coupon.menu_coupon_type_config
+DEL ir.ui.menu: pos_coupon.menu_promotion_type_config
+DEL ir.ui.view: pos_coupon.pos_coupon_pos_config_view_form
+DEL ir.ui.view: pos_coupon.pos_coupon_program_view_coupon_program_form
+DEL ir.ui.view: pos_coupon.pos_coupon_program_view_promo_program_form
+DEL ir.ui.view: pos_coupon.pos_coupon_view_form
+DEL ir.ui.view: pos_coupon.res_config_view_form_inherit_pos_coupon
+DEL mail.template: pos_coupon.mail_coupon_template (noupdate)
+ERROR: module not in list of installed modules:
+---Models in module 'pos_gift_card'---
+---Fields in module 'pos_gift_card'---
+pos_gift_card / barcode.rule             / type (False)                  : DEL selection_keys: ['alias', 'cashier', 'client', 'coupon', 'discount', 'expiration_date', 'gift_card', 'location', 'location_dest', 'lot', 'package', 'package_type', 'packaging_date', 'price', 'product', 'quantity', 'use_date', 'weight'], mode: modify
+pos_gift_card / gift.card                / buy_pos_order_line_id (many2one): DEL relation: pos.order.line
+pos_gift_card / gift.card                / redeem_pos_order_line_ids (one2many): DEL relation: pos.order.line
+pos_gift_card / pos.config               / gift_card_product_id (many2one): DEL relation: product.product
+pos_gift_card / pos.config               / gift_card_settings (selection): module is now 'pos_loyalty' ('pos_gift_card')
+pos_gift_card / pos.config               / gift_card_settings (selection): selection_keys is now '['create_set', 'scan_use']' ('['create_set', 'scan_set', 'scan_use']')
+pos_gift_card / pos.config               / use_gift_card (boolean)       : DEL
+pos_gift_card / pos.order.line           / generated_gift_card_ids (one2many): DEL relation: gift.card
+pos_gift_card / pos.order.line           / gift_card_id (many2one)       : DEL relation: gift.card
+---XML records in module 'pos_gift_card'---
+DEL ir.actions.report: pos_gift_card.gift_card_report_pdf (noupdate)
+DEL ir.model.access: pos_gift_card.access_gift_card_sales
+DEL ir.model.access: pos_gift_card.access_pos_gift_card_manager
+DEL ir.ui.menu: pos_gift_card.pos_gift_card_menu
+DEL ir.ui.view: pos_gift_card.gift_card_template (noupdate)
+DEL ir.ui.view: pos_gift_card.pos_gift_card_config_view_form
+DEL ir.ui.view: pos_gift_card.pos_gift_card_view_form
+DEL ir.ui.view: pos_gift_card.res_config_view_form_inherit_pos_coupon
+ERROR: module not in list of installed modules:
+---Models in module 'project_account'---
+---Fields in module 'project_account'---
+---XML records in module 'project_account'---
+DEL ir.ui.view: project_account.res_config_settings_view_form
+ERROR: module not in list of installed modules:
+---Models in module 'purchase_requisition_stock_dropshipping'---
+---Fields in module 'purchase_requisition_stock_dropshipping'---
+purchase_requisition_stock_dropshipping / purchase.requisition.line / sale_line_id (many2one)       : DEL relation: sale.order.line
+---XML records in module 'purchase_requisition_stock_dropshipping'---
+DEL ir.ui.view: purchase_requisition_stock_dropshipping.purchase_order_view_form_inherit
+ERROR: module not in list of installed modules:
+---Models in module 'sale_coupon'---
+obsolete model sale.coupon.apply.code [transient]
+---Fields in module 'sale_coupon'---
+sale_coupon  / coupon.coupon            / order_id (many2one)           : DEL relation: sale.order
+sale_coupon  / coupon.coupon            / sales_order_id (many2one)     : DEL relation: sale.order
+sale_coupon  / sale.order               / applied_coupon_ids (one2many) : DEL relation: coupon.coupon
+sale_coupon  / sale.order               / code_promo_program_id (many2one): DEL relation: coupon.program
+sale_coupon  / sale.order               / generated_coupon_ids (one2many): DEL relation: coupon.coupon
+sale_coupon  / sale.order               / no_code_promo_program_ids (many2many): DEL relation: coupon.program
+sale_coupon  / sale.order               / reward_amount (float)         : module is now 'sale_loyalty' ('sale_coupon')
+sale_coupon  / sale.order.line          / is_reward_line (boolean)      : module is now 'sale_loyalty' ('sale_coupon')
+sale_coupon  / sale.order.line          / is_reward_line (boolean)      : not stored anymore
+sale_coupon  / sale.order.line          / is_reward_line (boolean)      : now a function
+---XML records in module 'sale_coupon'---
+DEL ir.actions.act_window: sale_coupon.sale_coupon_apply_code_action
+DEL ir.actions.act_window: sale_coupon.sale_order_action
+DEL ir.model.access: sale_coupon.access_applicability_manager [renamed to sale_loyalty module]
+DEL ir.model.access: sale_coupon.access_applicability_salesman [renamed to sale_loyalty module]
+DEL ir.model.access: sale_coupon.access_coupon_manager [renamed to sale_loyalty module]
+DEL ir.model.access: sale_coupon.access_coupon_salesman [renamed to sale_loyalty module]
+DEL ir.model.access: sale_coupon.access_program_manager [renamed to sale_loyalty module]
+DEL ir.model.access: sale_coupon.access_program_salesman [renamed to sale_loyalty module]
+DEL ir.model.access: sale_coupon.access_reward_manager [renamed to sale_loyalty module]
+DEL ir.model.access: sale_coupon.access_reward_salesman [renamed to sale_loyalty module]
+DEL ir.model.access: sale_coupon.access_sale_coupon_apply_code [renamed to sale_loyalty module]
+DEL ir.model.access: sale_coupon.access_sale_coupon_generate [renamed to pos_loyalty module]
+DEL ir.rule: sale_coupon.sale_coupon_apply_code_rule (noupdate)
+DEL ir.ui.menu: sale_coupon.menu_coupon_type_config
+DEL ir.ui.menu: sale_coupon.menu_promotion_type_config
+DEL ir.ui.view: sale_coupon.res_config_settings_view_form
+DEL ir.ui.view: sale_coupon.sale_coupon_apply_code_view_form
+DEL ir.ui.view: sale_coupon.sale_coupon_program_view_coupon_program_form
+DEL ir.ui.view: sale_coupon.sale_coupon_program_view_promo_program_form
+DEL ir.ui.view: sale_coupon.sale_coupon_view_coupon_program_kanban
+DEL ir.ui.view: sale_coupon.sale_coupon_view_form
+DEL ir.ui.view: sale_coupon.sale_coupon_view_tree
+DEL ir.ui.view: sale_coupon.sale_order_view_form
+DEL mail.template: sale_coupon.mail_template_sale_coupon (noupdate)
+ERROR: module not in list of installed modules:
+---Models in module 'sale_coupon_delivery'---
+---Fields in module 'sale_coupon_delivery'---
+sale_coupon_delivery / coupon.reward            / reward_type (False)           : DEL selection_keys: ['discount', 'free_shipping', 'product'], mode: modify
+---XML records in module 'sale_coupon_delivery'---
+ERROR: module not in list of installed modules:
+---Models in module 'sale_gift_card'---
+---Fields in module 'sale_gift_card'---
+sale_gift_card / gift.card                / buy_line_id (many2one)        : DEL relation: sale.order.line
+sale_gift_card / gift.card                / redeem_line_ids (one2many)    : DEL relation: sale.order.line
+sale_gift_card / sale.order.line          / generated_gift_card_ids (one2many): DEL relation: gift.card
+sale_gift_card / sale.order.line          / gift_card_id (many2one)       : DEL relation: gift.card
+---XML records in module 'sale_gift_card'---
+DEL ir.actions.act_window: sale_gift_card.gift_card_sale_order_action
+DEL ir.model.access: sale_gift_card.access_gift_card_manager
+DEL ir.model.access: sale_gift_card.access_gift_card_sales
+DEL ir.ui.view: sale_gift_card.sale_gift_card_view_form
+DEL ir.ui.view: sale_gift_card.sale_order_portal_content_inherit
+DEL ir.ui.view: sale_gift_card.sale_order_view_extend_gift_card_form
+DEL ir.ui.view: sale_gift_card.sale_purchased_gift_card
+DEL ir.ui.view: sale_gift_card.used_gift_card
+DEL mail.template: sale_gift_card.mail_template_gift_card [renamed to loyalty module]
+ERROR: module not in list of installed modules:
+---Models in module 'sale_project_account'---
+---Fields in module 'sale_project_account'---
+sale_project_account / project.project          / vendor_bill_count (integer)   : module is now 'sale_project' ('sale_project_account')
+---XML records in module 'sale_project_account'---
+DEL ir.ui.view: sale_project_account.project_project_view_form
+ERROR: module not in list of installed modules:
+---Models in module 'transifex'---
+---Fields in module 'transifex'---
+---XML records in module 'transifex'---
+DEL ir.config_parameter: transifex.transifex_project_url (noupdate)
+DEL ir.ui.view: transifex.ir_translation_dialog_view_src_value_tree_transifex
+DEL ir.ui.view: transifex.ir_translation_dialog_view_tree_transifex
+DEL ir.ui.view: transifex.ir_translation_view_tree_transifex
+ERROR: module not in list of installed modules:
+---Models in module 'website_sale_coupon'---
+model coupon.share (moved to website_sale_loyalty) [transient]
+---Fields in module 'website_sale_coupon'---
+website_sale_coupon / coupon.program           / website_id (many2one)         : DEL relation: website
+---XML records in module 'website_sale_coupon'---
+DEL ir.model.access: website_sale_coupon.access_coupon_share
+DEL ir.ui.menu: website_sale_coupon.menu_coupon_type_config
+DEL ir.ui.menu: website_sale_coupon.menu_promotion_type_config
+DEL ir.ui.view: website_sale_coupon.cart_discount
+DEL ir.ui.view: website_sale_coupon.cart_summary
+DEL ir.ui.view: website_sale_coupon.coupon_share_view_form
+DEL ir.ui.view: website_sale_coupon.coupon_view_tree
+DEL ir.ui.view: website_sale_coupon.layout
+DEL ir.ui.view: website_sale_coupon.reduction_coupon_code
+DEL ir.ui.view: website_sale_coupon.res_config_settings_view_form
+DEL ir.ui.view: website_sale_coupon.sale_coupon_program_view_form_common_website
+DEL ir.ui.view: website_sale_coupon.sale_coupon_program_view_tree_website
+DEL ir.ui.view: website_sale_coupon.sale_coupon_result
+DEL ir.ui.view: website_sale_coupon.website_sale_coupon_cart_hide_qty
+ERROR: module not in list of installed modules:
+---Models in module 'website_sale_gift_card'---
+---Fields in module 'website_sale_gift_card'---
+website_sale_gift_card / gift.card                / website_id (many2one)         : DEL relation: website
+---XML records in module 'website_sale_gift_card'---
+DEL ir.ui.menu: website_sale_gift_card.website_product_gift_card_menu
+DEL ir.ui.view: website_sale_gift_card.add_gift_card
+DEL ir.ui.view: website_sale_gift_card.cart_line_product_no_link
+DEL ir.ui.view: website_sale_gift_card.cart_summary_inherit_website_gift_card_sale
+DEL ir.ui.view: website_sale_gift_card.gift_card_view_form
+DEL ir.ui.view: website_sale_gift_card.gift_card_view_search
+DEL ir.ui.view: website_sale_gift_card.pay_with_gift_card_form
+DEL ir.ui.view: website_sale_gift_card.website_sale_purchased_gift_card

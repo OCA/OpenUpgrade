@@ -1,0 +1,10 @@
+---Models in module 'payment_custom'---
+---Fields in module 'payment_custom'---
+payment_custom / payment.provider         / code (False)                  : NEW selection_keys: ['adyen', 'alipay', 'aps', 'asiapay', 'authorize', 'buckaroo', 'custom', 'none'], mode: modify
+payment_custom / payment.provider         / custom_mode (selection)       : NEW selection_keys: ['wire_transfer']
+payment_custom / payment.provider         / qr_code (boolean)             : NEW
+---XML records in module 'payment_custom'---
+NEW ir.model.constraint: payment_custom.constraint_payment_provider_custom_providers_setup
+NEW ir.ui.view: payment_custom.custom_transaction_status
+NEW ir.ui.view: payment_custom.payment_provider_form
+NEW ir.ui.view: payment_custom.redirect_form
