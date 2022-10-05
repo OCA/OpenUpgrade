@@ -24,9 +24,9 @@ jobs:
       PGUSER: "odoo"
     steps:
       - name: Set up Python
-        uses: actions/setup-python@v2
+        uses: actions/setup-python@v4
         with:
-          python-version: 3.7
+          python-version: '3.10'
       - name: Check out Odoo
         uses: actions/checkout@v2
         with:
