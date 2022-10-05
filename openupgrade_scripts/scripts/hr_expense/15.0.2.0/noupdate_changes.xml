@@ -1,5 +1,28 @@
 <?xml version='1.0' encoding='utf-8'?>
 <odoo>
+  <template id="hr_expense_template_register">
+    <p>Dear <t t-esc="expense.employee_id.name"/>,</p>
+    <p>
+                Your expense has been successfully registered.
+                <t t-if="expense.employee_id.user_id">
+                    You can now submit it to the manager from the following link.
+                </t>
+            </p>
+    <p t-if="expense.product_id">
+                Category: <t t-esc="expense.product_id.name"/>
+            </p>
+    <div t-else="">
+      <p>Category: not found</p>
+      <p>The first word of the email subject did not correspond to any category code. You'll have to set the category manually on the expense.</p>
+    </div>
+    <p>
+                Price: <t t-esc="expense.unit_amount"/><t t-esc="expense.currency_id.symbol"/>
+            </p>
+    <p t-if="expense.employee_id.user_id">
+      <br/>
+      <a t-att-href="'/web#id=%s&amp;model=hr.expense&amp;view_type=form' % (expense.id)" style="background-color: #9E588B; margin-top: 10px; padding: 10px; text-decoration: none; color: #fff; border-radius: 5px; font-size: 16px;">View Expense</a>
+    </p>
+  </template>
   <record id="mail_act_expense_approval" model="mail.activity.type">
     <field name="res_model">hr.expense.sheet</field>
   </record>
