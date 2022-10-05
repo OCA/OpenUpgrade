@@ -79,4 +79,6 @@ def migrate(cr, version):
     openupgrade.convert_field_to_html(
         cr, "res_company", "report_header", "report_header"
     )
-    openupgrade.convert_field_to_html(cr, "res_partner", "comment", "comment")
+    openupgrade.convert_field_to_html(
+        cr, "res_partner", "comment", "comment", verbose=False
+    )
