@@ -1,0 +1,20 @@
+---Models in module 'sms'---
+obsolete model sms.cancel [transient]
+new model sms.template.reset [transient]
+---Fields in module 'sms'---
+sms          / ir.actions.server        / sms_mass_keep_log (boolean)   : DEL
+sms          / ir.actions.server        / sms_method (selection)        : NEW selection_keys: ['comment', 'note', 'sms'], hasdefault: compute
+sms          / ir.actions.server        / state (False)                 : selection_keys is now '['code', 'followers', 'mail_post', 'multi', 'next_activity', 'object_create', 'object_write', 'sms']' ('['code', 'email', 'followers', 'multi', 'next_activity', 'object_create', 'object_write', 'sms']')
+sms          / sms.template             / copyvalue (char)              : DEL
+sms          / sms.template             / model_object_field (many2one) : DEL relation: ir.model.fields
+sms          / sms.template             / null_value (char)             : DEL
+sms          / sms.template             / sub_model_object_field (many2one): DEL relation: ir.model.fields
+sms          / sms.template             / sub_object (many2one)         : DEL relation: ir.model
+sms          / sms.template             / template_fs (char)            : NEW
+---XML records in module 'sms'---
+NEW ir.actions.act_window: sms.sms_template_reset_action
+DEL ir.actions.act_window: sms.sms_cancel_action
+NEW ir.model.access: sms.access_sms_template_reset
+DEL ir.model.access: sms.access_sms_cancel
+NEW ir.ui.view: sms.sms_template_reset_view_form
+DEL ir.ui.view: sms.sms_cancel

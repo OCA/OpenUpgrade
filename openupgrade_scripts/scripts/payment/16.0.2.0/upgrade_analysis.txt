@@ -1,0 +1,179 @@
+---Models in module 'payment'---
+obsolete model payment.acquirer
+obsolete model payment.acquirer.onboarding.wizard [transient]
+model payment.refund.wizard (moved to account_payment) [transient]
+new model payment.provider
+new model payment.provider.onboarding.wizard [transient]
+---Fields in module 'payment'---
+payment      / account.bank.statement.line / amount_paid (float)           : module is now 'account_payment' ('payment')
+payment      / account.bank.statement.line / authorized_transaction_ids (many2many): module is now 'account_payment' ('payment')
+payment      / account.bank.statement.line / transaction_ids (many2many)   : module is now 'account_payment' ('payment')
+payment      / account.move             / amount_paid (float)           : module is now 'account_payment' ('payment')
+payment      / account.move             / authorized_transaction_ids (many2many): module is now 'account_payment' ('payment')
+payment      / account.move             / transaction_ids (many2many)   : module is now 'account_payment' ('payment')
+payment      / account.payment          / amount_available_for_refund (float): module is now 'account_payment' ('payment')
+payment      / account.payment          / amount_paid (float)           : module is now 'account_payment' ('payment')
+payment      / account.payment          / authorized_transaction_ids (many2many): module is now 'account_payment' ('payment')
+payment      / account.payment          / payment_token_id (many2one)   : module is now 'account_payment' ('payment')
+payment      / account.payment          / payment_transaction_id (many2one): module is now 'account_payment' ('payment')
+payment      / account.payment          / refunds_count (integer)       : module is now 'account_payment' ('payment')
+payment      / account.payment          / source_payment_id (many2one)  : module is now 'account_payment' ('payment')
+payment      / account.payment          / suitable_payment_token_ids (many2many): module is now 'account_payment' ('payment')
+payment      / account.payment          / transaction_ids (many2many)   : module is now 'account_payment' ('payment')
+payment      / account.payment          / use_electronic_payment_method (boolean): module is now 'account_payment' ('payment')
+payment      / account.payment.method.line / payment_acquirer_id (many2one): DEL relation: payment.acquirer
+payment      / payment.acquirer         / allow_tokenization (boolean)  : DEL
+payment      / payment.acquirer         / auth_msg (html)               : DEL
+payment      / payment.acquirer         / cancel_msg (html)             : DEL
+payment      / payment.acquirer         / capture_manually (boolean)    : DEL
+payment      / payment.acquirer         / color (integer)               : DEL
+payment      / payment.acquirer         / company_id (many2one)         : DEL relation: res.company, required
+payment      / payment.acquirer         / country_ids (many2many)       : DEL relation: res.country
+payment      / payment.acquirer         / description (html)            : DEL
+payment      / payment.acquirer         / display_as (char)             : DEL
+payment      / payment.acquirer         / done_msg (html)               : DEL
+payment      / payment.acquirer         / fees_active (boolean)         : DEL
+payment      / payment.acquirer         / fees_dom_fixed (float)        : DEL
+payment      / payment.acquirer         / fees_dom_var (float)          : DEL
+payment      / payment.acquirer         / fees_int_fixed (float)        : DEL
+payment      / payment.acquirer         / fees_int_var (float)          : DEL
+payment      / payment.acquirer         / image_128 (binary)            : DEL attachment: True
+payment      / payment.acquirer         / inline_form_view_id (many2one): DEL relation: ir.ui.view
+payment      / payment.acquirer         / module_id (many2one)          : DEL relation: ir.module.module
+payment      / payment.acquirer         / module_state (selection)      : DEL selection_keys: function
+payment      / payment.acquirer         / name (char)                   : DEL required
+payment      / payment.acquirer         / payment_icon_ids (many2many)  : DEL relation: payment.icon
+payment      / payment.acquirer         / pending_msg (html)            : DEL
+payment      / payment.acquirer         / pre_msg (html)                : DEL
+payment      / payment.acquirer         / provider (selection)          : DEL required, selection_keys: ['none']
+payment      / payment.acquirer         / redirect_form_view_id (many2one): DEL relation: ir.ui.view
+payment      / payment.acquirer         / sequence (integer)            : DEL
+payment      / payment.acquirer         / state (selection)             : DEL required, selection_keys: ['disabled', 'enabled', 'test']
+payment      / payment.acquirer         / support_authorization (boolean): DEL
+payment      / payment.acquirer         / support_fees_computation (boolean): DEL
+payment      / payment.acquirer         / support_refund (selection)    : DEL selection_keys: ['full_only', 'partial']
+payment      / payment.acquirer         / support_tokenization (boolean): DEL
+payment      / payment.icon             / acquirer_ids (many2many)      : DEL relation: payment.acquirer
+payment      / payment.icon             / provider_ids (many2many)      : NEW relation: payment.provider
+payment      / payment.provider         / allow_express_checkout (boolean): NEW
+payment      / payment.provider         / allow_tokenization (boolean)  : NEW
+payment      / payment.provider         / auth_msg (html)               : NEW hasdefault: default
+payment      / payment.provider         / available_country_ids (many2many): NEW relation: res.country
+payment      / payment.provider         / cancel_msg (html)             : NEW hasdefault: default
+payment      / payment.provider         / capture_manually (boolean)    : NEW
+payment      / payment.provider         / code (selection)              : NEW required, selection_keys: ['none'], hasdefault: default
+payment      / payment.provider         / color (integer)               : NEW isfunction: function, stored
+payment      / payment.provider         / company_id (many2one)         : NEW relation: res.company, required, hasdefault: default
+payment      / payment.provider         / display_as (char)             : NEW
+payment      / payment.provider         / done_msg (html)               : NEW hasdefault: default
+payment      / payment.provider         / express_checkout_form_view_id (many2one): NEW relation: ir.ui.view
+payment      / payment.provider         / fees_active (boolean)         : NEW
+payment      / payment.provider         / fees_dom_fixed (float)        : NEW
+payment      / payment.provider         / fees_dom_var (float)          : NEW
+payment      / payment.provider         / fees_int_fixed (float)        : NEW
+payment      / payment.provider         / fees_int_var (float)          : NEW
+payment      / payment.provider         / image_128 (binary)            : NEW attachment: True
+payment      / payment.provider         / inline_form_view_id (many2one): NEW relation: ir.ui.view
+payment      / payment.provider         / is_published (boolean)        : NEW
+payment      / payment.provider         / maximum_amount (float)        : NEW
+payment      / payment.provider         / module_id (many2one)          : NEW relation: ir.module.module
+payment      / payment.provider         / module_state (selection)      : NEW selection_keys: function, isrelated: related, stored
+payment      / payment.provider         / name (char)                   : NEW required
+payment      / payment.provider         / payment_icon_ids (many2many)  : NEW relation: payment.icon
+payment      / payment.provider         / pending_msg (html)            : NEW hasdefault: default
+payment      / payment.provider         / pre_msg (html)                : NEW
+payment      / payment.provider         / redirect_form_view_id (many2one): NEW relation: ir.ui.view
+payment      / payment.provider         / sequence (integer)            : NEW
+payment      / payment.provider         / state (selection)             : NEW required, selection_keys: ['disabled', 'enabled', 'test'], hasdefault: default
+payment      / payment.provider         / token_inline_form_view_id (many2one): NEW relation: ir.ui.view
+payment      / payment.token            / acquirer_id (many2one)        : DEL relation: payment.acquirer, required
+payment      / payment.token            / acquirer_ref (char)           : DEL required
+payment      / payment.token            / name (char)                   : DEL required
+payment      / payment.token            / payment_details (char)        : NEW
+payment      / payment.token            / provider_id (many2one)        : NEW relation: payment.provider, required
+payment      / payment.token            / provider_ref (char)           : NEW required
+payment      / payment.transaction      / acquirer_id (many2one)        : DEL relation: payment.acquirer, required
+payment      / payment.transaction      / acquirer_reference (char)     : DEL
+payment      / payment.transaction      / child_transaction_ids (one2many): NEW relation: payment.transaction
+payment      / payment.transaction      / invoice_ids (many2many)       : module is now 'account_payment' ('payment')
+payment      / payment.transaction      / invoices_count (integer)      : module is now 'account_payment' ('payment')
+payment      / payment.transaction      / payment_id (many2one)         : module is now 'account_payment' ('payment')
+payment      / payment.transaction      / provider_id (many2one)        : NEW relation: payment.provider, required
+payment      / payment.transaction      / provider_reference (char)     : NEW
+payment      / res.company              / payment_acquirer_onboarding_state (selection): DEL selection_keys: ['done', 'just_done', 'not_done']
+payment      / res.company              / payment_provider_onboarding_state (selection): NEW selection_keys: ['done', 'just_done', 'not_done'], hasdefault: default
+---XML records in module 'payment'---
+NEW ir.actions.act_window: payment.action_payment_provider
+DEL ir.actions.act_window: payment.action_invoice_order_generate_link [renamed to account_payment module]
+DEL ir.actions.act_window: payment.action_open_payment_onboarding_payment_acquirer_wizard
+DEL ir.actions.act_window: payment.action_payment_acquirer
+NEW ir.model.access: payment.access_payment_link_wizard
+NEW ir.model.access: payment.payment_provider_onboarding_wizard
+NEW ir.model.access: payment.payment_provider_system
+DEL ir.model.access: payment.payment_acquirer_onboarding_wizard
+DEL ir.model.access: payment.payment_acquirer_system
+DEL ir.model.access: payment.payment_link_wizard [renamed to account_payment module]
+DEL ir.model.access: payment.payment_refund_wizard [renamed to account_payment module]
+NEW ir.rule: payment.payment_provider_company_rule (noupdate)
+DEL ir.rule: payment.payment_acquirer_company_rule (noupdate)
+DEL ir.rule: payment.payment_token_billing_rule [renamed to account_payment module] (noupdate)
+DEL ir.rule: payment.payment_transaction_billing_rule [renamed to account_payment module] (noupdate)
+DEL ir.ui.menu: payment.payment_acquirer_menu
+DEL ir.ui.menu: payment.payment_icon_menu [renamed to account_payment module]
+DEL ir.ui.menu: payment.payment_token_menu [renamed to account_payment module]
+DEL ir.ui.menu: payment.payment_transaction_menu [renamed to account_payment module]
+NEW ir.ui.view: payment.express_checkout
+NEW ir.ui.view: payment.payment_provider_form
+NEW ir.ui.view: payment.payment_provider_kanban
+NEW ir.ui.view: payment.payment_provider_list
+NEW ir.ui.view: payment.payment_provider_onboarding_wizard_form
+NEW ir.ui.view: payment.payment_provider_search
+DEL ir.ui.view: payment.account_invoice_view_form_inherit_payment
+DEL ir.ui.view: payment.onboarding_payment_acquirer_step
+DEL ir.ui.view: payment.payment_acquirer_form
+DEL ir.ui.view: payment.payment_acquirer_kanban
+DEL ir.ui.view: payment.payment_acquirer_list
+DEL ir.ui.view: payment.payment_acquirer_onboarding_wizard_form
+DEL ir.ui.view: payment.payment_acquirer_search
+DEL ir.ui.view: payment.payment_refund_wizard_view_form
+DEL ir.ui.view: payment.view_account_journal_form
+DEL ir.ui.view: payment.view_account_payment_form_inherit_payment
+DEL ir.ui.view: payment.view_account_payment_register_form_inherit_payment
+DEL payment.acquirer: payment.payment_acquirer_adyen (noupdate)
+DEL payment.acquirer: payment.payment_acquirer_alipay (noupdate)
+DEL payment.acquirer: payment.payment_acquirer_authorize (noupdate)
+DEL payment.acquirer: payment.payment_acquirer_buckaroo (noupdate)
+DEL payment.acquirer: payment.payment_acquirer_mollie (noupdate)
+DEL payment.acquirer: payment.payment_acquirer_ogone (noupdate)
+DEL payment.acquirer: payment.payment_acquirer_paypal (noupdate)
+DEL payment.acquirer: payment.payment_acquirer_payulatam (noupdate)
+DEL payment.acquirer: payment.payment_acquirer_payumoney (noupdate)
+DEL payment.acquirer: payment.payment_acquirer_sepa_direct_debit (noupdate)
+DEL payment.acquirer: payment.payment_acquirer_sips (noupdate)
+DEL payment.acquirer: payment.payment_acquirer_stripe (noupdate)
+DEL payment.acquirer: payment.payment_acquirer_test (noupdate)
+DEL payment.acquirer: payment.payment_acquirer_transfer (noupdate)
+NEW payment.icon: payment.payment_icon_airtel_money
+NEW payment.icon: payment.payment_icon_barter_by_flutterwave
+NEW payment.icon: payment.payment_icon_bbva_bancomer
+NEW payment.icon: payment.payment_icon_cc_rupay
+NEW payment.icon: payment.payment_icon_citibanamex
+NEW payment.icon: payment.payment_icon_mada
+NEW payment.icon: payment.payment_icon_mpesa
+NEW payment.icon: payment.payment_icon_mtn_mobile_money
+NEW payment.icon: payment.payment_icon_sadad
+NEW payment.provider: payment.payment_provider_adyen (noupdate)
+NEW payment.provider: payment.payment_provider_aps (noupdate)
+NEW payment.provider: payment.payment_provider_asiapay (noupdate)
+NEW payment.provider: payment.payment_provider_authorize (noupdate)
+NEW payment.provider: payment.payment_provider_buckaroo (noupdate)
+NEW payment.provider: payment.payment_provider_demo (noupdate)
+NEW payment.provider: payment.payment_provider_flutterwave (noupdate)
+NEW payment.provider: payment.payment_provider_mercado_pago (noupdate)
+NEW payment.provider: payment.payment_provider_mollie (noupdate)
+NEW payment.provider: payment.payment_provider_paypal (noupdate)
+NEW payment.provider: payment.payment_provider_razorpay (noupdate)
+NEW payment.provider: payment.payment_provider_sepa_direct_debit (noupdate)
+NEW payment.provider: payment.payment_provider_sips (noupdate)
+NEW payment.provider: payment.payment_provider_stripe (noupdate)
+NEW payment.provider: payment.payment_provider_transfer (noupdate)

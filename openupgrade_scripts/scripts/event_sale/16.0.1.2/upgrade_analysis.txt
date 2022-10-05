@@ -1,0 +1,14 @@
+---Models in module 'event_sale'---
+new model event.sale.report [sql_view]
+---Fields in module 'event_sale'---
+event_sale   / product.template         / detailed_type (False)         : selection_keys is now '['consu', 'event', 'product', 'service']' ('['consu', 'event', 'gift', 'product', 'service']')
+---XML records in module 'event_sale'---
+NEW ir.actions.act_window: event_sale.event_sale_report_action
+NEW ir.model.access: event_sale.access_event_sale_report_manager
+NEW ir.rule: event_sale.event_sale_report_comp_rule (noupdate)
+NEW ir.ui.menu: event_sale.menu_action_show_revenues
+NEW ir.ui.view: event_sale.event_sale_report_view_form
+NEW ir.ui.view: event_sale.event_sale_report_view_graph
+NEW ir.ui.view: event_sale.event_sale_report_view_pivot
+NEW ir.ui.view: event_sale.event_sale_report_view_search
+NEW ir.ui.view: event_sale.event_sale_report_view_tree

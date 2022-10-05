@@ -1,0 +1,58 @@
+---Models in module 'onboarding'---
+new model onboarding.onboarding
+new model onboarding.onboarding.step
+new model onboarding.progress
+new model onboarding.progress.step
+---Fields in module 'onboarding'---
+onboarding   / onboarding.onboarding    / is_per_company (boolean)      : NEW hasdefault: default
+onboarding   / onboarding.onboarding    / name (char)                   : NEW
+onboarding   / onboarding.onboarding    / panel_background_color (selection): NEW selection_keys: ['blue', 'none', 'orange', 'violet'], hasdefault: default
+onboarding   / onboarding.onboarding    / panel_background_image (binary): NEW attachment: True
+onboarding   / onboarding.onboarding    / panel_close_action_name (char): NEW
+onboarding   / onboarding.onboarding    / progress_ids (one2many)       : NEW relation: onboarding.progress
+onboarding   / onboarding.onboarding    / route_name (char)             : NEW required
+onboarding   / onboarding.onboarding    / sequence (integer)            : NEW hasdefault: default
+onboarding   / onboarding.onboarding    / step_ids (one2many)           : NEW relation: onboarding.onboarding.step
+onboarding   / onboarding.onboarding.step / button_text (char)            : NEW required, hasdefault: default
+onboarding   / onboarding.onboarding.step / description (char)            : NEW
+onboarding   / onboarding.onboarding.step / done_icon (char)              : NEW hasdefault: default
+onboarding   / onboarding.onboarding.step / done_text (char)              : NEW hasdefault: default
+onboarding   / onboarding.onboarding.step / onboarding_id (many2one)      : NEW relation: onboarding.onboarding, required
+onboarding   / onboarding.onboarding.step / panel_step_open_action_name (char): NEW required
+onboarding   / onboarding.onboarding.step / progress_ids (one2many)       : NEW relation: onboarding.progress.step
+onboarding   / onboarding.onboarding.step / sequence (integer)            : NEW hasdefault: default
+onboarding   / onboarding.onboarding.step / title (char)                  : NEW
+onboarding   / onboarding.progress      / company_id (many2one)         : NEW relation: res.company
+onboarding   / onboarding.progress      / is_onboarding_closed (boolean): NEW
+onboarding   / onboarding.progress      / onboarding_id (many2one)      : NEW relation: onboarding.onboarding, required
+onboarding   / onboarding.progress      / onboarding_state (selection)  : NEW selection_keys: ['done', 'just_done', 'not_done'], isfunction: function, stored
+onboarding   / onboarding.progress      / progress_step_ids (one2many)  : NEW relation: onboarding.progress.step
+onboarding   / onboarding.progress.step / progress_id (many2one)        : NEW relation: onboarding.progress, required
+onboarding   / onboarding.progress.step / step_id (many2one)            : NEW relation: onboarding.onboarding.step, required
+onboarding   / onboarding.progress.step / step_state (selection)        : NEW selection_keys: ['done', 'just_done', 'not_done'], hasdefault: default
+---XML records in module 'onboarding'---
+NEW ir.actions.act_window: onboarding.action_view_onboarding_onboarding
+NEW ir.actions.act_window: onboarding.action_view_onboarding_step
+NEW ir.model.access: onboarding.access_onboarding_all
+NEW ir.model.access: onboarding.access_onboarding_manager
+NEW ir.model.access: onboarding.access_onboarding_progress_all
+NEW ir.model.access: onboarding.access_onboarding_progress_manager
+NEW ir.model.access: onboarding.access_onboarding_progress_step_all
+NEW ir.model.access: onboarding.access_onboarding_progress_step_manager
+NEW ir.model.access: onboarding.access_onboarding_progress_step_user
+NEW ir.model.access: onboarding.access_onboarding_progress_user
+NEW ir.model.access: onboarding.access_onboarding_step_all
+NEW ir.model.access: onboarding.access_onboarding_step_manager
+NEW ir.model.access: onboarding.access_onboarding_step_user
+NEW ir.model.access: onboarding.access_onboarding_user
+NEW ir.model.constraint: onboarding.constraint_onboarding_onboarding_route_name_uniq
+NEW ir.model.constraint: onboarding.constraint_onboarding_progress_onboarding_company_uniq
+NEW ir.model.constraint: onboarding.constraint_onboarding_progress_step_progress_step_uniq
+NEW ir.ui.menu: onboarding.menu_onboarding
+NEW ir.ui.menu: onboarding.menu_onboarding_step
+NEW ir.ui.view: onboarding.onboarding_container
+NEW ir.ui.view: onboarding.onboarding_onboarding_step_view_form
+NEW ir.ui.view: onboarding.onboarding_onboarding_step_view_tree
+NEW ir.ui.view: onboarding.onboarding_onboarding_view_form
+NEW ir.ui.view: onboarding.onboarding_onboarding_view_tree
+NEW ir.ui.view: onboarding.onboarding_panel

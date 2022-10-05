@@ -1,0 +1,34 @@
+---Models in module 'pos_loyalty'---
+---Fields in module 'pos_loyalty'---
+pos_loyalty  / barcode.rule             / type (False)                  : previously in module pos_coupon
+pos_loyalty  / loyalty.card             / source_pos_order_id (many2one): NEW relation: pos.order
+pos_loyalty  / loyalty.mail             / pos_report_print_id (many2one): NEW relation: ir.actions.report
+pos_loyalty  / loyalty.program          / pos_config_ids (many2many)    : NEW relation: pos.config, hasdefault: compute
+pos_loyalty  / loyalty.program          / pos_ok (boolean)              : NEW hasdefault: default
+pos_loyalty  / loyalty.rule             / promo_barcode (char)          : NEW hasdefault: compute
+pos_loyalty  / pos.config               / gift_card_settings (selection): previously in module pos_gift_card
+pos_loyalty  / pos.order.line           / coupon_id (many2one)          : previously in module pos_coupon
+pos_loyalty  / pos.order.line           / is_reward_line (boolean)      : NEW
+pos_loyalty  / pos.order.line           / points_cost (float)           : NEW
+pos_loyalty  / pos.order.line           / reward_id (many2one)          : NEW relation: loyalty.reward
+pos_loyalty  / pos.order.line           / reward_identifier_code (char) : NEW
+---XML records in module 'pos_loyalty'---
+NEW barcode.rule: pos_loyalty.barcode_rule_coupon [renamed from pos_coupon module] (noupdate)
+NEW ir.model.access: pos_loyalty.access_applicability_pos_manager
+NEW ir.model.access: pos_loyalty.access_applicability_pos_user
+NEW ir.model.access: pos_loyalty.access_communication_pos_manager
+NEW ir.model.access: pos_loyalty.access_communication_pos_user
+NEW ir.model.access: pos_loyalty.access_coupon_pos_manager [renamed from pos_coupon module]
+NEW ir.model.access: pos_loyalty.access_coupon_pos_user [renamed from pos_coupon module]
+NEW ir.model.access: pos_loyalty.access_program_pos_manager [renamed from pos_coupon module]
+NEW ir.model.access: pos_loyalty.access_program_pos_user [renamed from pos_coupon module]
+NEW ir.model.access: pos_loyalty.access_reward_pos_manager [renamed from pos_coupon module]
+NEW ir.model.access: pos_loyalty.access_reward_pos_user [renamed from pos_coupon module]
+NEW ir.model.access: pos_loyalty.access_sale_coupon_generate [renamed from sale_coupon module]
+NEW ir.ui.menu: pos_loyalty.menu_discount_loyalty_type_config
+NEW ir.ui.menu: pos_loyalty.menu_gift_ewallet_type_config
+NEW ir.ui.view: pos_loyalty.loyalty_card_view_form_inherit_pos_loyalty
+NEW ir.ui.view: pos_loyalty.loyalty_mail_view_tree_inherit_pos_loyalty
+NEW ir.ui.view: pos_loyalty.loyalty_program_view_form_inherit_pos_loyalty
+NEW ir.ui.view: pos_loyalty.loyalty_program_view_tree_inherit_pos_loyalty
+NEW ir.ui.view: pos_loyalty.res_config_view_form_inherit_pos_loyalty

@@ -1,0 +1,34 @@
+---Models in module 'spreadsheet_dashboard'---
+new model spreadsheet.dashboard
+new model spreadsheet.dashboard.group
+---Fields in module 'spreadsheet_dashboard'---
+spreadsheet_dashboard / spreadsheet.dashboard    / dashboard_group_id (many2one) : NEW relation: spreadsheet.dashboard.group, required
+spreadsheet_dashboard / spreadsheet.dashboard    / data (binary)                 : NEW required, attachment: True, hasdefault: default
+spreadsheet_dashboard / spreadsheet.dashboard    / group_ids (many2many)         : NEW relation: res.groups, hasdefault: default
+spreadsheet_dashboard / spreadsheet.dashboard    / name (char)                   : NEW required
+spreadsheet_dashboard / spreadsheet.dashboard    / sequence (integer)            : NEW
+spreadsheet_dashboard / spreadsheet.dashboard    / thumbnail (binary)            : NEW attachment: True
+spreadsheet_dashboard / spreadsheet.dashboard.group / dashboard_ids (one2many)      : NEW relation: spreadsheet.dashboard
+spreadsheet_dashboard / spreadsheet.dashboard.group / name (char)                   : NEW required
+spreadsheet_dashboard / spreadsheet.dashboard.group / sequence (integer)            : NEW
+---XML records in module 'spreadsheet_dashboard'---
+NEW ir.actions.act_window: spreadsheet_dashboard.spreadsheet_dashboard_action_configuration_dashboards
+NEW ir.actions.client: spreadsheet_dashboard.ir_actions_dashboard_action
+NEW ir.model.access: spreadsheet_dashboard.access_spreadsheet_dashboard_group
+NEW ir.model.access: spreadsheet_dashboard.access_spreadsheet_dashboard_group_user
+NEW ir.model.access: spreadsheet_dashboard.spreadsheet_dashboard
+NEW ir.model.access: spreadsheet_dashboard.spreadsheet_dashboard_user"
+NEW ir.rule: spreadsheet_dashboard.ir_rule_spreadsheet_dashboard
+NEW ir.ui.menu: spreadsheet_dashboard.spreadsheet_dashboard_menu_configuration
+NEW ir.ui.menu: spreadsheet_dashboard.spreadsheet_dashboard_menu_configuration_dashboards
+NEW ir.ui.menu: spreadsheet_dashboard.spreadsheet_dashboard_menu_dashboard
+NEW ir.ui.menu: spreadsheet_dashboard.spreadsheet_dashboard_menu_root
+NEW ir.ui.view: spreadsheet_dashboard.spreadsheet_dashboard_container_view_form
+NEW ir.ui.view: spreadsheet_dashboard.spreadsheet_dashboard_container_view_list
+NEW ir.ui.view: spreadsheet_dashboard.spreadsheet_dashboard_view_list
+NEW spreadsheet.dashboard.group: spreadsheet_dashboard.spreadsheet_dashboard_group_finance
+NEW spreadsheet.dashboard.group: spreadsheet_dashboard.spreadsheet_dashboard_group_hr
+NEW spreadsheet.dashboard.group: spreadsheet_dashboard.spreadsheet_dashboard_group_logistics
+NEW spreadsheet.dashboard.group: spreadsheet_dashboard.spreadsheet_dashboard_group_project
+NEW spreadsheet.dashboard.group: spreadsheet_dashboard.spreadsheet_dashboard_group_sales
+NEW spreadsheet.dashboard.group: spreadsheet_dashboard.spreadsheet_dashboard_group_website

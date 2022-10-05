@@ -1,0 +1,13 @@
+---Models in module 'calendar'---
+new model calendar.provider.config [transient]
+---Fields in module 'calendar'---
+calendar     / calendar.event           / access_token (char)           : NEW
+calendar     / calendar.event           / res_id (integer)              : relation is now 'res_model' ('False') [nothing to do]
+calendar     / calendar.event           / res_id (integer)              : type is now 'many2one_reference' ('integer')
+calendar     / calendar.event           / videocall_channel_id (many2one): NEW relation: mail.channel
+calendar     / calendar.event           / videocall_location (char)     : now a function
+---XML records in module 'calendar'---
+DEL ir.actions.act_window: calendar.action_calendar_event_notify
+NEW ir.model.access: calendar.access_calendar_provider_config_all
+NEW ir.model.access: calendar.access_calendar_provider_config_manager
+NEW ir.ui.view: calendar.calendar_provider_config_view_form

@@ -1,0 +1,82 @@
+---Models in module 'website_slides'---
+obsolete model slide.slide.link
+---Fields in module 'website_slides'---
+website_slides / slide.channel            / cover_properties (text)       : NEW hasdefault: default
+website_slides / slide.channel            / nbr_article (integer)         : NEW isfunction: function, stored
+website_slides / slide.channel            / nbr_presentation (integer)    : DEL
+website_slides / slide.channel            / nbr_webpage (integer)         : DEL
+website_slides / slide.channel            / share_channel_template_id (many2one): NEW relation: mail.template, hasdefault: default
+website_slides / slide.channel            / share_slide_template_id (many2one): NEW relation: mail.template, hasdefault: default
+website_slides / slide.channel            / share_template_id (many2one)  : DEL relation: mail.template
+website_slides / slide.slide              / binary_content (binary)       : NEW attachment: True
+website_slides / slide.slide              / datas (binary)                : DEL attachment: True
+website_slides / slide.slide              / document_id (char)            : DEL
+website_slides / slide.slide              / embed_ids (one2many)          : NEW relation: slide.embed
+website_slides / slide.slide              / embedcount_ids (one2many)     : DEL relation: slide.embed
+website_slides / slide.slide              / link_ids (one2many)           : DEL relation: slide.slide.link
+website_slides / slide.slide              / mime_type (char)              : DEL
+website_slides / slide.slide              / nbr_article (integer)         : NEW isfunction: function, stored
+website_slides / slide.slide              / nbr_presentation (integer)    : DEL
+website_slides / slide.slide              / nbr_webpage (integer)         : DEL
+website_slides / slide.slide              / slide_category (selection)    : NEW required, selection_keys: ['article', 'document', 'infographic', 'quiz', 'video'], hasdefault: default
+website_slides / slide.slide              / slide_type (selection)        : selection_keys is now '['article', 'doc', 'google_drive_video', 'image', 'pdf', 'quiz', 'sheet', 'slides', 'vimeo_video', 'youtube_video']' ('['document', 'infographic', 'presentation', 'quiz', 'video', 'webpage']')
+website_slides / slide.slide              / source_type (selection)       : NEW required, selection_keys: ['external', 'local_file'], hasdefault: default
+website_slides / slide.slide.link         / link (char)                   : DEL required
+website_slides / slide.slide.link         / name (char)                   : DEL required
+website_slides / slide.slide.link         / slide_id (many2one)           : DEL relation: slide.slide, required
+website_slides / slide.slide.resource     / file_name (char)              : NEW
+website_slides / slide.slide.resource     / link (char)                   : NEW hasdefault: compute
+website_slides / slide.slide.resource     / resource_type (selection)     : NEW required, selection_keys: ['file', 'url']
+---XML records in module 'website_slides'---
+NEW ir.actions.act_window: website_slides.action_slide_channel_pages_list
+NEW ir.actions.act_window: website_slides.slide_channel_action_add
+NEW ir.actions.act_window: website_slides.slide_embed_action
+NEW ir.actions.act_window: website_slides.slide_slide_partner_action_from_slide
+DEL ir.actions.act_window: website_slides.rating_rating_action_slide_channel_report
+NEW ir.actions.act_window.view: website_slides.rating_rating_action_slide_channel_view_form
+NEW ir.actions.act_window.view: website_slides.rating_rating_action_slide_channel_view_graph
+NEW ir.actions.act_window.view: website_slides.rating_rating_action_slide_channel_view_kanban
+NEW ir.actions.act_window.view: website_slides.rating_rating_action_slide_channel_view_pivot
+NEW ir.actions.act_window.view: website_slides.rating_rating_action_slide_channel_view_tree
+NEW ir.actions.act_window.view: website_slides.slide_channel_action_report_view_form
+NEW ir.actions.act_window.view: website_slides.slide_channel_action_report_view_graph
+NEW ir.actions.act_window.view: website_slides.slide_channel_action_report_view_pivot
+NEW ir.actions.act_window.view: website_slides.slide_channel_action_report_view_tree
+NEW ir.actions.act_window.view: website_slides.slide_slide_action_report_view_form
+NEW ir.actions.act_window.view: website_slides.slide_slide_action_report_view_graph
+NEW ir.actions.act_window.view: website_slides.slide_slide_action_report_view_pivot
+NEW ir.actions.act_window.view: website_slides.slide_slide_action_report_view_tree
+DEL ir.actions.act_window.view: website_slides.rating_rating_action_slide_channel_report_view_graph
+DEL ir.actions.act_window.view: website_slides.rating_rating_action_slide_channel_report_view_pivot
+DEL ir.actions.act_window.view: website_slides.rating_rating_action_slide_channel_report_view_tree
+DEL ir.model.access: website_slides.access_slide_slide_link_all
+DEL ir.model.access: website_slides.access_slide_slide_link_officer
+NEW ir.model.constraint: website_slides.constraint_slide_channel_partner_channel_partner_uniq
+NEW ir.model.constraint: website_slides.constraint_slide_channel_partner_check_completion
+NEW ir.model.constraint: website_slides.constraint_slide_slide_partner_check_vote
+NEW ir.model.constraint: website_slides.constraint_slide_slide_partner_slide_partner_uniq
+NEW ir.model.constraint: website_slides.constraint_slide_slide_resource_check_file_type
+NEW ir.model.constraint: website_slides.constraint_slide_slide_resource_check_url
+NEW ir.rule: website_slides.rule_slide_slide_resource_downloadable_manager (noupdate)
+DEL ir.rule: website_slides.rule_slide_slide_resource_manager (noupdate)
+NEW ir.ui.menu: website_slides.menu_slide_channel_pages
+DEL ir.ui.menu: website_slides.website_slides_menu_courses_reviews
+NEW ir.ui.view: website_slides.course_join
+NEW ir.ui.view: website_slides.rating_rating_view_form_slides
+NEW ir.ui.view: website_slides.rating_rating_view_tree_slide_channel
+NEW ir.ui.view: website_slides.slide_channel_pages_kanban_view
+NEW ir.ui.view: website_slides.slide_channel_pages_tree_view
+NEW ir.ui.view: website_slides.slide_channel_view_form_add
+NEW ir.ui.view: website_slides.slide_channel_view_pivot
+NEW ir.ui.view: website_slides.slide_embed_view_search
+NEW ir.ui.view: website_slides.slide_embed_view_tree
+NEW ir.ui.view: website_slides.slide_sidebar_done_button
+NEW ir.ui.view: website_slides.slide_slide_partner_view_form
+NEW ir.ui.view: website_slides.slide_slide_partner_view_search
+NEW ir.ui.view: website_slides.slide_slide_partner_view_tree
+NEW ir.ui.view: website_slides.slide_slide_view_tree_report
+NEW ir.ui.view: website_slides.snippet_options
+DEL ir.ui.view: website_slides.rating_rating_view_kanban_slide_channel
+DEL ir.ui.view: website_slides.slide_edit_options
+DEL ir.ui.view: website_slides.user_navbar_inherit_website_slides
+NEW mail.template: website_slides.mail_template_channel_shared (noupdate)

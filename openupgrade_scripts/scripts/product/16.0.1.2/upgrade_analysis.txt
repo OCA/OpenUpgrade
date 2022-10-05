@@ -1,0 +1,22 @@
+---Models in module 'product'---
+new model product.tag
+---Fields in module 'product'---
+product      / product.product          / additional_product_tag_ids (many2many): NEW relation: product.tag
+product      / product.supplierinfo     / name (many2one)               : DEL relation: res.partner, required
+product      / product.supplierinfo     / partner_id (many2one)         : NEW relation: res.partner, required
+product      / product.tag              / color (integer)               : NEW hasdefault: default
+product      / product.tag              / name (char)                   : NEW required
+product      / product.tag              / product_product_ids (many2many): NEW relation: product.product
+product      / product.tag              / product_template_ids (many2many): NEW relation: product.template
+product      / product.template         / pricelist_id (many2one)       : DEL relation: product.pricelist
+product      / product.template         / product_tag_ids (many2many)   : NEW relation: product.tag
+---XML records in module 'product'---
+NEW ir.actions.act_window: product.product_tag_action
+NEW ir.model.access: product.access_product_tag_manager
+NEW ir.model.access: product.access_product_tag_user
+NEW ir.model.constraint: product.constraint_product_packaging_barcode_uniq
+NEW ir.model.constraint: product.constraint_product_tag_name_uniq
+DEL ir.model.constraint: product.constraint_product_product_barcode_uniq
+NEW ir.ui.view: product.product_tag_form_view
+NEW ir.ui.view: product.product_tag_tree_view
+DEL ir.ui.view: product.product_pricelist_view_inherit

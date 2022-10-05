@@ -1,0 +1,14 @@
+---Models in module 'hr_contract'---
+model hr.contract.type (moved to hr)
+---Fields in module 'hr_contract'---
+hr_contract  / hr.contract.type         / __last_update (datetime)      : module is now 'hr' ('hr_contract')
+hr_contract  / hr.contract.type         / _order                        : _order is now 'sequence' ('id')
+hr_contract  / hr.contract.type         / _order                        : module is now 'hr' ('hr_contract')
+hr_contract  / hr.contract.type         / display_name (char)           : module is now 'hr' ('hr_contract')
+hr_contract  / hr.contract.type         / name (char)                   : module is now 'hr' ('hr_contract')
+---XML records in module 'hr_contract'---
+NEW ir.model.access: hr_contract.access_hr_contract_hr_employee_manager
+DEL ir.model.access: hr_contract.access_hr_contract_type_manager [renamed to hr module]
+NEW ir.rule: hr_contract.ir_rule_hr_contract_employee_manager (noupdate)
+NEW ir.rule: hr_contract.ir_rule_hr_contract_manager (noupdate)
+NEW res.groups: hr_contract.group_hr_contract_employee_manager (noupdate)

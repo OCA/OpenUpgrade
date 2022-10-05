@@ -1,0 +1,9 @@
+---Models in module 'payment_razorpay'---
+---Fields in module 'payment_razorpay'---
+payment_razorpay / payment.provider         / code (False)                  : NEW selection_keys: ['adyen', 'alipay', 'aps', 'asiapay', 'authorize', 'buckaroo', 'custom', 'demo', 'flutterwave', 'mercado_pago', 'mollie', 'none', 'ogone', 'paypal', 'payulatam', 'payumoney', 'razorpay'], mode: modify
+payment_razorpay / payment.provider         / razorpay_key_id (char)        : NEW
+payment_razorpay / payment.provider         / razorpay_key_secret (char)    : NEW
+payment_razorpay / payment.provider         / razorpay_webhook_secret (char): NEW
+---XML records in module 'payment_razorpay'---
+NEW ir.ui.view: payment_razorpay.payment_provider_form_razorpay
+NEW ir.ui.view: payment_razorpay.redirect_form

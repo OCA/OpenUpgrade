@@ -1,0 +1,83 @@
+<?xml version='1.0' encoding='utf-8'?>
+<odoo>
+  <record id="compiva0" model="account.tax.template">
+    <field name="invoice_repartition_line_ids" eval="[(5, 0, 0),                 (0,0, {                     'repartition_type': 'base',                     'plus_report_expression_ids': [ref('tax_report_pt_base_despesas_faturas_isento_tag')],                 }),                 (0,0, {                     'repartition_type': 'tax',                     'plus_report_expression_ids': [ref('tax_report_pt_tax_despesas_faturas_isento_tag')],                     'account_id': ref('chart_2432'),                 }),             ]"/>
+    <field name="refund_repartition_line_ids" eval="[(5, 0, 0),                 (0,0, {                     'repartition_type': 'base',                     'plus_report_expression_ids': [ref('tax_report_pt_base_despesas_notas_credito_isento_tag')],                 }),                 (0,0, {                     'repartition_type': 'tax',                     'plus_report_expression_ids': [ref('tax_report_pt_tax_despesas_notas_credito_isento_tag')],                     'account_id': ref('chart_2432'),                 }),             ]"/>
+  </record>
+  <record id="compiva12" model="account.tax.template">
+    <field name="invoice_repartition_line_ids" eval="[(5, 0, 0),                 (0,0, {'repartition_type': 'base'}),                 (0,0, {                     'repartition_type': 'tax',                     'account_id': ref('chart_2432'),                 }),             ]"/>
+    <field name="refund_repartition_line_ids" eval="[(5, 0, 0),                 (0,0, {'repartition_type': 'base'}),                 (0,0, {                     'repartition_type': 'tax',                     'account_id': ref('chart_2432'),                 }),             ]"/>
+  </record>
+  <record id="compiva13" model="account.tax.template">
+    <field name="invoice_repartition_line_ids" eval="[(5, 0, 0),                 (0,0, {                     'repartition_type': 'base',                     'plus_report_expression_ids': [ref('tax_report_pt_base_despesas_faturas_intermedia_tag')],                 }),                 (0,0, {                     'repartition_type': 'tax',                     'plus_report_expression_ids': [ref('tax_report_pt_tax_despesas_faturas_intermedia_tag')],                     'account_id': ref('chart_2432'),                 }),             ]"/>
+    <field name="refund_repartition_line_ids" eval="[(5, 0, 0),                 (0,0, {                     'repartition_type': 'base',                     'plus_report_expression_ids': [ref('tax_report_pt_base_despesas_notas_credito_intermedia_tag')],                 }),                 (0,0, {                     'repartition_type': 'tax',                     'plus_report_expression_ids': [ref('tax_report_pt_tax_despesas_notas_credito_intermedia_tag')],                     'account_id': ref('chart_2432'),                 }),             ]"/>
+  </record>
+  <record id="compiva16" model="account.tax.template">
+    <field name="invoice_repartition_line_ids" eval="[(5, 0, 0),                 (0,0, {'repartition_type': 'base'}),                 (0,0, {                     'repartition_type': 'tax',                     'account_id': ref('chart_2432'),                 }),             ]"/>
+    <field name="refund_repartition_line_ids" eval="[(5, 0, 0),                 (0,0, {'repartition_type': 'base'}),                 (0,0, {                     'repartition_type': 'tax',                     'account_id': ref('chart_2432'),                 }),             ]"/>
+  </record>
+  <record id="compiva22" model="account.tax.template">
+    <field name="invoice_repartition_line_ids" eval="[(5, 0, 0),                 (0,0, {'repartition_type': 'base'}),                 (0,0, {                     'repartition_type': 'tax',                     'account_id': ref('chart_2432'),                 }),             ]"/>
+    <field name="refund_repartition_line_ids" eval="[(5, 0, 0),                 (0,0, {'repartition_type': 'base'}),                 (0,0, {                     'repartition_type': 'tax',                     'account_id': ref('chart_2432'),                 }),             ]"/>
+  </record>
+  <record id="compiva23" model="account.tax.template">
+    <field name="invoice_repartition_line_ids" eval="[(5, 0, 0),                 (0,0, {                     'repartition_type': 'base',                     'plus_report_expression_ids': [ref('tax_report_pt_base_despesas_faturas_normal_tag')],                 }),                 (0,0, {                     'repartition_type': 'tax',                     'plus_report_expression_ids': [ref('tax_report_pt_tax_despesas_faturas_normal_tag')],                     'account_id': ref('chart_2432'),                 }),             ]"/>
+    <field name="refund_repartition_line_ids" eval="[(5, 0, 0),                 (0,0, {                     'repartition_type': 'base',                     'plus_report_expression_ids': [ref('tax_report_pt_base_despesas_notas_credito_normal_tag')],                 }),                 (0,0, {                     'repartition_type': 'tax',                     'plus_report_expression_ids': [ref('tax_report_pt_tax_despesas_notas_credito_normal_tag')],                     'account_id': ref('chart_2432'),                 }),             ]"/>
+  </record>
+  <record id="compiva4" model="account.tax.template">
+    <field name="invoice_repartition_line_ids" eval="[(5, 0, 0),                 (0,0, {'repartition_type': 'base'}),                 (0,0, {                     'repartition_type': 'tax',                     'account_id': ref('chart_2432'),                 }),             ]"/>
+    <field name="refund_repartition_line_ids" eval="[(5, 0, 0),                 (0,0, {'repartition_type': 'base'}),                 (0,0, {                     'repartition_type': 'tax',                     'account_id': ref('chart_2432'),                 }),             ]"/>
+  </record>
+  <record id="compiva5" model="account.tax.template">
+    <field name="invoice_repartition_line_ids" eval="[(5, 0, 0),                 (0,0, {'repartition_type': 'base'}),                 (0,0, {                     'repartition_type': 'tax',                     'account_id': ref('chart_2432'),                 }),             ]"/>
+    <field name="refund_repartition_line_ids" eval="[(5, 0, 0),                 (0,0, {'repartition_type': 'base'}),                 (0,0, {                     'repartition_type': 'tax',                     'account_id': ref('chart_2432'),                 }),             ]"/>
+  </record>
+  <record id="compiva6" model="account.tax.template">
+    <field name="invoice_repartition_line_ids" eval="[(5, 0, 0),                 (0,0, {                     'repartition_type': 'base',                     'plus_report_expression_ids': [ref('tax_report_pt_base_despesas_faturas_reduzida_tag')],                 }),                 (0,0, {                     'repartition_type': 'tax',                     'plus_report_expression_ids': [ref('tax_report_pt_tax_despesas_faturas_reduzida_tag')],                     'account_id': ref('chart_2432'),                 }),             ]"/>
+    <field name="refund_repartition_line_ids" eval="[(5, 0, 0),                 (0,0, {                     'repartition_type': 'base',                     'plus_report_expression_ids': [ref('tax_report_pt_base_despesas_notas_credito_reduzida_tag')],                 }),                 (0,0, {                     'repartition_type': 'tax',                     'plus_report_expression_ids': [ref('tax_report_pt_tax_despesas_notas_credito_reduzida_tag')],                     'account_id': ref('chart_2432'),                 }),             ]"/>
+  </record>
+  <record id="compiva9" model="account.tax.template">
+    <field name="invoice_repartition_line_ids" eval="[(5, 0, 0),                 (0,0, {'repartition_type': 'base'}),                 (0,0, {                     'repartition_type': 'tax',                     'account_id': ref('chart_2432'),                 }),             ]"/>
+    <field name="refund_repartition_line_ids" eval="[(5, 0, 0),                 (0,0, {'repartition_type': 'base'}),                 (0,0, {                     'repartition_type': 'tax',                     'account_id': ref('chart_2432'),                 }),             ]"/>
+  </record>
+  <record id="iva0" model="account.tax.template">
+    <field name="invoice_repartition_line_ids" eval="[(5, 0, 0),                 (0,0, {                     'repartition_type': 'base',                     'plus_report_expression_ids': [ref('tax_report_pt_base_vendas_faturas_isento_tag')],                 }),                 (0,0, {                     'repartition_type': 'tax',                     'plus_report_expression_ids': [ref('tax_report_pt_tax_vendas_faturas_isento_tag')],                     'account_id': ref('chart_2433'),                 }),             ]"/>
+    <field name="refund_repartition_line_ids" eval="[(5, 0, 0),                 (0,0, {                     'repartition_type': 'base',                     'plus_report_expression_ids': [ref('tax_report_pt_base_vendas_notas_credito_isento_tag')],                 }),                 (0,0, {                     'repartition_type': 'tax',                     'plus_report_expression_ids': [ref('tax_report_pt_tax_vendas_notas_credito_isento_tag')],                     'account_id': ref('chart_2433'),                 }),             ]"/>
+  </record>
+  <record id="iva12" model="account.tax.template">
+    <field name="invoice_repartition_line_ids" eval="[(5, 0, 0),                 (0,0, {'repartition_type': 'base'}),                 (0,0, {                     'repartition_type': 'tax',                     'account_id': ref('chart_2433'),                 }),             ]"/>
+    <field name="refund_repartition_line_ids" eval="[(5, 0, 0),                 (0,0, {'repartition_type': 'base'}),                 (0,0, {                     'repartition_type': 'tax',                     'account_id': ref('chart_2433'),                 }),             ]"/>
+  </record>
+  <record id="iva13" model="account.tax.template">
+    <field name="invoice_repartition_line_ids" eval="[(5, 0, 0),                 (0,0, {                     'repartition_type': 'base',                     'plus_report_expression_ids': [ref('tax_report_pt_base_vendas_faturas_intermedia_tag')],                 }),                 (0,0, {                     'repartition_type': 'tax',                     'plus_report_expression_ids': [ref('tax_report_pt_tax_vendas_faturas_intermedia_tag')],                     'account_id': ref('chart_2433'),                 }),             ]"/>
+    <field name="refund_repartition_line_ids" eval="[(5, 0, 0),                 (0,0, {                     'repartition_type': 'base',                     'plus_report_expression_ids': [ref('tax_report_pt_base_vendas_notas_credito_intermedia_tag')],                 }),                 (0,0, {                     'repartition_type': 'tax',                     'plus_report_expression_ids': [ref('tax_report_pt_tax_vendas_notas_credito_intermedia_tag')],                     'account_id': ref('chart_2433'),                 }),             ]"/>
+  </record>
+  <record id="iva16" model="account.tax.template">
+    <field name="invoice_repartition_line_ids" eval="[(5, 0, 0),                 (0,0, {'repartition_type': 'base'}),                 (0,0, {                     'repartition_type': 'tax',                     'account_id': ref('chart_2433'),                 }),             ]"/>
+    <field name="refund_repartition_line_ids" eval="[(5, 0, 0),                 (0,0, {'repartition_type': 'base'}),                 (0,0, {                     'repartition_type': 'tax',                     'account_id': ref('chart_2433'),                 }),             ]"/>
+  </record>
+  <record id="iva22" model="account.tax.template">
+    <field name="invoice_repartition_line_ids" eval="[(5, 0, 0),                 (0,0, {'repartition_type': 'base'}),                 (0,0, {                     'repartition_type': 'tax',                     'account_id': ref('chart_2433'),                 }),             ]"/>
+    <field name="refund_repartition_line_ids" eval="[(5, 0, 0),                 (0,0, {'repartition_type': 'base'}),                 (0,0, {                     'repartition_type': 'tax',                     'account_id': ref('chart_2433'),                 }),             ]"/>
+  </record>
+  <record id="iva23" model="account.tax.template">
+    <field name="invoice_repartition_line_ids" eval="[(5, 0, 0),                 (0,0, {                     'repartition_type': 'base',                     'plus_report_expression_ids': [ref('tax_report_pt_base_vendas_faturas_normal_tag')],                 }),                 (0,0, {                     'repartition_type': 'tax',                     'plus_report_expression_ids': [ref('tax_report_pt_tax_vendas_faturas_normal_tag')],                     'account_id': ref('chart_2433'),                 }),             ]"/>
+    <field name="refund_repartition_line_ids" eval="[(5, 0, 0),                 (0,0, {                     'repartition_type': 'base',                     'plus_report_expression_ids': [ref('tax_report_pt_base_vendas_notas_credito_normal_tag')],                 }),                 (0,0, {                     'repartition_type': 'tax',                     'plus_report_expression_ids': [ref('tax_report_pt_tax_vendas_notas_credito_normal_tag')],                     'account_id': ref('chart_2433'),                 }),             ]"/>
+  </record>
+  <record id="iva4" model="account.tax.template">
+    <field name="invoice_repartition_line_ids" eval="[(5, 0, 0),                 (0,0, {'repartition_type': 'base'}),                 (0,0, {                     'repartition_type': 'tax',                     'account_id': ref('chart_2433'),                 }),             ]"/>
+    <field name="refund_repartition_line_ids" eval="[(5, 0, 0),                 (0,0, {'repartition_type': 'base'}),                 (0,0, {                     'repartition_type': 'tax',                     'account_id': ref('chart_2433'),                 }),             ]"/>
+  </record>
+  <record id="iva5" model="account.tax.template">
+    <field name="invoice_repartition_line_ids" eval="[(5, 0, 0),                 (0,0, {'repartition_type': 'base'}),                 (0,0, {                     'repartition_type': 'tax',                     'account_id': ref('chart_2433'),                 }),             ]"/>
+    <field name="refund_repartition_line_ids" eval="[(5, 0, 0),                 (0,0, {'repartition_type': 'base'}),                 (0,0, {                     'repartition_type': 'tax',                     'account_id': ref('chart_2433'),                 }),             ]"/>
+  </record>
+  <record id="iva6" model="account.tax.template">
+    <field name="invoice_repartition_line_ids" eval="[(5, 0, 0),                 (0,0, {                     'repartition_type': 'base',                     'plus_report_expression_ids': [ref('tax_report_pt_base_vendas_faturas_reduzida_tag')],                 }),                 (0,0, {                     'repartition_type': 'tax',                     'plus_report_expression_ids': [ref('tax_report_pt_tax_vendas_faturas_reduzida_tag')],                     'account_id': ref('chart_2433'),                 }),             ]"/>
+    <field name="refund_repartition_line_ids" eval="[(5, 0, 0),                 (0,0, {                     'repartition_type': 'base',                     'plus_report_expression_ids': [ref('tax_report_pt_base_vendas_notas_credito_reduzida_tag')],                 }),                 (0,0, {                     'repartition_type': 'tax',                     'plus_report_expression_ids': [ref('tax_report_pt_tax_vendas_notas_credito_reduzida_tag')],                     'account_id': ref('chart_2433'),                 }),             ]"/>
+  </record>
+  <record id="iva9" model="account.tax.template">
+    <field name="invoice_repartition_line_ids" eval="[(5, 0, 0),                 (0,0, {'repartition_type': 'base'}),                 (0,0, {                     'repartition_type': 'tax',                     'account_id': ref('chart_2433'),                 }),             ]"/>
+    <field name="refund_repartition_line_ids" eval="[(5, 0, 0),                 (0,0, {'repartition_type': 'base'}),                 (0,0, {                     'repartition_type': 'tax',                     'account_id': ref('chart_2433'),                 }),             ]"/>
+  </record>
+</odoo>

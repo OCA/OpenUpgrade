@@ -1,0 +1,10 @@
+---Models in module 'utm'---
+new model utm.source.mixin [abstract]
+---Fields in module 'utm'---
+utm          / utm.campaign             / title (char)                  : NEW required
+---XML records in module 'utm'---
+NEW ir.model.access: utm.access_utm_medium_system
+NEW ir.model.access: utm.access_utm_source_system
+NEW ir.model.constraint: utm.constraint_utm_campaign_unique_name
+NEW ir.model.constraint: utm.constraint_utm_medium_unique_name
+NEW ir.model.constraint: utm.constraint_utm_source_unique_name

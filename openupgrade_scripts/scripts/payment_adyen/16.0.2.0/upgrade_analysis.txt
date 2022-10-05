@@ -1,0 +1,23 @@
+---Models in module 'payment_adyen'---
+---Fields in module 'payment_adyen'---
+payment_adyen / payment.acquirer         / adyen_api_key (char)          : DEL
+payment_adyen / payment.acquirer         / adyen_checkout_api_url (char) : DEL
+payment_adyen / payment.acquirer         / adyen_client_key (char)       : DEL
+payment_adyen / payment.acquirer         / adyen_hmac_key (char)         : DEL
+payment_adyen / payment.acquirer         / adyen_merchant_account (char) : DEL
+payment_adyen / payment.acquirer         / adyen_recurring_api_url (char): DEL
+payment_adyen / payment.acquirer         / provider (False)              : DEL selection_keys: ['adyen', 'none'], mode: modify
+payment_adyen / payment.provider         / adyen_api_key (char)          : NEW
+payment_adyen / payment.provider         / adyen_checkout_api_url (char) : NEW
+payment_adyen / payment.provider         / adyen_client_key (char)       : NEW
+payment_adyen / payment.provider         / adyen_hmac_key (char)         : NEW
+payment_adyen / payment.provider         / adyen_merchant_account (char) : NEW
+payment_adyen / payment.provider         / adyen_recurring_api_url (char): NEW
+payment_adyen / payment.provider         / code (False)                  : NEW selection_keys: ['adyen', 'none'], mode: modify
+---XML records in module 'payment_adyen'---
+DEL account.payment.method: payment_adyen.payment_method_adyen (noupdate)
+NEW ir.ui.view: payment_adyen.checkout
+NEW ir.ui.view: payment_adyen.manage
+NEW ir.ui.view: payment_adyen.payment_provider_form
+NEW ir.ui.view: payment_adyen.sdk_assets
+DEL ir.ui.view: payment_adyen.payment_acquirer_form

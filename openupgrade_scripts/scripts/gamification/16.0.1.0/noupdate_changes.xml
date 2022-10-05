@@ -1,0 +1,59 @@
+<?xml version='1.0' encoding='utf-8'?>
+<odoo>
+  <record id="email_template_badge_received" model="mail.template">
+    <field name="name">Gamification: Badge Received</field>
+    <field name="description">Sent automatically to the user who received a badge</field>
+  </record>
+  <record id="email_template_goal_reminder" model="mail.template">
+    <field name="name">Gamification: Reminder For Goal Update</field>
+    <field name="description">Sent automatically to participant who haven't updated their goal</field>
+  </record>
+  <record id="mail_template_data_new_rank_reached" model="mail.template">
+    <field name="name">Gamification: New Rank Reached</field>
+    <field name="description">Sent automatically when user reaches a new rank</field>
+  </record>
+  <record id="rank_bachelor" model="gamification.karma.rank">
+    <field name="description_motivational" type="html">
+      <div class="d-flex align-items-center">
+        <div class="flex-grow-1">Reach the next rank to improve your status!</div>
+        <img class="ms-3 img img-fluid" style="max-height: 72px;" src="/gamification/static/img/rank_bachelor_badge.svg"/>
+      </div>
+    </field>
+  </record>
+  <record id="rank_doctor" model="gamification.karma.rank">
+    <field name="description_motivational" type="html">
+      <div class="d-flex align-items-center">
+        <div class="flex-grow-1">Reach the next rank and become a powerful user!</div>
+        <img class="ms-3 img img-fluid" style="max-height: 72px;" src="/gamification/static/img/rank_doctor_badge.svg"/>
+      </div>
+    </field>
+  </record>
+  <record id="rank_master" model="gamification.karma.rank">
+    <field name="description_motivational" type="html">
+      <div class="d-flex align-items-center">
+        <div class="flex-grow-1">Reach the next rank and become a Master!</div>
+        <img class="ms-3 img img-fluid" style="max-height: 72px;" src="/gamification/static/img/rank_master_badge.svg"/>
+      </div>
+    </field>
+  </record>
+  <record id="rank_newbie" model="gamification.karma.rank">
+    <field name="description_motivational" type="html">
+      <div class="d-flex align-items-center">
+        <div class="flex-grow-1">Earn your first points and join the adventure !</div>
+        <img class="ms-3 img img-fluid" style="max-height: 72px;" src="/gamification/static/img/rank_newbie_badge.svg"/>
+      </div>
+    </field>
+  </record>
+  <record id="rank_student" model="gamification.karma.rank">
+    <field name="description_motivational" type="html">
+      <div class="d-flex align-items-center">
+        <div class="flex-grow-1">Reach the next rank to show the rest of the world you exist.</div>
+        <img class="ms-3 img img-fluid" style="max-height: 72px;" src="/gamification/static/img/rank_student_badge.svg"/>
+      </div>
+    </field>
+  </record>
+  <record id="simple_report_template" model="mail.template">
+    <field name="name">Gamification: Challenge Report</field>
+    <field name="description">Send a challenge report to all participants</field>
+  </record>
+</odoo>

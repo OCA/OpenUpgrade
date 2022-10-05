@@ -1,0 +1,10 @@
+---Models in module 'payment_demo'---
+---Fields in module 'payment_demo'---
+payment_demo / payment.provider         / code (False)                  : NEW selection_keys: ['adyen', 'alipay', 'aps', 'asiapay', 'authorize', 'buckaroo', 'custom', 'demo', 'none'], mode: modify
+payment_demo / payment.token            / demo_simulated_state (selection): NEW selection_keys: ['cancel', 'done', 'error', 'pending']
+---XML records in module 'payment_demo'---
+NEW ir.ui.view: payment_demo.inline_form
+NEW ir.ui.view: payment_demo.payment_token_form
+NEW ir.ui.view: payment_demo.payment_transaction_form
+NEW ir.ui.view: payment_demo.token_inline_form
+NEW ir.ui.view: payment_demo.verified_token_checkmark

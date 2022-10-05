@@ -1,0 +1,15 @@
+---Models in module 'repair'---
+---Fields in module 'repair'---
+repair       / repair.fee               / price_total (float)           : is now stored
+repair       / repair.line              / lot_id (many2one)             : relation is now 'stock.lot' ('stock.production.lot') [nothing to do]
+repair       / repair.line              / price_total (float)           : is now stored
+repair       / repair.order             / location_id (many2one)        : now a function
+repair       / repair.order             / lot_id (many2one)             : relation is now 'stock.lot' ('stock.production.lot') [nothing to do]
+repair       / repair.order             / picking_id (many2one)         : NEW relation: stock.picking
+repair       / repair.order             / product_uom (many2one)        : now a function
+repair       / stock.picking            / repair_ids (one2many)         : NEW relation: repair.order
+repair       / stock.picking.type       / is_repairable (boolean)       : NEW hasdefault: compute
+repair       / stock.picking.type       / return_type_of_ids (one2many) : NEW relation: stock.picking.type
+---XML records in module 'repair'---
+NEW ir.ui.view: repair.repair_view_picking_form
+NEW ir.ui.view: repair.repair_view_picking_type_form

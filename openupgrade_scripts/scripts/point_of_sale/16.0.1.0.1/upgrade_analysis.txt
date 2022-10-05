@@ -1,0 +1,45 @@
+---Models in module 'point_of_sale'---
+new model pos.session.check_product_wizard [transient]
+---Fields in module 'point_of_sale'---
+point_of_sale / account.bank.statement   / pos_session_id (many2one)     : DEL relation: pos.session
+point_of_sale / account.bank.statement.line / pos_session_id (many2one)     : NEW relation: pos.session
+point_of_sale / barcode.rule             / type (False)                  : selection_keys is now '['alias', 'cashier', 'client', 'discount', 'expiration_date', 'location', 'location_dest', 'lot', 'pack_date', 'package', 'package_type', 'price', 'product', 'quantity', 'use_date', 'weight']' ('['alias', 'cashier', 'client', 'discount', 'expiration_date', 'location', 'location_dest', 'lot', 'package', 'package_type', 'packaging_date', 'price', 'product', 'quantity', 'use_date', 'weight']')
+point_of_sale / pos.config               / barcode_nomenclature_id (many2one): DEL relation: barcode.nomenclature, required
+point_of_sale / pos.config               / iface_display_categ_images (boolean): DEL
+point_of_sale / pos.config               / iface_orderline_customer_notes (boolean): DEL
+point_of_sale / pos.config               / is_margins_costs_accessible_to_every_user (boolean): NEW hasdefault: default
+point_of_sale / pos.config               / module_account (boolean)      : DEL
+point_of_sale / pos.config               / module_pos_loyalty (boolean)  : DEL
+point_of_sale / pos.config               / product_configurator (boolean): DEL
+point_of_sale / pos.config               / route_id (many2one)           : relation is now 'stock.route' ('stock.location.route') [nothing to do]
+point_of_sale / pos.config               / tax_regime (boolean)          : DEL
+point_of_sale / pos.order                / access_token (char)           : NEW
+point_of_sale / pos.order.line           / price_extra (float)           : NEW
+point_of_sale / pos.session              / cash_real_difference (float)  : DEL
+point_of_sale / pos.session              / cash_real_expected (float)    : DEL
+point_of_sale / pos.session              / cash_register_balance_end_real (float): is now stored
+point_of_sale / pos.session              / cash_register_balance_end_real (float): not related anymore
+point_of_sale / pos.session              / cash_register_balance_start (float): is now stored
+point_of_sale / pos.session              / cash_register_balance_start (float): not related anymore
+point_of_sale / pos.session              / cash_register_id (many2one)   : DEL relation: account.bank.statement
+point_of_sale / pos.session              / statement_ids (one2many)      : DEL relation: account.bank.statement
+point_of_sale / pos.session              / statement_line_ids (one2many) : NEW relation: account.bank.statement.line
+point_of_sale / res.company              / point_of_sale_use_ticket_qr_code (boolean): NEW
+---XML records in module 'point_of_sale'---
+DEL ir.actions.act_window: point_of_sale.account_cashbox_line_action
+DEL ir.actions.act_window: point_of_sale.action_pos_box_out
+DEL ir.actions.act_window: point_of_sale.action_pos_config_pos
+NEW ir.model.access: point_of_sale.access_pos_config_system_user
+NEW ir.model.access: point_of_sale.access_pos_session_check_product_wizard
+NEW ir.model.access: point_of_sale.access_product_tag_pos_manager
+DEL ir.model.access: point_of_sale.access_account_cashbox_line_user
+DEL ir.model.access: point_of_sale.access_bank_statement_cashbox_user
+DEL ir.model.access: point_of_sale.access_money_in_out_wizard
+DEL ir.rule: point_of_sale.rule_pos_cashbox_line_accountant (noupdate)
+DEL ir.ui.menu: point_of_sale.menu_pos_config_pos
+NEW ir.ui.view: point_of_sale.ticket_validation_screen
+NEW ir.ui.view: point_of_sale.view_pos_session_check_product_wizard
+DEL ir.ui.view: point_of_sale.account_cashbox_line_view_tree
+DEL ir.ui.view: point_of_sale.view_bank_statement_pos_session
+NEW pos.bill: point_of_sale.0_25 (noupdate)
+DEL pos.bill: point_of_sale.500_00 (noupdate)

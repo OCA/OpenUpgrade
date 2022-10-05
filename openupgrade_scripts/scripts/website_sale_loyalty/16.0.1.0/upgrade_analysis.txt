@@ -1,0 +1,28 @@
+---Models in module 'website_sale_loyalty'---
+model coupon.share (moved from website_sale_coupon) [transient]
+---Fields in module 'website_sale_loyalty'---
+website_sale_loyalty / loyalty.program          / ecommerce_ok (boolean)        : NEW hasdefault: default
+website_sale_loyalty / loyalty.program          / website_id (many2one)         : NEW relation: website
+website_sale_loyalty / loyalty.rule             / website_id (many2one)         : NEW relation: website, isrelated: related, stored
+website_sale_loyalty / sale.order               / disabled_auto_rewards (many2many): NEW relation: loyalty.reward
+---XML records in module 'website_sale_loyalty'---
+NEW ir.model.access: website_sale_loyalty.access_coupon_share_manager
+NEW ir.ui.menu: website_sale_loyalty.menu_discount_loyalty_type_config
+NEW ir.ui.menu: website_sale_loyalty.menu_gift_ewallet_type_config
+NEW ir.ui.menu: website_sale_loyalty.menu_loyalty
+NEW ir.ui.view: website_sale_loyalty.cart_discount
+NEW ir.ui.view: website_sale_loyalty.cart_line_product_no_link
+NEW ir.ui.view: website_sale_loyalty.cart_summary
+NEW ir.ui.view: website_sale_loyalty.cart_summary_inherit_website_gift_card_sale
+NEW ir.ui.view: website_sale_loyalty.coupon_share_view_form
+NEW ir.ui.view: website_sale_loyalty.layout
+NEW ir.ui.view: website_sale_loyalty.loyalty_card_view_tree_inherit_website_sale_loyalty
+NEW ir.ui.view: website_sale_loyalty.loyalty_program_view_form_inherit_website_sale_loyalty
+NEW ir.ui.view: website_sale_loyalty.loyalty_program_view_tree_inherit_website_sale_loyalty
+NEW ir.ui.view: website_sale_loyalty.modify_code_form
+NEW ir.ui.view: website_sale_loyalty.reduction_coupon_code
+NEW ir.ui.view: website_sale_loyalty.res_config_settings_view_form_inherit_website_sale_loyalty
+NEW ir.ui.view: website_sale_loyalty.sale_coupon_result
+NEW ir.ui.view: website_sale_loyalty.snippet_options
+NEW ir.ui.view: website_sale_loyalty.website_sale_coupon_cart_hide_qty
+NEW ir.ui.view: website_sale_loyalty.website_sale_purchased_gift_card

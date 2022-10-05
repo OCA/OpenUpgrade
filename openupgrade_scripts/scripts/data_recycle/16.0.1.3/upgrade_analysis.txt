@@ -1,0 +1,44 @@
+---Models in module 'data_recycle'---
+new model data_recycle.model
+new model data_recycle.record
+---Fields in module 'data_recycle'---
+data_recycle / data_recycle.model       / active (boolean)              : NEW hasdefault: default
+data_recycle / data_recycle.model       / domain (char)                 : NEW hasdefault: compute
+data_recycle / data_recycle.model       / include_archived (boolean)    : NEW
+data_recycle / data_recycle.model       / last_notification (datetime)  : NEW
+data_recycle / data_recycle.model       / name (char)                   : NEW required, hasdefault: compute
+data_recycle / data_recycle.model       / notify_frequency (integer)    : NEW hasdefault: default
+data_recycle / data_recycle.model       / notify_frequency_period (selection): NEW selection_keys: ['days', 'months', 'weeks'], hasdefault: default
+data_recycle / data_recycle.model       / notify_user_ids (many2many)   : NEW relation: res.users, hasdefault: default
+data_recycle / data_recycle.model       / recycle_action (selection)    : NEW required, selection_keys: ['archive', 'unlink'], hasdefault: default
+data_recycle / data_recycle.model       / recycle_mode (selection)      : NEW required, selection_keys: ['automatic', 'manual'], hasdefault: default
+data_recycle / data_recycle.model       / recycle_record_ids (one2many) : NEW relation: data_recycle.record
+data_recycle / data_recycle.model       / res_model_id (many2one)       : NEW relation: ir.model, required
+data_recycle / data_recycle.model       / res_model_name (char)         : NEW isrelated: related, stored
+data_recycle / data_recycle.model       / time_field_delta (integer)    : NEW hasdefault: default
+data_recycle / data_recycle.model       / time_field_delta_unit (selection): NEW selection_keys: ['days', 'months', 'weeks', 'years'], hasdefault: default
+data_recycle / data_recycle.model       / time_field_id (many2one)      : NEW relation: ir.model.fields
+data_recycle / data_recycle.record      / active (boolean)              : NEW hasdefault: default
+data_recycle / data_recycle.record      / company_id (many2one)         : NEW relation: res.company, isfunction: function, stored
+data_recycle / data_recycle.record      / recycle_model_id (many2one)   : NEW relation: data_recycle.model
+data_recycle / data_recycle.record      / res_id (integer)              : NEW
+data_recycle / data_recycle.record      / res_model_id (many2one)       : NEW relation: ir.model, isrelated: related, stored
+data_recycle / data_recycle.record      / res_model_name (char)         : NEW isrelated: related, stored
+---XML records in module 'data_recycle'---
+NEW ir.actions.act_window: data_recycle.action_data_recycle_config
+NEW ir.actions.act_window: data_recycle.action_data_recycle_record
+NEW ir.actions.act_window: data_recycle.action_data_recycle_record_notification
+NEW ir.cron: data_recycle.ir_cron_clean_records
+NEW ir.model.access: data_recycle.access_data_recycle_model_group_system
+NEW ir.model.access: data_recycle.access_data_recycle_record_group_system
+NEW ir.model.constraint: data_recycle.constraint_data_recycle_model_check_notif_freq
+NEW ir.ui.menu: data_recycle.menu_data_cleaning_config
+NEW ir.ui.menu: data_recycle.menu_data_cleaning_config_rules
+NEW ir.ui.menu: data_recycle.menu_data_cleaning_config_rules_recycle
+NEW ir.ui.menu: data_recycle.menu_data_cleaning_root
+NEW ir.ui.menu: data_recycle.menu_data_recycle_record
+NEW ir.ui.view: data_recycle.notification
+NEW ir.ui.view: data_recycle.view_data_merge_model_form
+NEW ir.ui.view: data_recycle.view_data_recycle_model_list
+NEW ir.ui.view: data_recycle.view_data_recycle_record_list
+NEW ir.ui.view: data_recycle.view_data_recycle_record_search

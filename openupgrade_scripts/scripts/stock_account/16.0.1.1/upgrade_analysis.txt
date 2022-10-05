@@ -1,0 +1,11 @@
+---Models in module 'stock_account'---
+---Fields in module 'stock_account'---
+stock_account / account.move.line        / is_anglo_saxon_line (boolean) : DEL
+stock_account / account.move.line        / stock_valuation_layer_ids (one2many): NEW relation: stock.valuation.layer
+stock_account / stock.valuation.layer    / account_move_line_id (many2one): NEW relation: account.move.line
+stock_account / stock.valuation.layer    / price_diff_value (float)      : NEW
+---XML records in module 'stock_account'---
+NEW ir.actions.act_window: stock_account.stock_valuation_layer_report_action
+NEW ir.ui.view: stock_account.product_product_stock_tree_inherit_stock_account
+NEW ir.ui.view: stock_account.stock_valuation_layer_report_tree
+NEW ir.ui.view: stock_account.view_stock_quantity_history_inherit_stock_account

@@ -1,0 +1,8 @@
+<?xml version='1.0' encoding='utf-8'?>
+<odoo>
+  <record id="validation_email" model="mail.template">
+    <field name="email_from">{{ object.company_id.email_formatted or object.email_formatted }}</field>
+    <field name="name">Forum: Email Verification</field>
+    <field name="description">Sent to forum visitors to confirm their mail address</field>
+  </record>
+</odoo>

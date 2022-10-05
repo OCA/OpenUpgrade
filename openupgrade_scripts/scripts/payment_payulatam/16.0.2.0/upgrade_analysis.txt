@@ -1,0 +1,15 @@
+---Models in module 'payment_payulatam'---
+---Fields in module 'payment_payulatam'---
+payment_payulatam / payment.acquirer         / payulatam_account_id (char)   : DEL
+payment_payulatam / payment.acquirer         / payulatam_api_key (char)      : DEL
+payment_payulatam / payment.acquirer         / payulatam_merchant_id (char)  : DEL
+payment_payulatam / payment.acquirer         / provider (False)              : DEL selection_keys: ['adyen', 'alipay', 'authorize', 'buckaroo', 'mollie', 'none', 'ogone', 'paypal', 'payulatam'], mode: modify
+payment_payulatam / payment.provider         / code (False)                  : NEW selection_keys: ['adyen', 'alipay', 'aps', 'asiapay', 'authorize', 'buckaroo', 'custom', 'demo', 'flutterwave', 'mercado_pago', 'mollie', 'none', 'ogone', 'paypal', 'payulatam'], mode: modify
+payment_payulatam / payment.provider         / payulatam_account_id (char)   : NEW
+payment_payulatam / payment.provider         / payulatam_api_key (char)      : NEW
+payment_payulatam / payment.provider         / payulatam_merchant_id (char)  : NEW
+---XML records in module 'payment_payulatam'---
+DEL account.payment.method: payment_payulatam.payment_method_payulatam (noupdate)
+NEW ir.ui.view: payment_payulatam.payment_provider_form
+DEL ir.ui.view: payment_payulatam.payment_acquirer_form
+NEW payment.provider: payment_payulatam.payment_provider_payulatam (noupdate)

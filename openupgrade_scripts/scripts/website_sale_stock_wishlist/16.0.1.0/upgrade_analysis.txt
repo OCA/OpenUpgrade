@@ -1,0 +1,7 @@
+---Models in module 'website_sale_stock_wishlist'---
+---Fields in module 'website_sale_stock_wishlist'---
+website_sale_stock_wishlist / product.wishlist         / stock_notification (boolean)  : not stored anymore
+website_sale_stock_wishlist / product.wishlist         / stock_notification (boolean)  : now a function
+---XML records in module 'website_sale_stock_wishlist'---
+DEL ir.cron: website_sale_stock_wishlist.ir_cron_send_availability_email [renamed to website_sale module]
+DEL ir.ui.view: website_sale_stock_wishlist.availability_email_body

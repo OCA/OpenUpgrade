@@ -1,0 +1,9 @@
+---Models in module 'hr_attendance'---
+---Fields in module 'hr_attendance'---
+hr_attendance / res.company              / attendance_barcode_source (selection): NEW selection_keys: ['back', 'front', 'scanner'], hasdefault: default
+hr_attendance / res.company              / attendance_kiosk_delay (integer): NEW hasdefault: default
+hr_attendance / res.company              / attendance_kiosk_mode (selection): NEW selection_keys: ['barcode', 'barcode_manual', 'manual'], hasdefault: default
+---XML records in module 'hr_attendance'---
+NEW ir.model.access: hr_attendance.access_hr_attendance_officer
+DEL ir.ui.view: hr_attendance.hr_attendance_view_form_inherit
+DEL ir.ui.view: hr_attendance.view_attendance_tree_inherit

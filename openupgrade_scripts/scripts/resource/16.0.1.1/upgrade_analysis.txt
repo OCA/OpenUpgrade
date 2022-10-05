@@ -1,0 +1,9 @@
+---Models in module 'resource'---
+obsolete model resource.test
+---Fields in module 'resource'---
+resource     / resource.test            / company_id (many2one)         : DEL relation: res.company
+resource     / resource.test            / name (char)                   : DEL
+resource     / resource.test            / resource_calendar_id (many2one): DEL relation: resource.calendar
+resource     / resource.test            / resource_id (many2one)        : DEL relation: resource.resource, required
+---XML records in module 'resource'---
+DEL ir.model.access: resource.access_resource_test_all
