@@ -46,13 +46,17 @@ def _rename_fields(env):
 
 
 def _rename_tables(env):
+    # we delete sql constraint before table rename
     openupgrade.delete_sql_constraint_safely(
         env,
         "mail",
         "mail_message_res_partner_needaction_rel",
         "notification_partner_required",
     )
-    # we delete sql constraint before table rename
+    # mail_notification existed in version 8, we have to drop it (rename it) if it
+    # exists before renaming it.
+    if openupgrade.table_exists(env.cr, "mail_notification"):
+        openupgrade.rename_tables(env.cr, [("mail_notification", None)])
     openupgrade.rename_tables(
         env.cr, [("mail_message_res_partner_needaction_rel", "mail_notification")]
     )
