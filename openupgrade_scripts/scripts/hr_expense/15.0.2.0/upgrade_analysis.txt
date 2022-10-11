@@ -2,8 +2,8 @@
 new model hr.expense.approve.duplicate [transient]
 ---Fields in module 'hr_expense'---
 hr_expense   / hr.expense               / company_currency_id (many2one): not stored anymore
-hr_expense   / hr.expense               / currency_id (many2one)        : now a function
-hr_expense   / hr.expense               / currency_id (many2one)        : now required, req_default: function
+hr_expense   / hr.expense               / currency_id (many2one)        : now required
+hr_expense   / hr.expense               / total_amount (float)          : not a function anymore
 hr_expense   / hr.expense.sheet         / amount_residual (float)       : not a function anymore
 hr_expense   / hr.expense.sheet         / amount_residual (float)       : now related
 hr_expense   / hr.expense.sheet         / approval_date (datetime)      : NEW

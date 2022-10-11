@@ -2,7 +2,7 @@
 ---Fields in module 'im_livechat'---
 im_livechat  / im_livechat.channel      / script_external (text)        : type is now 'html' ('text')
 im_livechat  / mail.channel             / channel_type (False)          : selection_keys is now '['channel', 'chat', 'group', 'livechat']' ('['channel', 'chat', 'livechat']')
-im_livechat  / res.users.settings       / is_discuss_sidebar_category_livechat_open (boolean): NEW hasdefault
+im_livechat  / res.users.settings       / is_discuss_sidebar_category_livechat_open (boolean): NEW hasdefault: default
 ---XML records in module 'im_livechat'---
 NEW ir.actions.act_window: im_livechat.rating_rating_action_livechat
 DEL ir.actions.act_window: im_livechat.rating_rating_action_view_livechat_rating

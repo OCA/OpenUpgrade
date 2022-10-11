@@ -9,7 +9,7 @@ payment      / payment.acquirer         / check_validity (boolean)      : DEL
 payment      / payment.acquirer         / inline_form_view_id (many2one): NEW relation: ir.ui.view
 payment      / payment.acquirer         / journal_id (many2one)         : not stored anymore
 payment      / payment.acquirer         / journal_id (many2one)         : now a function
-payment      / payment.acquirer         / payment_flow (selection)      : DEL required, selection_keys: ['form', 's2s'], req_default: function
+payment      / payment.acquirer         / payment_flow (selection)      : DEL required, selection_keys: ['form', 's2s']
 payment      / payment.acquirer         / provider (selection)          : selection_keys is now '['none']' ('['manual']')
 payment      / payment.acquirer         / qr_code (boolean)             : module is now 'payment_transfer' ('payment')
 payment      / payment.acquirer         / redirect_form_view_id (many2one): NEW relation: ir.ui.view
@@ -22,7 +22,7 @@ payment      / payment.acquirer         / support_tokenization (boolean): NEW
 payment      / payment.acquirer         / view_template_id (many2one)   : DEL relation: ir.ui.view
 payment      / payment.icon             / _order                        : _order is now 'sequence, name' ('id')
 payment      / payment.icon             / image_payment_form (binary)   : now related
-payment      / payment.icon             / sequence (integer)            : NEW hasdefault
+payment      / payment.icon             / sequence (integer)            : NEW hasdefault: default
 payment      / payment.token            / name (char)                   : now required
 payment      / payment.token            / payment_ids (one2many)        : DEL relation: payment.transaction
 payment      / payment.token            / provider (selection)          : previously in module payment_authorize
@@ -34,7 +34,7 @@ payment      / payment.transaction      / html_3ds (char)               : DEL
 payment      / payment.transaction      / is_post_processed (boolean)   : NEW
 payment      / payment.transaction      / is_processed (boolean)        : DEL
 payment      / payment.transaction      / landing_route (char)          : NEW
-payment      / payment.transaction      / last_state_change (datetime)  : NEW hasdefault
+payment      / payment.transaction      / last_state_change (datetime)  : NEW
 payment      / payment.transaction      / operation (selection)         : NEW selection_keys: ['offline', 'online_direct', 'online_redirect', 'online_token', 'refund', 'validation']
 payment      / payment.transaction      / partner_id (many2one)         : now required
 payment      / payment.transaction      / partner_state_id (many2one)   : NEW relation: res.country.state
@@ -43,7 +43,7 @@ payment      / payment.transaction      / return_url (char)             : DEL
 payment      / payment.transaction      / source_transaction_id (many2one): NEW relation: payment.transaction
 payment      / payment.transaction      / token_id (many2one)           : NEW relation: payment.token
 payment      / payment.transaction      / tokenize (boolean)            : NEW
-payment      / payment.transaction      / type (selection)              : DEL required, selection_keys: ['form', 'form_save', 'server2server', 'validation'], req_default: function
+payment      / payment.transaction      / type (selection)              : DEL required, selection_keys: ['form', 'form_save', 'server2server', 'validation']
 ---XML records in module 'payment'---
 DEL account.payment.method: payment.account_payment_method_electronic_in
 NEW ir.actions.act_window: payment.action_payment_token

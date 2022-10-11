@@ -11,31 +11,31 @@ project      / account.analytic.tag     / task_ids (many2many)          : NEW re
 project      / project.collaborator     / partner_id (many2one)         : NEW relation: res.partner, required
 project      / project.collaborator     / project_id (many2one)         : NEW relation: project.project, required
 project      / project.milestone        / deadline (date)               : NEW
-project      / project.milestone        / is_reached (boolean)          : NEW hasdefault
+project      / project.milestone        / is_reached (boolean)          : NEW hasdefault: default
 project      / project.milestone        / message_follower_ids (one2many): NEW relation: mail.followers
 project      / project.milestone        / message_ids (one2many)        : NEW relation: mail.message
 project      / project.milestone        / message_main_attachment_id (many2one): NEW relation: ir.attachment
 project      / project.milestone        / name (char)                   : NEW required
-project      / project.milestone        / project_id (many2one)         : NEW relation: project.project, required, req_default: function, hasdefault
+project      / project.milestone        / project_id (many2one)         : NEW relation: project.project, required, hasdefault: default
 project      / project.milestone        / reached_date (date)           : NEW isfunction: function, stored
 project      / project.milestone        / website_message_ids (one2many): NEW relation: mail.message
 project      / project.project          / activity_ids (one2many)       : NEW relation: mail.activity
-project      / project.project          / allow_task_dependencies (boolean): NEW hasdefault
+project      / project.project          / allow_task_dependencies (boolean): NEW hasdefault: default
 project      / project.project          / allowed_internal_user_ids (many2many): DEL relation: res.users
 project      / project.project          / allowed_portal_user_ids (many2many): DEL relation: res.users
 project      / project.project          / collaborator_ids (one2many)   : NEW relation: project.collaborator
 project      / project.project          / last_update_id (many2one)     : NEW relation: project.update
-project      / project.project          / last_update_status (selection): NEW selection_keys: ['at_risk', 'off_track', 'on_hold', 'on_track'], hasdefault, isfunction: function, stored
+project      / project.project          / last_update_status (selection): NEW selection_keys: ['at_risk', 'off_track', 'on_hold', 'on_track'], isfunction: function, stored
 project      / project.project          / milestone_ids (one2many)      : NEW relation: project.milestone
-project      / project.project          / stage_id (many2one)           : NEW relation: project.project.stage, hasdefault
+project      / project.project          / stage_id (many2one)           : NEW relation: project.project.stage, hasdefault: default
 project      / project.project          / subtask_project_id (many2one) : DEL relation: project.project
 project      / project.project          / tag_ids (many2many)           : NEW relation: project.tags
 project      / project.project          / update_ids (one2many)         : NEW relation: project.update
-project      / project.project.stage    / active (boolean)              : NEW hasdefault
+project      / project.project.stage    / active (boolean)              : NEW hasdefault: default
 project      / project.project.stage    / fold (boolean)                : NEW
 project      / project.project.stage    / mail_template_id (many2one)   : NEW relation: mail.template
 project      / project.project.stage    / name (char)                   : NEW required
-project      / project.project.stage    / sequence (integer)            : NEW hasdefault
+project      / project.project.stage    / sequence (integer)            : NEW hasdefault: default
 project      / project.task             / allowed_user_ids (many2many)  : DEL relation: res.users
 project      / project.task             / analytic_account_id (many2one): previously in module sale_timesheet
 project      / project.task             / analytic_tag_ids (many2many)  : NEW relation: account.analytic.tag
@@ -44,13 +44,13 @@ project      / project.task             / dependent_ids (many2many)     : NEW re
 project      / project.task             / display_project_id (many2one) : NEW relation: project.project
 project      / project.task             / personal_stage_type_ids (many2many): NEW relation: project.task.type
 project      / project.task             / user_id (many2one)            : DEL relation: res.users
-project      / project.task             / user_ids (many2many)          : NEW relation: res.users, hasdefault
+project      / project.task             / user_ids (many2many)          : NEW relation: res.users, hasdefault: default
 project      / project.task.stage.personal / stage_id (many2one)           : NEW relation: project.task.type
 project      / project.task.stage.personal / task_id (many2one)            : NEW relation: project.task, required
 project      / project.task.stage.personal / user_id (many2one)            : NEW relation: res.users, required
 project      / project.task.type        / user_id (many2one)            : NEW relation: res.users
 project      / project.update           / activity_ids (one2many)       : NEW relation: mail.activity
-project      / project.update           / date (date)                   : NEW hasdefault
+project      / project.update           / date (date)                   : NEW hasdefault: default
 project      / project.update           / description (html)            : NEW
 project      / project.update           / email_cc (char)               : NEW
 project      / project.update           / message_follower_ids (one2many): NEW relation: mail.followers
@@ -60,7 +60,7 @@ project      / project.update           / name (char)                   : NEW re
 project      / project.update           / progress (integer)            : NEW
 project      / project.update           / project_id (many2one)         : NEW relation: project.project, required
 project      / project.update           / status (selection)            : NEW required, selection_keys: ['at_risk', 'off_track', 'on_hold', 'on_track']
-project      / project.update           / user_id (many2one)            : NEW relation: res.users, required, req_default: function, hasdefault
+project      / project.update           / user_id (many2one)            : NEW relation: res.users, required, hasdefault: default
 project      / project.update           / website_message_ids (one2many): NEW relation: mail.message
 ---XML records in module 'project'---
 NEW ir.actions.act_window: project.action_project_task_burndown_chart_report

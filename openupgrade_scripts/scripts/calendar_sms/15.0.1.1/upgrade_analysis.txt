@@ -1,6 +1,6 @@
 ---Models in module 'calendar_sms'---
 ---Fields in module 'calendar_sms'---
-calendar_sms / calendar.alarm           / sms_template_id (many2one)    : NEW relation: sms.template, isfunction: function, stored
+calendar_sms / calendar.alarm           / sms_template_id (many2one)    : NEW relation: sms.template, hasdefault: compute
 ---XML records in module 'calendar_sms'---
 DEL ir.actions.act_window: calendar_sms.calendar_event_act_window_sms_composer_single
 NEW ir.ui.view: calendar_sms.calendar_alarm_view_form

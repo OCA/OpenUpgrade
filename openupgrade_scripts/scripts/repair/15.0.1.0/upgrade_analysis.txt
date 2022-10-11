@@ -3,7 +3,7 @@
 repair       / repair.order             / _order                        : _order is now 'priority desc, create_date desc' ('create_date desc')
 repair       / repair.order             / description (char)            : NEW
 repair       / repair.order             / internal_notes (text)         : type is now 'html' ('text')
-repair       / repair.order             / priority (selection)          : NEW selection_keys: ['0', '1'], hasdefault
+repair       / repair.order             / priority (selection)          : NEW selection_keys: ['0', '1'], hasdefault: default
 repair       / repair.order             / quotation_notes (text)        : type is now 'html' ('text')
 repair       / repair.order             / sale_order_id (many2one)      : NEW relation: sale.order
 repair       / repair.order             / schedule_date (date)          : NEW

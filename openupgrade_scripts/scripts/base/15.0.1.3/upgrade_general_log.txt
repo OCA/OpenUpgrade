@@ -104,12 +104,12 @@ new model website.base.unit [module website_sale]
 new model website.configurator.feature [module website]
 new model website.searchable.mixin [module website]
 ---Fields in module 'general'---
-# 10890 fields matched,
-# Direct match: 10776
+# 10889 fields matched,
+# Direct match: 10775
 # Found in other module: 114
 # Found with different type: 0
 # In obsolete models: 162
-# New columns: 1755
+# New columns: 1763
 # Not matched: 587
 ---XML records in module 'general'---
 ERROR: module not in list of installed modules:
@@ -141,7 +141,7 @@ adyen_platforms / adyen.account            / id_front (binary)             : DEL
 adyen_platforms / adyen.account            / id_front_filename (char)      : DEL
 adyen_platforms / adyen.account            / id_type (selection)           : DEL selection_keys: ['DRIVING_LICENSE', 'ID_CARD', 'PASSPORT']
 adyen_platforms / adyen.account            / is_business (boolean)         : DEL required
-adyen_platforms / adyen.account            / kyc_status (selection)        : DEL required, selection_keys: ['awaiting_data', 'failed', 'passed', 'pending'], req_default: function
+adyen_platforms / adyen.account            / kyc_status (selection)        : DEL required, selection_keys: ['awaiting_data', 'failed', 'passed', 'pending']
 adyen_platforms / adyen.account            / kyc_status_message (char)     : DEL
 adyen_platforms / adyen.account            / last_name (char)              : DEL
 adyen_platforms / adyen.account            / legal_business_name (char)    : DEL
@@ -169,7 +169,7 @@ adyen_platforms / adyen.bank.account       / branch_code (char)            : DEL
 adyen_platforms / adyen.bank.account       / country_id (many2one)         : DEL relation: res.country, required
 adyen_platforms / adyen.bank.account       / currency_id (many2one)        : DEL relation: res.currency, required
 adyen_platforms / adyen.bank.account       / iban (char)                   : DEL
-adyen_platforms / adyen.bank.account       / kyc_status (selection)        : DEL required, selection_keys: ['awaiting_data', 'failed', 'passed', 'pending'], req_default: function
+adyen_platforms / adyen.bank.account       / kyc_status (selection)        : DEL required, selection_keys: ['awaiting_data', 'failed', 'passed', 'pending']
 adyen_platforms / adyen.bank.account       / kyc_status_message (char)     : DEL
 adyen_platforms / adyen.bank.account       / owner_city (char)             : DEL
 adyen_platforms / adyen.bank.account       / owner_country_id (many2one)   : DEL relation: res.country
@@ -181,9 +181,9 @@ adyen_platforms / adyen.bank.account       / owner_zip (char)              : DEL
 adyen_platforms / adyen.payout             / adyen_account_id (many2one)   : DEL relation: adyen.account
 adyen_platforms / adyen.payout             / adyen_bank_account_id (many2one): DEL relation: adyen.bank.account
 adyen_platforms / adyen.payout             / code (char)                   : DEL
-adyen_platforms / adyen.payout             / name (char)                   : DEL required, req_default: function
+adyen_platforms / adyen.payout             / name (char)                   : DEL required
 adyen_platforms / adyen.payout             / next_scheduled_payout (date)  : DEL
-adyen_platforms / adyen.payout             / payout_schedule (selection)   : DEL required, selection_keys: ['day', 'month', 'week'], req_default: function
+adyen_platforms / adyen.payout             / payout_schedule (selection)   : DEL required, selection_keys: ['day', 'month', 'week']
 adyen_platforms / adyen.payout             / transaction_ids (one2many)    : DEL relation: adyen.transaction
 adyen_platforms / adyen.shareholder        / adyen_account_id (many2one)   : DEL relation: adyen.account
 adyen_platforms / adyen.shareholder        / city (char)                   : DEL required
@@ -197,7 +197,7 @@ adyen_platforms / adyen.shareholder        / id_back_filename (char)       : DEL
 adyen_platforms / adyen.shareholder        / id_front (binary)             : DEL attachment: True
 adyen_platforms / adyen.shareholder        / id_front_filename (char)      : DEL
 adyen_platforms / adyen.shareholder        / id_type (selection)           : DEL selection_keys: ['DRIVING_LICENSE', 'ID_CARD', 'PASSPORT']
-adyen_platforms / adyen.shareholder        / kyc_status (selection)        : DEL required, selection_keys: ['awaiting_data', 'failed', 'passed', 'pending'], req_default: function
+adyen_platforms / adyen.shareholder        / kyc_status (selection)        : DEL required, selection_keys: ['awaiting_data', 'failed', 'passed', 'pending']
 adyen_platforms / adyen.shareholder        / kyc_status_message (char)     : DEL
 adyen_platforms / adyen.shareholder        / last_name (char)              : DEL required
 adyen_platforms / adyen.shareholder        / shareholder_reference (char)  : DEL
@@ -300,7 +300,6 @@ ERROR: module not in list of installed modules:
 ---Models in module 'l10n_ch_qriban'---
 ---Fields in module 'l10n_ch_qriban'---
 l10n_ch_qriban / res.partner.bank         / l10n_ch_qr_iban (char)        : module is now 'l10n_ch' ('l10n_ch_qriban')
-l10n_ch_qriban / res.partner.bank         / l10n_ch_qr_iban (char)        : now a function
 ---XML records in module 'l10n_ch_qriban'---
 DEL ir.ui.view: l10n_ch_qriban.l10n_ch_swissqr_qriban_template
 DEL ir.ui.view: l10n_ch_qriban.setup_bank_account_wizard_qr_inherit

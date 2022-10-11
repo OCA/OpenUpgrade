@@ -7,21 +7,21 @@ website      / ir.asset                 / key (char)                    : NEW
 website      / ir.asset                 / theme_template_id (many2one)  : NEW relation: theme.ir.asset
 website      / ir.asset                 / website_id (many2one)         : NEW relation: website
 website      / res.company              / website_id (many2one)         : NEW relation: website, isfunction: function, stored
-website      / theme.ir.asset           / active (boolean)              : NEW hasdefault
+website      / theme.ir.asset           / active (boolean)              : NEW hasdefault: default
 website      / theme.ir.asset           / bundle (char)                 : NEW required
 website      / theme.ir.asset           / copy_ids (one2many)           : NEW relation: ir.asset
-website      / theme.ir.asset           / directive (selection)         : NEW selection_keys: ['after', 'append', 'before', 'include', 'prepend', 'remove', 'replace'], hasdefault
+website      / theme.ir.asset           / directive (selection)         : NEW selection_keys: ['after', 'append', 'before', 'include', 'prepend', 'remove', 'replace'], hasdefault: default
 website      / theme.ir.asset           / key (char)                    : NEW
 website      / theme.ir.asset           / name (char)                   : NEW required
 website      / theme.ir.asset           / path (char)                   : NEW required
-website      / theme.ir.asset           / sequence (integer)            : NEW required, req_default: function, hasdefault
+website      / theme.ir.asset           / sequence (integer)            : NEW required, hasdefault: default
 website      / theme.ir.asset           / target (char)                 : NEW
 website      / website                  / _order                        : _order is now 'sequence, id' ('id')
 website      / website                  / configurator_done (boolean)   : NEW
 website      / website                  / custom_code_footer (text)     : type is now 'html' ('text')
 website      / website                  / custom_code_head (text)       : type is now 'html' ('text')
 website      / website                  / robots_txt (text)             : type is now 'html' ('text')
-website      / website                  / sequence (integer)            : NEW hasdefault
+website      / website                  / sequence (integer)            : NEW hasdefault: default
 website      / website.configurator.feature / description (char)            : NEW
 website      / website.configurator.feature / feature_url (char)            : NEW
 website      / website.configurator.feature / iap_page_code (char)          : NEW

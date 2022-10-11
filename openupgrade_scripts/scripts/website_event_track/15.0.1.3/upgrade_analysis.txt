@@ -55,23 +55,21 @@ website_event_track / event.sponsor.type       / display_name (char)           :
 website_event_track / event.sponsor.type       / display_ribbon_style (selection): module is now 'website_event_exhibitor' ('website_event_track')
 website_event_track / event.sponsor.type       / name (char)                   : module is now 'website_event_exhibitor' ('website_event_track')
 website_event_track / event.sponsor.type       / sequence (integer)            : module is now 'website_event_exhibitor' ('website_event_track')
-website_event_track / event.track              / contact_email (char)          : NEW isfunction: function, stored
-website_event_track / event.track              / contact_phone (char)          : NEW isfunction: function, stored
+website_event_track / event.track              / contact_email (char)          : NEW hasdefault: compute
+website_event_track / event.track              / contact_phone (char)          : NEW hasdefault: compute
 website_event_track / event.track              / kanban_state_label (char)     : NEW isfunction: function, stored
 website_event_track / event.track              / partner_company_name (char)   : is now stored
 website_event_track / event.track              / partner_company_name (char)   : not related anymore
-website_event_track / event.track              / partner_company_name (char)   : now a function
 website_event_track / event.track              / partner_function (char)       : is now stored
 website_event_track / event.track              / partner_function (char)       : not related anymore
-website_event_track / event.track              / partner_function (char)       : now a function
 website_event_track / event.track.stage        / description (text)            : NEW
 website_event_track / event.track.stage        / is_accepted (boolean)         : DEL
 website_event_track / event.track.stage        / is_done (boolean)             : DEL
 website_event_track / event.track.stage        / is_fully_accessible (boolean) : NEW isfunction: function, stored
 website_event_track / event.track.stage        / is_visible_in_agenda (boolean): NEW isfunction: function, stored
-website_event_track / event.track.stage        / legend_blocked (char)         : NEW hasdefault
-website_event_track / event.track.stage        / legend_done (char)            : NEW hasdefault
-website_event_track / event.track.stage        / legend_normal (char)          : NEW hasdefault
+website_event_track / event.track.stage        / legend_blocked (char)         : NEW hasdefault: default
+website_event_track / event.track.stage        / legend_done (char)            : NEW hasdefault: default
+website_event_track / event.track.stage        / legend_normal (char)          : NEW hasdefault: default
 website_event_track / website.event.menu       / menu_type (False)             : selection_keys is now '['booth', 'community', 'exhibitor', 'introduction', 'location', 'meeting_room', 'register', 'track', 'track_proposal']' ('['community', 'meeting_room', 'track', 'track_proposal']')
 ---XML records in module 'website_event_track'---
 DEL event.sponsor.type: website_event_track.event_sponsor_type1 [renamed to website_event_exhibitor module] (noupdate)

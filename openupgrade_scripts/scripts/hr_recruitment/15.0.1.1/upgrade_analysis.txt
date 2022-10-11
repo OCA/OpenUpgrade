@@ -1,5 +1,6 @@
 ---Models in module 'hr_recruitment'---
 ---Fields in module 'hr_recruitment'---
+hr_recruitment / hr.applicant             / date_closed (datetime)        : not a function anymore
 hr_recruitment / hr.applicant             / description (text)            : type is now 'html' ('text')
 hr_recruitment / hr.applicant             / meeting_ids (one2many)        : NEW relation: calendar.event
 hr_recruitment / hr.applicant.refuse.reason / template_id (many2one)        : NEW relation: mail.template

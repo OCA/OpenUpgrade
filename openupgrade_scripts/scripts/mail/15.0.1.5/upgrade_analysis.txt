@@ -11,7 +11,7 @@ new model res.users.settings.volumes
 mail         / bus.presence             / guest_id (many2one)           : NEW relation: mail.guest
 mail         / ir.actions.server        / channel_ids (many2many)       : DEL relation: mail.channel
 mail         / mail.activity.type       / category (selection)          : selection_keys is now '['default', 'phonecall', 'upload_file']' ('['default', 'upload_file']')
-mail         / mail.activity.type       / chaining_type (selection)     : NEW required, selection_keys: ['suggest', 'trigger'], req_default: function, hasdefault
+mail         / mail.activity.type       / chaining_type (selection)     : NEW required, selection_keys: ['suggest', 'trigger'], hasdefault: default
 mail         / mail.activity.type       / default_description (html)    : DEL
 mail         / mail.activity.type       / default_next_type_id (many2one): DEL relation: mail.activity.type
 mail         / mail.activity.type       / default_note (html)           : NEW
@@ -38,7 +38,7 @@ mail         / mail.channel             / moderator_ids (many2many)     : DEL re
 mail         / mail.channel             / rtc_session_ids (one2many)    : NEW relation: mail.channel.rtc.session
 mail         / mail.channel.partner     / channel_id (many2one)         : now required
 mail         / mail.channel.partner     / guest_id (many2one)           : NEW relation: mail.guest
-mail         / mail.channel.partner     / last_interest_dt (datetime)   : NEW hasdefault
+mail         / mail.channel.partner     / last_interest_dt (datetime)   : NEW hasdefault: default
 mail         / mail.channel.partner     / rtc_inviting_session_id (many2one): NEW relation: mail.channel.rtc.session
 mail         / mail.channel.partner     / rtc_session_ids (one2many)    : NEW relation: mail.channel.rtc.session
 mail         / mail.channel.rtc.session / channel_id (many2one)         : NEW relation: mail.channel, isrelated: related, stored
@@ -55,7 +55,7 @@ mail         / mail.followers           / is_active (boolean)           : now re
 mail         / mail.followers           / name (char)                   : not a function anymore
 mail         / mail.followers           / name (char)                   : now related
 mail         / mail.followers           / partner_id (many2one)         : now required
-mail         / mail.guest               / access_token (char)           : NEW required, req_default: function, hasdefault
+mail         / mail.guest               / access_token (char)           : NEW required
 mail         / mail.guest               / channel_ids (many2many)       : NEW relation: mail.channel
 mail         / mail.guest               / country_id (many2one)         : NEW relation: res.country
 mail         / mail.guest               / image_1024 (binary)           : NEW attachment: True, isrelated: related, stored
@@ -67,7 +67,7 @@ mail         / mail.guest               / lang (selection)              : NEW se
 mail         / mail.guest               / name (char)                   : NEW required
 mail         / mail.guest               / timezone (selection)          : NEW selection_keys: function
 mail         / mail.ice.server          / credential (char)             : NEW
-mail         / mail.ice.server          / server_type (selection)       : NEW required, selection_keys: ['stun', 'turn'], req_default: function, hasdefault
+mail         / mail.ice.server          / server_type (selection)       : NEW required, selection_keys: ['stun', 'turn'], hasdefault: default
 mail         / mail.ice.server          / uri (char)                    : NEW required
 mail         / mail.ice.server          / username (char)               : NEW
 mail         / mail.mail                / failure_type (selection)      : NEW selection_keys: ['mail_bl', 'mail_dup', 'mail_email_invalid', 'mail_email_missing', 'mail_optout', 'mail_smtp', 'unknown']
@@ -97,17 +97,17 @@ mail         / mail.notification        / mail_mail_id (many2one)       : NEW re
 mail         / mail.tracking.value      / currency_id (many2one)        : NEW relation: res.currency
 mail         / res.users                / moderation_channel_ids (many2many): DEL relation: mail.channel
 mail         / res.users                / res_users_settings_ids (one2many): NEW relation: res.users.settings
-mail         / res.users.settings       / is_discuss_sidebar_category_channel_open (boolean): NEW hasdefault
-mail         / res.users.settings       / is_discuss_sidebar_category_chat_open (boolean): NEW hasdefault
+mail         / res.users.settings       / is_discuss_sidebar_category_channel_open (boolean): NEW hasdefault: default
+mail         / res.users.settings       / is_discuss_sidebar_category_chat_open (boolean): NEW hasdefault: default
 mail         / res.users.settings       / push_to_talk_key (char)       : NEW
-mail         / res.users.settings       / use_push_to_talk (boolean)    : NEW hasdefault
+mail         / res.users.settings       / use_push_to_talk (boolean)    : NEW hasdefault: default
 mail         / res.users.settings       / user_id (many2one)            : NEW relation: res.users, required
 mail         / res.users.settings       / voice_active_duration (integer): NEW
 mail         / res.users.settings       / volume_settings_ids (one2many): NEW relation: res.users.settings.volumes
 mail         / res.users.settings.volumes / guest_id (many2one)           : NEW relation: res.partner
 mail         / res.users.settings.volumes / partner_id (many2one)         : NEW relation: res.partner
 mail         / res.users.settings.volumes / user_setting_id (many2one)    : NEW relation: res.users.settings, required
-mail         / res.users.settings.volumes / volume (float)                : NEW hasdefault
+mail         / res.users.settings.volumes / volume (float)                : NEW hasdefault: default
 ---XML records in module 'mail'---
 NEW ir.actions.act_window: mail.action_ice_servers
 NEW ir.actions.act_window: mail.mail_channel_rtc_session_action

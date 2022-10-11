@@ -1,9 +1,9 @@
 ---Models in module 'website_event_booth'---
 ---Fields in module 'website_event_booth'---
-website_event_booth / event.event              / booth_menu (boolean)          : NEW isfunction: function, stored
+website_event_booth / event.event              / booth_menu (boolean)          : NEW hasdefault: compute
 website_event_booth / event.event              / booth_menu_ids (one2many)     : NEW relation: website.event.menu
 website_event_booth / event.event              / exhibition_map (binary)       : NEW attachment: True
-website_event_booth / event.type               / booth_menu (boolean)          : NEW isfunction: function, stored
+website_event_booth / event.type               / booth_menu (boolean)          : NEW hasdefault: compute
 website_event_booth / website.event.menu       / menu_type (False)             : NEW selection_keys: ['booth', 'community', 'introduction', 'location', 'register'], mode: modify
 ---XML records in module 'website_event_booth'---
 NEW ir.model.access: website_event_booth.access_event_booth_all

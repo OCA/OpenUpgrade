@@ -6,9 +6,9 @@ new model mail.group.message.reject [transient]
 new model mail.group.moderation (renamed from mail.moderation in module mail)
 ---Fields in module 'mail_group'---
 mail_group   / mail.group               / _inherits                     : NEW _inherits: {'mail.alias': 'alias_id'}
-mail_group   / mail.group               / access_group_id (many2one)    : NEW relation: res.groups, hasdefault
-mail_group   / mail.group               / access_mode (selection)       : NEW required, selection_keys: ['groups', 'members', 'public'], req_default: function, hasdefault
-mail_group   / mail.group               / active (boolean)              : NEW hasdefault
+mail_group   / mail.group               / access_group_id (many2one)    : NEW relation: res.groups, hasdefault: default
+mail_group   / mail.group               / access_mode (selection)       : NEW required, selection_keys: ['groups', 'members', 'public'], hasdefault: default
+mail_group   / mail.group               / active (boolean)              : NEW hasdefault: default
 mail_group   / mail.group               / alias_id (many2one)           : NEW relation: mail.alias, required
 mail_group   / mail.group               / description (text)            : NEW
 mail_group   / mail.group               / image_128 (binary)            : NEW attachment: True
@@ -22,7 +22,7 @@ mail_group   / mail.group               / moderation_notify_msg (html)  : NEW
 mail_group   / mail.group               / moderation_rule_ids (one2many): NEW relation: mail.group.moderation
 mail_group   / mail.group               / moderator_ids (many2many)     : NEW relation: res.users
 mail_group   / mail.group               / name (char)                   : NEW required
-mail_group   / mail.group.member        / email (char)                  : NEW isfunction: function, stored
+mail_group   / mail.group.member        / email (char)                  : NEW hasdefault: compute
 mail_group   / mail.group.member        / email_normalized (char)       : NEW isfunction: function, stored
 mail_group   / mail.group.member        / mail_group_id (many2one)      : NEW relation: mail.group, required
 mail_group   / mail.group.member        / partner_id (many2one)         : NEW relation: res.partner
@@ -31,7 +31,7 @@ mail_group   / mail.group.message       / group_message_child_ids (one2many): NE
 mail_group   / mail.group.message       / group_message_parent_id (many2one): NEW relation: mail.group.message
 mail_group   / mail.group.message       / mail_group_id (many2one)      : NEW relation: mail.group, required
 mail_group   / mail.group.message       / mail_message_id (many2one)    : NEW relation: mail.message, required
-mail_group   / mail.group.message       / moderation_status (selection) : NEW required, selection_keys: ['accepted', 'pending_moderation', 'rejected'], req_default: function, hasdefault
+mail_group   / mail.group.message       / moderation_status (selection) : NEW required, selection_keys: ['accepted', 'pending_moderation', 'rejected'], hasdefault: default
 mail_group   / mail.group.message       / moderator_id (many2one)       : NEW relation: res.users
 mail_group   / mail.group.moderation    / mail_group_id (many2one)      : NEW relation: mail.group, required
 mail_group   / mail.moderation          / __last_update (datetime)      : previously in module mail

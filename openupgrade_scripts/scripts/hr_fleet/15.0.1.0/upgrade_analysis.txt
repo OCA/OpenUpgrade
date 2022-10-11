@@ -2,7 +2,7 @@
 ---Fields in module 'hr_fleet'---
 hr_fleet     / fleet.vehicle            / driver_employee_id (many2one) : NEW relation: hr.employee, isfunction: function, stored
 hr_fleet     / fleet.vehicle            / future_driver_employee_id (many2one): NEW relation: hr.employee, isfunction: function, stored
-hr_fleet     / fleet.vehicle.log.services / purchaser_employee_id (many2one): NEW relation: hr.employee, isfunction: function, stored
+hr_fleet     / fleet.vehicle.log.services / purchaser_employee_id (many2one): NEW relation: hr.employee, hasdefault: compute
 hr_fleet     / hr.employee              / car_ids (one2many)            : NEW relation: fleet.vehicle
 ---XML records in module 'hr_fleet'---
 NEW ir.model.access: hr_fleet.hr_fleet_vehicle_access_right_hr_officer

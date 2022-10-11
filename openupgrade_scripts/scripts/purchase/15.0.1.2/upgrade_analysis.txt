@@ -1,6 +1,6 @@
 ---Models in module 'purchase'---
 ---Fields in module 'purchase'---
-purchase     / product.packaging        / purchase (boolean)            : NEW hasdefault
+purchase     / product.packaging        / purchase (boolean)            : NEW hasdefault: default
 purchase     / purchase.order           / notes (text)                  : type is now 'html' ('text')
 purchase     / purchase.order.line      / product_packaging_id (many2one): NEW relation: product.packaging
 purchase     / purchase.order.line      / product_packaging_qty (float) : NEW

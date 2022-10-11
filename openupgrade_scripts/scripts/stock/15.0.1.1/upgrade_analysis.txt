@@ -13,16 +13,16 @@ new model stock.storage.category
 new model stock.storage.category.capacity
 ---Fields in module 'stock'---
 stock        / barcode.rule             / type (False)                  : selection_keys is now '['alias', 'expiration_date', 'location', 'location_dest', 'lot', 'package', 'package_type', 'packaging_date', 'product', 'quantity', 'use_date', 'weight']' ('['alias', 'location', 'lot', 'package', 'product', 'weight']')
-stock        / product.category         / packaging_reserve_method (selection): NEW selection_keys: ['full', 'partial'], hasdefault
+stock        / product.category         / packaging_reserve_method (selection): NEW selection_keys: ['full', 'partial'], hasdefault: default
 stock        / product.packaging        / package_type_id (many2one)    : NEW relation: stock.package.type
 stock        / product.packaging        / route_ids (many2many)         : NEW relation: stock.location.route
 stock        / product.product          / storage_category_capacity_ids (one2many): NEW relation: stock.storage.category.capacity
 stock        / product.template         / detailed_type (False)         : NEW selection_keys: ['consu', 'gift', 'product', 'service'], mode: modify
-stock        / res.company              / annual_inventory_day (integer): NEW hasdefault
-stock        / res.company              / annual_inventory_month (selection): NEW selection_keys: ['1', '10', '11', '12', '2', '3', '4', '5', '6', '7', '8', '9'], hasdefault
+stock        / res.company              / annual_inventory_day (integer): NEW hasdefault: default
+stock        / res.company              / annual_inventory_month (selection): NEW selection_keys: ['1', '10', '11', '12', '2', '3', '4', '5', '6', '7', '8', '9'], hasdefault: default
 stock        / stock.inventory          / activity_ids (one2many)       : DEL relation: mail.activity
-stock        / stock.inventory          / company_id (many2one)         : DEL relation: res.company, required, req_default: function
-stock        / stock.inventory          / date (datetime)               : DEL required, req_default: function
+stock        / stock.inventory          / company_id (many2one)         : DEL relation: res.company, required
+stock        / stock.inventory          / date (datetime)               : DEL required
 stock        / stock.inventory          / exhausted (boolean)           : DEL
 stock        / stock.inventory          / line_ids (one2many)           : DEL relation: stock.inventory.line
 stock        / stock.inventory          / location_ids (many2many)      : DEL relation: stock.location
@@ -30,7 +30,7 @@ stock        / stock.inventory          / message_follower_ids (one2many): DEL r
 stock        / stock.inventory          / message_ids (one2many)        : DEL relation: mail.message
 stock        / stock.inventory          / message_main_attachment_id (many2one): DEL relation: ir.attachment
 stock        / stock.inventory          / move_ids (one2many)           : DEL relation: stock.move
-stock        / stock.inventory          / name (char)                   : DEL required, req_default: function
+stock        / stock.inventory          / name (char)                   : DEL required
 stock        / stock.inventory          / prefill_counted_quantity (selection): DEL selection_keys: ['counted', 'zero']
 stock        / stock.inventory          / product_ids (many2many)       : DEL relation: product.product
 stock        / stock.inventory          / start_empty (boolean)         : DEL
@@ -50,7 +50,7 @@ stock        / stock.inventory.line     / product_qty (float)           : DEL
 stock        / stock.inventory.line     / product_uom_id (many2one)     : DEL relation: uom.uom, required
 stock        / stock.inventory.line     / theoretical_qty (float)       : DEL
 stock        / stock.location           / comment (text)                : type is now 'html' ('text')
-stock        / stock.location           / cyclic_inventory_frequency (integer): NEW hasdefault
+stock        / stock.location           / cyclic_inventory_frequency (integer): NEW hasdefault: default
 stock        / stock.location           / incoming_move_line_ids (one2many): NEW relation: stock.move.line
 stock        / stock.location           / last_inventory_date (date)    : NEW
 stock        / stock.location           / next_inventory_date (date)    : NEW isfunction: function, stored
@@ -72,30 +72,30 @@ stock        / stock.package.type       / height (integer)              : NEW
 stock        / stock.package.type       / max_weight (float)            : NEW
 stock        / stock.package.type       / name (char)                   : NEW required
 stock        / stock.package.type       / packaging_length (integer)    : NEW
-stock        / stock.package.type       / sequence (integer)            : NEW hasdefault
+stock        / stock.package.type       / sequence (integer)            : NEW hasdefault: default
 stock        / stock.package.type       / storage_category_capacity_ids (one2many): NEW relation: stock.storage.category.capacity
 stock        / stock.package.type       / width (integer)               : NEW
 stock        / stock.picking            / note (text)                   : type is now 'html' ('text')
 stock        / stock.picking.type       / print_label (boolean)         : NEW
 stock        / stock.picking.type       / reservation_days_before (integer): NEW
 stock        / stock.picking.type       / reservation_days_before_priority (integer): NEW
-stock        / stock.picking.type       / reservation_method (selection): NEW required, selection_keys: ['at_confirm', 'by_date', 'manual'], req_default: function, hasdefault
-stock        / stock.putaway.rule       / active (boolean)              : NEW hasdefault
+stock        / stock.picking.type       / reservation_method (selection): NEW required, selection_keys: ['at_confirm', 'by_date', 'manual'], hasdefault: default
+stock        / stock.putaway.rule       / active (boolean)              : NEW hasdefault: default
 stock        / stock.putaway.rule       / package_type_ids (many2many)  : NEW relation: stock.package.type
 stock        / stock.putaway.rule       / storage_category_id (many2one): NEW relation: stock.storage.category
-stock        / stock.quant              / in_date (datetime)            : now required, req_default: function
-stock        / stock.quant              / inventory_date (date)         : NEW isfunction: function, stored
+stock        / stock.quant              / in_date (datetime)            : now required
+stock        / stock.quant              / inventory_date (date)         : NEW hasdefault: compute
 stock        / stock.quant              / inventory_diff_quantity (float): NEW isfunction: function, stored
 stock        / stock.quant              / inventory_quantity (float)    : is now stored
 stock        / stock.quant              / inventory_quantity (float)    : not a function anymore
-stock        / stock.quant              / inventory_quantity_set (boolean): NEW hasdefault, isfunction: function, stored
+stock        / stock.quant              / inventory_quantity_set (boolean): NEW hasdefault: default
 stock        / stock.quant              / user_id (many2one)            : NEW relation: res.users
-stock        / stock.quant.package      / name (char)                   : now required, req_default: function
+stock        / stock.quant.package      / name (char)                   : now required
 stock        / stock.quant.package      / package_type_id (many2one)    : NEW relation: stock.package.type
-stock        / stock.quant.package      / package_use (selection)       : NEW required, selection_keys: ['disposable', 'reusable'], req_default: function, hasdefault
+stock        / stock.quant.package      / package_use (selection)       : NEW required, selection_keys: ['disposable', 'reusable'], hasdefault: default
 stock        / stock.quant.package      / packaging_id (many2one)       : DEL relation: product.packaging
-stock        / stock.rule               / propagate_carrier (boolean)   : NEW hasdefault
-stock        / stock.storage.category   / allow_new_product (selection) : NEW required, selection_keys: ['empty', 'mixed', 'same'], req_default: function, hasdefault
+stock        / stock.rule               / propagate_carrier (boolean)   : NEW hasdefault: default
+stock        / stock.storage.category   / allow_new_product (selection) : NEW required, selection_keys: ['empty', 'mixed', 'same'], hasdefault: default
 stock        / stock.storage.category   / capacity_ids (one2many)       : NEW relation: stock.storage.category.capacity
 stock        / stock.storage.category   / company_id (many2one)         : NEW relation: res.company
 stock        / stock.storage.category   / location_ids (one2many)       : NEW relation: stock.location

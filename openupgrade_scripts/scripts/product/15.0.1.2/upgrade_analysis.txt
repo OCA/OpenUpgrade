@@ -4,18 +4,17 @@ new model report.product.report_producttemplatelabel [abstract]
 new model report.product.report_producttemplatelabel_dymo [abstract]
 ---Fields in module 'product'---
 product      / product.attribute        / display_type (selection)      : selection_keys is now '['color', 'pills', 'radio', 'select']' ('['color', 'radio', 'select']')
-product      / product.attribute.value  / color (integer)               : NEW hasdefault
+product      / product.attribute.value  / color (integer)               : NEW hasdefault: default
 product      / product.packaging        / _order                        : _order is now 'product_id, sequence, id' ('sequence')
 product      / product.product          / _order                        : _order is now 'priority desc, default_code, name, id' ('default_code, name, id')
 product      / product.product          / description (text)            : type is now 'html' ('text')
 product      / product.product          / product_template_variant_value_ids (many2many): NEW relation: product.template.attribute.value
 product      / product.template         / _order                        : _order is now 'priority desc, name' ('name')
 product      / product.template         / description (text)            : type is now 'html' ('text')
-product      / product.template         / detailed_type (selection)     : NEW required, selection_keys: ['consu', 'service'], req_default: function, hasdefault
-product      / product.template         / priority (selection)          : NEW selection_keys: ['0', '1'], hasdefault
-product      / product.template         / type (selection)              : now a function
+product      / product.template         / detailed_type (selection)     : NEW required, selection_keys: ['consu', 'service'], hasdefault: default
+product      / product.template         / priority (selection)          : NEW selection_keys: ['0', '1'], hasdefault: default
 product      / product.template.attribute.line / value_count (integer)         : NEW isfunction: function, stored
-product      / product.template.attribute.value / color (integer)               : NEW hasdefault
+product      / product.template.attribute.value / color (integer)               : NEW hasdefault: default
 ---XML records in module 'product'---
 NEW ir.actions.act_window: product.action_open_label_layout
 DEL ir.actions.act_window: product.product_attribute_value_action

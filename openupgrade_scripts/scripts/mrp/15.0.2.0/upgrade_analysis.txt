@@ -17,7 +17,7 @@ mrp          / mrp.bom.line             / possible_bom_product_template_attribut
 mrp          / mrp.bom.line             / product_tmpl_id (many2one)    : is now stored
 mrp          / mrp.production           / is_planned (boolean)          : is now stored
 mrp          / mrp.routing.workcenter   / _order                        : _order is now 'bom_id, sequence, id' ('sequence, id')
-mrp          / mrp.routing.workcenter   / active (boolean)              : NEW hasdefault
+mrp          / mrp.routing.workcenter   / active (boolean)              : NEW hasdefault: default
 mrp          / mrp.routing.workcenter   / bom_id (many2one)             : now required
 mrp          / mrp.routing.workcenter   / bom_product_template_attribute_value_ids (many2many): NEW relation: product.template.attribute.value
 mrp          / mrp.routing.workcenter   / company_id (many2one)         : not stored anymore
@@ -25,12 +25,12 @@ mrp          / mrp.routing.workcenter   / company_id (many2one)         : now re
 mrp          / mrp.routing.workcenter   / note (text)                   : type is now 'html' ('text')
 mrp          / mrp.workcenter           / note (text)                   : type is now 'html' ('text')
 mrp          / mrp.workcenter           / tag_ids (many2many)           : NEW relation: mrp.workcenter.tag
-mrp          / mrp.workcenter.tag       / color (integer)               : NEW hasdefault
+mrp          / mrp.workcenter.tag       / color (integer)               : NEW hasdefault: default
 mrp          / mrp.workcenter.tag       / name (char)                   : NEW required
 mrp          / mrp.workorder            / consumption (selection)       : not stored anymore
 mrp          / mrp.workorder            / consumption (selection)       : now related
 mrp          / mrp.workorder            / consumption (selection)       : selection_keys is now 'function' ('['flexible', 'strict', 'warning']')
-mrp          / mrp.workorder            / costs_hour (float)            : NEW hasdefault
+mrp          / mrp.workorder            / costs_hour (float)            : NEW hasdefault: default
 mrp          / mrp.workorder            / operation_note (text)         : type is now 'html' ('text')
 mrp          / mrp.workorder            / state (selection)             : now a function
 mrp          / mrp.workorder            / state (selection)             : selection_keys is now '['cancel', 'done', 'pending', 'progress', 'ready', 'waiting']' ('['cancel', 'done', 'pending', 'progress', 'ready']')

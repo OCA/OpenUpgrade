@@ -1,7 +1,7 @@
 ---Models in module 'delivery_mondialrelay'---
 ---Fields in module 'delivery_mondialrelay'---
-delivery_mondialrelay / delivery.carrier         / mondialrelay_brand (char)     : NEW hasdefault
-delivery_mondialrelay / delivery.carrier         / mondialrelay_packagetype (char): NEW hasdefault
+delivery_mondialrelay / delivery.carrier         / mondialrelay_brand (char)     : NEW hasdefault: default
+delivery_mondialrelay / delivery.carrier         / mondialrelay_packagetype (char): NEW hasdefault: default
 ---XML records in module 'delivery_mondialrelay'---
 NEW delivery.carrier: delivery_mondialrelay.delivery_carrier_mondialrelay_be_lu (noupdate)
 NEW delivery.carrier: delivery_mondialrelay.delivery_carrier_mondialrelay_es (noupdate)

@@ -5,9 +5,8 @@ event        / event.event              / badge_front (html)            : DEL
 event        / event.event              / badge_innerleft (html)        : DEL
 event        / event.event              / badge_innerright (html)       : DEL
 event        / event.event              / event_logo (html)             : DEL
-event        / event.event              / note (text)                   : now a function
 event        / event.event              / note (text)                   : type is now 'html' ('text')
-event        / event.event              / ticket_instructions (html)    : NEW isfunction: function, stored
+event        / event.event              / ticket_instructions (html)    : NEW hasdefault: compute
 event        / event.event.ticket       / end_sale_date (date)          : DEL
 event        / event.event.ticket       / end_sale_datetime (datetime)  : NEW
 event        / event.event.ticket       / start_sale_date (date)        : DEL
@@ -18,9 +17,7 @@ event        / event.mail               / mail_done (boolean)           : NEW
 event        / event.mail               / mail_sent (boolean)           : DEL
 event        / event.mail               / template_id (many2one)        : DEL relation: mail.template
 event        / event.mail               / template_ref (reference)      : NEW required
-event        / event.registration       / active (boolean)              : NEW hasdefault
-event        / event.type               / event_type_mail_ids (one2many): not a function anymore
-event        / event.type               / event_type_ticket_ids (one2many): not a function anymore
+event        / event.registration       / active (boolean)              : NEW hasdefault: default
 event        / event.type               / note (html)                   : NEW
 event        / event.type               / ticket_instructions (html)    : NEW
 event        / event.type               / use_mail_schedule (boolean)   : DEL
