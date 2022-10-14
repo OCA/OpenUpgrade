@@ -140,10 +140,12 @@ tax_tag_xmlids = [
 def migrate(env, version):
     openupgrade_130.unlink_invalid_tax_tags_from_move_lines(
         env,
+        'l10n_nl',
         base_tag_xmlids,
         tax_tag_xmlids)
     openupgrade_130.unlink_invalid_tax_tags_from_repartition_lines(
         env,
+        'l10n_nl',
         base_tag_xmlids,
         tax_tag_xmlids)
     convert_old_tax_tags_into_new_report_line_tags(env)
