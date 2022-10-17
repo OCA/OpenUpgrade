@@ -34,6 +34,7 @@ merged_modules = {
     "stock_barcode_mobile": "stock_barcode",
     # OCA/account-financial-tools
     "stock_account_prepare_anglo_saxon_out_lines_hook": "stock_account",
+    "account_menu": "account_usability",
     # OCA/stock-logistics-workflow
     "stock_deferred_assign": "stock",
     "stock_move_assign_picking_hook": "stock",
