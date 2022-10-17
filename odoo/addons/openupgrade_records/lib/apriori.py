@@ -70,7 +70,13 @@ merged_modules = {
     'website_event_share': 'website_event',
     # OCA/l10n-spain
     'l10n_es_account_invoice_sequence': 'l10n_es',
+    'l10n_es_aeat_mod303_extra_data': 'l10n_es_aeat_mod303',
     'l10n_es_aeat_sii': 'l10n_es_aeat_sii_oca',
+    'l10n_es_aeat_sii_extra_data': 'l10n_es_aeat_sii_oca',
+    'l10n_es_extra_data': 'l10n_es',
+    'l10n_es_ticketbai_batuz_extra_data': 'l10n_es_ticketbai_batuz',
+    'l10n_es_ticketbai_extra_data': 'l10n_es_ticketbai',
+    'l10n_es_vat_book_extra_data': 'l10n_es_vat_book',
     # OCA/manufacture
     'repair_calendar_view': 'base_repair',
     # OCA/multi-company
