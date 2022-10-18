@@ -588,7 +588,8 @@ def fill_account_payment_with_no_move(env):
         p_data[p_id] = {
             "journal_id": p_journal_id,
             "name": p_name,
-            "state": p_state,
+            # Switch to cancel when no linked move, but the payment was validated
+            "state": "cancelled" if p_state not in {"draft", "cancelled"} else p_state,
             "payment_date": p_payment_date,
         }
         if p_company in p_dates_by_company:
