@@ -15,15 +15,15 @@ l10n_eg_edi_eta / l10n_eg_edi.activity.type / code (char)                   : NE
 l10n_eg_edi_eta / l10n_eg_edi.activity.type / name (char)                   : NEW required
 l10n_eg_edi_eta / l10n_eg_edi.thumb.drive  / access_token (char)           : NEW required
 l10n_eg_edi_eta / l10n_eg_edi.thumb.drive  / certificate (binary)          : NEW attachment: True
-l10n_eg_edi_eta / l10n_eg_edi.thumb.drive  / company_id (many2one)         : NEW relation: res.company, required, req_default: function, hasdefault
+l10n_eg_edi_eta / l10n_eg_edi.thumb.drive  / company_id (many2one)         : NEW relation: res.company, required, hasdefault: default
 l10n_eg_edi_eta / l10n_eg_edi.thumb.drive  / pin (char)                    : NEW required
-l10n_eg_edi_eta / l10n_eg_edi.thumb.drive  / user_id (many2one)            : NEW relation: res.users, required, req_default: function, hasdefault
+l10n_eg_edi_eta / l10n_eg_edi.thumb.drive  / user_id (many2one)            : NEW relation: res.users, required, hasdefault: default
 l10n_eg_edi_eta / l10n_eg_edi.uom.code     / code (char)                   : NEW required
 l10n_eg_edi_eta / l10n_eg_edi.uom.code     / name (char)                   : NEW required
 l10n_eg_edi_eta / product.product          / l10n_eg_eta_code (char)       : NEW
 l10n_eg_edi_eta / res.company              / l10n_eg_client_identifier (char): NEW
 l10n_eg_edi_eta / res.company              / l10n_eg_client_secret (char)  : NEW
-l10n_eg_edi_eta / res.company              / l10n_eg_invoicing_threshold (float): NEW hasdefault
+l10n_eg_edi_eta / res.company              / l10n_eg_invoicing_threshold (float): NEW hasdefault: default
 l10n_eg_edi_eta / res.company              / l10n_eg_production_env (boolean): NEW
 l10n_eg_edi_eta / res.partner              / l10n_eg_building_no (char)    : NEW
 l10n_eg_edi_eta / uom.uom                  / l10n_eg_unit_code_id (many2one): NEW relation: l10n_eg_edi.uom.code

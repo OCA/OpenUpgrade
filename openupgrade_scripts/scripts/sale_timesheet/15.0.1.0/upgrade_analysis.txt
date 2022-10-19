@@ -4,19 +4,20 @@ obsolete model project.task.create.sale.order [transient]
 sale_timesheet / account.analytic.line    / non_allow_billable (boolean)  : DEL
 sale_timesheet / account.analytic.line    / order_id (many2one)           : NEW relation: sale.order, isrelated: related, stored
 sale_timesheet / account.analytic.line    / timesheet_invoice_type (selection): selection_keys is now '['billable_fixed', 'billable_time', 'non_billable', 'other_costs', 'other_revenues', 'service_revenues', 'timesheet_revenues']' ('['billable_fixed', 'billable_time', 'non_billable', 'non_billable_project', 'non_billable_timesheet']')
-sale_timesheet / product.template         / service_upsell_threshold (float): NEW hasdefault
+sale_timesheet / product.template         / service_upsell_threshold (float): NEW hasdefault: default
 sale_timesheet / project.project          / bill_type (selection)         : DEL selection_keys: ['customer_project', 'customer_task']
+sale_timesheet / project.project          / partner_id (False)            : NEW mode: modify, hasdefault: compute
 sale_timesheet / project.project          / pricing_type (selection)      : not stored anymore
 sale_timesheet / project.project          / pricing_type (selection)      : now a function
 sale_timesheet / project.project          / pricing_type (selection)      : selection_keys is now '['employee_rate', 'fixed_rate', 'task_rate']' ('['employee_rate', 'fixed_rate']')
-sale_timesheet / project.sale.line.employee.map / cost (float)                  : NEW isfunction: function, stored
+sale_timesheet / project.sale.line.employee.map / cost (float)                  : NEW hasdefault: compute
 sale_timesheet / project.sale.line.employee.map / is_cost_changed (boolean)     : NEW isfunction: function, stored
-sale_timesheet / project.sale.line.employee.map / sale_line_id (many2one)       : now a function
 sale_timesheet / project.sale.line.employee.map / timesheet_product_id (many2one): DEL relation: product.product
 sale_timesheet / project.task             / analytic_account_id (many2one): is now stored
 sale_timesheet / project.task             / analytic_account_id (many2one): module is now 'project' ('sale_timesheet')
 sale_timesheet / project.task             / analytic_account_id (many2one): not related anymore
 sale_timesheet / project.task             / non_allow_billable (boolean)  : DEL
+sale_timesheet / project.task             / sale_order_id (False)         : DEL mode: modify
 sale_timesheet / project.task             / timesheet_product_id (many2one): not stored anymore
 sale_timesheet / project.task             / timesheet_product_id (many2one): now related
 sale_timesheet / sale.order.line          / has_displayed_warning_upsell (boolean): NEW

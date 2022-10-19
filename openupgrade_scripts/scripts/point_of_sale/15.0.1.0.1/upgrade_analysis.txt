@@ -24,18 +24,18 @@ point_of_sale / pos.config               / iface_customer_facing_display_local (
 point_of_sale / pos.config               / iface_customer_facing_display_via_proxy (boolean): NEW
 point_of_sale / pos.config               / iface_orderline_customer_notes (boolean): NEW
 point_of_sale / pos.config               / iface_vkeyboard (boolean)     : DEL
-point_of_sale / pos.config               / limited_partners_amount (integer): NEW hasdefault
+point_of_sale / pos.config               / limited_partners_amount (integer): NEW hasdefault: default
 point_of_sale / pos.config               / limited_partners_loading (boolean): NEW
-point_of_sale / pos.config               / limited_products_amount (integer): NEW hasdefault
+point_of_sale / pos.config               / limited_products_amount (integer): NEW hasdefault: default
 point_of_sale / pos.config               / limited_products_loading (boolean): NEW
 point_of_sale / pos.config               / manage_orders (boolean)       : DEL
 point_of_sale / pos.config               / partner_load_background (boolean): NEW
-point_of_sale / pos.config               / picking_policy (selection)    : NEW required, selection_keys: ['direct', 'one'], req_default: function, hasdefault
+point_of_sale / pos.config               / picking_policy (selection)    : NEW required, selection_keys: ['direct', 'one'], hasdefault: default
 point_of_sale / pos.config               / product_load_background (boolean): NEW
 point_of_sale / pos.config               / route_id (many2one)           : NEW relation: stock.location.route
 point_of_sale / pos.config               / set_maximum_difference (boolean): NEW
 point_of_sale / pos.config               / ship_later (boolean)          : NEW
-point_of_sale / pos.config               / warehouse_id (many2one)       : NEW relation: stock.warehouse, hasdefault
+point_of_sale / pos.config               / warehouse_id (many2one)       : NEW relation: stock.warehouse, hasdefault: default
 point_of_sale / pos.order                / procurement_group_id (many2one): NEW relation: procurement.group
 point_of_sale / pos.order                / to_ship (boolean)             : NEW
 point_of_sale / pos.order.line           / customer_note (char)          : NEW

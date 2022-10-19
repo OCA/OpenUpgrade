@@ -5,17 +5,17 @@ new model ir.asset
 new model ir.cron.trigger
 new model ir.profile
 ---Fields in module 'base'---
-base         / ir.asset                 / active (boolean)              : NEW hasdefault
+base         / ir.asset                 / active (boolean)              : NEW hasdefault: default
 base         / ir.asset                 / bundle (char)                 : NEW required
-base         / ir.asset                 / directive (selection)         : NEW selection_keys: ['after', 'append', 'before', 'include', 'prepend', 'remove', 'replace'], hasdefault
+base         / ir.asset                 / directive (selection)         : NEW selection_keys: ['after', 'append', 'before', 'include', 'prepend', 'remove', 'replace'], hasdefault: default
 base         / ir.asset                 / name (char)                   : NEW required
 base         / ir.asset                 / path (char)                   : NEW required
-base         / ir.asset                 / sequence (integer)            : NEW required, req_default: function, hasdefault
+base         / ir.asset                 / sequence (integer)            : NEW required, hasdefault: default
 base         / ir.asset                 / target (char)                 : NEW
 base         / ir.cron.trigger          / call_at (datetime)            : NEW
 base         / ir.cron.trigger          / cron_id (many2one)            : NEW relation: ir.cron
 base         / ir.mail_server           / from_filter (char)            : NEW
-base         / ir.mail_server           / smtp_authentication (selection): NEW required, selection_keys: ['certificate', 'login'], req_default: function, hasdefault
+base         / ir.mail_server           / smtp_authentication (selection): NEW required, selection_keys: ['certificate', 'login'], hasdefault: default
 base         / ir.mail_server           / smtp_ssl_certificate (binary) : NEW attachment: False
 base         / ir.mail_server           / smtp_ssl_private_key (binary) : NEW attachment: False
 base         / ir.profile               / duration (float)              : NEW
@@ -31,8 +31,7 @@ base         / report.paperformat       / disable_shrinking (boolean)   : NEW
 base         / res.company              / bank_ids (one2many)           : not stored anymore
 base         / res.company              / bank_ids (one2many)           : now related
 base         / res.company              / company_details (html)        : NEW
-base         / res.company              / company_registry (char)       : now a function
-base         / res.company              / layout_background (selection) : NEW required, selection_keys: ['Blank', 'Custom', 'Geometric'], req_default: function, hasdefault
+base         / res.company              / layout_background (selection) : NEW required, selection_keys: ['Blank', 'Custom', 'Geometric'], hasdefault: default
 base         / res.company              / layout_background_image (binary): NEW attachment: True
 base         / res.company              / mobile (char)                 : NEW isrelated: related, stored
 base         / res.company              / report_footer (text)          : type is now 'html' ('text')

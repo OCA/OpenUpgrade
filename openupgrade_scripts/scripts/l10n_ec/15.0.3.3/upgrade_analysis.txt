@@ -1,10 +1,10 @@
 ---Models in module 'l10n_ec'---
 new model l10n_ec.sri.payment
 ---Fields in module 'l10n_ec'---
-l10n_ec      / account.journal          / l10n_ec_emission (char)       : NEW hasdefault
+l10n_ec      / account.journal          / l10n_ec_emission (char)       : NEW hasdefault: default
 l10n_ec      / account.journal          / l10n_ec_emission_address_id (many2one): NEW relation: res.partner
-l10n_ec      / account.journal          / l10n_ec_emission_type (selection): NEW selection_keys: ['auto_printer', 'electronic', 'pre_printed'], hasdefault
-l10n_ec      / account.journal          / l10n_ec_entity (char)         : NEW hasdefault
+l10n_ec      / account.journal          / l10n_ec_emission_type (selection): NEW selection_keys: ['auto_printer', 'electronic', 'pre_printed'], hasdefault: default
+l10n_ec      / account.journal          / l10n_ec_entity (char)         : NEW hasdefault: default
 l10n_ec      / account.move             / l10n_ec_sri_payment_id (many2one): NEW relation: l10n_ec.sri.payment
 l10n_ec      / account.tax              / l10n_ec_code_applied (char)   : NEW
 l10n_ec      / account.tax              / l10n_ec_code_ats (char)       : NEW
@@ -16,7 +16,7 @@ l10n_ec      / account.tax.template     / l10n_ec_code_base (char)      : NEW
 l10n_ec      / l10n_ec.sri.payment      / code (char)                   : NEW
 l10n_ec      / l10n_ec.sri.payment      / name (char)                   : NEW
 l10n_ec      / l10n_latam.document.type / internal_type (False)         : NEW selection_keys: ['credit_note', 'debit_note', 'invoice', 'invoice_in', 'purchase_liquidation', 'receipt_invoice'], mode: modify
-l10n_ec      / l10n_latam.document.type / l10n_ec_check_format (boolean): NEW hasdefault
+l10n_ec      / l10n_latam.document.type / l10n_ec_check_format (boolean): NEW hasdefault: default
 ---XML records in module 'l10n_ec'---
 NEW account.account.template: l10n_ec.ec11010401
 NEW account.account.template: l10n_ec.ec110201

@@ -4,12 +4,11 @@ new model crm.lead.pls.update [transient]
 crm          / crm.lead                 / calendar_event_ids (one2many) : NEW relation: calendar.event
 crm          / crm.lead                 / company_currency (many2one)   : not related anymore
 crm          / crm.lead                 / company_currency (many2one)   : now a function
-crm          / crm.lead                 / company_id (many2one)         : now a function
 crm          / crm.lead                 / description (text)            : type is now 'html' ('text')
 crm          / crm.team                 / assignment_domain (char)      : NEW
 crm          / crm.team                 / assignment_optout (boolean)   : NEW
 crm          / crm.team.member          / assignment_domain (char)      : NEW
-crm          / crm.team.member          / assignment_max (integer)      : NEW hasdefault
+crm          / crm.team.member          / assignment_max (integer)      : NEW hasdefault: default
 crm          / crm.team.member          / assignment_optout (boolean)   : NEW
 crm          / res.partner              / meeting_count (integer)       : module is now 'calendar' ('crm')
 crm          / res.partner              / meeting_ids (many2many)       : module is now 'calendar' ('crm')

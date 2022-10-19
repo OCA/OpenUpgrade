@@ -1,7 +1,7 @@
 ---Models in module 'payment_authorize'---
 ---Fields in module 'payment_authorize'---
 payment_authorize / payment.acquirer         / authorize_currency_id (many2one): NEW relation: res.currency
-payment_authorize / payment.acquirer         / authorize_payment_method_type (selection): NEW selection_keys: ['bank_account', 'credit_card'], hasdefault
+payment_authorize / payment.acquirer         / authorize_payment_method_type (selection): NEW selection_keys: ['bank_account', 'credit_card'], hasdefault: default
 payment_authorize / payment.acquirer         / provider (False)              : selection_keys is now '['adyen', 'alipay', 'authorize', 'none']' ('['adyen', 'alipay', 'authorize', 'manual']')
 payment_authorize / payment.token            / authorize_payment_method_type (selection): NEW selection_keys: ['bank_account', 'credit_card']
 payment_authorize / payment.token            / provider (selection)          : module is now 'payment' ('payment_authorize')

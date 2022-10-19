@@ -1,7 +1,7 @@
 ---Models in module 'survey'---
 ---Fields in module 'survey'---
-survey       / survey.survey            / state (selection)             : DEL required, selection_keys: ['closed', 'draft', 'open'], req_default: function
-survey       / survey.survey            / user_id (many2one)            : NEW relation: res.users, hasdefault
+survey       / survey.survey            / state (selection)             : DEL required, selection_keys: ['closed', 'draft', 'open']
+survey       / survey.survey            / user_id (many2one)            : NEW relation: res.users, hasdefault: default
 survey       / survey.user_input        / _order                        : _order is now 'create_date desc' ('id')
 survey       / survey.user_input        / end_datetime (datetime)       : NEW
 ---XML records in module 'survey'---

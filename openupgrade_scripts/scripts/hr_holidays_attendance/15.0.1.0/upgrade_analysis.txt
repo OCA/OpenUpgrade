@@ -2,7 +2,7 @@
 ---Fields in module 'hr_holidays_attendance'---
 hr_holidays_attendance / hr.leave                 / overtime_id (many2one)        : NEW relation: hr.attendance.overtime
 hr_holidays_attendance / hr.leave.allocation      / overtime_id (many2one)        : NEW relation: hr.attendance.overtime
-hr_holidays_attendance / hr.leave.type            / overtime_deductible (boolean) : NEW hasdefault
+hr_holidays_attendance / hr.leave.type            / overtime_deductible (boolean) : NEW hasdefault: default
 ---XML records in module 'hr_holidays_attendance'---
 NEW hr.leave.type: hr_holidays_attendance.holiday_status_extra_hours (noupdate)
 NEW ir.actions.act_window: hr_holidays_attendance.hr_leave_allocation_overtime_action

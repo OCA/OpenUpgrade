@@ -7,12 +7,13 @@ event_booth_sale / event.booth              / is_paid (boolean)             : NE
 event_booth_sale / event.booth              / sale_order_id (many2one)      : NEW relation: sale.order, isrelated: related, stored
 event_booth_sale / event.booth              / sale_order_line_id (many2one) : NEW relation: sale.order.line
 event_booth_sale / event.booth              / sale_order_line_registration_ids (many2many): NEW relation: sale.order.line
-event_booth_sale / event.booth.category     / price (float)                 : NEW isfunction: function, stored
-event_booth_sale / event.booth.category     / product_id (many2one)         : NEW relation: product.product, required, req_default: function, hasdefault
-event_booth_sale / event.booth.registration / contact_email (char)          : NEW isfunction: function, stored
-event_booth_sale / event.booth.registration / contact_mobile (char)         : NEW isfunction: function, stored
-event_booth_sale / event.booth.registration / contact_name (char)           : NEW isfunction: function, stored
-event_booth_sale / event.booth.registration / contact_phone (char)          : NEW isfunction: function, stored
+event_booth_sale / event.booth.category     / image_1920 (False)            : NEW mode: modify, hasdefault: compute
+event_booth_sale / event.booth.category     / price (float)                 : NEW hasdefault: compute
+event_booth_sale / event.booth.category     / product_id (many2one)         : NEW relation: product.product, required, hasdefault: default
+event_booth_sale / event.booth.registration / contact_email (char)          : NEW hasdefault: compute
+event_booth_sale / event.booth.registration / contact_mobile (char)         : NEW hasdefault: compute
+event_booth_sale / event.booth.registration / contact_name (char)           : NEW hasdefault: compute
+event_booth_sale / event.booth.registration / contact_phone (char)          : NEW hasdefault: compute
 event_booth_sale / event.booth.registration / event_booth_id (many2one)     : NEW relation: event.booth, required
 event_booth_sale / event.booth.registration / partner_id (many2one)         : NEW relation: res.partner, isrelated: related, stored
 event_booth_sale / event.booth.registration / sale_order_line_id (many2one) : NEW relation: sale.order.line, required

@@ -1,7 +1,6 @@
 ---Models in module 'hr_work_entry'---
 ---Fields in module 'hr_work_entry'---
 hr_work_entry / hr.work.entry            / department_id (many2one)      : NEW relation: hr.department, isrelated: related, stored
-hr_work_entry / hr.work.entry            / name (char)                   : now a function
 ---XML records in module 'hr_work_entry'---
 NEW ir.model.constraint: hr_work_entry.constraint_hr_work_entry__work_entries_no_validated_conflict
 NEW ir.ui.view: hr_work_entry.hr_employee_view_form

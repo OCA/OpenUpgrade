@@ -19,7 +19,7 @@ website_event_exhibitor / event.sponsor            / activity_user_id (many2one)
 website_event_exhibitor / event.sponsor            / display_name (char)           : previously in module website_event_track
 website_event_exhibitor / event.sponsor            / email (char)                  : previously in module website_event_track
 website_event_exhibitor / event.sponsor            / event_id (many2one)           : previously in module website_event_track
-website_event_exhibitor / event.sponsor            / exhibitor_type (selection)    : NEW selection_keys: ['exhibitor', 'online', 'sponsor'], hasdefault
+website_event_exhibitor / event.sponsor            / exhibitor_type (selection)    : NEW selection_keys: ['exhibitor', 'online', 'sponsor'], hasdefault: default
 website_event_exhibitor / event.sponsor            / image_128 (binary)            : previously in module website_event_track
 website_event_exhibitor / event.sponsor            / image_256 (binary)            : previously in module website_event_track
 website_event_exhibitor / event.sponsor            / image_512 (binary)            : previously in module website_event_track

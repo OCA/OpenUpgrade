@@ -6,50 +6,49 @@ new model hr.leave.employee.type.report [sql_view]
 hr_holidays  / hr.department            / total_employee (integer)      : module is now 'hr' ('hr_holidays')
 hr_holidays  / hr.leave                 / attachment_ids (one2many)     : NEW relation: ir.attachment
 hr_holidays  / hr.leave                 / employee_company_id (many2one): NEW relation: res.company, isrelated: related, stored
-hr_holidays  / hr.leave                 / employee_ids (many2many)      : NEW relation: hr.employee, isfunction: function, stored
-hr_holidays  / hr.leave                 / holiday_allocation_id (many2one): NEW relation: hr.leave.allocation, isfunction: function, stored
+hr_holidays  / hr.leave                 / employee_ids (many2many)      : NEW relation: hr.employee, hasdefault: compute
+hr_holidays  / hr.leave                 / holiday_allocation_id (many2one): NEW relation: hr.leave.allocation, hasdefault: compute
 hr_holidays  / hr.leave                 / multi_employee (boolean)      : NEW isfunction: function, stored
 hr_holidays  / hr.leave                 / payslip_status (boolean)      : DEL
 hr_holidays  / hr.leave                 / state (selection)             : selection_keys is now '['confirm', 'draft', 'refuse', 'validate', 'validate1']' ('['cancel', 'confirm', 'draft', 'refuse', 'validate', 'validate1']')
 hr_holidays  / hr.leave.accrual.level   / accrual_plan_id (many2one)    : NEW relation: hr.leave.accrual.plan, required
-hr_holidays  / hr.leave.accrual.level   / action_with_unused_accruals (selection): NEW required, selection_keys: ['lost', 'postponed'], req_default: function, hasdefault
+hr_holidays  / hr.leave.accrual.level   / action_with_unused_accruals (selection): NEW required, selection_keys: ['lost', 'postponed'], hasdefault: default
 hr_holidays  / hr.leave.accrual.level   / added_value (float)           : NEW required
-hr_holidays  / hr.leave.accrual.level   / added_value_type (selection)  : NEW required, selection_keys: ['days', 'hours'], req_default: function, hasdefault
-hr_holidays  / hr.leave.accrual.level   / first_day (integer)           : NEW hasdefault
-hr_holidays  / hr.leave.accrual.level   / first_month (selection)       : NEW selection_keys: ['apr', 'feb', 'jan', 'jun', 'mar', 'may'], hasdefault
-hr_holidays  / hr.leave.accrual.level   / first_month_day (integer)     : NEW hasdefault
-hr_holidays  / hr.leave.accrual.level   / frequency (selection)         : NEW required, selection_keys: ['bimonthly', 'biyearly', 'daily', 'monthly', 'weekly', 'yearly'], req_default: function, hasdefault
+hr_holidays  / hr.leave.accrual.level   / added_value_type (selection)  : NEW required, selection_keys: ['days', 'hours'], hasdefault: default
+hr_holidays  / hr.leave.accrual.level   / first_day (integer)           : NEW hasdefault: default
+hr_holidays  / hr.leave.accrual.level   / first_month (selection)       : NEW selection_keys: ['apr', 'feb', 'jan', 'jun', 'mar', 'may'], hasdefault: default
+hr_holidays  / hr.leave.accrual.level   / first_month_day (integer)     : NEW hasdefault: default
+hr_holidays  / hr.leave.accrual.level   / frequency (selection)         : NEW required, selection_keys: ['bimonthly', 'biyearly', 'daily', 'monthly', 'weekly', 'yearly'], hasdefault: default
 hr_holidays  / hr.leave.accrual.level   / is_based_on_worked_time (boolean): NEW
-hr_holidays  / hr.leave.accrual.level   / maximum_leave (float)         : NEW hasdefault
+hr_holidays  / hr.leave.accrual.level   / maximum_leave (float)         : NEW hasdefault: default
 hr_holidays  / hr.leave.accrual.level   / parent_id (many2one)          : NEW relation: hr.leave.accrual.level
-hr_holidays  / hr.leave.accrual.level   / second_day (integer)          : NEW hasdefault
-hr_holidays  / hr.leave.accrual.level   / second_month (selection)      : NEW selection_keys: ['aug', 'dec', 'jul', 'nov', 'oct', 'sep'], hasdefault
-hr_holidays  / hr.leave.accrual.level   / second_month_day (integer)    : NEW hasdefault
+hr_holidays  / hr.leave.accrual.level   / second_day (integer)          : NEW hasdefault: default
+hr_holidays  / hr.leave.accrual.level   / second_month (selection)      : NEW selection_keys: ['aug', 'dec', 'jul', 'nov', 'oct', 'sep'], hasdefault: default
+hr_holidays  / hr.leave.accrual.level   / second_month_day (integer)    : NEW hasdefault: default
 hr_holidays  / hr.leave.accrual.level   / sequence (integer)            : NEW isfunction: function, stored
-hr_holidays  / hr.leave.accrual.level   / start_count (integer)         : NEW hasdefault
-hr_holidays  / hr.leave.accrual.level   / start_type (selection)        : NEW required, selection_keys: ['day', 'month', 'year'], req_default: function, hasdefault
-hr_holidays  / hr.leave.accrual.level   / week_day (selection)          : NEW required, selection_keys: ['fri', 'mon', 'sat', 'sun', 'thu', 'tue', 'wed'], req_default: function, hasdefault
-hr_holidays  / hr.leave.accrual.level   / yearly_day (integer)          : NEW hasdefault
-hr_holidays  / hr.leave.accrual.level   / yearly_month (selection)      : NEW selection_keys: ['apr', 'aug', 'dec', 'feb', 'jan', 'jul', 'jun', 'mar', 'may', 'nov', 'oct', 'sep'], hasdefault
+hr_holidays  / hr.leave.accrual.level   / start_count (integer)         : NEW hasdefault: default
+hr_holidays  / hr.leave.accrual.level   / start_type (selection)        : NEW required, selection_keys: ['day', 'month', 'year'], hasdefault: default
+hr_holidays  / hr.leave.accrual.level   / week_day (selection)          : NEW required, selection_keys: ['fri', 'mon', 'sat', 'sun', 'thu', 'tue', 'wed'], hasdefault: default
+hr_holidays  / hr.leave.accrual.level   / yearly_day (integer)          : NEW hasdefault: default
+hr_holidays  / hr.leave.accrual.level   / yearly_month (selection)      : NEW selection_keys: ['apr', 'aug', 'dec', 'feb', 'jan', 'jul', 'jun', 'mar', 'may', 'nov', 'oct', 'sep'], hasdefault: default
 hr_holidays  / hr.leave.accrual.plan    / allocation_ids (one2many)     : NEW relation: hr.leave.allocation
 hr_holidays  / hr.leave.accrual.plan    / level_ids (one2many)          : NEW relation: hr.leave.accrual.level
 hr_holidays  / hr.leave.accrual.plan    / name (char)                   : NEW required
 hr_holidays  / hr.leave.accrual.plan    / time_off_type_id (many2one)   : NEW relation: hr.leave.type
-hr_holidays  / hr.leave.accrual.plan    / transition_mode (selection)   : NEW required, selection_keys: ['end_of_accrual', 'immediately'], req_default: function, hasdefault
+hr_holidays  / hr.leave.accrual.plan    / transition_mode (selection)   : NEW required, selection_keys: ['end_of_accrual', 'immediately'], hasdefault: default
 hr_holidays  / hr.leave.allocation      / accrual_limit (integer)       : DEL
-hr_holidays  / hr.leave.allocation      / accrual_plan_id (many2one)    : NEW relation: hr.leave.accrual.plan, isfunction: function, stored
-hr_holidays  / hr.leave.allocation      / active (boolean)              : NEW hasdefault
+hr_holidays  / hr.leave.allocation      / accrual_plan_id (many2one)    : NEW relation: hr.leave.accrual.plan, hasdefault: compute
+hr_holidays  / hr.leave.allocation      / active (boolean)              : NEW hasdefault: default
 hr_holidays  / hr.leave.allocation      / approver_id (many2one)        : NEW relation: hr.employee
-hr_holidays  / hr.leave.allocation      / date_from (datetime)          : now required, req_default: function
+hr_holidays  / hr.leave.allocation      / date_from (datetime)          : now required
 hr_holidays  / hr.leave.allocation      / date_from (datetime)          : type is now 'date' ('datetime')
-hr_holidays  / hr.leave.allocation      / date_to (datetime)            : not a function anymore
 hr_holidays  / hr.leave.allocation      / date_to (datetime)            : type is now 'date' ('datetime')
 hr_holidays  / hr.leave.allocation      / employee_company_id (many2one): NEW relation: res.company, isrelated: related, stored
-hr_holidays  / hr.leave.allocation      / employee_ids (many2many)      : NEW relation: hr.employee, isfunction: function, stored
+hr_holidays  / hr.leave.allocation      / employee_ids (many2many)      : NEW relation: hr.employee, hasdefault: compute
 hr_holidays  / hr.leave.allocation      / first_approver_id (many2one)  : DEL relation: hr.employee
 hr_holidays  / hr.leave.allocation      / interval_number (integer)     : DEL
 hr_holidays  / hr.leave.allocation      / interval_unit (selection)     : DEL selection_keys: ['days', 'months', 'weeks', 'years']
-hr_holidays  / hr.leave.allocation      / lastcall (date)               : NEW hasdefault
+hr_holidays  / hr.leave.allocation      / lastcall (date)               : NEW
 hr_holidays  / hr.leave.allocation      / multi_employee (boolean)      : NEW isfunction: function, stored
 hr_holidays  / hr.leave.allocation      / number_per_interval (float)   : DEL
 hr_holidays  / hr.leave.allocation      / second_approver_id (many2one) : DEL relation: hr.employee
@@ -62,9 +61,9 @@ hr_holidays  / hr.leave.type            / allocation_type (selection)   : DEL se
 hr_holidays  / hr.leave.type            / allocation_validation_type (selection): selection_keys is now '['no', 'officer', 'set']' ('['both', 'hr', 'manager']')
 hr_holidays  / hr.leave.type            / code (char)                   : DEL
 hr_holidays  / hr.leave.type            / color (integer)               : NEW
-hr_holidays  / hr.leave.type            / employee_requests (selection) : NEW required, selection_keys: ['no', 'yes'], req_default: function, hasdefault
+hr_holidays  / hr.leave.type            / employee_requests (selection) : NEW required, selection_keys: ['no', 'yes'], hasdefault: default
 hr_holidays  / hr.leave.type            / icon_id (many2one)            : NEW relation: ir.attachment
-hr_holidays  / hr.leave.type            / requires_allocation (selection): NEW required, selection_keys: ['no', 'yes'], req_default: function, hasdefault
+hr_holidays  / hr.leave.type            / requires_allocation (selection): NEW required, selection_keys: ['no', 'yes'], hasdefault: default
 hr_holidays  / hr.leave.type            / support_document (boolean)    : NEW
 hr_holidays  / hr.leave.type            / validity_start (date)         : DEL
 hr_holidays  / hr.leave.type            / validity_stop (date)          : DEL

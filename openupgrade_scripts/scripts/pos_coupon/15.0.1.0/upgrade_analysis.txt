@@ -6,7 +6,7 @@ pos_coupon   / coupon.coupon            / source_pos_order_id (many2one): NEW re
 pos_coupon   / coupon.program           / pos_config_ids (many2many)    : NEW relation: pos.config
 pos_coupon   / coupon.program           / pos_order_ids (many2many)     : NEW relation: pos.order
 pos_coupon   / coupon.program           / pos_order_line_ids (one2many) : NEW relation: pos.order.line
-pos_coupon   / coupon.program           / promo_barcode (char)          : NEW hasdefault
+pos_coupon   / coupon.program           / promo_barcode (char)          : NEW hasdefault: default
 pos_coupon   / pos.config               / program_ids (many2many)       : NEW relation: coupon.program
 pos_coupon   / pos.config               / use_coupon_programs (boolean) : NEW
 pos_coupon   / pos.order                / applied_program_ids (many2many): NEW relation: coupon.program

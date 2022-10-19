@@ -4,24 +4,24 @@ new model hr.work.location
 ---Fields in module 'hr'---
 hr           / hr.department            / total_employee (integer)      : previously in module hr_holidays
 hr           / hr.departure.reason      / name (char)                   : NEW required
-hr           / hr.departure.reason      / sequence (integer)            : NEW hasdefault
+hr           / hr.departure.reason      / sequence (integer)            : NEW hasdefault: default
 hr           / hr.employee              / departure_description (text)  : type is now 'html' ('text')
 hr           / hr.employee              / departure_reason (selection)  : DEL selection_keys: ['fired', 'resigned', 'retired']
 hr           / hr.employee              / departure_reason_id (many2one): NEW relation: hr.departure.reason
 hr           / hr.employee              / driving_license (binary)      : NEW attachment: True
-hr           / hr.employee              / employee_type (selection)     : NEW required, selection_keys: ['contractor', 'employee', 'freelance', 'student', 'trainee'], req_default: function, hasdefault
+hr           / hr.employee              / employee_type (selection)     : NEW required, selection_keys: ['contractor', 'employee', 'freelance', 'student', 'trainee'], hasdefault: default
 hr           / hr.employee              / has_work_permit (binary)      : NEW attachment: True
 hr           / hr.employee              / id_card (binary)              : NEW attachment: True
 hr           / hr.employee              / work_location (char)          : DEL
-hr           / hr.employee              / work_location_id (many2one)   : NEW relation: hr.work.location, isfunction: function, stored
+hr           / hr.employee              / work_location_id (many2one)   : NEW relation: hr.work.location, hasdefault: compute
 hr           / hr.employee              / work_permit_expiration_date (date): NEW
-hr           / hr.employee              / work_permit_scheduled_activity (boolean): NEW hasdefault
+hr           / hr.employee              / work_permit_scheduled_activity (boolean): NEW hasdefault: default
 hr           / hr.job                   / _order                        : _order is now 'sequence' ('id')
 hr           / hr.job                   / description (text)            : type is now 'html' ('text')
-hr           / hr.job                   / sequence (integer)            : NEW hasdefault
-hr           / hr.work.location         / active (boolean)              : NEW hasdefault
+hr           / hr.job                   / sequence (integer)            : NEW hasdefault: default
+hr           / hr.work.location         / active (boolean)              : NEW hasdefault: default
 hr           / hr.work.location         / address_id (many2one)         : NEW relation: res.partner, required
-hr           / hr.work.location         / company_id (many2one)         : NEW relation: res.company, required, req_default: function, hasdefault
+hr           / hr.work.location         / company_id (many2one)         : NEW relation: res.company, required, hasdefault: default
 hr           / hr.work.location         / location_number (char)        : NEW
 hr           / hr.work.location         / name (char)                   : NEW required
 hr           / res.partner              / employee_ids (one2many)       : NEW relation: hr.employee

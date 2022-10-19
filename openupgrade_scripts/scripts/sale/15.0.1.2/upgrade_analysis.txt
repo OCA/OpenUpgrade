@@ -1,8 +1,8 @@
 ---Models in module 'sale'---
 ---Fields in module 'sale'---
-sale         / product.packaging        / sales (boolean)               : NEW hasdefault
+sale         / product.packaging        / sales (boolean)               : NEW hasdefault: default
 sale         / sale.order               / note (text)                   : type is now 'html' ('text')
-sale         / sale.order.line          / product_packaging_id (many2one): NEW relation: product.packaging, hasdefault
+sale         / sale.order.line          / product_packaging_id (many2one): NEW relation: product.packaging, hasdefault: default
 sale         / sale.order.line          / product_packaging_qty (float) : NEW
 ---XML records in module 'sale'---
 NEW ir.actions.act_window: sale.action_accrued_revenue_entry
