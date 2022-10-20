@@ -60,10 +60,35 @@ def users_should_export(env):
         (export_group, user_group),
     )
 
+def run_lovefurniture(env):
+    env.cr.execute(
+        "SELECT geo_location,openupgrade_7_migrated_to_partner_id FROM res_partner_address "
+        "WHERE geo_location IS NOT NULL"
+    )
+
+    for geo_location,partner_id in env.cr.fetchall():
+        if geo_location and geo_location != '':
+            partner = env["res.partner"].browse(partner_id)
+            coordinates = geo_location.split('-')
+            lat = lng = 0.0
+            if len(coordinates)>0:
+                try:
+                    lat = float(coordinates[0].strip())
+                except Exception as e:
+                    pass
+            if len(coordinates)>1:
+                try:
+                    lng = float(coordinates[1].strip())
+                except Exception as e:
+                    pass
+            partner.write({'partner_latitude' : lat,'partner_longitude' : lng})
+
+
 
 @openupgrade.migrate()
 def migrate(env, version):
     fix_module_category_parent_id(env)
     users_should_export(env)
+    run_lovefurniture(env)
     # Load noupdate changes
     openupgrade.load_data(env.cr, "base", "14.0.1.3/noupdate_changes.xml")
