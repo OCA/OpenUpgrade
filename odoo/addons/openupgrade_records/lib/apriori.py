@@ -95,6 +95,8 @@ merged_modules = {
     'sale_order_variant_mgmt': 'sale_product_matrix',
     # OCA/purchase-reporting
     'purchase_report_extension': 'purchase',
+    # OCA/sale-workflow
+    'sale_disable_inventory_check': 'sale_stock',
     # OCA/server-backend
     'base_suspend_security': 'base',
     # OCA/social
