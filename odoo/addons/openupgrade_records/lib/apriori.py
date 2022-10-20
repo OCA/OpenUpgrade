@@ -68,6 +68,8 @@ merged_modules = {
     # OCA/event
     'event_activity': 'event',
     'website_event_share': 'website_event',
+    # OCA/geospatial
+    'base_geolocalize_openstreetmap': 'base_geolocalize',
     # OCA/l10n-spain
     'l10n_es_account_invoice_sequence': 'l10n_es',
     'l10n_es_aeat_mod303_extra_data': 'l10n_es_aeat_mod303',
