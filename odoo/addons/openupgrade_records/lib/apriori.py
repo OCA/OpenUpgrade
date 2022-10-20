@@ -112,6 +112,7 @@ merged_modules = {
     # OCA/web
     'web_export_view': 'web',
     'web_favicon': 'base',
+    'web_tree_resize_column': 'web',
     'web_view_searchpanel': 'web',
     'web_widget_color': 'web',
     'web_widget_many2many_tags_multi_selection': 'web',
