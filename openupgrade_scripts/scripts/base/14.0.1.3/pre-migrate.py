@@ -87,6 +87,20 @@ def deduplicate_ir_properties(cr):
     )
 
 
+def uninstall_conflicting_it_edi(cr):
+    it_edi_conflicting_modules = ("l10n_it_edi", "l10n_it_fatturapa")
+    if all(openupgrade.is_module_installed(cr, m) for m in it_edi_conflicting_modules):
+        # Mark as 'to_remove' to avoid raising a conflict; it will be installed anyway,
+        # but we will uninstall it for good in end-migration.
+        openupgrade.logged_query(
+            cr,
+            """
+            UPDATE ir_module_module
+            SET state='to remove'
+            WHERE name = 'l10n_it_edi'""",
+        )
+
+
 @openupgrade.migrate(use_env=False)
 def migrate(cr, version):
     """
@@ -125,6 +139,7 @@ def migrate(cr, version):
     # Perform module renames and merges
     openupgrade.update_module_names(cr, renamed_modules.items())
     openupgrade.update_module_names(cr, merged_modules.items(), merge_modules=True)
+    uninstall_conflicting_it_edi(cr)
     # Migrate partners from Fil to Tagalog
     # See https://github.com/odoo/odoo/commit/194ed76c5cc9
     openupgrade.logged_query(

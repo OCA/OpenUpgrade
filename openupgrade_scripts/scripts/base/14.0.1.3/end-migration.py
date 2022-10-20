@@ -3,6 +3,20 @@
 from openupgradelib import openupgrade
 
 
+def uninstall_conflicting_it_edi(cr):
+    it_edi_conflicting_modules = ("l10n_it_edi", "l10n_it_fatturapa")
+    if all(
+        openupgrade.is_module_installed(cr.cr, m) for m in it_edi_conflicting_modules
+    ):
+        it_edi_module = cr["ir.module.module"].search(
+            [
+                ("name", "=", "l10n_it_edi"),
+            ],
+            limit=1,
+        )
+        it_edi_module.button_uninstall()
+
+
 @openupgrade.migrate()
 def migrate(env, version):
     """Call disable_invalid_filters in every edition of openupgrade"""
@@ -14,3 +28,4 @@ def migrate(env, version):
         openupgrade.update_module_names(
             env.cr, [("web_diagram", "web")], merge_modules=True
         )
+    uninstall_conflicting_it_edi(env)
