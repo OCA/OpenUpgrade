@@ -114,6 +114,7 @@ merged_modules = {
     'web_favicon': 'base',
     'web_view_searchpanel': 'web',
     'web_widget_color': 'web',
+    'web_widget_float_formula': 'web',
     'web_widget_many2many_tags_multi_selection': 'web',
     'web_widget_one2many_product_picker_sale_stock_available_info_popup': (
         'web_widget_one2many_product_picker_sale_stock'
