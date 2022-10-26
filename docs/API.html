@@ -1,0 +1,1242 @@
+
+<!DOCTYPE html>
+
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>OpenUpgrade API &#8212; OpenUpgrade 16.0 documentation</title>
+    <link rel="stylesheet" type="text/css" href="_static/pygments.css" />
+    <link rel="stylesheet" type="text/css" href="_static/alabaster.css" />
+    <script data-url_root="./" id="documentation_options" src="_static/documentation_options.js"></script>
+    <script src="_static/jquery.js"></script>
+    <script src="_static/underscore.js"></script>
+    <script src="_static/_sphinx_javascript_frameworks_compat.js"></script>
+    <script src="_static/doctools.js"></script>
+    <script src="_static/sphinx_highlight.js"></script>
+    <link rel="index" title="Index" href="genindex.html" />
+    <link rel="search" title="Search" href="search.html" />
+    <link rel="prev" title="Development FAQ" href="devfaq.html" />
+   
+  <link rel="stylesheet" href="_static/custom.css" type="text/css" />
+  
+  
+  <meta name="viewport" content="width=device-width, initial-scale=0.9, maximum-scale=0.9" />
+
+  </head><body>
+  
+
+    <div class="document">
+      <div class="documentwrapper">
+        <div class="bodywrapper">
+          
+
+          <div class="body" role="main">
+            
+  <div class="section" id="openupgrade-api">
+<h1>OpenUpgrade API<a class="headerlink" href="#openupgrade-api" title="Permalink to this heading">¶</a></h1>
+<p>The OpenUpgrade library contains all kinds of helper functions for your pre and
+post scripts, in OpenUpgrade itself or in the migration scripts of your own
+module (in either major or minor version upgrades). It can be installed with</p>
+<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>pip install openupgradelib
+</pre></div>
+</div>
+<p>and then used in your scripts as</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="kn">from</span> <span class="nn">openupgradelib</span> <span class="kn">import</span> <span class="n">openupgrade</span>
+</pre></div>
+</div>
+<div class="section" id="module-openupgradelib.openupgrade">
+<span id="general-methods"></span><h2>General methods<a class="headerlink" href="#module-openupgradelib.openupgrade" title="Permalink to this heading">¶</a></h2>
+<dl class="py function">
+<dt class="sig sig-object py" id="openupgradelib.openupgrade.add_fields">
+<span class="sig-prename descclassname"><span class="pre">openupgradelib.openupgrade.</span></span><span class="sig-name descname"><span class="pre">add_fields</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">env</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">field_spec</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#openupgradelib.openupgrade.add_fields" title="Permalink to this definition">¶</a></dt>
+<dd><p>This method adds all the needed stuff for having a new field populated
+in the DB (SQL column, ir.model.fields entry, ir.model.data entry…).</p>
+<p>It’s intended for being run in pre-migration scripts for pre-populating
+fields that are going to be declared later in the module.</p>
+<p>NOTE: This is not needed in &gt;=v12, as now Odoo
+always add the XML-ID entry:
+<a class="reference external" href="https://github.com/odoo/odoo/blob/9201f92a4f29a53a014b462469f27b32dca8fc5a/">https://github.com/odoo/odoo/blob/9201f92a4f29a53a014b462469f27b32dca8fc5a/</a>
+odoo/addons/base/models/ir_model.py#L794-L802, but you can still call
+this method for consistency and for avoiding to know the internal PG
+column type.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Param</dt>
+<dd class="field-odd"><p>field_spec: List of tuples with the following expected elements
+for each tuple:</p>
+<ul class="simple">
+<li><p>field name</p></li>
+<li><p>model name</p></li>
+<li><p>SQL table name: Put <cite>False</cite> if the model is already loaded in the
+registry and thus the SQL table name can be obtained that way.</p></li>
+<li><p>field type: binary, boolean, char, date, datetime, float, html,
+integer, many2many, many2one, many2one_reference, monetary, one2many,
+reference, selection, text, serialized. The list can vary depending on
+Odoo version or custom added field types.</p></li>
+<li><p>SQL field type: If the field type is custom or it’s one of the special
+cases (see below), you need to indicate here the SQL type to use
+(from the valid PostgreSQL types):
+<a class="reference external" href="https://www.postgresql.org/docs/9.6/static/datatype.html">https://www.postgresql.org/docs/9.6/static/datatype.html</a></p></li>
+<li><p>module name: for adding the XML-ID entry.</p></li>
+<li><p>(optional) initialization value: if included in the tuple, it is set
+in the column for existing records.</p></li>
+</ul>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="openupgradelib.openupgrade.add_ir_model_fields">
+<span class="sig-prename descclassname"><span class="pre">openupgradelib.openupgrade.</span></span><span class="sig-name descname"><span class="pre">add_ir_model_fields</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">cr</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">columnspec</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#openupgradelib.openupgrade.add_ir_model_fields" title="Permalink to this definition">¶</a></dt>
+<dd><p>Typically, new columns on ir_model_fields need to be added in a very
+early stage in the upgrade process of the base module, in raw sql
+as they need to be in place before any model gets initialized.
+Do not use for fields with additional SQL constraints, such as a
+reference to another table or the cascade constraint, but craft your
+own statement taking them into account.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><p><strong>columnspec</strong> – tuple of (column name, column type)</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="openupgradelib.openupgrade.add_xmlid">
+<span class="sig-prename descclassname"><span class="pre">openupgradelib.openupgrade.</span></span><span class="sig-name descname"><span class="pre">add_xmlid</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">cr</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">module</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">xmlid</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">model</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">res_id</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">noupdate</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">False</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#openupgradelib.openupgrade.add_xmlid" title="Permalink to this definition">¶</a></dt>
+<dd><p>Adds an entry in ir_model_data. Typically called in the pre script.
+One usage example is when an entry has been add in the XML and there is
+a high probability that the user has already created the entry manually.
+For example, a currency was added in the XML data of the base module
+in OpenERP 6 but the user had already created this missing currency
+by hand in it’s 5.0 database. In order to avoid having 2 identical
+currencies (which is in fact blocked by an sql_constraint), you have to
+add the entry in ir_model_data before the upgrade.</p>
+</dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="openupgradelib.openupgrade.check_values_selection_field">
+<span class="sig-prename descclassname"><span class="pre">openupgradelib.openupgrade.</span></span><span class="sig-name descname"><span class="pre">check_values_selection_field</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">cr</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">table_name</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">field_name</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">allowed_values</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#openupgradelib.openupgrade.check_values_selection_field" title="Permalink to this definition">¶</a></dt>
+<dd><blockquote>
+<div><p>check if the field selection ‘field_name’ of the table ‘table_name’
+has only the values ‘allowed_values’.
+If not return False and log an error.
+If yes, return True.</p>
+</div></blockquote>
+<div class="versionadded">
+<p><span class="versionmodified added">New in version 8.0.</span></p>
+</div>
+</dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="openupgradelib.openupgrade.chunked">
+<span class="sig-prename descclassname"><span class="pre">openupgradelib.openupgrade.</span></span><span class="sig-name descname"><span class="pre">chunked</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">records</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">single</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">True</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#openupgradelib.openupgrade.chunked" title="Permalink to this definition">¶</a></dt>
+<dd><p>Memory and performance friendly method to iterate over a potentially
+large number of records. Yields either a whole chunk or a single record
+at the time. Don’t nest calls to this method.</p>
+</dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="openupgradelib.openupgrade.column_exists">
+<span class="sig-prename descclassname"><span class="pre">openupgradelib.openupgrade.</span></span><span class="sig-name descname"><span class="pre">column_exists</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">cr</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">table</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">column</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#openupgradelib.openupgrade.column_exists" title="Permalink to this definition">¶</a></dt>
+<dd><p>Check whether a certain column exists</p>
+</dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="openupgradelib.openupgrade.convert_field_to_html">
+<span class="sig-prename descclassname"><span class="pre">openupgradelib.openupgrade.</span></span><span class="sig-name descname"><span class="pre">convert_field_to_html</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">cr</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">table</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">field_name</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">html_field_name</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">verbose</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">True</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#openupgradelib.openupgrade.convert_field_to_html" title="Permalink to this definition">¶</a></dt>
+<dd><p>Convert field value to HTML value.</p>
+<div class="versionadded">
+<p><span class="versionmodified added">New in version 7.0.</span></p>
+</div>
+</dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="openupgradelib.openupgrade.convert_to_company_dependent">
+<span class="sig-prename descclassname"><span class="pre">openupgradelib.openupgrade.</span></span><span class="sig-name descname"><span class="pre">convert_to_company_dependent</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">env</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">model_name</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">origin_field_name</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">destination_field_name</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">model_table_name</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#openupgradelib.openupgrade.convert_to_company_dependent" title="Permalink to this definition">¶</a></dt>
+<dd><p>For each row in a given table, the value of a given field is
+set in another ‘company dependant’ field of the same table.
+Useful in cases when from one version to another one, some field in a
+model becomes a ‘company dependent’ field.</p>
+<p>This method must be executed in post-migration scripts after
+the field is created, or in pre-migration if you have previously
+executed add_fields openupgradelib method.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>model_name</strong> – Name of the model.</p></li>
+<li><p><strong>origin_field_name</strong> – Name of the field from which the values
+will be obtained.</p></li>
+<li><p><strong>destination_field_name</strong> – Name of the ‘company dependent’
+field where the values obtained from origin_field_name will be set.</p></li>
+<li><p><strong>model_table_name</strong> – Name of the table. Optional. If not provided
+the table name is taken from the model (so the model must be
+registered previously).</p></li>
+</ul>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="openupgradelib.openupgrade.copy_columns">
+<span class="sig-prename descclassname"><span class="pre">openupgradelib.openupgrade.</span></span><span class="sig-name descname"><span class="pre">copy_columns</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">cr</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">column_spec</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#openupgradelib.openupgrade.copy_columns" title="Permalink to this definition">¶</a></dt>
+<dd><p>Copy table columns. Typically called in the pre script.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><p><strong>column_spec</strong> – a hash with table keys, with lists of tuples as
+values. Tuples consist of (old_name, new_name, type). Use None for
+new_name to trigger a conversion of old_name using get_legacy_name()
+Use None for type to use type of old field.
+Make sure to quote properly, if your column name coincides with a
+SQL directive. eg. ‘“column”’</p>
+</dd>
+</dl>
+<div class="versionadded">
+<p><span class="versionmodified added">New in version 8.0.</span></p>
+</div>
+</dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="openupgradelib.openupgrade.copy_fields_multilang">
+<span class="sig-prename descclassname"><span class="pre">openupgradelib.openupgrade.</span></span><span class="sig-name descname"><span class="pre">copy_fields_multilang</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">cr</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">destination_model</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">destination_table</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">destination_columns</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">relation_column</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">source_model</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">source_table</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">source_columns</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">translations_only</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">False</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#openupgradelib.openupgrade.copy_fields_multilang" title="Permalink to this definition">¶</a></dt>
+<dd><p>Copy field contents including translations.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>destination_model</strong> (<em>str</em>) – Name of the destination model where the data will be copied to.</p></li>
+<li><p><strong>destination_table</strong> (<em>str</em>) – Name of the destination table where the data will be copied to.
+It must be <code class="docutils literal notranslate"><span class="pre">env[destination_model]._table</span></code>.</p></li>
+<li><p><strong>destination_columns</strong> (<em>list</em>) – List of column names in the <code class="docutils literal notranslate"><span class="pre">destination_table</span></code> that will
+receive the copied data.</p></li>
+<li><p><strong>relation_column</strong> (<em>str</em>) – Name of a column in <code class="docutils literal notranslate"><span class="pre">destination_table</span></code> which points to IDs in
+<code class="docutils literal notranslate"><span class="pre">source_table</span></code>. An <code class="docutils literal notranslate"><span class="pre">INNER</span> <span class="pre">JOIN</span></code> will be done to update the
+destination records with their corresponding source records only.
+Records where this column <code class="docutils literal notranslate"><span class="pre">NULL</span></code> will be skipped.</p></li>
+<li><p><strong>source_model</strong> (<em>str</em>) – Name of the source model where the data will be copied from.
+If empty, it will default to <code class="docutils literal notranslate"><span class="pre">destination_table</span></code>.</p></li>
+<li><p><strong>source_table</strong> (<em>str</em>) – Name of the source table where the data will be copied from.
+If empty, it will default to <code class="docutils literal notranslate"><span class="pre">destination_table</span></code>.
+It must be <code class="docutils literal notranslate"><span class="pre">env[source_model]._table</span></code>.</p></li>
+<li><p><strong>source_columns</strong> (<em>list</em>) – List of column names in the <code class="docutils literal notranslate"><span class="pre">source_table</span></code> that will
+provide the copied data.
+If empty, it will default to <code class="docutils literal notranslate"><span class="pre">destination_columns</span></code>.</p></li>
+<li><p><strong>translations_only</strong> (<em>bool</em>) – If <code class="docutils literal notranslate"><span class="pre">True</span></code>, it will only handle transferring translations. Won’t
+copy the raw field from <code class="docutils literal notranslate"><span class="pre">source_table</span></code>.</p></li>
+</ul>
+</dd>
+</dl>
+<div class="versionadded">
+<p><span class="versionmodified added">New in version 12.0.</span></p>
+</div>
+</dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="openupgradelib.openupgrade.cow_templates_mark_if_equal_to_upstream">
+<span class="sig-prename descclassname"><span class="pre">openupgradelib.openupgrade.</span></span><span class="sig-name descname"><span class="pre">cow_templates_mark_if_equal_to_upstream</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">cr</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">mark_colname</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#openupgradelib.openupgrade.cow_templates_mark_if_equal_to_upstream" title="Permalink to this definition">¶</a></dt>
+<dd><p>Record which COW’d templates are equal to their upstream equivalents.</p>
+<p>This is meant to be executed in a pre-migration script.</p>
+<p>This only makes sense if:</p>
+<ol class="arabic simple">
+<li><p>Origin is &gt;= v12.</p></li>
+<li><p>Website was installed. Hint: run this in website’s pre-migration.</p></li>
+<li><p>You are going to run <a class="reference internal" href="#openupgradelib.openupgrade.cow_templates_replicate_upstream" title="openupgradelib.openupgrade.cow_templates_replicate_upstream"><code class="xref py py-func docutils literal notranslate"><span class="pre">cow_templates_replicate_upstream()</span></code></a> in the
+end-migration.</p></li>
+</ol>
+</dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="openupgradelib.openupgrade.cow_templates_replicate_upstream">
+<span class="sig-prename descclassname"><span class="pre">openupgradelib.openupgrade.</span></span><span class="sig-name descname"><span class="pre">cow_templates_replicate_upstream</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">cr</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">mark_colname</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#openupgradelib.openupgrade.cow_templates_replicate_upstream" title="Permalink to this definition">¶</a></dt>
+<dd><p>Reset COW’d templates to their upstream equivalents.</p>
+<p>This is meant to be executed in an end-migration script.</p>
+<p>This only makes sense if:</p>
+<ol class="arabic simple">
+<li><p>Origin is &gt;= v12.</p></li>
+<li><p>Website was installed. Hint: run this in website’s end-migration.</p></li>
+<li><p>You ran <a class="reference internal" href="#openupgradelib.openupgrade.cow_templates_mark_if_equal_to_upstream" title="openupgradelib.openupgrade.cow_templates_mark_if_equal_to_upstream"><code class="xref py py-func docutils literal notranslate"><span class="pre">cow_templates_mark_if_equal_to_upstream()</span></code></a> in the
+pre-migration.</p></li>
+</ol>
+</dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="openupgradelib.openupgrade.date_to_datetime_tz">
+<span class="sig-prename descclassname"><span class="pre">openupgradelib.openupgrade.</span></span><span class="sig-name descname"><span class="pre">date_to_datetime_tz</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">cr</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">table_name</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">user_field_name</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">date_field_name</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">datetime_field_name</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#openupgradelib.openupgrade.date_to_datetime_tz" title="Permalink to this definition">¶</a></dt>
+<dd><p>Take the related user’s timezone into account when converting
+date field to datetime in a given table.
+This function must be call in post migration script.</p>
+<p>:param table_name : Name of the table where the field is;
+:param user_field_name : The name of the user field (res.users);
+:param date_field_name : The name of the old date field;     (Typically a legacy name, set in pre-migration script)
+:param datetime_field_name : The name of the new date field;</p>
+<div class="versionadded">
+<p><span class="versionmodified added">New in version 8.0.</span></p>
+</div>
+</dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="openupgradelib.openupgrade.deactivate_workflow_transitions">
+<span class="sig-prename descclassname"><span class="pre">openupgradelib.openupgrade.</span></span><span class="sig-name descname"><span class="pre">deactivate_workflow_transitions</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">cr</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">model</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">transitions</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#openupgradelib.openupgrade.deactivate_workflow_transitions" title="Permalink to this definition">¶</a></dt>
+<dd><p>Disable workflow transitions for workflows on a given model.
+This can be necessary for automatic workflow transitions when writing
+to an object via the ORM in the post migration step.
+Returns a dictionary to be used on reactivate_workflow_transitions</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>model</strong> – the model for which workflow transitions should be     deactivated</p></li>
+<li><p><strong>transitions</strong> – a list of (‘module’, ‘name’) xmlid tuples of     transitions to be deactivated. Don’t pass this if there’s no specific     reason to do so, the default is to deactivate all transitions</p></li>
+</ul>
+</dd>
+</dl>
+<div class="versionadded">
+<p><span class="versionmodified added">New in version 7.0.</span></p>
+</div>
+</dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="openupgradelib.openupgrade.delete_model_workflow">
+<span class="sig-prename descclassname"><span class="pre">openupgradelib.openupgrade.</span></span><span class="sig-name descname"><span class="pre">delete_model_workflow</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">cr</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">model</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">drop_indexes</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">False</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#openupgradelib.openupgrade.delete_model_workflow" title="Permalink to this definition">¶</a></dt>
+<dd><p>Forcefully remove active workflows for obsolete models,
+to prevent foreign key issues when the orm deletes the model.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>cr</strong> – DB cursor.</p></li>
+<li><p><strong>model</strong> (<em>str</em>) – Model name.</p></li>
+<li><p><strong>drop_indexes</strong> (<em>bool</em>) – Do I drop indexes after finishing? If <code class="docutils literal notranslate"><span class="pre">False</span></code>, those will be dropped
+by a subsequent update of the <code class="docutils literal notranslate"><span class="pre">workflow</span></code> module in normal Odoo
+probably.</p></li>
+</ul>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="openupgradelib.openupgrade.delete_record_translations">
+<span class="sig-prename descclassname"><span class="pre">openupgradelib.openupgrade.</span></span><span class="sig-name descname"><span class="pre">delete_record_translations</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">cr</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">module</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">xml_ids</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#openupgradelib.openupgrade.delete_record_translations" title="Permalink to this definition">¶</a></dt>
+<dd><p>Cleanup translations of specific records in a module.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>module</strong> – module name</p></li>
+<li><p><strong>xml_ids</strong> – a tuple or list of xml record IDs</p></li>
+</ul>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="openupgradelib.openupgrade.delete_records_safely_by_xml_id">
+<span class="sig-prename descclassname"><span class="pre">openupgradelib.openupgrade.</span></span><span class="sig-name descname"><span class="pre">delete_records_safely_by_xml_id</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">env</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">xml_ids</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">delete_childs</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">False</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#openupgradelib.openupgrade.delete_records_safely_by_xml_id" title="Permalink to this definition">¶</a></dt>
+<dd><p>This removes in the safest possible way the records whose XML-IDs are
+passed as argument.</p>
+<p>If not possible to be removed, and the record is an updatable one
+(noupdate=0), it’s switched to noupdate=1, for avoiding a later error when
+Odoo performs the regular update cleanup and trying to remove it as well.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>xml_ids</strong> – List of XML-ID string identifiers of the records to remove.</p></li>
+<li><p><strong>delete_childs</strong> – If true, also child ids of the given xml_ids will
+be deleted.</p></li>
+</ul>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="openupgradelib.openupgrade.delete_sql_constraint_safely">
+<span class="sig-prename descclassname"><span class="pre">openupgradelib.openupgrade.</span></span><span class="sig-name descname"><span class="pre">delete_sql_constraint_safely</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">env</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">module</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">table</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">name</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#openupgradelib.openupgrade.delete_sql_constraint_safely" title="Permalink to this definition">¶</a></dt>
+<dd><p>In case of obsolete constraints, run this in pre-migration script.
+Useful from v14 onwards.
+:param module: Module where the sql constraint was declared
+:param table: Table where the sql constraint belongs
+:param name: Name of the sql constraint as it was declared</p>
+</dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="openupgradelib.openupgrade.disable_invalid_filters">
+<span class="sig-prename descclassname"><span class="pre">openupgradelib.openupgrade.</span></span><span class="sig-name descname"><span class="pre">disable_invalid_filters</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">env</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#openupgradelib.openupgrade.disable_invalid_filters" title="Permalink to this definition">¶</a></dt>
+<dd><p>It analyzes all the existing active filters to check if they are still
+correct. If not, they are disabled for avoiding errors when clicking on
+them, or worse, if they are default filters when opening the model/action.</p>
+<p>To be run at the base end-migration script for having a general scope. Only
+assured to work on &gt; v8.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><p><strong>env</strong> – Environment parameter.</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="openupgradelib.openupgrade.drop_columns">
+<span class="sig-prename descclassname"><span class="pre">openupgradelib.openupgrade.</span></span><span class="sig-name descname"><span class="pre">drop_columns</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">cr</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">column_spec</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#openupgradelib.openupgrade.drop_columns" title="Permalink to this definition">¶</a></dt>
+<dd><p>Drop columns but perform an additional check if a column exists.
+This covers the case of function fields that may or may not be stored.
+Consider that this may not be obvious: an additional module can govern
+a function fields’ store properties.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><p><strong>column_spec</strong> – a list of (table, column) tuples</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="openupgradelib.openupgrade.float_to_integer">
+<span class="sig-prename descclassname"><span class="pre">openupgradelib.openupgrade.</span></span><span class="sig-name descname"><span class="pre">float_to_integer</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">cr</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">table</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">field</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#openupgradelib.openupgrade.float_to_integer" title="Permalink to this definition">¶</a></dt>
+<dd><p>Change column type from float to integer. It will just
+truncate the float value (It won’t round it)</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>table</strong> – The table</p></li>
+<li><p><strong>field</strong> – The field name for which we want to change the type</p></li>
+</ul>
+</dd>
+</dl>
+<div class="versionadded">
+<p><span class="versionmodified added">New in version 8.0.</span></p>
+</div>
+</dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="openupgradelib.openupgrade.get_legacy_name">
+<span class="sig-prename descclassname"><span class="pre">openupgradelib.openupgrade.</span></span><span class="sig-name descname"><span class="pre">get_legacy_name</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">original_name</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#openupgradelib.openupgrade.get_legacy_name" title="Permalink to this definition">¶</a></dt>
+<dd><p>Returns a versioned name for legacy tables/columns/etc
+Use this function instead of some custom name to avoid
+collisions with future or past legacy tables/columns/etc</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>original_name</strong> – the original name of the column</p></li>
+<li><p><strong>version</strong> – current version as passed to migrate()</p></li>
+</ul>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="openupgradelib.openupgrade.lift_constraints">
+<span class="sig-prename descclassname"><span class="pre">openupgradelib.openupgrade.</span></span><span class="sig-name descname"><span class="pre">lift_constraints</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">cr</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">table</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">column</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#openupgradelib.openupgrade.lift_constraints" title="Permalink to this definition">¶</a></dt>
+<dd><p>Lift all constraints on column in table.
+Typically, you use this in a pre-migrate script where you adapt references
+for many2one fields with changed target objects.
+If everything went right, the constraints will be recreated</p>
+</dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="openupgradelib.openupgrade.load_data">
+<span class="sig-prename descclassname"><span class="pre">openupgradelib.openupgrade.</span></span><span class="sig-name descname"><span class="pre">load_data</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">cr</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">module_name</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">filename</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">idref</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">mode</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">'init'</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#openupgradelib.openupgrade.load_data" title="Permalink to this definition">¶</a></dt>
+<dd><p>Load an xml, csv or yml data file from your post script. The usual case for
+this is the
+occurrence of newly added essential or useful data in the module that is
+marked with “noupdate=’1’” and without “forcecreate=’1’” so that it will
+not be loaded by the usual upgrade mechanism. Leaving the ‘mode’ argument
+to its default ‘init’ will load the data from your migration script.</p>
+<p>Theoretically, you could simply load a stock file from the module, but be
+careful not to reinitialize any data that could have been customized.
+Preferably, select only the newly added items. Copy these to a file
+in your migrations directory and load that file.
+Leave it to the user to actually delete existing resources that are
+marked with ‘noupdate’ (other named items will be deleted
+automatically).</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>module_name</strong> – the name of the module</p></li>
+<li><p><strong>filename</strong> – the path to the filename, relative to the module     directory. This may also be the module directory relative to –upgrade-path</p></li>
+<li><p><strong>idref</strong> – optional hash with ?id mapping cache?</p></li>
+<li><p><strong>mode</strong> – <p>one of ‘init’, ‘update’, ‘demo’, ‘init_no_create’.
+Always use ‘init’ for adding new items from files that are marked with
+‘noupdate’. Defaults to ‘init’.</p>
+<p>’init_no_create’ is a hack to load data for records which have
+forcecreate=False set. As those records won’t be recreated during the
+update, standard Odoo would recreate the record if it was deleted,
+but this will fail in cases where there are required fields to be
+filled which are not contained in the data file.</p>
+</p></li>
+</ul>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="openupgradelib.openupgrade.logged_query">
+<span class="sig-prename descclassname"><span class="pre">openupgradelib.openupgrade.</span></span><span class="sig-name descname"><span class="pre">logged_query</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">cr</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">query</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">args</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">skip_no_result</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">False</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#openupgradelib.openupgrade.logged_query" title="Permalink to this definition">¶</a></dt>
+<dd><p>Logs query and affected rows at level DEBUG.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>query</strong> – a query string suitable to pass to cursor.execute()</p></li>
+<li><p><strong>args</strong> – a list, tuple or dictionary passed as substitution values
+to cursor.execute().</p></li>
+<li><p><strong>skip_no_result</strong> – If True, then logging details are only shown
+if there are affected records.</p></li>
+</ul>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="openupgradelib.openupgrade.logging">
+<span class="sig-prename descclassname"><span class="pre">openupgradelib.openupgrade.</span></span><span class="sig-name descname"><span class="pre">logging</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">args_details</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">False</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">step</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">False</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#openupgradelib.openupgrade.logging" title="Permalink to this definition">¶</a></dt>
+<dd><p>This is a decorator for any sub functions called in an OpenUpgrade script.
+(pre or post migration script)</p>
+<p>Decorate functions that can take time, or for debug / development purpose.</p>
+<p>if a function is decorated, a log will be written each time the function
+is called.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>args_details</strong> – if True, arguments details are given in the log</p></li>
+<li><p><strong>step</strong> – The log will be done only every step times.</p></li>
+</ul>
+</dd>
+</dl>
+<p>Typical use:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="nd">@openupgrade</span><span class="o">.</span><span class="n">logging</span><span class="p">()</span>
+<span class="k">def</span> <span class="nf">migrate_stock_warehouses</span><span class="p">(</span><span class="n">cr</span><span class="p">)</span>
+    <span class="c1"># some custom code</span>
+
+<span class="nd">@openupgrade</span><span class="o">.</span><span class="n">logging</span><span class="p">(</span><span class="n">step</span><span class="o">=</span><span class="mi">1000</span><span class="p">)</span>
+<span class="k">def</span> <span class="nf">migrate_partner</span><span class="p">(</span><span class="n">cr</span><span class="p">,</span> <span class="n">partner</span><span class="p">):</span>
+    <span class="c1"># some custom code</span>
+
+<span class="nd">@openupgrade</span><span class="o">.</span><span class="n">migrate</span><span class="p">()</span>
+<span class="k">def</span> <span class="nf">migrate</span><span class="p">(</span><span class="n">cr</span><span class="p">,</span> <span class="n">version</span><span class="p">):</span>
+    <span class="c1"># some custom code</span>
+    <span class="n">migrate_stock_warehouses</span><span class="p">(</span><span class="n">cr</span><span class="p">)</span>
+
+    <span class="k">for</span> <span class="n">partner</span> <span class="ow">in</span> <span class="n">partners</span><span class="p">:</span>
+        <span class="n">migrate_partner</span><span class="p">(</span><span class="n">cr</span><span class="p">,</span> <span class="n">partner</span><span class="p">)</span>
+</pre></div>
+</div>
+</dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="openupgradelib.openupgrade.m2o_to_x2m">
+<span class="sig-prename descclassname"><span class="pre">openupgradelib.openupgrade.</span></span><span class="sig-name descname"><span class="pre">m2o_to_x2m</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">cr</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">model</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">table</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">field</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">source_field</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#openupgradelib.openupgrade.m2o_to_x2m" title="Permalink to this definition">¶</a></dt>
+<dd><p>Transform many2one relations into one2many or many2many.
+Use rename_columns in your pre-migrate script to retain the column’s old
+value, then call m2o_to_x2m in your post-migrate script.</p>
+<p>WARNING: If converting to one2many, there can be data loss, because only
+one inverse record can be mapped in a one2many, but you can have multiple
+many2one pointing to the same target. Use it when the use case allows this
+conversion.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>model</strong> – The target model registry object</p></li>
+<li><p><strong>table</strong> – The source table</p></li>
+<li><p><strong>field</strong> – The new field name on the target model</p></li>
+<li><p><strong>source_field</strong> – the (renamed) many2one column on the source table.</p></li>
+</ul>
+</dd>
+</dl>
+<div class="versionadded">
+<p><span class="versionmodified added">New in version 8.0.</span></p>
+</div>
+</dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="openupgradelib.openupgrade.map_values">
+<span class="sig-prename descclassname"><span class="pre">openupgradelib.openupgrade.</span></span><span class="sig-name descname"><span class="pre">map_values</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">cr</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">source_column</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">target_column</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">mapping</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">model</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">table</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">write</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">'sql'</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#openupgradelib.openupgrade.map_values" title="Permalink to this definition">¶</a></dt>
+<dd><p>Map old values to new values within the same model or table. Old values
+presumably come from a legacy column.
+You will typically want to use it in post-migration scripts.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>cr</strong> – The database cursor</p></li>
+<li><p><strong>source_column</strong> – the database column that contains old values to be     mapped</p></li>
+<li><p><strong>target_column</strong> – the database column, or model field (if ‘write’ is     ‘orm’) that the new values are written to</p></li>
+<li><p><strong>mapping</strong> – list of tuples [(old value, new value)]
+Old value True represents “is set”, False “is not set”.</p></li>
+<li><p><strong>model</strong> – used for writing if ‘write’ is ‘orm’, or to retrieve the     table if ‘table’ is not given.</p></li>
+<li><p><strong>table</strong> – the database table used to query the old values, and write     the new values (if ‘write’ is ‘sql’)</p></li>
+<li><p><strong>write</strong> – Either ‘orm’ or ‘sql’. Note that old ids are always     identified by an sql read.</p></li>
+</ul>
+</dd>
+</dl>
+<p>This method does not support mapping m2m, o2m or property fields.     For o2m you can migrate the inverse field’s column instead.</p>
+<div class="versionadded">
+<p><span class="versionmodified added">New in version 8.0.</span></p>
+</div>
+</dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="openupgradelib.openupgrade.merge_models">
+<span class="sig-prename descclassname"><span class="pre">openupgradelib.openupgrade.</span></span><span class="sig-name descname"><span class="pre">merge_models</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">cr</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">old_model</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">new_model</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">ref_field</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#openupgradelib.openupgrade.merge_models" title="Permalink to this definition">¶</a></dt>
+<dd><p>Update model references for models that have merged to an existing model.
+:param old_model: old model
+:param new_model: destination model
+:param ref_field: name of the field in new model that references
+the id of the old model. Usually created before calling this method.</p>
+<p>WARNING: This method doesn’t move the records from old_model to new_model
+tables. You should have to do that previously in the migration scripts.</p>
+</dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="openupgradelib.openupgrade.message">
+<span class="sig-prename descclassname"><span class="pre">openupgradelib.openupgrade.</span></span><span class="sig-name descname"><span class="pre">message</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">cr</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">module</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">table</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">column</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">message</span></span></em>, <em class="sig-param"><span class="o"><span class="pre">*</span></span><span class="n"><span class="pre">args</span></span></em>, <em class="sig-param"><span class="o"><span class="pre">**</span></span><span class="n"><span class="pre">kwargs</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#openupgradelib.openupgrade.message" title="Permalink to this definition">¶</a></dt>
+<dd><p>Log handler for non-critical notifications about the upgrade.
+To be extended with logging to a table for reporting purposes.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>module</strong> – the module name that the message concerns</p></li>
+<li><p><strong>table</strong> – the model that this message concerns (may be False,     but preferably not if ‘column’ is defined)</p></li>
+<li><p><strong>column</strong> – the column that this message concerns (may be False)</p></li>
+</ul>
+</dd>
+</dl>
+<div class="versionadded">
+<p><span class="versionmodified added">New in version 7.0.</span></p>
+</div>
+</dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="openupgradelib.openupgrade.migrate">
+<span class="sig-prename descclassname"><span class="pre">openupgradelib.openupgrade.</span></span><span class="sig-name descname"><span class="pre">migrate</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">no_version</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">False</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">use_env</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">uid</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">context</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#openupgradelib.openupgrade.migrate" title="Permalink to this definition">¶</a></dt>
+<dd><p>This is the decorator for the migrate() function
+in migration scripts.</p>
+<p>Set argument <cite>no_version</cite> to True if the method has to be taken into
+account if the module is installed during a migration.</p>
+<p>Set argument <cite>use_env</cite> if you want an v8+ environment instead of a plain
+cursor. Starting from version 10, this is the default</p>
+<p>The arguments <cite>uid</cite> and <cite>context</cite> can be set when an evironment is
+requested. In the cursor case, they’re ignored.</p>
+<p>The migration function’s signature must be <cite>func(cr, version)</cite> if
+<cite>use_env</cite> is <cite>False</cite> or not set and the version is below 10, or
+<cite>func(env, version)</cite> if <cite>use_env</cite> is <cite>True</cite> or not set and the version is
+10 or higher.</p>
+<p>Return when the <cite>version</cite> argument is not defined and <cite>no_version</cite> is
+False and log execeptions.</p>
+<p>Retrieve debug context data from the frame above for
+logging purposes.</p>
+</dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="openupgradelib.openupgrade.move_field_m2o">
+<span class="sig-prename descclassname"><span class="pre">openupgradelib.openupgrade.</span></span><span class="sig-name descname"><span class="pre">move_field_m2o</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">cr</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">pool</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">registry_old_model</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">field_old_model</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">m2o_field_old_model</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">registry_new_model</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">field_new_model</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">quick_request</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">True</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">compute_func</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">binary_field</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">False</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#openupgradelib.openupgrade.move_field_m2o" title="Permalink to this definition">¶</a></dt>
+<dd><p>Use that function in the following case:
+A field moves from a model A to the model B with : A -&gt; m2o -&gt; B.
+(For exemple product_product -&gt; product_template)
+This function manage the migration of this field.
+available on post script migration.
+:param registry_old_model: registry of the model A;
+:param field_old_model: name of the field to move in model A;
+:param m2o_field_old_model: name of the field of the table of the model A     that link model A to model B;
+:param registry_new_model: registry of the model B;
+:param field_new_model: name of the field to move in model B;
+:param quick_request: Set to False, if you want to use write function to     update value; Otherwise, the function will use UPDATE SQL request;
+:param compute_func: This a function that receives 4 parameters:     cr, pool: common args;    id: id of the instance of Model B    vals:  list of different values.    This function must return a unique value that will be set to the    instance of Model B which id is ‘id’ param;    If compute_func is not set, the algorithm will take the value that    is the most present in vals.    :binary_field: Set to True if the migrated field is a binary field</p>
+<div class="versionadded">
+<p><span class="versionmodified added">New in version 8.0.</span></p>
+</div>
+</dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="openupgradelib.openupgrade.reactivate_workflow_transitions">
+<span class="sig-prename descclassname"><span class="pre">openupgradelib.openupgrade.</span></span><span class="sig-name descname"><span class="pre">reactivate_workflow_transitions</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">cr</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">transition_conditions</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#openupgradelib.openupgrade.reactivate_workflow_transitions" title="Permalink to this definition">¶</a></dt>
+<dd><p>Reactivate workflow transition previously deactivated by
+deactivate_workflow_transitions.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><p><strong>transition_conditions</strong> – a dictionary returned by     deactivate_workflow_transitions</p>
+</dd>
+</dl>
+<div class="versionadded">
+<p><span class="versionmodified added">New in version 7.0.</span></p>
+</div>
+<div class="deprecated">
+<p><span class="versionmodified deprecated">Deprecated since version 11.0: </span>Workflows were removed from Odoo as of version 11.0</p>
+</div>
+</dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="openupgradelib.openupgrade.remove_tables_fks">
+<span class="sig-prename descclassname"><span class="pre">openupgradelib.openupgrade.</span></span><span class="sig-name descname"><span class="pre">remove_tables_fks</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">cr</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">tables</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#openupgradelib.openupgrade.remove_tables_fks" title="Permalink to this definition">¶</a></dt>
+<dd><p>Remove foreign keys declared in <code class="docutils literal notranslate"><span class="pre">tables</span></code>.</p>
+<p>This is useful when a table is not going to be used anymore, but you still
+don’t want to delete it.</p>
+<p>If you keep FKs in that table, it will still get modifications when other
+tables are modified too; but if you’re keeping that table as a log, that
+is a problem. Also, if some of the FK has no index, it could slow down
+deletion in other tables, even when this one has no more use.</p>
+<div class="admonition hint">
+<p class="admonition-title">Hint</p>
+<p>This method removes FKs that are <em>declared</em> in <code class="docutils literal notranslate"><span class="pre">tables</span></code>,
+<strong>not</strong> FKs that <em>point</em> to those tables.</p>
+</div>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><p><strong>tables</strong> (<em>[</em><em>str</em><em>, </em><em>...</em><em>]</em>) – List of tables where the FKs were declared, and where they will be
+removed too. If a table doesn’t exist, it is skipped.</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="openupgradelib.openupgrade.rename_columns">
+<span class="sig-prename descclassname"><span class="pre">openupgradelib.openupgrade.</span></span><span class="sig-name descname"><span class="pre">rename_columns</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">cr</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">column_spec</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#openupgradelib.openupgrade.rename_columns" title="Permalink to this definition">¶</a></dt>
+<dd><p>Rename table columns. Typically called in the pre script.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><p><strong>column_spec</strong> – a hash with table keys, with lists of tuples as     values. Tuples consist of (old_name, new_name). Use None for new_name     to trigger a conversion of old_name using get_legacy_name()</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="openupgradelib.openupgrade.rename_fields">
+<span class="sig-prename descclassname"><span class="pre">openupgradelib.openupgrade.</span></span><span class="sig-name descname"><span class="pre">rename_fields</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">env</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">field_spec</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">no_deep</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">False</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#openupgradelib.openupgrade.rename_fields" title="Permalink to this definition">¶</a></dt>
+<dd><p>Rename fields. Typically called in the pre script. WARNING: If using
+this on base module, pass the argument <code class="docutils literal notranslate"><span class="pre">no_deep</span></code> with True value for
+avoiding the using of the environment (which is not yet loaded).</p>
+<p>This, in contrast of <code class="docutils literal notranslate"><span class="pre">rename_columns</span></code>, performs all the steps for
+completely rename a field from one name to another. This is needed for
+making a complete renaming of a field with all their side features:
+translations, filters, exports…</p>
+<p>Call this method whenever you are not performing a pure SQL column renaming
+for other purposes (preserve a value for example).</p>
+<p>This method performs also the SQL column renaming, so only one call is
+needed.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>env</strong> – Environment/pool variable. The database cursor is the only
+thing needed, but added in prevision of TODO tasks for not breaking
+API later.</p></li>
+<li><p><strong>field_spec</strong> – a list of tuples with the following elements:
+* Model name. The name of the Odoo model
+* Table name. The name of the SQL table for the model.
+* Old field name. The name of the old field.
+* New field name. The name of the new field.</p></li>
+<li><p><strong>no_deep</strong> – If True, avoids to perform any operation that involves
+the environment. Not used for now.</p></li>
+</ul>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="openupgradelib.openupgrade.rename_models">
+<span class="sig-prename descclassname"><span class="pre">openupgradelib.openupgrade.</span></span><span class="sig-name descname"><span class="pre">rename_models</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">cr</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">model_spec</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#openupgradelib.openupgrade.rename_models" title="Permalink to this definition">¶</a></dt>
+<dd><p>Rename models. Typically called in the pre script.
+:param model_spec: a list of tuples (old model name, new model name).</p>
+<p>Use case: if a model changes name, but still implements equivalent
+functionality you will want to update references in for instance
+relation fields.</p>
+<p>WARNING: This method doesn’t rename the associated tables. For that,
+you need to call <cite>rename_tables</cite> method.</p>
+</dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="openupgradelib.openupgrade.rename_property">
+<span class="sig-prename descclassname"><span class="pre">openupgradelib.openupgrade.</span></span><span class="sig-name descname"><span class="pre">rename_property</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">cr</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">model</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">old_name</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">new_name</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#openupgradelib.openupgrade.rename_property" title="Permalink to this definition">¶</a></dt>
+<dd><p>Rename property old_name owned by model to new_name. This should happen
+in a pre-migration script.</p>
+</dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="openupgradelib.openupgrade.rename_tables">
+<span class="sig-prename descclassname"><span class="pre">openupgradelib.openupgrade.</span></span><span class="sig-name descname"><span class="pre">rename_tables</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">cr</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">table_spec</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#openupgradelib.openupgrade.rename_tables" title="Permalink to this definition">¶</a></dt>
+<dd><p>Rename tables. Typically called in the pre script.
+This function also renames the id sequence if it exists and if it is
+not modified in the same run.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><p><strong>table_spec</strong> – a list of tuples (old table name, new table name). Use     None for new_name to trigger a conversion of old_name to the result of     get_legacy_name()</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="openupgradelib.openupgrade.rename_xmlids">
+<span class="sig-prename descclassname"><span class="pre">openupgradelib.openupgrade.</span></span><span class="sig-name descname"><span class="pre">rename_xmlids</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">cr</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">xmlids_spec</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">allow_merge</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">False</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#openupgradelib.openupgrade.rename_xmlids" title="Permalink to this definition">¶</a></dt>
+<dd><p>Rename XML IDs. Typically called in the pre script.
+One usage example is when an ID changes module. In OpenERP 6 for example,
+a number of res_groups IDs moved to module base from other modules (
+although they were still being defined in their respective module).</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>xmlids_spec</strong> – a list of tuples (old module.xmlid, new module.xmlid).</p></li>
+<li><p><strong>allow_merge</strong> – if the new ID already exists, try to merge the records.
+This is recommended when renaming module categories, which are
+generated on the fly by the Odoo database initialization routine and
+may resurface over a longer period of time. In general though, this
+option should be avoided. Renaming to existing IDs is usually an
+error, and because this method is usually called in the pre-stage,
+the applied merge method is by SQL which is incomplete and can lead
+to inconsistencies in the database.</p></li>
+</ul>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="openupgradelib.openupgrade.safe_unlink">
+<span class="sig-prename descclassname"><span class="pre">openupgradelib.openupgrade.</span></span><span class="sig-name descname"><span class="pre">safe_unlink</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">records</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">do_raise</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">False</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#openupgradelib.openupgrade.safe_unlink" title="Permalink to this definition">¶</a></dt>
+<dd><p>Allow for errors to occur during unlinking of records.</p>
+<p>Prevent broken database transactions, and by default, catch exceptions.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>records</strong> – an iterable (not necessarily recordset) of records to
+unlink.</p></li>
+<li><p><strong>do_raise</strong> – when set to True, don’t catch exceptions but let them
+be raised.</p></li>
+</ul>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="openupgradelib.openupgrade.set_defaults">
+<span class="sig-prename descclassname"><span class="pre">openupgradelib.openupgrade.</span></span><span class="sig-name descname"><span class="pre">set_defaults</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">cr</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">pool</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">default_spec</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">force</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">False</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">use_orm</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">False</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#openupgradelib.openupgrade.set_defaults" title="Permalink to this definition">¶</a></dt>
+<dd><p>Set default value. Useful for fields that are newly required. Uses orm, so
+call from the post script.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>pool</strong> – you can pass ‘env’ as well.</p></li>
+<li><p><strong>default_spec</strong> – a hash with model names as keys. Values are lists     of tuples (field, value). None as a value has a special meaning: it     assigns the default value. If this value is provided by a function, the     function is called as the user that created the resource.</p></li>
+<li><p><strong>force</strong> – overwrite existing values. To be used for assigning a non-     default value (presumably in the case of a new column). The ORM assigns     the default value as declared in the model in an earlier stage of the     process. Beware of issues with resources loaded from new data that     actually do require the model’s default, in combination with the post     script possible being run multiple times.</p></li>
+<li><p><strong>use_orm</strong> – If set to True, the write operation of the default value     will be triggered using ORM instead on an SQL clause (default).</p></li>
+</ul>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="openupgradelib.openupgrade.set_xml_ids_noupdate_value">
+<span class="sig-prename descclassname"><span class="pre">openupgradelib.openupgrade.</span></span><span class="sig-name descname"><span class="pre">set_xml_ids_noupdate_value</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">env</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">module</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">xml_ids</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">value</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#openupgradelib.openupgrade.set_xml_ids_noupdate_value" title="Permalink to this definition">¶</a></dt>
+<dd><p>Set the xml_ids noupdate values in a module.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>module</strong> – module name</p></li>
+<li><p><strong>xml_ids</strong> – a tuple or list of xml record IDs</p></li>
+<li><p><strong>value</strong> (<em>bool</em>) – True or False.</p></li>
+</ul>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="openupgradelib.openupgrade.table_exists">
+<span class="sig-prename descclassname"><span class="pre">openupgradelib.openupgrade.</span></span><span class="sig-name descname"><span class="pre">table_exists</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">cr</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">table</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#openupgradelib.openupgrade.table_exists" title="Permalink to this definition">¶</a></dt>
+<dd><p>Check whether a certain table or view exists</p>
+</dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="openupgradelib.openupgrade.update_field_multilang">
+<span class="sig-prename descclassname"><span class="pre">openupgradelib.openupgrade.</span></span><span class="sig-name descname"><span class="pre">update_field_multilang</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">records</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">field</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">method</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#openupgradelib.openupgrade.update_field_multilang" title="Permalink to this definition">¶</a></dt>
+<dd><p>Update a field in all available languages in the database.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>records</strong> – Recordset to be updated.</p></li>
+<li><p><strong>field</strong> (<em>str</em>) – Field to be updated.</p></li>
+<li><p><strong>method</strong> (<em>callable</em>) – <p>Method to execute to update the field.</p>
+<p>It will be called with: <code class="docutils literal notranslate"><span class="pre">(old_value,</span> <span class="pre">lang_code,</span> <span class="pre">record)</span></code></p>
+</p></li>
+</ul>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="openupgradelib.openupgrade.update_module_moved_fields">
+<span class="sig-prename descclassname"><span class="pre">openupgradelib.openupgrade.</span></span><span class="sig-name descname"><span class="pre">update_module_moved_fields</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">cr</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">model</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">moved_fields</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">old_module</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">new_module</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#openupgradelib.openupgrade.update_module_moved_fields" title="Permalink to this definition">¶</a></dt>
+<dd><p>Update module for field definition in general tables that have been
+moved from one module to another.</p>
+<p>No need to use this method: moving the XMLID is covered in
+Odoo and OpenUpgrade natively.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>cr</strong> – Database cursor</p></li>
+<li><p><strong>model</strong> – model name</p></li>
+<li><p><strong>moved_fields</strong> – list of moved fields</p></li>
+<li><p><strong>old_module</strong> – previous module of the fields</p></li>
+<li><p><strong>new_module</strong> – new module of the fields</p></li>
+</ul>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="openupgradelib.openupgrade.update_module_moved_models">
+<span class="sig-prename descclassname"><span class="pre">openupgradelib.openupgrade.</span></span><span class="sig-name descname"><span class="pre">update_module_moved_models</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">cr</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">model</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">old_module</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">new_module</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#openupgradelib.openupgrade.update_module_moved_models" title="Permalink to this definition">¶</a></dt>
+<dd><p>Update module for model definition in general tables that have been
+moved from one module to another.
+:param cr: Database cursor
+:param model: Model name
+:param old_module: Previous module of the models
+:param new_module: New module of the models</p>
+</dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="openupgradelib.openupgrade.update_module_names">
+<span class="sig-prename descclassname"><span class="pre">openupgradelib.openupgrade.</span></span><span class="sig-name descname"><span class="pre">update_module_names</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">cr</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">namespec</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">merge_modules</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">False</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#openupgradelib.openupgrade.update_module_names" title="Permalink to this definition">¶</a></dt>
+<dd><p>Deal with changed module names, making all the needed changes on the
+related tables, like XML-IDs, translations, and so on.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>namespec</strong> – list of tuples of (old name, new name)</p></li>
+<li><p><strong>merge_modules</strong> – Specify if the operation should be a merge instead
+of just a renaming.</p></li>
+</ul>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="openupgradelib.openupgrade.update_workflow_workitems">
+<span class="sig-prename descclassname"><span class="pre">openupgradelib.openupgrade.</span></span><span class="sig-name descname"><span class="pre">update_workflow_workitems</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">cr</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">pool</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">ref_spec_actions</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#openupgradelib.openupgrade.update_workflow_workitems" title="Permalink to this definition">¶</a></dt>
+<dd><p>Find all the workflow items from the target state to set them to
+the wanted state.</p>
+<p>When a workflow action is removed, from model, the objects whose states
+are in these actions need to be set to another to be able to continue the
+workflow properly.</p>
+<p>Run in pre-migration</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><p><strong>ref_spec_actions</strong> – list of tuples with couple of workflow.action’s
+external ids. The first id is replaced with the second.</p>
+</dd>
+<dt class="field-even">Returns</dt>
+<dd class="field-even"><p>None</p>
+</dd>
+</dl>
+<div class="versionadded">
+<p><span class="versionmodified added">New in version 7.0.</span></p>
+</div>
+</dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="openupgradelib.openupgrade.warn_possible_dataloss">
+<span class="sig-prename descclassname"><span class="pre">openupgradelib.openupgrade.</span></span><span class="sig-name descname"><span class="pre">warn_possible_dataloss</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">cr</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">pool</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">old_module</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">fields</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#openupgradelib.openupgrade.warn_possible_dataloss" title="Permalink to this definition">¶</a></dt>
+<dd><p>Use that function in the following case:
+if a field of a model was moved from a ‘A’ module to a ‘B’ module.
+(‘B’ depend on ‘A’),
+This function will test if ‘B’ is installed.
+If not, count the number of different value and possibly warn the user.
+Use orm, so call from the post script.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>old_module</strong> – name of the old module</p></li>
+<li><p><strong>fields</strong> – list of dictionary with the following keys:
+‘table’ : name of the table where the field is.
+‘field’ : name of the field that are moving.
+‘new_module’ : name of the new module</p></li>
+</ul>
+</dd>
+</dl>
+<div class="versionadded">
+<p><span class="versionmodified added">New in version 7.0.</span></p>
+</div>
+</dd></dl>
+
+</div>
+<div class="section" id="methods-for-openupgrade-7-0">
+<h2>Methods for OpenUpgrade 7.0<a class="headerlink" href="#methods-for-openupgrade-7-0" title="Permalink to this heading">¶</a></h2>
+<p>The following specific methods for 7.0 are available. These have been
+developed to cover specific needs as per data model changes in that
+release.</p>
+<span class="target" id="module-openupgradelib.openupgrade_70"></span><dl class="py function">
+<dt class="sig sig-object py" id="openupgradelib.openupgrade_70.get_partner_id_from_user_id">
+<span class="sig-prename descclassname"><span class="pre">openupgradelib.openupgrade_70.</span></span><span class="sig-name descname"><span class="pre">get_partner_id_from_user_id</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">cr</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">user_id</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#openupgradelib.openupgrade_70.get_partner_id_from_user_id" title="Permalink to this definition">¶</a></dt>
+<dd><p>Get the new partner_id from user_id.
+:param user_id : user previously used.</p>
+</dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="openupgradelib.openupgrade_70.set_partner_id_from_partner_address_id">
+<span class="sig-prename descclassname"><span class="pre">openupgradelib.openupgrade_70.</span></span><span class="sig-name descname"><span class="pre">set_partner_id_from_partner_address_id</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">cr</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">pool</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">model_name</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">partner_field</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">address_field</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">table</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#openupgradelib.openupgrade_70.set_partner_id_from_partner_address_id" title="Permalink to this definition">¶</a></dt>
+<dd><p>Set the new partner_id on any table with migrated contact ids</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>model_name</strong> – the model name of the target table</p></li>
+<li><p><strong>partner_field</strong> – the column in the target model’s table                           that will store the new partner when found</p></li>
+<li><p><strong>address_field</strong> – the legacy field in the model’s table                     that contains the old address in the model’s table</p></li>
+<li><p><strong>table</strong> – override the target model’s table name in case it was renamed</p></li>
+</ul>
+</dd>
+<dt class="field-even">Returns</dt>
+<dd class="field-even"><p>nothing</p>
+</dd>
+</dl>
+</dd></dl>
+
+</div>
+<div class="section" id="methods-for-openupgrade-8-0">
+<h2>Methods for OpenUpgrade 8.0<a class="headerlink" href="#methods-for-openupgrade-8-0" title="Permalink to this heading">¶</a></h2>
+<p>The following specific methods for 8.0 are available. These have been
+developed to cover specific needs as per data model changes in that
+release.</p>
+<span class="target" id="module-openupgradelib.openupgrade_80"></span><dl class="py function">
+<dt class="sig sig-object py" id="openupgradelib.openupgrade_80.get_last_post_for_model">
+<span class="sig-prename descclassname"><span class="pre">openupgradelib.openupgrade_80.</span></span><span class="sig-name descname"><span class="pre">get_last_post_for_model</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">cr</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">uid</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">ids</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">model_pool</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#openupgradelib.openupgrade_80.get_last_post_for_model" title="Permalink to this definition">¶</a></dt>
+<dd><p>Given a set of ids and a model pool, return a dict of each object ids with
+their latest message date as a value.
+To be called in post-migration scripts</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>cr</strong> – database cursor</p></li>
+<li><p><strong>uid</strong> – user id, assumed to be openerp.SUPERUSER_ID</p></li>
+<li><p><strong>ids</strong> – ids of the model in question to retrieve ids</p></li>
+<li><p><strong>model_pool</strong> – orm model pool, assumed to be from pool.get()</p></li>
+</ul>
+</dd>
+<dt class="field-even">Returns</dt>
+<dd class="field-even"><p>a dict with ids as keys and with dates as values</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="openupgradelib.openupgrade_80.set_message_last_post">
+<span class="sig-prename descclassname"><span class="pre">openupgradelib.openupgrade_80.</span></span><span class="sig-name descname"><span class="pre">set_message_last_post</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">cr</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">uid</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">pool</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">models</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#openupgradelib.openupgrade_80.set_message_last_post" title="Permalink to this definition">¶</a></dt>
+<dd><p>Given a list of models, set their ‘message_last_post’ fields to an
+estimated last post datetime.
+To be called in post-migration scripts</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>cr</strong> – database cursor</p></li>
+<li><p><strong>uid</strong> – user id, assumed to be openerp.SUPERUSER_ID</p></li>
+<li><p><strong>pool</strong> – orm pool, assumed to be openerp.pooler.get_pool(cr.dbname)</p></li>
+<li><p><strong>models</strong> – a list of model names for which ‘message_last_post’ needs     to be filled</p></li>
+</ul>
+</dd>
+<dt class="field-even">Returns</dt>
+<dd class="field-even"><p></p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="openupgradelib.openupgrade_80.update_aliases">
+<span class="sig-prename descclassname"><span class="pre">openupgradelib.openupgrade_80.</span></span><span class="sig-name descname"><span class="pre">update_aliases</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">cr</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">registry</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">model_name</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">set_parent_thread_id</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">alias_defaults</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">defaults_id_key</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">False</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#openupgradelib.openupgrade_80.update_aliases" title="Permalink to this definition">¶</a></dt>
+<dd><p>Update a model’s aliases according to how they are configured
+in the model’s create() method.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>model_name</strong> – The name of the model whose aliases are to be updated.     The model_id is also set as the aliases’ alias_parent_model_id.</p></li>
+<li><p><strong>set_parent_thread_id'</strong> – When set, set the ids of the resources as     their alias’ alias_parent_thread_id</p></li>
+<li><p><strong>alias_defaults</strong> – Static dictionary, recorded as a string on each     alias</p></li>
+<li><p><strong>defaults_id_key</strong> – When defined, add this key to each alias’     defaults dictionary with the resource id as its value.</p></li>
+</ul>
+</dd>
+</dl>
+</dd></dl>
+
+</div>
+<div class="section" id="methods-for-openupgrade-9-0">
+<h2>Methods for OpenUpgrade 9.0<a class="headerlink" href="#methods-for-openupgrade-9-0" title="Permalink to this heading">¶</a></h2>
+<p>The following specific methods for 9.0 are available. These have been
+developed to cover specific needs as per data model changes in that
+release.</p>
+<span class="target" id="module-openupgradelib.openupgrade_90"></span><p>This module provides simple tools for OpenUpgrade migration, specific for
+the 8.0 -&gt; 9.0 migration.</p>
+<dl class="py function">
+<dt class="sig sig-object py" id="openupgradelib.openupgrade_90.convert_binary_field_to_attachment">
+<span class="sig-prename descclassname"><span class="pre">openupgradelib.openupgrade_90.</span></span><span class="sig-name descname"><span class="pre">convert_binary_field_to_attachment</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">env</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">field_spec</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#openupgradelib.openupgrade_90.convert_binary_field_to_attachment" title="Permalink to this definition">¶</a></dt>
+<dd><p>This method converts the 8.0 binary fields to attachments like Odoo 9.0
+makes with the new attachment=True attribute. It has to be called on
+post-migration script, as there’s a call to get the res_name of the
+target model, which is not yet loaded on pre-migration.</p>
+<p>You need to rename the involved column in pre-migration script if you
+don’t want to lose your data in the process.</p>
+<p>This method also removes after the conversion the source column for
+avoiding data duplication.</p>
+<p>This is done through Odoo ORM, because there’s a lot of logic associated
+with guessing MIME type, format and length, file saving in store…
+that is doesn’t worth to recreate it via SQL as there’s not too much
+performance problem.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>env</strong> – Odoo environment</p></li>
+<li><p><strong>field_spec</strong> – <p>A dictionary with the ORM model name as key, and as
+dictionary values a tuple with:</p>
+<ul>
+<li><p>field name to be converted as attachment as first element.</p></li>
+<li><p>SQL column name that contains actual data as second element. If
+the second element is None, then the column name is taken
+calling <cite>get_legacy_name</cite> method, which is the typical technique.</p></li>
+</ul>
+</p></li>
+</ul>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="openupgradelib.openupgrade_90.replace_account_types">
+<span class="sig-prename descclassname"><span class="pre">openupgradelib.openupgrade_90.</span></span><span class="sig-name descname"><span class="pre">replace_account_types</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">env</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">type_spec</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">unlink</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">True</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#openupgradelib.openupgrade_90.replace_account_types" title="Permalink to this definition">¶</a></dt>
+<dd><p>Replace old account types with their replacements. The old account
+type is allowed not to exist anymore, except when running unit tests.
+:param type_spec: list of tuples (xmlid of old account.account.type, xmlid of new account.account.type)
+:param unlink: attempt to unlink the old account type</p>
+</dd></dl>
+
+</div>
+</div>
+
+
+          </div>
+          
+        </div>
+      </div>
+      <div class="sphinxsidebar" role="navigation" aria-label="main navigation">
+        <div class="sphinxsidebarwrapper">
+<h1 class="logo"><a href="index.html">OpenUpgrade</a></h1>
+
+
+
+
+
+
+
+
+<h3>Navigation</h3>
+<ul class="current">
+<li class="toctree-l1"><a class="reference internal" href="intro.html">Introduction</a></li>
+<li class="toctree-l1"><a class="reference internal" href="intro.html#migrating-your-database">Migrating your database</a></li>
+<li class="toctree-l1"><a class="reference internal" href="community.html">Community involvement</a></li>
+<li class="toctree-l1"><a class="reference internal" href="status.html">Module coverage</a></li>
+<li class="toctree-l1"><a class="reference internal" href="analysis.html">Database analysis</a></li>
+<li class="toctree-l1"><a class="reference internal" href="development.html">Migration script development</a></li>
+<li class="toctree-l1 current"><a class="current reference internal" href="#">OpenUpgrade API</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="#module-openupgradelib.openupgrade">General methods</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="#openupgradelib.openupgrade.add_fields"><code class="docutils literal notranslate"><span class="pre">add_fields()</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="#openupgradelib.openupgrade.add_ir_model_fields"><code class="docutils literal notranslate"><span class="pre">add_ir_model_fields()</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="#openupgradelib.openupgrade.add_xmlid"><code class="docutils literal notranslate"><span class="pre">add_xmlid()</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="#openupgradelib.openupgrade.check_values_selection_field"><code class="docutils literal notranslate"><span class="pre">check_values_selection_field()</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="#openupgradelib.openupgrade.chunked"><code class="docutils literal notranslate"><span class="pre">chunked()</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="#openupgradelib.openupgrade.column_exists"><code class="docutils literal notranslate"><span class="pre">column_exists()</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="#openupgradelib.openupgrade.convert_field_to_html"><code class="docutils literal notranslate"><span class="pre">convert_field_to_html()</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="#openupgradelib.openupgrade.convert_to_company_dependent"><code class="docutils literal notranslate"><span class="pre">convert_to_company_dependent()</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="#openupgradelib.openupgrade.copy_columns"><code class="docutils literal notranslate"><span class="pre">copy_columns()</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="#openupgradelib.openupgrade.copy_fields_multilang"><code class="docutils literal notranslate"><span class="pre">copy_fields_multilang()</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="#openupgradelib.openupgrade.cow_templates_mark_if_equal_to_upstream"><code class="docutils literal notranslate"><span class="pre">cow_templates_mark_if_equal_to_upstream()</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="#openupgradelib.openupgrade.cow_templates_replicate_upstream"><code class="docutils literal notranslate"><span class="pre">cow_templates_replicate_upstream()</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="#openupgradelib.openupgrade.date_to_datetime_tz"><code class="docutils literal notranslate"><span class="pre">date_to_datetime_tz()</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="#openupgradelib.openupgrade.deactivate_workflow_transitions"><code class="docutils literal notranslate"><span class="pre">deactivate_workflow_transitions()</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="#openupgradelib.openupgrade.delete_model_workflow"><code class="docutils literal notranslate"><span class="pre">delete_model_workflow()</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="#openupgradelib.openupgrade.delete_record_translations"><code class="docutils literal notranslate"><span class="pre">delete_record_translations()</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="#openupgradelib.openupgrade.delete_records_safely_by_xml_id"><code class="docutils literal notranslate"><span class="pre">delete_records_safely_by_xml_id()</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="#openupgradelib.openupgrade.delete_sql_constraint_safely"><code class="docutils literal notranslate"><span class="pre">delete_sql_constraint_safely()</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="#openupgradelib.openupgrade.disable_invalid_filters"><code class="docutils literal notranslate"><span class="pre">disable_invalid_filters()</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="#openupgradelib.openupgrade.drop_columns"><code class="docutils literal notranslate"><span class="pre">drop_columns()</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="#openupgradelib.openupgrade.float_to_integer"><code class="docutils literal notranslate"><span class="pre">float_to_integer()</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="#openupgradelib.openupgrade.get_legacy_name"><code class="docutils literal notranslate"><span class="pre">get_legacy_name()</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="#openupgradelib.openupgrade.lift_constraints"><code class="docutils literal notranslate"><span class="pre">lift_constraints()</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="#openupgradelib.openupgrade.load_data"><code class="docutils literal notranslate"><span class="pre">load_data()</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="#openupgradelib.openupgrade.logged_query"><code class="docutils literal notranslate"><span class="pre">logged_query()</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="#openupgradelib.openupgrade.logging"><code class="docutils literal notranslate"><span class="pre">logging()</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="#openupgradelib.openupgrade.m2o_to_x2m"><code class="docutils literal notranslate"><span class="pre">m2o_to_x2m()</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="#openupgradelib.openupgrade.map_values"><code class="docutils literal notranslate"><span class="pre">map_values()</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="#openupgradelib.openupgrade.merge_models"><code class="docutils literal notranslate"><span class="pre">merge_models()</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="#openupgradelib.openupgrade.message"><code class="docutils literal notranslate"><span class="pre">message()</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="#openupgradelib.openupgrade.migrate"><code class="docutils literal notranslate"><span class="pre">migrate()</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="#openupgradelib.openupgrade.move_field_m2o"><code class="docutils literal notranslate"><span class="pre">move_field_m2o()</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="#openupgradelib.openupgrade.reactivate_workflow_transitions"><code class="docutils literal notranslate"><span class="pre">reactivate_workflow_transitions()</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="#openupgradelib.openupgrade.remove_tables_fks"><code class="docutils literal notranslate"><span class="pre">remove_tables_fks()</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="#openupgradelib.openupgrade.rename_columns"><code class="docutils literal notranslate"><span class="pre">rename_columns()</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="#openupgradelib.openupgrade.rename_fields"><code class="docutils literal notranslate"><span class="pre">rename_fields()</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="#openupgradelib.openupgrade.rename_models"><code class="docutils literal notranslate"><span class="pre">rename_models()</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="#openupgradelib.openupgrade.rename_property"><code class="docutils literal notranslate"><span class="pre">rename_property()</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="#openupgradelib.openupgrade.rename_tables"><code class="docutils literal notranslate"><span class="pre">rename_tables()</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="#openupgradelib.openupgrade.rename_xmlids"><code class="docutils literal notranslate"><span class="pre">rename_xmlids()</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="#openupgradelib.openupgrade.safe_unlink"><code class="docutils literal notranslate"><span class="pre">safe_unlink()</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="#openupgradelib.openupgrade.set_defaults"><code class="docutils literal notranslate"><span class="pre">set_defaults()</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="#openupgradelib.openupgrade.set_xml_ids_noupdate_value"><code class="docutils literal notranslate"><span class="pre">set_xml_ids_noupdate_value()</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="#openupgradelib.openupgrade.table_exists"><code class="docutils literal notranslate"><span class="pre">table_exists()</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="#openupgradelib.openupgrade.update_field_multilang"><code class="docutils literal notranslate"><span class="pre">update_field_multilang()</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="#openupgradelib.openupgrade.update_module_moved_fields"><code class="docutils literal notranslate"><span class="pre">update_module_moved_fields()</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="#openupgradelib.openupgrade.update_module_moved_models"><code class="docutils literal notranslate"><span class="pre">update_module_moved_models()</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="#openupgradelib.openupgrade.update_module_names"><code class="docutils literal notranslate"><span class="pre">update_module_names()</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="#openupgradelib.openupgrade.update_workflow_workitems"><code class="docutils literal notranslate"><span class="pre">update_workflow_workitems()</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="#openupgradelib.openupgrade.warn_possible_dataloss"><code class="docutils literal notranslate"><span class="pre">warn_possible_dataloss()</span></code></a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="#methods-for-openupgrade-7-0">Methods for OpenUpgrade 7.0</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="#openupgradelib.openupgrade_70.get_partner_id_from_user_id"><code class="docutils literal notranslate"><span class="pre">get_partner_id_from_user_id()</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="#openupgradelib.openupgrade_70.set_partner_id_from_partner_address_id"><code class="docutils literal notranslate"><span class="pre">set_partner_id_from_partner_address_id()</span></code></a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="#methods-for-openupgrade-8-0">Methods for OpenUpgrade 8.0</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="#openupgradelib.openupgrade_80.get_last_post_for_model"><code class="docutils literal notranslate"><span class="pre">get_last_post_for_model()</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="#openupgradelib.openupgrade_80.set_message_last_post"><code class="docutils literal notranslate"><span class="pre">set_message_last_post()</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="#openupgradelib.openupgrade_80.update_aliases"><code class="docutils literal notranslate"><span class="pre">update_aliases()</span></code></a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="#methods-for-openupgrade-9-0">Methods for OpenUpgrade 9.0</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="#openupgradelib.openupgrade_90.convert_binary_field_to_attachment"><code class="docutils literal notranslate"><span class="pre">convert_binary_field_to_attachment()</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="#openupgradelib.openupgrade_90.replace_account_types"><code class="docutils literal notranslate"><span class="pre">replace_account_types()</span></code></a></li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+
+<div class="relations">
+<h3>Related Topics</h3>
+<ul>
+  <li><a href="index.html">Documentation overview</a><ul>
+      <li>Previous: <a href="devfaq.html" title="previous chapter">Development FAQ</a></li>
+  </ul></li>
+</ul>
+</div>
+<div id="searchbox" style="display: none" role="search">
+  <h3 id="searchlabel">Quick search</h3>
+    <div class="searchformwrapper">
+    <form class="search" action="search.html" method="get">
+      <input type="text" name="q" aria-labelledby="searchlabel" autocomplete="off" autocorrect="off" autocapitalize="off" spellcheck="false"/>
+      <input type="submit" value="Go" />
+    </form>
+    </div>
+</div>
+<script>document.getElementById('searchbox').style.display = "block"</script>
+
+
+
+
+
+
+
+
+        </div>
+      </div>
+      <div class="clearer"></div>
+    </div>
+    <div class="footer">
+      &copy;2012-2021, Odoo Community Association (OCA) / The OpenUpgrade developers.
+      
+      |
+      Powered by <a href="http://sphinx-doc.org/">Sphinx 5.3.0</a>
+      &amp; <a href="https://github.com/bitprophet/alabaster">Alabaster 0.7.12</a>
+      
+      |
+      <a href="_sources/API.rst.txt"
+          rel="nofollow">Page source</a>
+    </div>
+
+    
+
+    
+  </body>
+</html>

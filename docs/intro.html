@@ -1,0 +1,172 @@
+
+<!DOCTYPE html>
+
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Introduction &#8212; OpenUpgrade 16.0 documentation</title>
+    <link rel="stylesheet" type="text/css" href="_static/pygments.css" />
+    <link rel="stylesheet" type="text/css" href="_static/alabaster.css" />
+    <script data-url_root="./" id="documentation_options" src="_static/documentation_options.js"></script>
+    <script src="_static/jquery.js"></script>
+    <script src="_static/underscore.js"></script>
+    <script src="_static/_sphinx_javascript_frameworks_compat.js"></script>
+    <script src="_static/doctools.js"></script>
+    <script src="_static/sphinx_highlight.js"></script>
+    <link rel="index" title="Index" href="genindex.html" />
+    <link rel="search" title="Search" href="search.html" />
+    <link rel="next" title="Running the migration" href="migration_details.html" />
+    <link rel="prev" title="Welcome to OpenUpgrade’s documentation!" href="index.html" />
+   
+  <link rel="stylesheet" href="_static/custom.css" type="text/css" />
+  
+  
+  <meta name="viewport" content="width=device-width, initial-scale=0.9, maximum-scale=0.9" />
+
+  </head><body>
+  
+
+    <div class="document">
+      <div class="documentwrapper">
+        <div class="bodywrapper">
+          
+
+          <div class="body" role="main">
+            
+  <div class="section" id="introduction">
+<h1>Introduction<a class="headerlink" href="#introduction" title="Permalink to this heading">¶</a></h1>
+<p>Odoo is an open source business application suite and development platform.
+This project, <em>OpenUpgrade</em>, aims to provide an Open Source upgrade path for
+Odoo. This is a community initiative, as the open source version of Odoo
+does not support migrations from one major release to another. Instead,
+migrations are part of a support package sold by Odoo SA. Note that the name
+of the project refers to the old name of Odoo, <em>OpenERP</em>.</p>
+<p>The project is hosted as two separate GitHub projects:</p>
+<ul class="simple">
+<li><p><a class="reference external" href="https://github.com/OCA/openupgrade">https://github.com/OCA/openupgrade</a></p></li>
+<li><p><a class="reference external" href="https://github.com/OCA/openupgradelib">https://github.com/OCA/openupgradelib</a></p></li>
+</ul>
+<p>The branches in the first project contain the framework, as well as the
+database analysis and the migration scripts.</p>
+<p>The second project contains a library with helper functions. It
+can be used in the migration of any Odoo module.</p>
+<div class="section" id="older-versions">
+<h2>Older versions<a class="headerlink" href="#older-versions" title="Permalink to this heading">¶</a></h2>
+<p>Before Odoo 14.0, the branches in <a class="reference external" href="https://github.com/OCA/openupgrade">https://github.com/OCA/openupgrade</a>
+contain copies (or forks in Git terminology) of the Odoo main project, but
+with extra commits that include the framework, and the analysis and the
+migration scripts for each module.</p>
+</div>
+<div class="section" id="contribute">
+<h2>Contribute<a class="headerlink" href="#contribute" title="Permalink to this heading">¶</a></h2>
+<p>In order to contribute to the OpenUpgrade project, please</p>
+<ul class="simple">
+<li><p>Post your code contributions as pull requests on
+<a class="reference external" href="https://github.com/oca/openupgrade">https://github.com/oca/openupgrade</a></p></li>
+<li><p>Donate to the Odoo Community Association (<a class="reference external" href="https://github.com/sponsors/OCA">https://github.com/sponsors/OCA</a>)</p></li>
+<li><p>Hire any active contributor to this project to help you migrate your
+database, and give back any code improvements developed during the project.</p></li>
+</ul>
+</div>
+</div>
+<div class="section" id="migrating-your-database">
+<h1>Migrating your database<a class="headerlink" href="#migrating-your-database" title="Permalink to this heading">¶</a></h1>
+<div class="toctree-wrapper compound">
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="migration_details.html">Running the migration</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="migration_details.html#get-the-code-from-openupgrade-and-dependencies">1. Get the code from OpenUpgrade and dependencies</a></li>
+<li class="toctree-l2"><a class="reference internal" href="migration_details.html#check-coverage-of-the-migration-scripts-for-your-installed-modules">2. Check coverage of the migration scripts for your installed modules</a></li>
+<li class="toctree-l2"><a class="reference internal" href="migration_details.html#make-a-copy-of-the-database-to-migrate">3. Make a copy of the database to migrate</a></li>
+<li class="toctree-l2"><a class="reference internal" href="migration_details.html#adjust-the-configuration-for-odoo-and-openupgrade">4. Adjust the configuration for Odoo and OpenUpgrade</a></li>
+<li class="toctree-l2"><a class="reference internal" href="migration_details.html#run-the-upgrade-fix-data-and-repeat">5. Run the upgrade, fix data and repeat…</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="after_migration.html">After migration</a></li>
+</ul>
+</div>
+</div>
+
+
+          </div>
+          
+        </div>
+      </div>
+      <div class="sphinxsidebar" role="navigation" aria-label="main navigation">
+        <div class="sphinxsidebarwrapper">
+<h1 class="logo"><a href="index.html">OpenUpgrade</a></h1>
+
+
+
+
+
+
+
+
+<h3>Navigation</h3>
+<ul class="current">
+<li class="toctree-l1 current"><a class="current reference internal" href="#">Introduction</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="#older-versions">Older versions</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#contribute">Contribute</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="#migrating-your-database">Migrating your database</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="migration_details.html">Running the migration</a></li>
+<li class="toctree-l2"><a class="reference internal" href="after_migration.html">After migration</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="community.html">Community involvement</a></li>
+<li class="toctree-l1"><a class="reference internal" href="status.html">Module coverage</a></li>
+<li class="toctree-l1"><a class="reference internal" href="analysis.html">Database analysis</a></li>
+<li class="toctree-l1"><a class="reference internal" href="development.html">Migration script development</a></li>
+<li class="toctree-l1"><a class="reference internal" href="API.html">OpenUpgrade API</a></li>
+</ul>
+
+<div class="relations">
+<h3>Related Topics</h3>
+<ul>
+  <li><a href="index.html">Documentation overview</a><ul>
+      <li>Previous: <a href="index.html" title="previous chapter">Welcome to OpenUpgrade’s documentation!</a></li>
+      <li>Next: <a href="migration_details.html" title="next chapter">Running the migration</a></li>
+  </ul></li>
+</ul>
+</div>
+<div id="searchbox" style="display: none" role="search">
+  <h3 id="searchlabel">Quick search</h3>
+    <div class="searchformwrapper">
+    <form class="search" action="search.html" method="get">
+      <input type="text" name="q" aria-labelledby="searchlabel" autocomplete="off" autocorrect="off" autocapitalize="off" spellcheck="false"/>
+      <input type="submit" value="Go" />
+    </form>
+    </div>
+</div>
+<script>document.getElementById('searchbox').style.display = "block"</script>
+
+
+
+
+
+
+
+
+        </div>
+      </div>
+      <div class="clearer"></div>
+    </div>
+    <div class="footer">
+      &copy;2012-2021, Odoo Community Association (OCA) / The OpenUpgrade developers.
+      
+      |
+      Powered by <a href="http://sphinx-doc.org/">Sphinx 5.3.0</a>
+      &amp; <a href="https://github.com/bitprophet/alabaster">Alabaster 0.7.12</a>
+      
+      |
+      <a href="_sources/intro.rst.txt"
+          rel="nofollow">Page source</a>
+    </div>
+
+    
+
+    
+  </body>
+</html>

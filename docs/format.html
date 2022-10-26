@@ -1,0 +1,199 @@
+
+<!DOCTYPE html>
+
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Fields analysis format &#8212; OpenUpgrade 16.0 documentation</title>
+    <link rel="stylesheet" type="text/css" href="_static/pygments.css" />
+    <link rel="stylesheet" type="text/css" href="_static/alabaster.css" />
+    <script data-url_root="./" id="documentation_options" src="_static/documentation_options.js"></script>
+    <script src="_static/jquery.js"></script>
+    <script src="_static/underscore.js"></script>
+    <script src="_static/_sphinx_javascript_frameworks_compat.js"></script>
+    <script src="_static/doctools.js"></script>
+    <script src="_static/sphinx_highlight.js"></script>
+    <link rel="index" title="Index" href="genindex.html" />
+    <link rel="search" title="Search" href="search.html" />
+    <link rel="next" title="Migration script development" href="development.html" />
+    <link rel="prev" title="XML IDs" href="xmlids.html" />
+   
+  <link rel="stylesheet" href="_static/custom.css" type="text/css" />
+  
+  
+  <meta name="viewport" content="width=device-width, initial-scale=0.9, maximum-scale=0.9" />
+
+  </head><body>
+  
+
+    <div class="document">
+      <div class="documentwrapper">
+        <div class="bodywrapper">
+          
+
+          <div class="body" role="main">
+            
+  <div class="section" id="fields-analysis-format">
+<h1>Fields analysis format<a class="headerlink" href="#fields-analysis-format" title="Permalink to this heading">¶</a></h1>
+<p>The first section displays models which are removed from the database.
+The second section displays models which are added to the database.</p>
+<p>TODO: display which models moved to another module, instead of in the field
+analysis? It should also be clear how to install such modules from the upgrade</p>
+<p>The second section lists the model fields which have been signalled by the
+analysis script. Every line lists the following columns:</p>
+<p>module / model / field (field type) : description of the change</p>
+<p>Multiple changes per field are listed on separate lines.
+If possible, the old situation is added to the change description (in between
+parentheses).</p>
+<p>The change description flags the following types of change:</p>
+<blockquote>
+<div><ul>
+<li><p>The field is now required. The upgrade script might apply the default for
+this field, if it is encoded in the model, or any value that you might see
+fit (see the openupgrade library
+function <code class="xref py py-meth docutils literal notranslate"><span class="pre">set_defaults()</span></code>). If any empty values remain,
+these can be reported by the openupgrade report module (TODO).
+If the field is a function field after the upgrade, this changes the cause
+for action. See below.</p></li>
+<li><p>A field is now a function or a related field. This might or might not call
+for any action of your upgrade script, as the value is now automatically
+determined. At the same time, this might cause data loss. An example is
+the field employee’s manager (hr module), which in Odoo 6 is derived
+from the employee’s department.</p>
+<p>Without any action in the upgrade script, you will lose the manually
+encoded employee hierarchy.</p>
+</li>
+<li><p>A selection field’s hardcoded selection changes. You need to audit the
+function for any change in possible values and may need to map any
+differences you encounter.</p></li>
+<li><p>A selection field’s selection is now being filled by a function or has
+stopped doing so. You need to audit the function for any change in
+possible values and may need to map any differences you encounter.</p>
+<p>(Of course, a selection function could change the set of posible values
+in between functions.)</p>
+</li>
+<li><p>The field changes type. This always calls for action in your upgrade
+script. Rename the database column to a temporary name in the pre script,
+then migrate the values in the post script. A typical instance of this
+change is when the field becomes a many2one lookup table, or the other way
+around. An example of these are the partner’s function which became a char
+field in Odoo 6, and the partner’s title which as a selection (thus
+char type database column) and had to be migrated to a many2one on
+res.partner.title.</p></li>
+<li><p>A relation field’s relation changes. You need to migrate the one target
+model to the other, and update the references to them</p></li>
+<li><p>A field is deleted from the model (marked by ‘DEL’). Also fields from
+deleted models are marked in this way. TODO: mark fields from deleted
+models in a distinct manner. Any distinct features of the field are
+displayed, for easier manual matching.
+You need to audit any new fields
+(see below) to see if they correspond to the deleted field and implement
+this change in your upgrade script. It might also be the case that a
+deleted field is now delegated to a new or existing _inherits table (see below).</p></li>
+<li><p>A field is introduced in the model (marked by ‘NEW’). Also fields from
+introduced models are marked in this way. TODO: mark fields from introduced
+models in a distinct manner? Any distinct features of the field are
+displayed, for easier manual matching. You need to audit any deleted
+fields (see below) to see if they correspond to the new field and
+implement this change in your upgrade script.</p></li>
+<li><p>The _inherits property of a model has changed. It might be the case that
+fields which are removed are actually delegated to this newly
+inherited table.</p></li>
+<li><p>A new model is introduced. Copy all access data from the access csv and
+security rules xml files and load them in your script. Also copy any
+other data that may be introduced in this release of Odoo. This may
+have consequences for other modules’ migration scripts. TODO: create an
+overview of new or renamed modules.</p></li>
+</ul>
+</div></blockquote>
+<p>The final section of the database layout analysis contains a simple report on
+the changes that were detected.</p>
+</div>
+
+
+          </div>
+          
+        </div>
+      </div>
+      <div class="sphinxsidebar" role="navigation" aria-label="main navigation">
+        <div class="sphinxsidebarwrapper">
+<h1 class="logo"><a href="index.html">OpenUpgrade</a></h1>
+
+
+
+
+
+
+
+
+<h3>Navigation</h3>
+<ul class="current">
+<li class="toctree-l1"><a class="reference internal" href="intro.html">Introduction</a></li>
+<li class="toctree-l1"><a class="reference internal" href="intro.html#migrating-your-database">Migrating your database</a></li>
+<li class="toctree-l1"><a class="reference internal" href="community.html">Community involvement</a></li>
+<li class="toctree-l1"><a class="reference internal" href="status.html">Module coverage</a></li>
+<li class="toctree-l1 current"><a class="reference internal" href="analysis.html">Database analysis</a><ul class="current">
+<li class="toctree-l2"><a class="reference internal" href="analysis.html#earlier-versions">Earlier versions</a></li>
+<li class="toctree-l2 current"><a class="reference internal" href="analysis.html#contents">Contents</a><ul class="current">
+<li class="toctree-l3"><a class="reference internal" href="analyse.html">How to run your own analysis</a></li>
+<li class="toctree-l3"><a class="reference internal" href="xmlids.html">XML IDs</a></li>
+<li class="toctree-l3 current"><a class="current reference internal" href="#">Fields analysis format</a></li>
+</ul>
+</li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="development.html">Migration script development</a></li>
+<li class="toctree-l1"><a class="reference internal" href="API.html">OpenUpgrade API</a></li>
+</ul>
+
+<div class="relations">
+<h3>Related Topics</h3>
+<ul>
+  <li><a href="index.html">Documentation overview</a><ul>
+  <li><a href="analysis.html">Database analysis</a><ul>
+      <li>Previous: <a href="xmlids.html" title="previous chapter">XML IDs</a></li>
+      <li>Next: <a href="development.html" title="next chapter">Migration script development</a></li>
+  </ul></li>
+  </ul></li>
+</ul>
+</div>
+<div id="searchbox" style="display: none" role="search">
+  <h3 id="searchlabel">Quick search</h3>
+    <div class="searchformwrapper">
+    <form class="search" action="search.html" method="get">
+      <input type="text" name="q" aria-labelledby="searchlabel" autocomplete="off" autocorrect="off" autocapitalize="off" spellcheck="false"/>
+      <input type="submit" value="Go" />
+    </form>
+    </div>
+</div>
+<script>document.getElementById('searchbox').style.display = "block"</script>
+
+
+
+
+
+
+
+
+        </div>
+      </div>
+      <div class="clearer"></div>
+    </div>
+    <div class="footer">
+      &copy;2012-2021, Odoo Community Association (OCA) / The OpenUpgrade developers.
+      
+      |
+      Powered by <a href="http://sphinx-doc.org/">Sphinx 5.3.0</a>
+      &amp; <a href="https://github.com/bitprophet/alabaster">Alabaster 0.7.12</a>
+      
+      |
+      <a href="_sources/format.rst.txt"
+          rel="nofollow">Page source</a>
+    </div>
+
+    
+
+    
+  </body>
+</html>
