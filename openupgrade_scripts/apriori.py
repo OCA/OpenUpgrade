@@ -82,6 +82,8 @@ merged_modules = {
     # OCA/project
     "project_description": "project",
     "project_stage_closed": "project",
+    # OCA/reporting-engine
+    "bi_sql_editor_aggregate": "bi_sql_editor",
     # OCA/sale-reporting
     "report_qweb_pdf_fixed_column": "web",
     # OCA/sale-workflow
