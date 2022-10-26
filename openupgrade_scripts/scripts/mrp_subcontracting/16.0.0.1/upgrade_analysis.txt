@@ -1,0 +1,59 @@
+---Models in module 'mrp_subcontracting'---
+---Fields in module 'mrp_subcontracting'---
+mrp_subcontracting / mrp.production           / subcontractor_id (many2one)   : NEW relation: res.partner
+mrp_subcontracting / res.partner              / is_subcontractor (boolean)    : now a function
+mrp_subcontracting / stock.location           / is_subcontracting_location (boolean): NEW
+mrp_subcontracting / stock.location           / subcontractor_ids (one2many)  : NEW relation: res.partner
+mrp_subcontracting / stock.warehouse          / subcontracting_route_id (many2one): relation is now 'stock.route' ('stock.location.route') [nothing to do]
+---XML records in module 'mrp_subcontracting'---
+NEW ir.actions.act_window: mrp_subcontracting.subcontracting_portal_view_production_action
+NEW ir.model.access: mrp_subcontracting.access_subcontracting_portal_barcode_nomenclature_stock_user
+NEW ir.model.access: mrp_subcontracting.access_subcontracting_portal_bom
+NEW ir.model.access: mrp_subcontracting.access_subcontracting_portal_bom_line
+NEW ir.model.access: mrp_subcontracting.access_subcontracting_portal_consumption_warning
+NEW ir.model.access: mrp_subcontracting.access_subcontracting_portal_consumption_warning_line
+NEW ir.model.access: mrp_subcontracting.access_subcontracting_portal_location
+NEW ir.model.access: mrp_subcontracting.access_subcontracting_portal_lot
+NEW ir.model.access: mrp_subcontracting.access_subcontracting_portal_picking_type
+NEW ir.model.access: mrp_subcontracting.access_subcontracting_portal_product
+NEW ir.model.access: mrp_subcontracting.access_subcontracting_portal_product_template
+NEW ir.model.access: mrp_subcontracting.access_subcontracting_portal_production
+NEW ir.model.access: mrp_subcontracting.access_subcontracting_portal_stock_move
+NEW ir.model.access: mrp_subcontracting.access_subcontracting_portal_stock_move_line
+NEW ir.model.access: mrp_subcontracting.access_subcontracting_portal_stock_picking
+NEW ir.model.access: mrp_subcontracting.access_subcontracting_portal_uom
+NEW ir.model.access: mrp_subcontracting.access_subcontracting_portal_warehouse
+NEW ir.rule: mrp_subcontracting.bom_line_subcontractor_rule
+NEW ir.rule: mrp_subcontracting.bom_subcontractor_rule
+NEW ir.rule: mrp_subcontracting.consumption_warning_line_subcontractor_rule
+NEW ir.rule: mrp_subcontracting.consumption_warning_subcontractor_rule
+NEW ir.rule: mrp_subcontracting.picking_subcontractor_rule
+NEW ir.rule: mrp_subcontracting.picking_type_subcontractor_rule
+NEW ir.rule: mrp_subcontracting.product_template_subcontracting_rule
+NEW ir.rule: mrp_subcontracting.production_subcontractor_rule
+NEW ir.rule: mrp_subcontracting.stock_location_subcontractor_rule
+NEW ir.rule: mrp_subcontracting.stock_lot_subcontracting_rule
+NEW ir.rule: mrp_subcontracting.stock_move_line_subcontractor_rule
+NEW ir.rule: mrp_subcontracting.stock_move_subcontractor_rule
+NEW ir.rule: mrp_subcontracting.stock_warehouse_subcontractor_rule
+NEW ir.rule: mrp_subcontracting.uom_subcontracting_rule
+NEW ir.ui.view: mrp_subcontracting.mrp_production_subcontracting_filter
+NEW ir.ui.view: mrp_subcontracting.mrp_production_subcontracting_portal_form_view
+NEW ir.ui.view: mrp_subcontracting.mrp_production_subcontracting_tree_view
+NEW ir.ui.view: mrp_subcontracting.mrp_subcontracting_portal_move_form_view
+NEW ir.ui.view: mrp_subcontracting.mrp_subcontracting_portal_stock_move_line_tree_view
+NEW ir.ui.view: mrp_subcontracting.mrp_subcontracting_view_stock_move_line_operation_tree
+NEW ir.ui.view: mrp_subcontracting.mrp_subcontracting_view_stock_move_nosuggest_operations
+NEW ir.ui.view: mrp_subcontracting.mrp_subcontracting_view_stock_move_operations
+NEW ir.ui.view: mrp_subcontracting.portal_my_home_menu_production
+NEW ir.ui.view: mrp_subcontracting.portal_my_home_productions
+NEW ir.ui.view: mrp_subcontracting.portal_my_productions
+NEW ir.ui.view: mrp_subcontracting.subcontracting
+NEW ir.ui.view: mrp_subcontracting.subcontracting_portal
+NEW ir.ui.view: mrp_subcontracting.subcontracting_portal_embed
+NEW ir.ui.view: mrp_subcontracting.subcontracting_portal_production_form_view
+NEW ir.ui.view: mrp_subcontracting.view_location_form
+NEW ir.ui.view: mrp_subcontracting.view_move_search
+DEL ir.ui.view: mrp_subcontracting.report_mrp_bom_line_inherit_mrp_subcontracting
+DEL stock.location.route: mrp_subcontracting.route_resupply_subcontractor_mto (noupdate)
+NEW stock.route: mrp_subcontracting.route_resupply_subcontractor_mto (noupdate)

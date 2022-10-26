@@ -1,0 +1,42 @@
+---Models in module 'hr'---
+model hr.contract.type (moved from hr_contract)
+---Fields in module 'hr'---
+hr           / hr.contract.type         / __last_update (datetime)      : previously in module hr_contract
+hr           / hr.contract.type         / _order                        : previously in module hr_contract
+hr           / hr.contract.type         / display_name (char)           : previously in module hr_contract
+hr           / hr.contract.type         / name (char)                   : previously in module hr_contract
+hr           / hr.contract.type         / sequence (integer)            : NEW
+hr           / hr.department            / master_department_id (many2one): NEW relation: hr.department, isfunction: function, stored
+hr           / hr.department            / parent_path (char)            : NEW
+hr           / hr.department            / plan_ids (one2many)           : NEW relation: hr.plan
+hr           / hr.employee              / mobile_phone (char)           : now a function
+hr           / hr.employee              / work_contact_id (many2one)    : NEW relation: res.partner
+hr           / hr.employee              / work_email (char)             : now a function
+hr           / hr.job                   / active (boolean)              : NEW hasdefault: default
+hr           / hr.job                   / contract_type_id (many2one)   : NEW relation: hr.contract.type
+hr           / hr.job                   / state (selection)             : DEL required, selection_keys: ['open', 'recruit']
+hr           / hr.plan                  / company_id (many2one)         : NEW relation: res.company, hasdefault: default
+hr           / hr.plan                  / department_id (many2one)      : NEW relation: hr.department
+hr           / hr.plan                  / plan_activity_type_ids (many2many): table is now 'False' ('hr_plan_hr_plan_activity_type_rel')
+hr           / hr.plan                  / plan_activity_type_ids (many2many): type is now 'one2many' ('many2many')
+hr           / hr.plan.activity.type    / company_id (many2one)         : NEW relation: res.company, hasdefault: default
+hr           / hr.plan.activity.type    / plan_id (many2one)            : NEW relation: hr.plan
+hr           / res.users                / create_employee (boolean)     : NEW hasdefault: default
+hr           / res.users                / create_employee_id (many2one) : NEW relation: hr.employee
+hr           / resource.resource        / employee_id (one2many)        : NEW relation: hr.employee
+---XML records in module 'hr'---
+NEW ir.actions.act_window: hr.hr_contract_type_action
+NEW ir.actions.server: hr.action_hr_employee_create_user
+NEW ir.model.access: hr.access_hr_contract_type_manager [renamed from hr_contract module]
+NEW ir.rule: hr.hr_plan_activity_type_company_rule (noupdate)
+NEW ir.rule: hr.hr_plan_company_rule (noupdate)
+NEW ir.ui.menu: hr.menu_config_employee
+NEW ir.ui.menu: hr.menu_config_recruitment
+NEW ir.ui.menu: hr.menu_view_hr_contract_type
+DEL ir.ui.menu: hr.menu_config_plan_types
+DEL ir.ui.menu: hr.menu_human_resources_configuration_employee
+NEW ir.ui.view: hr.hr_contract_type_view_form
+NEW ir.ui.view: hr.hr_contract_type_view_tree
+NEW ir.ui.view: hr.view_employee_form_smartbutton
+NEW ir.ui.view: hr.view_users_simple_form
+NEW ir.ui.view: hr.view_users_simple_form_inherit_hr

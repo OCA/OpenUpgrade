@@ -1,0 +1,21 @@
+---Models in module 'website_slides_survey'---
+---Fields in module 'website_slides_survey'---
+website_slides_survey / slide.slide              / name (False)                  : NEW mode: modify, hasdefault: compute
+website_slides_survey / slide.slide              / slide_category (False)        : NEW selection_keys: ['article', 'certification', 'document', 'infographic', 'quiz', 'video'], mode: modify
+website_slides_survey / slide.slide              / slide_type (False)            : selection_keys is now '['article', 'certification', 'doc', 'google_drive_video', 'image', 'pdf', 'quiz', 'sheet', 'slides', 'vimeo_video', 'youtube_video']' ('['certification', 'document', 'infographic', 'presentation', 'quiz', 'video', 'webpage']')
+---XML records in module 'website_slides_survey'---
+DEL ir.actions.act_window: website_slides_survey.survey_survey_action_slides_report
+NEW ir.actions.act_window.view: website_slides_survey.survey_survey_action_slides_view_form
+NEW ir.actions.act_window.view: website_slides_survey.survey_survey_action_slides_view_kanban
+NEW ir.actions.act_window.view: website_slides_survey.survey_survey_action_slides_view_tree
+ir.model.constraint: website_slides_survey.constraint_slide_slide_check_certification_preview (changed definition: is now 'check(slide_category != 'certification' or is_preview = false)' ('check(slide_type != 'certification' or is_preview = false)'))
+ir.model.constraint: website_slides_survey.constraint_slide_slide_check_survey_id (changed definition: is now 'check(slide_category != 'certification' or survey_id is not null)' ('check(slide_type != 'certification' or survey_id is not null)'))
+DEL ir.ui.menu: website_slides_survey.website_slides_menu_report_certification
+NEW ir.ui.view: website_slides_survey.res_config_settings_view_form
+NEW ir.ui.view: website_slides_survey.slide_sidebar_done_button
+NEW ir.ui.view: website_slides_survey.slide_slide_partner_view_form
+NEW ir.ui.view: website_slides_survey.slide_slide_partner_view_search
+NEW ir.ui.view: website_slides_survey.slide_slide_partner_view_tree
+NEW ir.ui.view: website_slides_survey.survey_survey_view_kanban
+NEW ir.ui.view: website_slides_survey.survey_survey_view_search_slides
+NEW ir.ui.view: website_slides_survey.survey_survey_view_tree_slides

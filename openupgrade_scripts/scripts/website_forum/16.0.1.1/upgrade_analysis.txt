@@ -1,0 +1,13 @@
+---Models in module 'website_forum'---
+---Fields in module 'website_forum'---
+---XML records in module 'website_forum'---
+NEW ir.actions.act_window: website_forum.forum_forum_action_add
+NEW ir.ui.menu: website_forum.menu_forum_post_pages
+DEL ir.ui.menu: website_forum.menu_forum_posts
+DEL ir.ui.menu: website_forum.menu_website_forum
+NEW ir.ui.view: website_forum.forum_forum_view_form_add
+NEW ir.ui.view: website_forum.forum_post_view_kanban
+NEW ir.ui.view: website_forum.mark_as_offensive
+NEW ir.ui.view: website_forum.show_flag_validator
+NEW ir.ui.view: website_forum.snippet_options
+DEL ir.ui.view: website_forum.user_navbar_inherit_website_forum

@@ -1,0 +1,18 @@
+---Models in module 'hr_recruitment_skills'---
+new model hr.applicant.skill
+---Fields in module 'hr_recruitment_skills'---
+hr_recruitment_skills / hr.applicant             / applicant_skill_ids (one2many): NEW relation: hr.applicant.skill
+hr_recruitment_skills / hr.applicant             / skill_ids (many2many)         : NEW relation: hr.skill, isfunction: function, stored
+hr_recruitment_skills / hr.applicant.skill       / applicant_id (many2one)       : NEW relation: hr.applicant, required
+hr_recruitment_skills / hr.applicant.skill       / skill_id (many2one)           : NEW relation: hr.skill, required, hasdefault: compute
+hr_recruitment_skills / hr.applicant.skill       / skill_level_id (many2one)     : NEW relation: hr.skill.level, required, hasdefault: compute
+hr_recruitment_skills / hr.applicant.skill       / skill_type_id (many2one)      : NEW relation: hr.skill.type, required
+---XML records in module 'hr_recruitment_skills'---
+NEW ir.model.access: hr_recruitment_skills.access_hr_applicant_skill
+NEW ir.model.access: hr_recruitment_skills.access_hr_applicant_skill_interviewer
+NEW ir.model.constraint: hr_recruitment_skills.constraint_hr_applicant_skill__unique_skill
+NEW ir.rule: hr_recruitment_skills.hr_applicant_skill_interviewer_rule (noupdate)
+NEW ir.ui.view: hr_recruitment_skills.hr_applicant_skill_view_form
+NEW ir.ui.view: hr_recruitment_skills.hr_applicant_view_form
+NEW ir.ui.view: hr_recruitment_skills.hr_applicant_view_search
+NEW ir.ui.view: hr_recruitment_skills.hr_applicant_view_search_bis

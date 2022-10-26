@@ -1,0 +1,35 @@
+<?xml version='1.0' encoding='utf-8'?>
+<odoo>
+  <record id="tax0purchase" model="account.tax.template">
+    <field name="invoice_repartition_line_ids" eval="[(5, 0, 0),             (0,0, {'repartition_type': 'base'}),             (0,0, {'repartition_type': 'tax'}),         ]"/>
+    <field name="refund_repartition_line_ids" eval="[(5, 0, 0),             (0,0, {'repartition_type': 'base'}),             (0,0, {'repartition_type': 'tax'}),         ]"/>
+  </record>
+  <record id="tax0sale" model="account.tax.template">
+    <field name="invoice_repartition_line_ids" eval="[(5, 0, 0),             (0,0, {'repartition_type': 'base'}),             (0,0, {'repartition_type': 'tax'}),         ]"/>
+    <field name="refund_repartition_line_ids" eval="[(5, 0, 0),             (0,0, {'repartition_type': 'base'}),             (0,0, {'repartition_type': 'tax'}),         ]"/>
+  </record>
+  <record id="tax1purchase" model="account.tax.template">
+    <field name="invoice_repartition_line_ids" eval="[(5, 0, 0),             (0,0, {'repartition_type': 'base'}),             (0,0, {                 'repartition_type': 'tax',                 'account_id': ref('account_activa_account_1151004'),             }),         ]"/>
+    <field name="refund_repartition_line_ids" eval="[(5, 0, 0),             (0,0, {'repartition_type': 'base'}),             (0,0, {                 'repartition_type': 'tax',                 'account_id': ref('account_activa_account_1151004'),             }),         ]"/>
+  </record>
+  <record id="tax1sale" model="account.tax.template">
+    <field name="invoice_repartition_line_ids" eval="[(5, 0, 0),             (0,0, {'repartition_type': 'base'}),             (0,0, {                 'repartition_type': 'tax',                 'account_id': ref('account_activa_account_2172003'),             }),         ]"/>
+    <field name="refund_repartition_line_ids" eval="[(5, 0, 0),             (0,0, {'repartition_type': 'base'}),             (0,0, {                 'repartition_type': 'tax',                 'account_id': ref('account_activa_account_2172003'),             }),         ]"/>
+  </record>
+  <record id="tax2purchase" model="account.tax.template">
+    <field name="invoice_repartition_line_ids" eval="[(5, 0, 0),             (0,0, {'repartition_type': 'base'}),             (0,0, {                 'repartition_type': 'tax',                 'account_id': ref('account_activa_account_1151004'),             }),         ]"/>
+    <field name="refund_repartition_line_ids" eval="[(5, 0, 0),             (0,0, {'repartition_type': 'base'}),             (0,0, {                 'repartition_type': 'tax',                 'account_id': ref('account_activa_account_1151004'),             }),         ]"/>
+  </record>
+  <record id="tax2sale" model="account.tax.template">
+    <field name="invoice_repartition_line_ids" eval="[(5, 0, 0),             (0,0, {'repartition_type': 'base'}),             (0,0, {                 'repartition_type': 'tax',                 'account_id': ref('account_activa_account_2172003'),             }),         ]"/>
+    <field name="refund_repartition_line_ids" eval="[(5, 0, 0),             (0,0, {'repartition_type': 'base'}),             (0,0, {                 'repartition_type': 'tax',                 'account_id': ref('account_activa_account_2172003'),             }),         ]"/>
+  </record>
+  <record id="tax3purchase" model="account.tax.template">
+    <field name="invoice_repartition_line_ids" eval="[(5, 0, 0),             (0,0, {'repartition_type': 'base'}),             (0,0, {                 'repartition_type': 'tax',                 'account_id': ref('account_activa_account_1151004'),             }),         ]"/>
+    <field name="refund_repartition_line_ids" eval="[(5, 0, 0),             (0,0, {'repartition_type': 'base'}),             (0,0, {                 'repartition_type': 'tax',                 'account_id': ref('account_activa_account_1151004'),             }),         ]"/>
+  </record>
+  <record id="tax3sale" model="account.tax.template">
+    <field name="invoice_repartition_line_ids" eval="[(5, 0, 0),             (0,0, {'repartition_type': 'base'}),             (0,0, {                 'repartition_type': 'tax',                 'account_id': ref('account_activa_account_2172003'),             }),         ]"/>
+    <field name="refund_repartition_line_ids" eval="[(5, 0, 0),             (0,0, {'repartition_type': 'base'}),             (0,0, {                 'repartition_type': 'tax',                 'account_id': ref('account_activa_account_2172003'),             }),         ]"/>
+  </record>
+</odoo>

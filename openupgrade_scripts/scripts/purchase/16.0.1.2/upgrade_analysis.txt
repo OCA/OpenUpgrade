@@ -1,0 +1,20 @@
+---Models in module 'purchase'---
+---Fields in module 'purchase'---
+purchase     / account.analytic.applicability / business_domain (False)       : NEW selection_keys: ['bill', 'expense', 'general', 'invoice', 'purchase_order'], mode: modify
+purchase     / product.category         / property_account_creditor_price_difference_categ (many2one): DEL relation: account.account
+purchase     / product.template         / property_account_creditor_price_difference (many2one): DEL relation: account.account
+purchase     / purchase.order.line      / account_analytic_id (many2one): DEL relation: account.analytic.account
+purchase     / purchase.order.line      / analytic_distribution_stored_char (char): NEW isfunction: function, stored
+purchase     / purchase.order.line      / analytic_tag_ids (many2many)  : DEL relation: account.analytic.tag
+---XML records in module 'purchase'---
+NEW ir.actions.act_window: purchase.action_purchase_history
+DEL ir.actions.act_window: purchase.purchase_action_dashboard_kanban
+DEL ir.actions.act_window: purchase.purchase_action_dashboard_list
+NEW ir.model.access: purchase.access_product_tag_purchase_manager
+DEL ir.model.access: purchase.access_account_type
+NEW ir.ui.view: purchase.purchase_history_tree
+NEW ir.ui.view: purchase.purchase_order_view_kanban_without_dashboard
+DEL ir.ui.view: purchase.mail_notification_confirm (noupdate)
+DEL ir.ui.view: purchase.product_template_form_view
+DEL ir.ui.view: purchase.view_category_property_form
+NEW mail.message.subtype: purchase.mt_rfq_sent (noupdate)

@@ -1,0 +1,436 @@
+---Models in module 'account'---
+obsolete model account.account.type
+obsolete model account.analytic.default
+obsolete model account.bank.statement.cashbox
+obsolete model account.bank.statement.closebalance [transient]
+obsolete model account.cashbox.line
+obsolete model account.common.journal.report [transient]
+obsolete model account.common.report [transient]
+obsolete model account.print.journal [transient]
+obsolete model account.tax.carryover.line
+obsolete model account.tax.report
+obsolete model account.tax.report.line
+obsolete model cash.box.out [transient]
+obsolete model report.account.report_journal [abstract]
+obsolete model tax.adjustments.wizard [transient]
+new model account.report
+new model account.report.column
+new model account.report.expression
+new model account.report.external.value
+new model account.report.line
+---Fields in module 'account'---
+account      / account.account          / account_type (selection)      : NEW required, selection_keys: ['asset_cash', 'asset_current', 'asset_fixed', 'asset_non_current', 'asset_prepayments', 'asset_receivable', 'equity', 'equity_unaffected', 'expense', 'expense_depreciation', 'expense_direct_cost', 'income', 'income_other', 'liability_credit_card', 'liability_current', 'liability_non_current', 'liability_payable', 'off_balance'], hasdefault: compute
+account      / account.account          / include_initial_balance (boolean): NEW isfunction: function, stored
+account      / account.account          / internal_group (selection)    : not related anymore
+account      / account.account          / internal_group (selection)    : now a function
+account      / account.account          / internal_group (selection)    : selection_keys is now '['asset', 'equity', 'expense', 'income', 'liability', 'off_balance']' ('function')
+account      / account.account          / internal_type (selection)     : DEL selection_keys: function
+account      / account.account          / non_trade (boolean)           : NEW hasdefault: default
+account      / account.account          / user_type_id (many2one)       : DEL relation: account.account.type, required
+account      / account.account.tag      / tax_report_line_ids (many2many): DEL relation: account.tax.report.line
+account      / account.account.template / account_type (selection)      : NEW selection_keys: ['asset_cash', 'asset_current', 'asset_fixed', 'asset_non_current', 'asset_prepayments', 'asset_receivable', 'equity', 'equity_unaffected', 'expense', 'expense_depreciation', 'expense_direct_cost', 'income', 'income_other', 'liability_credit_card', 'liability_current', 'liability_non_current', 'liability_payable', 'off_balance']
+account      / account.account.template / user_type_id (many2one)       : DEL relation: account.account.type, required
+account      / account.account.type     / include_initial_balance (boolean): DEL
+account      / account.account.type     / internal_group (selection)    : DEL required, selection_keys: ['asset', 'equity', 'expense', 'income', 'liability', 'off_balance']
+account      / account.account.type     / name (char)                   : DEL required
+account      / account.account.type     / note (text)                   : DEL
+account      / account.account.type     / type (selection)              : DEL required, selection_keys: ['liquidity', 'other', 'payable', 'receivable']
+account      / account.analytic.applicability / account_prefix (char)         : NEW
+account      / account.analytic.applicability / business_domain (False)       : NEW selection_keys: ['bill', 'general', 'invoice'], mode: modify
+account      / account.analytic.applicability / product_categ_id (many2one)   : NEW relation: product.category
+account      / account.analytic.default / account_id (many2one)         : DEL relation: account.account
+account      / account.analytic.default / analytic_id (many2one)        : DEL relation: account.analytic.account
+account      / account.analytic.default / analytic_tag_ids (many2many)  : DEL relation: account.analytic.tag
+account      / account.analytic.default / company_id (many2one)         : DEL relation: res.company
+account      / account.analytic.default / date_start (date)             : DEL
+account      / account.analytic.default / date_stop (date)              : DEL
+account      / account.analytic.default / partner_id (many2one)         : DEL relation: res.partner
+account      / account.analytic.default / product_id (many2one)         : DEL relation: product.product
+account      / account.analytic.default / sequence (integer)            : DEL
+account      / account.analytic.default / user_id (many2one)            : DEL relation: res.users
+account      / account.analytic.distribution.model / account_prefix (char)         : NEW
+account      / account.analytic.distribution.model / product_categ_id (many2one)   : NEW relation: product.category
+account      / account.analytic.distribution.model / product_id (many2one)         : NEW relation: product.product
+account      / account.analytic.line    / general_account_id (many2one) : not related anymore
+account      / account.analytic.line    / journal_id (many2one)         : NEW relation: account.journal, isrelated: related, stored
+account      / account.analytic.line    / move_id (many2one)            : DEL relation: account.move.line
+account      / account.analytic.line    / move_line_id (many2one)       : NEW relation: account.move.line
+account      / account.analytic.line    / partner_id (False)            : previously in module hr_timesheet
+account      / account.bank.statement   / _order                        : _order is now 'first_line_index desc' ('date desc, name desc, id desc')
+account      / account.bank.statement   / attachment_ids (many2many)    : NEW relation: ir.attachment
+account      / account.bank.statement   / cashbox_end_id (many2one)     : DEL relation: account.bank.statement.cashbox
+account      / account.bank.statement   / cashbox_start_id (many2one)   : DEL relation: account.bank.statement.cashbox
+account      / account.bank.statement   / date (date)                   : now a function
+account      / account.bank.statement   / date_done (datetime)          : DEL
+account      / account.bank.statement   / difference (float)            : DEL
+account      / account.bank.statement   / first_line_index (char)       : NEW isfunction: function, stored
+account      / account.bank.statement   / is_complete (boolean)         : NEW isfunction: function, stored
+account      / account.bank.statement   / is_valid_balance_start (boolean): DEL
+account      / account.bank.statement   / journal_id (many2one)         : now a function
+account      / account.bank.statement   / line_ids (one2many)           : now required
+account      / account.bank.statement   / message_follower_ids (one2many): DEL relation: mail.followers
+account      / account.bank.statement   / message_ids (one2many)        : DEL relation: mail.message
+account      / account.bank.statement   / message_main_attachment_id (many2one): DEL relation: ir.attachment
+account      / account.bank.statement   / move_line_ids (one2many)      : DEL relation: account.move.line
+account      / account.bank.statement   / previous_statement_id (many2one): DEL relation: account.bank.statement
+account      / account.bank.statement   / sequence_number (integer)     : DEL
+account      / account.bank.statement   / sequence_prefix (char)        : DEL
+account      / account.bank.statement   / state (selection)             : DEL required, selection_keys: ['confirm', 'open', 'posted']
+account      / account.bank.statement   / total_entry_encoding (float)  : DEL
+account      / account.bank.statement   / user_id (many2one)            : DEL relation: res.users
+account      / account.bank.statement   / website_message_ids (one2many): DEL relation: mail.message
+account      / account.bank.statement.cashbox / cashbox_lines_ids (one2many)  : DEL relation: account.cashbox.line
+account      / account.bank.statement.cashbox / end_bank_stmt_ids (one2many)  : DEL relation: account.bank.statement
+account      / account.bank.statement.cashbox / start_bank_stmt_ids (one2many): DEL relation: account.bank.statement
+account      / account.bank.statement.line / _order                        : _order is now 'internal_index desc' ('statement_id desc, date, sequence, id desc')
+account      / account.bank.statement.line / auto_post (boolean)           : now required
+account      / account.bank.statement.line / auto_post (boolean)           : selection_keys is now 'function' ('False')
+account      / account.bank.statement.line / auto_post (boolean)           : type is now 'selection' ('boolean')
+account      / account.bank.statement.line / currency_id (many2one)        : now a function
+account      / account.bank.statement.line / internal_index (char)         : NEW isfunction: function, stored
+account      / account.bank.statement.line / invoice_outstanding_credits_debits_widget (text): type is now 'binary' ('text')
+account      / account.bank.statement.line / invoice_payments_widget (text): type is now 'binary' ('text')
+account      / account.bank.statement.line / partner_shipping_id (many2one): previously in module sale
+account      / account.bank.statement.line / state (selection)             : now required
+account      / account.cashbox.line     / cashbox_id (many2one)         : DEL relation: account.bank.statement.cashbox
+account      / account.cashbox.line     / coin_value (float)            : DEL required
+account      / account.cashbox.line     / number (integer)              : DEL
+account      / account.chart.template   / account_journal_early_pay_discount_gain_account_id (many2one): NEW relation: account.account.template
+account      / account.chart.template   / account_journal_early_pay_discount_loss_account_id (many2one): NEW relation: account.account.template
+account      / account.chart.template   / complete_tax_set (boolean)    : DEL
+account      / account.chart.template   / use_storno_accounting (boolean): NEW hasdefault: default
+account      / account.journal          / default_account_type (many2one): relation is now 'False' ('account.account.type') [nothing to do]
+account      / account.journal          / default_account_type (many2one): type is now 'char' ('many2one')
+account      / account.journal          / payment_sequence (boolean)    : NEW hasdefault: default
+account      / account.journal          / type_control_ids (many2many)  : DEL relation: account.account.type
+account      / account.move             / attachment_ids (one2many)     : NEW relation: ir.attachment
+account      / account.move             / auto_post (boolean)           : now required
+account      / account.move             / auto_post (boolean)           : selection_keys is now '['at_date', 'monthly', 'no', 'quarterly', 'yearly']' ('False')
+account      / account.move             / auto_post (boolean)           : type is now 'selection' ('boolean')
+account      / account.move             / auto_post_origin_id (many2one): NEW relation: account.move
+account      / account.move             / auto_post_until (date)        : NEW hasdefault: compute
+account      / account.move             / currency_id (many2one)        : now a function
+account      / account.move             / invoice_outstanding_credits_debits_widget (text): type is now 'binary' ('text')
+account      / account.move             / invoice_payments_widget (text): type is now 'binary' ('text')
+account      / account.move             / is_storno (boolean)           : NEW hasdefault: compute
+account      / account.move             / partner_shipping_id (many2one): previously in module sale
+account      / account.move             / payment_ids (one2many)        : NEW relation: account.payment
+account      / account.move             / quick_edit_total_amount (float): NEW
+account      / account.move             / statement_line_ids (one2many) : NEW relation: account.bank.statement.line
+account      / account.move             / tax_totals_json (char)        : DEL
+account      / account.move.line        / _order                        : _order is now 'date desc, move_name desc, sequence, id' ('date desc, move_name desc, id')
+account      / account.move.line        / account_id (many2one)         : now a function
+account      / account.move.line        / amount_currency (float)       : now a function
+account      / account.move.line        / analytic_account_id (many2one): DEL relation: account.analytic.account
+account      / account.move.line        / analytic_distribution_stored_char (char): NEW isfunction: function, stored
+account      / account.move.line        / analytic_tag_ids (many2many)  : DEL relation: account.analytic.tag
+account      / account.move.line        / balance (float)               : not a function anymore
+account      / account.move.line        / credit (float)                : now a function
+account      / account.move.line        / debit (float)                 : now a function
+account      / account.move.line        / discount_amount_currency (float): NEW
+account      / account.move.line        / discount_balance (float)      : NEW
+account      / account.move.line        / discount_date (date)          : NEW
+account      / account.move.line        / discount_percentage (float)   : NEW
+account      / account.move.line        / display_type (selection)      : now required
+account      / account.move.line        / display_type (selection)      : selection_keys is now '['cogs', 'epd', 'line_note', 'line_section', 'payment_term', 'product', 'rounding', 'tax']' ('['line_note', 'line_section']')
+account      / account.move.line        / exclude_from_invoice_tab (boolean): DEL
+account      / account.move.line        / is_rounding_line (boolean)    : DEL
+account      / account.move.line        / partner_id (many2one)         : now a function
+account      / account.move.line        / price_subtotal (float)        : now a function
+account      / account.move.line        / price_total (float)           : now a function
+account      / account.move.line        / recompute_tax_line (boolean)  : DEL
+account      / account.move.line        / tax_line_id (many2one)        : not a function anymore
+account      / account.move.line        / tax_line_id (many2one)        : now related
+account      / account.partial.reconcile / credit_currency_id (many2one) : not a function anymore
+account      / account.partial.reconcile / credit_currency_id (many2one) : now related
+account      / account.partial.reconcile / debit_currency_id (many2one)  : not a function anymore
+account      / account.partial.reconcile / debit_currency_id (many2one)  : now related
+account      / account.partial.reconcile / exchange_move_id (many2one)   : NEW relation: account.move
+account      / account.payment          / amount_company_currency_signed (float): is now stored
+account      / account.payment          / auto_post (boolean)           : now required
+account      / account.payment          / auto_post (boolean)           : selection_keys is now 'function' ('False')
+account      / account.payment          / auto_post (boolean)           : type is now 'selection' ('boolean')
+account      / account.payment          / invoice_outstanding_credits_debits_widget (text): type is now 'binary' ('text')
+account      / account.payment          / invoice_payments_widget (text): type is now 'binary' ('text')
+account      / account.payment          / partner_shipping_id (many2one): previously in module sale
+account      / account.payment.term     / display_on_invoice (boolean)  : NEW
+account      / account.payment.term     / example_amount (float)        : NEW hasdefault: default
+account      / account.payment.term     / example_date (date)           : NEW hasdefault: default
+account      / account.payment.term.line / _order                        : _order is now 'id' ('sequence, id')
+account      / account.payment.term.line / day_of_the_month (integer)    : DEL
+account      / account.payment.term.line / days_after (integer)          : NEW
+account      / account.payment.term.line / discount_days (integer)       : NEW
+account      / account.payment.term.line / discount_percentage (float)   : NEW
+account      / account.payment.term.line / end_month (boolean)           : NEW
+account      / account.payment.term.line / months (integer)              : NEW required, hasdefault: default
+account      / account.payment.term.line / option (selection)            : DEL required, selection_keys: ['after_invoice_month', 'day_after_invoice_date', 'day_current_month', 'day_following_month']
+account      / account.payment.term.line / sequence (integer)            : DEL
+account      / account.reconcile.model.line / analytic_account_id (many2one): DEL relation: account.analytic.account
+account      / account.reconcile.model.line / analytic_distribution_stored_char (char): NEW isfunction: function, stored
+account      / account.reconcile.model.line / analytic_tag_ids (many2many)  : DEL relation: account.analytic.tag
+account      / account.report           / availability_condition (selection): NEW selection_keys: ['always', 'coa', 'country'], hasdefault: compute
+account      / account.report           / chart_template_id (many2one)  : NEW relation: account.chart.template
+account      / account.report           / column_ids (one2many)         : NEW relation: account.report.column
+account      / account.report           / country_id (many2one)         : NEW relation: res.country
+account      / account.report           / default_opening_date_filter (selection): NEW selection_keys: ['last_month', 'last_quarter', 'last_year', 'this_month', 'this_quarter', 'this_year', 'today'], hasdefault: compute
+account      / account.report           / filter_account_type (boolean) : NEW hasdefault: compute
+account      / account.report           / filter_analytic (boolean)     : NEW hasdefault: compute
+account      / account.report           / filter_date_range (boolean)   : NEW hasdefault: compute
+account      / account.report           / filter_fiscal_position (boolean): NEW hasdefault: compute
+account      / account.report           / filter_growth_comparison (boolean): NEW hasdefault: compute
+account      / account.report           / filter_hierarchy (selection)  : NEW selection_keys: ['by_default', 'never', 'optional'], hasdefault: compute
+account      / account.report           / filter_journals (boolean)     : NEW hasdefault: compute
+account      / account.report           / filter_multi_company (selection): NEW selection_keys: ['disabled', 'selector', 'tax_units'], hasdefault: compute
+account      / account.report           / filter_partner (boolean)      : NEW hasdefault: compute
+account      / account.report           / filter_period_comparison (boolean): NEW hasdefault: compute
+account      / account.report           / filter_show_draft (boolean)   : NEW hasdefault: compute
+account      / account.report           / filter_unfold_all (boolean)   : NEW hasdefault: compute
+account      / account.report           / filter_unreconciled (boolean) : NEW hasdefault: compute
+account      / account.report           / line_ids (one2many)           : NEW relation: account.report.line
+account      / account.report           / load_more_limit (integer)     : NEW
+account      / account.report           / name (char)                   : NEW required
+account      / account.report           / only_tax_exigible (boolean)   : NEW
+account      / account.report           / root_report_id (many2one)     : NEW relation: account.report
+account      / account.report           / search_bar (boolean)          : NEW
+account      / account.report           / variant_report_ids (one2many) : NEW relation: account.report
+account      / account.report.column    / blank_if_zero (boolean)       : NEW hasdefault: default
+account      / account.report.column    / custom_audit_action_id (many2one): NEW relation: ir.actions.act_window
+account      / account.report.column    / expression_label (char)       : NEW required
+account      / account.report.column    / figure_type (selection)       : NEW required, selection_keys: ['date', 'datetime', 'float', 'integer', 'monetary', 'none', 'percentage'], hasdefault: default
+account      / account.report.column    / name (char)                   : NEW required
+account      / account.report.column    / report_id (many2one)          : NEW relation: account.report
+account      / account.report.column    / sequence (integer)            : NEW
+account      / account.report.column    / sortable (boolean)            : NEW
+account      / account.report.expression / auditable (boolean)           : NEW hasdefault: compute
+account      / account.report.expression / blank_if_zero (boolean)       : NEW
+account      / account.report.expression / carryover_target (char)       : NEW
+account      / account.report.expression / date_scope (selection)        : NEW required, selection_keys: ['from_beginning', 'from_fiscalyear', 'normal', 'previous_tax_period', 'strict_range', 'to_beginning_of_fiscalyear', 'to_beginning_of_period'], hasdefault: default
+account      / account.report.expression / engine (selection)            : NEW required, selection_keys: ['account_codes', 'aggregation', 'custom', 'domain', 'external', 'tax_tags']
+account      / account.report.expression / figure_type (selection)       : NEW selection_keys: ['date', 'datetime', 'float', 'integer', 'monetary', 'none', 'percentage']
+account      / account.report.expression / formula (char)                : NEW required
+account      / account.report.expression / green_on_positive (boolean)   : NEW hasdefault: default
+account      / account.report.expression / label (char)                  : NEW required
+account      / account.report.expression / report_line_id (many2one)     : NEW relation: account.report.line, required
+account      / account.report.expression / subformula (char)             : NEW
+account      / account.report.external.value / carryover_origin_expression_label (char): NEW
+account      / account.report.external.value / carryover_origin_report_line_id (many2one): NEW relation: account.report.line
+account      / account.report.external.value / company_id (many2one)         : NEW relation: res.company, required, hasdefault: default
+account      / account.report.external.value / date (date)                   : NEW required
+account      / account.report.external.value / foreign_vat_fiscal_position_id (many2one): NEW relation: account.fiscal.position
+account      / account.report.external.value / name (char)                   : NEW required
+account      / account.report.external.value / target_report_expression_id (many2one): NEW relation: account.report.expression, required
+account      / account.report.external.value / value (float)                 : NEW required
+account      / account.report.line      / account_codes_formula (char)  : NEW
+account      / account.report.line      / action_id (many2one)          : NEW relation: ir.actions.actions
+account      / account.report.line      / aggregation_formula (char)    : NEW
+account      / account.report.line      / children_ids (one2many)       : NEW relation: account.report.line
+account      / account.report.line      / code (char)                   : NEW
+account      / account.report.line      / domain_formula (char)         : NEW
+account      / account.report.line      / expression_ids (one2many)     : NEW relation: account.report.expression
+account      / account.report.line      / foldable (boolean)            : NEW
+account      / account.report.line      / groupby (char)                : NEW
+account      / account.report.line      / hide_if_zero (boolean)        : NEW
+account      / account.report.line      / hierarchy_level (integer)     : NEW required, hasdefault: compute
+account      / account.report.line      / name (char)                   : NEW required
+account      / account.report.line      / parent_id (many2one)          : NEW relation: account.report.line
+account      / account.report.line      / print_on_new_page (boolean)   : NEW
+account      / account.report.line      / report_id (many2one)          : NEW relation: account.report, required, hasdefault: compute
+account      / account.report.line      / sequence (integer)            : NEW
+account      / account.tax              / name_searchable (char)        : NEW
+account      / account.tax              / real_amount (float)           : NEW isfunction: function, stored
+account      / account.tax.carryover.line / amount (float)                : DEL required
+account      / account.tax.carryover.line / company_id (many2one)         : DEL relation: res.company, required
+account      / account.tax.carryover.line / date (date)                   : DEL required
+account      / account.tax.carryover.line / foreign_vat_fiscal_position_id (many2one): DEL relation: account.fiscal.position
+account      / account.tax.carryover.line / name (char)                   : DEL required
+account      / account.tax.carryover.line / tax_report_line_id (many2one) : DEL relation: account.tax.report.line
+account      / account.tax.repartition.line.template / minus_report_expression_ids (many2many): NEW relation: account.report.expression
+account      / account.tax.repartition.line.template / minus_report_line_ids (many2many): DEL relation: account.tax.report.line
+account      / account.tax.repartition.line.template / plus_report_expression_ids (many2many): NEW relation: account.report.expression
+account      / account.tax.repartition.line.template / plus_report_line_ids (many2many): DEL relation: account.tax.report.line
+account      / account.tax.report       / country_id (many2one)         : DEL relation: res.country, required
+account      / account.tax.report       / line_ids (one2many)           : DEL relation: account.tax.report.line
+account      / account.tax.report       / name (char)                   : DEL required
+account      / account.tax.report       / root_line_ids (one2many)      : DEL relation: account.tax.report.line
+account      / account.tax.report.line  / carry_over_condition_method (selection): DEL selection_keys: ['always_carry_over_and_set_to_0', 'no_negative_amount_carry_over_condition']
+account      / account.tax.report.line  / carry_over_destination_line_id (many2one): DEL relation: account.tax.report.line
+account      / account.tax.report.line  / carryover_line_ids (one2many) : DEL relation: account.tax.carryover.line
+account      / account.tax.report.line  / children_line_ids (one2many)  : DEL relation: account.tax.report.line
+account      / account.tax.report.line  / code (char)                   : DEL
+account      / account.tax.report.line  / formula (char)                : DEL
+account      / account.tax.report.line  / is_carryover_persistent (boolean): DEL
+account      / account.tax.report.line  / is_carryover_used_in_balance (boolean): DEL
+account      / account.tax.report.line  / name (char)                   : DEL required
+account      / account.tax.report.line  / parent_id (many2one)          : DEL relation: account.tax.report.line
+account      / account.tax.report.line  / parent_path (char)            : DEL
+account      / account.tax.report.line  / report_action_id (many2one)   : DEL relation: ir.actions.act_window
+account      / account.tax.report.line  / report_id (many2one)          : DEL relation: account.tax.report, required
+account      / account.tax.report.line  / sequence (integer)            : DEL required
+account      / account.tax.report.line  / tag_ids (many2many)           : DEL relation: account.account.tag
+account      / account.tax.report.line  / tag_name (char)               : DEL
+account      / res.company              / account_journal_early_pay_discount_gain_account_id (many2one): NEW relation: account.account
+account      / res.company              / account_journal_early_pay_discount_loss_account_id (many2one): NEW relation: account.account
+account      / res.company              / account_onboarding_create_invoice_state (selection): not stored anymore
+account      / res.company              / account_onboarding_create_invoice_state (selection): now a function
+account      / res.company              / account_onboarding_create_invoice_state_flag (boolean): NEW hasdefault: default
+account      / res.company              / account_storno (boolean)      : NEW
+account      / res.company              / account_use_credit_limit (boolean): NEW
+account      / res.company              / early_pay_discount_computation (selection): NEW selection_keys: ['excluded', 'included', 'mixed'], hasdefault: compute
+account      / res.company              / message_follower_ids (one2many): NEW relation: mail.followers
+account      / res.company              / message_ids (one2many)        : NEW relation: mail.message
+account      / res.company              / message_main_attachment_id (many2one): NEW relation: ir.attachment
+account      / res.company              / quick_edit_mode (selection)   : NEW selection_keys: ['in_invoices', 'out_and_in_invoices', 'out_invoices']
+account      / res.company              / website_message_ids (one2many): NEW relation: mail.message
+account      / res.partner              / credit_limit (float)          : previously in module base
+account      / res.partner.bank         / activity_ids (one2many)       : NEW relation: mail.activity
+account      / res.partner.bank         / message_follower_ids (one2many): NEW relation: mail.followers
+account      / res.partner.bank         / message_ids (one2many)        : NEW relation: mail.message
+account      / res.partner.bank         / message_main_attachment_id (many2one): NEW relation: ir.attachment
+account      / res.partner.bank         / website_message_ids (one2many): NEW relation: mail.message
+account      / res.users                / credit_limit (float)          : previously in module base
+---XML records in module 'account'---
+DEL account.account.type: account.data_account_off_sheet (noupdate)
+DEL account.account.type: account.data_account_type_credit_card (noupdate)
+DEL account.account.type: account.data_account_type_current_assets (noupdate)
+DEL account.account.type: account.data_account_type_current_liabilities (noupdate)
+DEL account.account.type: account.data_account_type_depreciation (noupdate)
+DEL account.account.type: account.data_account_type_direct_costs (noupdate)
+DEL account.account.type: account.data_account_type_equity (noupdate)
+DEL account.account.type: account.data_account_type_expenses (noupdate)
+DEL account.account.type: account.data_account_type_fixed_assets (noupdate)
+DEL account.account.type: account.data_account_type_liquidity (noupdate)
+DEL account.account.type: account.data_account_type_non_current_assets (noupdate)
+DEL account.account.type: account.data_account_type_non_current_liabilities (noupdate)
+DEL account.account.type: account.data_account_type_other_income (noupdate)
+DEL account.account.type: account.data_account_type_payable (noupdate)
+DEL account.account.type: account.data_account_type_prepayments (noupdate)
+DEL account.account.type: account.data_account_type_receivable (noupdate)
+DEL account.account.type: account.data_account_type_revenue (noupdate)
+DEL account.account.type: account.data_unaffected_earnings (noupdate)
+NEW account.payment.term: account.account_payment_term_30_days_end_month_the_10 (noupdate)
+NEW account.payment.term: account.account_payment_term_30days_early_discount (noupdate)
+NEW account.report: account.generic_tax_report
+NEW account.report: account.generic_tax_report_account_tax
+NEW account.report: account.generic_tax_report_tax_account
+NEW account.report.column: account.generic_tax_report_account_tax_column_net
+NEW account.report.column: account.generic_tax_report_account_tax_column_tax
+NEW account.report.column: account.generic_tax_report_column_net
+NEW account.report.column: account.generic_tax_report_column_tax
+NEW account.report.column: account.generic_tax_report_tax_account_column_net
+NEW account.report.column: account.generic_tax_report_tax_account_column_tax
+NEW ir.actions.act_window: account.action_account_moves_all_grouped_matching
+DEL ir.actions.act_window: account.action_account_chart_template_form
+DEL ir.actions.act_window: account.action_account_moves_ledger_general
+DEL ir.actions.act_window: account.action_account_type_form
+DEL ir.actions.act_window: account.action_analytic_default_list
+DEL ir.actions.act_window: account.action_bank_statement_line
+DEL ir.actions.act_window: account.action_configure_tax_report
+DEL ir.actions.act_window: account.action_view_account_bnk_stmt_check
+DEL ir.actions.act_window: account.analytic_rule_action_user
+DEL ir.actions.act_window: account.tax_adjustments_form
+DEL ir.actions.act_window.view: account.action_bank_statement_form_bank
+DEL ir.actions.report: account.action_report_journal
+NEW ir.model.access: account.access_account_analytic_distribution_invoice
+NEW ir.model.access: account.access_account_analytic_distribution_readonly
+NEW ir.model.access: account.access_account_analytic_plan_accountant
+NEW ir.model.access: account.access_account_report_ac_user
+NEW ir.model.access: account.access_account_report_column_ac_user
+NEW ir.model.access: account.access_account_report_column_readonly
+NEW ir.model.access: account.access_account_report_expression_ac_user
+NEW ir.model.access: account.access_account_report_expression_readonly
+NEW ir.model.access: account.access_account_report_external_value_ac_user
+NEW ir.model.access: account.access_account_report_external_value_readonly
+NEW ir.model.access: account.access_account_report_line_ac_user
+NEW ir.model.access: account.access_account_report_line_readonly
+NEW ir.model.access: account.access_account_report_readonly
+DEL ir.model.access: account.access_account_account_type_invoice
+DEL ir.model.access: account.access_account_account_type_manager
+DEL ir.model.access: account.access_account_account_type_readonly
+DEL ir.model.access: account.access_account_analytic_default
+DEL ir.model.access: account.access_account_analytic_default_analytic
+DEL ir.model.access: account.access_account_analytic_default_invoice
+DEL ir.model.access: account.access_account_bank_statement_closebalance
+DEL ir.model.access: account.access_account_cashbox
+DEL ir.model.access: account.access_account_cashbox_line
+DEL ir.model.access: account.access_account_common_journal_report
+DEL ir.model.access: account.access_account_common_report
+DEL ir.model.access: account.access_account_print_journal
+DEL ir.model.access: account.access_account_tax_carryover_line_ac_user
+DEL ir.model.access: account.access_account_tax_carryover_line_readonly
+DEL ir.model.access: account.access_account_tax_report_ac_user
+DEL ir.model.access: account.access_account_tax_report_invoice
+DEL ir.model.access: account.access_account_tax_report_line_ac_user
+DEL ir.model.access: account.access_account_tax_report_line_readonly
+DEL ir.model.access: account.access_cash_box_out
+DEL ir.model.access: account.access_tax_adjustments_wizard
+ir.model.constraint: account.constraint_account_journal_code_company_uniq (changed definition: is now 'unique(company_id,code)' ('unique(code,company_id)'))
+NEW ir.model.constraint: account.constraint_account_journal_group_uniq_name
+ir.model.constraint: account.constraint_account_move_line_check_accountable_required_fields (changed definition: is now 'check(display_type in('line_section','line_note') or account_id is not null)' ('check(coalesce(display_type in('line_section','line_note'),'f') or account_id is not null)'))
+ir.model.constraint: account.constraint_account_move_line_check_amount_currency_balance_sign (changed definition: is now 'check(    display_type in('line_section','line_note')    or(    (balance <= 0 and amount_currency <= 0)    or    (balance >= 0 and amount_currency >= 0)    )   )' ('check(   (    (currency_id != company_currency_id)    and    (    (debit - credit <= 0 and amount_currency <= 0)     or    (debit - credit >= 0 and amount_currency >= 0)    )    )    or   (    currency_id = company_currency_id    and    round(debit - credit - amount_currency,2) = 0    )   )'))
+ir.model.constraint: account.constraint_account_move_line_check_credit_debit (changed definition: is now 'check(display_type in('line_section','line_note') or credit * debit=0)' ('check(credit + debit>=0 and credit * debit=0)'))
+NEW ir.model.constraint: account.constraint_account_reconcile_model_name_unique
+NEW ir.model.constraint: account.constraint_account_report_line_code_uniq
+NEW ir.rule: account.report_external_value_comp_rule (noupdate)
+DEL ir.rule: account.account_tax_carryover_line_comp_rule (noupdate)
+DEL ir.rule: account.analytic_default_comp_rule (noupdate)
+NEW ir.ui.menu: account.account_analytic_plan_menu
+NEW ir.ui.menu: account.menu_analytic__distribution_model
+DEL ir.ui.menu: account.account_analytic_group_menu
+DEL ir.ui.menu: account.account_analytic_tag_menu
+DEL ir.ui.menu: account.menu_action_account_moves_journal_bank_cash
+DEL ir.ui.menu: account.menu_action_account_moves_journal_misc
+DEL ir.ui.menu: account.menu_action_account_moves_journal_purchase
+DEL ir.ui.menu: account.menu_action_account_moves_journal_sales
+DEL ir.ui.menu: account.menu_action_account_moves_ledger_general
+DEL ir.ui.menu: account.menu_action_account_moves_ledger_partner
+DEL ir.ui.menu: account.menu_action_tax_adjustment
+DEL ir.ui.menu: account.menu_analytic_default_list
+DEL ir.ui.menu: account.menu_configure_tax_report
+DEL ir.ui.menu: account.menu_finance_entries_accounting_journals
+DEL ir.ui.menu: account.menu_finance_entries_accounting_ledgers
+NEW ir.ui.view: account.account_analytic_distribution_model_form_inherit
+NEW ir.ui.view: account.account_analytic_distribution_model_tree_inherit
+NEW ir.ui.view: account.account_analytic_plan_form_view_inherit_account
+NEW ir.ui.view: account.portal_invoice_required_fields_form
+NEW ir.ui.view: account.view_account_analytic_line_filter_inherit
+NEW ir.ui.view: account.view_onboarding_tax_tree
+NEW ir.ui.view: account.view_partner_bank_form_inherit_account
+NEW ir.ui.view: account.view_tax_group_form
+DEL ir.ui.view: account.account_common_report_view
+DEL ir.ui.view: account.account_tax_carryover_line_form
+DEL ir.ui.view: account.account_tax_carryover_line_tree
+DEL ir.ui.view: account.account_tax_report_form
+DEL ir.ui.view: account.account_tax_report_line_form
+DEL ir.ui.view: account.account_tax_report_line_tree
+DEL ir.ui.view: account.account_tax_report_search
+DEL ir.ui.view: account.account_tax_report_tree
+DEL ir.ui.view: account.cash_box_out_form
+DEL ir.ui.view: account.report_journal
+DEL ir.ui.view: account.tax_adjustments_wizard
+DEL ir.ui.view: account.view_account_analytic_default_form
+DEL ir.ui.view: account.view_account_analytic_default_form_search
+DEL ir.ui.view: account.view_account_analytic_default_kanban
+DEL ir.ui.view: account.view_account_analytic_default_tree
+DEL ir.ui.view: account.view_account_bnk_stmt_cashbox
+DEL ir.ui.view: account.view_account_bnk_stmt_cashbox_footer
+DEL ir.ui.view: account.view_account_bnk_stmt_check
+DEL ir.ui.view: account.view_account_chart_template_form
+DEL ir.ui.view: account.view_account_chart_template_seacrh
+DEL ir.ui.view: account.view_account_chart_template_tree
+DEL ir.ui.view: account.view_account_invoice_report_search_analytic_accounting
+DEL ir.ui.view: account.view_account_move_line_filter_with_root_selection
+DEL ir.ui.view: account.view_account_template_form
+DEL ir.ui.view: account.view_account_template_search
+DEL ir.ui.view: account.view_account_template_tree
+DEL ir.ui.view: account.view_account_type_form
+DEL ir.ui.view: account.view_account_type_search
+DEL ir.ui.view: account.view_account_type_tree
+DEL ir.ui.view: account.view_bank_statement_form
+DEL ir.ui.view: account.view_bank_statement_line_form
+DEL ir.ui.view: account.view_bank_statement_line_search
+DEL ir.ui.view: account.view_bank_statement_line_tree
+DEL ir.ui.view: account.view_company_partner_bank_form
+DEL ir.ui.view: account.view_move_line_tree_grouped
+DEL ir.ui.view: account.view_payment_term_line_form
+DEL ir.ui.view: account.view_payment_term_line_tree
+NEW res.groups: account.group_delivery_invoice_address [renamed from sale module]

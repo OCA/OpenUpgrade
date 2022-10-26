@@ -1,0 +1,17 @@
+---Models in module 'stock_picking_batch'---
+---Fields in module 'stock_picking_batch'---
+stock_picking_batch / stock.move.line          / batch_id (many2one)           : is now stored
+stock_picking_batch / stock.picking.type       / auto_batch (boolean)          : NEW
+stock_picking_batch / stock.picking.type       / batch_auto_confirm (boolean)  : NEW hasdefault: default
+stock_picking_batch / stock.picking.type       / batch_group_by_dest_loc (boolean): NEW
+stock_picking_batch / stock.picking.type       / batch_group_by_destination (boolean): NEW
+stock_picking_batch / stock.picking.type       / batch_group_by_partner (boolean): NEW
+stock_picking_batch / stock.picking.type       / batch_group_by_src_loc (boolean): NEW
+stock_picking_batch / stock.picking.type       / batch_max_lines (integer)     : NEW
+stock_picking_batch / stock.picking.type       / batch_max_pickings (integer)  : NEW
+---XML records in module 'stock_picking_batch'---
+NEW ir.ui.view: stock_picking_batch.stock_move_line_view_search_inherit_stock_picking_batch
+NEW ir.ui.view: stock_picking_batch.stock_picking_form_inherit
+NEW ir.ui.view: stock_picking_batch.view_move_line_tree_inherit_stock_picking_batch
+NEW ir.ui.view: stock_picking_batch.view_picking_internal_search_inherit
+NEW ir.ui.view: stock_picking_batch.view_picking_type_form_inherit

@@ -1,0 +1,91 @@
+<?xml version='1.0' encoding='utf-8'?>
+<odoo>
+  <record id="gst_purc_en" model="account.tax.template">
+    <field name="invoice_repartition_line_ids" eval="[(5, 0, 0),             (0,0, {'repartition_type': 'base'}),             (0,0, {                 'repartition_type': 'tax',                 'account_id': ref('chart1181_en'),             }),          ]"/>
+    <field name="refund_repartition_line_ids" eval="[(5, 0, 0),             (0,0, {'repartition_type': 'base'}),             (0,0, {                 'repartition_type': 'tax',                 'account_id': ref('chart1181_en'),             }),         ]"/>
+  </record>
+  <record id="gst_sale_en" model="account.tax.template">
+    <field name="invoice_repartition_line_ids" eval="[(5, 0, 0),             (0,0, {'repartition_type': 'base'}),             (0,0, {                 'repartition_type': 'tax',                 'account_id': ref('chart2131_en'),             }),          ]"/>
+    <field name="refund_repartition_line_ids" eval="[(5, 0, 0),             (0,0, {'repartition_type': 'base'}),             (0,0, {                 'repartition_type': 'tax',                 'account_id': ref('chart2131_en'),             }),         ]"/>
+  </record>
+  <record id="gstpst_purc_bc_gst_en" model="account.tax.template">
+    <field name="invoice_repartition_line_ids" eval="[(5, 0, 0),             (0,0, {'repartition_type': 'base'}),             (0,0, {                 'repartition_type': 'tax',                 'account_id': ref('chart1181_en'),             }),          ]"/>
+    <field name="refund_repartition_line_ids" eval="[(5, 0, 0),             (0,0, {'repartition_type': 'base'}),             (0,0, {                 'repartition_type': 'tax',                 'account_id': ref('chart1181_en'),             }),         ]"/>
+  </record>
+  <record id="gstpst_purc_mb_gst_en" model="account.tax.template">
+    <field name="invoice_repartition_line_ids" eval="[(5, 0, 0),             (0,0, {'repartition_type': 'base'}),             (0,0, {                 'repartition_type': 'tax',                 'account_id': ref('chart1181_en'),             }),          ]"/>
+    <field name="refund_repartition_line_ids" eval="[(5, 0, 0),             (0,0, {'repartition_type': 'base'}),             (0,0, {                 'repartition_type': 'tax',                 'account_id': ref('chart1181_en'),             }),         ]"/>
+  </record>
+  <record id="gstpst_purc_sk_gst_en" model="account.tax.template">
+    <field name="invoice_repartition_line_ids" eval="[(5, 0, 0),             (0,0, {'repartition_type': 'base'}),             (0,0, {                 'repartition_type': 'tax',                 'account_id': ref('chart1181_en'),             }),          ]"/>
+    <field name="refund_repartition_line_ids" eval="[(5, 0, 0),             (0,0, {'repartition_type': 'base'}),             (0,0, {                 'repartition_type': 'tax',                 'account_id': ref('chart1181_en'),             }),         ]"/>
+  </record>
+  <record id="gstpst_sale_bc_gst_en" model="account.tax.template">
+    <field name="invoice_repartition_line_ids" eval="[(5, 0, 0),             (0,0, {'repartition_type': 'base'}),            (0,0, {                 'repartition_type': 'tax',                 'account_id': ref('chart2131_en'),             }),         ]"/>
+    <field name="refund_repartition_line_ids" eval="[(5, 0, 0),             (0,0, {'repartition_type': 'base'}),             (0,0, {                 'repartition_type': 'tax',                 'account_id': ref('chart2131_en'),             }),         ]"/>
+  </record>
+  <record id="gstpst_sale_mb_gst_en" model="account.tax.template">
+    <field name="invoice_repartition_line_ids" eval="[(5, 0, 0),             (0,0, {'repartition_type': 'base'}),             (0,0, {                 'repartition_type': 'tax',                 'account_id': ref('chart2131_en'),             }),          ]"/>
+    <field name="refund_repartition_line_ids" eval="[(5, 0, 0),             (0,0, {'repartition_type': 'base'}),             (0,0, {                 'repartition_type': 'tax',                 'account_id': ref('chart2131_en'),             }),         ]"/>
+  </record>
+  <record id="gstpst_sale_sk_gst_en" model="account.tax.template">
+    <field name="invoice_repartition_line_ids" eval="[(5, 0, 0),             (0,0, {'repartition_type': 'base'}),             (0,0, {                 'repartition_type': 'tax',                 'account_id': ref('chart2131_en'),             }),          ]"/>
+    <field name="refund_repartition_line_ids" eval="[(5, 0, 0),             (0,0, {'repartition_type': 'base'}),             (0,0, {                 'repartition_type': 'tax',                 'account_id': ref('chart2131_en'),             }),         ]"/>
+  </record>
+  <record id="gstqst_purc_gst_en" model="account.tax.template">
+    <field name="invoice_repartition_line_ids" eval="[(5, 0, 0),             (0,0, {'repartition_type': 'base'}),             (0,0, {                 'repartition_type': 'tax',                 'account_id': ref('chart1181_en'),             }),          ]"/>
+    <field name="refund_repartition_line_ids" eval="[(5, 0, 0),             (0,0, {'repartition_type': 'base'}),             (0,0, {                 'repartition_type': 'tax',                 'account_id': ref('chart1181_en'),             }),         ]"/>
+  </record>
+  <record id="gstqst_sale_gst_en" model="account.tax.template">
+    <field name="invoice_repartition_line_ids" eval="[(5, 0, 0),             (0,0, {'repartition_type': 'base'}),             (0,0, {                 'repartition_type': 'tax',                 'account_id': ref('chart2131_en'),             }),          ]"/>
+    <field name="refund_repartition_line_ids" eval="[(5, 0, 0),             (0,0, {'repartition_type': 'base'}),             (0,0, {                 'repartition_type': 'tax',                 'account_id': ref('chart2131_en'),             }),         ]"/>
+  </record>
+  <record id="hst13_purc_en" model="account.tax.template">
+    <field name="invoice_repartition_line_ids" eval="[(5, 0, 0),             (0,0, {'repartition_type': 'base'}),             (0,0, {                 'repartition_type': 'tax',                 'account_id': ref('chart11831_en'),             }),          ]"/>
+    <field name="refund_repartition_line_ids" eval="[(5, 0, 0),             (0,0, {'repartition_type': 'base'}),             (0,0, {                 'repartition_type': 'tax',                 'account_id': ref('chart11831_en'),             }),         ]"/>
+  </record>
+  <record id="hst13_sale_en" model="account.tax.template">
+    <field name="invoice_repartition_line_ids" eval="[(5, 0, 0),             (0,0, {'repartition_type': 'base'}),             (0,0, {                 'repartition_type': 'tax',                 'account_id': ref('chart21331_en'),             }),          ]"/>
+    <field name="refund_repartition_line_ids" eval="[(5, 0, 0),             (0,0, {'repartition_type': 'base'}),             (0,0, {                 'repartition_type': 'tax',                 'account_id': ref('chart21331_en'),             }),         ]"/>
+  </record>
+  <record id="hst15_purc_en" model="account.tax.template">
+    <field name="invoice_repartition_line_ids" eval="[(5, 0, 0),             (0,0, {'repartition_type': 'base'}),             (0,0, {                 'repartition_type': 'tax',                 'account_id': ref('chart11833_en'),             }),          ]"/>
+    <field name="refund_repartition_line_ids" eval="[(5, 0, 0),             (0,0, {'repartition_type': 'base'}),             (0,0, {                 'repartition_type': 'tax',                 'account_id': ref('chart11833_en'),             }),         ]"/>
+  </record>
+  <record id="hst15_sale_en" model="account.tax.template">
+    <field name="invoice_repartition_line_ids" eval="[(5, 0, 0),             (0,0, {'repartition_type': 'base'}),             (0,0, {                 'repartition_type': 'tax',                 'account_id': ref('chart21333_en'),             }),          ]"/>
+    <field name="refund_repartition_line_ids" eval="[(5, 0, 0),             (0,0, {'repartition_type': 'base'}),             (0,0, {                 'repartition_type': 'tax',                 'account_id': ref('chart21333_en'),             }),         ]"/>
+  </record>
+  <record id="pst_bc_purc_en" model="account.tax.template">
+    <field name="invoice_repartition_line_ids" eval="[(5, 0, 0),             (0,0, {'repartition_type': 'base'}),             (0,0, {                 'repartition_type': 'tax',                 'account_id': ref('chart1182_en'),             }),          ]"/>
+    <field name="refund_repartition_line_ids" eval="[(5, 0, 0),             (0,0, {'repartition_type': 'base'}),             (0,0, {                 'repartition_type': 'tax',                 'account_id': ref('chart1182_en'),             }),         ]"/>
+  </record>
+  <record id="pst_bc_sale_en" model="account.tax.template">
+    <field name="invoice_repartition_line_ids" eval="[(5, 0, 0),             (0,0, {'repartition_type': 'base'}),             (0,0, {                 'repartition_type': 'tax',                 'account_id': ref('chart2132_en'),             }),         ]"/>
+    <field name="refund_repartition_line_ids" eval="[(5, 0, 0),             (0,0, {'repartition_type': 'base'}),             (0,0, {                 'repartition_type': 'tax',                 'account_id': ref('chart2132_en'),             }),         ]"/>
+  </record>
+  <record id="pst_mb_purc_en" model="account.tax.template">
+    <field name="invoice_repartition_line_ids" eval="[(5, 0, 0),             (0,0, {'repartition_type': 'base'}),             (0,0, {                 'repartition_type': 'tax',                 'account_id': ref('chart1182_en'),             }),          ]"/>
+    <field name="refund_repartition_line_ids" eval="[(5, 0, 0),             (0,0, {'repartition_type': 'base'}),             (0,0, {                 'repartition_type': 'tax',                 'account_id': ref('chart1182_en'),             }),         ]"/>
+  </record>
+  <record id="pst_mb_sale_en" model="account.tax.template">
+    <field name="invoice_repartition_line_ids" eval="[(5, 0, 0),             (0,0, {'repartition_type': 'base'}),             (0,0, {                 'repartition_type': 'tax',                 'account_id': ref('chart2132_en'),             }),          ]"/>
+    <field name="refund_repartition_line_ids" eval="[(5, 0, 0),             (0,0, {'repartition_type': 'base'}),             (0,0, {                 'repartition_type': 'tax',                 'account_id': ref('chart2132_en'),             }),         ]"/>
+  </record>
+  <record id="pst_sk_purc_en" model="account.tax.template">
+    <field name="invoice_repartition_line_ids" eval="[(5, 0, 0),             (0,0, {'repartition_type': 'base'}),             (0,0, {                 'repartition_type': 'tax',                 'account_id': ref('chart1182_en'),             }),          ]"/>
+    <field name="refund_repartition_line_ids" eval="[(5, 0, 0),             (0,0, {'repartition_type': 'base'}),             (0,0, {                 'repartition_type': 'tax',                 'account_id': ref('chart1182_en'),             }),         ]"/>
+  </record>
+  <record id="pst_sk_sale_en" model="account.tax.template">
+    <field name="invoice_repartition_line_ids" eval="[(5, 0, 0),             (0,0, {'repartition_type': 'base'}),             (0,0, {                 'repartition_type': 'tax',                 'account_id': ref('chart2132_en'),             }),          ]"/>
+    <field name="refund_repartition_line_ids" eval="[(5, 0, 0),             (0,0, {'repartition_type': 'base'}),             (0,0, {                 'repartition_type': 'tax',                 'account_id': ref('chart2132_en'),             }),         ]"/>
+  </record>
+  <record id="qst_purc_en" model="account.tax.template">
+    <field name="invoice_repartition_line_ids" eval="[(5, 0, 0),             (0,0, {'repartition_type': 'base'}),             (0,0, {                 'repartition_type': 'tax',                 'account_id': ref('chart1182_en'),             }),          ]"/>
+    <field name="refund_repartition_line_ids" eval="[(5, 0, 0),             (0,0, {'repartition_type': 'base'}),             (0,0, {                 'repartition_type': 'tax',                 'account_id': ref('chart1182_en'),             }),         ]"/>
+  </record>
+  <record id="qst_sale_en" model="account.tax.template">
+    <field name="invoice_repartition_line_ids" eval="[(5, 0, 0),             (0,0, {'repartition_type': 'base'}),             (0,0, {                 'repartition_type': 'tax',                 'account_id': ref('chart2132_en'),             }),          ]"/>
+    <field name="refund_repartition_line_ids" eval="[(5, 0, 0),             (0,0, {'repartition_type': 'base'}),             (0,0, {                 'repartition_type': 'tax',                 'account_id': ref('chart2132_en'),             }),         ]"/>
+  </record>
+</odoo>

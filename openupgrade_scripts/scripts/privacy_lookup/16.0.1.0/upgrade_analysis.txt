@@ -1,0 +1,31 @@
+---Models in module 'privacy_lookup'---
+new model privacy.log
+new model privacy.lookup.wizard [transient]
+new model privacy.lookup.wizard.line [transient]
+---Fields in module 'privacy_lookup'---
+privacy_lookup / privacy.log              / additional_note (text)        : NEW
+privacy_lookup / privacy.log              / anonymized_email (char)       : NEW required
+privacy_lookup / privacy.log              / anonymized_name (char)        : NEW required
+privacy_lookup / privacy.log              / date (datetime)               : NEW required, hasdefault: default
+privacy_lookup / privacy.log              / execution_details (text)      : NEW
+privacy_lookup / privacy.log              / records_description (text)    : NEW
+privacy_lookup / privacy.log              / user_id (many2one)            : NEW relation: res.users, required, hasdefault: default
+---XML records in module 'privacy_lookup'---
+NEW ir.actions.act_window: privacy_lookup.action_privacy_lookup_wizard
+NEW ir.actions.act_window: privacy_lookup.action_privacy_lookup_wizard_line
+NEW ir.actions.act_window: privacy_lookup.privacy_log_action
+NEW ir.actions.act_window: privacy_lookup.privacy_log_form_action
+NEW ir.actions.server: privacy_lookup.ir_action_server_action_privacy_lookup_partner
+NEW ir.actions.server: privacy_lookup.ir_action_server_action_privacy_lookup_user
+NEW ir.actions.server: privacy_lookup.ir_actions_server_archive_all
+NEW ir.actions.server: privacy_lookup.ir_actions_server_unlink_all
+NEW ir.model.access: privacy_lookup.access_privacy_log
+NEW ir.model.access: privacy_lookup.access_privacy_lookup_wizard
+NEW ir.model.access: privacy_lookup.access_privacy_lookup_wizard_line
+NEW ir.ui.menu: privacy_lookup.pricacy_log_menu
+NEW ir.ui.menu: privacy_lookup.privacy_menu
+NEW ir.ui.view: privacy_lookup.privacy_log_view_form
+NEW ir.ui.view: privacy_lookup.privacy_log_view_list
+NEW ir.ui.view: privacy_lookup.privacy_lookup_wizard_line_view_search
+NEW ir.ui.view: privacy_lookup.privacy_lookup_wizard_line_view_tree
+NEW ir.ui.view: privacy_lookup.privacy_lookup_wizard_view_form

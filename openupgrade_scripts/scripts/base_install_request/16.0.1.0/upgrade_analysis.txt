@@ -1,0 +1,14 @@
+---Models in module 'base_install_request'---
+new model base.module.install.request [transient]
+new model base.module.install.review [transient]
+---Fields in module 'base_install_request'---
+---XML records in module 'base_install_request'---
+NEW ir.actions.act_window: base_install_request.action_base_module_install_review
+NEW ir.model.access: base_install_request.access_base_module_install_request
+NEW ir.model.access: base_install_request.access_base_module_install_review
+NEW ir.model.access: base_install_request.access_ir_module_module_group_system
+NEW ir.ui.view: base_install_request.base_module_install_request_view_form
+NEW ir.ui.view: base_install_request.base_module_install_review_description
+NEW ir.ui.view: base_install_request.base_module_install_review_view_form
+NEW ir.ui.view: base_install_request.ir_module_module_view_kanban
+NEW mail.template: base_install_request.mail_template_base_install_request (noupdate)

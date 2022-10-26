@@ -1,0 +1,19 @@
+---Models in module 'website_crm_partner_assign'---
+---Fields in module 'website_crm_partner_assign'---
+website_crm_partner_assign / res.partner              / implemented_count (integer)   : DEL
+website_crm_partner_assign / res.partner              / implemented_partner_count (integer): NEW isfunction: function, stored
+website_crm_partner_assign / res.partner.activation   / active (boolean)              : NEW hasdefault: default
+---XML records in module 'website_crm_partner_assign'---
+NEW ir.ui.view: website_crm_partner_assign.crm_lead_merge_summary_inherit_partner_assign
+NEW ir.ui.view: website_crm_partner_assign.crm_lead_view_graph_forecast
+NEW ir.ui.view: website_crm_partner_assign.crm_lead_view_kanban
+NEW ir.ui.view: website_crm_partner_assign.crm_lead_view_pivot_forecast
+NEW ir.ui.view: website_crm_partner_assign.crm_opportunity_report_view_pivot_lead
+NEW ir.ui.view: website_crm_partner_assign.res_partner_activation_view_search
+NEW ir.ui.view: website_crm_partner_assign.snippet_options
+NEW res.partner.activation: website_crm_partner_assign.res_partner_activation_data_first_contact
+NEW res.partner.activation: website_crm_partner_assign.res_partner_activation_data_fully_operational
+NEW res.partner.activation: website_crm_partner_assign.res_partner_activation_data_ramp_up
+NEW res.partner.grade: website_crm_partner_assign.res_partner_grade_data_bronze
+NEW res.partner.grade: website_crm_partner_assign.res_partner_grade_data_gold
+NEW res.partner.grade: website_crm_partner_assign.res_partner_grade_data_silver

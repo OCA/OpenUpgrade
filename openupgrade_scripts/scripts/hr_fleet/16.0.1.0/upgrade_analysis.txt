@@ -1,0 +1,8 @@
+---Models in module 'hr_fleet'---
+---Fields in module 'hr_fleet'---
+hr_fleet     / fleet.vehicle.assignation.log / driver_employee_id (many2one) : is now stored
+hr_fleet     / fleet.vehicle.assignation.log / driver_employee_id (many2one) : not related anymore
+---XML records in module 'hr_fleet'---
+NEW ir.ui.view: hr_fleet.fleet_vehicle_assignation_log_employee_view_list
+NEW ir.ui.view: hr_fleet.fleet_vehicle_view_tree_inherit_hr
+NEW ir.ui.view: hr_fleet.view_attachment_kanban_inherit_hr

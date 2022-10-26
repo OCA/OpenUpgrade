@@ -7,7 +7,7 @@ name: Test OpenUpgrade migration
 
 on:
   push:
-    branches: ["15.0*"]
+    branches: ["16.0*"]
   pull_request:
 
 jobs:
@@ -27,13 +27,13 @@ jobs:
       OPENUPGRADE_USE_DEMO: "yes"
     steps:
       - name: Set up Python
-        uses: actions/setup-python@v2
+        uses: actions/setup-python@v4
         with:
-          python-version: 3.7
+          python-version: '3.10'
       - name: Configure Postgres
         uses: harmon758/postgresql-action@v1
         with:
-          postgresql version: "10"
+          postgresql version: "14"
           postgresql user: ${DB_USERNAME}
           postgresql password: ${DB_PASSWORD}
       - name: Wait / Sleep
@@ -44,25 +44,12 @@ jobs:
         run: createdb $DB
       - name: DB Restore
         run: |
-          psql -d $DB -c "DROP SCHEMA IF EXISTS PUBLIC;"
-          wget -q -O- $DOWNLOADS/14.0.psql | pg_restore -d $DB --no-owner
-          # TODO: create test data in Odoo 14.0 which does not support yml
-          # anymore
-          # Roundtrip to previous release to update the test database with
-          # additional test data
-          # - git fetch --depth 2 origin 14.0
-          # - git reset --hard `git ls-remote \
-          #       | grep refs/heads/14.0 \
-          #       | awk '{print $1}'`
-          # - pip install -q -r requirements.txt
-          # Line below may fail quite often due to Travis bug:
-          # - git reset -q --hard $TRAVIS_COMMIT
-          # Install Python requirements of target release
+          wget -q -O- $DOWNLOADS/15.0.psql | pg_restore -d $DB --no-owner
       - name: Check out Odoo
         uses: actions/checkout@v2
         with:
           repository: odoo/odoo
-          ref: "15.0"
+          ref: "16.0"
           fetch-depth: 1
           path: odoo
       - name: Check out OpenUpgrade
@@ -98,22 +85,26 @@ jobs:
           # select modules and perform the upgrade
       - name: OpenUpgrade test
         run: |
-          MODULES_OLD=base,$(\
+          MODULES_OLD=$(\
               sed -n '/^+========/,$p' \
-              openupgrade/docsource/modules140-150.rst \
+              openupgrade/docsource/modules150-160.rst \
               | grep "Done\|Partial\|Nothing" \
               | grep -v "theme_" \
               | sed -rn 's/((^\| *\|del\| *)|^\| *)([0-9a-z_]*)[ \|].*/\3/g p' \
               | sed '/^\s*$/d' \
               | paste -d, -s)
-          MODULES_NEW=base,$(\
+          MODULES_NEW=$(\
               sed -n '/^+========/,$p' \
-              openupgrade/docsource/modules140-150.rst \
+              openupgrade/docsource/modules150-160.rst \
               | grep "Done\|Partial\|Nothing" \
               | grep -v "theme_" \
               | sed -rn 's/((^\| *\|new\| *)|^\| *)([0-9a-z_]*)[ \|].*/\3/g p' \
               | sed '/^\s*$/d' \
               | paste -d, -s)
+          if [ -z "$MODULES_NEW" ]; then
+             echo "No modules to test yet"
+             exit
+          fi
           REQUEST="update ir_module_module set state='uninstalled' \
               where name not in ('$(echo $MODULES_OLD | sed -e "s/,/','/g")')"
           echo Set the modules as not installable if they are not in the following list : $MODULES_OLD

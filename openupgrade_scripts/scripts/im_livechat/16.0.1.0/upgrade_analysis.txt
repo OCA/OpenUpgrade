@@ -1,0 +1,69 @@
+---Models in module 'im_livechat'---
+new model chatbot.message
+new model chatbot.script
+new model chatbot.script.answer
+new model chatbot.script.step
+---Fields in module 'im_livechat'---
+im_livechat  / chatbot.message          / mail_channel_id (many2one)    : NEW relation: mail.channel, required
+im_livechat  / chatbot.message          / mail_message_id (many2one)    : NEW relation: mail.message, required
+im_livechat  / chatbot.message          / script_step_id (many2one)     : NEW relation: chatbot.script.step, required
+im_livechat  / chatbot.message          / user_raw_answer (html)        : NEW
+im_livechat  / chatbot.message          / user_script_answer_id (many2one): NEW relation: chatbot.script.answer
+im_livechat  / chatbot.script           / active (boolean)              : NEW hasdefault: default
+im_livechat  / chatbot.script           / image_1024 (binary)           : NEW attachment: True, isrelated: related, stored
+im_livechat  / chatbot.script           / image_128 (binary)            : NEW attachment: True, isrelated: related, stored
+im_livechat  / chatbot.script           / image_256 (binary)            : NEW attachment: True, isrelated: related, stored
+im_livechat  / chatbot.script           / image_512 (binary)            : NEW attachment: True, isrelated: related, stored
+im_livechat  / chatbot.script           / operator_partner_id (many2one): NEW relation: res.partner, required
+im_livechat  / chatbot.script           / script_step_ids (one2many)    : NEW relation: chatbot.script.step
+im_livechat  / chatbot.script           / source_id (many2one)          : NEW relation: utm.source, required
+im_livechat  / chatbot.script           / title (char)                  : NEW required, hasdefault: default
+im_livechat  / chatbot.script.answer    / name (char)                   : NEW required
+im_livechat  / chatbot.script.answer    / redirect_link (char)          : NEW
+im_livechat  / chatbot.script.answer    / script_step_id (many2one)     : NEW relation: chatbot.script.step, required
+im_livechat  / chatbot.script.answer    / sequence (integer)            : NEW hasdefault: default
+im_livechat  / chatbot.script.step      / answer_ids (one2many)         : NEW relation: chatbot.script.answer
+im_livechat  / chatbot.script.step      / chatbot_script_id (many2one)  : NEW relation: chatbot.script, required
+im_livechat  / chatbot.script.step      / message (text)                : NEW
+im_livechat  / chatbot.script.step      / sequence (integer)            : NEW
+im_livechat  / chatbot.script.step      / step_type (selection)         : NEW required, selection_keys: ['forward_operator', 'free_input_multi', 'free_input_single', 'question_email', 'question_phone', 'question_selection', 'text'], hasdefault: default
+im_livechat  / chatbot.script.step      / triggering_answer_ids (many2many): NEW relation: chatbot.script.answer, hasdefault: compute
+im_livechat  / im_livechat.channel.rule / action (selection)            : selection_keys is now '['auto_popup', 'display_button', 'display_button_and_text', 'hide_button']' ('['auto_popup', 'display_button', 'hide_button']')
+im_livechat  / im_livechat.channel.rule / chatbot_only_if_no_operator (boolean): NEW
+im_livechat  / im_livechat.channel.rule / chatbot_script_id (many2one)  : NEW relation: chatbot.script
+im_livechat  / mail.channel             / chatbot_current_step_id (many2one): NEW relation: chatbot.script.step
+im_livechat  / mail.channel             / chatbot_message_ids (one2many): NEW relation: chatbot.message
+---XML records in module 'im_livechat'---
+NEW chatbot.script: im_livechat.chatbot_script_welcome_bot (noupdate)
+NEW chatbot.script.answer: im_livechat.chatbot_script_welcome_step_dispatch_answer_documentation (noupdate)
+NEW chatbot.script.answer: im_livechat.chatbot_script_welcome_step_dispatch_answer_just_looking (noupdate)
+NEW chatbot.script.answer: im_livechat.chatbot_script_welcome_step_dispatch_answer_pricing (noupdate)
+NEW chatbot.script.step: im_livechat.chatbot_script_welcome_step_dispatch (noupdate)
+NEW chatbot.script.step: im_livechat.chatbot_script_welcome_step_documentation_exit (noupdate)
+NEW chatbot.script.step: im_livechat.chatbot_script_welcome_step_documentation_redirect (noupdate)
+NEW chatbot.script.step: im_livechat.chatbot_script_welcome_step_just_looking (noupdate)
+NEW chatbot.script.step: im_livechat.chatbot_script_welcome_step_pricing (noupdate)
+NEW chatbot.script.step: im_livechat.chatbot_script_welcome_step_pricing_email (noupdate)
+NEW chatbot.script.step: im_livechat.chatbot_script_welcome_step_pricing_forward_operator (noupdate)
+NEW chatbot.script.step: im_livechat.chatbot_script_welcome_step_pricing_noone_available (noupdate)
+NEW chatbot.script.step: im_livechat.chatbot_script_welcome_step_welcome (noupdate)
+NEW ir.actions.act_window: im_livechat.chatbot_script_action
+NEW ir.model.access: im_livechat.access_chatbot_message_all
+NEW ir.model.access: im_livechat.access_chatbot_message_user
+NEW ir.model.access: im_livechat.access_chatbot_script
+NEW ir.model.access: im_livechat.access_chatbot_script_answer
+NEW ir.model.access: im_livechat.access_chatbot_script_answer_user
+NEW ir.model.access: im_livechat.access_chatbot_script_step
+NEW ir.model.access: im_livechat.access_chatbot_script_step_user
+NEW ir.model.access: im_livechat.access_chatbot_script_user
+NEW ir.model.constraint: im_livechat.constraint_chatbot_message__unique_mail_message_id
+NEW ir.ui.menu: im_livechat.chatbot_config
+NEW ir.ui.view: im_livechat.chatbot_script_answer_view_form
+NEW ir.ui.view: im_livechat.chatbot_script_answer_view_tree
+NEW ir.ui.view: im_livechat.chatbot_script_step_view_form
+NEW ir.ui.view: im_livechat.chatbot_script_step_view_tree
+NEW ir.ui.view: im_livechat.chatbot_script_view_form
+NEW ir.ui.view: im_livechat.chatbot_script_view_search
+NEW ir.ui.view: im_livechat.chatbot_script_view_tree
+NEW ir.ui.view: im_livechat.chatbot_test_script_page
+DEL ir.ui.view: im_livechat.rating_rating_view_form_livechat

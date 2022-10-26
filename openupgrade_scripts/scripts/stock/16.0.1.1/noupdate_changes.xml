@@ -1,0 +1,17 @@
+<?xml version='1.0' encoding='utf-8'?>
+<odoo>
+  <record id="mail_template_data_delivery_confirmation" model="mail.template">
+    <field name="name">Shipping: Send by Email</field>
+    <field name="description">Sent to the customers when orders are delivered, if the setting is enabled</field>
+  </record>
+  <record id="stock_location_locations_partner" model="stock.location">
+    <field name="name">Partners</field>
+  </record>
+  <record id="stock_location_route_comp_rule" model="ir.rule">
+    <field name="model_id" ref="model_stock_route"/>
+    <field name="name">stock_route multi-company</field>
+  </record>
+  <record id="warehouse0" model="stock.warehouse">
+    <field name="name"/>
+  </record>
+</odoo>

@@ -1,0 +1,21 @@
+---Models in module 'payment_ogone'---
+---Fields in module 'payment_ogone'---
+payment_ogone / payment.acquirer         / ogone_password (char)         : DEL
+payment_ogone / payment.acquirer         / ogone_pspid (char)            : DEL
+payment_ogone / payment.acquirer         / ogone_shakey_in (char)        : DEL
+payment_ogone / payment.acquirer         / ogone_shakey_out (char)       : DEL
+payment_ogone / payment.acquirer         / ogone_userid (char)           : DEL
+payment_ogone / payment.acquirer         / provider (False)              : DEL selection_keys: ['adyen', 'alipay', 'authorize', 'buckaroo', 'mollie', 'none', 'ogone'], mode: modify
+payment_ogone / payment.provider         / code (False)                  : NEW selection_keys: ['adyen', 'alipay', 'aps', 'asiapay', 'authorize', 'buckaroo', 'custom', 'demo', 'flutterwave', 'mercado_pago', 'mollie', 'none', 'ogone'], mode: modify
+payment_ogone / payment.provider         / ogone_hash_function (selection): NEW selection_keys: ['sha1', 'sha256', 'sha512'], hasdefault: default
+payment_ogone / payment.provider         / ogone_password (char)         : NEW
+payment_ogone / payment.provider         / ogone_pspid (char)            : NEW
+payment_ogone / payment.provider         / ogone_shakey_in (char)        : NEW
+payment_ogone / payment.provider         / ogone_shakey_out (char)       : NEW
+payment_ogone / payment.provider         / ogone_userid (char)           : NEW
+---XML records in module 'payment_ogone'---
+DEL account.payment.method: payment_ogone.payment_method_ogone (noupdate)
+DEL ir.config_parameter: payment_ogone.payment_ogone_hash_function (noupdate)
+NEW ir.ui.view: payment_ogone.payment_provider_form
+DEL ir.ui.view: payment_ogone.payment_acquirer_form
+NEW payment.provider: payment_ogone.payment_provider_ogone (noupdate)

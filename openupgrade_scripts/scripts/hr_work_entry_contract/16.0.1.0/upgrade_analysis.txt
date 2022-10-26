@@ -1,0 +1,7 @@
+---Models in module 'hr_work_entry_contract'---
+---Fields in module 'hr_work_entry_contract'---
+hr_work_entry_contract / hr.contract              / last_generation_date (date)   : NEW
+hr_work_entry_contract / hr.contract              / work_entry_source (selection) : NEW required, selection_keys: ['calendar'], hasdefault: default
+---XML records in module 'hr_work_entry_contract'---
+NEW ir.cron: hr_work_entry_contract.ir_cron_generate_missing_work_entries (noupdate)
+NEW ir.ui.view: hr_work_entry_contract.hr_contract_view_form_inherit_work_entry

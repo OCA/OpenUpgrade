@@ -1,0 +1,48 @@
+<?xml version='1.0' encoding='utf-8'?>
+<odoo>
+  <record id="mail_template_channel_completed" model="mail.template">
+    <field name="name">Elearning: Completed Course</field>
+    <field name="description">Sent to attendees once they've completed the course</field>
+  </record>
+  <record id="mail_template_slide_channel_invite" model="mail.template">
+    <field name="name">Elearning: Course Invite</field>
+    <field name="description">Sent to attendees when they are added to a course</field>
+  </record>
+  <record id="rule_slide_slide_resource_downloadable" model="ir.rule">
+    <field name="name">Resource: read restricted to channel members and channel responsible</field>
+  </record>
+  <record id="slide_template_published" model="mail.template">
+    <field name="body_html" type="html">
+      <div style="margin: 0px; padding: 0px;">
+        <p style="margin: 0px; padding: 0px; font-size: 13px;">
+                        Hello<br/><br/>
+                        There is something new in the course <strong t-out="object.channel_id.name or ''">Trees, Wood and Gardens</strong> you are following:<br/><br/>
+                        <center><strong t-out="object.name or ''">Trees</strong></center>
+                        <t t-if="object.image_1024"><div style="padding: 16px 8px 16px 8px; text-align: center;"><a t-att-href="object.website_share_url"><img t-att-alt="object.name" t-attf-src="{{ ctx.get('base_url') }}/web/image/slide.slide/{{ object.id }}/image_1024" style="height:auto; width:150px; margin: 16px;"/></a></div></t>
+                        <div style="padding: 16px 8px 16px 8px; text-align: center;"><a t-att-href="object.website_share_url" style="background-color: #875a7b; padding: 8px 16px 8px 16px; text-decoration: none; color: #fff; border-radius: 5px;">View content</a></div>
+                        Enjoy this exclusive content!
+                        <t t-if="user.signature"><br/><t t-out="user.signature or ''">--<br/>Mitchell Admin</t></t>
+                    </p>
+      </div>
+    </field>
+    <field name="name">Elearning: New Course Content Notification</field>
+    <field name="subject">New {{ object.slide_category }} published on {{ object.channel_id.name }}</field>
+    <field name="description">Sent to attendees when new course is published</field>
+  </record>
+  <record id="slide_template_shared" model="mail.template">
+    <field name="body_html" type="html">
+      <div style="margin: 0px; padding: 0px;">
+        <p style="margin: 0px; padding: 0px; font-size: 13px;">
+                        Hello<br/><br/>
+                        <t t-out="user.name or ''">Mitchell Admin</t> shared the <t t-out="object.slide_category or ''">document</t> <strong t-out="object.name or ''">Trees</strong> with you!
+                        <div style="margin: 16px 8px 16px 8px; text-align: center;"><a t-att-href="(object.website_share_url + '?fullscreen=1') if ctx.get('fullscreen') else object.website_share_url"><img t-att-alt="object.name" t-attf-src="{{ ctx.get('base_url') }}/web/image/slide.slide/{{ object.id }}/image_1024" style="height:auto; width:150px; margin: 16px;"/></a></div>
+                        <div style="padding: 16px 8px 16px 8px; text-align: center;"><a t-att-href="(object.website_share_url + '?fullscreen=1') if ctx.get('fullscreen') else object.website_share_url" style="background-color: #875a7b; padding: 8px 16px 8px 16px; text-decoration: none; color: #fff; border-radius: 5px;">View <strong t-out="object.name or ''">Trees</strong></a></div>
+                        <t t-if="user.signature"><br/><t t-out="user.signature or ''">--<br/>Mitchell Admin</t></t>
+                    </p>
+      </div>
+    </field>
+    <field name="name">Elearning: Course Share</field>
+    <field name="subject">{{ user.name }} shared a {{ object.slide_category }} with you!</field>
+    <field name="description">Sent when attendees share the course by email</field>
+  </record>
+</odoo>

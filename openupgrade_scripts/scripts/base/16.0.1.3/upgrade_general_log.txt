@@ -1,0 +1,1231 @@
+---Models in module 'general'---
+obsolete model account.account.type [module account]
+obsolete model account.analytic.default [module account]
+obsolete model account.analytic.distribution [module analytic]
+obsolete model account.analytic.group [module analytic]
+obsolete model account.analytic.tag [module analytic]
+obsolete model account.bank.statement.cashbox [module account]
+obsolete model account.bank.statement.closebalance [module account]
+obsolete model account.cashbox.line [module account]
+obsolete model account.common.journal.report [module account]
+obsolete model account.common.report [module account]
+obsolete model account.print.journal [module account]
+obsolete model account.tax.carryover.line [module account]
+obsolete model account.tax.report [module account]
+obsolete model account.tax.report.line [module account]
+obsolete model base.update.translations [module base]
+obsolete model cash.box.out [module account]
+obsolete model coupon.coupon [module coupon]
+obsolete model coupon.generate.wizard [module coupon]
+obsolete model coupon.program [module coupon]
+obsolete model coupon.reward [module coupon]
+obsolete model coupon.rule [module coupon]
+obsolete model gift.card [module gift_card]
+obsolete model google.drive.config [module google_drive]
+obsolete model ir.translation [module base]
+obsolete model l10n_in.account.invoice.report [module l10n_in]
+obsolete model l10n_in.advances.payment.adjustment.report [module l10n_in]
+obsolete model l10n_in.advances.payment.report [module l10n_in]
+obsolete model l10n_in.exempted.report [module l10n_in]
+obsolete model l10n_in.payment.report [module l10n_in]
+obsolete model l10n_in.product.hsn.report [module l10n_in]
+obsolete model mail.channel.partner [module mail]
+obsolete model mail.resend.cancel [module mail]
+obsolete model pad.common [module pad]
+obsolete model payment.acquirer [module payment]
+obsolete model payment.acquirer.onboarding.wizard [module payment]
+obsolete model project.delete.wizard [module project]
+obsolete model project.profitability.report [module sale_timesheet]
+obsolete model project.task.create.timesheet [module hr_timesheet]
+obsolete model report.account.report_journal [module account]
+obsolete model report.all.channels.sales [module sale]
+obsolete model report.coupon.report_coupon [module coupon]
+obsolete model report.sale.report_saleproforma [module sale]
+obsolete model resource.test [module resource]
+obsolete model sale.coupon.apply.code [module sale_coupon]
+obsolete model sale.payment.acquirer.onboarding.wizard [module sale]
+obsolete model sale.product.configurator [module sale_product_configurator]
+obsolete model slide.slide.link [module website_slides]
+obsolete model sms.cancel [module sms]
+obsolete model snailmail.letter.cancel [module snailmail]
+obsolete model stock.location.route [module stock]
+obsolete model stock.production.lot [module stock]
+obsolete model tax.adjustments.wizard [module account]
+obsolete model website.sale.payment.acquirer.onboarding.wizard [module website_sale]
+new model account.analytic.applicability [module analytic]
+new model account.analytic.distribution.model [module analytic]
+new model account.analytic.plan [module analytic]
+new model account.report [module account]
+new model account.report.column [module account]
+new model account.report.expression [module account]
+new model account.report.external.value [module account]
+new model account.report.line [module account]
+new model analytic.mixin [module analytic]
+new model applicant.send.mail [module hr_recruitment]
+new model base.module.install.request [module base_install_request]
+new model base.module.install.review [module base_install_request]
+new model calendar.provider.config [module calendar]
+new model change.password.own [module base]
+new model chatbot.message [module im_livechat]
+new model chatbot.script [module im_livechat]
+new model chatbot.script.answer [module im_livechat]
+new model chatbot.script.step [module im_livechat]
+new model data_recycle.model [module data_recycle]
+new model data_recycle.record [module data_recycle]
+new model delivery.zip.prefix [module delivery]
+new model event.sale.report [module event_sale]
+new model hr.applicant.skill [module hr_recruitment_skills]
+new model hr.employee.skill.log [module hr_skills]
+new model hr.employee.skill.report [module hr_skills]
+new model hr.expense.split [module hr_expense]
+new model hr.expense.split.wizard [module hr_expense]
+new model hr.holidays.cancel.leave [module hr_holidays]
+new model hr.leave.stress.day [module hr_holidays]
+new model ir.binary [module base]
+new model ir.qweb.field.time [module base]
+new model ir.websocket [module bus]
+new model l10n_ch.qr_invoice.wizard [module l10n_ch]
+new model lot.label.layout [module stock]
+new model loyalty.card [module loyalty]
+new model loyalty.generate.wizard [module loyalty]
+new model loyalty.mail [module loyalty]
+new model loyalty.program [module loyalty]
+new model loyalty.reward [module loyalty]
+new model loyalty.rule [module loyalty]
+new model mail.channel.member [module mail]
+new model mail.gateway.allowed [module mail]
+new model mail.link.preview [module mail]
+new model mail.message.schedule [module mail]
+new model mail.template.reset [module mail]
+new model mailing.contact.import [module mass_mailing]
+new model mailing.filter [module mass_mailing]
+new model mrp.production.split [module mrp]
+new model mrp.production.split.line [module mrp]
+new model mrp.production.split.multi [module mrp]
+new model mrp.workcenter.capacity [module mrp]
+new model onboarding.onboarding [module onboarding]
+new model onboarding.onboarding.step [module onboarding]
+new model onboarding.progress [module onboarding]
+new model onboarding.progress.step [module onboarding]
+new model payment.provider [module payment]
+new model payment.provider.onboarding.wizard [module payment]
+new model picking.label.type [module stock]
+new model pos.session.check_product_wizard [module point_of_sale]
+new model privacy.log [module privacy_lookup]
+new model privacy.lookup.wizard [module privacy_lookup]
+new model privacy.lookup.wizard.line [module privacy_lookup]
+new model product.tag [module product]
+new model purchase.order.group [module purchase_requisition]
+new model purchase.requisition.alternative.warning [module purchase_requisition]
+new model purchase.requisition.create.alternative [module purchase_requisition]
+new model res.users.deletion [module base]
+new model sale.loyalty.coupon.wizard [module sale_loyalty]
+new model sale.loyalty.reward.wizard [module sale_loyalty]
+new model sale.order.coupon.points [module sale_loyalty]
+new model sale.payment.provider.onboarding.wizard [module sale]
+new model sms.template.reset [module sms]
+new model spreadsheet.dashboard [module spreadsheet_dashboard]
+new model spreadsheet.dashboard.group [module spreadsheet_dashboard]
+new model stock.lot [module stock]
+new model stock.replenishment.option [module stock]
+new model stock.route [module stock]
+new model template.reset.mixin [module mail]
+new model timesheets.analysis.report [module hr_timesheet]
+new model utm.source.mixin [module utm]
+---Fields in module 'general'---
+# 11787 fields matched,
+# Direct match: 11684
+# Found in other module: 103
+# Found with different type: 0
+# In obsolete models: 436
+# New columns: 1479
+# Not matched: 865
+---XML records in module 'general'---
+ERROR: module not in list of installed modules:
+---Models in module 'account_edi_facturx'---
+---Fields in module 'account_edi_facturx'---
+---XML records in module 'account_edi_facturx'---
+DEL account.edi.format: account_edi_facturx.edi_facturx_1_0_05 [renamed to account_edi_ubl_cii module]
+DEL ir.ui.view: account_edi_facturx.account_invoice_facturx_export
+DEL ir.ui.view: account_edi_facturx.account_invoice_line_facturx_export
+DEL ir.ui.view: account_edi_facturx.account_invoice_partner_facturx_export
+DEL ir.ui.view: account_edi_facturx.account_invoice_pdfa_3_facturx_metadata
+ERROR: module not in list of installed modules:
+---Models in module 'account_edi_ubl'---
+---Fields in module 'account_edi_ubl'---
+---XML records in module 'account_edi_ubl'---
+DEL account.edi.format: account_edi_ubl.edi_ubl_2_1 [renamed to account_edi_ubl_cii module]
+DEL ir.ui.view: account_edi_ubl.export_ubl_invoice
+DEL ir.ui.view: account_edi_ubl.export_ubl_invoice_line
+DEL ir.ui.view: account_edi_ubl.export_ubl_invoice_partner
+ERROR: module not in list of installed modules:
+---Models in module 'account_edi_ubl_bis3'---
+---Fields in module 'account_edi_ubl_bis3'---
+---XML records in module 'account_edi_ubl_bis3'---
+DEL ir.ui.view: account_edi_ubl_bis3.export_bis3_invoice
+DEL ir.ui.view: account_edi_ubl_bis3.export_bis3_invoice_line
+DEL ir.ui.view: account_edi_ubl_bis3.export_bis3_invoice_partner
+ERROR: module not in list of installed modules:
+---Models in module 'account_sale_timesheet'---
+---Fields in module 'account_sale_timesheet'---
+account_sale_timesheet / project.project          / invoice_count (integer)       : module is now 'sale_project' ('account_sale_timesheet')
+---XML records in module 'account_sale_timesheet'---
+DEL ir.ui.view: account_sale_timesheet.project_project_view_form
+ERROR: module not in list of installed modules:
+---Models in module 'base_address_city'---
+model res.city (moved to base_address_extended)
+---Fields in module 'base_address_city'---
+base_address_city / res.city                 / __last_update (datetime)      : module is now 'base_address_extended' ('base_address_city')
+base_address_city / res.city                 / _order                        : module is now 'base_address_extended' ('base_address_city')
+base_address_city / res.city                 / country_id (many2one)         : module is now 'base_address_extended' ('base_address_city')
+base_address_city / res.city                 / display_name (char)           : module is now 'base_address_extended' ('base_address_city')
+base_address_city / res.city                 / name (char)                   : module is now 'base_address_extended' ('base_address_city')
+base_address_city / res.city                 / state_id (many2one)           : module is now 'base_address_extended' ('base_address_city')
+base_address_city / res.city                 / zipcode (char)                : module is now 'base_address_extended' ('base_address_city')
+base_address_city / res.country              / enforce_cities (boolean)      : module is now 'base_address_extended' ('base_address_city')
+base_address_city / res.partner              / city_id (many2one)            : module is now 'base_address_extended' ('base_address_city')
+base_address_city / res.partner              / country_enforce_cities (boolean): module is now 'base_address_extended' ('base_address_city')
+base_address_city / res.users                / city_id (many2one)            : module is now 'base_address_extended' ('base_address_city')
+base_address_city / res.users                / country_enforce_cities (boolean): module is now 'base_address_extended' ('base_address_city')
+---XML records in module 'base_address_city'---
+DEL ir.actions.act_window: base_address_city.action_res_city_tree [renamed to base_address_extended module]
+DEL ir.model.access: base_address_city.access_res_city_group_all [renamed to base_address_extended module]
+DEL ir.model.access: base_address_city.access_res_city_group_user [renamed to base_address_extended module]
+DEL ir.ui.view: base_address_city.view_city_filter
+DEL ir.ui.view: base_address_city.view_city_tree
+DEL ir.ui.view: base_address_city.view_res_country_city_extended_form
+ERROR: module not in list of installed modules:
+---Models in module 'coupon'---
+obsolete model coupon.coupon
+obsolete model coupon.generate.wizard [transient]
+obsolete model coupon.program
+obsolete model coupon.reward
+obsolete model coupon.rule
+obsolete model report.coupon.report_coupon [abstract]
+---Fields in module 'coupon'---
+coupon       / coupon.coupon            / code (char)                   : DEL required
+coupon       / coupon.coupon            / partner_id (many2one)         : DEL relation: res.partner
+coupon       / coupon.coupon            / program_id (many2one)         : DEL relation: coupon.program
+coupon       / coupon.coupon            / state (selection)             : DEL required, selection_keys: ['cancel', 'expired', 'new', 'reserved', 'sent', 'used']
+coupon       / coupon.program           / _inherits                     : DEL _inherits: {'coupon.rule': 'rule_id', 'coupon.reward': 'reward_id'}
+coupon       / coupon.program           / active (boolean)              : DEL
+coupon       / coupon.program           / company_id (many2one)         : DEL relation: res.company, required
+coupon       / coupon.program           / coupon_ids (one2many)         : DEL relation: coupon.coupon
+coupon       / coupon.program           / maximum_use_number (integer)  : DEL
+coupon       / coupon.program           / name (char)                   : DEL required
+coupon       / coupon.program           / program_type (selection)      : DEL selection_keys: ['coupon_program', 'promotion_program']
+coupon       / coupon.program           / promo_applicability (selection): DEL selection_keys: ['on_current_order', 'on_next_order']
+coupon       / coupon.program           / promo_code (char)             : DEL
+coupon       / coupon.program           / promo_code_usage (selection)  : DEL selection_keys: ['code_needed', 'no_code_needed']
+coupon       / coupon.program           / reward_id (many2one)          : DEL relation: coupon.reward, required
+coupon       / coupon.program           / rule_id (many2one)            : DEL relation: coupon.rule, required
+coupon       / coupon.program           / sequence (integer)            : DEL
+coupon       / coupon.program           / validity_duration (integer)   : DEL
+coupon       / coupon.reward            / discount_apply_on (selection) : DEL selection_keys: ['cheapest_product', 'on_order', 'specific_products']
+coupon       / coupon.reward            / discount_fixed_amount (float) : DEL
+coupon       / coupon.reward            / discount_line_product_id (many2one): DEL relation: product.product
+coupon       / coupon.reward            / discount_max_amount (float)   : DEL
+coupon       / coupon.reward            / discount_percentage (float)   : DEL
+coupon       / coupon.reward            / discount_specific_product_ids (many2many): DEL relation: product.product
+coupon       / coupon.reward            / discount_type (selection)     : DEL selection_keys: ['fixed_amount', 'percentage']
+coupon       / coupon.reward            / reward_description (char)     : DEL
+coupon       / coupon.reward            / reward_product_id (many2one)  : DEL relation: product.product
+coupon       / coupon.reward            / reward_product_quantity (integer): DEL
+coupon       / coupon.reward            / reward_type (selection)       : DEL selection_keys: ['discount', 'product']
+coupon       / coupon.rule              / rule_date_from (datetime)     : DEL
+coupon       / coupon.rule              / rule_date_to (datetime)       : DEL
+coupon       / coupon.rule              / rule_min_quantity (integer)   : DEL
+coupon       / coupon.rule              / rule_minimum_amount (float)   : DEL
+coupon       / coupon.rule              / rule_minimum_amount_tax_inclusion (selection): DEL selection_keys: ['tax_excluded', 'tax_included']
+coupon       / coupon.rule              / rule_partners_domain (char)   : DEL
+coupon       / coupon.rule              / rule_products_domain (char)   : DEL
+---XML records in module 'coupon'---
+DEL ir.actions.act_window: coupon.coupon_action
+DEL ir.actions.act_window: coupon.coupon_generate_action
+DEL ir.actions.act_window: coupon.coupon_program_action_coupon_program
+DEL ir.actions.act_window: coupon.coupon_program_action_promo_program
+DEL ir.actions.report: coupon.report_coupon_code
+DEL ir.cron: coupon.expire_coupon_cron (noupdate)
+DEL ir.model.access: coupon.access_coupon_coupon
+DEL ir.model.access: coupon.access_coupon_generate_wizard
+DEL ir.model.access: coupon.access_coupon_program
+DEL ir.model.access: coupon.access_coupon_reward
+DEL ir.model.access: coupon.access_coupon_rule
+DEL ir.model.constraint: coupon.constraint_coupon_coupon_unique_coupon_code
+DEL ir.rule: coupon.sale_coupon_generate_rule (noupdate)
+DEL ir.ui.view: coupon.coupon_generate_view_form
+DEL ir.ui.view: coupon.coupon_program_view_coupon_program_form
+DEL ir.ui.view: coupon.coupon_program_view_form_common
+DEL ir.ui.view: coupon.coupon_program_view_promo_program_form
+DEL ir.ui.view: coupon.coupon_program_view_promo_program_search
+DEL ir.ui.view: coupon.coupon_program_view_promo_program_tree
+DEL ir.ui.view: coupon.coupon_program_view_search
+DEL ir.ui.view: coupon.coupon_program_view_tree
+DEL ir.ui.view: coupon.coupon_view_form
+DEL ir.ui.view: coupon.coupon_view_tree
+DEL ir.ui.view: coupon.report_coupon
+DEL ir.ui.view: coupon.report_coupon_i18n
+DEL ir.ui.view: coupon.view_coupon_program_kanban
+ERROR: module not in list of installed modules:
+---Models in module 'fetchmail'---
+model fetchmail.server (moved to mail)
+---Fields in module 'fetchmail'---
+fetchmail    / fetchmail.server         / __last_update (datetime)      : module is now 'mail' ('fetchmail')
+fetchmail    / fetchmail.server         / _order                        : module is now 'mail' ('fetchmail')
+fetchmail    / fetchmail.server         / active (boolean)              : module is now 'mail' ('fetchmail')
+fetchmail    / fetchmail.server         / attach (boolean)              : module is now 'mail' ('fetchmail')
+fetchmail    / fetchmail.server         / configuration (text)          : module is now 'mail' ('fetchmail')
+fetchmail    / fetchmail.server         / date (datetime)               : module is now 'mail' ('fetchmail')
+fetchmail    / fetchmail.server         / display_name (char)           : module is now 'mail' ('fetchmail')
+fetchmail    / fetchmail.server         / is_ssl (boolean)              : module is now 'mail' ('fetchmail')
+fetchmail    / fetchmail.server         / message_ids (one2many)        : module is now 'mail' ('fetchmail')
+fetchmail    / fetchmail.server         / name (char)                   : module is now 'mail' ('fetchmail')
+fetchmail    / fetchmail.server         / object_id (many2one)          : module is now 'mail' ('fetchmail')
+fetchmail    / fetchmail.server         / original (boolean)            : module is now 'mail' ('fetchmail')
+fetchmail    / fetchmail.server         / password (char)               : module is now 'mail' ('fetchmail')
+fetchmail    / fetchmail.server         / port (integer)                : module is now 'mail' ('fetchmail')
+fetchmail    / fetchmail.server         / priority (integer)            : module is now 'mail' ('fetchmail')
+fetchmail    / fetchmail.server         / script (char)                 : module is now 'mail' ('fetchmail')
+fetchmail    / fetchmail.server         / server (char)                 : module is now 'mail' ('fetchmail')
+fetchmail    / fetchmail.server         / server_type (selection)       : module is now 'mail' ('fetchmail')
+fetchmail    / fetchmail.server         / state (selection)             : module is now 'mail' ('fetchmail')
+fetchmail    / fetchmail.server         / user (char)                   : module is now 'mail' ('fetchmail')
+fetchmail    / mail.mail                / fetchmail_server_id (many2one): module is now 'mail' ('fetchmail')
+---XML records in module 'fetchmail'---
+DEL ir.actions.act_window: fetchmail.act_server_history [renamed to mail module]
+DEL ir.actions.act_window: fetchmail.action_email_server_tree [renamed to mail module]
+DEL ir.cron: fetchmail.ir_cron_mail_gateway_action [renamed to mail module] (noupdate)
+DEL ir.model.access: fetchmail.access_fetchmail_server [renamed to mail module]
+DEL ir.ui.menu: fetchmail.menu_action_fetchmail_server_tree [renamed to mail module]
+DEL ir.ui.view: fetchmail.email_message_tree_view
+DEL ir.ui.view: fetchmail.res_config_settings_view_form
+DEL ir.ui.view: fetchmail.view_email_server_form
+DEL ir.ui.view: fetchmail.view_email_server_search
+DEL ir.ui.view: fetchmail.view_email_server_tree
+ERROR: module not in list of installed modules:
+---Models in module 'fetchmail_gmail'---
+---Fields in module 'fetchmail_gmail'---
+fetchmail_gmail / fetchmail.server         / google_gmail_access_token (char): module is now 'google_gmail' ('fetchmail_gmail')
+fetchmail_gmail / fetchmail.server         / google_gmail_access_token_expiration (integer): module is now 'google_gmail' ('fetchmail_gmail')
+fetchmail_gmail / fetchmail.server         / google_gmail_authorization_code (char): module is now 'google_gmail' ('fetchmail_gmail')
+fetchmail_gmail / fetchmail.server         / google_gmail_refresh_token (char): module is now 'google_gmail' ('fetchmail_gmail')
+fetchmail_gmail / fetchmail.server         / google_gmail_uri (char)       : module is now 'google_gmail' ('fetchmail_gmail')
+fetchmail_gmail / fetchmail.server         / use_google_gmail_service (boolean): DEL
+---XML records in module 'fetchmail_gmail'---
+DEL ir.ui.view: fetchmail_gmail.fetchmail_server_view_form
+ERROR: module not in list of installed modules:
+---Models in module 'fetchmail_outlook'---
+---Fields in module 'fetchmail_outlook'---
+fetchmail_outlook / fetchmail.server         / is_microsoft_outlook_configured (boolean): module is now 'microsoft_outlook' ('fetchmail_outlook')
+fetchmail_outlook / fetchmail.server         / microsoft_outlook_access_token (char): module is now 'microsoft_outlook' ('fetchmail_outlook')
+fetchmail_outlook / fetchmail.server         / microsoft_outlook_access_token_expiration (integer): module is now 'microsoft_outlook' ('fetchmail_outlook')
+fetchmail_outlook / fetchmail.server         / microsoft_outlook_refresh_token (char): module is now 'microsoft_outlook' ('fetchmail_outlook')
+fetchmail_outlook / fetchmail.server         / microsoft_outlook_uri (char)  : module is now 'microsoft_outlook' ('fetchmail_outlook')
+fetchmail_outlook / fetchmail.server         / use_microsoft_outlook_service (boolean): DEL
+---XML records in module 'fetchmail_outlook'---
+DEL ir.ui.view: fetchmail_outlook.fetchmail_server_view_form
+ERROR: module not in list of installed modules:
+---Models in module 'gift_card'---
+obsolete model gift.card
+---Fields in module 'gift_card'---
+gift_card    / gift.card                / code (char)                   : DEL required
+gift_card    / gift.card                / company_id (many2one)         : DEL relation: res.company
+gift_card    / gift.card                / expired_date (date)           : DEL
+gift_card    / gift.card                / initial_amount (float)        : DEL required
+gift_card    / gift.card                / partner_id (many2one)         : DEL relation: res.partner
+gift_card    / gift.card                / state (selection)             : DEL selection_keys: ['expired', 'valid']
+gift_card    / product.template         / detailed_type (False)         : module is now 'website_sale_slides' ('gift_card')
+gift_card    / product.template         / detailed_type (False)         : selection_keys is now '['consu', 'course', 'event', 'product', 'service']' ('['consu', 'gift', 'service']')
+---XML records in module 'gift_card'---
+DEL ir.actions.act_window: gift_card.gift_card_action
+DEL ir.model.access: gift_card.access_gift_card_all
+DEL ir.model.constraint: gift_card.constraint_gift_card_check_amount
+DEL ir.model.constraint: gift_card.constraint_gift_card_unique_gift_card_code
+DEL ir.ui.view: gift_card.gift_card_view_form
+DEL ir.ui.view: gift_card.gift_card_view_search
+DEL ir.ui.view: gift_card.gift_card_view_tree
+DEL product.product: gift_card.gift_card_product_50 [renamed to loyalty module] (noupdate)
+DEL product.product: gift_card.pay_with_gift_card_product (noupdate)
+ERROR: module not in list of installed modules:
+---Models in module 'google_drive'---
+obsolete model google.drive.config
+---Fields in module 'google_drive'---
+google_drive / google.drive.config      / active (boolean)              : DEL
+google_drive / google.drive.config      / filter_id (many2one)          : DEL relation: ir.filters
+google_drive / google.drive.config      / google_drive_template_url (char): DEL required
+google_drive / google.drive.config      / model_id (many2one)           : DEL relation: ir.model, required
+google_drive / google.drive.config      / name (char)                   : DEL required
+google_drive / google.drive.config      / name_template (char)          : DEL required
+---XML records in module 'google_drive'---
+DEL ir.actions.act_window: google_drive.action_google_drive_users_config
+DEL ir.config_parameter: google_drive.config_google_drive_client_id (noupdate)
+DEL ir.config_parameter: google_drive.config_google_drive_client_secret (noupdate)
+DEL ir.model.access: google_drive.access_google_drive
+DEL ir.model.access: google_drive.access_google_drive_all
+DEL ir.ui.view: google_drive.google_drive_auth_code_wizard
+DEL ir.ui.view: google_drive.google_drive_config_view_search
+DEL ir.ui.view: google_drive.res_config_settings_view_form
+DEL ir.ui.view: google_drive.view_google_drive_config_form
+DEL ir.ui.view: google_drive.view_google_drive_config_kanban
+DEL ir.ui.view: google_drive.view_google_drive_config_tree
+ERROR: module not in list of installed modules:
+---Models in module 'google_spreadsheet'---
+---Fields in module 'google_spreadsheet'---
+---XML records in module 'google_spreadsheet'---
+DEL google.drive.config: google_spreadsheet.google_spreadsheet_template
+DEL ir.actions.act_window: google_spreadsheet.action_ir_attachment_google_spreadsheet_tree
+DEL ir.actions.act_window.view: google_spreadsheet.action_ir_attachment_google_spreadsheet_form_view
+DEL ir.actions.act_window.view: google_spreadsheet.action_ir_attachment_google_spreadsheet_tree_view
+DEL ir.ui.menu: google_spreadsheet.menu_reporting_dashboard_google_spreadsheets
+DEL ir.ui.view: google_spreadsheet.res_config_settings_view_form
+DEL ir.ui.view: google_spreadsheet.view_ir_attachment_google_spreadsheet_form
+DEL ir.ui.view: google_spreadsheet.view_ir_attachment_google_spreadsheet_tree
+ERROR: module not in list of installed modules:
+---Models in module 'l10n_be_edi'---
+---Fields in module 'l10n_be_edi'---
+---XML records in module 'l10n_be_edi'---
+DEL account.edi.format: l10n_be_edi.edi_efff_1 [renamed to account_edi_ubl_cii module]
+DEL ir.ui.view: l10n_be_edi.export_efff_invoice
+ERROR: module not in list of installed modules:
+---Models in module 'l10n_de_purchase'---
+---Fields in module 'l10n_de_purchase'---
+---XML records in module 'l10n_de_purchase'---
+---nothing has changed in this module--
+ERROR: module not in list of installed modules:
+---Models in module 'l10n_de_repair'---
+---Fields in module 'l10n_de_repair'---
+---XML records in module 'l10n_de_repair'---
+---nothing has changed in this module--
+ERROR: module not in list of installed modules:
+---Models in module 'l10n_de_sale'---
+---Fields in module 'l10n_de_sale'---
+---XML records in module 'l10n_de_sale'---
+---nothing has changed in this module--
+ERROR: module not in list of installed modules:
+---Models in module 'l10n_de_stock'---
+---Fields in module 'l10n_de_stock'---
+---XML records in module 'l10n_de_stock'---
+---nothing has changed in this module--
+ERROR: module not in list of installed modules:
+---Models in module 'l10n_it_edi_sdicoop'---
+---Fields in module 'l10n_it_edi_sdicoop'---
+l10n_it_edi_sdicoop / account.bank.statement.line / l10n_it_edi_attachment_id (many2one): module is now 'l10n_it_edi' ('l10n_it_edi_sdicoop')
+l10n_it_edi_sdicoop / account.bank.statement.line / l10n_it_edi_transaction (char): module is now 'l10n_it_edi' ('l10n_it_edi_sdicoop')
+l10n_it_edi_sdicoop / account.move             / l10n_it_edi_attachment_id (many2one): module is now 'l10n_it_edi' ('l10n_it_edi_sdicoop')
+l10n_it_edi_sdicoop / account.move             / l10n_it_edi_transaction (char): module is now 'l10n_it_edi' ('l10n_it_edi_sdicoop')
+l10n_it_edi_sdicoop / account.payment          / l10n_it_edi_attachment_id (many2one): module is now 'l10n_it_edi' ('l10n_it_edi_sdicoop')
+l10n_it_edi_sdicoop / account.payment          / l10n_it_edi_transaction (char): module is now 'l10n_it_edi' ('l10n_it_edi_sdicoop')
+---XML records in module 'l10n_it_edi_sdicoop'---
+DEL ir.cron: l10n_it_edi_sdicoop.ir_cron_receive_fattura_pa_invoice [renamed to l10n_it_edi module]
+DEL ir.ui.view: l10n_it_edi_sdicoop.fetchmail_server_form_l10n_it_inherit
+DEL ir.ui.view: l10n_it_edi_sdicoop.res_company_form_l10n_it_inherit
+DEL ir.ui.view: l10n_it_edi_sdicoop.res_config_settings_view_form
+ERROR: module not in list of installed modules:
+---Models in module 'l10n_nl_edi'---
+---Fields in module 'l10n_nl_edi'---
+---XML records in module 'l10n_nl_edi'---
+DEL account.edi.format: l10n_nl_edi.edi_nlcius_1 [renamed to account_edi_ubl_cii module]
+DEL ir.ui.view: l10n_nl_edi.export_nlcius_invoice
+DEL ir.ui.view: l10n_nl_edi.export_nlcius_invoice_partner
+ERROR: module not in list of installed modules:
+---Models in module 'l10n_no_edi'---
+---Fields in module 'l10n_no_edi'---
+---XML records in module 'l10n_no_edi'---
+DEL account.edi.format: l10n_no_edi.edi_ehf_3
+DEL ir.ui.view: l10n_no_edi.export_ehf_3_invoice
+DEL ir.ui.view: l10n_no_edi.export_ehf_3_invoice_partner
+ERROR: module not in list of installed modules:
+---Models in module 'l10n_rs'---
+---Fields in module 'l10n_rs'---
+l10n_rs      / account.move             / l10n_rs_turnover_date (date)  : DEL
+l10n_rs      / res.partner              / l10n_rs_company_registry (char): DEL
+---XML records in module 'l10n_rs'---
+DEL account.account.template: l10n_rs.rs_000
+DEL account.account.template: l10n_rs.rs_001
+DEL account.account.template: l10n_rs.rs_010
+DEL account.account.template: l10n_rs.rs_011
+DEL account.account.template: l10n_rs.rs_012
+DEL account.account.template: l10n_rs.rs_013
+DEL account.account.template: l10n_rs.rs_014
+DEL account.account.template: l10n_rs.rs_015
+DEL account.account.template: l10n_rs.rs_016
+DEL account.account.template: l10n_rs.rs_019
+DEL account.account.template: l10n_rs.rs_020
+DEL account.account.template: l10n_rs.rs_021
+DEL account.account.template: l10n_rs.rs_022
+DEL account.account.template: l10n_rs.rs_023
+DEL account.account.template: l10n_rs.rs_024
+DEL account.account.template: l10n_rs.rs_025
+DEL account.account.template: l10n_rs.rs_026
+DEL account.account.template: l10n_rs.rs_027
+DEL account.account.template: l10n_rs.rs_028
+DEL account.account.template: l10n_rs.rs_029
+DEL account.account.template: l10n_rs.rs_030
+DEL account.account.template: l10n_rs.rs_031
+DEL account.account.template: l10n_rs.rs_032
+DEL account.account.template: l10n_rs.rs_037
+DEL account.account.template: l10n_rs.rs_038
+DEL account.account.template: l10n_rs.rs_039
+DEL account.account.template: l10n_rs.rs_040
+DEL account.account.template: l10n_rs.rs_041
+DEL account.account.template: l10n_rs.rs_042
+DEL account.account.template: l10n_rs.rs_0430
+DEL account.account.template: l10n_rs.rs_0431
+DEL account.account.template: l10n_rs.rs_0440
+DEL account.account.template: l10n_rs.rs_0441
+DEL account.account.template: l10n_rs.rs_0450
+DEL account.account.template: l10n_rs.rs_0451
+DEL account.account.template: l10n_rs.rs_046
+DEL account.account.template: l10n_rs.rs_047
+DEL account.account.template: l10n_rs.rs_048
+DEL account.account.template: l10n_rs.rs_049
+DEL account.account.template: l10n_rs.rs_050
+DEL account.account.template: l10n_rs.rs_051
+DEL account.account.template: l10n_rs.rs_052
+DEL account.account.template: l10n_rs.rs_053
+DEL account.account.template: l10n_rs.rs_054
+DEL account.account.template: l10n_rs.rs_055
+DEL account.account.template: l10n_rs.rs_056
+DEL account.account.template: l10n_rs.rs_059
+DEL account.account.template: l10n_rs.rs_100
+DEL account.account.template: l10n_rs.rs_101
+DEL account.account.template: l10n_rs.rs_102
+DEL account.account.template: l10n_rs.rs_103
+DEL account.account.template: l10n_rs.rs_104
+DEL account.account.template: l10n_rs.rs_109
+DEL account.account.template: l10n_rs.rs_110
+DEL account.account.template: l10n_rs.rs_111
+DEL account.account.template: l10n_rs.rs_120
+DEL account.account.template: l10n_rs.rs_130
+DEL account.account.template: l10n_rs.rs_131
+DEL account.account.template: l10n_rs.rs_132
+DEL account.account.template: l10n_rs.rs_133
+DEL account.account.template: l10n_rs.rs_134
+DEL account.account.template: l10n_rs.rs_135
+DEL account.account.template: l10n_rs.rs_136
+DEL account.account.template: l10n_rs.rs_137
+DEL account.account.template: l10n_rs.rs_139
+DEL account.account.template: l10n_rs.rs_140
+DEL account.account.template: l10n_rs.rs_141
+DEL account.account.template: l10n_rs.rs_142
+DEL account.account.template: l10n_rs.rs_143
+DEL account.account.template: l10n_rs.rs_144
+DEL account.account.template: l10n_rs.rs_145
+DEL account.account.template: l10n_rs.rs_146
+DEL account.account.template: l10n_rs.rs_147
+DEL account.account.template: l10n_rs.rs_149
+DEL account.account.template: l10n_rs.rs_150
+DEL account.account.template: l10n_rs.rs_151
+DEL account.account.template: l10n_rs.rs_152
+DEL account.account.template: l10n_rs.rs_153
+DEL account.account.template: l10n_rs.rs_154
+DEL account.account.template: l10n_rs.rs_155
+DEL account.account.template: l10n_rs.rs_159
+DEL account.account.template: l10n_rs.rs_200
+DEL account.account.template: l10n_rs.rs_201
+DEL account.account.template: l10n_rs.rs_202
+DEL account.account.template: l10n_rs.rs_203
+DEL account.account.template: l10n_rs.rs_204
+DEL account.account.template: l10n_rs.rs_205
+DEL account.account.template: l10n_rs.rs_206
+DEL account.account.template: l10n_rs.rs_209
+DEL account.account.template: l10n_rs.rs_210
+DEL account.account.template: l10n_rs.rs_211
+DEL account.account.template: l10n_rs.rs_212
+DEL account.account.template: l10n_rs.rs_218
+DEL account.account.template: l10n_rs.rs_219
+DEL account.account.template: l10n_rs.rs_220
+DEL account.account.template: l10n_rs.rs_221
+DEL account.account.template: l10n_rs.rs_222
+DEL account.account.template: l10n_rs.rs_223
+DEL account.account.template: l10n_rs.rs_224
+DEL account.account.template: l10n_rs.rs_225
+DEL account.account.template: l10n_rs.rs_226
+DEL account.account.template: l10n_rs.rs_228
+DEL account.account.template: l10n_rs.rs_229
+DEL account.account.template: l10n_rs.rs_230
+DEL account.account.template: l10n_rs.rs_231
+DEL account.account.template: l10n_rs.rs_232
+DEL account.account.template: l10n_rs.rs_233
+DEL account.account.template: l10n_rs.rs_234
+DEL account.account.template: l10n_rs.rs_235
+DEL account.account.template: l10n_rs.rs_236
+DEL account.account.template: l10n_rs.rs_237
+DEL account.account.template: l10n_rs.rs_238
+DEL account.account.template: l10n_rs.rs_239
+DEL account.account.template: l10n_rs.rs_240
+DEL account.account.template: l10n_rs.rs_241
+DEL account.account.template: l10n_rs.rs_242
+DEL account.account.template: l10n_rs.rs_243
+DEL account.account.template: l10n_rs.rs_244
+DEL account.account.template: l10n_rs.rs_245
+DEL account.account.template: l10n_rs.rs_246
+DEL account.account.template: l10n_rs.rs_248
+DEL account.account.template: l10n_rs.rs_249
+DEL account.account.template: l10n_rs.rs_270
+DEL account.account.template: l10n_rs.rs_271
+DEL account.account.template: l10n_rs.rs_272
+DEL account.account.template: l10n_rs.rs_273
+DEL account.account.template: l10n_rs.rs_274
+DEL account.account.template: l10n_rs.rs_275
+DEL account.account.template: l10n_rs.rs_276
+DEL account.account.template: l10n_rs.rs_277
+DEL account.account.template: l10n_rs.rs_278
+DEL account.account.template: l10n_rs.rs_279
+DEL account.account.template: l10n_rs.rs_280
+DEL account.account.template: l10n_rs.rs_281
+DEL account.account.template: l10n_rs.rs_282
+DEL account.account.template: l10n_rs.rs_288
+DEL account.account.template: l10n_rs.rs_289
+DEL account.account.template: l10n_rs.rs_300
+DEL account.account.template: l10n_rs.rs_301
+DEL account.account.template: l10n_rs.rs_302
+DEL account.account.template: l10n_rs.rs_303
+DEL account.account.template: l10n_rs.rs_304
+DEL account.account.template: l10n_rs.rs_305
+DEL account.account.template: l10n_rs.rs_306
+DEL account.account.template: l10n_rs.rs_309
+DEL account.account.template: l10n_rs.rs_310
+DEL account.account.template: l10n_rs.rs_311
+DEL account.account.template: l10n_rs.rs_321
+DEL account.account.template: l10n_rs.rs_322
+DEL account.account.template: l10n_rs.rs_330
+DEL account.account.template: l10n_rs.rs_331
+DEL account.account.template: l10n_rs.rs_332
+DEL account.account.template: l10n_rs.rs_333
+DEL account.account.template: l10n_rs.rs_334
+DEL account.account.template: l10n_rs.rs_335
+DEL account.account.template: l10n_rs.rs_336
+DEL account.account.template: l10n_rs.rs_337
+DEL account.account.template: l10n_rs.rs_340
+DEL account.account.template: l10n_rs.rs_341
+DEL account.account.template: l10n_rs.rs_350
+DEL account.account.template: l10n_rs.rs_351
+DEL account.account.template: l10n_rs.rs_400
+DEL account.account.template: l10n_rs.rs_401
+DEL account.account.template: l10n_rs.rs_402
+DEL account.account.template: l10n_rs.rs_403
+DEL account.account.template: l10n_rs.rs_404
+DEL account.account.template: l10n_rs.rs_405
+DEL account.account.template: l10n_rs.rs_409
+DEL account.account.template: l10n_rs.rs_410
+DEL account.account.template: l10n_rs.rs_411
+DEL account.account.template: l10n_rs.rs_412
+DEL account.account.template: l10n_rs.rs_413
+DEL account.account.template: l10n_rs.rs_414
+DEL account.account.template: l10n_rs.rs_415
+DEL account.account.template: l10n_rs.rs_416
+DEL account.account.template: l10n_rs.rs_419
+DEL account.account.template: l10n_rs.rs_420
+DEL account.account.template: l10n_rs.rs_421
+DEL account.account.template: l10n_rs.rs_422
+DEL account.account.template: l10n_rs.rs_423
+DEL account.account.template: l10n_rs.rs_424
+DEL account.account.template: l10n_rs.rs_425
+DEL account.account.template: l10n_rs.rs_426
+DEL account.account.template: l10n_rs.rs_427
+DEL account.account.template: l10n_rs.rs_429
+DEL account.account.template: l10n_rs.rs_430
+DEL account.account.template: l10n_rs.rs_431
+DEL account.account.template: l10n_rs.rs_432
+DEL account.account.template: l10n_rs.rs_433
+DEL account.account.template: l10n_rs.rs_434
+DEL account.account.template: l10n_rs.rs_435
+DEL account.account.template: l10n_rs.rs_436
+DEL account.account.template: l10n_rs.rs_439
+DEL account.account.template: l10n_rs.rs_440
+DEL account.account.template: l10n_rs.rs_441
+DEL account.account.template: l10n_rs.rs_442
+DEL account.account.template: l10n_rs.rs_449
+DEL account.account.template: l10n_rs.rs_450
+DEL account.account.template: l10n_rs.rs_451
+DEL account.account.template: l10n_rs.rs_452
+DEL account.account.template: l10n_rs.rs_453
+DEL account.account.template: l10n_rs.rs_454
+DEL account.account.template: l10n_rs.rs_455
+DEL account.account.template: l10n_rs.rs_456
+DEL account.account.template: l10n_rs.rs_460
+DEL account.account.template: l10n_rs.rs_461
+DEL account.account.template: l10n_rs.rs_462
+DEL account.account.template: l10n_rs.rs_463
+DEL account.account.template: l10n_rs.rs_464
+DEL account.account.template: l10n_rs.rs_465
+DEL account.account.template: l10n_rs.rs_466
+DEL account.account.template: l10n_rs.rs_467
+DEL account.account.template: l10n_rs.rs_469
+DEL account.account.template: l10n_rs.rs_470
+DEL account.account.template: l10n_rs.rs_471
+DEL account.account.template: l10n_rs.rs_472
+DEL account.account.template: l10n_rs.rs_473
+DEL account.account.template: l10n_rs.rs_474
+DEL account.account.template: l10n_rs.rs_475
+DEL account.account.template: l10n_rs.rs_476
+DEL account.account.template: l10n_rs.rs_479
+DEL account.account.template: l10n_rs.rs_480
+DEL account.account.template: l10n_rs.rs_481
+DEL account.account.template: l10n_rs.rs_482
+DEL account.account.template: l10n_rs.rs_483
+DEL account.account.template: l10n_rs.rs_489
+DEL account.account.template: l10n_rs.rs_490
+DEL account.account.template: l10n_rs.rs_491
+DEL account.account.template: l10n_rs.rs_494
+DEL account.account.template: l10n_rs.rs_495
+DEL account.account.template: l10n_rs.rs_496
+DEL account.account.template: l10n_rs.rs_498
+DEL account.account.template: l10n_rs.rs_499
+DEL account.account.template: l10n_rs.rs_500
+DEL account.account.template: l10n_rs.rs_501
+DEL account.account.template: l10n_rs.rs_502
+DEL account.account.template: l10n_rs.rs_503
+DEL account.account.template: l10n_rs.rs_510
+DEL account.account.template: l10n_rs.rs_511
+DEL account.account.template: l10n_rs.rs_512
+DEL account.account.template: l10n_rs.rs_513
+DEL account.account.template: l10n_rs.rs_514
+DEL account.account.template: l10n_rs.rs_515
+DEL account.account.template: l10n_rs.rs_520
+DEL account.account.template: l10n_rs.rs_521
+DEL account.account.template: l10n_rs.rs_522
+DEL account.account.template: l10n_rs.rs_523
+DEL account.account.template: l10n_rs.rs_524
+DEL account.account.template: l10n_rs.rs_525
+DEL account.account.template: l10n_rs.rs_526
+DEL account.account.template: l10n_rs.rs_529
+DEL account.account.template: l10n_rs.rs_530
+DEL account.account.template: l10n_rs.rs_531
+DEL account.account.template: l10n_rs.rs_532
+DEL account.account.template: l10n_rs.rs_533
+DEL account.account.template: l10n_rs.rs_534
+DEL account.account.template: l10n_rs.rs_535
+DEL account.account.template: l10n_rs.rs_536
+DEL account.account.template: l10n_rs.rs_537
+DEL account.account.template: l10n_rs.rs_539
+DEL account.account.template: l10n_rs.rs_540
+DEL account.account.template: l10n_rs.rs_541
+DEL account.account.template: l10n_rs.rs_542
+DEL account.account.template: l10n_rs.rs_543
+DEL account.account.template: l10n_rs.rs_544
+DEL account.account.template: l10n_rs.rs_545
+DEL account.account.template: l10n_rs.rs_549
+DEL account.account.template: l10n_rs.rs_550
+DEL account.account.template: l10n_rs.rs_551
+DEL account.account.template: l10n_rs.rs_552
+DEL account.account.template: l10n_rs.rs_553
+DEL account.account.template: l10n_rs.rs_554
+DEL account.account.template: l10n_rs.rs_555
+DEL account.account.template: l10n_rs.rs_556
+DEL account.account.template: l10n_rs.rs_559
+DEL account.account.template: l10n_rs.rs_560
+DEL account.account.template: l10n_rs.rs_561
+DEL account.account.template: l10n_rs.rs_562
+DEL account.account.template: l10n_rs.rs_563
+DEL account.account.template: l10n_rs.rs_564
+DEL account.account.template: l10n_rs.rs_565
+DEL account.account.template: l10n_rs.rs_566
+DEL account.account.template: l10n_rs.rs_569
+DEL account.account.template: l10n_rs.rs_570
+DEL account.account.template: l10n_rs.rs_571
+DEL account.account.template: l10n_rs.rs_572
+DEL account.account.template: l10n_rs.rs_573
+DEL account.account.template: l10n_rs.rs_574
+DEL account.account.template: l10n_rs.rs_575
+DEL account.account.template: l10n_rs.rs_576
+DEL account.account.template: l10n_rs.rs_577
+DEL account.account.template: l10n_rs.rs_579
+DEL account.account.template: l10n_rs.rs_5791
+DEL account.account.template: l10n_rs.rs_580
+DEL account.account.template: l10n_rs.rs_581
+DEL account.account.template: l10n_rs.rs_582
+DEL account.account.template: l10n_rs.rs_583
+DEL account.account.template: l10n_rs.rs_584
+DEL account.account.template: l10n_rs.rs_585
+DEL account.account.template: l10n_rs.rs_589
+DEL account.account.template: l10n_rs.rs_590
+DEL account.account.template: l10n_rs.rs_591
+DEL account.account.template: l10n_rs.rs_592
+DEL account.account.template: l10n_rs.rs_599
+DEL account.account.template: l10n_rs.rs_600
+DEL account.account.template: l10n_rs.rs_601
+DEL account.account.template: l10n_rs.rs_602
+DEL account.account.template: l10n_rs.rs_603
+DEL account.account.template: l10n_rs.rs_604
+DEL account.account.template: l10n_rs.rs_605
+DEL account.account.template: l10n_rs.rs_610
+DEL account.account.template: l10n_rs.rs_611
+DEL account.account.template: l10n_rs.rs_612
+DEL account.account.template: l10n_rs.rs_613
+DEL account.account.template: l10n_rs.rs_614
+DEL account.account.template: l10n_rs.rs_615
+DEL account.account.template: l10n_rs.rs_620
+DEL account.account.template: l10n_rs.rs_621
+DEL account.account.template: l10n_rs.rs_630
+DEL account.account.template: l10n_rs.rs_631
+DEL account.account.template: l10n_rs.rs_640
+DEL account.account.template: l10n_rs.rs_641
+DEL account.account.template: l10n_rs.rs_650
+DEL account.account.template: l10n_rs.rs_651
+DEL account.account.template: l10n_rs.rs_652
+DEL account.account.template: l10n_rs.rs_659
+DEL account.account.template: l10n_rs.rs_660
+DEL account.account.template: l10n_rs.rs_661
+DEL account.account.template: l10n_rs.rs_662
+DEL account.account.template: l10n_rs.rs_663
+DEL account.account.template: l10n_rs.rs_664
+DEL account.account.template: l10n_rs.rs_665
+DEL account.account.template: l10n_rs.rs_669
+DEL account.account.template: l10n_rs.rs_670
+DEL account.account.template: l10n_rs.rs_671
+DEL account.account.template: l10n_rs.rs_672
+DEL account.account.template: l10n_rs.rs_673
+DEL account.account.template: l10n_rs.rs_674
+DEL account.account.template: l10n_rs.rs_675
+DEL account.account.template: l10n_rs.rs_676
+DEL account.account.template: l10n_rs.rs_677
+DEL account.account.template: l10n_rs.rs_678
+DEL account.account.template: l10n_rs.rs_679
+DEL account.account.template: l10n_rs.rs_6791
+DEL account.account.template: l10n_rs.rs_680
+DEL account.account.template: l10n_rs.rs_681
+DEL account.account.template: l10n_rs.rs_682
+DEL account.account.template: l10n_rs.rs_683
+DEL account.account.template: l10n_rs.rs_684
+DEL account.account.template: l10n_rs.rs_685
+DEL account.account.template: l10n_rs.rs_689
+DEL account.account.template: l10n_rs.rs_690
+DEL account.account.template: l10n_rs.rs_691
+DEL account.account.template: l10n_rs.rs_692
+DEL account.account.template: l10n_rs.rs_699
+DEL account.account.template: l10n_rs.rs_700
+DEL account.account.template: l10n_rs.rs_710
+DEL account.account.template: l10n_rs.rs_711
+DEL account.account.template: l10n_rs.rs_712
+DEL account.account.template: l10n_rs.rs_720
+DEL account.account.template: l10n_rs.rs_721
+DEL account.account.template: l10n_rs.rs_7220
+DEL account.account.template: l10n_rs.rs_7221
+DEL account.account.template: l10n_rs.rs_723
+DEL account.account.template: l10n_rs.rs_724
+DEL account.account.template: l10n_rs.rs_730
+DEL account.account.template: l10n_rs.rs_880
+DEL account.account.template: l10n_rs.rs_881
+DEL account.account.template: l10n_rs.rs_882
+DEL account.account.template: l10n_rs.rs_883
+DEL account.account.template: l10n_rs.rs_884
+DEL account.account.template: l10n_rs.rs_885
+DEL account.account.template: l10n_rs.rs_889
+DEL account.account.template: l10n_rs.rs_890
+DEL account.account.template: l10n_rs.rs_891
+DEL account.account.template: l10n_rs.rs_892
+DEL account.account.template: l10n_rs.rs_893
+DEL account.account.template: l10n_rs.rs_894
+DEL account.account.template: l10n_rs.rs_895
+DEL account.account.template: l10n_rs.rs_899
+DEL account.account.template: l10n_rs.rs_900
+DEL account.account.template: l10n_rs.rs_901
+DEL account.account.template: l10n_rs.rs_902
+DEL account.account.template: l10n_rs.rs_903
+DEL account.account.template: l10n_rs.rs_910
+DEL account.account.template: l10n_rs.rs_911
+DEL account.account.template: l10n_rs.rs_912
+DEL account.account.template: l10n_rs.rs_950
+DEL account.account.template: l10n_rs.rs_951
+DEL account.account.template: l10n_rs.rs_952
+DEL account.account.template: l10n_rs.rs_953
+DEL account.account.template: l10n_rs.rs_954
+DEL account.account.template: l10n_rs.rs_955
+DEL account.account.template: l10n_rs.rs_956
+DEL account.account.template: l10n_rs.rs_957
+DEL account.account.template: l10n_rs.rs_958
+DEL account.account.template: l10n_rs.rs_959
+DEL account.account.template: l10n_rs.rs_960
+DEL account.account.template: l10n_rs.rs_961
+DEL account.account.template: l10n_rs.rs_962
+DEL account.account.template: l10n_rs.rs_963
+DEL account.account.template: l10n_rs.rs_964
+DEL account.account.template: l10n_rs.rs_965
+DEL account.account.template: l10n_rs.rs_966
+DEL account.account.template: l10n_rs.rs_967
+DEL account.account.template: l10n_rs.rs_968
+DEL account.account.template: l10n_rs.rs_969
+DEL account.account.template: l10n_rs.rs_980
+DEL account.account.template: l10n_rs.rs_981
+DEL account.account.template: l10n_rs.rs_982
+DEL account.account.template: l10n_rs.rs_983
+DEL account.account.template: l10n_rs.rs_986
+DEL account.account.template: l10n_rs.rs_987
+DEL account.account.template: l10n_rs.rs_989
+DEL account.account.template: l10n_rs.rs_990
+DEL account.account.template: l10n_rs.rs_991
+DEL account.account.template: l10n_rs.rs_992
+DEL account.account.template: l10n_rs.rs_993
+DEL account.account.template: l10n_rs.rs_994
+DEL account.account.template: l10n_rs.rs_999
+DEL account.chart.template: l10n_rs.l10n_rs_chart_template
+DEL account.fiscal.position.account.template: l10n_rs.fiscal_position_account_template_foreign
+DEL account.fiscal.position.tax.template: l10n_rs.account_fiscal_position_purchase_10_0
+DEL account.fiscal.position.tax.template: l10n_rs.account_fiscal_position_purchase_20_0
+DEL account.fiscal.position.tax.template: l10n_rs.account_fiscal_position_sale_10_0
+DEL account.fiscal.position.tax.template: l10n_rs.account_fiscal_position_sale_20_0
+DEL account.fiscal.position.template: l10n_rs.fiscal_position_template_domestic
+DEL account.fiscal.position.template: l10n_rs.fiscal_position_template_foreign
+DEL account.group.template: l10n_rs.rs_group_0
+DEL account.group.template: l10n_rs.rs_group_00
+DEL account.group.template: l10n_rs.rs_group_01
+DEL account.group.template: l10n_rs.rs_group_02
+DEL account.group.template: l10n_rs.rs_group_03
+DEL account.group.template: l10n_rs.rs_group_04
+DEL account.group.template: l10n_rs.rs_group_043
+DEL account.group.template: l10n_rs.rs_group_044
+DEL account.group.template: l10n_rs.rs_group_045
+DEL account.group.template: l10n_rs.rs_group_05
+DEL account.group.template: l10n_rs.rs_group_1
+DEL account.group.template: l10n_rs.rs_group_10
+DEL account.group.template: l10n_rs.rs_group_11
+DEL account.group.template: l10n_rs.rs_group_12
+DEL account.group.template: l10n_rs.rs_group_13
+DEL account.group.template: l10n_rs.rs_group_14
+DEL account.group.template: l10n_rs.rs_group_15
+DEL account.group.template: l10n_rs.rs_group_2
+DEL account.group.template: l10n_rs.rs_group_20
+DEL account.group.template: l10n_rs.rs_group_21
+DEL account.group.template: l10n_rs.rs_group_22
+DEL account.group.template: l10n_rs.rs_group_23
+DEL account.group.template: l10n_rs.rs_group_24
+DEL account.group.template: l10n_rs.rs_group_27
+DEL account.group.template: l10n_rs.rs_group_28
+DEL account.group.template: l10n_rs.rs_group_3
+DEL account.group.template: l10n_rs.rs_group_30
+DEL account.group.template: l10n_rs.rs_group_31
+DEL account.group.template: l10n_rs.rs_group_32
+DEL account.group.template: l10n_rs.rs_group_33
+DEL account.group.template: l10n_rs.rs_group_34
+DEL account.group.template: l10n_rs.rs_group_35
+DEL account.group.template: l10n_rs.rs_group_4
+DEL account.group.template: l10n_rs.rs_group_40
+DEL account.group.template: l10n_rs.rs_group_41
+DEL account.group.template: l10n_rs.rs_group_42
+DEL account.group.template: l10n_rs.rs_group_43
+DEL account.group.template: l10n_rs.rs_group_44
+DEL account.group.template: l10n_rs.rs_group_45
+DEL account.group.template: l10n_rs.rs_group_46
+DEL account.group.template: l10n_rs.rs_group_47
+DEL account.group.template: l10n_rs.rs_group_48
+DEL account.group.template: l10n_rs.rs_group_49
+DEL account.group.template: l10n_rs.rs_group_5
+DEL account.group.template: l10n_rs.rs_group_50
+DEL account.group.template: l10n_rs.rs_group_51
+DEL account.group.template: l10n_rs.rs_group_52
+DEL account.group.template: l10n_rs.rs_group_53
+DEL account.group.template: l10n_rs.rs_group_54
+DEL account.group.template: l10n_rs.rs_group_55
+DEL account.group.template: l10n_rs.rs_group_56
+DEL account.group.template: l10n_rs.rs_group_57
+DEL account.group.template: l10n_rs.rs_group_58
+DEL account.group.template: l10n_rs.rs_group_59
+DEL account.group.template: l10n_rs.rs_group_6
+DEL account.group.template: l10n_rs.rs_group_60
+DEL account.group.template: l10n_rs.rs_group_61
+DEL account.group.template: l10n_rs.rs_group_62
+DEL account.group.template: l10n_rs.rs_group_63
+DEL account.group.template: l10n_rs.rs_group_64
+DEL account.group.template: l10n_rs.rs_group_65
+DEL account.group.template: l10n_rs.rs_group_66
+DEL account.group.template: l10n_rs.rs_group_67
+DEL account.group.template: l10n_rs.rs_group_68
+DEL account.group.template: l10n_rs.rs_group_69
+DEL account.group.template: l10n_rs.rs_group_7
+DEL account.group.template: l10n_rs.rs_group_70
+DEL account.group.template: l10n_rs.rs_group_71
+DEL account.group.template: l10n_rs.rs_group_72
+DEL account.group.template: l10n_rs.rs_group_722
+DEL account.group.template: l10n_rs.rs_group_73
+DEL account.group.template: l10n_rs.rs_group_74
+DEL account.group.template: l10n_rs.rs_group_8
+DEL account.group.template: l10n_rs.rs_group_88
+DEL account.group.template: l10n_rs.rs_group_89
+DEL account.group.template: l10n_rs.rs_group_9
+DEL account.group.template: l10n_rs.rs_group_90
+DEL account.group.template: l10n_rs.rs_group_91
+DEL account.group.template: l10n_rs.rs_group_92
+DEL account.group.template: l10n_rs.rs_group_93
+DEL account.group.template: l10n_rs.rs_group_94
+DEL account.group.template: l10n_rs.rs_group_95
+DEL account.group.template: l10n_rs.rs_group_96
+DEL account.group.template: l10n_rs.rs_group_97
+DEL account.group.template: l10n_rs.rs_group_98
+DEL account.group.template: l10n_rs.rs_group_99
+DEL account.tax.group: l10n_rs.tax_group_vat_0 (noupdate)
+DEL account.tax.group: l10n_rs.tax_group_vat_10 (noupdate)
+DEL account.tax.group: l10n_rs.tax_group_vat_20 (noupdate)
+DEL account.tax.group: l10n_rs.tax_group_vat_compensation (noupdate)
+DEL account.tax.report: l10n_rs.tax_report_vat
+DEL account.tax.report.line: l10n_rs.tax_report_line_001
+DEL account.tax.report.line: l10n_rs.tax_report_line_002
+DEL account.tax.report.line: l10n_rs.tax_report_line_003
+DEL account.tax.report.line: l10n_rs.tax_report_line_004
+DEL account.tax.report.line: l10n_rs.tax_report_line_005
+DEL account.tax.report.line: l10n_rs.tax_report_line_006
+DEL account.tax.report.line: l10n_rs.tax_report_line_007
+DEL account.tax.report.line: l10n_rs.tax_report_line_008
+DEL account.tax.report.line: l10n_rs.tax_report_line_009
+DEL account.tax.report.line: l10n_rs.tax_report_line_103
+DEL account.tax.report.line: l10n_rs.tax_report_line_104
+DEL account.tax.report.line: l10n_rs.tax_report_line_105
+DEL account.tax.report.line: l10n_rs.tax_report_line_106
+DEL account.tax.report.line: l10n_rs.tax_report_line_107
+DEL account.tax.report.line: l10n_rs.tax_report_line_108
+DEL account.tax.report.line: l10n_rs.tax_report_line_109
+DEL account.tax.report.line: l10n_rs.tax_report_line_110
+DEL account.tax.report.line: l10n_rs.tax_report_title_VAT
+DEL account.tax.report.line: l10n_rs.tax_report_title_VAT_liability
+DEL account.tax.report.line: l10n_rs.tax_report_title_VAT_previous_tax
+DEL account.tax.report.line: l10n_rs.tax_report_title_VAT_turnover
+DEL account.tax.report.line: l10n_rs.tax_report_title_operations
+DEL account.tax.report.line: l10n_rs.tax_report_title_operations_previous_tax
+DEL account.tax.report.line: l10n_rs.tax_report_title_operations_turnover
+DEL account.tax.template: l10n_rs.rs_purchase_farmer_deductible_vat_8
+DEL account.tax.template: l10n_rs.rs_purchase_farmer_non_deductible_vat_8
+DEL account.tax.template: l10n_rs.rs_purchase_import_vat_0
+DEL account.tax.template: l10n_rs.rs_purchase_import_vat_10
+DEL account.tax.template: l10n_rs.rs_purchase_import_vat_20
+DEL account.tax.template: l10n_rs.rs_purchase_vat_0
+DEL account.tax.template: l10n_rs.rs_purchase_vat_10
+DEL account.tax.template: l10n_rs.rs_purchase_vat_20
+DEL account.tax.template: l10n_rs.rs_sale_vat_0
+DEL account.tax.template: l10n_rs.rs_sale_vat_0_deduct_previous_tax
+DEL account.tax.template: l10n_rs.rs_sale_vat_0_no_deduct_previous_tax
+DEL account.tax.template: l10n_rs.rs_sale_vat_10
+DEL account.tax.template: l10n_rs.rs_sale_vat_20
+DEL ir.model.constraint: l10n_rs.constraint_res_partner_company_registry_country_uniq
+DEL ir.ui.menu: l10n_rs.account_reports_rs_statements_menu
+DEL ir.ui.view: l10n_rs.report_invoice_document_inherit
+DEL ir.ui.view: l10n_rs.view_move_form_inherit
+DEL ir.ui.view: l10n_rs.view_partner_form_inherit
+ERROR: module not in list of installed modules:
+---Models in module 'l10n_sa_invoice'---
+---Fields in module 'l10n_sa_invoice'---
+l10n_sa_invoice / account.bank.statement.line / l10n_sa_confirmation_datetime (datetime): module is now 'l10n_sa' ('l10n_sa_invoice')
+l10n_sa_invoice / account.bank.statement.line / l10n_sa_delivery_date (date)  : module is now 'l10n_sa' ('l10n_sa_invoice')
+l10n_sa_invoice / account.bank.statement.line / l10n_sa_qr_code_str (char)    : module is now 'l10n_sa' ('l10n_sa_invoice')
+l10n_sa_invoice / account.bank.statement.line / l10n_sa_show_delivery_date (boolean): module is now 'l10n_sa' ('l10n_sa_invoice')
+l10n_sa_invoice / account.move             / l10n_sa_confirmation_datetime (datetime): module is now 'l10n_sa' ('l10n_sa_invoice')
+l10n_sa_invoice / account.move             / l10n_sa_delivery_date (date)  : module is now 'l10n_sa' ('l10n_sa_invoice')
+l10n_sa_invoice / account.move             / l10n_sa_qr_code_str (char)    : module is now 'l10n_sa' ('l10n_sa_invoice')
+l10n_sa_invoice / account.move             / l10n_sa_show_delivery_date (boolean): module is now 'l10n_sa' ('l10n_sa_invoice')
+l10n_sa_invoice / account.payment          / l10n_sa_confirmation_datetime (datetime): module is now 'l10n_sa' ('l10n_sa_invoice')
+l10n_sa_invoice / account.payment          / l10n_sa_delivery_date (date)  : module is now 'l10n_sa' ('l10n_sa_invoice')
+l10n_sa_invoice / account.payment          / l10n_sa_qr_code_str (char)    : module is now 'l10n_sa' ('l10n_sa_invoice')
+l10n_sa_invoice / account.payment          / l10n_sa_show_delivery_date (boolean): module is now 'l10n_sa' ('l10n_sa_invoice')
+---XML records in module 'l10n_sa_invoice'---
+DEL ir.ui.view: l10n_sa_invoice.arabic_english_invoice
+DEL ir.ui.view: l10n_sa_invoice.view_move_form
+ERROR: module not in list of installed modules:
+---Models in module 'note_pad'---
+---Fields in module 'note_pad'---
+note_pad     / note.note                / note_pad_url (char)           : DEL
+---XML records in module 'note_pad'---
+DEL ir.ui.view: note_pad.view_note_note_pad_form
+ERROR: module not in list of installed modules:
+---Models in module 'pad'---
+obsolete model pad.common [abstract]
+---Fields in module 'pad'---
+---XML records in module 'pad'---
+DEL ir.ui.view: pad.res_config_settings_view_form
+ERROR: module not in list of installed modules:
+---Models in module 'pad_project'---
+---Fields in module 'pad_project'---
+pad_project  / project.project          / description_pad (char)        : DEL
+pad_project  / project.project          / use_pads (boolean)            : DEL
+pad_project  / project.task             / description_pad (char)        : DEL
+---XML records in module 'pad_project'---
+DEL ir.ui.view: pad_project.project_project_view_form
+DEL ir.ui.view: pad_project.res_config_settings_view_form
+DEL ir.ui.view: pad_project.view_task_form2_inherit_pad_project
+ERROR: module not in list of installed modules:
+---Models in module 'payment_transfer'---
+---Fields in module 'payment_transfer'---
+payment_transfer / payment.acquirer         / provider (False)              : DEL selection_keys: ['adyen', 'alipay', 'authorize', 'buckaroo', 'mollie', 'none', 'ogone', 'paypal', 'payulatam', 'payumoney', 'sips', 'stripe', 'transfer'], mode: modify
+payment_transfer / payment.acquirer         / qr_code (boolean)             : DEL
+---XML records in module 'payment_transfer'---
+DEL ir.ui.view: payment_transfer.payment_acquirer_form
+DEL ir.ui.view: payment_transfer.redirect_form
+DEL ir.ui.view: payment_transfer.transfer_transaction_status
+ERROR: module not in list of installed modules:
+---Models in module 'pos_coupon'---
+---Fields in module 'pos_coupon'---
+pos_coupon   / barcode.rule             / type (False)                  : module is now 'pos_loyalty' ('pos_coupon')
+pos_coupon   / barcode.rule             / type (False)                  : selection_keys is now '['alias', 'cashier', 'client', 'coupon', 'discount', 'expiration_date', 'location', 'location_dest', 'lot', 'pack_date', 'package', 'package_type', 'price', 'product', 'quantity', 'use_date', 'weight']' ('['alias', 'cashier', 'client', 'coupon', 'discount', 'expiration_date', 'location', 'location_dest', 'lot', 'package', 'package_type', 'packaging_date', 'price', 'product', 'quantity', 'use_date', 'weight']')
+pos_coupon   / coupon.coupon            / pos_order_id (many2one)       : DEL relation: pos.order
+pos_coupon   / coupon.coupon            / source_pos_order_id (many2one): DEL relation: pos.order
+pos_coupon   / coupon.program           / pos_config_ids (many2many)    : DEL relation: pos.config
+pos_coupon   / coupon.program           / pos_order_ids (many2many)     : DEL relation: pos.order
+pos_coupon   / coupon.program           / pos_order_line_ids (one2many) : DEL relation: pos.order.line
+pos_coupon   / coupon.program           / promo_barcode (char)          : DEL
+pos_coupon   / pos.config               / program_ids (many2many)       : DEL relation: coupon.program
+pos_coupon   / pos.config               / use_coupon_programs (boolean) : DEL
+pos_coupon   / pos.order                / applied_program_ids (many2many): DEL relation: coupon.program
+pos_coupon   / pos.order                / generated_coupon_ids (one2many): DEL relation: coupon.coupon
+pos_coupon   / pos.order                / used_coupon_ids (one2many)    : DEL relation: coupon.coupon
+pos_coupon   / pos.order.line           / coupon_id (many2one)          : module is now 'pos_loyalty' ('pos_coupon')
+pos_coupon   / pos.order.line           / coupon_id (many2one)          : relation is now 'loyalty.card' ('coupon.coupon') [nothing to do]
+pos_coupon   / pos.order.line           / is_program_reward (boolean)   : DEL
+pos_coupon   / pos.order.line           / program_id (many2one)         : DEL relation: coupon.program
+---XML records in module 'pos_coupon'---
+DEL barcode.rule: pos_coupon.barcode_rule_coupon [renamed to pos_loyalty module] (noupdate)
+DEL ir.model.access: pos_coupon.access_coupon_generate_wizard
+DEL ir.model.access: pos_coupon.access_coupon_pos_manager [renamed to pos_loyalty module]
+DEL ir.model.access: pos_coupon.access_coupon_pos_user [renamed to pos_loyalty module]
+DEL ir.model.access: pos_coupon.access_program_pos_manager [renamed to pos_loyalty module]
+DEL ir.model.access: pos_coupon.access_program_pos_user [renamed to pos_loyalty module]
+DEL ir.model.access: pos_coupon.access_reward_pos_manager [renamed to pos_loyalty module]
+DEL ir.model.access: pos_coupon.access_reward_pos_user [renamed to pos_loyalty module]
+DEL ir.model.access: pos_coupon.access_rule_pos_manager
+DEL ir.model.access: pos_coupon.access_rule_pos_user
+DEL ir.ui.menu: pos_coupon.menu_coupon_type_config
+DEL ir.ui.menu: pos_coupon.menu_promotion_type_config
+DEL ir.ui.view: pos_coupon.pos_coupon_pos_config_view_form
+DEL ir.ui.view: pos_coupon.pos_coupon_program_view_coupon_program_form
+DEL ir.ui.view: pos_coupon.pos_coupon_program_view_promo_program_form
+DEL ir.ui.view: pos_coupon.pos_coupon_view_form
+DEL ir.ui.view: pos_coupon.res_config_view_form_inherit_pos_coupon
+DEL mail.template: pos_coupon.mail_coupon_template (noupdate)
+ERROR: module not in list of installed modules:
+---Models in module 'pos_gift_card'---
+---Fields in module 'pos_gift_card'---
+pos_gift_card / barcode.rule             / type (False)                  : DEL selection_keys: ['alias', 'cashier', 'client', 'coupon', 'discount', 'expiration_date', 'gift_card', 'location', 'location_dest', 'lot', 'package', 'package_type', 'packaging_date', 'price', 'product', 'quantity', 'use_date', 'weight'], mode: modify
+pos_gift_card / gift.card                / buy_pos_order_line_id (many2one): DEL relation: pos.order.line
+pos_gift_card / gift.card                / redeem_pos_order_line_ids (one2many): DEL relation: pos.order.line
+pos_gift_card / pos.config               / gift_card_product_id (many2one): DEL relation: product.product
+pos_gift_card / pos.config               / gift_card_settings (selection): module is now 'pos_loyalty' ('pos_gift_card')
+pos_gift_card / pos.config               / gift_card_settings (selection): selection_keys is now '['create_set', 'scan_use']' ('['create_set', 'scan_set', 'scan_use']')
+pos_gift_card / pos.config               / use_gift_card (boolean)       : DEL
+pos_gift_card / pos.order.line           / generated_gift_card_ids (one2many): DEL relation: gift.card
+pos_gift_card / pos.order.line           / gift_card_id (many2one)       : DEL relation: gift.card
+---XML records in module 'pos_gift_card'---
+DEL ir.actions.report: pos_gift_card.gift_card_report_pdf (noupdate)
+DEL ir.model.access: pos_gift_card.access_gift_card_sales
+DEL ir.model.access: pos_gift_card.access_pos_gift_card_manager
+DEL ir.ui.menu: pos_gift_card.pos_gift_card_menu
+DEL ir.ui.view: pos_gift_card.gift_card_template (noupdate)
+DEL ir.ui.view: pos_gift_card.pos_gift_card_config_view_form
+DEL ir.ui.view: pos_gift_card.pos_gift_card_view_form
+DEL ir.ui.view: pos_gift_card.res_config_view_form_inherit_pos_coupon
+ERROR: module not in list of installed modules:
+---Models in module 'project_account'---
+---Fields in module 'project_account'---
+---XML records in module 'project_account'---
+DEL ir.ui.view: project_account.res_config_settings_view_form
+ERROR: module not in list of installed modules:
+---Models in module 'purchase_requisition_stock_dropshipping'---
+---Fields in module 'purchase_requisition_stock_dropshipping'---
+purchase_requisition_stock_dropshipping / purchase.requisition.line / sale_line_id (many2one)       : DEL relation: sale.order.line
+---XML records in module 'purchase_requisition_stock_dropshipping'---
+DEL ir.ui.view: purchase_requisition_stock_dropshipping.purchase_order_view_form_inherit
+ERROR: module not in list of installed modules:
+---Models in module 'sale_coupon'---
+obsolete model sale.coupon.apply.code [transient]
+---Fields in module 'sale_coupon'---
+sale_coupon  / coupon.coupon            / order_id (many2one)           : DEL relation: sale.order
+sale_coupon  / coupon.coupon            / sales_order_id (many2one)     : DEL relation: sale.order
+sale_coupon  / sale.order               / applied_coupon_ids (one2many) : DEL relation: coupon.coupon
+sale_coupon  / sale.order               / code_promo_program_id (many2one): DEL relation: coupon.program
+sale_coupon  / sale.order               / generated_coupon_ids (one2many): DEL relation: coupon.coupon
+sale_coupon  / sale.order               / no_code_promo_program_ids (many2many): DEL relation: coupon.program
+sale_coupon  / sale.order               / reward_amount (float)         : module is now 'sale_loyalty' ('sale_coupon')
+sale_coupon  / sale.order.line          / is_reward_line (boolean)      : module is now 'sale_loyalty' ('sale_coupon')
+sale_coupon  / sale.order.line          / is_reward_line (boolean)      : not stored anymore
+sale_coupon  / sale.order.line          / is_reward_line (boolean)      : now a function
+---XML records in module 'sale_coupon'---
+DEL ir.actions.act_window: sale_coupon.sale_coupon_apply_code_action
+DEL ir.actions.act_window: sale_coupon.sale_order_action
+DEL ir.model.access: sale_coupon.access_applicability_manager [renamed to sale_loyalty module]
+DEL ir.model.access: sale_coupon.access_applicability_salesman [renamed to sale_loyalty module]
+DEL ir.model.access: sale_coupon.access_coupon_manager [renamed to sale_loyalty module]
+DEL ir.model.access: sale_coupon.access_coupon_salesman [renamed to sale_loyalty module]
+DEL ir.model.access: sale_coupon.access_program_manager [renamed to sale_loyalty module]
+DEL ir.model.access: sale_coupon.access_program_salesman [renamed to sale_loyalty module]
+DEL ir.model.access: sale_coupon.access_reward_manager [renamed to sale_loyalty module]
+DEL ir.model.access: sale_coupon.access_reward_salesman [renamed to sale_loyalty module]
+DEL ir.model.access: sale_coupon.access_sale_coupon_apply_code [renamed to sale_loyalty module]
+DEL ir.model.access: sale_coupon.access_sale_coupon_generate [renamed to pos_loyalty module]
+DEL ir.rule: sale_coupon.sale_coupon_apply_code_rule (noupdate)
+DEL ir.ui.menu: sale_coupon.menu_coupon_type_config
+DEL ir.ui.menu: sale_coupon.menu_promotion_type_config
+DEL ir.ui.view: sale_coupon.res_config_settings_view_form
+DEL ir.ui.view: sale_coupon.sale_coupon_apply_code_view_form
+DEL ir.ui.view: sale_coupon.sale_coupon_program_view_coupon_program_form
+DEL ir.ui.view: sale_coupon.sale_coupon_program_view_promo_program_form
+DEL ir.ui.view: sale_coupon.sale_coupon_view_coupon_program_kanban
+DEL ir.ui.view: sale_coupon.sale_coupon_view_form
+DEL ir.ui.view: sale_coupon.sale_coupon_view_tree
+DEL ir.ui.view: sale_coupon.sale_order_view_form
+DEL mail.template: sale_coupon.mail_template_sale_coupon (noupdate)
+ERROR: module not in list of installed modules:
+---Models in module 'sale_coupon_delivery'---
+---Fields in module 'sale_coupon_delivery'---
+sale_coupon_delivery / coupon.reward            / reward_type (False)           : DEL selection_keys: ['discount', 'free_shipping', 'product'], mode: modify
+---XML records in module 'sale_coupon_delivery'---
+ERROR: module not in list of installed modules:
+---Models in module 'sale_gift_card'---
+---Fields in module 'sale_gift_card'---
+sale_gift_card / gift.card                / buy_line_id (many2one)        : DEL relation: sale.order.line
+sale_gift_card / gift.card                / redeem_line_ids (one2many)    : DEL relation: sale.order.line
+sale_gift_card / sale.order.line          / generated_gift_card_ids (one2many): DEL relation: gift.card
+sale_gift_card / sale.order.line          / gift_card_id (many2one)       : DEL relation: gift.card
+---XML records in module 'sale_gift_card'---
+DEL ir.actions.act_window: sale_gift_card.gift_card_sale_order_action
+DEL ir.model.access: sale_gift_card.access_gift_card_manager
+DEL ir.model.access: sale_gift_card.access_gift_card_sales
+DEL ir.ui.view: sale_gift_card.sale_gift_card_view_form
+DEL ir.ui.view: sale_gift_card.sale_order_portal_content_inherit
+DEL ir.ui.view: sale_gift_card.sale_order_view_extend_gift_card_form
+DEL ir.ui.view: sale_gift_card.sale_purchased_gift_card
+DEL ir.ui.view: sale_gift_card.used_gift_card
+DEL mail.template: sale_gift_card.mail_template_gift_card [renamed to loyalty module]
+ERROR: module not in list of installed modules:
+---Models in module 'sale_project_account'---
+---Fields in module 'sale_project_account'---
+sale_project_account / project.project          / vendor_bill_count (integer)   : module is now 'sale_project' ('sale_project_account')
+---XML records in module 'sale_project_account'---
+DEL ir.ui.view: sale_project_account.project_project_view_form
+ERROR: module not in list of installed modules:
+---Models in module 'transifex'---
+---Fields in module 'transifex'---
+---XML records in module 'transifex'---
+DEL ir.config_parameter: transifex.transifex_project_url (noupdate)
+DEL ir.ui.view: transifex.ir_translation_dialog_view_src_value_tree_transifex
+DEL ir.ui.view: transifex.ir_translation_dialog_view_tree_transifex
+DEL ir.ui.view: transifex.ir_translation_view_tree_transifex
+ERROR: module not in list of installed modules:
+---Models in module 'website_sale_coupon'---
+model coupon.share (moved to website_sale_loyalty) [transient]
+---Fields in module 'website_sale_coupon'---
+website_sale_coupon / coupon.program           / website_id (many2one)         : DEL relation: website
+---XML records in module 'website_sale_coupon'---
+DEL ir.model.access: website_sale_coupon.access_coupon_share
+DEL ir.ui.menu: website_sale_coupon.menu_coupon_type_config
+DEL ir.ui.menu: website_sale_coupon.menu_promotion_type_config
+DEL ir.ui.view: website_sale_coupon.cart_discount
+DEL ir.ui.view: website_sale_coupon.cart_summary
+DEL ir.ui.view: website_sale_coupon.coupon_share_view_form
+DEL ir.ui.view: website_sale_coupon.coupon_view_tree
+DEL ir.ui.view: website_sale_coupon.layout
+DEL ir.ui.view: website_sale_coupon.reduction_coupon_code
+DEL ir.ui.view: website_sale_coupon.res_config_settings_view_form
+DEL ir.ui.view: website_sale_coupon.sale_coupon_program_view_form_common_website
+DEL ir.ui.view: website_sale_coupon.sale_coupon_program_view_tree_website
+DEL ir.ui.view: website_sale_coupon.sale_coupon_result
+DEL ir.ui.view: website_sale_coupon.website_sale_coupon_cart_hide_qty
+ERROR: module not in list of installed modules:
+---Models in module 'website_sale_gift_card'---
+---Fields in module 'website_sale_gift_card'---
+website_sale_gift_card / gift.card                / website_id (many2one)         : DEL relation: website
+---XML records in module 'website_sale_gift_card'---
+DEL ir.ui.menu: website_sale_gift_card.website_product_gift_card_menu
+DEL ir.ui.view: website_sale_gift_card.add_gift_card
+DEL ir.ui.view: website_sale_gift_card.cart_line_product_no_link
+DEL ir.ui.view: website_sale_gift_card.cart_summary_inherit_website_gift_card_sale
+DEL ir.ui.view: website_sale_gift_card.gift_card_view_form
+DEL ir.ui.view: website_sale_gift_card.gift_card_view_search
+DEL ir.ui.view: website_sale_gift_card.pay_with_gift_card_form
+DEL ir.ui.view: website_sale_gift_card.website_sale_purchased_gift_card

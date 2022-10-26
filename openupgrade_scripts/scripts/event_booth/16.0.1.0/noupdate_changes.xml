@@ -1,0 +1,29 @@
+<?xml version='1.0' encoding='utf-8'?>
+<odoo>
+  <record id="event_booth_category_standard" model="event.booth.category">
+    <field name="description" type="html">
+      <div class="card text-center shadow-sm mt32">
+        <div class="o_wevent_theme_bg_dark card-header p-4">
+          <h4 class="text-white m-0">Standard</h4>
+        </div>
+        <ul class="list-group list-group-flush">
+          <li class="list-group-item">
+            <span>1 Branded Booth</span>
+          </li>
+          <li class="o_wevent_theme_bg_dark list-group-item">
+            <span class="text-white">4m²</span>
+          </li>
+          <li class="list-group-item">
+            <span>46" display screen</span>
+          </li>
+          <li class="list-group-item">
+            <span>1 desk</span>
+          </li>
+          <li class="list-group-item">
+            <span>Logo &amp; link on website</span>
+          </li>
+        </ul>
+      </div>
+    </field>
+  </record>
+</odoo>
