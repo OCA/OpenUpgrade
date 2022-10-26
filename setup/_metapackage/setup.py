@@ -8,7 +8,7 @@ setuptools.setup(
     description="Meta package for oca-OpenUpgrade Odoo addons",
     version=version,
     install_requires=[
-        'odoo-addon-openupgrade_scripts>=16.0dev,<15.1dev',
+        'odoo-addon-openupgrade_scripts>=16.0dev,<16.1dev',
     ],
     classifiers=[
         'Programming Language :: Python',
