@@ -5,7 +5,8 @@ to help the matching process
 # Renamed modules is a mapping from old module name to new module name
 renamed_modules = {
     # odoo
-    # OCA/...
+    # OCA/server-ux
+    "mass_editing": "server_action_mass_edit",
 }
 
 # Merged modules contain a mapping from old module names to other,
