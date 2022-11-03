@@ -54,8 +54,6 @@ _xmlid_renames = [
     ('survey.survey_input_users_access', 'survey.survey_user_input_rule_survey_user_cw'),
     ('survey.survey_manager_access', 'survey.survey_survey_rule_survey_manager'),
     ('survey.survey_users_access', 'survey.survey_survey_rule_survey_user_read'),
-    # mail.template
-    ('survey.email_template_survey', 'survey.mail_template_user_input_invite'),
 ]
 
 

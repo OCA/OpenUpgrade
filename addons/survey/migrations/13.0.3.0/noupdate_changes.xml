@@ -11,4 +11,27 @@
   <record id="group_survey_user" model="res.groups">
     <field name="category_id" ref="base.module_category_marketing_survey"/>
   </record>
+  <record id="survey_survey_rule_survey_user_read" model="ir.rule">
+    <field name="name">Survey: officer: read all</field>
+    <field name="domain_force">[(1, '=', 1)]</field>
+  </record>
+  <record id="survey_survey_rule_survey_manager" model="ir.rule">
+    <field name="name">Survey: manager: all</field>
+  </record>
+  <record id="survey_user_input_rule_survey_user_cw" model="ir.rule">
+    <field name="name">Survey user input: officer: create/write/unlink linked to own survey only</field>
+    <field name="domain_force">[('survey_id.create_uid', '=', user.id)]</field>
+    <field name="perm_unlink" eval="1"/>
+    <field name="perm_write" eval="1"/>
+    <field name="perm_read" eval="0"/>
+    <field name="perm_create" eval="1"/>
+  </record>
+  <record id="survey_user_input_rule_survey_user_read" model="ir.rule">
+    <field name="name">Survey user input: officer: read all</field>
+    <field name="domain_force">[(1, '=', 1)]</field>
+    <field name="groups" eval="[(5, 0), (4, ref('group_survey_user'))]"/>
+  </record>
+  <record id="survey_user_input_rule_survey_manager" model="ir.rule">
+    <field name="name">Survey user input: manager: all</field>
+  </record>
 </odoo>
