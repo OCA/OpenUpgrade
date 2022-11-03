@@ -9,6 +9,7 @@ _unlink_by_xmlid = [
     'survey.stage_draft',
     'survey.stage_in_progress',
     'survey.stage_permanent',
+    'survey.email_template_survey',
 ]
 
 
