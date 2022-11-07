@@ -40,6 +40,8 @@ merged_modules = {
     # OCA/stock-logistics-workflow
     "stock_deferred_assign": "stock",
     "stock_move_assign_picking_hook": "stock",
+    # OCA/survey
+    "survey_description": "survey",
     # OCA/project
     "project_mail_chatter": "project",
     "project_task_dependency": "project",
