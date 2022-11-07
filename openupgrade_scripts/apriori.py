@@ -91,8 +91,6 @@ merged_modules = {
     "sale_order_price_recalculation": "sale",
     # OCA/stock-logistics-warehouse
     "stock_inventory_include_exhausted": "stock",
-    # OCA/survey
-    "survey_description": "survey",
     # OCA/web
     "web_editor_background_color": "web_editor",
     # OCA/website
