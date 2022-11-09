@@ -91,6 +91,7 @@ merged_modules = {
     'hr_payroll_account': 'payroll_account',
     # OCA/product-attribute
     'product_pricelist_show_product_ref': 'product',
+    'product_active_propagate': 'product',
     # OCA/product-variant
     'sale_order_variant_mgmt': 'sale_product_matrix',
     # OCA/purchase-reporting
