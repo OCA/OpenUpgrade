@@ -14,7 +14,11 @@ hr_holidays  / hr.leave                 / category_id (many2one)        : now a 
 hr_holidays  / hr.leave                 / date_from (datetime)          : now a function
 hr_holidays  / hr.leave                 / date_to (datetime)            : now a function
 hr_holidays  / hr.leave                 / department_id (many2one)      : now a function
+# NOTHING TO DO
+
 hr_holidays  / hr.leave                 / duration_display (char)       : is now stored
+# DONE: pre-migration: create field, end-migration: fill using the compute
+
 hr_holidays  / hr.leave                 / employee_id (many2one)        : now a function
 hr_holidays  / hr.leave                 / holiday_status_id (many2one)  : now a function
 hr_holidays  / hr.leave                 / manager_id (many2one)         : now a function
