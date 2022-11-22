@@ -60,7 +60,7 @@ account      / account.bank.statement   / previous_statement_id (many2one): NEW 
 
 account      / account.bank.statement   / sequence_number (integer)     : NEW isfunction: function, stored
 account      / account.bank.statement   / sequence_prefix (char)        : NEW isfunction: function, stored
-# NOTHING TO DO: fields that store the sequence name splitted in prefix and number for fixing ordering bugs.
+# Pre-migration: Fill data. fields that store the sequence name splitted in prefix and number for fixing ordering bugs.
 
 account      / account.bank.statement.line / _inherits                     : NEW _inherits: {'account.move': 'move_id'}
 account      / account.bank.statement.line / move_id (many2one)            : NEW relation: account.move, required
@@ -207,7 +207,7 @@ account      / account.move             / qr_code_method (selection)    : NEW se
 
 account      / account.move             / sequence_number (integer)     : NEW isfunction: function, stored
 account      / account.move             / sequence_prefix (char)        : NEW isfunction: function, stored
-# NOTHING TO DO: sequence.mixin model fields, filled by Odoo.
+# Pre-migration: Fill data
 
 account      / account.move.line        / account_internal_type (selection): not stored anymore
 # NOTHING TO DO: not stored to improve performance

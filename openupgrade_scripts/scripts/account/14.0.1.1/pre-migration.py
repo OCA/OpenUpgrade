@@ -348,6 +348,66 @@ def delete_xmlid_existing_groups(env):
     # - merge repeated groups
 
 
+def fill_sequence_mixin_fields(env):
+    openupgrade.add_fields(
+        env,
+        [
+            (
+                "sequence_prefix",
+                "account.move",
+                "account_move",
+                "char",
+                False,
+                "account",
+            ),
+            (
+                "sequence_number",
+                "account.move",
+                "account_move",
+                "integer",
+                False,
+                "account",
+            ),
+            (
+                "sequence_prefix",
+                "account.bank.statement",
+                "account_bank_statement",
+                "char",
+                False,
+                "account",
+            ),
+            (
+                "sequence_number",
+                "account.bank.statement",
+                "account_bank_statement",
+                "integer",
+                False,
+                "account",
+            ),
+        ],
+    )
+    openupgrade.logged_query(
+        env.cr,
+        """
+        UPDATE account_move
+        SET sequence_prefix = substring(
+                name, '^(.*?)(?:\\d{0,9})(?:\\D*?)$'),
+            sequence_number = CAST(COALESCE(NULLIF(substring(
+                name, '^(?:.*?)(\\d{0,9})(?:\\D*?)$'),''), '0') as int)
+    """,
+    )
+    openupgrade.logged_query(
+        env.cr,
+        """
+        UPDATE account_bank_statement
+        SET sequence_prefix = substring(
+                name, '^(.*?)(?:\\d{0,9})(?:\\D*?)$'),
+            sequence_number = CAST(COALESCE(NULLIF(substring(
+                name, '^(?:.*?)(\\d{0,9})(?:\\D*?)$'),''), '0') as int)
+    """,
+    )
+
+
 @openupgrade.migrate()
 def migrate(env, version):
     openupgrade.set_xml_ids_noupdate_value(
@@ -363,6 +423,7 @@ def migrate(env, version):
     fill_account_move_line_currency_id(env)
     fill_account_payment_partner_id(env)
     delete_xmlid_existing_groups(env)
+    fill_sequence_mixin_fields(env)
     openupgrade.remove_tables_fks(
         env.cr, ["account_bank_statement_import_ir_attachment_rel"]
     )
