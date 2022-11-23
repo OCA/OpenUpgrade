@@ -764,6 +764,60 @@ def fill_account_move_line_date(env):
     )
 
 
+def fill_account_bank_statement_line_reconciliation(env):
+    openupgrade.logged_query(
+        env.cr,
+        """
+        WITH absl_residual AS (
+            SELECT absl.id,
+                CASE
+                    WHEN am.to_check
+                        AND absl.foreign_currency_id IS NOT NULL
+                        THEN -absl.amount_currency
+                    WHEN am.to_check THEN -absl.amount
+                    ELSE SUM(
+                        CASE
+                            WHEN aa.reconcile AND aa.id != aj.default_account_id
+                                AND aa.id = aj.suspense_account_id
+                                THEN aml.amount_residual_currency
+                            WHEN aa.id != aj.default_account_id
+                                AND aa.id = aj.suspense_account_id
+                                THEN aml.amount_currency
+                            ELSE 0.
+                        END
+                    )
+                END as amount_residual,
+                MIN(CASE
+                    WHEN aa.id != aj.default_account_id
+                        AND aa.id = aj.suspense_account_id
+                        THEN aml.currency_id
+                    ELSE NULL END) as suspense_currency_id
+            FROM account_bank_statement_line absl
+                JOIN account_move am ON am.id = absl.move_id
+                JOIN account_move_line aml ON aml.move_id = am.id
+                JOIN account_journal aj ON aj.id = am.journal_id
+                JOIN account_account aa ON aa.id = aml.account_id
+                JOIN res_company rc ON rc.id = aj.company_id
+            GROUP BY
+                absl.id,
+                am.to_check,
+                absl.foreign_currency_id,
+                absl.amount_currency,
+                absl.amount
+        )
+        UPDATE account_bank_statement_line absl
+        SET amount_residual = absl_residual.amount_residual,
+            is_reconciled = CASE
+                WHEN suspense_currency_id IS NULL THEN TRUE
+                ELSE ROUND(absl_residual.amount_residual, rcur.decimal_places) = 0
+            END
+        FROM absl_residual
+            LEFT JOIN res_currency rcur ON rcur.id = absl_residual.suspense_currency_id
+        WHERE absl_residual.id = absl.id
+        """,
+    )
+
+
 @openupgrade.migrate()
 def migrate(env, version):
     fill_account_journal_posted_before(env)
@@ -790,6 +844,7 @@ def migrate(env, version):
     map_account_payment_transfer(env)
     fill_account_payment_reconciliation(env)
     fill_account_payment_with_no_move(env)
+    fill_account_bank_statement_line_reconciliation(env)
     _delete_hooks(env)
     openupgrade.delete_record_translations(
         env.cr,

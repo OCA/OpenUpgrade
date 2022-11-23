@@ -79,14 +79,16 @@ account      / account.bank.statement.line / bank_account_id (many2one)    : DEL
 # DONE: pre/post: filled partner_bank_id of linked account moves
 
 account      / account.bank.statement.line / amount_residual (float)       : NEW isfunction: function, stored
-# NOTHING TO DO: filled by Odoo.
+# DONE: pre-migration: Create field
+# DONE: post-migration: Fill field
 
 account      / account.bank.statement.line / foreign_currency_id (many2one): NEW relation: res.currency
 # DONE: pre-migration: This field is the "currency_id" field from v13. It has been renamed because now, "currency_id" in v14 stores
 # the "journal_currency_id" values from v13.
 
 account      / account.bank.statement.line / is_reconciled (boolean)       : NEW isfunction: function, stored
-# NOTHING TO DO: new feature. Technical field to indicate if statement line is already reconciled for display purposes.
+# DONE: pre-migration: Create field
+# DONE: post-migration: Fill field
 
 account      / account.bank.statement.line / company_id (many2one)         : not stored anymore
 account      / account.bank.statement.line / date (date)                   : not stored anymore

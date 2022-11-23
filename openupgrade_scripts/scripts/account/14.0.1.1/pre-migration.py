@@ -625,6 +625,30 @@ def create_account_payment_reconciliation(env):
     )
 
 
+def create_account_bank_statement_line_reconciliation(env):
+    openupgrade.add_fields(
+        env,
+        [
+            (
+                "amount_residual",
+                "account.bank.statement.line",
+                "account_bank_statement_line",
+                "float",
+                False,
+                "account",
+            ),
+            (
+                "is_reconciled",
+                "account.bank.statement.line",
+                "account_bank_statement_line",
+                "boolean",
+                False,
+                "account",
+            ),
+        ],
+    )
+
+
 def delete_xmlid_existing_groups(env):
     env.cr.execute(
         """DELETE FROM ir_model_data imd
@@ -762,6 +786,7 @@ def migrate(env, version):
     fill_account_payment_partner_id(env)
     fill_account_payment_data(env)
     create_account_payment_reconciliation(env)
+    create_account_bank_statement_line_reconciliation(env)
     delete_xmlid_existing_groups(env)
     fill_sequence_mixin_fields(env)
     fill_partial_reconcile_currency(env)
