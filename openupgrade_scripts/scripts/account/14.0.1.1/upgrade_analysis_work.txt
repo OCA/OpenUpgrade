@@ -237,6 +237,8 @@ account      / account.partial.reconcile / debit_amount_currency (float) : NEW
 
 account      / account.partial.reconcile / credit_currency_id (many2one) : NEW relation: res.currency, isfunction: function, stored
 account      / account.partial.reconcile / debit_currency_id (many2one)  : NEW relation: res.currency, isfunction: function, stored
+# DONE: pre-migration: field created and filled
+
 account      / account.partial.reconcile / currency_id (many2one)        : DEL relation: res.currency
 # NOTHING TO DO: filled by Odoo.
 

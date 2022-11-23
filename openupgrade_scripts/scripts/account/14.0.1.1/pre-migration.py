@@ -675,6 +675,52 @@ def fill_sequence_mixin_fields(env):
     )
 
 
+def fill_partial_reconcile_currency(env):
+    openupgrade.add_fields(
+        env,
+        [
+            (
+                "debit_currency_id",
+                "account.partial.reconcile",
+                "account_partial_reconcile",
+                "many2one",
+                False,
+                "account",
+            ),
+            (
+                "credit_currency_id",
+                "account.partial.reconcile",
+                "account_partial_reconcile",
+                "many2one",
+                False,
+                "account",
+            ),
+        ],
+    )
+    openupgrade.logged_query(
+        env.cr,
+        """
+        UPDATE account_partial_reconcile apr
+        SET debit_currency_id = COALESCE(am.currency_id, rc.currency_id)
+        FROM account_move am,
+            res_company rc
+        WHERE am.id = apr.debit_move_id
+            AND rc.id = am.company_id
+        """,
+    )
+    openupgrade.logged_query(
+        env.cr,
+        """
+        UPDATE account_partial_reconcile apr
+        SET credit_currency_id = COALESCE(am.currency_id, rc.currency_id)
+        FROM account_move am,
+            res_company rc
+        WHERE am.id = apr.credit_move_id
+            AND rc.id = am.company_id
+        """,
+    )
+
+
 @openupgrade.migrate()
 def migrate(env, version):
     openupgrade.set_xml_ids_noupdate_value(
@@ -693,6 +739,7 @@ def migrate(env, version):
     fill_account_payment_data(env)
     delete_xmlid_existing_groups(env)
     fill_sequence_mixin_fields(env)
+    fill_partial_reconcile_currency(env)
     openupgrade.remove_tables_fks(
         env.cr, ["account_bank_statement_import_ir_attachment_rel"]
     )
