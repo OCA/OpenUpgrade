@@ -321,6 +321,41 @@ def fill_account_move_line_currency_id(env):
     )
 
 
+def fill_account_move_line_matching_number(env):
+    openupgrade.add_fields(
+        env,
+        [
+            (
+                "matching_number",
+                "account.move.line",
+                "account_move_line",
+                "char",
+                False,
+                "account",
+            ),
+        ],
+    )
+    openupgrade.logged_query(
+        env.cr,
+        """
+        UPDATE account_move_line aml
+        SET matching_number = afr.name
+        FROM account_full_reconcile afr
+        WHERE afr.id = aml.full_reconcile_id
+        """,
+    )
+    openupgrade.logged_query(
+        env.cr,
+        """
+        UPDATE account_move_line aml
+        SET matching_number = 'P'
+        FROM account_partial_reconcile apr
+        WHERE aml.full_reconcile_id IS NULL AND
+            (apr.credit_move_id = aml.id OR apr.debit_move_id = aml.id)
+        """,
+    )
+
+
 def fill_account_payment_partner_id(env):
     openupgrade.logged_query(
         env.cr,
@@ -421,6 +456,7 @@ def migrate(env, version):
     add_edi_state_field_account_move(env)
     fill_empty_partner_type_account_payment(env)
     fill_account_move_line_currency_id(env)
+    fill_account_move_line_matching_number(env)
     fill_account_payment_partner_id(env)
     delete_xmlid_existing_groups(env)
     fill_sequence_mixin_fields(env)

@@ -220,7 +220,7 @@ account      / account.move.line        / currency_id (many2one)        : now re
 # DONE: filled with company currency if empty
 
 account      / account.move.line        / matching_number (char)        : NEW isfunction: function, stored
-# NOTHING TO DO
+# pre-migration: Fill data
 
 account      / account.move.line        / payment_id (many2one)         : now related
 account      / account.move.line        / statement_line_id (many2one)  : now related
