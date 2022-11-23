@@ -365,6 +365,7 @@ def fill_account_payment_partner_id(env):
         FROM account_journal aj
         JOIN res_company rc ON aj.company_id = rc.id
         WHERE ap.payment_type = 'transfer'
+            AND aj.id = ap.journal_id
         """,
     )
 
