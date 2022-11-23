@@ -625,6 +625,64 @@ def create_account_payment_reconciliation(env):
     )
 
 
+def fill_account_bank_statement_data(env):
+    openupgrade.add_fields(
+        env,
+        [
+            (
+                "is_valid_balance_start",
+                "account.bank.statement",
+                "account_bank_statement",
+                "boolean",
+                False,
+                "account",
+            ),
+            (
+                "previous_statement_id",
+                "account.bank.statement",
+                "account_bank_statement",
+                "many2one",
+                False,
+                "account",
+            ),
+        ],
+    )
+    openupgrade.logged_query(
+        env.cr,
+        """
+        WITH previous_statement as (
+            SELECT abst.id,
+                CASE
+                WHEN abst.journal_id = LAG(abst.journal_id, 1) OVER (
+                        ORDER BY abst.journal_id, abst.date, abst.id)
+                    THEN LAG(abst.id, 1) OVER (
+                        ORDER BY abst.journal_id, abst.date, abst.id)
+                ELSE NULL
+                END as previous_statement_id,
+            CASE
+                WHEN abst.journal_id = LAG(abst.journal_id, 1) OVER (
+                        ORDER BY abst.journal_id, abst.date, abst.id)
+                    THEN ROUND(LAG(abst.balance_end, 1) OVER (
+                        ORDER BY abst.journal_id, abst.date, abst.id)
+                        - abst.balance_start, rcur.decimal_places) = 0
+                ELSE TRUE
+                END as is_valid_balance_start
+            FROM account_bank_statement abst
+            LEFT JOIN account_journal aj ON aj.id = abst.journal_id
+            LEFT JOIN res_company rc ON rc.id = aj.company_id
+            LEFT JOIN res_currency rcur
+                ON rcur.id = aj.currency_id
+                    OR (aj.currency_id IS NULL and rcur.id = rc.currency_id)
+            )
+        UPDATE account_bank_statement abst
+        SET is_valid_balance_start = previous_statement.is_valid_balance_start,
+            previous_statement_id = previous_statement.previous_statement_id
+        FROM previous_statement
+        WHERE abst.id = previous_statement.id
+        """,
+    )
+
+
 def create_account_bank_statement_line_reconciliation(env):
     openupgrade.add_fields(
         env,
@@ -786,6 +844,7 @@ def migrate(env, version):
     fill_account_payment_partner_id(env)
     fill_account_payment_data(env)
     create_account_payment_reconciliation(env)
+    fill_account_bank_statement_data(env)
     create_account_bank_statement_line_reconciliation(env)
     delete_xmlid_existing_groups(env)
     fill_sequence_mixin_fields(env)

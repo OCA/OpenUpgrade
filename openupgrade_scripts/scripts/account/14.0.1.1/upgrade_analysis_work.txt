@@ -54,9 +54,11 @@ account      / account.bank.statement   / state (selection)             : select
 
 account      / account.bank.statement   / balance_end_real (float)      : now a function
 account      / account.bank.statement   / balance_start (float)         : now a function
+# NOTHING TO DO: Fields created and adapted for better usability. Now start balance is computed using the end balance from the previous statement.
+
 account      / account.bank.statement   / is_valid_balance_start (boolean): NEW isfunction: function, stored
 account      / account.bank.statement   / previous_statement_id (many2one): NEW relation: account.bank.statement, isfunction: function, stored
-# NOTHING TO DO: Fields created and adapted for better usability. Now start balance is computed using the end balance from the previous statement.
+# DONE: pre-migrate: Add fields and compute
 
 account      / account.bank.statement   / sequence_number (integer)     : NEW isfunction: function, stored
 account      / account.bank.statement   / sequence_prefix (char)        : NEW isfunction: function, stored
