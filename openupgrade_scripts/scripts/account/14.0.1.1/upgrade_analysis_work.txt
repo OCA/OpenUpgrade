@@ -250,10 +250,12 @@ account      / account.payment          / _order                        : _order
 # NOTHING TO DO
 
 account      / account.payment          / currency_id (many2one)        : now a function
-account      / account.payment          / destination_account_id (many2one): is now stored
 # NOTHING TO DO
 
+account      / account.payment          / destination_account_id (many2one): is now stored
 account      / account.payment          / is_internal_transfer (boolean): NEW isfunction: function, stored
+# pre-migration: Fill data
+
 account      / account.payment          / is_matched (boolean)          : NEW isfunction: function, stored
 account      / account.payment          / is_reconciled (boolean)       : NEW isfunction: function, stored
 # NOTHING TO DO: new features
