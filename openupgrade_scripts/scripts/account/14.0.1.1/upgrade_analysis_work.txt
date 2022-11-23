@@ -260,7 +260,8 @@ account      / account.payment          / is_internal_transfer (boolean): NEW is
 
 account      / account.payment          / is_matched (boolean)          : NEW isfunction: function, stored
 account      / account.payment          / is_reconciled (boolean)       : NEW isfunction: function, stored
-# NOTHING TO DO: new features
+# pre-migration: Create columns
+# post-migration: Fill data
 
 account      / account.payment          / journal_id (many2one)         : not stored anymore
 account      / account.payment          / journal_id (many2one)         : now related
