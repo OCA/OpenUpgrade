@@ -280,9 +280,13 @@ account      / account.payment          / move_name (char)              : DEL
 # NOTHING TO DO: now the relation is made with the new field move_id
 
 account      / account.payment          / partner_bank_account_id (many2one): DEL relation: res.partner.bank
+# NOTHING TO DO
+
 account      / account.payment          / partner_bank_id (many2one)    : NEW relation: res.partner.bank, isfunction: function, stored
+# Fill on pre-migration
+
 account      / account.payment          / partner_id (many2one)         : now a function
-# NOTHING TO DO: automated field filling
+# NOTHING TO DO
 
 account      / account.payment          / partner_type (selection)      : now required, req_default: function
 # DONE: pre-migration: ensuring empty records are filled with default value ('customer')

@@ -390,6 +390,14 @@ def fill_account_payment_data(env):
                 False,
                 "account",
             ),
+            (
+                "partner_bank_id",
+                "account.payment",
+                "account_payment",
+                "many2one",
+                False,
+                "account",
+            ),
         ],
     )
     # Set data for internal transfers
@@ -562,6 +570,35 @@ def fill_account_payment_data(env):
                 """,
                 (account[0], company.id),
             )
+    # Set Partner Bank ID
+    openupgrade.logged_query(
+        env.cr,
+        """
+        UPDATE account_payment ap
+        SET partner_bank_id = aj.bank_account_id
+        FROM account_journal aj,
+            account_move am
+        WHERE payment_type = 'inbound'
+            AND am.journal_id = aj.id
+            AND ap.move_id = am.id
+        """,
+    )
+    openupgrade.logged_query(
+        env.cr,
+        """
+        UPDATE account_payment ap
+        SET partner_bank_id = rpb.id
+        FROM res_partner_bank rpb,
+            account_journal aj,
+            account_move am
+        WHERE payment_type != 'inbound'
+            AND ap.partner_id IS NOT NULL
+            AND ap.partner_id = rpb.partner_id
+            AND am.journal_id = aj.id
+            AND ap.move_id = am.id
+            AND (rpb.company_id is NULL or rpb.company_id = aj.company_id)
+        """,
+    )
 
 
 def delete_xmlid_existing_groups(env):
