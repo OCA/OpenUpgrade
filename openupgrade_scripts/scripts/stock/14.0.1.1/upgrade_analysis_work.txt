@@ -27,7 +27,7 @@ stock        / stock.move               / date_expected (datetime)      : DEL re
 # DONE: pre-migration: renamed field
 
 stock        / stock.move               / delay_alert_date (datetime)   : NEW isfunction: function, stored
-# NOTHING TO DO: computed during loading
+# DONE: pre-migration: Create field, post-migration: Fill data
 
 stock        / stock.move               / delay_alert (boolean)         : DEL
 stock        / stock.move               / propagate_date (boolean)      : DEL

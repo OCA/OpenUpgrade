@@ -35,6 +35,20 @@ def recompute_stock_picking_scheduled_date(env):
         pickings._compute_scheduled_date()
 
 
+def recompute_stock_move_delay_alert_date(env):
+    env.cr.execute(
+        """
+        SELECT sm.id
+        FROM stock_move sm
+        WHERE sm.state NOT IN ('done', 'cancel')
+        """
+    )
+    move_ids = [move[0] for move in env.cr.fetchall()]
+    if move_ids:
+        moves = env["stock.move"].browse(move_ids)
+        moves._compute_delay_alert_date()
+
+
 def delete_domain_from_view(env):
     view = env.ref("stock.report_stock_quantity_action")
     view.domain = None
@@ -46,6 +60,7 @@ def migrate(env, version):
     delete_domain_from_view(env)
     openupgrade.load_data(env.cr, "stock", "14.0.1.1/noupdate_changes.xml")
     recompute_stock_picking_scheduled_date(env)
+    recompute_stock_move_delay_alert_date(env)
     openupgrade.delete_record_translations(
         env.cr, "stock", ["mail_template_data_delivery_confirmation"]
     )
