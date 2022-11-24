@@ -49,7 +49,7 @@ stock        / stock.picking            / _order                        : _order
 
 stock        / stock.picking            / date_deadline (datetime)      : NEW isfunction: function, stored
 stock        / stock.picking            / has_deadline_issue (boolean)  : NEW hasdefault, isfunction: function, stored
-# NOTHING TO DO: computed during loading
+# DONE: pre-migration: Create fields, post-migration: Fill fields
 
 stock        / stock.picking            / priority (selection)          : not a function anymore
 stock        / stock.picking            / priority (selection)          : selection_keys is now '['0', '1']' ('['0', '1', '2', '3']')

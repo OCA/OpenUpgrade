@@ -35,6 +35,39 @@ def recompute_stock_picking_scheduled_date(env):
         pickings._compute_scheduled_date()
 
 
+def save_stock_picking_date_deadline(env):
+    openupgrade.logged_query(
+        env.cr,
+        """
+        WITH picking_deadline AS (
+            SELECT sp.id,
+                CASE
+                    WHEN sp.move_type = 'direct' THEN
+                        MIN(sm.date_deadline)
+                    ELSE
+                        MAX(sm.date_deadline)
+                END as date_deadline
+            FROM stock_picking sp
+                JOIN stock_move sm ON sm.picking_id = sp.id
+            WHERE sm.date_deadline IS NOT NULL
+            GROUP BY sp.id, sp.move_type
+        )
+        UPDATE stock_picking sp
+        SET date_deadline = picking_deadline.date_deadline
+        FROM picking_deadline
+        WHERE picking_deadline.id = sp.id
+        """,
+    )
+    openupgrade.logged_query(
+        env.cr,
+        """
+        UPDATE stock_picking sp
+        SET has_deadline_issue = TRUE
+        WHERE date_deadline IS NOT NULL AND date_deadline < scheduled_date
+        """,
+    )
+
+
 def recompute_stock_move_delay_alert_date(env):
     env.cr.execute(
         """
@@ -60,6 +93,7 @@ def migrate(env, version):
     delete_domain_from_view(env)
     openupgrade.load_data(env.cr, "stock", "14.0.1.1/noupdate_changes.xml")
     recompute_stock_picking_scheduled_date(env)
+    save_stock_picking_date_deadline(env)
     recompute_stock_move_delay_alert_date(env)
     openupgrade.delete_record_translations(
         env.cr, "stock", ["mail_template_data_delivery_confirmation"]

@@ -20,6 +20,8 @@ _xmlid_renames = [
 
 _field_additons = [
     ("delay_alert_date", "stock.move", "stock_move", "datetime", False, "stock"),
+    ("date_deadline", "stock.picking", "stock_picking", "datetime", False, "stock"),
+    ("has_deadline_issue", "stock.picking", "stock_picking", "boolean", False, "stock"),
 ]
 
 
