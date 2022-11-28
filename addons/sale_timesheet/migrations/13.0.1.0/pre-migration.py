@@ -20,3 +20,5 @@ def migrate(env, version):
     cr = env.cr
     openupgrade.copy_columns(cr, _column_copies)
     openupgrade.rename_columns(cr, _column_renames)
+    openupgrade.delete_records_safely_by_xml_id(
+        env, ["sale_timesheet.project_timesheet_action_client_timesheet_plan"])

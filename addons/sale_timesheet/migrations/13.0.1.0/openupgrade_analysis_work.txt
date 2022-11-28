@@ -18,7 +18,6 @@ sale_timesheet / sale.order               / project_id (many2one)         : NEW 
 
 ---XML records in module 'sale_timesheet'---
 NEW ir.actions.act_window: sale_timesheet.product_template_action_default_services
-NEW ir.actions.act_window: sale_timesheet.project_timesheet_action_client_timesheet_plan
 NEW ir.actions.act_window: sale_timesheet.timesheet_action_from_sales_order
 DEL ir.actions.act_window: sale_timesheet.product_template_action_fixed
 DEL ir.actions.act_window: sale_timesheet.product_template_action_milestone
@@ -26,7 +25,6 @@ DEL ir.actions.act_window: sale_timesheet.product_template_action_time_based
 DEL ir.actions.act_window: sale_timesheet.project_task_action_multi_assign_so_line
 NEW ir.actions.act_window.view: sale_timesheet.timesheet_action_from_sales_order_form
 NEW ir.actions.act_window.view: sale_timesheet.timesheet_action_from_sales_order_tree
-DEL ir.actions.client: sale_timesheet.project_timesheet_action_client_timesheet_plan
 NEW ir.ui.view: sale_timesheet.assets_frontend
 NEW ir.ui.view: sale_timesheet.portal_invoice_page_inherit_timesheet
 NEW ir.ui.view: sale_timesheet.progressbar
@@ -34,3 +32,7 @@ DEL ir.ui.view: sale_timesheet.project_project_view_search
 DEL ir.ui.view: sale_timesheet.project_task_assign_so_line_view_form
 DEL ir.ui.view: sale_timesheet.qunit_suite
 # NOTHING TO DO
+
+DEL ir.actions.client: sale_timesheet.project_timesheet_action_client_timesheet_plan
+NEW ir.actions.act_window: sale_timesheet.project_timesheet_action_client_timesheet_plan
+DONE: pre-migration: same xmlid but different model case, we delete the old one
