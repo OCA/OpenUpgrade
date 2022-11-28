@@ -411,6 +411,7 @@ class AccountMove(models.Model):
             # Copy currency.
             if self.currency_id != self.invoice_vendor_bill_id.currency_id:
                 self.currency_id = self.invoice_vendor_bill_id.currency_id
+                self._onchange_currency()
 
             # Reset
             self.invoice_vendor_bill_id = False
@@ -1013,7 +1014,12 @@ class AccountMove(models.Model):
                     else:
                         tax_type = line.tax_ids[0].type_tax_use
                         is_refund = (tax_type == 'sale' and line.debit) or (tax_type == 'purchase' and line.credit)
-                    taxes = line.tax_ids.flatten_taxes_hierarchy()
+                    taxes = line.tax_ids._origin.flatten_taxes_hierarchy().filtered(
+                        lambda tax: (
+                                tax.amount_type == 'fixed' and not invoice.company_id.currency_id.is_zero(tax.amount)
+                                or not float_is_zero(tax.amount, precision_digits=4)
+                        )
+                    )
                     if is_refund:
                         tax_rep_lines = taxes.refund_repartition_line_ids._origin.filtered(lambda x: x.repartition_type == "tax")
                     else:
@@ -3783,6 +3789,18 @@ class AccountMoveLine(models.Model):
             name += (line.name or line.product_id.display_name) and (' ' + (line.name or line.product_id.display_name)) or ''
             result.append((line.id, name))
         return result
+
+    @api.model
+    def _name_search(self, name, args=None, operator='ilike', limit=100, name_get_uid=None):
+        if operator == 'ilike':
+            args = ['|', '|',
+                    ('name', 'ilike', name),
+                    ('move_id', 'ilike', name),
+                    ('product_id', 'ilike', name)]
+            result = self._search(args, limit=limit, access_rights_uid=name_get_uid)
+            return models.lazy_name_get(self.browse(result).with_user(name_get_uid))
+
+        return super()._name_search(name, args=args, operator=operator, limit=limit, name_get_uid=name_get_uid)
 
     @api.model
     def invalidate_cache(self, fnames=None, ids=None):
