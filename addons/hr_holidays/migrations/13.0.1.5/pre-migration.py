@@ -27,3 +27,5 @@ _xmlid_renames = [
 def migrate(env, version):
     openupgrade.rename_columns(env.cr, _column_renames)
     openupgrade.rename_xmlids(env.cr, _xmlid_renames)
+    openupgrade.delete_records_safely_by_xml_id(
+        env, ["hr_holidays.act_hr_employee_holiday_request"])

@@ -10,7 +10,7 @@ from PIL import Image
 
 from . import common
 from odoo.exceptions import UserError
-from odoo.tests.common import TransactionCase, Form
+from odoo.tests.common import TransactionCase, Form, users
 
 
 class TestVariantsSearch(TransactionCase):
@@ -211,6 +211,31 @@ class TestVariants(common.TestProductCommon):
         self.assertEqual(template_copy.name, 'Test Copy (copy)')
         self.assertEqual(variant_copy.name, 'Test Copy (copy) (copy)')
         self.assertEqual(len(variant_copy.product_variant_ids), 2)
+
+    def test_dynamic_variants_copy(self):
+        self.color_attr = self.env['product.attribute'].create({'name': 'Color', 'create_variant': 'dynamic'})
+        self.color_attr_value_r = self.env['product.attribute.value'].create({'name': 'Red', 'attribute_id': self.color_attr.id})
+        self.color_attr_value_b = self.env['product.attribute.value'].create({'name': 'Blue', 'attribute_id': self.color_attr.id})
+
+        # test copy of variant with dynamic attribute
+        template_dyn = self.env['product.template'].create({
+            'name': 'Test Dynamical',
+            'attribute_line_ids': [(0, 0, {
+                'attribute_id': self.color_attr.id,
+                'value_ids': [(4, self.color_attr_value_r.id), (4, self.color_attr_value_b.id)],
+            })]
+        })
+
+        self.assertEqual(len(template_dyn.product_variant_ids), 0)
+        self.assertEqual(template_dyn.name, 'Test Dynamical')
+
+        variant_dyn = template_dyn._create_product_variant(template_dyn._get_first_possible_combination())
+        self.assertEqual(len(template_dyn.product_variant_ids), 1)
+
+        variant_dyn_copy = variant_dyn.copy()
+        template_dyn_copy = variant_dyn_copy.product_tmpl_id
+        self.assertEqual(len(template_dyn_copy.product_variant_ids), 1)
+        self.assertEqual(template_dyn_copy.name, 'Test Dynamical (copy)')
 
     def test_standard_price(self):
         """ Ensure template values are correctly (re)computed depending on the context """
@@ -578,6 +603,27 @@ class TestVariantsManyAttributes(common.TestAttributesCommon):
         self.assertEqual(len(toto.attribute_line_ids.mapped('attribute_id')), 10)
         self.assertEqual(len(toto.attribute_line_ids.mapped('value_ids')), 100)
         self.assertEqual(len(toto.product_variant_ids), 0)
+
+    @users('admin')
+    def test_08_create_unreable_multi_company_attribute(self):
+        attribute = self.attributes[0]
+        attribute.write({'create_variant': 'always'})
+        self.env['product.template'].create({
+            'name': 'Toto',
+            'company_id': self.env.company.id,
+            'attribute_line_ids': [(0, 0, {
+                'attribute_id': attribute.id,
+                'value_ids': [(6, 0, attribute.value_ids.ids)],
+            })]
+        })
+        other_company = self.env['res.company'].create({'name': 'other'})
+        self.env['product.template'].with_context(allowed_company_ids=other_company.ids).create({
+            'name': 'Tarte',
+            'attribute_line_ids': [(0, 0, {
+                'attribute_id': attribute.id,
+                'value_ids': [(6, 0, attribute.value_ids.ids)],
+            })]
+        })
 
 
 class TestVariantsImages(common.TestProductCommon):

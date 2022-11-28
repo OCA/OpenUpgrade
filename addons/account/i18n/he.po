@@ -21,10 +21,12 @@
 # shaked <shaked@laylinetech.com>, 2021
 # david danilov, 2021
 # Jonathan Spier, 2022
-# hed shefer <hed@laylinetech.com>, 2022
 # Sagi Ahiel, 2022
 # Lilach Gilliam <lilach.gilliam@gmail.com>, 2022
 # Netta Waizer, 2022
+# NoaFarkash, 2022
+# hed shefer <hed@laylinetech.com>, 2022
+# yizhaq agronov <yizhaq@gmail.com>, 2022
 # 
 msgid ""
 msgstr ""
@@ -32,7 +34,7 @@ msgstr ""
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2020-07-01 12:20+0000\n"
 "PO-Revision-Date: 2019-08-26 09:06+0000\n"
-"Last-Translator: Netta Waizer, 2022\n"
+"Last-Translator: yizhaq agronov <yizhaq@gmail.com>, 2022\n"
 "Language-Team: Hebrew (https://www.transifex.com/odoo/teams/41243/he/)\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
@@ -718,6 +720,11 @@ msgstr "<strong>חברה:</strong>"
 
 #. module: account
 #: model_terms:ir.ui.view,arch_db:account.report_invoice_document
+msgid "<strong>Credit Note Date:</strong>"
+msgstr ""
+
+#. module: account
+#: model_terms:ir.ui.view,arch_db:account.report_invoice_document
 msgid "<strong>Customer Code:</strong>"
 msgstr "<strong>קוד לקוח:</strong>"
 
@@ -725,6 +732,11 @@ msgstr "<strong>קוד לקוח:</strong>"
 #: model_terms:ir.ui.view,arch_db:account.report_payment_receipt_document
 msgid "<strong>Customer: </strong>"
 msgstr "<strong>לקוח:</strong>"
+
+#. module: account
+#: model_terms:ir.ui.view,arch_db:account.report_invoice_document
+msgid "<strong>Date:</strong>"
+msgstr "<strong>תאריך:</strong>"
 
 #. module: account
 #: model_terms:ir.ui.view,arch_db:account.report_invoice_document
@@ -7110,7 +7122,7 @@ msgstr "שונות"
 #: code:addons/account/static/src/xml/account_reconciliation.xml:0
 #, python-format
 msgid "Miscellaneous Matching"
-msgstr ""
+msgstr "התאמות שונות"
 
 #. module: account
 #: code:addons/account/models/chart_template.py:0
@@ -7625,7 +7637,7 @@ msgstr "מאזן פתוח"
 #: code:addons/account/static/src/xml/account_reconciliation.xml:0
 #, python-format
 msgid "Open balance"
-msgstr ""
+msgstr "יתרה"
 
 #. module: account
 #: model:ir.model,name:account.model_account_financial_year_op
@@ -11872,7 +11884,7 @@ msgstr "סכום ללא מע\"מ"
 #. module: account
 #: model:ir.model.fields,field_description:account.field_account_move__amount_untaxed_signed
 msgid "Untaxed Amount Signed"
-msgstr ""
+msgstr "נחתם על סכום ללא מע\"מ"
 
 #. module: account
 #: model:ir.model.fields,field_description:account.field_account_invoice_report__price_subtotal
@@ -12436,6 +12448,8 @@ msgid ""
 "You can't set a different company on your analytic tags since there are some"
 " journal items linked to it."
 msgstr ""
+"אינך יכול להגדיר חברה אחרת בתגים האנליטיים שלך מכיוון שיש כמה פריטי יומן "
+"המקושרים אליה."
 
 #. module: account
 #: code:addons/account/models/account_move.py:0
@@ -12525,7 +12539,7 @@ msgstr "אינך יכול לערוך את השדות הבאים עקב הפעל�
 #, python-format
 msgid ""
 "You cannot edit the journal of an account move if it has been posted once."
-msgstr ""
+msgstr "לא ניתן לערוך את היומן של מעבר חשבון אם הוא פורסם פעם אחת."
 
 #. module: account
 #: code:addons/account/models/account.py:0
@@ -12596,7 +12610,7 @@ msgstr "אינך יכול לבצע פעולה זו בחשבון שמכיל פק�
 #: code:addons/account/wizard/pos_box.py:0
 #, python-format
 msgid "You cannot put/take money in/out for a bank statement which is closed."
-msgstr ""
+msgstr "אתה לא יכול להכניס/לקחת כסף עבור דף חשבון בנק סגור."
 
 #. module: account
 #: code:addons/account/models/account_payment.py:0
