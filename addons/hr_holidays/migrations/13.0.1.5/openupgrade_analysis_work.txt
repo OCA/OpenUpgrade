@@ -41,14 +41,12 @@ hr_holidays  / hr.leave.type            / validation_type (selection)   : select
 
 ---XML records in module 'hr_holidays'---
 NEW ir.actions.act_window: hr_holidays.hr_leave_action_my_request
-DEL ir.actions.act_window: hr_holidays.act_hr_employee_holiday_request
 DEL ir.actions.act_window: hr_holidays.action_hr_holidays_summary_dept
 DEL ir.actions.act_window: hr_holidays.open_company_allocation
 NEW ir.actions.act_window.view: hr_holidays.action_view_form_manager_approve
 NEW ir.actions.act_window.view: hr_holidays.action_view_kanban_manager_approve
 NEW ir.actions.act_window.view: hr_holidays.action_view_tree_manager_approve
 NEW ir.actions.act_window.view: hr_holidays.hr_leave_action_my_request_view_form
-NEW ir.actions.server: hr_holidays.act_hr_employee_holiday_request
 NEW ir.actions.server: hr_holidays.action_hr_approval
 NEW ir.actions.server: hr_holidays.action_manager_approval
 NEW ir.actions.server: hr_holidays.action_report_to_payslip
@@ -71,6 +69,10 @@ NEW ir.ui.view: hr_holidays.qunit_suite
 NEW ir.ui.view: hr_holidays.res_users_view_form
 DEL ir.ui.view: hr_holidays.view_hr_holidays_summary_dept
 # NOTHING TO DO: noupdate=0 ir records
+
+DEL ir.actions.act_window: hr_holidays.act_hr_employee_holiday_request
+NEW ir.actions.server: hr_holidays.act_hr_employee_holiday_request
+# DONE: pre-migration: same xmlid but different model case, we delete the old one
 
 NEW ir.actions.act_window.view: hr_holidays.hr_leave_action_new_request_view_form
 DEL ir.actions.act_window.view: hr_holidays.hhr_leave_action_new_request_view_form
