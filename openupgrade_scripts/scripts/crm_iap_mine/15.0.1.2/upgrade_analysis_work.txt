@@ -1,0 +1,169 @@
+---Models in module 'crm_iap_mine'---
+---Fields in module 'crm_iap_mine'---
+crm_iap_lead / crm.iap.lead.industry    / _order                        : _order is now 'sequence,id' ('id')
+# NOTHING TO DO
+
+crm_iap_lead / crm.iap.lead.industry    / reveal_id (char)              : DEL required
+crm_iap_lead / crm.iap.lead.mining.request / error (text)                  : DEL
+crm_iap_mine / crm.iap.lead.industry    / reveal_ids (char)             : NEW required
+ # DONE: pre-migration: renamed column 'reveal_id' to 'reveal_ids'
+
+crm_iap_mine / crm.iap.lead.industry    / sequence (integer)            : NEW
+crm_iap_mine / crm.iap.lead.mining.request / error_type (selection)        : NEW selection_keys: ['credits', 'no_result']
+# NOTHING TO DO: new feature
+
+---XML records in module 'crm_iap_mine'---
+NEW crm.iap.lead.industry: crm_iap_mine.crm_iap_mine_industry_114
+NEW crm.iap.lead.industry: crm_iap_mine.crm_iap_mine_industry_136
+NEW crm.iap.lead.industry: crm_iap_mine.crm_iap_mine_industry_138_156
+NEW crm.iap.lead.industry: crm_iap_mine.crm_iap_mine_industry_148
+NEW crm.iap.lead.industry: crm_iap_mine.crm_iap_mine_industry_149
+NEW crm.iap.lead.industry: crm_iap_mine.crm_iap_mine_industry_150_151
+NEW crm.iap.lead.industry: crm_iap_mine.crm_iap_mine_industry_152
+NEW crm.iap.lead.industry: crm_iap_mine.crm_iap_mine_industry_153_154
+NEW crm.iap.lead.industry: crm_iap_mine.crm_iap_mine_industry_158_159
+NEW crm.iap.lead.industry: crm_iap_mine.crm_iap_mine_industry_160
+NEW crm.iap.lead.industry: crm_iap_mine.crm_iap_mine_industry_161
+NEW crm.iap.lead.industry: crm_iap_mine.crm_iap_mine_industry_162
+NEW crm.iap.lead.industry: crm_iap_mine.crm_iap_mine_industry_163
+NEW crm.iap.lead.industry: crm_iap_mine.crm_iap_mine_industry_165
+NEW crm.iap.lead.industry: crm_iap_mine.crm_iap_mine_industry_166
+NEW crm.iap.lead.industry: crm_iap_mine.crm_iap_mine_industry_167
+NEW crm.iap.lead.industry: crm_iap_mine.crm_iap_mine_industry_168
+NEW crm.iap.lead.industry: crm_iap_mine.crm_iap_mine_industry_238
+NEW crm.iap.lead.industry: crm_iap_mine.crm_iap_mine_industry_239
+NEW crm.iap.lead.industry: crm_iap_mine.crm_iap_mine_industry_30_155
+NEW crm.iap.lead.industry: crm_iap_mine.crm_iap_mine_industry_33
+NEW crm.iap.lead.industry: crm_iap_mine.crm_iap_mine_industry_69_157
+NEW crm.iap.lead.industry: crm_iap_mine.crm_iap_mine_industry_86
+DEL crm.iap.lead.industry: crm_iap_lead.crm_iap_lead_industry_114
+DEL crm.iap.lead.industry: crm_iap_lead.crm_iap_lead_industry_136
+DEL crm.iap.lead.industry: crm_iap_lead.crm_iap_lead_industry_138
+DEL crm.iap.lead.industry: crm_iap_lead.crm_iap_lead_industry_146
+DEL crm.iap.lead.industry: crm_iap_lead.crm_iap_lead_industry_148
+DEL crm.iap.lead.industry: crm_iap_lead.crm_iap_lead_industry_149
+DEL crm.iap.lead.industry: crm_iap_lead.crm_iap_lead_industry_150
+DEL crm.iap.lead.industry: crm_iap_lead.crm_iap_lead_industry_151
+DEL crm.iap.lead.industry: crm_iap_lead.crm_iap_lead_industry_152
+DEL crm.iap.lead.industry: crm_iap_lead.crm_iap_lead_industry_153
+DEL crm.iap.lead.industry: crm_iap_lead.crm_iap_lead_industry_154
+DEL crm.iap.lead.industry: crm_iap_lead.crm_iap_lead_industry_155
+DEL crm.iap.lead.industry: crm_iap_lead.crm_iap_lead_industry_156
+DEL crm.iap.lead.industry: crm_iap_lead.crm_iap_lead_industry_157
+DEL crm.iap.lead.industry: crm_iap_lead.crm_iap_lead_industry_158
+DEL crm.iap.lead.industry: crm_iap_lead.crm_iap_lead_industry_159
+DEL crm.iap.lead.industry: crm_iap_lead.crm_iap_lead_industry_160
+DEL crm.iap.lead.industry: crm_iap_lead.crm_iap_lead_industry_161
+DEL crm.iap.lead.industry: crm_iap_lead.crm_iap_lead_industry_162
+DEL crm.iap.lead.industry: crm_iap_lead.crm_iap_lead_industry_163
+DEL crm.iap.lead.industry: crm_iap_lead.crm_iap_lead_industry_164
+DEL crm.iap.lead.industry: crm_iap_lead.crm_iap_lead_industry_165
+DEL crm.iap.lead.industry: crm_iap_lead.crm_iap_lead_industry_166
+DEL crm.iap.lead.industry: crm_iap_lead.crm_iap_lead_industry_167
+DEL crm.iap.lead.industry: crm_iap_lead.crm_iap_lead_industry_168
+DEL crm.iap.lead.industry: crm_iap_lead.crm_iap_lead_industry_238
+DEL crm.iap.lead.industry: crm_iap_lead.crm_iap_lead_industry_239
+DEL crm.iap.lead.industry: crm_iap_lead.crm_iap_lead_industry_30
+DEL crm.iap.lead.industry: crm_iap_lead.crm_iap_lead_industry_33
+DEL crm.iap.lead.industry: crm_iap_lead.crm_iap_lead_industry_69
+DEL crm.iap.lead.industry: crm_iap_lead.crm_iap_lead_industry_86
+NEW crm.iap.lead.role: crm_iap_mine.crm_iap_mine_role_1
+NEW crm.iap.lead.role: crm_iap_mine.crm_iap_mine_role_10
+NEW crm.iap.lead.role: crm_iap_mine.crm_iap_mine_role_11
+NEW crm.iap.lead.role: crm_iap_mine.crm_iap_mine_role_12
+NEW crm.iap.lead.role: crm_iap_mine.crm_iap_mine_role_13
+NEW crm.iap.lead.role: crm_iap_mine.crm_iap_mine_role_14
+NEW crm.iap.lead.role: crm_iap_mine.crm_iap_mine_role_15
+NEW crm.iap.lead.role: crm_iap_mine.crm_iap_mine_role_16
+NEW crm.iap.lead.role: crm_iap_mine.crm_iap_mine_role_17
+NEW crm.iap.lead.role: crm_iap_mine.crm_iap_mine_role_18
+NEW crm.iap.lead.role: crm_iap_mine.crm_iap_mine_role_19
+NEW crm.iap.lead.role: crm_iap_mine.crm_iap_mine_role_2
+NEW crm.iap.lead.role: crm_iap_mine.crm_iap_mine_role_20
+NEW crm.iap.lead.role: crm_iap_mine.crm_iap_mine_role_21
+NEW crm.iap.lead.role: crm_iap_mine.crm_iap_mine_role_22
+NEW crm.iap.lead.role: crm_iap_mine.crm_iap_mine_role_3
+NEW crm.iap.lead.role: crm_iap_mine.crm_iap_mine_role_4
+NEW crm.iap.lead.role: crm_iap_mine.crm_iap_mine_role_5
+NEW crm.iap.lead.role: crm_iap_mine.crm_iap_mine_role_6
+NEW crm.iap.lead.role: crm_iap_mine.crm_iap_mine_role_7
+NEW crm.iap.lead.role: crm_iap_mine.crm_iap_mine_role_8
+NEW crm.iap.lead.role: crm_iap_mine.crm_iap_mine_role_9
+DEL crm.iap.lead.role: crm_iap_lead.crm_iap_lead_role_1
+DEL crm.iap.lead.role: crm_iap_lead.crm_iap_lead_role_10
+DEL crm.iap.lead.role: crm_iap_lead.crm_iap_lead_role_11
+DEL crm.iap.lead.role: crm_iap_lead.crm_iap_lead_role_12
+DEL crm.iap.lead.role: crm_iap_lead.crm_iap_lead_role_13
+DEL crm.iap.lead.role: crm_iap_lead.crm_iap_lead_role_14
+DEL crm.iap.lead.role: crm_iap_lead.crm_iap_lead_role_15
+DEL crm.iap.lead.role: crm_iap_lead.crm_iap_lead_role_16
+DEL crm.iap.lead.role: crm_iap_lead.crm_iap_lead_role_17
+DEL crm.iap.lead.role: crm_iap_lead.crm_iap_lead_role_18
+DEL crm.iap.lead.role: crm_iap_lead.crm_iap_lead_role_19
+DEL crm.iap.lead.role: crm_iap_lead.crm_iap_lead_role_2
+DEL crm.iap.lead.role: crm_iap_lead.crm_iap_lead_role_20
+DEL crm.iap.lead.role: crm_iap_lead.crm_iap_lead_role_21
+DEL crm.iap.lead.role: crm_iap_lead.crm_iap_lead_role_22
+DEL crm.iap.lead.role: crm_iap_lead.crm_iap_lead_role_3
+DEL crm.iap.lead.role: crm_iap_lead.crm_iap_lead_role_4
+DEL crm.iap.lead.role: crm_iap_lead.crm_iap_lead_role_5
+DEL crm.iap.lead.role: crm_iap_lead.crm_iap_lead_role_6
+DEL crm.iap.lead.role: crm_iap_lead.crm_iap_lead_role_7
+DEL crm.iap.lead.role: crm_iap_lead.crm_iap_lead_role_8
+DEL crm.iap.lead.role: crm_iap_lead.crm_iap_lead_role_9
+NEW crm.iap.lead.seniority: crm_iap_mine.crm_iap_mine_seniority_1
+NEW crm.iap.lead.seniority: crm_iap_mine.crm_iap_mine_seniority_2
+NEW crm.iap.lead.seniority: crm_iap_mine.crm_iap_mine_seniority_3
+DEL crm.iap.lead.seniority: crm_iap_lead.crm_iap_lead_seniority_1
+DEL crm.iap.lead.seniority: crm_iap_lead.crm_iap_lead_seniority_2
+DEL crm.iap.lead.seniority: crm_iap_lead.crm_iap_lead_seniority_3
+# DONE: renamed xmlids in pre-migration
+
+NEW ir.actions.act_window: crm_iap_mine.crm_iap_lead_mining_request_action [renamed from crm_iap_lead module]
+DEL ir.actions.act_window: crm_iap_lead.crm_iap_lead_mining_request_action [renamed to crm_iap_mine module]
+NEW ir.model.access: crm_iap_mine.access_crm_iap_lead_helpers [renamed from crm_iap_lead module]
+NEW ir.model.access: crm_iap_mine.access_crm_iap_lead_industry [renamed from crm_iap_lead module]
+NEW ir.model.access: crm_iap_mine.access_crm_iap_lead_mining_request [renamed from crm_iap_lead module]
+NEW ir.model.access: crm_iap_mine.access_crm_iap_lead_role [renamed from crm_iap_lead module]
+NEW ir.model.access: crm_iap_mine.access_crm_iap_lead_seniority [renamed from crm_iap_lead module]
+DEL ir.model.access: crm_iap_lead.access_crm_iap_lead_helpers [renamed to crm_iap_mine module]
+DEL ir.model.access: crm_iap_lead.access_crm_iap_lead_industry [renamed to crm_iap_mine module]
+DEL ir.model.access: crm_iap_lead.access_crm_iap_lead_mining_request [renamed to crm_iap_mine module]
+DEL ir.model.access: crm_iap_lead.access_crm_iap_lead_role [renamed to crm_iap_mine module]
+DEL ir.model.access: crm_iap_lead.access_crm_iap_lead_seniority [renamed to crm_iap_mine module]
+NEW ir.model.constraint: crm_iap_mine.constraint_crm_iap_lead_industry_name_uniq [renamed from crm_iap_lead module]
+NEW ir.model.constraint: crm_iap_mine.constraint_crm_iap_lead_role_name_uniq [renamed from crm_iap_lead module]
+NEW ir.model.constraint: crm_iap_mine.constraint_crm_iap_lead_seniority_name_uniq [renamed from crm_iap_lead module]
+DEL ir.model.constraint: crm_iap_lead.constraint_crm_iap_lead_industry_name_uniq [renamed to crm_iap_mine module]
+DEL ir.model.constraint: crm_iap_lead.constraint_crm_iap_lead_role_name_uniq [renamed to crm_iap_mine module]
+DEL ir.model.constraint: crm_iap_lead.constraint_crm_iap_lead_seniority_name_uniq [renamed to crm_iap_mine module]
+NEW ir.ui.menu: crm_iap_mine.crm_iap_lead_mining_request_menu_action [renamed from crm_iap_lead module]
+NEW ir.ui.menu: crm_iap_mine.crm_menu_lead_generation [renamed from crm_iap_lead module]
+DEL ir.ui.menu: crm_iap_lead.crm_iap_lead_mining_request_menu_action [renamed to crm_iap_mine module]
+DEL ir.ui.menu: crm_iap_lead.crm_menu_lead_generation [renamed to crm_iap_mine module]
+NEW ir.ui.view: crm_iap_mine.crm_iap_lead_mining_request_view_form
+NEW ir.ui.view: crm_iap_mine.crm_iap_lead_mining_request_view_search
+NEW ir.ui.view: crm_iap_mine.crm_iap_lead_mining_request_view_tree
+NEW ir.ui.view: crm_iap_mine.crm_lead_view_kanban_lead
+NEW ir.ui.view: crm_iap_mine.crm_lead_view_kanban_opportunity
+NEW ir.ui.view: crm_iap_mine.crm_lead_view_tree_lead
+NEW ir.ui.view: crm_iap_mine.crm_lead_view_tree_opportunity
+NEW ir.ui.view: crm_iap_mine.enrich_company
+NEW ir.ui.view: crm_iap_mine.res_config_settings_view_form
+DEL ir.ui.view: crm_iap_lead.assets_backend
+DEL ir.ui.view: crm_iap_lead.crm_iap_lead_kanban
+DEL ir.ui.view: crm_iap_lead.crm_iap_lead_mining_request_form
+DEL ir.ui.view: crm_iap_lead.crm_iap_lead_mining_request_search
+DEL ir.ui.view: crm_iap_lead.crm_iap_lead_mining_request_tree
+DEL ir.ui.view: crm_iap_lead.crm_iap_lead_tree
+DEL ir.ui.view: crm_iap_lead.crm_iap_opportunity_kanban
+DEL ir.ui.view: crm_iap_lead.crm_iap_opportunity_tree
+DEL ir.ui.view: crm_iap_lead.enrich_company
+DEL ir.ui.view: crm_iap_lead.res_config_settings_view_form
+NEW mail.template: crm_iap_mine.lead_generation_no_credits [renamed from crm_iap_lead module] (noupdate)
+DEL mail.template: crm_iap_lead.lead_generation_no_credits [renamed to crm_iap_mine module] (noupdate)
+# NOTHING TO DO: noupdate="0" records, no name changed.
+
+NEW ir.sequence: crm_iap_mine.ir_sequence_crm_iap_mine (noupdate)
+DEL ir.sequence: crm_iap_lead.seq_crm_iap_lead_mining_request (noupdate)
+# DONE: pre-migration: renamed xmlids
