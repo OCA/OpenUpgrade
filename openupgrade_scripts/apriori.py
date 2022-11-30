@@ -19,6 +19,8 @@ renamed_modules = {
     "sale_coupon_taxcloud_delivery": "sale_loyalty_taxcloud_delivery",
     # OCA/knowledge
     "knowledge": "document_knowledge",
+    # OCA/server-ux
+    "mass_editing": "server_action_mass_edit",
     # OCA/...
 }
 
