@@ -1,0 +1,231 @@
+---Models in module 'account'---
+new model account.accrued.orders.wizard [transient]
+new model account.payment.method.line
+new model account.tax.carryover.line
+# NOTHING TO DO: new models
+
+---Fields in module 'account'---
+account      / account.account          / message_follower_ids (one2many): NEW relation: mail.followers
+account      / account.account          / message_ids (one2many)        : NEW relation: mail.message
+account      / account.account          / message_main_attachment_id (many2one): NEW relation: ir.attachment
+account      / account.account          / website_message_ids (one2many): NEW relation: mail.message
+# NOTHING TO DO: new feature
+
+account      / account.account.tag      / applicability (selection)     : selection_keys is now '['accounts', 'products', 'taxes']' ('['accounts', 'taxes']')
+# NOTHING TO DO: new feature
+
+account      / account.account.template / message_follower_ids (one2many): NEW relation: mail.followers
+account      / account.account.template / message_ids (one2many)        : NEW relation: mail.message
+account      / account.account.template / message_main_attachment_id (many2one): NEW relation: ir.attachment
+account      / account.account.template / website_message_ids (one2many): NEW relation: mail.message
+# NOTHING TO DO: new feature
+
+account      / account.analytic.line    / category (False)              : NEW selection_keys: ['invoice', 'other', 'vendor_bill'], mode: modify
+# DONE: post-migration: filled value for category
+
+account      / account.bank.statement.line / narration (text)              : type is now 'html' ('text')
+# DONE: pre-migration: converted to html
+
+account      / account.chart.template   / account_journal_payment_credit_account_id (many2one): NEW relation: account.account.template
+account      / account.chart.template   / account_journal_payment_debit_account_id (many2one): NEW relation: account.account.template
+account      / account.chart.template   / country_id (many2one)         : NEW relation: res.country
+# NOTHING TO DO: new feature
+
+account      / account.fiscal.position  / foreign_vat (char)            : NEW
+# NOTHING TO DO: new feature
+
+account      / account.fiscal.position  / note (text)                   : type is now 'html' ('text')
+# DONE: pre-migration: converted to html
+
+account      / account.journal          / at_least_one_inbound (boolean): DEL
+account      / account.journal          / at_least_one_outbound (boolean): DEL
+# NOTHING TO DO
+
+account      / account.journal          / inbound_payment_method_ids (many2many): DEL relation: account.payment.method
+account      / account.journal          / inbound_payment_method_line_ids (one2many): NEW relation: account.payment.method.line, isfunction: function, stored
+account      / account.journal          / outbound_payment_method_ids (many2many): DEL relation: account.payment.method
+account      / account.journal          / outbound_payment_method_line_ids (one2many): NEW relation: account.payment.method.line, isfunction: function, stored
+# DONE: pre-migration: created account.payment.method.line for journal with type is bank / cash
+
+account      / account.journal          / payment_credit_account_id (many2one): DEL relation: account.account
+account      / account.journal          / payment_debit_account_id (many2one): DEL relation: account.account
+# NOTHING TO DO
+
+account      / account.move             / always_tax_exigible (boolean) : NEW isfunction: function, stored
+# DONE: pre-migration: filled value for always_tax_exigible
+
+account      / account.move             / amount_total_in_currency_signed (float): NEW isfunction: function, stored
+# DONE: pre-migration: filled value for amount_total_in_currency_signed
+
+account      / account.move             / narration (text)              : now a function
+account      / account.move             / narration (text)              : type is now 'html' ('text')
+# DONE: pre-migration: converted to html
+
+account      / account.move             / tax_cash_basis_created_move_ids (one2many): NEW relation: account.move
+# NOTHING TO DO: o2m counterpart of existing m2o field.
+
+account      / account.move             / tax_cash_basis_move_id (many2one): DEL relation: account.move
+account      / account.move             / tax_cash_basis_origin_move_id (many2one): NEW relation: account.move
+# DONE: pre-migration: renamed field tax_cash_basis_move_id -> tax_cash_basis_origin_move_id
+
+account      / account.move.line        / group_tax_id (many2one)       : NEW relation: account.tax
+account      / account.move.line        / tax_exigible (boolean)        : DEL
+# NOTHING TO DO: new feature
+
+account      / account.move.line        / tax_tag_invert (boolean)      : NEW isfunction: function, stored
+# DONE: pre-migration: filled value for tax_tag_invert
+
+account      / account.payment          / narration (text) : type is now 'html' ('text')
+# NOTHING TO DO: inherited from account.move
+
+account      / account.payment          / outstanding_account_id (many2one): NEW relation: account.account, isfunction: function, stored
+# DONE: pre-migration: created column outstanding_account_id to avoid being filled when loading module
+# DONE: end-migration: filled for outstanding_account_id
+
+account      / account.payment          / destination_journal_id (many2one): NEW relation: account.journal
+account      / account.payment          / paired_internal_transfer_payment_id (many2one): NEW relation: account.payment
+# DONE: post-migration: filled using _create_paired_internal_transfer_payment method
+
+account      / account.payment          / payment_method_id (many2one)  : not a function anymore
+account      / account.payment          / payment_method_id (many2one)  : now related
+# NOTHING TO DO
+
+account      / account.payment          / payment_method_line_id (many2one): NEW relation: account.payment.method.line, isfunction: function, stored
+# DONE: pre-migration: fast filled value for payment_method_line_id
+
+account      / account.payment.method   / _order                        : _order is now 'id' ('sequence')
+account      / account.payment.method   / sequence (integer)            : DEL
+# NOTHING TO DO
+
+account      / account.payment.method.line / journal_id (many2one)         : NEW relation: account.journal
+account      / account.payment.method.line / name (char)                   : NEW isfunction: function, stored
+account      / account.payment.method.line / payment_account_id (many2one) : NEW relation: account.account
+account      / account.payment.method.line / payment_method_id (many2one)  : NEW relation: account.payment.method, required
+account      / account.payment.method.line / sequence (integer)            : NEW hasdefault
+# DONE: post-migration: filled with default records from each account.payment.method and journal with type is bank / cash
+
+account      / account.payment.term     / note (text)                   : type is now 'html' ('text')
+# DONE: pre-migration: converted to html
+
+account      / account.reconcile.model  / message_follower_ids (one2many): NEW relation: mail.followers
+account      / account.reconcile.model  / message_ids (one2many)        : NEW relation: mail.message
+account      / account.reconcile.model  / message_main_attachment_id (many2one): NEW relation: ir.attachment
+account      / account.reconcile.model  / website_message_ids (one2many): NEW relation: mail.message
+# NOTHING TO DO: new feature
+
+account      / account.reconcile.model  / allow_payment_tolerance (boolean): NEW hasdefault
+account      / account.reconcile.model  / match_total_amount (boolean)  : DEL
+account      / account.reconcile.model  / match_total_amount_param (float): DEL
+account      / account.reconcile.model  / payment_tolerance_param (float): NEW isfunction: function, stored
+account      / account.reconcile.model  / payment_tolerance_type (selection): NEW required, selection_keys: ['fixed_amount', 'percentage'], req_default: function, hasdefault
+account      / account.reconcile.model.template / allow_payment_tolerance (boolean): NEW hasdefault
+account      / account.reconcile.model.template / match_total_amount (boolean)  : DEL
+account      / account.reconcile.model.template / match_total_amount_param (float): DEL
+account      / account.reconcile.model.template / payment_tolerance_param (float): NEW hasdefault
+account      / account.reconcile.model.template / payment_tolerance_type (selection): NEW required, selection_keys: ['fixed_amount', 'percentage'], req_default: function, hasdefault
+# DONE: pre-migration: renamed field match_total_amount_param to payment_tolerance_param and switched its value
+# DONE: pre-migration: renamed field match_total_amount to allow_payment_tolerance
+
+account      / account.reconcile.model.line / amount_type (selection)       : selection_keys is now '['fixed', 'percentage', 'percentage_st_line', 'regex']' ('['fixed', 'percentage', 'regex']')
+# NOTHING TO DO: new feature
+
+account      / account.tax              / country_id (many2one)         : NEW relation: res.country, required
+# DONE: pre-migration: filled value for country_id
+
+account      / account.tax              / is_base_affected (boolean)    : NEW hasdefault
+# NOTHING TO DO
+
+account      / account.tax.carryover.line / amount (float)                : NEW required, req_default: function, hasdefault
+account      / account.tax.carryover.line / company_id (many2one)         : NEW relation: res.company, required, req_default: function, hasdefault
+account      / account.tax.carryover.line / date (date)                   : NEW required, req_default: function, hasdefault
+account      / account.tax.carryover.line / foreign_vat_fiscal_position_id (many2one): NEW relation: account.fiscal.position
+account      / account.tax.carryover.line / name (char)                   : NEW required
+account      / account.tax.carryover.line / tax_report_line_id (many2one) : NEW relation: account.tax.report.line
+# NOTHING TO DO: new model
+
+account      / account.tax.group        / country_id (many2one)         : NEW relation: res.country
+account      / account.tax.group        / preceding_subtotal (char)     : NEW
+# NOTHING TO DO: new features
+
+account      / account.tax.report.line  / carry_over_condition_method (selection): NEW selection_keys: ['always_carry_over_and_set_to_0', 'no_negative_amount_carry_over_condition']
+account      / account.tax.report.line  / carry_over_destination_line_id (many2one): NEW relation: account.tax.report.line
+account      / account.tax.report.line  / carryover_line_ids (one2many) : NEW relation: account.tax.carryover.line
+account      / account.tax.report.line  / is_carryover_persistent (boolean): NEW hasdefault
+account      / account.tax.report.line  / is_carryover_used_in_balance (boolean): NEW
+# NOTHING TO DO: new feature
+
+account      / account.tax.template     / is_base_affected (boolean)    : NEW hasdefault
+# NOTHING TO DO: new feature
+
+account      / product.template         / account_tag_ids (many2many)   : NEW relation: account.account.tag
+# NOTHING TO DO: new feature
+
+account      / res.company              / account_fiscal_country_id (many2one): NEW relation: res.country, isfunction: function, stored
+account      / res.company              / account_tax_fiscal_country_id (many2one): DEL relation: res.country
+# DONE: pre-migration: renamed field
+
+account      / res.company              / account_journal_payment_credit_account_id (many2one): NEW relation: account.account
+account      / res.company              / account_journal_payment_debit_account_id (many2one): NEW relation: account.account
+# DONE post-migration: filled value from account journal
+
+account      / res.company              / account_setup_taxes_state (selection): NEW selection_keys: ['done', 'just_done', 'not_done'], hasdefault
+# DONE: post-migration: set "done" the companies with taxes
+
+account      / res.company              / invoice_terms (text)          : type is now 'html' ('text')
+# DONE: pre-migration: convert to html
+
+account      / res.company              / invoice_terms_html (html)     : NEW isfunction: function, stored
+account      / res.company              / terms_type (selection)        : NEW selection_keys: ['html', 'plain'], hasdefault
+# NOTHING TO DO: new feature
+
+---XML records in module 'account'---
+ir.actions.act_window: account.action_account_resequence (noupdate) (noupdate switched)
+# DONE: pre-migration: noupdate changed to "1"
+
+NEW ir.actions.act_window: account.action_tax_group
+DEL ir.actions.act_window: account.action_cash_box_out
+NEW ir.model.access: account.access_account_accrued_orders_wizard
+NEW ir.model.access: account.access_account_payment_method_line
+NEW ir.model.access: account.access_account_payment_method_line_readonly
+NEW ir.model.access: account.access_account_tax_carryover_line_ac_user
+NEW ir.model.access: account.access_account_tax_carryover_line_readonly
+# NOTHING TO DO
+
+DEL ir.actions.act_window: account.invoice_send
+NEW ir.actions.server: account.invoice_send
+# DONE: pre-migration: deleted the obsolete one, as they have same xmlid but different models
+
+ir.model.constraint: account.constraint_account_journal_code_company_uniq (changed definition: is now 'unique(code,company_id)' ('unique(code,name,company_id)'))
+# DONE: pre-migration: dropped constraint and let ORM add it again with the new definition
+
+NEW ir.model.constraint: account.constraint_account_payment_method_name_code_unique
+NEW ir.rule: account.account_tax_carryover_line_comp_rule (noupdate)
+NEW ir.ui.menu: account.menu_action_tax_group
+NEW ir.ui.view: account.account_analytic_account_view_form_inherit
+NEW ir.ui.view: account.account_default_terms_and_conditions
+NEW ir.ui.view: account.account_invoice_report_view_tree
+NEW ir.ui.view: account.account_tax_carryover_line_form
+NEW ir.ui.view: account.account_tax_carryover_line_tree
+NEW ir.ui.view: account.account_tax_group_view_search
+NEW ir.ui.view: account.account_terms_conditions_page
+NEW ir.ui.view: account.account_terms_conditions_setting_banner
+NEW ir.ui.view: account.bill_preview
+NEW ir.ui.view: account.document_tax_totals
+NEW ir.ui.view: account.onboarding_taxes_step
+NEW ir.ui.view: account.res_company_view_form_terms
+NEW ir.ui.view: account.tax_groups_totals
+NEW ir.ui.view: account.view_account_accrued_orders_wizard
+NEW ir.ui.view: account.view_account_various_payment_tree
+NEW ir.ui.view: account.view_in_invoice_bill_tree
+NEW ir.ui.view: account.view_in_invoice_receipt_tree
+NEW ir.ui.view: account.view_in_invoice_refund_tree
+NEW ir.ui.view: account.view_module_filter_inherit_account
+NEW ir.ui.view: account.view_out_credit_note_tree
+DEL ir.ui.view: account._assets_primary_variables
+DEL ir.ui.view: account.assets_backend
+DEL ir.ui.view: account.assets_frontend
+DEL ir.ui.view: account.assets_tests
+DEL ir.ui.view: account.dashboard_onboarding_bill_step
+DEL ir.ui.view: account.qunit_suite
+NEW mail.template: account.email_template_edi_credit_note (noupdate)
+# NOTHING TO DO
