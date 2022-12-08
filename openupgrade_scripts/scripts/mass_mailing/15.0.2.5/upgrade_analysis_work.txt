@@ -1,0 +1,175 @@
+---Models in module 'mass_mailing'---
+new model mailing.contact.to.list [transient]
+# NOTHING TO DO
+
+---Fields in module 'mass_mailing'---
+mass_mailing / mailing.list             / mailing_ids (many2many)       : NEW relation: mailing.mailing
+mass_mailing / mailing.mailing          / ab_testing_completed (boolean): NEW isrelated: related, stored
+mass_mailing / mailing.mailing          / schedule_date (datetime)      : now a function
+mass_mailing / mailing.mailing          / email_from (char)             : now a function
+mass_mailing / mailing.trace            / _order                        : _order is now 'create_date DESC' ('scheduled DESC')
+# NOTHING TO DO
+
+mass_mailing / mailing.mailing          / contact_ab_pc (integer)       : DEL
+mass_mailing / mailing.mailing          / ab_testing_pc (integer)       : NEW hasdefault
+mass_mailing / mailing.mailing          / unique_ab_testing (boolean)   : DEL
+mass_mailing / mailing.mailing          / ab_testing_enabled (boolean)  : NEW hasdefault
+# DONE: pre-migration: renamed fields
+
+mass_mailing / mailing.mailing          / calendar_date (datetime)      : NEW isfunction: function, stored
+# NOTHING TO DO: system will auto compute
+
+mass_mailing / mailing.mailing          / reply_to_mode (selection)     : selection_keys is now '['new', 'update']' ('['email', 'thread']')
+# DONE: pre-migration: mapped 'email' to 'new', 'thread' to 'update'
+
+mass_mailing / mailing.mailing          / schedule_type (selection)     : NEW required, selection_keys: ['now', 'scheduled'], req_default: function, hasdefault
+# DONE: pre-migration: set schedule_type = 'scheduled' if scheduled_date is set else 'now'
+
+mass_mailing / mailing.trace            / failure_type (selection)      : selection_keys is now '['mail_bl', 'mail_dup', 'mail_email_invalid', 'mail_email_missing', 'mail_optout', 'mail_smtp', 'unknown']' ('['BOUNCE', 'RECIPIENT', 'SMTP', 'UNKNOWN']')
+# DONE: pre-migration: mapped 'SMTP' to 'mail_smtp', 'RECIPIENT' to 'mail_email_invalid', 'RECIPIENT' to 'mail_email_invalid', 'BOUNCE' to 'mail_email_invalid', 'UNKNOWN' to 'unknown'
+
+mass_mailing / mailing.trace            / model (char)                  : now required
+mass_mailing / mailing.trace            / res_id (integer)              : now required
+mass_mailing / mailing.trace            / res_id (integer)              : relation is now 'model' ('False') [nothing to do]
+mass_mailing / mailing.trace            / res_id (integer)              : type is now 'many2one_reference' ('integer')
+# DONE: pre-migration: deleted invalid data: model is null or res_id is null
+
+mass_mailing / mailing.trace            / scheduled (datetime)          : DEL
+mass_mailing / mailing.trace            / state_update (datetime)       : DEL
+mass_mailing / mailing.trace            / ignored (datetime)            : DEL
+mass_mailing / mailing.trace            / bounced (datetime)            : DEL
+mass_mailing / mailing.trace            / exception (datetime)          : DEL
+# NOTHING TO DO: removed fields
+
+mass_mailing / mailing.trace            / state (selection)             : DEL selection_keys: ['bounced', 'exception', 'ignored', 'opened', 'outgoing', 'replied', 'sent']
+mass_mailing / mailing.trace            / trace_status (selection)      : NEW selection_keys: ['bounce', 'cancel', 'error', 'open', 'outgoing', 'reply', 'sent'], hasdefault
+# DONE: pre-migration: changed value selection
+
+mass_mailing / mailing.trace            / sent (datetime)               : DEL
+mass_mailing / mailing.trace            / sent_datetime (datetime)      : NEW
+mass_mailing / mailing.trace            / opened (datetime)             : DEL
+mass_mailing / mailing.trace            / open_datetime (datetime)      : NEW
+mass_mailing / mailing.trace            / replied (datetime)            : DEL
+mass_mailing / mailing.trace            / reply_datetime (datetime)     : NEW
+mass_mailing / mailing.trace            / clicked (datetime)            : DEL
+mass_mailing / mailing.trace            / links_click_datetime (datetime): NEW
+# DONE: pre-migration: renamed fields
+
+mass_mailing / utm.campaign             / ab_testing_winner_selection (selection): NEW selection_keys: ['clicks_ratio', 'manual', 'opened_ratio', 'replied_ratio'], hasdefault
+# DONE: pre-migration: set 'manual' as default instead
+
+mass_mailing / utm.campaign             / ab_testing_schedule_datetime (datetime): NEW hasdefault
+# NOTHING TO DO: as ab_testing_winner_selection is set 'manual', then ab_testing_schedule_datetime is avoided
+
+mass_mailing / utm.campaign             / ab_testing_completed (boolean): NEW
+mass_mailing / utm.campaign             / ab_testing_total_pc (integer) : NEW isfunction: function, stored
+# DONE: pre-migration: computed value for these fields
+
+---XML records in module 'mass_mailing'---
+NEW ir.actions.act_window: mass_mailing.action_ab_testing_open_winner_mailing
+NEW ir.actions.act_window: mass_mailing.mailing_contact_to_list_action
+NEW ir.actions.act_window.view: mass_mailing.mailing_mailing_action_mail_fullwidth_calendar
+NEW ir.actions.act_window.view: mass_mailing.mailing_mailing_action_mail_fullwidth_form
+NEW ir.actions.act_window.view: mass_mailing.mailing_mailing_action_mail_fullwidth_graph
+NEW ir.actions.act_window.view: mass_mailing.mailing_mailing_action_mail_fullwidth_kanban
+NEW ir.actions.act_window.view: mass_mailing.mailing_mailing_action_mail_fullwidth_tree
+NEW ir.asset: mass_mailing.s_alert_001_scss
+NEW ir.asset: mass_mailing.s_features_grid_000_scss
+NEW ir.asset: mass_mailing.s_hr_000_scss
+NEW ir.asset: mass_mailing.s_masonry_block_001_scss
+NEW ir.asset: mass_mailing.s_media_list_001_scss
+NEW ir.asset: mass_mailing.s_rating_000_scss
+NEW ir.asset: mass_mailing.s_rating_001_scss
+NEW ir.attachment: mass_mailing.s_blockquote_cover_default_image (noupdate)
+NEW ir.attachment: mass_mailing.s_blockquote_default_image (noupdate)
+NEW ir.attachment: mass_mailing.s_company_team_image_1 (noupdate)
+NEW ir.attachment: mass_mailing.s_company_team_image_2 (noupdate)
+NEW ir.attachment: mass_mailing.s_company_team_image_3 (noupdate)
+NEW ir.attachment: mass_mailing.s_company_team_image_4 (noupdate)
+NEW ir.attachment: mass_mailing.s_masonry_block_default_image_1 (noupdate)
+NEW ir.attachment: mass_mailing.s_masonry_block_default_image_2 (noupdate)
+NEW ir.attachment: mass_mailing.s_media_list_default_image_1 (noupdate)
+NEW ir.attachment: mass_mailing.s_media_list_default_image_2 (noupdate)
+NEW ir.attachment: mass_mailing.s_media_list_default_image_3 (noupdate)
+NEW ir.attachment: mass_mailing.s_product_list_default_image_1 (noupdate)
+NEW ir.attachment: mass_mailing.s_product_list_default_image_2 (noupdate)
+NEW ir.attachment: mass_mailing.s_product_list_default_image_3 (noupdate)
+NEW ir.attachment: mass_mailing.s_product_list_default_image_4 (noupdate)
+NEW ir.attachment: mass_mailing.s_product_list_default_image_5 (noupdate)
+NEW ir.attachment: mass_mailing.s_product_list_default_image_6 (noupdate)
+NEW ir.attachment: mass_mailing.s_reference_default_image_6 (noupdate)
+NEW ir.attachment: mass_mailing.s_reference_demo_image_1 (noupdate)
+NEW ir.attachment: mass_mailing.s_reference_demo_image_2 (noupdate)
+NEW ir.attachment: mass_mailing.s_reference_demo_image_3 (noupdate)
+NEW ir.attachment: mass_mailing.s_reference_demo_image_4 (noupdate)
+NEW ir.attachment: mass_mailing.s_reference_demo_image_5 (noupdate)
+NEW ir.cron: mass_mailing.ir_cron_mass_mailing_ab_testing (noupdate)
+NEW ir.model.access: mass_mailing.access_ir_model
+NEW ir.model.access: mass_mailing.access_mailing_contact_to_list
+NEW ir.model.access: mass_mailing.access_mailing_schedule_date
+DEL ir.model.access: mass_mailing.access_mailing_mailing_schedule_date
+# NOTHING TO DO
+
+NEW ir.model.constraint: mass_mailing.constraint_mailing_mailing_percentage_valid
+# DONE: pre-migration: made sure this constraint can be added
+
+NEW ir.ui.view: mass_mailing.ab_testing_description
+NEW ir.ui.view: mass_mailing.mailing_contact_to_list_view_form
+NEW ir.ui.view: mass_mailing.mailing_list_view_form_simplified_footer
+NEW ir.ui.view: mass_mailing.mailing_mailing_view_calendar
+NEW ir.ui.view: mass_mailing.mailing_mailing_view_form_full_width
+NEW ir.ui.view: mass_mailing.mailing_trace_report_view_tree
+NEW ir.ui.view: mass_mailing.mailing_trace_view_tree_mail
+# NOTHING TO DO
+
+ir.ui.view: mass_mailing.mass_mailing_kpi_link_trackers (noupdate switched)
+# DONE: pre-migration: switched noupdate
+
+NEW ir.ui.view: mass_mailing.s_alert
+NEW ir.ui.view: mass_mailing.s_alert_options
+NEW ir.ui.view: mass_mailing.s_blockquote
+NEW ir.ui.view: mass_mailing.s_call_to_action
+NEW ir.ui.view: mass_mailing.s_color_blocks_2
+NEW ir.ui.view: mass_mailing.s_company_team
+NEW ir.ui.view: mass_mailing.s_comparisons
+NEW ir.ui.view: mass_mailing.s_coupon_code
+NEW ir.ui.view: mass_mailing.s_cover
+NEW ir.ui.view: mass_mailing.s_features
+NEW ir.ui.view: mass_mailing.s_features_grid
+NEW ir.ui.view: mass_mailing.s_hr
+NEW ir.ui.view: mass_mailing.s_hr_options
+NEW ir.ui.view: mass_mailing.s_image_text
+NEW ir.ui.view: mass_mailing.s_masonry_block
+NEW ir.ui.view: mass_mailing.s_masonry_block_alternation_image_text_template
+NEW ir.ui.view: mass_mailing.s_masonry_block_alternation_text_image_template
+NEW ir.ui.view: mass_mailing.s_masonry_block_alternation_text_image_text_template
+NEW ir.ui.view: mass_mailing.s_masonry_block_alternation_text_template
+NEW ir.ui.view: mass_mailing.s_masonry_block_default_template
+NEW ir.ui.view: mass_mailing.s_masonry_block_image_texts_image_template
+NEW ir.ui.view: mass_mailing.s_masonry_block_images_template
+NEW ir.ui.view: mass_mailing.s_masonry_block_mosaic_template
+NEW ir.ui.view: mass_mailing.s_masonry_block_options
+NEW ir.ui.view: mass_mailing.s_masonry_block_reversed_template
+NEW ir.ui.view: mass_mailing.s_masonry_block_texts_image_texts_template
+NEW ir.ui.view: mass_mailing.s_media_list
+NEW ir.ui.view: mass_mailing.s_numbers
+NEW ir.ui.view: mass_mailing.s_picture
+NEW ir.ui.view: mass_mailing.s_product_list
+NEW ir.ui.view: mass_mailing.s_rating
+NEW ir.ui.view: mass_mailing.s_rating_options
+NEW ir.ui.view: mass_mailing.s_references
+NEW ir.ui.view: mass_mailing.s_showcase
+NEW ir.ui.view: mass_mailing.s_text_block
+NEW ir.ui.view: mass_mailing.s_text_highlight
+NEW ir.ui.view: mass_mailing.s_text_image
+NEW ir.ui.view: mass_mailing.s_three_columns
+NEW ir.ui.view: mass_mailing.s_title
+NEW ir.ui.view: mass_mailing.snippet_options_border_line_widgets
+NEW ir.ui.view: mass_mailing.snippet_options_border_widgets
+NEW ir.ui.view: mass_mailing.theme_empty_template
+DEL ir.ui.view: mass_mailing.assets_backend
+DEL ir.ui.view: mass_mailing.assets_common
+DEL ir.ui.view: mass_mailing.assets_mail_themes
+DEL ir.ui.view: mass_mailing.assets_mail_themes_edition
+DEL ir.ui.view: mass_mailing.qunit_suite
+# NOTHING TO DO
