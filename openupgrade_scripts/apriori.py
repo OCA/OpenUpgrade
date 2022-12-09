@@ -56,6 +56,8 @@ merged_modules = {
     "hr_attendance_user_list": "hr_attendance",
     # OCA/product-attribute
     "stock_account_product_cost_security": "product_cost_security",
+    # OCA/stock-logistics-reporting
+    "stock_inventory_valuation_pivot": "stock_account",
     # OCA/stock-logistics-warehouse
     "stock_orderpoint_manual_procurement": "stock",
     # OCA/stock-logistics-workflow
