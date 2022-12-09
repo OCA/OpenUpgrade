@@ -9,3 +9,13 @@ def migrate(env, version):
     openupgrade.convert_field_to_html(
         env.cr, "hr_applicant", "description", "description"
     )
+    # Rename hr_recruitment_notification module data to the core one (if present)
+    openupgrade.rename_xmlids(
+        env.cr,
+        [
+            (
+                "hr_recruitment.mt_hr_applicant_new",
+                "hr_recruitment.mt_job_applicant_new",
+            ),
+        ],
+    )
