@@ -1,0 +1,18 @@
+---Models in module 'stock_picking_batch'---
+new model stock.add.to.wave [transient]
+# NOTHING TO DO: New features
+---Fields in module 'stock_picking_batch'---
+stock_picking_batch / stock.picking.batch      / is_wave (boolean)             : NEW
+# NOTHING TO DO: New features
+---XML records in module 'stock_picking_batch'---
+NEW ir.actions.act_window: stock_picking_batch.action_picking_tree_wave
+NEW ir.actions.act_window: stock_picking_batch.stock_add_to_wave_action_stock_picking
+NEW ir.model.access: stock_picking_batch.access_stock_add_to_wave
+NEW ir.sequence: stock_picking_batch.seq_picking_wave (noupdate)
+NEW ir.ui.menu: stock_picking_batch.stock_picking_wave_menu
+NEW ir.ui.view: stock_picking_batch.stock_add_to_wave_form
+NEW ir.ui.view: stock_picking_batch.stock_picking_type_kanban_batch
+NEW ir.ui.view: stock_picking_batch.stock_picking_wave_tree
+NEW ir.ui.view: stock_picking_batch.view_move_line_tree_detailed_wave
+NEW ir.ui.view: stock_picking_batch.view_picking_tree_batch
+# NOTHING TO DO: Manage by ORM
