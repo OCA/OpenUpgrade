@@ -40,6 +40,8 @@ merged_modules = {
     # OCA/account-financial-tools
     "stock_account_prepare_anglo_saxon_out_lines_hook": "stock_account",
     "account_menu": "account_usability",
+    # OCA/account-invoicing
+    "purchase_invoicing_no_zero_line": "purchase",
     # OCA/e-commerce
     "website_sale_cart_no_redirect": "website_sale",
     # OCA/hr
