@@ -29,3 +29,8 @@ def migrate(env, version):
         True,
     )
     _fill_task_overtime(env)
+    # Remove obsolete view from "hr_timesheet_analysis" module that would
+    # collide with the new "timesheet_action_view_all_pivot" view
+    openupgrade.delete_records_safely_by_xml_id(
+        env, ["hr_timesheet_analysis.act_hr_timesheet_line_view_all_pivot"]
+    )

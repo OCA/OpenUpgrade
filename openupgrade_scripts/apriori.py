@@ -37,6 +37,13 @@ renamed_modules = {
     "edi_backend_partner": "edi_backend_partner_oca",
     "edi_exchange_template": "edi_exchange_template_oca",
     "edi_storage": "edi_storage_oca",
+    "edi_voxel": "edi_voxel_oca",
+    "edi_voxel_account_invoice": "edi_voxel_account_invoice_oca",
+    "edi_voxel_sale_order_import": "edi_voxel_sale_order_import_oca",
+    "edi_voxel_sale_secondary_unit": "edi_voxel_sale_secondary_unit_oca",
+    "edi_voxel_secondary_unit": "edi_voxel_secondary_unit_oca",
+    "edi_voxel_stock_picking": "edi_voxel_stock_picking_oca",
+    "edi_voxel_stock_picking_secondary_unit": "edi_voxel_stock_picking_secondary_unit_oca",  # noqa: B950
     "edi_webservice": "edi_webservice_oca",
     "edi_xml": "edi_xml_oca",
     # OCA/l10n-spain
@@ -68,6 +75,10 @@ merged_modules = {
     "website_theme_install": "website",
     # odoo/design-themes
     "theme_graphene_blog": "theme_graphene",
+    # odoo/enterprise
+    "hr_holidays_gantt_calendar": "hr_holidays_gantt",
+    # OCA/intrastat-extrastat
+    "hs_code_link": "product_harmonized_system_delivery",
     # OCA/event
     "website_event_questions_free_text": "website_event_questions",
     # OCA/margin-analysis
@@ -75,17 +86,17 @@ merged_modules = {
     # OCA/partner-contact
     "base_vat_sanitized": "base_vat",
     "partner_bank_active": "base",
-    # OCA/sale-reporting
-    "report_qweb_pdf_fixed_column": "web",
-    # OCA/stock-logistics-warehouse
-    "stock_inventory_include_exhausted": "stock",
     # OCA/project
     "project_description": "project",
     "project_stage_closed": "project",
+    # OCA/reporting-engine
+    "bi_sql_editor_aggregate": "bi_sql_editor",
+    # OCA/sale-reporting
+    "report_qweb_pdf_fixed_column": "web",
     # OCA/sale-workflow
     "sale_order_price_recalculation": "sale",
-    # OCA/survey
-    "survey_description": "survey",
+    # OCA/stock-logistics-warehouse
+    "stock_inventory_include_exhausted": "stock",
     # OCA/web
     "web_editor_background_color": "web_editor",
     # OCA/website

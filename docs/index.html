@@ -13,6 +13,7 @@
     <script src="_static/underscore.js"></script>
     <script src="_static/_sphinx_javascript_frameworks_compat.js"></script>
     <script src="_static/doctools.js"></script>
+    <script src="_static/sphinx_highlight.js"></script>
     <link rel="index" title="Index" href="genindex.html" />
     <link rel="search" title="Search" href="search.html" />
     <link rel="next" title="Introduction" href="intro.html" />
@@ -110,10 +111,75 @@
 </ul>
 </li>
 <li class="toctree-l1"><a class="reference internal" href="API.html">OpenUpgrade API</a><ul>
-<li class="toctree-l2"><a class="reference internal" href="API.html#module-openupgradelib.openupgrade">General methods</a></li>
-<li class="toctree-l2"><a class="reference internal" href="API.html#methods-for-openupgrade-7-0">Methods for OpenUpgrade 7.0</a></li>
-<li class="toctree-l2"><a class="reference internal" href="API.html#methods-for-openupgrade-8-0">Methods for OpenUpgrade 8.0</a></li>
-<li class="toctree-l2"><a class="reference internal" href="API.html#methods-for-openupgrade-9-0">Methods for OpenUpgrade 9.0</a></li>
+<li class="toctree-l2"><a class="reference internal" href="API.html#module-openupgradelib.openupgrade">General methods</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="API.html#openupgradelib.openupgrade.add_fields"><code class="docutils literal notranslate"><span class="pre">add_fields()</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="API.html#openupgradelib.openupgrade.add_ir_model_fields"><code class="docutils literal notranslate"><span class="pre">add_ir_model_fields()</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="API.html#openupgradelib.openupgrade.add_xmlid"><code class="docutils literal notranslate"><span class="pre">add_xmlid()</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="API.html#openupgradelib.openupgrade.check_values_selection_field"><code class="docutils literal notranslate"><span class="pre">check_values_selection_field()</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="API.html#openupgradelib.openupgrade.chunked"><code class="docutils literal notranslate"><span class="pre">chunked()</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="API.html#openupgradelib.openupgrade.column_exists"><code class="docutils literal notranslate"><span class="pre">column_exists()</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="API.html#openupgradelib.openupgrade.convert_field_to_html"><code class="docutils literal notranslate"><span class="pre">convert_field_to_html()</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="API.html#openupgradelib.openupgrade.convert_to_company_dependent"><code class="docutils literal notranslate"><span class="pre">convert_to_company_dependent()</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="API.html#openupgradelib.openupgrade.copy_columns"><code class="docutils literal notranslate"><span class="pre">copy_columns()</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="API.html#openupgradelib.openupgrade.copy_fields_multilang"><code class="docutils literal notranslate"><span class="pre">copy_fields_multilang()</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="API.html#openupgradelib.openupgrade.cow_templates_mark_if_equal_to_upstream"><code class="docutils literal notranslate"><span class="pre">cow_templates_mark_if_equal_to_upstream()</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="API.html#openupgradelib.openupgrade.cow_templates_replicate_upstream"><code class="docutils literal notranslate"><span class="pre">cow_templates_replicate_upstream()</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="API.html#openupgradelib.openupgrade.date_to_datetime_tz"><code class="docutils literal notranslate"><span class="pre">date_to_datetime_tz()</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="API.html#openupgradelib.openupgrade.deactivate_workflow_transitions"><code class="docutils literal notranslate"><span class="pre">deactivate_workflow_transitions()</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="API.html#openupgradelib.openupgrade.delete_model_workflow"><code class="docutils literal notranslate"><span class="pre">delete_model_workflow()</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="API.html#openupgradelib.openupgrade.delete_record_translations"><code class="docutils literal notranslate"><span class="pre">delete_record_translations()</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="API.html#openupgradelib.openupgrade.delete_records_safely_by_xml_id"><code class="docutils literal notranslate"><span class="pre">delete_records_safely_by_xml_id()</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="API.html#openupgradelib.openupgrade.delete_sql_constraint_safely"><code class="docutils literal notranslate"><span class="pre">delete_sql_constraint_safely()</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="API.html#openupgradelib.openupgrade.disable_invalid_filters"><code class="docutils literal notranslate"><span class="pre">disable_invalid_filters()</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="API.html#openupgradelib.openupgrade.drop_columns"><code class="docutils literal notranslate"><span class="pre">drop_columns()</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="API.html#openupgradelib.openupgrade.float_to_integer"><code class="docutils literal notranslate"><span class="pre">float_to_integer()</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="API.html#openupgradelib.openupgrade.get_legacy_name"><code class="docutils literal notranslate"><span class="pre">get_legacy_name()</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="API.html#openupgradelib.openupgrade.lift_constraints"><code class="docutils literal notranslate"><span class="pre">lift_constraints()</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="API.html#openupgradelib.openupgrade.load_data"><code class="docutils literal notranslate"><span class="pre">load_data()</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="API.html#openupgradelib.openupgrade.logged_query"><code class="docutils literal notranslate"><span class="pre">logged_query()</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="API.html#openupgradelib.openupgrade.logging"><code class="docutils literal notranslate"><span class="pre">logging()</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="API.html#openupgradelib.openupgrade.m2o_to_x2m"><code class="docutils literal notranslate"><span class="pre">m2o_to_x2m()</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="API.html#openupgradelib.openupgrade.map_values"><code class="docutils literal notranslate"><span class="pre">map_values()</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="API.html#openupgradelib.openupgrade.merge_models"><code class="docutils literal notranslate"><span class="pre">merge_models()</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="API.html#openupgradelib.openupgrade.message"><code class="docutils literal notranslate"><span class="pre">message()</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="API.html#openupgradelib.openupgrade.migrate"><code class="docutils literal notranslate"><span class="pre">migrate()</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="API.html#openupgradelib.openupgrade.move_field_m2o"><code class="docutils literal notranslate"><span class="pre">move_field_m2o()</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="API.html#openupgradelib.openupgrade.reactivate_workflow_transitions"><code class="docutils literal notranslate"><span class="pre">reactivate_workflow_transitions()</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="API.html#openupgradelib.openupgrade.remove_tables_fks"><code class="docutils literal notranslate"><span class="pre">remove_tables_fks()</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="API.html#openupgradelib.openupgrade.rename_columns"><code class="docutils literal notranslate"><span class="pre">rename_columns()</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="API.html#openupgradelib.openupgrade.rename_fields"><code class="docutils literal notranslate"><span class="pre">rename_fields()</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="API.html#openupgradelib.openupgrade.rename_models"><code class="docutils literal notranslate"><span class="pre">rename_models()</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="API.html#openupgradelib.openupgrade.rename_property"><code class="docutils literal notranslate"><span class="pre">rename_property()</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="API.html#openupgradelib.openupgrade.rename_tables"><code class="docutils literal notranslate"><span class="pre">rename_tables()</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="API.html#openupgradelib.openupgrade.rename_xmlids"><code class="docutils literal notranslate"><span class="pre">rename_xmlids()</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="API.html#openupgradelib.openupgrade.safe_unlink"><code class="docutils literal notranslate"><span class="pre">safe_unlink()</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="API.html#openupgradelib.openupgrade.set_defaults"><code class="docutils literal notranslate"><span class="pre">set_defaults()</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="API.html#openupgradelib.openupgrade.set_xml_ids_noupdate_value"><code class="docutils literal notranslate"><span class="pre">set_xml_ids_noupdate_value()</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="API.html#openupgradelib.openupgrade.table_exists"><code class="docutils literal notranslate"><span class="pre">table_exists()</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="API.html#openupgradelib.openupgrade.update_field_multilang"><code class="docutils literal notranslate"><span class="pre">update_field_multilang()</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="API.html#openupgradelib.openupgrade.update_module_moved_fields"><code class="docutils literal notranslate"><span class="pre">update_module_moved_fields()</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="API.html#openupgradelib.openupgrade.update_module_moved_models"><code class="docutils literal notranslate"><span class="pre">update_module_moved_models()</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="API.html#openupgradelib.openupgrade.update_module_names"><code class="docutils literal notranslate"><span class="pre">update_module_names()</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="API.html#openupgradelib.openupgrade.update_workflow_workitems"><code class="docutils literal notranslate"><span class="pre">update_workflow_workitems()</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="API.html#openupgradelib.openupgrade.warn_possible_dataloss"><code class="docutils literal notranslate"><span class="pre">warn_possible_dataloss()</span></code></a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="API.html#methods-for-openupgrade-7-0">Methods for OpenUpgrade 7.0</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="API.html#openupgradelib.openupgrade_70.get_partner_id_from_user_id"><code class="docutils literal notranslate"><span class="pre">get_partner_id_from_user_id()</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="API.html#openupgradelib.openupgrade_70.set_partner_id_from_partner_address_id"><code class="docutils literal notranslate"><span class="pre">set_partner_id_from_partner_address_id()</span></code></a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="API.html#methods-for-openupgrade-8-0">Methods for OpenUpgrade 8.0</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="API.html#openupgradelib.openupgrade_80.get_last_post_for_model"><code class="docutils literal notranslate"><span class="pre">get_last_post_for_model()</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="API.html#openupgradelib.openupgrade_80.set_message_last_post"><code class="docutils literal notranslate"><span class="pre">set_message_last_post()</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="API.html#openupgradelib.openupgrade_80.update_aliases"><code class="docutils literal notranslate"><span class="pre">update_aliases()</span></code></a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="API.html#methods-for-openupgrade-9-0">Methods for OpenUpgrade 9.0</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="API.html#openupgradelib.openupgrade_90.convert_binary_field_to_attachment"><code class="docutils literal notranslate"><span class="pre">convert_binary_field_to_attachment()</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="API.html#openupgradelib.openupgrade_90.replace_account_types"><code class="docutils literal notranslate"><span class="pre">replace_account_types()</span></code></a></li>
+</ul>
+</li>
 </ul>
 </li>
 </ul>
@@ -190,7 +256,7 @@
       &copy;2012-2021, Odoo Community Association (OCA) / The OpenUpgrade developers.
       
       |
-      Powered by <a href="http://sphinx-doc.org/">Sphinx 5.1.1</a>
+      Powered by <a href="http://sphinx-doc.org/">Sphinx 5.3.0</a>
       &amp; <a href="https://github.com/bitprophet/alabaster">Alabaster 0.7.12</a>
       
     </div>

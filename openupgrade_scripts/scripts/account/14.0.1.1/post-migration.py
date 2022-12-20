@@ -529,14 +529,14 @@ def create_new_counterpart_account_payment_transfer(env):
         INSERT INTO account_payment (move_id, is_internal_transfer, partner_type,
             payment_type,
             amount, currency_id,
-            destination_account_id, partner_id, journal_id,
+            destination_account_id, partner_id,
             create_uid, create_date, write_uid, write_date)
         SELECT move.id, true, ap.partner_type,
             CASE
             WHEN journal.id = ap.destination_journal_id THEN 'inbound' ELSE 'outbound'
             END,
             ap.amount, ap.currency_id,
-            ap.destination_account_id, ap.partner_id, move.journal_id,
+            ap.destination_account_id, ap.partner_id,
             ap.create_uid, ap.create_date, ap.write_uid, ap.write_date
         FROM account_payment ap
         JOIN account_move move
@@ -567,13 +567,14 @@ def fill_account_payment_with_no_move(env):
         """
         SELECT ap.id, ap.%s, ap.%s, ap.%s, ap.state, aj.company_id
         FROM account_payment ap
-        JOIN account_journal aj ON ap.journal_id = aj.id
+        JOIN account_journal aj ON ap.%s = aj.id
         WHERE ap.move_id IS NULL
         """
         % (
             openupgrade.get_legacy_name("journal_id"),
             openupgrade.get_legacy_name("name"),
             openupgrade.get_legacy_name("payment_date"),
+            openupgrade.get_legacy_name("journal_id"),
         )
     )
     for (
@@ -587,7 +588,8 @@ def fill_account_payment_with_no_move(env):
         p_data[p_id] = {
             "journal_id": p_journal_id,
             "name": p_name,
-            "state": p_state,
+            # Switch to cancel when no linked move, but the payment was validated
+            "state": "cancelled" if p_state not in {"draft", "cancelled"} else p_state,
             "payment_date": p_payment_date,
         }
         if p_company in p_dates_by_company:

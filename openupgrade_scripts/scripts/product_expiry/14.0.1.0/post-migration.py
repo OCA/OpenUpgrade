@@ -29,12 +29,9 @@ def migrate(env, version):
         """
         UPDATE stock_move_line sml
         SET expiration_date = spl.expiration_date
-        FROM stock_production_lot spl, product_product pp
-        JOIN product_template pt ON pp.product_tmpl_id = pt.id, stock_picking sp
-        JOIN stock_picking_type spt ON sp.picking_type_id = spt.id
-        WHERE spl.id = sml.lot_id AND sml.picking_id = sp.id
-            AND spt.use_existing_lots AND sml.product_id = pp.id
-            AND pt.use_expiration_date""",
+        FROM stock_production_lot spl
+        WHERE spl.id = sml.lot_id AND spl.expiration_date IS NOT NULL
+        """,
     )
     openupgrade.logged_query(
         # use sml.create_date
@@ -46,7 +43,11 @@ def migrate(env, version):
         FROM product_product pp
         JOIN product_template pt ON pp.product_tmpl_id = pt.id, stock_picking sp
         JOIN stock_picking_type spt ON sp.picking_type_id = spt.id
-        WHERE (sml.lot_id IS NULL OR sml.expiration_date IS NULL) AND
-            sml.picking_id = sp.id AND spt.use_existing_lots AND sml.product_id = pp.id
-            AND pt.use_expiration_date AND pt.expiration_time IS NOT NULL""",
+        WHERE
+            sml.product_id = pp.id
+            AND sml.picking_id = sp.id
+            AND spt.use_create_lots
+            AND pt.use_expiration_date
+            AND pt.expiration_time IS NOT NULL
+            AND sml.expiration_date IS NULL""",
     )

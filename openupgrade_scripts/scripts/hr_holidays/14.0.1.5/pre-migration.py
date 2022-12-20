@@ -13,11 +13,23 @@ _field_renames = [
     ("hr.leave.type", "hr_leave_type", "validation_type", "leave_validation_type"),
 ]
 
+_field_spec = [
+    (
+        "duration_display",
+        "hr.leave",
+        "hr_leave",
+        "char",
+        False,
+        "hr_holidays",
+    )
+]
+
 
 @openupgrade.migrate()
 def migrate(env, version):
     openupgrade.copy_columns(env.cr, _column_copies)
     openupgrade.rename_fields(env, _field_renames)
+    openupgrade.add_fields(env, _field_spec)
     openupgrade.set_xml_ids_noupdate_value(
         env,
         "hr_holidays",
