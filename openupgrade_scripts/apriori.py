@@ -101,6 +101,8 @@ merged_modules = {
     "web_editor_background_color": "web_editor",
     # OCA/website
     "website_cookie_notice": "website",
+    "website_form_recaptcha": "website_form",
+    "website_crm_recaptcha": "website_form",
     # OCA/...
 }
 
