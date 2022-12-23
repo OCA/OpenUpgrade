@@ -103,3 +103,21 @@ def migrate(env, version):
     fill_leave_allocation_allocation_type(env.cr)
     openupgrade.delete_records_safely_by_xml_id(env, _unlink_by_xmlid)
     openupgrade.load_data(env.cr, 'hr_holidays', 'migrations/13.0.1.5/noupdate_changes.xml')
+    # Leave menus with the same permissions as v13 for the 'Responsible' group use case
+    env.ref("hr_holidays.menu_hr_holidays_dashboard").groups_id = [(5,)]
+    env.ref("hr_holidays.menu_hr_holidays_approvals").groups_id = [(5,)]
+    env.ref("hr_holidays.menu_open_department_leave_approve").groups_id = [(5,)]
+    env.ref("hr_holidays.hr_holidays_menu_manager_approve_allocations").groups_id = [(5,)]
+    env.ref("hr_holidays.hr_holidays_menu_manager_approve").groups_id = [
+        (
+            6,
+            0,
+            [
+                env.ref("hr_holidays.group_hr_holidays_responsible").id,
+                env.ref("hr_holidays.group_hr_holidays_user").id,
+            ],
+        )
+    ]
+    env.ref("hr_holidays.menu_hr_holidays_report").groups_id = [
+        (6, 0, [env.ref("hr_holidays.group_hr_holidays_manager").id])
+    ]
