@@ -35,6 +35,8 @@ merged_modules = {
     # OCA/account-financial-tools
     "stock_account_prepare_anglo_saxon_out_lines_hook": "stock_account",
     "account_menu": "account_usability",
+    # OCA/bank-statement-import
+    "account_statement_import_base": "account_statement_import",
     # OCA/hr
     "hr_recruitment_notification": "hr_recruitment",
     # OCA/hr-attendance
