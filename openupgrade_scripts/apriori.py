@@ -15,10 +15,10 @@ renamed_modules = {
     "account_bank_statement_import_bypass_check": "account_statement_import_bypass_check",  # noqa: B950
     "account_bank_statement_clear_partner": "account_statement_clear_partner",
     "account_bank_statement_import_camt_details": "account_statement_import_camt_details",  # noqa: B950
-    "account_bank_statement_import_camt_oca": "account_statement_import_camt_oca",
+    "account_bank_statement_import_camt_oca": "account_statement_import_camt",
     "account_bank_statement_import_move_line": "account_statement_import_move_line",
     "account_bank_statement_import_mt940_base": "account_statement_import_mt940_base",
-    "account_bank_statement_import_oca_camt54": "account_statement_import_oca_camt54",
+    "account_bank_statement_import_oca_camt54": "account_statement_import_camt54",
     "account_bank_statement_import_ofx": "account_statement_import_ofx",
     "account_bank_statement_import_online": "account_statement_import_online",
     "account_bank_statement_import_online_paypal": "account_statement_import_online_paypal",  # noqa: B950
