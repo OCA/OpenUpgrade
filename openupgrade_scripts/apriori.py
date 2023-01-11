@@ -14,6 +14,8 @@ renamed_modules = {
     "website_sale_attribute_filter_order": "website_sale_product_attribute_filter_order",
     # OCA/project
     "project_stage_state": "project_task_stage_state",
+    # OCA/sale-promotion
+    "sale_coupon_mass_mailing": "coupon_mass_mailing",
     # OCA/stock-logistics-worehouse
     "stock_inventory_cost_info": "stock_quant_cost_info",
     # OCA/...
