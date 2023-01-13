@@ -2,13 +2,13 @@
 obsolete model project.task.create.sale.order [transient]
 ---Fields in module 'sale_timesheet'---
 sale_timesheet / account.analytic.line    / order_id (many2one)           : NEW relation: sale.order, isrelated: related, stored
-# DONE: pre-migration: fill value from sale order line
+# NOTHING TO DO: Filled by SQL by the ORM
 
 sale_timesheet / account.analytic.line    / non_allow_billable (boolean)  : DEL
 # NOTHING TO DO: non_allow_billable is not used anymore
 
 sale_timesheet / account.analytic.line    / timesheet_invoice_type (selection): selection_keys is now '['billable_fixed', 'billable_time', 'non_billable', 'other_costs', 'other_revenues', 'service_revenues', 'timesheet_revenues']' ('['billable_fixed', 'billable_time', 'non_billable', 'non_billable_project', 'non_billable_timesheet']')
-# DONE: end-migration: re-filled value
+# DONE: pre-migration: re-filled value
 
 sale_timesheet / product.template         / service_upsell_threshold (float): NEW hasdefault
 # NOTHING TO DO
@@ -25,7 +25,7 @@ sale_timesheet / project.sale.line.employee.map / cost (float)                  
 # DONE: pre-migration: fast filled
 
 sale_timesheet / project.sale.line.employee.map / is_cost_changed (boolean)     : NEW isfunction: function, stored
-# DONE: pre-migration: fast filled
+# DONE: pre-migration: pre-created with default=False
 
 sale_timesheet / project.sale.line.employee.map / sale_line_id (many2one)       : now a function
 # NOTHING TO DO
@@ -36,7 +36,7 @@ sale_timesheet / project.sale.line.employee.map / timesheet_product_id (many2one
 sale_timesheet / project.task             / analytic_account_id (many2one): is now stored
 sale_timesheet / project.task             / analytic_account_id (many2one): module is now 'project' ('sale_timesheet')
 sale_timesheet / project.task             / analytic_account_id (many2one): not related anymore
-# DONE: pre-migration: filled value
+# NOTHING TO DO: Handled by ORM in project module
 
 sale_timesheet / project.task             / non_allow_billable (boolean)  : DEL
 # NOTHING TO DO: non_allow_billable is not used anymore, we use allow_billable instead
