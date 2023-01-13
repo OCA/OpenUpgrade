@@ -1,0 +1,13 @@
+---Models in module 'purchase_requisition'---
+---Fields in module 'purchase_requisition'---
+purchase_requisition / purchase.requisition     / description (text)            : type is now 'html' ('text')
+# DONE: pre-migration: copy column for preserving old content.
+# DONE: post-migration: convert plaintext to html
+
+purchase_requisition / purchase.requisition.type / active (boolean)              : NEW hasdefault
+# NOTHING TO DO
+
+---XML records in module 'purchase_requisition'---
+DEL ir.actions.act_window: purchase_requisition.act_res_partner_2_purchase_order
+NEW ir.ui.view: purchase_requisition.view_purchase_requisition_type_search
+# NOTHING TO DO
