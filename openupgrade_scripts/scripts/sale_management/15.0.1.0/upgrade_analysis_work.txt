@@ -1,0 +1,9 @@
+---Models in module 'sale_management'---
+---Fields in module 'sale_management'---
+sale_management / sale.order.template      / note (text)                   : type is now 'html' ('text')
+# DONE: pre-migration: copied column for preserving original content
+# DONE: post-migration: converted text to html
+
+---XML records in module 'sale_management'---
+DEL ir.ui.view: sale_management.assets_frontend
+# NOTHING TO DO
