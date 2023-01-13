@@ -1,0 +1,33 @@
+---Models in module 'sale'---
+---Fields in module 'sale'---
+sale         / product.packaging        / sales (boolean)               : NEW hasdefault
+# DONE: pre-migration: fast filled with True value
+
+sale         / sale.order               / note (text)                   : type is now 'html' ('text')
+# DONE: post-migration: convert text to html
+
+sale         / sale.order.line          / product_packaging_id (many2one): NEW relation: product.packaging, hasdefault
+sale         / sale.order.line          / product_packaging_qty (float) : NEW
+# DONE: pre-migration: renamed from product_packaging (from sale_stock)
+# DONE: end-migration: filled product_packaging_id
+
+---XML records in module 'sale'---
+NEW ir.actions.act_window: sale.action_accrued_revenue_entry
+NEW ir.actions.act_window: sale.action_sale_order_form_view
+NEW ir.cron: sale.send_invoice_cron (noupdate)
+DEL ir.model.access: sale.access_product_group_res_partner_sale_manager
+NEW ir.ui.view: sale.account_invoice_report_view_tree
+NEW ir.ui.view: sale.badge_extra_price
+NEW ir.ui.view: sale.crm_team_view_kanban_dashboard
+NEW ir.ui.view: sale.payment_checkout_inherit
+NEW ir.ui.view: sale.payment_manage_inherit
+NEW ir.ui.view: sale.product_packaging_form_view_sale
+NEW ir.ui.view: sale.product_packaging_tree_view_sale
+NEW ir.ui.view: sale.sale_report_view_tree
+DEL ir.ui.view: sale.assets_backend_inherit_sale
+DEL ir.ui.view: sale.assets_frontend_inherit_sale
+DEL ir.ui.view: sale.assets_tests
+DEL ir.ui.view: sale.crm_team_salesteams_view_kanban
+DEL ir.ui.view: sale.qunit_suite
+DEL ir.ui.view: sale.report_assets_common_inherit_sale
+# NOTHING TO DO: noupdate="0" records
