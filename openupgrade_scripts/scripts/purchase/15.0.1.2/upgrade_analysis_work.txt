@@ -1,0 +1,31 @@
+---Models in module 'purchase'---
+---Fields in module 'purchase'---
+purchase     / product.packaging        / purchase (boolean)            : NEW hasdefault
+# DONE: pre-migration: fast filled with True value
+
+purchase     / purchase.order           / notes (text)                  : type is now 'html' ('text')
+# DONE: post-migration: convert plaintext to html
+
+purchase     / purchase.order.line      / product_packaging_id (many2one): NEW relation: product.packaging
+purchase     / purchase.order.line      / product_packaging_qty (float) : NEW
+# DONE: end-migration: filled product_packaging_id
+
+---XML records in module 'purchase'---
+NEW ir.actions.act_window: purchase.action_accrued_expense_entry
+NEW ir.ui.menu: purchase.purchase_report_main
+NEW ir.ui.view: purchase.account_analytic_account_view_form_purchase
+NEW ir.ui.view: purchase.portal_my_purchase_rfqs
+NEW ir.ui.view: purchase.product_packaging_form_view_purchase
+NEW ir.ui.view: purchase.product_packaging_tree_view_purchase
+NEW ir.ui.view: purchase.purchase_order_portal_content
+NEW ir.ui.view: purchase.purchase_order_portal_content_totals_table
+NEW ir.ui.view: purchase.purchase_report_view_tree
+# NOTHING TO DO
+
+ir.ui.view: purchase.track_po_line_qty_received_template (noupdate) (noupdate switched)
+ir.ui.view: purchase.track_po_line_template (noupdate) (noupdate switched)
+# DONE: pre-migration: change noupdate to "1"
+
+DEL ir.ui.view: purchase.assets_backend
+DEL ir.ui.view: purchase.assets_frontend
+ # NOTHING TO DO
