@@ -1,0 +1,193 @@
+---Models in module 'payment'---
+new model payment.refund.wizard [transient]
+# NOTHING TO DO: new model: https://github.com/odoo/odoo/commit/e0233a1010618450cf53b997c50964bed2bb1b1a
+
+---Fields in module 'payment'---
+payment      / account.payment          / source_payment_id (many2one)  : NEW relation: account.payment, isrelated: related, stored
+# NOTHING TO DO: it's related to source_transaction_id and the new refund feature
+
+payment      / account.payment.method.line / payment_acquirer_id (many2one): NEW relation: payment.acquirer, isfunction: function, stored
+payment      / payment.acquirer         / journal_id (many2one)         : not stored anymore
+payment      / payment.acquirer         / journal_id (many2one)         : now a function
+# DONE: post-migration: payment.method.line records are populated for each payment method.
+
+payment      / payment.acquirer         / _order                        : _order is now 'module_state, state desc, sequence, name' ('module_state, state, sequence, name')
+payment      / payment.acquirer         / check_validity (boolean)      : DEL
+# NOTHING TO DO
+
+payment      / payment.acquirer         / save_token (selection)        : DEL selection_keys: ['always', 'ask', 'none']
+payment      / payment.acquirer         / allow_tokenization (boolean)  : NEW
+DONE: post-migration: marked as true if 'always' or 'ask'
+
+payment      / payment.acquirer         / payment_flow (selection)      : DEL required, selection_keys: ['form', 's2s'], req_default: function
+# DONE: pre-migration: when payment_flow = form, inline_form_view_id is null
+
+payment      / payment.acquirer         / registration_view_template_id (many2one): DEL relation: ir.ui.view
+payment      / payment.acquirer         / inline_form_view_id (many2one): NEW relation: ir.ui.view
+# DONE: pre-migration: renamed field.
+
+payment      / payment.acquirer         / provider (selection)          : selection_keys is now '['none']' ('['manual']')
+# DONE: post-migration: converted value of provider (manual -> none)
+
+payment      / payment.acquirer         / qr_code (boolean)             : module is now 'payment_transfer' ('payment')
+payment      / payment.acquirer         / redirect_form_view_id (many2one): NEW relation: ir.ui.view
+payment      / payment.acquirer         / support_authorization (boolean): NEW
+payment      / payment.acquirer         / support_fees_computation (boolean): NEW
+payment      / payment.acquirer         / support_refund (selection)    : NEW selection_keys: ['full_only', 'partial']
+payment      / payment.acquirer         / support_tokenization (boolean): NEW
+payment      / payment.acquirer         / view_template_id (many2one)   : DEL relation: ir.ui.view
+# NOTHING TO DO
+
+payment      / payment.icon             / _order                        : _order is now 'sequence, name' ('id')
+payment      / payment.icon             / image_payment_form (binary)   : now related
+payment      / payment.icon             / sequence (integer)            : NEW hasdefault
+# NOTHING TO DO
+
+payment      / payment.token            / name (char)                   : now required
+# DONE: pre-migration: filled value for name
+
+payment      / payment.token            / payment_ids (one2many)        : DEL relation: payment.transaction
+payment      / payment.token            / transaction_ids (one2many)    : NEW relation: payment.transaction
+# DONE: pre-migration: renamed field payment_ids -> transaction_ids
+
+payment      / payment.token            / provider (selection)          : previously in module payment_authorize
+# NOTHING TO DO
+
+payment      / payment.transaction      / callback_is_done (boolean)    : NEW
+payment      / payment.transaction      / company_id (many2one)         : NEW relation: res.company, isrelated: related, stored
+# NOTHING TO DO
+
+payment      / payment.transaction      / date (datetime)               : DEL
+# NOTHING TO DO: This date will be in the best case the same as write_date, and in the worst, the create_date, so nothing relevant.
+
+payment      / payment.transaction      / html_3ds (char)               : DEL
+# NOTHING TO DO
+
+payment      / payment.transaction      / is_post_processed (boolean)   : NEW
+payment      / payment.transaction      / is_processed (boolean)        : DEL
+# DONE: pre-migration: renamed field is_processed -> is_post_processed
+
+payment      / payment.transaction      / landing_route (char)          : NEW
+# NOTHING TO DO
+
+payment      / payment.transaction      / last_state_change (datetime)  : NEW hasdefault
+# DONE: post-migration: filled value for last_state_change
+
+payment      / payment.transaction      / operation (selection)         : NEW selection_keys: ['offline', 'online_direct', 'online_redirect', 'online_token', 'refund', 'validation']
+# NOTHING TO DO
+
+payment      / payment.transaction      / partner_id (many2one)         : now required
+# DONE: pre-migration: filled value for partner_id
+
+payment      / payment.transaction      / partner_state_id (many2one)   : NEW relation: res.country.state
+# DONE: post-migration: filled value for partner_state_id
+
+payment      / payment.transaction      / return_url (char)             : DEL
+payment      / payment.transaction      / source_transaction_id (many2one): NEW relation: payment.transaction
+# NOTHING TO DO
+
+payment      / payment.transaction      / payment_token_id (many2one)   : DEL relation: payment.token
+payment      / payment.transaction      / token_id (many2one)           : NEW relation: payment.token
+# DONE: pre-migration: renamed field payment_token_id -> token_id
+
+payment      / payment.transaction      / tokenize (boolean)            : NEW
+payment      / payment.transaction      / type (selection)              : DEL required, selection_keys: ['form', 'form_save', 'server2server', 'validation'], req_default: function
+# DONE: post-migration: marked as true if 'form_save'
+
+---XML records in module 'payment'---
+DEL account.payment.method: payment.account_payment_method_electronic_in
+NEW ir.actions.act_window: payment.action_payment_token
+NEW ir.actions.act_window: payment.action_payment_transaction_linked_to_token
+DEL ir.actions.act_window: payment.action_payment_tx_ids
+DEL ir.actions.act_window: payment.payment_token_action
+NEW ir.model.access: payment.payment_acquirer_onboarding_wizard
+NEW ir.model.access: payment.payment_link_wizard
+NEW ir.model.access: payment.payment_refund_wizard
+NEW ir.model.access: payment.payment_token_all
+NEW ir.model.access: payment.payment_token_portal
+NEW ir.model.access: payment.payment_token_system
+NEW ir.model.access: payment.payment_token_user
+DEL ir.model.access: payment.access_payment_acquirer_onboarding_wizard
+DEL ir.model.access: payment.access_payment_link_wizard
+DEL ir.model.access: payment.payment_acquirer_all
+DEL ir.model.access: payment.payment_icon_user
+DEL ir.model.access: payment.payment_method_all
+DEL ir.model.access: payment.payment_method_portal
+DEL ir.model.access: payment.payment_method_system
+DEL ir.model.access: payment.payment_method_user
+NEW ir.rule: payment.payment_acquirer_company_rule (noupdate)
+NEW ir.rule: payment.payment_token_company_rule (noupdate)
+NEW ir.rule: payment.transaction_company_rule (noupdate)
+# NOTHING TO DO
+
+NEW ir.rule: payment.payment_token_billing_rule (noupdate)
+DEL ir.rule: payment.payment_token_salesman_rule (noupdate)
+# DONE: pre-migration: renamed xmlid
+
+NEW ir.ui.view: payment.checkout
+NEW ir.ui.view: payment.footer
+NEW ir.ui.view: payment.icon_list
+NEW ir.ui.view: payment.manage
+NEW ir.ui.view: payment.payment_acquirer_form
+NEW ir.ui.view: payment.payment_acquirer_kanban
+NEW ir.ui.view: payment.payment_acquirer_list
+NEW ir.ui.view: payment.payment_acquirer_search
+NEW ir.ui.view: payment.payment_icon_form
+NEW ir.ui.view: payment.payment_icon_tree
+NEW ir.ui.view: payment.payment_methods
+NEW ir.ui.view: payment.payment_refund_wizard_view_form
+NEW ir.ui.view: payment.payment_status
+NEW ir.ui.view: payment.payment_token_form
+NEW ir.ui.view: payment.payment_token_list
+NEW ir.ui.view: payment.payment_token_search
+NEW ir.ui.view: payment.payment_transaction_form
+NEW ir.ui.view: payment.payment_transaction_kanban
+NEW ir.ui.view: payment.payment_transaction_list
+NEW ir.ui.view: payment.payment_transaction_search
+NEW ir.ui.view: payment.portal_breadcrumb
+NEW ir.ui.view: payment.transaction_status
+NEW ir.ui.view: payment.verified_token_checkmark
+NEW ir.ui.view: payment.view_account_journal_form
+NEW ir.ui.view: payment.view_account_payment_register_form_inherit_payment
+DEL ir.ui.view: payment.acquirer_form
+DEL ir.ui.view: payment.acquirer_kanban
+DEL ir.ui.view: payment.acquirer_list
+DEL ir.ui.view: payment.acquirer_search
+DEL ir.ui.view: payment.assets_backend
+DEL ir.ui.view: payment.assets_frontend
+# NOTHING TO DO
+
+DEL ir.ui.view: payment.default_acquirer_button (noupdate)
+# DONE: safely deleted xmlid
+
+DEL ir.ui.view: payment.pay_methods
+DEL ir.ui.view: payment.payment_confirmation_status
+DEL ir.ui.view: payment.payment_icon_form_view
+DEL ir.ui.view: payment.payment_process_page
+DEL ir.ui.view: payment.payment_token_form_view
+DEL ir.ui.view: payment.payment_token_tree_view
+DEL ir.ui.view: payment.payment_token_view_search
+DEL ir.ui.view: payment.payment_tokens_list
+DEL ir.ui.view: payment.transaction
+DEL ir.ui.view: payment.transaction_form
+DEL ir.ui.view: payment.transaction_list
+DEL ir.ui.view: payment.transaction_view_kanban
+DEL ir.ui.view: payment_fix_register_token.view_account_payment_register_form_inherit_payment
+NEW payment.acquirer: payment.payment_acquirer_mollie (noupdate)
+NEW payment.acquirer: payment.payment_acquirer_test [renamed from payment_test module] (noupdate)
+# NOTHING TO DO
+
+DEL payment.acquirer: payment.payment_acquirer_odoo_by_adyen (noupdate)
+# DONE: post-migration: safely deleted xmlid
+
+NEW payment.acquirer: payment.payment_acquirer_ogone (noupdate)
+NEW payment.acquirer: payment.payment_acquirer_payumoney (noupdate)
+DEL payment.acquirer: payment.payment_acquirer_ingenico (noupdate)
+DEL payment.acquirer: payment.payment_acquirer_payu (noupdate)
+# DONE: pre-migration: renamed xmlids
+
+NEW payment.icon: payment.payment_icon_apple_pay
+NEW payment.icon: payment.payment_icon_kbc
+NEW payment.icon: payment.payment_icon_paypal
+NEW payment.icon: payment.payment_icon_sepa
+# NOTHING TO DO
