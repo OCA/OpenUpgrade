@@ -1,0 +1,44 @@
+---Models in module 'survey'---
+---Fields in module 'survey'---
+survey       / survey.survey            / state (selection)             : DEL required, selection_keys: ['closed', 'draft', 'open'], req_default: function
+# NOTHING TO DO
+
+survey       / survey.survey            / user_id (many2one)            : NEW relation: res.users, hasdefault
+#DONE: post-migration: user_id = create_uid
+
+survey       / survey.user_input        / _order                        : _order is now 'create_date desc' ('id')
+# NOTHING TO DO
+
+survey       / survey.user_input        / end_datetime (datetime)       : NEW
+# DONE: post-migration: When survey.user_input done, end_datetime = create_date of survey.user_input.line
+
+---XML records in module 'survey'---
+DEL ir.model.constraint: survey.constraint_survey_question_positive_answer_score
+DEL ir.model.constraint: survey.constraint_survey_question_positive_len_max
+DEL ir.model.constraint: survey.constraint_survey_question_positive_len_min
+DEL ir.model.constraint: survey.constraint_survey_question_scored_date_have_answers
+DEL ir.model.constraint: survey.constraint_survey_question_scored_datetime_have_answers
+DEL ir.model.constraint: survey.constraint_survey_question_validation_date
+DEL ir.model.constraint: survey.constraint_survey_question_validation_datetime
+DEL ir.model.constraint: survey.constraint_survey_question_validation_float
+DEL ir.model.constraint: survey.constraint_survey_question_validation_length
+DEL ir.model.constraint: survey.constraint_survey_survey_access_token_unique
+DEL ir.model.constraint: survey.constraint_survey_survey_attempts_limit_check
+DEL ir.model.constraint: survey.constraint_survey_survey_badge_uniq
+DEL ir.model.constraint: survey.constraint_survey_survey_certification_check
+DEL ir.model.constraint: survey.constraint_survey_survey_give_badge_check
+DEL ir.model.constraint: survey.constraint_survey_survey_scoring_success_min_check
+DEL ir.model.constraint: survey.constraint_survey_survey_session_code_unique
+DEL ir.model.constraint: survey.constraint_survey_survey_time_limit_check
+DEL ir.model.constraint: survey.constraint_survey_user_input_unique_token
+# NOTHING TO DO: check code the constrains are not deleted, still the same 14.0
+
+NEW ir.ui.view: survey.certification_preview
+DEL ir.ui.view: survey.assets_backend
+DEL ir.ui.view: survey.assets_backend_inherit_survey
+DEL ir.ui.view: survey.assets_tests
+DEL ir.ui.view: survey.survey_assets
+DEL ir.ui.view: survey.survey_report_assets_pdf
+DEL ir.ui.view: survey.survey_user_input_session_assets
+NEW report.paperformat: survey.paperformat_survey_certification
+# NOTHING TO DO
