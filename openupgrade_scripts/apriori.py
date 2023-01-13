@@ -49,6 +49,7 @@ merged_modules = {
     # OCA/project
     "project_mail_chatter": "project",
     "project_task_dependency": "project",
+    "project_timeline_task_dependency": "project_timeline",
     # OCA/web
     "web_decimal_numpad_dot": "web",
 }
