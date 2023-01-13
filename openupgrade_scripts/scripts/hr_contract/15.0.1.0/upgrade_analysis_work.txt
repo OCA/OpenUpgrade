@@ -6,7 +6,8 @@ hr_contract  / hr.contract              / contract_type_id (many2one)   : NEW re
 # NOTHING TO DO: new feature on 15.0
 
 hr_contract  / hr.contract              / notes (text)                  : type is now 'html' ('text')
-# DONE: pre-migration: convert text to html
+# DONE: pre-migration: copied column for preserving old content
+# DONE: post-migration: convert text to html
 
 hr_contract  / hr.contract.type         / name (char)                   : NEW required
 # NOTHING TO DO: new model for new feature on 15.0
