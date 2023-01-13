@@ -1,0 +1,22 @@
+---Models in module 'payment_adyen'---
+---Fields in module 'payment_adyen'---
+payment_adyen / payment.acquirer         / adyen_api_key (char)          : previously in module payment_adyen_paybylink
+payment_adyen / payment.acquirer         / adyen_checkout_api_url (char) : previously in module payment_adyen_paybylink
+payment_adyen / payment.acquirer         / adyen_client_key (char)       : NEW
+payment_adyen / payment.acquirer         / adyen_hmac_key (char)         : previously in module payment_adyen_paybylink
+payment_adyen / payment.acquirer         / adyen_recurring_api_url (char): NEW
+payment_adyen / payment.acquirer         / adyen_skin_code (char)        : DEL
+payment_adyen / payment.acquirer         / adyen_skin_hmac_key (char)    : DEL
+payment_adyen / payment.acquirer         / provider (False)              : selection_keys is now '['adyen', 'none']' ('['adyen', 'manual']')
+payment_adyen / payment.token            / adyen_shopper_reference (char): NEW
+# NOTHING TO DO
+
+---XML records in module 'payment_adyen'---
+NEW account.payment.method: payment_adyen.payment_method_adyen (noupdate)
+NEW ir.ui.view: payment_adyen.inline_form
+NEW ir.ui.view: payment_adyen.payment_acquirer_form
+DEL ir.ui.view: payment_adyen.acquirer_form_adyen
+# NOTHING TO DO
+
+DEL ir.ui.view: payment_adyen.adyen_form (noupdate)
+# DONE: post-migration: safely deleted xmlid

@@ -1,0 +1,11 @@
+---Models in module 'payment_mollie'---
+---Fields in module 'payment_mollie'---
+payment_mollie / payment.acquirer         / mollie_api_key (char)         : NEW
+payment_mollie / payment.acquirer         / provider (False)              : previously in module payment_odoo_by_adyen
+# NOTHING TO DO
+
+---XML records in module 'payment_mollie'---
+NEW account.payment.method: payment_mollie.payment_method_mollie (noupdate)
+NEW ir.ui.view: payment_mollie.payment_acquirer_form
+NEW ir.ui.view: payment_mollie.redirect_form
+# NOTHING TO DO

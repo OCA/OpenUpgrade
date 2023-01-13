@@ -24,6 +24,7 @@ merged_modules = {
     "l10n_eu_service": "l10n_eu_oss",  # due to OCA/account-fiscal-rule
     "l10n_ch_qr_iban": "l10n_ch",
     "l10n_se_ocr": "l10n_se",
+    "payment_adyen_paybylink": "payment_adyen",
     "payment_fix_register_token": "payment",
     "procurement_jit": "sale_stock",
     "sale_timesheet_edit": "sale_timesheet",
