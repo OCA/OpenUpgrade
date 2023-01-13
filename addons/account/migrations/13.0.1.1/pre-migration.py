@@ -59,6 +59,10 @@ _field_adds = [
     ("tax_group_id", "account.move.line", "account_move_line", "many2one", False, "account")
 ]
 
+xmlid_renames_payment_terms = [
+    ("account.account_payment_term_net", "account.account_payment_term_30days"),
+]
+
 
 def type_change_account_fiscal_position_zips(env):
     tables = ['account_fiscal_position', 'account_fiscal_position_template']
@@ -328,6 +332,7 @@ def migrate(env, version):
         )
     openupgrade.rename_models(cr, _model_renames)
     openupgrade.rename_tables(cr, _table_renames)
+    openupgrade.rename_xmlids(env.cr, xmlid_renames_payment_terms)
     openupgrade.add_fields(env, _field_adds)
     type_change_account_fiscal_position_zips(env)
     create_account_invoice_amount_tax_company_signed(env)

@@ -1100,7 +1100,6 @@ def migrate(env, version):
             "account.invoice_comp_rule",
             "account.voucher_comp_rule",
             "account.voucher_line_comp_rule",
-            "account.account_payment_term_net",
             "account.reconciliation_model_default_rule",
         ]
     )
