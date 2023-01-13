@@ -1,0 +1,93 @@
+---Models in module 'sale_timesheet'---
+obsolete model project.task.create.sale.order [transient]
+---Fields in module 'sale_timesheet'---
+sale_timesheet / account.analytic.line    / order_id (many2one)           : NEW relation: sale.order, isrelated: related, stored
+# NOTHING TO DO: Filled by SQL by the ORM
+
+sale_timesheet / account.analytic.line    / non_allow_billable (boolean)  : DEL
+# NOTHING TO DO: non_allow_billable is not used anymore
+
+sale_timesheet / account.analytic.line    / timesheet_invoice_type (selection): selection_keys is now '['billable_fixed', 'billable_time', 'non_billable', 'other_costs', 'other_revenues', 'service_revenues', 'timesheet_revenues']' ('['billable_fixed', 'billable_time', 'non_billable', 'non_billable_project', 'non_billable_timesheet']')
+# DONE: pre-migration: re-filled value
+
+sale_timesheet / product.template         / service_upsell_threshold (float): NEW hasdefault
+# NOTHING TO DO
+
+sale_timesheet / project.project          / bill_type (selection)         : DEL selection_keys: ['customer_project', 'customer_task']
+# NOTHING TO DO: bill_type is not used anymore
+
+sale_timesheet / project.project          / pricing_type (selection)      : not stored anymore
+sale_timesheet / project.project          / pricing_type (selection)      : now a function
+sale_timesheet / project.project          / pricing_type (selection)      : selection_keys is now '['employee_rate', 'fixed_rate', 'task_rate']' ('['employee_rate', 'fixed_rate']')
+# NOTHING TO DO: non-stored field
+
+sale_timesheet / project.sale.line.employee.map / cost (float)                  : NEW isfunction: function, stored
+# DONE: pre-migration: fast filled
+
+sale_timesheet / project.sale.line.employee.map / is_cost_changed (boolean)     : NEW isfunction: function, stored
+# DONE: pre-migration: pre-created with default=False
+
+sale_timesheet / project.sale.line.employee.map / sale_line_id (many2one)       : now a function
+# NOTHING TO DO
+
+sale_timesheet / project.sale.line.employee.map / timesheet_product_id (many2one): DEL relation: product.product
+# NOTHING TO DO: timesheet_product_id is not used anymore
+
+sale_timesheet / project.task             / analytic_account_id (many2one): is now stored
+sale_timesheet / project.task             / analytic_account_id (many2one): module is now 'project' ('sale_timesheet')
+sale_timesheet / project.task             / analytic_account_id (many2one): not related anymore
+# NOTHING TO DO: Handled by ORM in project module
+
+sale_timesheet / project.task             / non_allow_billable (boolean)  : DEL
+# NOTHING TO DO: non_allow_billable is not used anymore, we use allow_billable instead
+
+sale_timesheet / project.task             / timesheet_product_id (many2one): not stored anymore
+sale_timesheet / project.task             / timesheet_product_id (many2one): now related
+# NOTHING TO DO: non-stored field
+
+sale_timesheet / sale.order.line          / has_displayed_warning_upsell (boolean): NEW
+# NOTHING TO DO: new field for new feature
+
+sale_timesheet / sale.order.line          / remaining_hours (float)       : is now stored
+# NOTHING TO DO: handed by ORM
+
+---XML records in module 'sale_timesheet'---
+DEL ir.actions.act_window: sale_timesheet.project_profitability_report_action
+DEL ir.actions.act_window: sale_timesheet.project_task_action_multi_create_sale_order
+DEL ir.actions.act_window: sale_timesheet.project_timesheet_action_client_timesheet_plan
+NEW ir.actions.act_window.view: sale_timesheet.action_timesheet_from_invoice_view_form
+NEW ir.actions.act_window.view: sale_timesheet.action_timesheet_from_invoice_view_graph
+NEW ir.actions.act_window.view: sale_timesheet.action_timesheet_from_invoice_view_kanban
+NEW ir.actions.act_window.view: sale_timesheet.action_timesheet_from_invoice_view_pivot
+NEW ir.actions.act_window.view: sale_timesheet.action_timesheet_from_invoice_view_tree
+NEW ir.actions.act_window.view: sale_timesheet.timesheet_action_view_report_by_billing_rate_form
+NEW ir.actions.act_window.view: sale_timesheet.timesheet_action_view_report_by_billing_rate_kanban
+NEW ir.actions.act_window.view: sale_timesheet.timesheet_action_view_report_by_billing_rate_tree
+DEL ir.model.access: sale_timesheet.access_project_task_create_sale_order
+DEL ir.model.constraint: sale_timesheet.constraint_project_create_sale_order_line_unique_employee_per_wizard
+DEL ir.model.constraint: sale_timesheet.constraint_project_project_timesheet_product_required_if_billable_and_timesheets
+DEL ir.model.constraint: sale_timesheet.constraint_project_sale_line_employee_map_uniqueness_employee
+DEL ir.ui.menu: sale_timesheet.menu_project_profitability_analysis
+NEW ir.ui.view: sale_timesheet.hr_timesheet_line_form_inherit
+NEW ir.ui.view: sale_timesheet.hr_timesheet_line_tree_inherit
+NEW ir.ui.view: sale_timesheet.portal_invoice_page_inherit
+NEW ir.ui.view: sale_timesheet.portal_my_task_inherit
+NEW ir.ui.view: sale_timesheet.portal_timesheet_table_inherit
+NEW ir.ui.view: sale_timesheet.project_profitability_report_view_tree
+NEW ir.ui.view: sale_timesheet.project_sharing_inherit_project_task_view_form
+NEW ir.ui.view: sale_timesheet.project_task_view_form_inherit_sale_timesheet_editable
+NEW ir.ui.view: sale_timesheet.project_update_default_description
+DEL ir.ui.view: sale_timesheet.assets_backend
+DEL ir.ui.view: sale_timesheet.assets_frontend
+DEL ir.ui.view: sale_timesheet.portal_invoice_page_inherit_timesheet
+DEL ir.ui.view: sale_timesheet.progressbar
+DEL ir.ui.view: sale_timesheet.project_task_create_sale_order_view_form
+DEL ir.ui.view: sale_timesheet.quick_create_task_form_sale_timesheet
+DEL ir.ui.view: sale_timesheet.report_invoice_document
+DEL ir.ui.view: sale_timesheet.sale_order_portal_template_inherit
+DEL ir.ui.view: sale_timesheet.timesheet_plan
+DEL ir.ui.view: sale_timesheet.timesheet_view_tree_sale
+DEL ir.ui.view: sale_timesheet_edit.assets_backend
+DEL ir.ui.view: sale_timesheet_edit.project_task_view_form_inherit_sale_timesheet_edit
+DEL ir.ui.view: sale_timesheet_edit.project_task_view_form_inherit_sale_timesheet_editable
+# NOTHING TO DO: noupdate="0" records
