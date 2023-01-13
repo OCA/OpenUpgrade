@@ -1,8 +1,12 @@
 from openupgradelib import openupgrade
 
+_columns_copy = {
+    "purchase_requisition": [
+        ("description", None, None),
+    ],
+}
+
 
 @openupgrade.migrate()
 def migrate(env, version):
-    openupgrade.convert_field_to_html(
-        env.cr, "purchase_requisition", "description", "description"
-    )
+    openupgrade.copy_columns(env.cr, _columns_copy)

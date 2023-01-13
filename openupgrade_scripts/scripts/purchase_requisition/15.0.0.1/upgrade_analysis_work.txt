@@ -1,7 +1,8 @@
 ---Models in module 'purchase_requisition'---
 ---Fields in module 'purchase_requisition'---
 purchase_requisition / purchase.requisition     / description (text)            : type is now 'html' ('text')
-# DONE: pre-migration: convert plaintext to html
+# DONE: pre-migration: copy column for preserving old content.
+# DONE: post-migration: convert plaintext to html
 
 purchase_requisition / purchase.requisition.type / active (boolean)              : NEW hasdefault
 # NOTHING TO DO
