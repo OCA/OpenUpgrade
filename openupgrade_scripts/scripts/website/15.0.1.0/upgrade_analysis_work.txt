@@ -25,14 +25,16 @@ website      / theme.ir.asset           / target (char)                 : NEW
 # NOTHING TO DO: new model
 
 website      / website                  / _order                        : _order is now 'sequence, id' ('id')
-website      / website                  / configurator_done (boolean)   : NEW
 website      / website                  / sequence (integer)            : NEW hasdefault
-# NOTHING TO DO
+# NOTHING TO DO: The old order is kept
+
+website      / website                  / configurator_done (boolean)   : NEW
+# DONE: post-migration: set to True for avoiding the wizard on existing websites
 
 website      / website                  / custom_code_footer (text)     : type is now 'html' ('text')
 website      / website                  / custom_code_head (text)       : type is now 'html' ('text')
 website      / website                  / robots_txt (text)             : type is now 'html' ('text')
-# DONE: pre-migation: convert custom_code_footer, custom_code_head, robots_txt field from text to html
+# NOTHING TO DO: The content is still the same and the widget used in screen is kept (ace xml)
 
 website      / website.configurator.feature / description (char)            : NEW
 website      / website.configurator.feature / feature_url (char)            : NEW
@@ -45,7 +47,7 @@ website      / website.configurator.feature / name (char)                   : NE
 website      / website.configurator.feature / page_view_id (many2one)       : NEW relation: ir.ui.view
 website      / website.configurator.feature / sequence (integer)            : NEW
 website      / website.configurator.feature / website_config_preselection (char): NEW
-# NOTHING TO DO: new model
+# NOTHING TO DO: new model for showing website features that is fed through <data> in the modules.
 
 ---XML records in module 'website'---
 NEW digest.tip: website.digest_tip_website_3
