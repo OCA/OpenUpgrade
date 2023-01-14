@@ -1,0 +1,345 @@
+---Models in module 'website'---
+new model theme.ir.asset
+new model website.configurator.feature
+new model website.searchable.mixin [abstract]
+# NOTHING TO DO
+
+---Fields in module 'website'---
+website      / ir.asset                 / key (char)                    : NEW
+website      / ir.asset                 / theme_template_id (many2one)  : NEW relation: theme.ir.asset
+website      / ir.asset                 / website_id (many2one)         : NEW relation: website
+# NOTHING TO DO
+
+website      / res.company              / website_id (many2one)         : NEW relation: website, isfunction: function, stored
+# NOTHING TO DO
+
+website      / theme.ir.asset           / active (boolean)              : NEW hasdefault
+website      / theme.ir.asset           / bundle (char)                 : NEW required
+website      / theme.ir.asset           / copy_ids (one2many)           : NEW relation: ir.asset
+website      / theme.ir.asset           / directive (selection)         : NEW selection_keys: ['after', 'append', 'before', 'include', 'prepend', 'remove', 'replace'], hasdefault
+website      / theme.ir.asset           / key (char)                    : NEW
+website      / theme.ir.asset           / name (char)                   : NEW required
+website      / theme.ir.asset           / path (char)                   : NEW required
+website      / theme.ir.asset           / sequence (integer)            : NEW required, req_default: function, hasdefault
+website      / theme.ir.asset           / target (char)                 : NEW
+# NOTHING TO DO: new model
+
+website      / website                  / _order                        : _order is now 'sequence, id' ('id')
+website      / website                  / sequence (integer)            : NEW hasdefault
+# NOTHING TO DO: The old order is kept
+
+website      / website                  / configurator_done (boolean)   : NEW
+# DONE: post-migration: set to True for avoiding the wizard on existing websites
+
+website      / website                  / custom_code_footer (text)     : type is now 'html' ('text')
+website      / website                  / custom_code_head (text)       : type is now 'html' ('text')
+website      / website                  / robots_txt (text)             : type is now 'html' ('text')
+# NOTHING TO DO: The content is still the same and the widget used in screen is kept (ace xml)
+
+website      / website.configurator.feature / description (char)            : NEW
+website      / website.configurator.feature / feature_url (char)            : NEW
+website      / website.configurator.feature / iap_page_code (char)          : NEW
+website      / website.configurator.feature / icon (char)                   : NEW
+website      / website.configurator.feature / menu_company (boolean)        : NEW
+website      / website.configurator.feature / menu_sequence (integer)       : NEW
+website      / website.configurator.feature / module_id (many2one)          : NEW relation: ir.module.module
+website      / website.configurator.feature / name (char)                   : NEW
+website      / website.configurator.feature / page_view_id (many2one)       : NEW relation: ir.ui.view
+website      / website.configurator.feature / sequence (integer)            : NEW
+website      / website.configurator.feature / website_config_preselection (char): NEW
+# NOTHING TO DO: new model for showing website features that is fed through <data> in the modules.
+
+---XML records in module 'website'---
+NEW digest.tip: website.digest_tip_website_3
+NEW digest.tip: website.digest_tip_website_4
+# NOTHING TO DO
+
+ir.actions.act_url: website.action_website (noupdate switched)
+# DONE: pre-migration: switched noupdate
+
+NEW ir.actions.act_url: website.start_configurator_act_url
+# NOTHING TO DO
+
+DEL ir.actions.act_url: website.action_website_edit (noupdate)
+# DONE: post-migration: deleted xmlid safely
+
+DEL ir.actions.act_url: website.theme_install_act_url
+NEW ir.actions.act_window: website.action_show_viewhierarchy
+NEW ir.actions.todo: website.website_configurator_todo
+DEL ir.actions.todo: website.theme_install_todo
+NEW ir.asset: website.bs3_for_12_0_scss
+NEW ir.asset: website.configurator_tour
+NEW ir.asset: website.ripple_effect_js
+NEW ir.asset: website.ripple_effect_scss
+NEW ir.asset: website.s_alert_000_scss
+NEW ir.asset: website.s_badge_000_scss
+NEW ir.asset: website.s_badge_000_variables_scss
+NEW ir.asset: website.s_blockquote_000_scss
+NEW ir.asset: website.s_card_000_scss
+NEW ir.asset: website.s_chart_000_js
+NEW ir.asset: website.s_color_blocks_2_000_scss
+NEW ir.asset: website.s_company_team_000_scss
+NEW ir.asset: website.s_comparisons_000_scss
+NEW ir.asset: website.s_countdown_000_js
+NEW ir.asset: website.s_dynamic_snippet_000_js
+NEW ir.asset: website.s_dynamic_snippet_000_scss
+NEW ir.asset: website.s_dynamic_snippet_carousel_000_js
+NEW ir.asset: website.s_dynamic_snippet_carousel_000_scss
+NEW ir.asset: website.s_embed_code_000_scss
+NEW ir.asset: website.s_facebook_page_000_js
+NEW ir.asset: website.s_faq_collapse_000_scss
+NEW ir.asset: website.s_features_grid_000_scss
+NEW ir.asset: website.s_google_map_000_js
+NEW ir.asset: website.s_google_map_000_scss
+NEW ir.asset: website.s_hr_000_scss
+NEW ir.asset: website.s_image_gallery_000_js
+NEW ir.asset: website.s_image_gallery_000_scss
+NEW ir.asset: website.s_image_gallery_001_scss
+NEW ir.asset: website.s_map_000_scss
+NEW ir.asset: website.s_masonry_block_000_scss
+NEW ir.asset: website.s_masonry_block_000_variables_scss
+NEW ir.asset: website.s_masonry_block_001_scss
+NEW ir.asset: website.s_media_list_000_scss
+NEW ir.asset: website.s_media_list_001_scss
+NEW ir.asset: website.s_mega_menu_cards_000_scss
+NEW ir.asset: website.s_mega_menu_images_subtitles_000_scss
+NEW ir.asset: website.s_mega_menu_little_icons_000_scss
+NEW ir.asset: website.s_mega_menu_menus_logos_000_scss
+NEW ir.asset: website.s_mega_menu_odoo_menu_000_scss
+NEW ir.asset: website.s_mega_menu_thumbnails_000_scss
+NEW ir.asset: website.s_popup_000_js
+NEW ir.asset: website.s_popup_000_scss
+NEW ir.asset: website.s_popup_001_scss
+NEW ir.asset: website.s_process_steps_000_scss
+NEW ir.asset: website.s_product_catalog_001_scss
+NEW ir.asset: website.s_product_list_000_scss
+NEW ir.asset: website.s_product_list_000_variables_scss
+NEW ir.asset: website.s_quotes_carousel_000_scss
+NEW ir.asset: website.s_quotes_carousel_001_scss
+NEW ir.asset: website.s_rating_000_scss
+NEW ir.asset: website.s_rating_001_scss
+NEW ir.asset: website.s_references_000_scss
+NEW ir.asset: website.s_searchbar_000_js
+NEW ir.asset: website.s_share_000_js
+NEW ir.asset: website.s_share_000_scss
+NEW ir.asset: website.s_showcase_000_scss
+NEW ir.asset: website.s_showcase_001_scss
+NEW ir.asset: website.s_showcase_002_scss
+NEW ir.asset: website.s_table_of_content_000_js
+NEW ir.asset: website.s_table_of_content_000_scss
+NEW ir.asset: website.s_tabs_001_scss
+NEW ir.asset: website.s_text_highlight_000_scss
+NEW ir.asset: website.s_three_columns_000_scss
+NEW ir.asset: website.s_timeline_000_scss
+NEW ir.asset: website.s_title_000_scss
+NEW ir.asset: website.s_website_form_000_js
+NEW ir.asset: website.s_website_form_000_scss
+NEW ir.asset: website.s_website_form_001_scss
+NEW ir.asset: website.user_custom_bootstrap_overridden_scss
+NEW ir.asset: website.user_custom_rules_scss
+NEW ir.attachment: website.s_masonry_block_default_image_2 (noupdate)
+NEW ir.attachment: website.s_mega_menu_cards_default_image_1 (noupdate)
+NEW ir.attachment: website.s_mega_menu_cards_default_image_2 (noupdate)
+NEW ir.attachment: website.s_mega_menu_cards_default_image_3 (noupdate)
+NEW ir.attachment: website.s_mega_menu_cards_default_image_4 (noupdate)
+NEW ir.attachment: website.s_mega_menu_cards_default_image_5 (noupdate)
+NEW ir.attachment: website.s_mega_menu_cards_default_image_6 (noupdate)
+NEW ir.attachment: website.s_mega_menu_cards_default_image_7 (noupdate)
+NEW ir.attachment: website.s_mega_menu_cards_default_image_8 (noupdate)
+NEW ir.attachment: website.s_mega_menu_images_subtitles_default_image_1 (noupdate)
+NEW ir.attachment: website.s_mega_menu_images_subtitles_default_image_2 (noupdate)
+NEW ir.attachment: website.s_mega_menu_images_subtitles_default_image_3 (noupdate)
+NEW ir.attachment: website.s_mega_menu_images_subtitles_default_image_4 (noupdate)
+NEW ir.attachment: website.s_mega_menu_images_subtitles_default_image_5 (noupdate)
+NEW ir.attachment: website.s_mega_menu_images_subtitles_default_image_6 (noupdate)
+NEW ir.attachment: website.s_mega_menu_images_subtitles_default_image_7 (noupdate)
+NEW ir.attachment: website.s_mega_menu_menus_logos_default_image (noupdate)
+NEW ir.attachment: website.s_mega_menu_menus_logos_default_logo_1 (noupdate)
+NEW ir.attachment: website.s_mega_menu_menus_logos_default_logo_2 (noupdate)
+NEW ir.attachment: website.s_mega_menu_menus_logos_default_logo_3 (noupdate)
+NEW ir.attachment: website.s_mega_menu_menus_logos_default_logo_4 (noupdate)
+NEW ir.attachment: website.s_mega_menu_menus_logos_default_logo_5 (noupdate)
+NEW ir.attachment: website.s_mega_menu_menus_logos_default_logo_6 (noupdate)
+NEW ir.attachment: website.s_mega_menu_thumbnails_default_image_1 (noupdate)
+NEW ir.attachment: website.s_mega_menu_thumbnails_default_image_10 (noupdate)
+NEW ir.attachment: website.s_mega_menu_thumbnails_default_image_11 (noupdate)
+NEW ir.attachment: website.s_mega_menu_thumbnails_default_image_2 (noupdate)
+NEW ir.attachment: website.s_mega_menu_thumbnails_default_image_3 (noupdate)
+NEW ir.attachment: website.s_mega_menu_thumbnails_default_image_4 (noupdate)
+NEW ir.attachment: website.s_mega_menu_thumbnails_default_image_5 (noupdate)
+NEW ir.attachment: website.s_mega_menu_thumbnails_default_image_6 (noupdate)
+NEW ir.attachment: website.s_mega_menu_thumbnails_default_image_7 (noupdate)
+NEW ir.attachment: website.s_mega_menu_thumbnails_default_image_8 (noupdate)
+NEW ir.attachment: website.s_mega_menu_thumbnails_default_image_9 (noupdate)
+NEW ir.attachment: website.s_quotes_carousel_demo_image_0 (noupdate)
+NEW ir.cron: website.website_disable_unused_snippets_assets
+DEL ir.filters: website.dynamic_snippet_country_filter
+NEW ir.model.access: website.access_theme_ir_asset_group_system
+NEW ir.model.access: website.access_website_configurator_feature_designer
+NEW ir.model.access: website.access_website_ir_asset_designer
+NEW ir.ui.view: website.aboutus
+NEW ir.ui.view: website.asset_view_form_inherit_website
+NEW ir.ui.view: website.footer_copyright_company_name
+NEW ir.ui.view: website.header_call_to_action
+NEW ir.ui.view: website.ir_model_fields_view
+NEW ir.ui.view: website.ir_model_view
+NEW ir.ui.view: website.list_hybrid
+NEW ir.ui.view: website.list_website_public_pages
+NEW ir.ui.view: website.navbar
+NEW ir.ui.view: website.one_hybrid
+NEW ir.ui.view: website.option_header_no_mobile_hamburger
+NEW ir.ui.view: website.our_services
+NEW ir.ui.view: website.placeholder_header_call_to_action
+NEW ir.ui.view: website.pricing
+NEW ir.ui.view: website.privacy_policy
+NEW ir.ui.view: website.report_viewhierarchy_children
+NEW ir.ui.view: website.s_embed_code
+NEW ir.ui.view: website.s_embed_code_options
+NEW ir.ui.view: website.s_faq_collapse_options
+NEW ir.ui.view: website.s_map
+NEW ir.ui.view: website.s_map_options
+NEW ir.ui.view: website.s_masonry_block_alternation_image_text_template
+NEW ir.ui.view: website.s_masonry_block_alternation_text_image_template
+NEW ir.ui.view: website.s_masonry_block_alternation_text_image_text_template
+NEW ir.ui.view: website.s_masonry_block_alternation_text_template
+NEW ir.ui.view: website.s_masonry_block_default_template
+NEW ir.ui.view: website.s_masonry_block_image_texts_image_template
+NEW ir.ui.view: website.s_masonry_block_images_template
+NEW ir.ui.view: website.s_masonry_block_mosaic_template
+NEW ir.ui.view: website.s_masonry_block_options
+NEW ir.ui.view: website.s_masonry_block_reversed_template
+NEW ir.ui.view: website.s_masonry_block_texts_image_texts_template
+NEW ir.ui.view: website.s_mega_menu_big_icons_subtitles
+NEW ir.ui.view: website.s_mega_menu_big_icons_subtitles_item
+NEW ir.ui.view: website.s_mega_menu_cards
+NEW ir.ui.view: website.s_mega_menu_cards_item
+NEW ir.ui.view: website.s_mega_menu_images_subtitles
+NEW ir.ui.view: website.s_mega_menu_images_subtitles_item
+NEW ir.ui.view: website.s_mega_menu_little_icons
+NEW ir.ui.view: website.s_mega_menu_menus_logos
+NEW ir.ui.view: website.s_mega_menu_odoo_menu
+NEW ir.ui.view: website.s_mega_menu_thumbnails
+NEW ir.ui.view: website.s_mega_menu_thumbnails_item
+NEW ir.ui.view: website.s_product_catalog_add_product_widget
+NEW ir.ui.view: website.s_searchbar
+NEW ir.ui.view: website.s_searchbar_input
+NEW ir.ui.view: website.s_website_form
+NEW ir.ui.view: website.s_website_form_options
+NEW ir.ui.view: website.search_text_with_highlight
+NEW ir.ui.view: website.searchbar_input_snippet_options
+NEW ir.ui.view: website.snippet_options_conditional_visibility
+NEW ir.ui.view: website.snippet_options_header_brand
+NEW ir.ui.view: website.template_header_slogan_align_center
+NEW ir.ui.view: website.template_header_slogan_align_right
+NEW ir.ui.view: website.view_view_qweb
+NEW ir.ui.view: website.website_configurator
+NEW ir.ui.view: website.website_search_box_input
+DEL ir.ui.view: website._assets_frontend_helpers
+DEL ir.ui.view: website._assets_frontend_helpers_user_custom
+DEL ir.ui.view: website._assets_primary_variables
+DEL ir.ui.view: website._assets_secondary_variables
+DEL ir.ui.view: website._assets_snippet_s_badge_css_000_variables
+DEL ir.ui.view: website._assets_snippet_s_masonry_block_css_000_variables
+DEL ir.ui.view: website._assets_snippet_s_product_list_css_000_variables
+DEL ir.ui.view: website.assets_backend
+DEL ir.ui.view: website.assets_editor
+DEL ir.ui.view: website.assets_frontend
+DEL ir.ui.view: website.assets_frontend_compatibility_for_12_0
+DEL ir.ui.view: website.assets_frontend_user_custom
+DEL ir.ui.view: website.assets_snippet_s_alert_css_000
+DEL ir.ui.view: website.assets_snippet_s_badge_css_000
+DEL ir.ui.view: website.assets_snippet_s_blockquote_css_000
+DEL ir.ui.view: website.assets_snippet_s_btn_css_000
+DEL ir.ui.view: website.assets_snippet_s_card_css_000
+DEL ir.ui.view: website.assets_snippet_s_chart_js_000
+DEL ir.ui.view: website.assets_snippet_s_color_blocks_2_css_000
+DEL ir.ui.view: website.assets_snippet_s_company_team_css_000
+DEL ir.ui.view: website.assets_snippet_s_comparisons_css_000
+DEL ir.ui.view: website.assets_snippet_s_countdown_js_000
+DEL ir.ui.view: website.assets_snippet_s_dynamic_snippet_carousel_css_000
+DEL ir.ui.view: website.assets_snippet_s_dynamic_snippet_carousel_js_000
+DEL ir.ui.view: website.assets_snippet_s_dynamic_snippet_css_000
+DEL ir.ui.view: website.assets_snippet_s_dynamic_snippet_js_000
+DEL ir.ui.view: website.assets_snippet_s_facebook_page_js_000
+DEL ir.ui.view: website.assets_snippet_s_faq_collapse_css_000
+DEL ir.ui.view: website.assets_snippet_s_features_grid_css_000
+DEL ir.ui.view: website.assets_snippet_s_google_map_css_000
+DEL ir.ui.view: website.assets_snippet_s_google_map_js_000
+DEL ir.ui.view: website.assets_snippet_s_hr_css_000
+DEL ir.ui.view: website.assets_snippet_s_image_gallery_css_000
+DEL ir.ui.view: website.assets_snippet_s_image_gallery_css_001
+DEL ir.ui.view: website.assets_snippet_s_image_gallery_js_000
+DEL ir.ui.view: website.assets_snippet_s_masonry_block_css_000
+DEL ir.ui.view: website.assets_snippet_s_masonry_block_css_001
+DEL ir.ui.view: website.assets_snippet_s_media_list_css_000
+DEL ir.ui.view: website.assets_snippet_s_media_list_css_001
+DEL ir.ui.view: website.assets_snippet_s_numbers_css_000
+DEL ir.ui.view: website.assets_snippet_s_popup_css_000
+DEL ir.ui.view: website.assets_snippet_s_popup_css_001
+DEL ir.ui.view: website.assets_snippet_s_popup_js_000
+DEL ir.ui.view: website.assets_snippet_s_process_steps_css_000
+DEL ir.ui.view: website.assets_snippet_s_product_catalog_css_001
+DEL ir.ui.view: website.assets_snippet_s_product_list_css_000
+DEL ir.ui.view: website.assets_snippet_s_progress_bar_css_000
+DEL ir.ui.view: website.assets_snippet_s_quotes_carousel_css_000
+DEL ir.ui.view: website.assets_snippet_s_quotes_carousel_css_001
+DEL ir.ui.view: website.assets_snippet_s_rating_css_000
+DEL ir.ui.view: website.assets_snippet_s_rating_css_001
+DEL ir.ui.view: website.assets_snippet_s_references_css_000
+DEL ir.ui.view: website.assets_snippet_s_share_css_000
+DEL ir.ui.view: website.assets_snippet_s_share_js_000
+DEL ir.ui.view: website.assets_snippet_s_showcase_css_000
+DEL ir.ui.view: website.assets_snippet_s_showcase_css_001
+DEL ir.ui.view: website.assets_snippet_s_table_of_content_css_000
+DEL ir.ui.view: website.assets_snippet_s_table_of_content_js_000
+DEL ir.ui.view: website.assets_snippet_s_tabs_css_001
+DEL ir.ui.view: website.assets_snippet_s_text_highlight_css_000
+DEL ir.ui.view: website.assets_snippet_s_three_columns_css_000
+DEL ir.ui.view: website.assets_snippet_s_timeline_css_000
+DEL ir.ui.view: website.assets_snippet_s_title_css_000
+DEL ir.ui.view: website.assets_tests
+DEL ir.ui.view: website.assets_wysiwyg
+DEL ir.ui.view: website.company_description
+DEL ir.ui.view: website.company_description_google_map
+DEL ir.ui.view: website.dynamic_filter_template_header_image_footer_card
+DEL ir.ui.view: website.dynamic_filter_template_image_title_footer
+DEL ir.ui.view: website.kanban
+DEL ir.ui.view: website.kanban_contain
+DEL ir.ui.view: website.onboarding_website_theme_step
+DEL ir.ui.view: website.option_ripple_effect
+DEL ir.ui.view: website.qunit_suite
+DEL ir.ui.view: website.template_header_boxed_oe_structure_header_boxed_2
+DEL ir.ui.view: website.template_header_default_oe_structure_header_default_1
+DEL ir.ui.view: website.template_header_hamburger_oe_structure_header_hamburger_1
+DEL ir.ui.view: website.template_header_image_oe_structure_header_image_2
+DEL ir.ui.view: website.template_header_minimalist
+DEL ir.ui.view: website.template_header_slogan_oe_structure_header_slogan_2
+DEL ir.ui.view: website_form.assets_editor
+DEL ir.ui.view: website_form.assets_snippet_s_website_form_css_000
+DEL ir.ui.view: website_form.assets_snippet_s_website_form_css_001
+DEL ir.ui.view: website_form.assets_snippet_s_website_form_js_000
+DEL ir.ui.view: website_form.assets_tests
+DEL ir.ui.view: website_form.contactus_form
+DEL ir.ui.view: website_form.ir_model_fields_view
+DEL ir.ui.view: website_form.ir_model_view
+DEL ir.ui.view: website_form.remove_external_snippets
+DEL ir.ui.view: website_form.s_website_form
+DEL ir.ui.view: website_form.s_website_form_options
+DEL ir.ui.view: website_form.snippets
+NEW website.configurator.feature: website.feature_module_career
+NEW website.configurator.feature: website.feature_module_elearning
+NEW website.configurator.feature: website.feature_module_event
+NEW website.configurator.feature: website.feature_module_forum
+NEW website.configurator.feature: website.feature_module_live_chat
+NEW website.configurator.feature: website.feature_module_news
+NEW website.configurator.feature: website.feature_module_shop
+NEW website.configurator.feature: website.feature_module_stores_locator
+NEW website.configurator.feature: website.feature_module_success_stories
+NEW website.configurator.feature: website.feature_page_about_us
+NEW website.configurator.feature: website.feature_page_our_services
+NEW website.configurator.feature: website.feature_page_pricing
+NEW website.configurator.feature: website.feature_page_privacy_policy
+NEW website.page: website.contactus_thanks [renamed from website_form module]
+DEL website.page: website_form.contactus_thanks [renamed to website module]
+DEL website.snippet.filter: website.dynamic_snippet_data_source_country
+# NOTHING TO DO
