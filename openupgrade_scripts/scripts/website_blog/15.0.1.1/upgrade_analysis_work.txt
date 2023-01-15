@@ -1,0 +1,32 @@
+---Models in module 'website_blog'---
+---Fields in module 'website_blog'---
+---XML records in module 'website_blog'---
+NEW ir.asset: website_blog.s_blog_posts_000_js
+NEW ir.asset: website_blog.s_blog_posts_000_scss
+NEW ir.filters: website_blog.dynamic_snippet_latest_blog_post_filter
+NEW ir.filters: website_blog.dynamic_snippet_most_viewed_blog_post_filter
+DEL ir.model.constraint: website_blog.constraint_blog_tag_category_name_uniq
+DEL ir.model.constraint: website_blog.constraint_blog_tag_name_uniq
+NEW ir.ui.view: website_blog.blog_searchbar_input_snippet_options
+NEW ir.ui.view: website_blog.dynamic_filter_template_blog_post_big_picture
+NEW ir.ui.view: website_blog.dynamic_filter_template_blog_post_card
+NEW ir.ui.view: website_blog.dynamic_filter_template_blog_post_horizontal
+NEW ir.ui.view: website_blog.dynamic_filter_template_blog_post_list
+NEW ir.ui.view: website_blog.s_blog_posts
+NEW ir.ui.view: website_blog.s_blog_posts_options
+NEW ir.ui.view: website_blog.s_dynamic_snippet_options_template
+DEL ir.ui.view: website_blog.assets_editor
+DEL ir.ui.view: website_blog.assets_frontend
+DEL ir.ui.view: website_blog.assets_snippet_s_latest_posts_css_000
+DEL ir.ui.view: website_blog.assets_snippet_s_latest_posts_css_001
+DEL ir.ui.view: website_blog.assets_snippet_s_latest_posts_js_000
+DEL ir.ui.view: website_blog.assets_wysiwyg
+DEL ir.ui.view: website_blog.s_latest_posts
+DEL ir.ui.view: website_blog.s_latest_posts_big_picture_template
+DEL ir.ui.view: website_blog.s_latest_posts_card_template
+DEL ir.ui.view: website_blog.s_latest_posts_horizontal_template
+DEL ir.ui.view: website_blog.s_latest_posts_list_template
+DEL ir.ui.view: website_blog.s_latest_posts_options
+NEW website.snippet.filter: website_blog.dynamic_filter_latest_blog_posts
+NEW website.snippet.filter: website_blog.dynamic_filter_most_viewed_blog_posts
+# NOTHING TO DO: noupdate="0" records
