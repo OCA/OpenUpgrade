@@ -1,0 +1,10 @@
+---Models in module 'website_forum'---
+---Fields in module 'website_forum'---
+---XML records in module 'website_forum'---
+DEL ir.model.constraint: website_forum.constraint_forum_post_vote_vote_uniq
+DEL ir.model.constraint: website_forum.constraint_forum_tag_name_uniq
+NEW ir.ui.view: website_forum.forum_searchbar_input_snippet_options
+DEL ir.ui.view: website_forum.assets_editor
+DEL ir.ui.view: website_forum.assets_frontend
+DEL ir.ui.view: website_forum.assets_tests
+# NOTHING TO DO: noupdate="0" records
