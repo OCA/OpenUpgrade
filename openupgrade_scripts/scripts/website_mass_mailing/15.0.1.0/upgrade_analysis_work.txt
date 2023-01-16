@@ -1,0 +1,22 @@
+---Models in module 'website_mass_mailing'---
+obsolete model website.mass_mailing.popup
+---Fields in module 'website_mass_mailing'---
+website_mass_mailing / mailing.list             / toast_content (html)          : DEL
+# NOTHING TO DO: remove model, toast_content added default data
+website_mass_mailing / mailing.list             / website_popup_ids (one2many)  : DEL relation: website.mass_mailing.popup
+website_mass_mailing / website.mass_mailing.popup / mailing_list_id (many2one)    : DEL relation: mailing.list
+website_mass_mailing / website.mass_mailing.popup / popup_content (html)          : DEL
+website_mass_mailing / website.mass_mailing.popup / website_id (many2one)         : DEL relation: website
+# NOTHING TO DO: remove model
+---XML records in module 'website_mass_mailing'---
+NEW ir.asset: website_mass_mailing.s_popup_000_js
+DEL ir.model.access: website_mass_mailing.access_mass_mailing_popup
+DEL ir.ui.view: website_mass_mailing.assets_editor
+DEL ir.ui.view: website_mass_mailing.assets_frontend
+DEL ir.ui.view: website_mass_mailing.assets_tests
+DEL ir.ui.view: website_mass_mailing.mailing_list_view_form
+DEL ir.ui.view: website_mass_mailing.s_mail_block_header_social
+DEL ir.ui.view: website_mass_mailing.s_mail_block_header_text_social
+DEL ir.ui.view: website_mass_mailing.s_newsletter_subscribe_popup_content
+DEL ir.ui.view: website_mass_mailing.view_mail_mass_mailing_popup_form
+# NOTHING TO DO
