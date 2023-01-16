@@ -10,7 +10,7 @@ website_sale / product.image            / embed_code (char)             : type i
 # NOTHING TO DO: compute field is not stored
 
 website_sale / product.ribbon           / html (char)                   : type is now 'html' ('char')
-# DONE: pre-migration, converted to html
+# NOTHING TO DO: Contents are preserved the same without HTML, but the field now allows to add HTML markups (like <strong> and similar)
 
 website_sale / product.product          / base_unit_count (float)       : NEW required, req_default: function, hasdefault
 website_sale / product.product          / base_unit_id (many2one)       : NEW relation: website.base.unit
