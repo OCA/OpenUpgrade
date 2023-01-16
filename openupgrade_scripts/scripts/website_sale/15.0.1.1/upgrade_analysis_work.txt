@@ -1,0 +1,104 @@
+---Models in module 'website_sale'---
+new model website.base.unit
+# NOTHING TO DO: new feature to add price per unit on products
+
+---Fields in module 'website_sale'---
+website_sale / product.attribute        / visibility (selection)        : NEW selection_keys: ['hidden', 'visible'], hasdefault
+# NOTHING TO DO: new feature to hide specific attribute filter on website
+
+website_sale / product.image            / embed_code (char)             : type is now 'html' ('char')
+# NOTHING TO DO: compute field is not stored
+
+website_sale / product.ribbon           / html (char)                   : type is now 'html' ('char')
+# NOTHING TO DO: Contents are preserved the same without HTML, but the field now allows to add HTML markups (like <strong> and similar)
+
+website_sale / product.product          / base_unit_count (float)       : NEW required, req_default: function, hasdefault
+website_sale / product.product          / base_unit_id (many2one)       : NEW relation: website.base.unit
+website_sale / product.template         / base_unit_count (float)       : NEW required, req_default: function, hasdefault, isfunction: function, stored
+website_sale / product.template         / base_unit_id (many2one)       : NEW relation: website.base.unit, isfunction: function, stored
+# NOTHING TO DO: new feature to add price per unit on products
+
+website_sale / website                  / cart_add_on_page (boolean)    : NEW hasdefault
+# NOTHING TO DO: new feature allowing user to stay on page when adding products
+
+website_sale / website.base.unit        / name (char)                   : NEW required
+# NOTHING TO DO: new feature
+
+website_sale / website.snippet.filter   / product_cross_selling (boolean): NEW hasdefault
+# NOTHING TO DO: new feature
+
+---XML records in module 'website_sale'---
+NEW ir.actions.act_window: website_sale.base_unit_action
+NEW ir.actions.server: website_sale.dynamic_snippet_accessories_action
+NEW ir.actions.server: website_sale.dynamic_snippet_latest_sold_products_action
+NEW ir.actions.server: website_sale.dynamic_snippet_latest_viewed_products_action
+NEW ir.actions.server: website_sale.dynamic_snippet_recently_sold_with_action
+DEL ir.actions.server: website_sale.dynamic_snippet_products_action
+NEW ir.asset: website_sale.s_dynamic_snippet_products_000_js
+NEW ir.asset: website_sale.s_dynamic_snippet_products_000_scss
+NEW ir.filters: website_sale.dynamic_snippet_newest_products_filter
+NEW ir.model.access: website_sale.access_website_base_unit_public
+NEW ir.model.access: website_sale.access_website_base_unit_sale_manager
+NEW ir.ui.menu: website_sale.website_base_unit_menu
+NEW ir.ui.view: website_sale.add_to_cart_redirect
+NEW ir.ui.view: website_sale.address_on_payment
+NEW ir.ui.view: website_sale.attribute_tree_view
+NEW ir.ui.view: website_sale.base_unit_price
+NEW ir.ui.view: website_sale.carousel_product_indicators
+NEW ir.ui.view: website_sale.carousel_product_indicators_bottom
+NEW ir.ui.view: website_sale.carousel_product_indicators_left
+NEW ir.ui.view: website_sale.categorie_link
+NEW ir.ui.view: website_sale.crm_team_view_kanban_dashboard
+NEW ir.ui.view: website_sale.dynamic_filter_template_product_product_add_to_cart
+NEW ir.ui.view: website_sale.dynamic_filter_template_product_product_banner
+NEW ir.ui.view: website_sale.dynamic_filter_template_product_product_borderless_1
+NEW ir.ui.view: website_sale.dynamic_filter_template_product_product_borderless_2
+NEW ir.ui.view: website_sale.dynamic_filter_template_product_product_centered
+NEW ir.ui.view: website_sale.dynamic_filter_template_product_product_horizontal_card
+NEW ir.ui.view: website_sale.dynamic_filter_template_product_product_mini_image
+NEW ir.ui.view: website_sale.dynamic_filter_template_product_product_mini_name
+NEW ir.ui.view: website_sale.dynamic_filter_template_product_product_mini_price
+NEW ir.ui.view: website_sale.dynamic_filter_template_product_product_view_detail
+NEW ir.ui.view: website_sale.filter_products_price
+NEW ir.ui.view: website_sale.payment_footer
+NEW ir.ui.view: website_sale.price_dynamic_filter_template_product_product
+NEW ir.ui.view: website_sale.product_attribute_view_form
+NEW ir.ui.view: website_sale.product_product_normal_website_form_view
+NEW ir.ui.view: website_sale.product_ribbon_form_view
+NEW ir.ui.view: website_sale.product_searchbar_input_snippet_options
+NEW ir.ui.view: website_sale.product_share_buttons
+NEW ir.ui.view: website_sale.product_template_only_website_form_view
+NEW ir.ui.view: website_sale.product_template_view_kanban_website_sale
+NEW ir.ui.view: website_sale.products_breadcrumb
+NEW ir.ui.view: website_sale.res_config_settings_view_form_web_terms
+NEW ir.ui.view: website_sale.s_dynamic_snippet_products_template_options
+NEW ir.ui.view: website_sale.sale_report_view_tree
+DEL ir.ui.view: website_sale._assets_primary_variables
+DEL ir.ui.view: website_sale.assets_backend
+DEL ir.ui.view: website_sale.assets_common
+DEL ir.ui.view: website_sale.assets_editor
+DEL ir.ui.view: website_sale.assets_frontend
+DEL ir.ui.view: website_sale.assets_snippet_s_dynamic_snippet_products_js_000
+DEL ir.ui.view: website_sale.assets_snippet_s_products_searchbar_js_000
+DEL ir.ui.view: website_sale.assets_tests
+DEL ir.ui.view: website_sale.assets_wysiwyg
+DEL ir.ui.view: website_sale.crm_team_salesteams_view_kanban_inherit_website_sale
+DEL ir.ui.view: website_sale.product_template_form_view_invoice_policy
+DEL ir.ui.view: website_sale.recently_viewed_products_product
+DEL ir.ui.view: website_sale.s_products_recently_viewed
+DEL ir.ui.view: website_sale.s_products_searchbar
+DEL ir.ui.view: website_sale.s_products_searchbar_input
+DEL ir.ui.view: website_sale.searchbar_input_snippet_options
+DEL ir.ui.view: website_sale.template_header_minimalist
+DEL ir.ui.view: website_sale.terms
+DEL ir.ui.view: website_sale.website_sale_products_search_box
+NEW product.attribute: website_sale.product_attribute_brand
+NEW product.ribbon: website_sale.out_of_stock_ribbon
+NEW res.groups: website_sale.group_show_uom_price
+NEW website.snippet.filter: website_sale.dynamic_filter_cross_selling_accessories
+NEW website.snippet.filter: website_sale.dynamic_filter_cross_selling_recently_sold_with
+NEW website.snippet.filter: website_sale.dynamic_filter_latest_sold_products
+NEW website.snippet.filter: website_sale.dynamic_filter_latest_viewed_products
+NEW website.snippet.filter: website_sale.dynamic_filter_newest_products
+DEL website.snippet.filter: website_sale.dynamic_filter_demo_products
+# NOTHING TO DO
