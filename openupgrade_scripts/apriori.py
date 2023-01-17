@@ -55,6 +55,8 @@ merged_modules = {
     "sale_timesheet_order_line_sync": "sale_timesheet",
     # OCA/web
     "web_decimal_numpad_dot": "web",
+    # OCA/website
+    "website_snippet_timeline": "website",
 }
 
 # only used here for upgrade_analysis
