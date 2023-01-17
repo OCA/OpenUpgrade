@@ -52,6 +52,13 @@ jobs:
           ref: "16.0"
           fetch-depth: 1
           path: odoo
+      - name: Check out previous Odoo
+        uses: actions/checkout@v2
+        with:
+          repository: odoo/odoo
+          ref: "15.0"
+          fetch-depth: 1
+          path: odoo-old
       - name: Check out OpenUpgrade
         uses: actions/checkout@v2
         with:
@@ -82,9 +89,16 @@ jobs:
           pip install -q -r odoo/requirements.txt
           pip install --ignore-installed \
               git+https://github.com/OCA/openupgradelib.git@master
-          # select modules and perform the upgrade
+          # this is for v15 l10n_eg_edi_eta which crashes without it
+          pip install asn1crypto
+      - name: Test data
+        run: |
+          for snippet in openupgrade/openupgrade_scripts/scripts/*/*/tests/data*.py; do
+            odoo-old/odoo-bin shell -d $DB < $snippet
+          done
       - name: OpenUpgrade test
         run: |
+          # select modules and perform the upgrade
           MODULES_OLD=$(\
               sed -n '/^+========/,$p' \
               openupgrade/docsource/modules150-160.rst \
@@ -126,5 +140,6 @@ jobs:
               --db_user=$DB_USERNAME \
               --load=base,web,openupgrade_framework \
               --log-handler odoo.models.unlink:WARNING \
+              --test-enable \
               --stop-after-init \
               --update=$MODULES_NEW
