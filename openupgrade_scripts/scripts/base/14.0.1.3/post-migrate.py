@@ -44,6 +44,56 @@ def fix_module_category_parent_id(env):
     )
 
 
+def assign_module_category_parent(env):
+    """As these records are created as noupdate=1, we need to manually assign the
+    parent categories that are new in v14.
+    """
+    category_mapping = [
+        ("module_category_sales_sales", "module_category_sales"),
+        ("module_category_sales_point_of_sale", "module_category_sales"),
+        ("module_category_services_project", "module_category_services"),
+        ("module_category_services_timesheets", "module_category_services"),
+        ("module_category_accounting_accounting", "module_category_accounting"),
+        ("module_category_inventory_purchase", "module_category_inventory"),
+        ("module_category_inventory_inventory", "module_category_inventory"),
+        (
+            "module_category_manufacturing_manufacturing",
+            "module_category_manufacturing",
+        ),
+        ("module_category_manufacturing_maintenance", "module_category_manufacturing"),
+        ("module_category_website_live_chat", "module_category_website"),
+        ("module_category_website_elearning", "module_category_website"),
+        ("module_category_website_website", "module_category_website"),
+        ("module_category_marketing_events", "module_category_marketing"),
+        ("module_category_marketing_email_marketing", "module_category_marketing"),
+        ("module_category_marketing_surveys", "module_category_marketing"),
+        ("module_category_human_resources_fleet", "module_category_human_resources"),
+        ("module_category_human_resources_lunch", "module_category_human_resources"),
+        (
+            "module_category_human_resources_employees",
+            "module_category_human_resources",
+        ),
+        (
+            "module_category_human_resources_contracts",
+            "module_category_human_resources",
+        ),
+        ("module_category_human_resources_time_off", "module_category_human_resources"),
+        (
+            "module_category_human_resources_recruitment",
+            "module_category_human_resources",
+        ),
+        ("module_category_human_resources_expenses", "module_category_human_resources"),
+        (
+            "module_category_human_resources_attendances",
+            "module_category_human_resources",
+        ),
+    ]
+    for xml_id, parent_xml_id in category_mapping:
+        record = env.ref("base." + xml_id, False)
+        if record:
+            record.parent_id = env.ref("base." + parent_xml_id, False)
+
+
 def users_should_export(env):
     # maintain same behavior as previous versions
     export_group = env.ref("base.group_allow_export").id
@@ -64,6 +114,7 @@ def users_should_export(env):
 @openupgrade.migrate()
 def migrate(env, version):
     fix_module_category_parent_id(env)
+    assign_module_category_parent(env)
     users_should_export(env)
     # Load noupdate changes
     openupgrade.load_data(env.cr, "base", "14.0.1.3/noupdate_changes.xml")
