@@ -14,7 +14,18 @@ def _fill_payment_state(env):
     # v14 these ones were not computed being of type `entry`, which changes now
     # on v15 if the method `_payment_state_matters` returns True, which is the
     # case for the expense moves
+    # Disable the reconciliation check to be able to update reconciled moves
+    _check_reconciliation = env["account.move.line"].__class__._check_reconciliation
+    _check_fiscalyear_lock_date = env[
+        "account.move"
+    ].__class__._check_fiscalyear_lock_date
+    env["account.move.line"].__class__._check_reconciliation = lambda self: None
+    env["account.move"].__class__._check_fiscalyear_lock_date = lambda self: None
     env["hr.expense.sheet"].search([]).account_move_id._compute_amount()
+    env["account.move.line"].__class__._check_reconciliation = _check_reconciliation
+    env[
+        "account.move"
+    ].__class__._check_fiscalyear_lock_date = _check_fiscalyear_lock_date
     # Now perform the SQL to transfer the payment_state
     openupgrade.logged_query(
         env.cr,
