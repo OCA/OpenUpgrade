@@ -12,6 +12,8 @@ renamed_modules = {
     "website_mail_channel": "website_mail_group",
     # OCA/project
     "project_stage_state": "project_task_stage_state",
+    # OCA/stock-logistics-worehouse
+    "stock_inventory_cost_info": "stock_quant_cost_info",
     # OCA/...
 }
 
