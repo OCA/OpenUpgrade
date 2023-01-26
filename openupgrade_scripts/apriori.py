@@ -10,6 +10,8 @@ renamed_modules = {
     "mail_client_extension": "mail_plugin",
     "payment_ingenico": "payment_ogone",
     "website_mail_channel": "website_mail_group",
+    # OCA/e-commerce
+    "website_sale_attribute_filter_order": "website_sale_product_attribute_filter_order",
     # OCA/project
     "project_stage_state": "project_task_stage_state",
     # OCA/stock-logistics-worehouse
