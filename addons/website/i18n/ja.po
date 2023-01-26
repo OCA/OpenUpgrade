@@ -16,6 +16,7 @@
 # Tsuda Ryoko <ryoko04nov@gmail.com>, 2020
 # Noma Yuki, 2021
 # Ryoko Tsuda <ryoko@quartile.co>, 2022
+# Andy Yiu, 2023
 # 
 msgid ""
 msgstr ""
@@ -23,7 +24,7 @@ msgstr ""
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2022-01-07 12:31+0000\n"
 "PO-Revision-Date: 2019-08-26 09:15+0000\n"
-"Last-Translator: Ryoko Tsuda <ryoko@quartile.co>, 2022\n"
+"Last-Translator: Andy Yiu, 2023\n"
 "Language-Team: Japanese (https://www.transifex.com/odoo/teams/41243/ja/)\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
@@ -54,19 +55,19 @@ msgstr "\"URL to\" は空にすることはできません。"
 #: code:addons/website/models/website_rewrite.py:0
 #, python-format
 msgid "\"URL to\" cannot contain parameter %s which is not used in \"URL from\"."
-msgstr ""
+msgstr "「URL to」は「URL from」に使われてないパラメータ%sを含んではいけません。"
 
 #. module: website
 #: code:addons/website/models/website_rewrite.py:0
 #, python-format
 msgid "\"URL to\" is invalid: %s"
-msgstr ""
+msgstr "「URL to」は無効です: %s"
 
 #. module: website
 #: code:addons/website/models/website_rewrite.py:0
 #, python-format
 msgid "\"URL to\" must contain parameter %s used in \"URL from\"."
-msgstr ""
+msgstr "「URL to」は「URL from」に使われてるパラメータ%sを含める必要があります。"
 
 #. module: website
 #: code:addons/website/models/website_rewrite.py:0
@@ -1409,14 +1410,14 @@ msgstr "パターンを選択"
 msgid ""
 "Choose a vibrant image and write an inspiring paragraph about it.<br/> It "
 "does not have to be long, but it should reinforce your image."
-msgstr ""
+msgstr "美しい画像を選んでインスピレーションに溢れた"
 
 #. module: website
 #. openerp-web
 #: code:addons/website/static/src/xml/website.editor.xml:0
 #, python-format
 msgid "Choose an anchor name"
-msgstr ""
+msgstr "アンカー名を選択"
 
 #. module: website
 #: model_terms:ir.ui.view,arch_db:website.theme_customize
@@ -1451,7 +1452,7 @@ msgstr "サークル"
 #. module: website
 #: model_terms:ir.ui.view,arch_db:website.s_carousel
 msgid "Clever Slogan"
-msgstr ""
+msgstr "巧妙なスローガン"
 
 #. module: website
 #. openerp-web
@@ -1482,7 +1483,7 @@ msgstr ""
 #: code:addons/website/static/src/xml/website.seo.xml:0
 #, python-format
 msgid "Click to choose more images"
-msgstr ""
+msgstr "クリックして"
 
 #. module: website
 #: model_terms:ir.ui.view,arch_db:website.res_config_settings_view_form
@@ -1646,7 +1647,7 @@ msgstr "国"
 #. module: website
 #: model:ir.model.fields,field_description:website.field_website_visitor__country_flag
 msgid "Country Flag"
-msgstr ""
+msgstr "国旗"
 
 #. module: website
 #: model:ir.model.fields,field_description:website.field_res_config_settings__website_country_group_ids
@@ -1662,7 +1663,7 @@ msgstr "ページ作成"
 #. module: website
 #: model_terms:ir.ui.view,arch_db:website.brand_promotion
 msgid "Create a"
-msgstr ""
+msgstr "作成: "
 
 #. module: website
 #: model_terms:ir.ui.view,arch_db:website.res_config_settings_view_form
@@ -1743,7 +1744,7 @@ msgstr "ダッシュボード"
 #. module: website
 #: model_terms:ir.ui.view,arch_db:website.snippet_options
 msgid "Dashed"
-msgstr ""
+msgstr "破線"
 
 #. module: website
 #: model_terms:ir.ui.view,arch_db:website.bs_debug_page_ir_ui_view
@@ -1775,7 +1776,7 @@ msgstr "デフォルト言語"
 #. module: website
 #: model:website.menu,name:website.main_menu
 msgid "Default Main Menu"
-msgstr ""
+msgstr "デフォルトメインメニュー"
 
 #. module: website
 #: model:ir.model.fields,field_description:website.field_res_config_settings__social_default_image
@@ -1819,14 +1820,14 @@ msgstr "ページを削除"
 msgid ""
 "Delete the above image or replace it with a picture that illustrates your "
 "message. Click on the picture to change its <em>rounded corner</em> style."
-msgstr ""
+msgstr "上の画像を削除するか、メッセージを説明する画像で置き換えます。"
 
 #. module: website
 #. openerp-web
 #: code:addons/website/static/src/xml/website.editor.xml:0
 #, python-format
 msgid "Delete this font"
-msgstr ""
+msgstr "このフォントを削除"
 
 #. module: website
 #: model_terms:ir.ui.view,arch_db:website.one_page_line
@@ -1909,19 +1910,19 @@ msgstr "表示名"
 #: code:addons/website/models/ir_qweb_fields.py:0
 #, python-format
 msgid "Display the badges"
-msgstr ""
+msgstr "バッジを表示"
 
 #. module: website
 #: code:addons/website/models/ir_qweb_fields.py:0
 #, python-format
 msgid "Display the biography"
-msgstr ""
+msgstr "プロフィールを表示"
 
 #. module: website
 #: code:addons/website/models/ir_qweb_fields.py:0
 #, python-format
 msgid "Display the website description"
-msgstr ""
+msgstr "サイト説明を表示"
 
 #. module: website
 #: model:ir.model.fields,help:website.field_res_config_settings__website_logo
@@ -1952,7 +1953,7 @@ msgstr "会社のデータを編集しますか？"
 #: code:addons/website/static/src/js/menu/new_content.js:0
 #, python-format
 msgid "Do you want to install the \"%s\" App?"
-msgstr ""
+msgstr "「%s」アプリをインストールしますか?"
 
 #. module: website
 #: model_terms:ir.ui.view,arch_db:website.res_config_settings_view_form
@@ -1969,17 +1970,17 @@ msgstr ""
 #. module: website
 #: model_terms:ir.ui.view,arch_db:website.snippet_options
 msgid "Dotted"
-msgstr ""
+msgstr "点線"
 
 #. module: website
 #: model_terms:ir.ui.view,arch_db:website.snippet_options
 msgid "Double"
-msgstr ""
+msgstr "ダブル"
 
 #. module: website
 #: model_terms:ir.ui.view,arch_db:website.s_features_grid
 msgid "Double click an icon to replace it with one of your choice."
-msgstr ""
+msgstr "アイコンをダブルクリックして自分の選択で置き換えます。"
 
 #. module: website
 #. openerp-web
@@ -2013,7 +2014,7 @@ msgstr "サブメニューを作成するには、メニューを右にドラッ
 #: model_terms:ir.ui.view,arch_db:website.bs_debug_page_ir_ui_view
 #: model_terms:website.page,arch_db:website.bs_debug_page
 msgid "Dropdown"
-msgstr ""
+msgstr "ドロップダウン"
 
 #. module: website
 #. openerp-web
@@ -2030,7 +2031,7 @@ msgstr "複製"
 #. module: website
 #: model_terms:ir.ui.view,arch_db:website.s_features_grid
 msgid "Duplicate blocks and columns to add more features."
-msgstr ""
+msgstr "ブロックと列を複製して機能を追加します。"
 
 #. module: website
 #: model_terms:ir.ui.view,arch_db:website.publish_management
@@ -2055,7 +2056,7 @@ msgstr "メニュー項目の編集"
 #. module: website
 #: model_terms:ir.ui.view,arch_db:website.s_features_grid
 msgid "Edit Styles"
-msgstr ""
+msgstr "スタイルを編集"
 
 #. module: website
 #: model_terms:ir.ui.view,arch_db:website.user_navbar
@@ -2109,7 +2110,7 @@ msgstr "Eメール"
 #: model_terms:ir.ui.view,arch_db:website.bs_debug_page_ir_ui_view
 #: model_terms:website.page,arch_db:website.bs_debug_page
 msgid "Email address"
-msgstr ""
+msgstr "メールアドレス"
 
 #. module: website
 #: model_terms:ir.ui.view,arch_db:website.s_comparisons
@@ -2120,7 +2121,7 @@ msgstr "Eメールサポート"
 #: model_terms:ir.ui.view,arch_db:website.bs_debug_page_ir_ui_view
 #: model_terms:website.page,arch_db:website.bs_debug_page
 msgid "Enter email"
-msgstr ""
+msgstr "メールを入力"
 
 #. module: website
 #: model_terms:ir.ui.view,arch_db:website.snippet_options
@@ -2149,7 +2150,7 @@ msgstr "エキスパート"
 msgid ""
 "Explain the benefits you offer. <br/>Don't write about products or services "
 "here, write about solutions."
-msgstr ""
+msgstr "提供するメリットを説明。<br/>ここで商品やサービスについて書かないで、ソリューションを描きましょう。"
 
 #. module: website
 #: model:ir.model.fields,field_description:website.field_base_automation__xml_id
@@ -2189,14 +2190,14 @@ msgstr ""
 #. module: website
 #: model_terms:ir.ui.view,arch_db:website.snippet_options
 msgid "Fade"
-msgstr ""
+msgstr "フェード"
 
 #. module: website
 #. openerp-web
 #: code:addons/website/static/src/js/menu/new_content.js:0
 #, python-format
 msgid "Failed to install \"%s\""
-msgstr ""
+msgstr "「%s」をインストールできませんでした"
 
 #. module: website
 #: model_terms:ir.ui.view,arch_db:website.snippet_options
@@ -2259,7 +2260,7 @@ msgstr "最初の特徴"
 #. module: website
 #: model_terms:ir.ui.view,arch_db:website.s_mega_menu_multi_menus
 msgid "First Menu"
-msgstr ""
+msgstr "最初のメニュー"
 
 #. module: website
 #: model:ir.model.fields,field_description:website.field_website_visitor__create_date
@@ -2269,18 +2270,18 @@ msgstr "初回接続日"
 #. module: website
 #: model_terms:ir.ui.view,arch_db:website.s_features_grid
 msgid "First list of Features"
-msgstr ""
+msgstr "最初の機能リスト"
 
 #. module: website
 #: model:ir.model.fields,help:website.field_ir_ui_view__first_page_id
 #: model:ir.model.fields,help:website.field_website_page__first_page_id
 msgid "First page linked to this view"
-msgstr ""
+msgstr "このビューにリンクする最初のページ"
 
 #. module: website
 #: model_terms:ir.ui.view,arch_db:website.snippet_options
 msgid "Fit text"
-msgstr ""
+msgstr "テキストに合わせる"
 
 #. module: website
 #: model_terms:ir.ui.view,arch_db:website.snippet_options
@@ -2356,7 +2357,7 @@ msgstr "自由にサインアップ"
 #. module: website
 #: model_terms:ir.ui.view,arch_db:website.theme_customize
 msgid "Full"
-msgstr ""
+msgstr "フル"
 
 #. module: website
 #: model_terms:ir.ui.view,arch_db:website.snippet_options
@@ -2366,7 +2367,7 @@ msgstr "フルスクリーン"
 #. module: website
 #: model_terms:ir.ui.view,arch_db:website.snippet_options
 msgid "Full-Width"
-msgstr ""
+msgstr "フル幅"
 
 #. module: website
 #: model_terms:ir.ui.view,arch_db:website.s_comparisons
@@ -2445,7 +2446,7 @@ msgid ""
 "Good copy starts with understanding how your product or service helps your "
 "customers. Simple words communicate better than big words and pompous "
 "language."
-msgstr ""
+msgstr "良いコピーには、商品やサービスがどうお客様の役に立つかを理解するのは一番です。"
 
 #. module: website
 #: model:ir.model.fields,field_description:website.field_res_config_settings__has_google_analytics
@@ -2554,14 +2555,14 @@ msgstr "グループ"
 #: code:addons/website/static/src/xml/website.seo.xml:0
 #, python-format
 msgid "H1"
-msgstr ""
+msgstr "H1"
 
 #. module: website
 #. openerp-web
 #: code:addons/website/static/src/xml/website.seo.xml:0
 #, python-format
 msgid "H2"
-msgstr ""
+msgstr "H2"
 
 #. module: website
 #: model_terms:ir.ui.view,arch_db:website.user_navbar
@@ -2576,7 +2577,7 @@ msgstr "HTTPルーティング"
 #. module: website
 #: model_terms:ir.ui.view,arch_db:website.snippet_options
 msgid "Half Screen"
-msgstr ""
+msgstr "画面半分"
 
 #. module: website
 #: model_terms:ir.ui.view,arch_db:website.bs_debug_page_ir_ui_view
@@ -2587,54 +2588,54 @@ msgstr "ヘッダ"
 #. module: website
 #: model:ir.model.fields,field_description:website.field_website_page__header_color
 msgid "Header Color"
-msgstr ""
+msgstr "ヘッダー色"
 
 #. module: website
 #: model:ir.model.fields,field_description:website.field_website_page__header_overlay
 msgid "Header Overlay"
-msgstr ""
+msgstr "ヘッダーオーバーレイ"
 
 #. module: website
 #: model_terms:ir.ui.view,arch_db:website.bs_debug_page_ir_ui_view
 #: model_terms:ir.ui.view,arch_db:website.theme_customize
 #: model_terms:website.page,arch_db:website.bs_debug_page
 msgid "Headings 1"
-msgstr ""
+msgstr "見出し 1"
 
 #. module: website
 #: model_terms:ir.ui.view,arch_db:website.bs_debug_page_ir_ui_view
 #: model_terms:ir.ui.view,arch_db:website.theme_customize
 #: model_terms:website.page,arch_db:website.bs_debug_page
 msgid "Headings 2"
-msgstr ""
+msgstr "見出し 2"
 
 #. module: website
 #: model_terms:ir.ui.view,arch_db:website.bs_debug_page_ir_ui_view
 #: model_terms:ir.ui.view,arch_db:website.theme_customize
 #: model_terms:website.page,arch_db:website.bs_debug_page
 msgid "Headings 3"
-msgstr ""
+msgstr "見出し 3"
 
 #. module: website
 #: model_terms:ir.ui.view,arch_db:website.bs_debug_page_ir_ui_view
 #: model_terms:ir.ui.view,arch_db:website.theme_customize
 #: model_terms:website.page,arch_db:website.bs_debug_page
 msgid "Headings 4"
-msgstr ""
+msgstr "見出し 4"
 
 #. module: website
 #: model_terms:ir.ui.view,arch_db:website.bs_debug_page_ir_ui_view
 #: model_terms:ir.ui.view,arch_db:website.theme_customize
 #: model_terms:website.page,arch_db:website.bs_debug_page
 msgid "Headings 5"
-msgstr ""
+msgstr "見出し 5"
 
 #. module: website
 #: model_terms:ir.ui.view,arch_db:website.bs_debug_page_ir_ui_view
 #: model_terms:ir.ui.view,arch_db:website.theme_customize
 #: model_terms:website.page,arch_db:website.bs_debug_page
 msgid "Headings 6"
-msgstr ""
+msgstr "見出し 6"
 
 #. module: website
 #. openerp-web
@@ -2758,7 +2759,7 @@ msgstr "アイコン"
 #. module: website
 #: model:ir.model.fields,help:website.field_website__specific_user_account
 msgid "If True, new accounts will be associated to the current website"
-msgstr ""
+msgstr "Trueの場合、新規アカウントは現サイトに関連付けられます"
 
 #. module: website
 #: model:ir.model.fields,help:website.field_res_config_settings__social_default_image
@@ -2772,7 +2773,7 @@ msgstr "設定した場合、デフォルトソーシャルシェア画像を会
 msgid ""
 "If this error is caused by a change of yours in the templates, you have the "
 "possibility to reset the template to its <strong>factory settings</strong>."
-msgstr ""
+msgstr "テンプレート変更によってのエラーは、テンプレートを<strong>工場設定</strong>にリセットできます。"
 
 #. module: website
 #: model:ir.model.fields,help:website.field_website_page__groups_id
@@ -2896,7 +2897,7 @@ msgstr ""
 #. module: website
 #: model:ir.model.fields,help:website.field_website__theme_id
 msgid "Installed theme"
-msgstr ""
+msgstr "インストール済テーマ"
 
 #. module: website
 #. openerp-web
@@ -2971,13 +2972,13 @@ msgstr ""
 #: model_terms:ir.ui.view,arch_db:website.bs_debug_page_ir_ui_view
 #: model_terms:website.page,arch_db:website.bs_debug_page
 msgid "Item 1"
-msgstr ""
+msgstr "アイテム 1"
 
 #. module: website
 #: model_terms:ir.ui.view,arch_db:website.bs_debug_page_ir_ui_view
 #: model_terms:website.page,arch_db:website.bs_debug_page
 msgid "Item 2"
-msgstr ""
+msgstr "アイテム 2"
 
 #. module: website
 #: model_terms:ir.ui.view,arch_db:website.s_call_to_action
@@ -3172,7 +3173,7 @@ msgstr "デザインを始めましょう。"
 #: model_terms:ir.ui.view,arch_db:website.bs_debug_page_ir_ui_view
 #: model_terms:website.page,arch_db:website.bs_debug_page
 msgid "Library"
-msgstr ""
+msgstr "ライブラリー"
 
 #. module: website
 #: model_terms:ir.ui.view,arch_db:website.s_comparisons
@@ -3206,7 +3207,7 @@ msgstr "リンクトラッカー"
 #: model_terms:ir.ui.view,arch_db:website.bs_debug_page_ir_ui_view
 #: model_terms:website.page,arch_db:website.bs_debug_page
 msgid "Link button"
-msgstr ""
+msgstr "リンクボタン"
 
 #. module: website
 #: model:ir.model.fields,field_description:website.field_website_visitor__partner_id
@@ -3495,7 +3496,7 @@ msgstr "ナロー"
 #: model_terms:ir.ui.view,arch_db:website.theme_customize
 #: model_terms:website.page,arch_db:website.bs_debug_page
 msgid "Navbar"
-msgstr ""
+msgstr "ナビーバー"
 
 #. module: website
 #: model_terms:ir.ui.view,arch_db:website.res_config_settings_view_form
@@ -3661,7 +3662,7 @@ msgstr "注：このページを非表示にするには、上部の「カスタ
 #. module: website
 #: model:ir.model.fields,field_description:website.field_res_config_settings__website_language_count
 msgid "Number of languages"
-msgstr ""
+msgstr "言語数"
 
 #. module: website
 #: model:ir.model.fields,field_description:website.field_website_visitor__visit_count
@@ -3835,7 +3836,7 @@ msgstr ""
 #: model_terms:ir.ui.view,arch_db:website.bs_debug_page_ir_ui_view
 #: model_terms:website.page,arch_db:website.bs_debug_page
 msgid "Outline"
-msgstr ""
+msgstr "アウトライン"
 
 #. module: website
 #: code:addons/website/models/website.py:0
@@ -3938,7 +3939,7 @@ msgstr "ページ"
 #: model_terms:ir.ui.view,arch_db:website.bs_debug_page_ir_ui_view
 #: model_terms:website.page,arch_db:website.bs_debug_page
 msgid "Pagination"
-msgstr ""
+msgstr "ページネーション"
 
 #. module: website
 #: model_terms:ir.ui.view,arch_db:website.bs_debug_page_ir_ui_view
@@ -3946,7 +3947,7 @@ msgstr ""
 msgid ""
 "Paragraph with <strong>bold</strong>, <span class=\"text-"
 "muted\">muted</span> and <em>italic</em> texts"
-msgstr ""
+msgstr "<strong>太字</strong>、<span class=\"text-muted\"></span>"
 
 #. module: website
 #: model:ir.model.fields,field_description:website.field_website_menu__parent_id
@@ -3977,7 +3978,7 @@ msgstr "取引先"
 #: model_terms:ir.ui.view,arch_db:website.bs_debug_page_ir_ui_view
 #: model_terms:website.page,arch_db:website.bs_debug_page
 msgid "Pill"
-msgstr ""
+msgstr "ピル"
 
 #. module: website
 #. openerp-web
@@ -4352,7 +4353,7 @@ msgstr ""
 #: model_terms:ir.ui.view,arch_db:website.snippet_options
 #: model_terms:ir.ui.view,arch_db:website.theme_customize
 msgid "Secondary"
-msgstr ""
+msgstr "セカンダリ"
 
 #. module: website
 #: model_terms:ir.ui.view,arch_db:website.s_image_text
@@ -4411,7 +4412,7 @@ msgstr "Eメールを送る"
 #: model_terms:ir.ui.view,arch_db:website.bs_debug_page_ir_ui_view
 #: model_terms:website.page,arch_db:website.bs_debug_page
 msgid "Separated link"
-msgstr ""
+msgstr "区切られたリンク"
 
 #. module: website
 #: model:ir.model.fields,field_description:website.field_website_menu__sequence
@@ -4535,13 +4536,13 @@ msgstr "ソーシャルプレビュー"
 #. module: website
 #: model_terms:ir.ui.view,arch_db:website.snippet_options
 msgid "Solid"
-msgstr ""
+msgstr "ソリッド"
 
 #. module: website
 #: model_terms:ir.ui.view,arch_db:website.bs_debug_page_ir_ui_view
 #: model_terms:website.page,arch_db:website.bs_debug_page
 msgid "Something else here"
-msgstr ""
+msgstr "ここにある他のもの"
 
 #. module: website
 #: code:addons/website/controllers/main.py:0
@@ -4865,7 +4866,7 @@ msgstr "このフィールドは、書き込む前に現在の `arch_db`を保�
 #: model_terms:ir.ui.view,arch_db:website.bs_debug_page_ir_ui_view
 #: model_terms:website.page,arch_db:website.bs_debug_page
 msgid "This is a \""
-msgstr ""
+msgstr "「"
 
 #. module: website
 #: model_terms:ir.ui.view,arch_db:website.s_banner
@@ -4963,13 +4964,13 @@ msgstr ""
 #: model_terms:ir.ui.view,arch_db:website.bs_debug_page_ir_ui_view
 #: model_terms:website.page,arch_db:website.bs_debug_page
 msgid "Toggle"
-msgstr ""
+msgstr "切り替える"
 
 #. module: website
 #: model_terms:ir.ui.view,arch_db:website.bs_debug_page_ir_ui_view
 #: model_terms:website.page,arch_db:website.bs_debug_page
 msgid "Toggle navigation"
-msgstr ""
+msgstr "ナビゲーションを切り替える"
 
 #. module: website
 #: model_terms:ir.ui.view,arch_db:website.s_company_team
@@ -5116,6 +5117,13 @@ msgid ""
 "        308 Redirect / Rewrite: If you want rename a controller with a new url. (Eg: /shop -> /garden - Both url will be accessible but /shop will automatically be redirected to /garden)\n"
 "    "
 msgstr ""
+"リダイレクト・書き直しの種類:\n"
+"\n"
+"        301 恒久的な移転: ブラウザは新しいURLをキャッシュに保存。\n"
+"        302 一時的な移転: ブラウザは新しいURLをキャッシュに保存しない、次回はもう一度新しいURLを確認。\n"
+"        404 Not Found: If you want remove a specific page/controller (e.g. Ecommerce is installed, but you don't want /shop on a specific website)\n"
+"        308 Redirect / Rewrite: If you want rename a controller with a new url. (Eg: /shop -> /garden - Both url will be accessible but /shop will automatically be redirected to /garden)\n"
+"    "
 
 #. module: website
 #. openerp-web
@@ -5283,7 +5291,7 @@ msgstr "ユーザ"
 #: model_terms:ir.ui.view,arch_db:website.bs_debug_page_ir_ui_view
 #: model_terms:website.page,arch_db:website.bs_debug_page
 msgid "Utilities &amp; Typography"
-msgstr ""
+msgstr "ユーティリティー・タイポグラフィー"
 
 #. module: website
 #: model_terms:ir.ui.view,arch_db:website.snippet_options
@@ -5499,7 +5507,7 @@ msgstr "ウェブサイト"
 #. module: website
 #: model:ir.model.fields,field_description:website.field_res_config_settings__website_company_id
 msgid "Website Company"
-msgstr ""
+msgstr "サイトの所属会社"
 
 #. module: website
 #: model:ir.model.fields,field_description:website.field_res_config_settings__website_domain
@@ -5656,17 +5664,17 @@ msgstr "ウェブサイトopengraph画像"
 #. module: website
 #: model:ir.model,name:website.model_website_rewrite
 msgid "Website rewrite"
-msgstr ""
+msgstr "サイトリライト"
 
 #. module: website
 #: model_terms:ir.ui.view,arch_db:website.view_website_rewrite_form
 msgid "Website rewrite Settings"
-msgstr ""
+msgstr "サイトリライト設定"
 
 #. module: website
 #: model_terms:ir.ui.view,arch_db:website.action_website_rewrite_tree
 msgid "Website rewrites"
-msgstr ""
+msgstr "サイトリライト"
 
 #. module: website
 #: model:ir.actions.server,name:website.ir_actions_server_website_dashboard
@@ -5925,7 +5933,7 @@ msgstr "Odooのインスタンス、"
 #: model_terms:ir.ui.view,arch_db:website.bs_debug_page_ir_ui_view
 #: model_terms:website.page,arch_db:website.bs_debug_page
 msgid "link"
-msgstr ""
+msgstr "リンク"
 
 #. module: website
 #: model_terms:ir.ui.view,arch_db:website.menu_search

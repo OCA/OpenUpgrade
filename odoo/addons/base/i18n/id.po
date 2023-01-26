@@ -34,7 +34,7 @@
 # Muftiara Syuhada <muftiara.syuhada@gmail.com>, 2021
 # Abdul Munif Hanafi <amunifhanafi@gmail.com>, 2022
 # arfa simoncelli, 2022
-# Abe Manyo, 2022
+# Abe Manyo, 2023
 # 
 msgid ""
 msgstr ""
@@ -42,7 +42,7 @@ msgstr ""
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2020-07-23 15:12+0000\n"
 "PO-Revision-Date: 2019-08-26 09:06+0000\n"
-"Last-Translator: Abe Manyo, 2022\n"
+"Last-Translator: Abe Manyo, 2023\n"
 "Language-Team: Indonesian (https://www.transifex.com/odoo/teams/41243/id/)\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
@@ -776,6 +776,17 @@ msgid ""
 "        * Account Tags.\n"
 "    "
 msgstr ""
+"\n"
+"        Templat Bagan Akun (COA) untuk Akuntansi Lituania.\n"
+"\n"
+"        Modul ini juga memiliki:\n"
+"\n"
+"        * Daftar bank yang tersedia di Lituania.\n"
+"        * Kelompok pajak.\n"
+"        * Pajak paling umum Lituania.\n"
+"        * Fiscal position.\n"
+"        * Tag Akun.\n"
+"    "
 
 #. module: base
 #: model:ir.module.module,description:base.module_helpdesk_fsm
@@ -921,6 +932,11 @@ msgid ""
 "        Manage user and manager notifications\n"
 "    "
 msgstr ""
+"\n"
+"        Tetapkan rental produk (produk, penawaran, faktur, ...)\n"
+"        Kelola status produk, rental, delay\n"
+"        Kelola notifikasi user dan manajer\n"
+"    "
 
 #. module: base
 #: model:ir.module.module,description:base.module_base_sparse_field
@@ -932,6 +948,12 @@ msgid ""
 "        fields are stored in a \"serialized\" field in the form of a JSON mapping.\n"
 "    "
 msgstr ""
+"\n"
+"        Tujuan dari modul ini untuk mengimplementasikan field yang \"sparse\", contohnya field\n"
+"        yang sebagian besar null. Implementasi ini menghindari batasan PostgreSQL\n"
+"        pada jumlah kolom di tabel. Value dari semua field yang sparse\n"
+"        akan disimpan di field yang \"serialized\" dalam bentuk pemetaan JSON.\n"
+"    "
 
 #. module: base
 #: model:ir.module.module,description:base.module_mrp_subcontracting_dropshipping
@@ -1151,6 +1173,13 @@ msgid ""
 "          templates to target objects.\n"
 "    "
 msgstr ""
+"\n"
+"    * Dukungan multi-language untuk Bagan Akun, Pajak, Kode Pajak, Jurnal,\n"
+"      Templat Akuntansi, Bagan Akun Analitik dan Jurnal Analitik.\n"
+"    * Perubahan pada setup wizard\n"
+"        - Salin terjemahan untuk COA, Pajak, Kode Pajak dan Posisi Fiskal dari\n"
+"          templat ke objek sasaran.\n"
+"    "
 
 #. module: base
 #: model:ir.module.module,description:base.module_quality_mrp_workorder_iot
@@ -1240,6 +1269,24 @@ msgid ""
 "    but rather the amount of these lines will be deduced from the lines they apply to during tax computation.\n"
 "    "
 msgstr ""
+"\n"
+"    Kelola diskon di komputasi taxclouds.\n"
+"    Lihat https://taxcloud.com/support/discounts atau\n"
+"    https://service.taxcloud.net/hc/en-us/articles/360015649791-How-can-discounts-be-applied-\n"
+"\n"
+"    Rangkuman: all seller-provided discounts must be applied to the Sales Price before calculating sales tax.\n"
+"    Sellers should disclose their methodology to customers in a Discount Application Policy.\n"
+"\n"
+"    The algorithm is as follows:\n"
+"     - line-specific discounts are applied first, on the lines they are supposed to apply to.\n"
+"       This means product-specific discounts or discounts on the cheapest line.\n"
+"     - Then global discounts are applied evenly across paid lines, as much as possible.\n"
+"       If there is a remainder, it is applied sequentially, in the order of the lines,\n"
+"       until there is either no discount left or no discountable line left.\n"
+"\n"
+"    Note that discount lines (with a negative price) will have no taxes applied to them,\n"
+"    but rather the amount of these lines will be deduced from the lines they apply to during tax computation.\n"
+"    "
 
 #. module: base
 #: model:ir.module.module,description:base.module_sale_coupon_taxcloud_delivery
@@ -1274,6 +1321,11 @@ msgid ""
 "    Necessary master data is also included.\n"
 "    "
 msgstr ""
+"\n"
+"    SAF-T Norwegia adalah file format standar untuk beragam tipe ekspor dari data transaksi akuntansi yang menggunakan format XML.\n"
+"    Versi pertama dari SAF-T Financial dibatasi ke tingkat jurnal umum yang termasuk transaksi pelanggan dan pemasok.\n"
+"    Master data yang diperlukan juga disertakan.\n"
+"    "
 
 #. module: base
 #: model:ir.module.module,description:base.module_payment_payumoney
@@ -1310,6 +1362,11 @@ msgid ""
 "    - a Chart of Accounts customised to Ireland\n"
 "    - VAT Rates and Structure"
 msgstr ""
+"\n"
+"    Modul ini adalah untuk semua UKM Irlandia yang ingin menyiapkan akuntansi mereka dengan cepat. Modul menyediakan:\n"
+"\n"
+"    - Bagan Akun yang dikustomisasi untuk Irlandia\n"
+"    - Tarif Pajak dan Struktur"
 
 #. module: base
 #: model:ir.module.module,description:base.module_l10n_lu_saft
@@ -1347,6 +1404,12 @@ msgid ""
 "This module gives the details of the goods traded between the countries of\n"
 "European Union."
 msgstr ""
+"\n"
+"Modul yang menambahkan manajemen stok di laporan intrastat.\n"
+"============================================================\n"
+"\n"
+"Modul ini mengirimkan detail barang yang didagangkan di antara negara-negara\n"
+"Uni Eropa."
 
 #. module: base
 #: model:ir.module.module,description:base.module_account_tax_python
@@ -1359,6 +1422,13 @@ msgid ""
 "\"Python Code\" defines the amount of the tax.\n"
 "        "
 msgstr ""
+"\n"
+"Pajak yang didefinisikan sebagai kode python terdiri dari dua snippet kode python yang akan di-execute di local environment yang memiliki data seperti harga unit, produk atau mitra.\n"
+"\n"
+"\"Applicable Code\" didefinisikan bila pajak akan diterapkan.\n"
+"\n"
+"\"Python Code\" mendefinisikan jumlah pajak.\n"
+"        "
 
 #. module: base
 #: model:ir.module.module,description:base.module_l10n_au_aba
@@ -1460,6 +1530,102 @@ msgid ""
 "    When validating a batch payment, the ABA file will be generated.  It can\n"
 "    be regenerated.  This file can then be uploaded to the bank.\n"
 msgstr ""
+"\n"
+"ABA Credit Transfer\n"
+"===================\n"
+"\n"
+"Modul ini memungkinkan pembuatan pembayaran batch dalam bentuk file teks ABA (Australian\n"
+"Bankers Association).  File 'aba' yang dibuat dapat diunggah\n"
+"ke banyak bank Australia.\n"
+"\n"
+"Setup\n"
+"-----\n"
+"\n"
+"- *Account > Configuration > invoicing > Journals*\n"
+"\n"
+"    Bila diperlukan, buat jurnal baru atau pilih jurnal yang tersedia dengan **Type**\n"
+"    set to *“Bank”*.\n"
+"\n"
+"    Pada **Advanced Settings**, pastikan ABA Credit Transfer dicentang.\n"
+"\n"
+"    Pada tab **Bank Account**, masukkan **Account Number**.\n"
+"\n"
+"    Pada tab yang sama, pastikan informasi transfer ABA transfer sudah di set up.\n"
+"\n"
+"    **BSB** - Wajib, 6 digit, dan akan di format otomatis.\n"
+"\n"
+"    **Financial Institution Code** - Wajib (disediakan oleh bank atau dapat ditemukan\n"
+"    pada Google).  Ini adalah 3 karakter uppercase.\n"
+"\n"
+"    **Supplying User Name** - Beberapa bank mengizinkan ini untuk dalam bentuk freeform, beberapa bank\n"
+"    mungkin menolak file ABA bila Supplying User Name tidak sesuai format. Ini\n"
+"    tidak boleh lebih dari 26 karakter.\n"
+"\n"
+"    **APCA Identification Number** - Nomor identifikasi User dialokasikan oleh\n"
+"    bank. 6 digit.\n"
+"\n"
+"    **Include Self Balancing Transaction** - Beberapa lembaga mewajibkan transaksi terakhir\n"
+"    adalah self balancing transaction yang akan digunakan sebagai verifikasi.\n"
+"\n"
+"- *Accounting > Configuration > Payments > Bank Accounts*\n"
+"\n"
+"    Akun akan muncul di daftar sebagai nama jurnal.\n"
+"\n"
+"    Editing akan menunjukkan **Account Number**.  Ini penting karena akan digunakan dalam\n"
+"    proses ABA.\n"
+"\n"
+"    **Bank** bersifat opsional.\n"
+"\n"
+"- *Contacts > Configuration > Bank Accounts > Bank Accounts*\n"
+"\n"
+"    Paying account akan muncul di daftar sebagai nomor akun.\n"
+"\n"
+"    **Account Holder Name** - Dapat dimasukkan di sini, bila Wajib.  Secara umum tidak\n"
+"    divalidasikan oleh bank pada transfer file ABA, tapi dapat muncul pada payee\n"
+"    bank statement against the payment.\n"
+"\n"
+"- Vendor bank accounts dapat di set up di tempat yang sama, namun, secara\n"
+"  umum lebih gampang untuk disiapkan dari mitra dari untuk Vendor.\n"
+"\n"
+"- *Accounting > Vendors > Vendors*\n"
+"\n"
+"    Pada tab **Accounting**, klik pada *\"View accounts detail\"* sehingga\n"
+"    vendor bank account dapat dibuat atau diedit.\n"
+"\n"
+"    **Account Number** - Wajib, harus lebih sedikit dari 9 digit.\n"
+"\n"
+"    **BSB** - Wajib, 6 digit, dan akan di format otomatis.\n"
+"\n"
+"    **Account Holder Name** - Opsional.\n"
+"\n"
+"Use\n"
+"---\n"
+"\n"
+"- Buat pembayaran vendor dengan cara normal.\n"
+"\n"
+"    Pastikan **Vendor** memiliki akun pembayaran ABA yang valid.\n"
+"\n"
+"    Pilih **Payment Journal** yang benar yang disediakan untuk pembayaran ABA.\n"
+"\n"
+"    Pilih radio button **ABA Credit Transfer**.\n"
+"\n"
+"    Bila vendor memiliki lebih dari satu akun bank, Anda mungkin harus memilih\n"
+"    **Recipient Bank Account** yang benar.  Atau bila membayar vendor bill, proses tersebut mungkin\n"
+"    membutuhkan akun bank yang benar yang terkait.\n"
+"\n"
+"    Enter payment amount, etc.\n"
+"\n"
+"- *Vendors > Payments*\n"
+"\n"
+"    After payment(s) are confirmed, they will show up in the payments list.\n"
+"\n"
+"    Using filters, or sorting, select the payments to be included.  Under\n"
+"    *Actions* choose *Create batch payment*.\n"
+"\n"
+"- *Vendors > Batch Payments*\n"
+"\n"
+"    When validating a batch payment, the ABA file will be generated.  It can\n"
+"    be regenerated.  This file can then be uploaded to the bank.\n"
 
 #. module: base
 #: model:ir.module.module,description:base.module_account_auto_transfer
@@ -1470,6 +1636,11 @@ msgid ""
 "Manage automatic transfers between your accounts.\n"
 "    "
 msgstr ""
+"\n"
+"Transfer Otomatis Akun\n"
+"===========================\n"
+"Kelola transfer otomatis di antara akun-akun Anda.\n"
+"    "
 
 #. module: base
 #: model:ir.module.module,description:base.module_l10n_generic_auto_transfer_demo
@@ -1480,6 +1651,11 @@ msgid ""
 "Demo data for account automatic transfers module\n"
 "    "
 msgstr ""
+"\n"
+"Demo Transfer Otomatis Akun\n"
+"================================\n"
+"Data demo untuk modul transfer otomatis akun\n"
+"    "
 
 #. module: base
 #: model:ir.module.module,description:base.module_l10n_be_us_consolidation_demo
@@ -1488,6 +1664,9 @@ msgid ""
 "Account Consolidation Demo Data\n"
 "==================================\n"
 msgstr ""
+"\n"
+"Data Demo Konsolidasi Akun\n"
+"==================================\n"
 
 #. module: base
 #: model:ir.module.module,description:base.module_account_accountant
@@ -1499,6 +1678,12 @@ msgid ""
 "\n"
 "It assigns manager and user access rights to the Administrator for the accounting application and only user rights to the Demo user.\n"
 msgstr ""
+"\n"
+"Hak Akses Akuntansi\n"
+"========================\n"
+"Hak akses ini memberikan user Administrator akses ke semua fitur akuntansi seperti item jurnal dan bagan akun.\n"
+"\n"
+"Ini akan menetapkan hak akses manajer dan user ke Administrator untuk aplikasi akuntansi dan hanya hak user ke user Demo.\n"
 
 #. module: base
 #: model:ir.module.module,description:base.module_l10n_be_hr_payroll_account
@@ -1547,6 +1732,10 @@ msgid ""
 "=================================\n"
 "    "
 msgstr ""
+"\n"
+"Laporan akuntansi untuk Denmark\n"
+"=================================\n"
+"    "
 
 #. module: base
 #: model:ir.module.module,description:base.module_l10n_fi_reports
@@ -1557,6 +1746,11 @@ msgid ""
 "\n"
 "    "
 msgstr ""
+"\n"
+"Laporan akuntansi untuk Finlandia\n"
+"================================\n"
+"\n"
+"    "
 
 #. module: base
 #: model:ir.module.module,description:base.module_l10n_fr_reports
@@ -1645,6 +1839,9 @@ msgid ""
 "Add a dynamic report about contracts and employees.\n"
 "    "
 msgstr ""
+"\n"
+"Tambahkan laporan dinamis tentang kontrak dan karyawan.\n"
+"    "
 
 #. module: base
 #: model:ir.module.module,description:base.module_l10n_latam_base
@@ -1688,6 +1885,42 @@ msgid ""
 "\n"
 "This module is compatible with base_vat module in order to be able to validate VAT numbers for each country that have or not have the possibility to manage multiple identification types.\n"
 msgstr ""
+"\n"
+"Tambahkan model baru bernama \"Tipe Identifikasi\" yang memperpanjang fungsi vat field di mitra dan memberikan user kemampuan untuk mengidentifikasi (dan berujung pada memberikan faktur) ke kontak tidak hanya dengan ID pajak fiskal mereka (VAT) tapi juga dengan tipe identifikasi lainnya seperti dokumen nasional, paspor, ID asing, dsb. Dengan menginstal modul ini Anda akan sekarang melihat di tampilan formulir mitra dua field:\n"
+"\n"
+"* Tipe Identifikasi\n"
+"* Nomor Identifikasi\n"
+"\n"
+"Perilaku ini berdasarkan persyaratan umum untuk beberapa negara latam seperti Argentina dan Chili. Jika lokalisasi Anda memiliki persyaratan ini maka Anda harus menggunakan modul ini dan mendefinisikan di modul lokalisasi Anda tipe identifikasi yang digunakan di negara ini. Secara umum tipe-tipe identifikasi ini ditetapkan oleh otoritas pemerintah yang meregulasi operasi fiskal. Sebagai contoh:\n"
+"\n"
+"* AFIP di Argentina mendefinisikan DNI, CUIT (vat untuk badan hukum), CUIL (vat untuk natural person), dan 80 tipe identifikasi valid lainnya.\n"
+"\n"
+"Setiap identifikasi memiliki informasi ini berikut:\n"
+"\n"
+"* nama: nama pendek identifikasi\n"
+"* keterangan: bisa sama dengan nama atau panjang\n"
+"* country_id: negara dimana identifikasi ini berasal\n"
+"* is_vat: Identifikasi record ini agar sebagai VAT yang sesuai untuk negara spesifik.\n"
+"* urutan: sortir tipe identifikasi berdasarkan tipe yang paling sering digunakan.\n"
+"* aktif: kami akan mengaktifkan/menonaktifkan identifikasi untuk memudahkan pekerjaan pelanggan kita\n"
+"\n"
+"Agar modul ini kompatibel di lingkungan multi-company di mana kami memiliki perusahaan yang tidak membutuhkan/mendukung persyaratan ini, kami menambahkan tipe identifikasi dan peraturan umum dan membuatnya transparan untuk user hanya saat menggunakan VAT seperti yang sebelumnya kita kenali.\n"
+"\n"
+"Identifikasi Umum:\n"
+"\n"
+"* VAT: Identifikasi Pajak Fiskal atau nomor VAT, secara default akan dipilih sebagai tipe identifikasi supaya user hanya perlu menambahkan nomor VAT yang terkait.\n"
+"* Passpor\n"
+"* ID Asing (Dokumen Nasional Asing)\n"
+"\n"
+"Rule saat membuat mitra baru: Kami hanya akan melihat tipe identifikasi yang berguna, mengingat peraturan-peraturan berikut:\n"
+"\n"
+"* Jika mitra belum mengisi alamat negara: Akan menunjukkan identifikasi umum ditambah identifikasi yang didenifisikan untuk negara perusahaan yang terkait mitra (Bila mitra tidak memiliki perusahaan maka tipe identifikasi yang ditunjukkan akan terkait dengan perusahaan user saat ini)\n"
+"\n"
+"* Bila mitra memiliki alamat negara : akan menunjukkan tipe identifikasi umum ditambah tipe yang didefinisikan oleh negara mitra. Saat membuat perusahaan baru, akan selalu memberikan mitra tipe identifikasi is_vat yang terkait negara mitra.\n"
+"\n"
+"Semua tipe identifikasi yang didenifisikan dapat ditinjau dan diaktifkan/dinonaktifkan di menu \"Tipe Kontak / Konfigurasi / Identifikasi\".\n"
+"\n"
+"Modul ini kompatibel dengan modul base_vat agar bisa memvalidasi nomor VAT untuk setiap negara yang memiliki atau tidak memiliki kemampuan untuk mengelola lebih dari satu tipe identifikasi.\n"
 
 #. module: base
 #: model:ir.module.module,description:base.module_website_sale_delivery
@@ -1697,6 +1930,10 @@ msgid ""
 "Configure your own methods with a pricing grid or integrate with carriers for a fully automated shipping process.\n"
 "    "
 msgstr ""
+"\n"
+"Tambahkan pilihan metode pengiriman ke toko eCommerce Anda.\n"
+"Konfigurasikan metode Anda sendiri dengan kisi harga atau integrasikan dengan carrier untuk proses pengiriman yang sepenuhnya otomatis.\n"
+"    "
 
 #. module: base
 #: model:ir.module.module,description:base.module_hr_contract
@@ -1713,6 +1950,17 @@ msgid ""
 "You can assign several contracts per employee.\n"
 "    "
 msgstr ""
+"\n"
+"Tambahkan semua informasi pada formulir karyawan untuk mengelola kontrak.\n"
+"=============================================================\n"
+"\n"
+"    * Kontrak\n"
+"    * Tempat Lahir,\n"
+"    * Data Pemeriksaan Medis\n"
+"    * Kendaraan Perusahaan\n"
+"\n"
+"Anda dapat menetapkan beberapa kontrak untuk setiap karyawan.\n"
+"    "
 
 #. module: base
 #: model:ir.module.module,description:base.module_product_email_template
@@ -1764,6 +2012,11 @@ msgid ""
 "\n"
 "The wizard to launch the report has several options to help you get the data you need.\n"
 msgstr ""
+"\n"
+"Tambahkan menu pelaporan di produk yang memperhitungkan sale, purchase, margin dan beberapa indikator menarik lainnya berdasarkan faktur.\n"
+"=============================================================================================================================\n"
+"\n"
+"Wizard untuk meluncurkan laporan yang memiliki beberapa pilihan untuk membantu Anda mendapatkan data yang Anda butuhkan.\n"
 
 #. module: base
 #: model:ir.module.module,description:base.module_pad
@@ -1835,6 +2088,20 @@ msgid ""
 "* Supported cards: Visa, MasterCard, American Express, Discover\n"
 "    "
 msgstr ""
+"\n"
+"Izinkan pembayaran POS dengan kartu kredit\n"
+"==============================\n"
+"\n"
+"Modul ini memungkinkan pelanggan untuk membayar pesanan mereka menggunakan\n"
+"kartu. Transaksi akan diproses oleh Vantiv (dikembangkan oleh Wells\n"
+"Fargo Bank). Akun pedagang Vantiv diperlukan. Ini akan memungkinkan hal-hal \n"
+"berikut:\n"
+"\n"
+"* Pembayaran cepat dengan menggesek kartu kredit selagi di layar pembayaran\n"
+"* Mengkombinasikan pembayaran tunai dan kartu kredit\n"
+"* Cashback\n"
+"* Kartu yang dapat digunakan: Visa, MasterCard, American Express, Discover\n"
+"    "
 
 #. module: base
 #: model:ir.module.module,description:base.module_website_sale_wishlist
@@ -2037,6 +2304,16 @@ msgid ""
 "    - sets up Australian taxes.\n"
 "    "
 msgstr ""
+"\n"
+"Modul Akuntansi Australia\n"
+"============================\n"
+"\n"
+"Bagan akun dan lokalisasi akuntansi Australia.\n"
+"\n"
+"Juga:\n"
+"    - mengaktifkan sejumlah mata uang regional.\n"
+"    - memeprsiapkan pajak Australia.\n"
+"    "
 
 #. module: base
 #: model:ir.module.module,description:base.module_base_gengo
@@ -2068,6 +2345,16 @@ msgid ""
 "    - Regional State listings\n"
 "    "
 msgstr ""
+"\n"
+"Modul Dasar untuk Lokalisasi Etiopia\n"
+"======================================\n"
+"\n"
+"Berikut adalah lokalisasi terkini Etiopia Odoo dan terdiri dari:\n"
+"    - Bagan Akun\n"
+"    - Struktur pajak PPN\n"
+"    - Struktur pemotongan pajak\n"
+"    - Daftar Negara Bagian\n"
+"    "
 
 #. module: base
 #: model:ir.module.module,description:base.module_account_saft
@@ -2187,6 +2474,12 @@ msgid ""
 "\n"
 "    "
 msgstr ""
+"\n"
+"Bagan akuntansi dan lokalisasi pajak Bolivia.\n"
+"\n"
+"Plan contable boliviano e impuestos de acuerdo a disposiciones vigentes\n"
+"\n"
+"    "
 
 #. module: base
 #: model:ir.module.module,description:base.module_documents_account
@@ -2309,6 +2602,12 @@ msgid ""
 "Thai accounting chart and localization.\n"
 "    "
 msgstr ""
+"\n"
+"Bagan Akun untuk Thailand.\n"
+"===============================\n"
+"\n"
+"Bagan akuntansi dan lokalisasi Thai.\n"
+"    "
 
 #. module: base
 #: model:ir.module.module,description:base.module_l10n_cr
@@ -2327,6 +2626,19 @@ msgid ""
 "please go to http://translations.launchpad.net/openerp-costa-rica.\n"
 "    "
 msgstr ""
+"\n"
+"Bagan akun untuk Kosta Rika.\n"
+"=================================\n"
+"\n"
+"Termasuk:\n"
+"---------\n"
+"    * account.account.template\n"
+"    * account.tax.template\n"
+"    * account.chart.template\n"
+"\n"
+"Semuanya dalam bahasa Inggris dengan terjemahan Spanyol. Kami menerima terjemahan lebih lanjut,\n"
+"silakan kunjungi http://translations.launchpad.net/openerp-costa-rica.\n"
+"    "
 
 #. module: base
 #: model:ir.module.module,description:base.module_l10n_cl
@@ -2525,6 +2837,18 @@ msgid ""
 "when you confirm your sales order it will automatically create a registration for\n"
 "this event.\n"
 msgstr ""
+"\n"
+"Buat pendaftaran dengan sale order.\n"
+"========================================\n"
+"\n"
+"Modul ini memungkinkan Anda untuk mengotomatiskan dan menghubungkan pembuatan pendaftaran dengan\n"
+"alur sale utama Anda dan karena itu, memungkinkan fitur faktur pendaftaran.\n"
+"\n"
+"Ini mendefinisikan produk layanan baru yang memberikan kemampuan untuk\n"
+"memilih kategori acara yang terkait dengannya. Saat melakukan encode untuk sales untuk\n"
+"produk tersebut, Anda dapat memilih acara yang tersedia dari kategori dan\n"
+"saat Anda mengonfirmasi sales order Anda itu akan secara otomatis membuat pendaftaran untuk\n"
+"acara ini.\n"
 
 #. module: base
 #: model:ir.module.module,description:base.module_l10n_hr
@@ -2557,6 +2881,33 @@ msgid ""
 " https://www.rrif.hr/dok/preuzimanje/rrif-rp2012.rar\n"
 "\n"
 msgstr ""
+"\n"
+"Lokalisasi Croatia.\n"
+"======================\n"
+"\n"
+"Author: Goran Kliska, Slobodni programi d.o.o., Zagreb\n"
+"        https://www.slobodni-programi.hr\n"
+"\n"
+"Kontribusi:\n"
+"  Tomislav Bošnjaković, Storm Computers: tipovi konta\n"
+"  Ivan Vađić, Slobodni programi: tipovi konta\n"
+"\n"
+"Keterangan:\n"
+"\n"
+"Croatian Chart of Accounts (RRIF ver.2012)\n"
+"\n"
+"RRIF-ov računski plan za poduzetnike za 2012.\n"
+"Vrste konta\n"
+"Kontni plan prema RRIF-u, dorađen u smislu kraćenja naziva i dodavanja analitika\n"
+"Porezne grupe prema poreznoj prijavi\n"
+"Porezi PDV obrasca\n"
+"Ostali porezi\n"
+"Osnovne fiskalne pozicije\n"
+"\n"
+"Izvori podataka:\n"
+" https://www.rrif.hr/dok/preuzimanje/rrif-rp2011.rar\n"
+" https://www.rrif.hr/dok/preuzimanje/rrif-rp2012.rar\n"
+"\n"
 
 #. module: base
 #: model:ir.module.module,description:base.module_mass_mailing_themes
@@ -2594,6 +2945,12 @@ msgid ""
 "German accounting chart and localization.\n"
 "    "
 msgstr ""
+"\n"
+"Dieses  Modul beinhaltet einen deutschen Kontenrahmen basierend auf dem SKR04.\n"
+"==============================================================================\n"
+"\n"
+"Bagan akuntansi dan lokalisasi Jerman.\n"
+"    "
 
 #. module: base
 #: model:ir.module.module,description:base.module_website_sale_management
@@ -2802,6 +3159,25 @@ msgid ""
 "      payslip interface, but not in the payslip report\n"
 "    "
 msgstr ""
+"\n"
+"Peraturan Payroll Prancis\n"
+"=====================\n"
+"\n"
+"    - Konfigurasi hr_payroll untuk lokalisasi Prancis\n"
+"    - Semua kontribusi utama untuk payslip Prancis, untuk 'cadre' dan 'non-cadre'\n"
+"    - Laporan payslip baru\n"
+"\n"
+"TO-DO:\n"
+"-----\n"
+"    - Integrasi dengan modul liburan untuk potongan dan tunjangan\n"
+"    - Integrasi dengan hr_payroll_account untuk pembuatan otomatis account_move_line\n"
+"      dari payslip\n"
+"    - Terus mengintegrasikan kontribusi. Hanya kontribusi utama yang saat\n"
+"      ini diimplementasikan\n"
+"    - Membuat ulang laporan mengenai webkit\n"
+"    - payslip.line dengan appears_in_payslip = False seharusnya muncul di\n"
+"      antarmuka payslip, tapi tidak muncul di laporan payslip\n"
+"    "
 
 #. module: base
 #: model:ir.module.module,description:base.module_purchase_mrp_workorder_quality
@@ -2906,6 +3282,24 @@ msgid ""
 "* create the data of the document types that exists for the specific country. The document type has a country field\n"
 "\n"
 msgstr ""
+"\n"
+"Fungsionalitas\n"
+"----------\n"
+"\n"
+"Di beberapa negara Latin Amerika, termasuk Argentina dan Chili, beberapa transaksasi seperti faktur dan tagihan vendor digolongkan berdasarkan tipe dokumen yang didefinisikan oleh lembaga fiskal pemerintah (Di Argentina oleh AFIP, Chili oleh SII).\n"
+"\n"
+"Tujuan modul ini untuk memperpanjang lokalisasi agar bisa mengelola tipe dokumen tersebut dan merupakan informati penting yang dapat ditampilkan di laporan yang dicetak dan gampang diidentifikasi, This module is intended to be extended by localizations in order to manage these document types and is an essential information that needs to be displayed in the printed reports and that needs to be easily identified, dalam kumpulan faktur serta pemindahan akun.\n"
+"\n"
+"Setiap tipe dokumen memiliki peraturan dan nomor urutan sendiri, yang terakhir terintegrasi dengan nomor faktur dan urutan jurnal agar gampang dilihat oleh user lokalisasi. Agar bisa atau tidak bisa mendukung tipe dokumen ini Jurnal memiliki opsi baru yang mengizinkan atau melarang penggunaan dokumen.\n"
+"\n"
+"Teknis\n"
+"---------\n"
+"\n"
+"Jika lokalisasi Anda membutuhkan logic ini maka Anda harus menambahkan modul ini sebagai dependen dan di modul lokalisasi Anda memperpanjang:\n"
+"\n"
+"* perpanjang metode company's _localization_use_documents().\n"
+"* buat data untuk tipe dokumen yang tersedia untuk negara tersebut. Tipe dokumen memiliki kolom negara\n"
+"\n"
 
 #. module: base
 #: model:ir.module.module,description:base.module_l10n_ar
@@ -2999,6 +3393,12 @@ msgid ""
 "Provide Templates for Chart of Accounts, Taxes for Uruguay.\n"
 "\n"
 msgstr ""
+"\n"
+"Bagan Akun Umum.\n"
+"==========================\n"
+"\n"
+"Menyediakan Templat untuk Bagan Akun, Pajak untuk Uruguay.\n"
+"\n"
 
 #. module: base
 #: model:ir.module.module,description:base.module_helpdesk_sale_coupon
@@ -3241,6 +3641,18 @@ msgid ""
 "Sheet, now only Vertical format has been permitted Which is Supported By Odoo.\n"
 "  "
 msgstr ""
+"\n"
+"Akuntansi India: Bagan Akun.\n"
+"====================================\n"
+"\n"
+"Bagan akuntansi dan lokalisasi India.\n"
+"\n"
+"Odoo memungkinkan penanganan Akuntansi India dengan menyediakan Dua Format Bagan Akun contohnya Bagan Akun India - Standard dan Bagan Akun India - Schedule VI.\n"
+"\n"
+"Catatan: Schedule VI telah ditinjau oleh MCA dan dapat diberlakukan untuk semua Neraca Keuangan yang dibuat setelah\n"
+"31 Maret, 2011. Format telah dibersihkan dengan dua opsi format untuk Neraca\n"
+"Keuangan, sekarang hanya format Vertikal yang diizinkan yang Digunakan Oleh Odoo..\n"
+"  "
 
 #. module: base
 #: model:ir.module.module,description:base.module_l10n_in_hr_payroll
@@ -3693,6 +4105,25 @@ msgid ""
 ".. _SAT: http://www.sat.gob.mx/\n"
 "    "
 msgstr ""
+"\n"
+"Konfigurasi akuntansi minimal untuk Meksiko.\n"
+"============================================\n"
+"\n"
+"Bagan akun ini adalah proposal minimal untuk dapat menggunakan OoB,\n"
+"fitur akuntansi Odoo.\n"
+"\n"
+"Ini tidak mengeklaim sebagai semua lokalisasi yang dibutuhkan untuk MX tapi hanya data\n"
+"minimal yang dibutuhkan untuk memulai dari 0 di lokalisasi Meksiko.\n"
+"\n"
+"Modul ini serta isinya diperbarui secara berkala oleh tim openerp-mexico.\n"
+"\n"
+"Dengan modul ini Anda juga mendapatkan:\n"
+"\n"
+" - Bagan akun minimal yang ditest di environment produksi.\n"
+" - Bagan pajak minimal, untuk sesuai dengan persyaratan SAT_ .\n"
+"\n"
+".. _SAT: http://www.sat.gob.mx/\n"
+"    "
 
 #. module: base
 #: model:ir.module.module,description:base.module_analytic
@@ -3895,6 +4326,16 @@ msgid ""
 "    - sets up New Zealand taxes.\n"
 "    "
 msgstr ""
+"\n"
+"Modul Akuntansi Selandia Baru\n"
+"=============================\n"
+"\n"
+"Bagan akun dan lokalisasi basic Selandia Baru.\n"
+"\n"
+"Juga:\n"
+"    - mengaktifkan sejumlah mata uang regional.\n"
+"    - mempersiapkan pajak untuk Selandia Baru.\n"
+"    "
 
 #. module: base
 #: model:ir.module.module,description:base.module_base_import
@@ -4059,6 +4500,15 @@ msgid ""
 "\n"
 "    "
 msgstr ""
+"\n"
+"Bagan akuntansi dan lokalisasi pajak Panama.\n"
+"\n"
+"Plan contable panameño e impuestos de acuerdo a disposiciones vigentes\n"
+"\n"
+"Con la Colaboración de\n"
+"- AHMNET CORP http://www.ahmnet.com\n"
+"\n"
+"    "
 
 #. module: base
 #: model:ir.module.module,description:base.module_base_geolocalize
@@ -4120,6 +4570,12 @@ msgid ""
 "Italian accounting chart and localization.\n"
 "    "
 msgstr ""
+"\n"
+"Piano dei conti italiano di un'impresa generica.\n"
+"================================================\n"
+"\n"
+"Bagan akuntansi dan lokalisasi Italia.\n"
+"    "
 
 #. module: base
 #: model:ir.module.module,description:base.module_product_matrix
@@ -4421,6 +4877,16 @@ msgid ""
 "\n"
 "    "
 msgstr ""
+"\n"
+"Bagan akuntansi dan lokalisasi Singapura.\n"
+"=======================================================\n"
+"\n"
+"Modul ini menambahkan, untuk akuntansi:\n"
+" - Bagan Akun Singapura\n"
+" - Field UEN (Unique Entity Number) pada perusahaan dan mitra\n"
+" - Field PermitNo dan PermitNoDate pada faktur\n"
+"\n"
+"    "
 
 #. module: base
 #: model:ir.module.module,description:base.module_hr_skills
@@ -4449,6 +4915,18 @@ msgid ""
 "    * Defines fiscal positions for spanish fiscal legislation\n"
 "    * Defines tax reports mod 111, 115 and 303\n"
 msgstr ""
+"\n"
+"Bagan akun Spanyol (PGCE 2008).\n"
+"========================================\n"
+"\n"
+"    * Mendefinisikan templat bagan akun berikut:\n"
+"        * Bagan Akun umum Spanyol 2008\n"
+"        * Bagan Akun umum Spanyol 2008 untuk perusahaan kecil dan menengah\n"
+"        * Bagan Akun umum Spanyol 2008 untuk asosiasi\n"
+"    * Mendefinisikan templat untuk PPN penualan dan pembelian\n"
+"    * Mendefinisikan templat pajak\n"
+"    * Mendefinisikan fiscal position untuk legislasi fiskal Spanyol\n"
+"    * Mendefinisikan laporan pajak mod 111, 115 and 303\n"
 
 #. module: base
 #: model:ir.module.module,description:base.module_web_studio
@@ -5749,6 +6227,35 @@ msgid ""
 "only the country code will be validated.\n"
 "    "
 msgstr ""
+"\n"
+"Validasi PPN untuk nomor PPN Mitra.\n"
+"=========================================\n"
+"\n"
+"Setelah menginstal modul ini, nilai yang dimasukkan di field PPN untuk Mitra akan\n"
+"divalidasi untuk semua negara yang didukung. Negara akan ditentukan berdasarkan\n"
+"kode negara 2-huruf yang di depan nomor PPN, contohnya ``BE0477472701``\n"
+"yang akan divalidasi berdasarkan peraturan Belgium.\n"
+"\n"
+"Ada dua tingkat berbeda untuk validasi nomor PPN:\n"
+"--------------------------------------------------------\n"
+"    * Secara default, pemeriksaan sederhana off-line dilakukan menggunakan peraturan validasi\n"
+"      yang diketahui untuk negara tersebut, biasanya menggunakan pemeriksaan nomor sederhana. Ini cepat dan\n"
+"      selalu tersedia, tapi memungkinkan nomor yang mungkin tidak dialokasikan dengan benar,\n"
+"      atau sudah tidak valid lagi.\n"
+"\n"
+"    * Saat opsi \"VAT VIES Check\" diaktifkan (di konfigurasi Perusahaan\n"
+"      User), nomor PPN akan sebaliknya digunakan untuk database EU\n"
+"      VIES, yang akan sebetulnya memeriksa bahwa nomor valid dan saat ini\n"
+"      dialokasikan ke perusahaan EU. Ini sedikit lebih lambat dari pemeriksaan\n"
+"      sederhana off-line, requires an Internet connection, and may not be available\n"
+"      all the time. If the service is not available or does not support the\n"
+"      requested country (e.g. for non-EU countries), a simple check will be performed\n"
+"      instead.\n"
+"\n"
+"Supported countries currently include EU countries, and a few non-EU countries\n"
+"such as Chile, Colombia, Mexico, Norway or Russia. For unsupported countries,\n"
+"only the country code will be validated.\n"
+"    "
 
 #. module: base
 #: model:ir.module.module,description:base.module_industry_fsm_stock
@@ -7718,6 +8225,7 @@ msgstr ""
 #: model:ir.module.module,summary:base.module_website_sale_comparison
 msgid "Allow shoppers to compare products based on their attributes"
 msgstr ""
+"izinkan pelanggan untuk membandingkan produk berdasarkan atribut mereka"
 
 #. module: base
 #: model:ir.module.module,summary:base.module_website_sale_wishlist
@@ -7963,7 +8471,7 @@ msgstr ""
 #. module: base
 #: model:ir.module.module,shortdesc:base.module_website_calendar
 msgid "Appointments"
-msgstr ""
+msgstr "Appointment"
 
 #. module: base
 #: model:ir.module.module,shortdesc:base.module_hr_appraisal
@@ -12211,6 +12719,46 @@ msgid ""
 "* Alexis de Lattre <alexis.delattre@akretion.com>\n"
 "\n"
 msgstr ""
+"Fichier d'Échange Informatisé (FEC) pour la France\n"
+"==================================================\n"
+"\n"
+"Ce module permet de générer le fichier FEC tel que définit par `l'arrêté du 29\n"
+"Juillet 2013 <http://legifrance.gouv.fr/eli/arrete/2013/7/29/BUDE1315492A/jo/texte>`\n"
+"portant modification des dispositions de l'article A. 47 A-1 du\n"
+"livre des procédures fiscales.\n"
+"\n"
+"Cet arrêté prévoit l'obligation pour les sociétés ayant une comptabilité\n"
+"informatisée de pouvoir fournir à l'administration fiscale un fichier\n"
+"regroupant l'ensemble des écritures comptables de l'exercice. Le format de ce\n"
+"fichier, appelé *FEC*, est définit dans l'arrêté.\n"
+"\n"
+"Le détail du format du FEC est spécifié dans le bulletin officiel des finances publiques `BOI-CF-IOR-60-40-20-20131213 <http://bofip.impots.gouv.fr/bofip/ext/pdf/createPdfWithAnnexePermalien/BOI-CF-IOR-60-40-20-20131213.pdf?doc=9028-PGP&identifiant=BOI-CF-IOR-60-40-20-20131213>` du 13 Décembre 2013. Ce module implémente le fichier\n"
+"FEC au format texte et non au format XML, car le format texte sera facilement\n"
+"lisible et vérifiable par le comptable en utilisant un tableur.\n"
+"\n"
+"La structure du fichier FEC généré par ce module a été vérifiée avec le logiciel\n"
+"*Test Compta Demat* version 1_00_05 disponible sur\n"
+"`le site de la direction générale des finances publiques <http://www.economie.gouv.fr/dgfip/outil-test-des-fichiers-des-ecritures-comptables-fec>`\n"
+"en utilisant une base de donnée Odoo réelle.\n"
+"\n"
+"Configuration\n"
+"=============\n"
+"\n"
+"Aucune configuration n'est nécessaire.\n"
+"\n"
+"Utilisation\n"
+"===========\n"
+"\n"
+"Pour générer le *FEC*, allez dans le menu *Accounting > Reporting > French Statements > FEC* qui va démarrer l'assistant de génération du FEC.\n"
+"\n"
+"Credits\n"
+"=======\n"
+"\n"
+"Contributors\n"
+"------------\n"
+"\n"
+"* Alexis de Lattre <alexis.delattre@akretion.com>\n"
+"\n"
 
 #. module: base
 #: model:ir.model.fields,field_description:base.field_ir_default__field_id
@@ -12254,7 +12802,7 @@ msgstr ""
 #. module: base
 #: model:ir.model.fields,field_description:base.field_ir_model_fields__field_description
 msgid "Field Label"
-msgstr ""
+msgstr "Label Field"
 
 #. module: base
 #: model_terms:ir.ui.view,arch_db:base.view_server_action_form
@@ -15537,7 +16085,7 @@ msgstr "Muat Terjemahan"
 #. module: base
 #: model:ir.actions.act_window,name:base.demo_force_install_action
 msgid "Load demo data"
-msgstr ""
+msgstr "Load data demo"
 
 #. module: base
 #: model:ir.model.fields,field_description:base.field_res_lang__code
@@ -15876,6 +16424,8 @@ msgid ""
 "Manage contact tags to better classify them for tracking and analysis "
 "purposes."
 msgstr ""
+"Kelola tag kontak untuk lebih baik mengklasifikasikan mereka untuk tujuan "
+"pelacakan dan analisis."
 
 #. module: base
 #: model:ir.module.module,summary:base.module_sale_coupon_taxcloud_delivery
@@ -16552,7 +17102,7 @@ msgstr ""
 #: code:addons/model.py:0 code:addons/model.py:0
 #, python-format
 msgid "Model:"
-msgstr ""
+msgstr "Model:"
 
 #. module: base
 #: model:ir.actions.act_window,name:base.action_model_model
@@ -16609,7 +17159,7 @@ msgstr ""
 #. module: base
 #: model:ir.model,name:base.model_base_module_uninstall
 msgid "Module Uninstall"
-msgstr ""
+msgstr "Module Uninstal"
 
 #. module: base
 #: model:ir.actions.act_window,name:base.action_view_base_module_update
@@ -17010,7 +17560,7 @@ msgstr ""
 #. module: base
 #: model:ir.model.fields,field_description:base.field_ir_actions_act_window__view_ids
 msgid "No of Views"
-msgstr ""
+msgstr "Jumlah Views"
 
 #. module: base
 #: model:ir.model.fields,field_description:base.field_ir_model_data__noupdate
@@ -19066,7 +19616,7 @@ msgstr "Format Kertas"
 #. module: base
 #: model:ir.model,name:base.model_report_paperformat
 msgid "Paper Format Config"
-msgstr ""
+msgstr "Konfigurasi Format Kertas"
 
 #. module: base
 #: model:ir.actions.act_window,name:base.paper_format_action
@@ -20141,7 +20691,7 @@ msgstr ""
 #. module: base
 #: model:ir.model,name:base.model_ir_qweb
 msgid "Qweb"
-msgstr ""
+msgstr "Qweb"
 
 #. module: base
 #: model:ir.model,name:base.model_ir_qweb_field
@@ -20156,7 +20706,7 @@ msgstr "Barcode Kolom Qweb"
 #. module: base
 #: model:ir.model,name:base.model_ir_qweb_field_contact
 msgid "Qweb Field Contact"
-msgstr ""
+msgstr "Kolom Kontak Qweb"
 
 #. module: base
 #: model:ir.model,name:base.model_ir_qweb_field_date
@@ -20305,12 +20855,12 @@ msgstr "Catatan"
 #: model:ir.model.fields,field_description:base.field_ir_model_data__res_id
 #: model:ir.model.fields,field_description:base.field_ir_translation__res_id
 msgid "Record ID"
-msgstr ""
+msgstr "Record ID"
 
 #. module: base
 #: model_terms:ir.ui.view,arch_db:base.view_rule_search
 msgid "Record Rule"
-msgstr ""
+msgstr "Peraturan Pencatatan"
 
 #. module: base
 #: code:addons/base/models/res_users.py:0
@@ -20409,7 +20959,7 @@ msgstr ""
 #. module: base
 #: model:ir.model.fields,field_description:base.field_ir_model_fields__related
 msgid "Related Field"
-msgstr ""
+msgstr "Field Terkait"
 
 #. module: base
 #: model:ir.model.fields,field_description:base.field_res_users__partner_id
@@ -20706,7 +21256,7 @@ msgstr ""
 #. module: base
 #: model:ir.model.fields.selection,name:base.selection__reset_view_arch_wizard__reset_mode__soft
 msgid "Restore previous version (soft reset)."
-msgstr ""
+msgstr "Pulihkan ke versi sebelumnya (soft reset)."
 
 #. module: base
 #: model:ir.model.fields.selection,name:base.selection__ir_model_fields__on_delete__restrict
@@ -21271,7 +21821,7 @@ msgstr ""
 #. module: base
 #: model:ir.model.fields,field_description:base.field_ir_model_fields__selectable
 msgid "Selectable"
-msgstr ""
+msgstr "Dapat dipilih"
 
 #. module: base
 #: model_terms:ir.ui.view,arch_db:base.base_partner_merge_automatic_wizard_form
@@ -21747,7 +22297,7 @@ msgstr ""
 #: model:ir.module.category,name:base.module_category_marketing_social
 #: model:ir.module.category,name:base.module_category_social
 msgid "Social"
-msgstr ""
+msgstr "Sosial"
 
 #. module: base
 #: model:ir.module.module,shortdesc:base.module_social_facebook
@@ -22021,7 +22571,7 @@ msgstr "Status"
 #. module: base
 #: model:ir.model.fields,field_description:base.field_ir_sequence__number_increment
 msgid "Step"
-msgstr ""
+msgstr "Langkah"
 
 #. module: base
 #: code:addons/base/models/ir_sequence.py:0
@@ -22146,7 +22696,7 @@ msgstr ""
 #. module: base
 #: model:ir.module.module,shortdesc:base.module_web_studio
 msgid "Studio"
-msgstr ""
+msgstr "Studio"
 
 #. module: base
 #: model:ir.module.module,summary:base.module_mrp_subcontracting
@@ -22623,6 +23173,10 @@ msgid ""
 " 1,06,500; [1,2,-1] will represent it to be 106,50,0;[3] will represent it "
 "as 106,500. Provided ',' as the thousand separator in each case."
 msgstr ""
+"The Separator Format should be like [,n] where 0 < n :starting from Unit "
+"digit. -1 will end the separation. e.g. [3,2,-1] will represent 106500 to be"
+" 1,06,500; [1,2,-1] will represent it to be 106,50,0;[3] will represent it "
+"as 106,500. Provided ',' as the thousand separator in each case."
 
 #. module: base
 #: code:addons/base/models/res_lang.py:0
@@ -22633,6 +23187,10 @@ msgid ""
 " 1,06,500;[1,2,-1] will represent it to be 106,50,0;[3] will represent it as"
 " 106,500. Provided as the thousand separator in each case."
 msgstr ""
+"The Separator Format should be like [,n] where 0 < n :starting from Unit "
+"digit. -1 will end the separation. e.g. [3,2,-1] will represent 106500 to be"
+" 1,06,500;[1,2,-1] will represent it to be 106,50,0;[3] will represent it as"
+" 106,500. Provided as the thousand separator in each case."
 
 #. module: base
 #: model:ir.model.fields,help:base.field_res_company__vat
@@ -22703,6 +23261,10 @@ msgid ""
 "Odoo. They are launched during the installation of new modules, but you can "
 "choose to restart some wizards manually from this menu."
 msgstr ""
+"Wizard konfigurasi akan digunakan untuk membantu Anda mengonfigurasi "
+"instance baru Odoo. Mereka akan diluncurkan pada instalasi modul baru, tapi "
+"Anda dapat memilih untuk restart beberapa wizard secara manual dari menu "
+"ini."
 
 #. module: base
 #: model:ir.model.fields,help:base.field_ir_model_fields__related
@@ -22750,6 +23312,10 @@ msgid ""
 "                                                the field must be assigned to each record with a dictionary-like\n"
 "                                                assignment."
 msgstr ""
+"Field <strong>Compute</strong> adalah kode Python untuk\n"
+"                                                menghitung nilai dari field pada satu set record. Nilai dari\n"
+"                                                field harus diterapkan ke setiap record dengan satu dictionary-like\n"
+"                                                assignment."
 
 #. module: base
 #: model_terms:ir.ui.view,arch_db:base.view_model_fields_form
@@ -22759,6 +23325,10 @@ msgid ""
 "                                    the field must be assigned to each record with a dictionary-like\n"
 "                                    assignment."
 msgstr ""
+"Field <strong>Compute</strong> adalah kode Python untuk\n"
+"                                    menghitung nilai dari field pada satu set record. Nilai dari\n"
+"                                   field harus diterapkan ke setiap record dengan satu dictionary-like\n"
+"                                    assignment."
 
 #. module: base
 #: model_terms:ir.ui.view,arch_db:base.view_model_form
@@ -23144,12 +23714,12 @@ msgstr ""
 #. module: base
 #: model:ir.model.fields,help:base.field_ir_ui_view__arch_base
 msgid "This field is the same as `arch` field without translations"
-msgstr ""
+msgstr "Kolom ini sama dengan kolom `arch` tanpa terjemaha"
 
 #. module: base
 #: model:ir.model.fields,help:base.field_res_lang__code
 msgid "This field is used to set/get locales for user"
-msgstr ""
+msgstr "Kolom ini digunakan untuk set/get locales bagi user"
 
 #. module: base
 #: model:ir.model.fields,help:base.field_ir_ui_view__arch
@@ -23157,11 +23727,13 @@ msgid ""
 "This field should be used when accessing view arch. It will use translation.\n"
 "                               Note that it will read `arch_db` or `arch_fs` if in dev-xml mode."
 msgstr ""
+"Kolom ini seharusnya digunakan saat mengakses tampilan arch. Kolom ini akan menggunakan terjemahan.\n"
+"                               Mohon dicatat bahwa kolom ini akan membaca `arch_db` atau `arch_fs` bila berada di mode dev-xml."
 
 #. module: base
 #: model:ir.model.fields,help:base.field_ir_ui_view__arch_db
 msgid "This field stores the view arch."
-msgstr ""
+msgstr "Kolom ini menyimpan tampilan arch"
 
 #. module: base
 #: model:ir.model.fields,help:base.field_ir_ui_view__arch_prev
@@ -23169,6 +23741,8 @@ msgid ""
 "This field will save the current `arch_db` before writing on it.\n"
 "                                                                         Useful to (soft) reset a broken view."
 msgstr ""
+"Kolom ini akan menyimpan `arch_db` yang tersedia saat ini sebelum kolom ini mulai mengganti.\n"
+"                                                                         Ini berguna untuk melakukan (soft) reset pada tampilan yang rusak."
 
 #. module: base
 #: code:addons/image.py:0
@@ -23508,7 +24082,7 @@ msgstr ""
 #. module: base
 #: model:ir.module.module,shortdesc:base.module_web_tour
 msgid "Tours"
-msgstr ""
+msgstr "Tur"
 
 #. module: base
 #: model:ir.module.module,shortdesc:base.module_mass_mailing_event_track_sms
@@ -23732,7 +24306,7 @@ msgstr ""
 #. module: base
 #: model:ir.module.module,shortdesc:base.module_website_twitter_wall
 msgid "Twitter Wall"
-msgstr ""
+msgstr "Twitter Wall"
 
 #. module: base
 #: model:ir.module.module,summary:base.module_website_twitter
@@ -24050,7 +24624,7 @@ msgstr ""
 #: code:addons/base/static/src/js/res_config_settings.js:0
 #, python-format
 msgid "Unsaved changes"
-msgstr ""
+msgstr "Perubahan yang belum disave"
 
 #. module: base
 #: model:ir.module.module,shortdesc:base.module_web_unsplash
@@ -24572,7 +25146,7 @@ msgstr ""
 #. module: base
 #: model:ir.model.fields,field_description:base.field_ir_ui_view__mode
 msgid "View inheritance mode"
-msgstr ""
+msgstr "View inheritance mode"
 
 #. module: base
 #: model:ir.module.module,summary:base.module_website_crm_livechat
@@ -24626,7 +25200,7 @@ msgstr ""
 #. module: base
 #: model:ir.model.fields,field_description:base.field_ir_module_category__visible
 msgid "Visible"
-msgstr ""
+msgstr "Terlihat"
 
 #. module: base
 #: model:ir.module.module,shortdesc:base.module_stock_account
@@ -24902,6 +25476,9 @@ msgid ""
 "If the timezone is not set, UTC (Coordinated Universal Time) is used.\n"
 "Anywhere else, time values are computed according to the time offset of your web client."
 msgstr ""
+"Saat mencetak dokumen dan ekspor/impor data, value waktu akan dihitung berdasarkan timezone ini.\n"
+"Bila timezone belum ditetapkan, UTC (Waktu Universal Terkoordinasi) akan digunakan.\n"
+"DI tempat lain, value waktu akan dihitung berdasarkan offset waktu dari klien website Anda."
 
 #. module: base
 #: model_terms:ir.ui.view,arch_db:base.sequence_view
@@ -25191,6 +25768,9 @@ msgid ""
 "\n"
 "(Operation: %(operation)s)"
 msgstr ""
+"Anda tidak memiliki hak yang mencukupi untuk mengakses field \"%(fields)s\" pada %(document_kind)s (%(document_model)s). Mohon hubungi administrator sistem Anda.\n"
+"\n"
+"(Operation: %(operation)s)"
 
 #. module: base
 #: code:addons/base/models/ir_actions.py:0
@@ -25251,6 +25831,9 @@ msgid ""
 "instead. If SSL is needed, an upgrade to Python 2.6 on the server-side "
 "should do the trick."
 msgstr ""
+"Server Odoo Anda tidak mendukung SMTP-over-SSL. Sebagai gantinya Anda dapat "
+"menggunakan STARTTLS. Bila SSL diperlukan, upgrade ke Python 2.6 pada "
+"server-side akan membantu."
 
 #. module: base
 #: code:addons/base/models/ir_mail_server.py:0
@@ -25379,12 +25962,12 @@ msgstr "id database"
 #. module: base
 #: model:ir.model.fields.selection,name:base.selection__ir_model_fields__ttype__date
 msgid "date"
-msgstr ""
+msgstr "tanggal"
 
 #. module: base
 #: model:ir.model.fields.selection,name:base.selection__ir_model_fields__ttype__datetime
 msgid "datetime"
-msgstr ""
+msgstr "datetime"
 
 #. module: base
 #: model_terms:ir.ui.view,arch_db:base.wizard_lang_export
@@ -25470,7 +26053,7 @@ msgstr "Pengiriman eCommerce"
 #. module: base
 #: model:ir.module.module,shortdesc:base.module_website_slides
 msgid "eLearning"
-msgstr ""
+msgstr "eLearning"
 
 #. module: base
 #: model_terms:ir.ui.view,arch_db:base.view_users_simple_form
