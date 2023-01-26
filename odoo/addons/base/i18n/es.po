@@ -10,7 +10,7 @@
 # Luis González <lgonzalez@vauxoo.com>, 2019
 # oihane <oihanecruce@gmail.com>, 2019
 # Massiel Acuna <mac@odoo.com>, 2019
-# Christopher Ormaza <chris.ormaza@gmail.com>, 2019
+# 3fea9b0a501d83c62ec74234fbc72e10_a827c46 <dce1956db1a05bce2aec6cc4ef975d99_318347>, 2019
 # Miguel Orueta <mo@landoo.es>, 2019
 # Cristóbal Martí Oliver <info@moblesmarti.com>, 2019
 # José Vicente <txusev@gmail.com>, 2019
@@ -70,13 +70,13 @@
 # Wilson Pujols <wpujols@capw.com.do>, 2021
 # José Cabrera Lozano <jose.cabrera@edukative.es>, 2021
 # Valentino <vgaffuri2018@student.hult.edu>, 2021
-# jabelchi, 2021
+# Josep Anton Belchi, 2021
 # Lucia Pacheco <lpo@odoo.com>, 2021
 # Patricia Gutiérrez Capetillo <pagc@odoo.com>, 2021
 # Braulio D. López Vázquez <bdl@odoo.com>, 2022
-# Pedro M. Baeza <pedro.baeza@tecnativa.com>, 2022
 # Leonardo J. Caballero G. <leonardocaballero@gmail.com>, 2022
 # Luis D Lafaurie, 2022
+# Pedro M. Baeza <pedro.baeza@tecnativa.com>, 2022
 # 
 msgid ""
 msgstr ""
@@ -84,7 +84,7 @@ msgstr ""
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2020-07-23 15:12+0000\n"
 "PO-Revision-Date: 2019-08-26 09:06+0000\n"
-"Last-Translator: Luis D Lafaurie, 2022\n"
+"Last-Translator: Pedro M. Baeza <pedro.baeza@tecnativa.com>, 2022\n"
 "Language-Team: Spanish (https://www.transifex.com/odoo/teams/41243/es/)\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
@@ -4045,7 +4045,7 @@ msgstr ""
 "\n"
 "A hacer:\n"
 "--------\n"
-"    - Integración con módulo de vacaciones para deducción y permiso\n"
+"    - Integración con módulo de ausencias para deducción y permiso\n"
 "    - Integración con hr_payroll_account para la creación automática de account_move_line desde el recibo de sueldo. Continúe para integrar la contribución. Solo las contribuciones principales\n"
 "      son implementadas actualmente\n"
 "    - Rehaga el reporte bajo webkit\n"
@@ -5359,7 +5359,7 @@ msgstr ""
 "Gestiona ausencias y solicitudes de asignación\n"
 "====================================\n"
 "\n"
-"Esta aplicación controla la planificación de vacaciones de su compañía. Permite a los empleados solicitar vacaciones. Luego, los responsables pueden revisar las solicitudes de vacaciones y aprobarlas o rechazarlas. De esta manera usted puede controlar en conjunto la planificación de las vacaciones para una compañía o departamento.\n"
+"Esta aplicación controla la planificación de ausencias de su compañía. Permite a los empleados solicitar ausencias. Luego, los responsables pueden revisar las solicitudes de ausencias y aprobarlas o rechazarlas. De esta manera, usted puede controlar en conjunto la planificación de las ausencias para una compañía o departamento.\n"
 "\n"
 "Puede configurar distintos tipos de ausencias (enfermedad, vacaciones, días compensatorios, ...) y distribuirlas para un empleado o departamento rápidamente usando las solicitudes de asignación. Un empleado puede también hacer una petición para más días creando una nueva asignación. Esto incrementará el total de días disponibles para ese tipo de ausencia (si la petición es aceptada).\n"
 "\n"
@@ -5369,7 +5369,7 @@ msgstr ""
 "* Ausencias por departamento\n"
 "* Análisis de ausencias\n"
 "\n"
-"También es posible la sincronización con la agenda interna (Reuniones del módulo de CRM) de cara a crear automáticamente una reunión cuando se acepta una solicitud de vacaciones, configurando un tipo reunión como tipo de ausencia.\n"
+"También es posible la sincronización con la agenda interna (Reuniones del módulo de CRM) de cara a crear automáticamente una reunión cuando se acepta una solicitud de ausencias, configurando un tipo reunión como tipo de ausencia.\n"
 
 #. module: base
 #: model:ir.module.module,description:base.module_mass_mailing_slides
@@ -21753,7 +21753,7 @@ msgstr ""
 "Gestión de tiempo libre\n"
 "-----------------\n"
 "\n"
-"Lleve un registro de los días de vacaciones acumulados por cada empleado. Los empleados ingresan a sus\n"
+"Lleve un registro de los días de ausencias acumulados por cada empleado. Los empleados ingresan a sus\n"
 "(tiempo libre pagado, tiempo libre de enfermedad, etc.), para que los gerentes aprueben y\n"
 "Validar. Todo se hace en unos pocos clics. La agenda de cada empleado es\n"
 "actualizado en consecuencia.\n"
@@ -31105,3 +31105,10 @@ msgstr "sí"
 #: model:res.country,name:base.ax
 msgid "Åland Islands"
 msgstr "Islas Aland"
+
+#. module: base
+#: code:addons/base/models/res_currency.py:0
+#, python-format
+msgid "This currency is set on a company and therefore must be active."
+msgstr ""
+"La moneda está establecida en una compañía y por ello debe estar activa."

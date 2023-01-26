@@ -8,6 +8,7 @@
 # Wahyu Setiawan <wahyusetiaaa@gmail.com>, 2019
 # Andhitia Rama <andhitia.r@gmail.com>, 2019
 # Ryanto The <ry.the77@gmail.com>, 2019
+# Abe Manyo, 2023
 # 
 msgid ""
 msgstr ""
@@ -15,7 +16,7 @@ msgstr ""
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2020-04-27 09:22+0000\n"
 "PO-Revision-Date: 2019-08-26 09:15+0000\n"
-"Last-Translator: Ryanto The <ry.the77@gmail.com>, 2019\n"
+"Last-Translator: Abe Manyo, 2023\n"
 "Language-Team: Indonesian (https://www.transifex.com/odoo/teams/41243/id/)\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
@@ -45,6 +46,8 @@ msgid ""
 "A pricelist item with a positive min. quantity cannot be applied to this "
 "event tickets product."
 msgstr ""
+"Item daftar harga dengan kuantitas minimal yang positif tidak dapat "
+"diterapkan ke produk tiket acara ini."
 
 #. module: website_event_sale
 #: code:addons/website_event_sale/models/product_pricelist.py:0
@@ -53,6 +56,8 @@ msgid ""
 "A pricelist item with a positive min. quantity will not be applied to the "
 "event tickets products."
 msgstr ""
+"Item daftar harga dengan kuantitas minimal yang positif tidak akan "
+"diterapkan ke produk tiket acara."
 
 #. module: website_event_sale
 #: model:ir.model.fields,field_description:website_event_sale.field_product_product__event_ticket_ids
@@ -77,7 +82,7 @@ msgstr "Untuk tujuan internal saja"
 #. module: website_event_sale
 #: model:ir.model,name:website_event_sale.model_product_pricelist_item
 msgid "Pricelist Rule"
-msgstr ""
+msgstr "Peraturan Daftar Harga"
 
 #. module: website_event_sale
 #: model:ir.model,name:website_event_sale.model_product_product
@@ -113,7 +118,7 @@ msgstr "Detail Order Penjualan"
 #. module: website_event_sale
 #: model_terms:ir.ui.view,arch_db:website_event_sale.registration_template
 msgid "Sales end on"
-msgstr ""
+msgstr "Sale berakhir pada"
 
 #. module: website_event_sale
 #: model_terms:ir.ui.view,arch_db:website_event_sale.index
@@ -124,7 +129,7 @@ msgstr "Terjual Habis"
 #: code:addons/website_event_sale/models/sale_order.py:0
 #, python-format
 msgid "Sorry, The %(ticket)s tickets for the %(event)s event are sold out."
-msgstr ""
+msgstr "Maaf, tiket %(ticket)s untuk acara %(event)s sudah sold out."
 
 #. module: website_event_sale
 #: code:addons/website_event_sale/models/sale_order.py:0
@@ -133,6 +138,8 @@ msgid ""
 "Sorry, only %(remaining_seats)d seats are still available for the %(ticket)s"
 " ticket for the %(event)s event."
 msgstr ""
+"Maaf, hanya %(remaining_seats)d tempat duduk yang masih tersisa untuk tiket "
+"%(ticket)s untuk acara %(event)s."
 
 #. module: website_event_sale
 #: code:addons/website_event_sale/models/sale_order.py:0
@@ -143,7 +150,7 @@ msgstr "Tiket tidak sesuai dengan produk ini."
 #. module: website_event_sale
 #: model_terms:ir.ui.view,arch_db:website_event_sale.registration_complete_inherit_website_event_sale
 msgid "Ticket"
-msgstr ""
+msgstr "Tiket"
 
 #. module: website_event_sale
 #: model_terms:ir.ui.view,arch_db:website_event_sale.registration_template
