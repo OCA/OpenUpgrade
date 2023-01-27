@@ -66,4 +66,7 @@
   <record id="res_partner_industry_U" model="res.partner.industry">
     <field name="full_name">U - ACTIVITIES OF EXTRATERRITORIAL ORGANISATIONS AND BODIES</field>
   </record>
+  <record id="es" model="res.country">
+    <field eval="'%(street)s\n%(street2)s\n%(zip)s %(city)s (%(state_name)s)\n%(country_name)s'" name="address_format"/>
+  </record>
 </odoo>
