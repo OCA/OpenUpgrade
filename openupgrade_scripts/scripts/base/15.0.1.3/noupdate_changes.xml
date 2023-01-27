@@ -600,4 +600,7 @@
     <field name="company_ids" eval="[Command.link(ref('main_company'))]"/>
   </record>
 -->
+  <record id="es" model="res.country">
+    <field eval="'%(street)s\n%(street2)s\n%(zip)s %(city)s (%(state_name)s)\n%(country_name)s'" name="address_format"/>
+  </record>
 </odoo>
