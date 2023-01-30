@@ -54,6 +54,8 @@ renamed_modules = {
     "openupgrade_records": "upgrade_analysis",
     # OCA/web
     "web_confirm_duplicate": "web_copy_confirm",
+    # OCA/website
+    "website_analytics_piwik": "website_analytics_matomo",
     # OCA/...
 }
 
