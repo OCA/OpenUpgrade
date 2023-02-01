@@ -2,7 +2,7 @@
 # Copyright 2021 ForgeFlow S.L.  <https://www.forgeflow.com>
 # License AGPL-3.0 or later (https://www.gnu.org/licenses/agpl).
 
-from openupgradelib import openupgrade
+from openupgradelib import openupgrade, openupgrade_140
 
 
 @openupgrade.migrate()
@@ -56,4 +56,12 @@ def migrate(env, version):
         DELETE FROM ir_model_data
         WHERE module = 'website_sale' and name = 'image_full'
         """,
+    )
+    openupgrade_140.convert_field_html_string_13to14(
+        env, "product.template", "website_description"
+    )
+    openupgrade_140.convert_field_html_string_13to14(
+        env,
+        "product.public.category",
+        "website_description",
     )
