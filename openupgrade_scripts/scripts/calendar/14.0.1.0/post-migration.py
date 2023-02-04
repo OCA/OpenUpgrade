@@ -73,7 +73,44 @@ def create_recurrent_events(env):
     But we do not create an activity on the real records.
     """
     recs = env["calendar.recurrence"].search([("base_event_id", "!=", False)])
-    recs.with_context(default_activity_ids=[(6, 0, [])])._apply_recurrence()
+    env.cr.execute(
+        """
+        SELECT id, recurrent_id, recurrent_id_date
+        FROM calendar_event
+        WHERE recurrent_id > 0
+        """
+    )
+    result = env.cr.fetchall()
+
+    for recurrence in recs:
+        duration = recurrence.base_event_id.stop - recurrence.base_event_id.start
+        ranges = set(recurrence._get_ranges(recurrence.base_event_id.start, duration))
+        # Remove range that contains start < event's start to avoid create past events
+        for range in list(ranges):
+            if range[0] <= recurrence.base_event_id.start:
+                ranges.remove(range)
+            else:
+                break
+        # Remove range that contains detach events
+        for event_id, recurrent_id, recurrent_id_date in result:
+            if recurrence.base_event_id.id == recurrent_id:
+                result.remove((event_id, recurrent_id, recurrent_id_date))
+                if (recurrent_id_date, recurrent_id_date + duration) in ranges:
+                    ranges.remove((recurrent_id_date, recurrent_id_date + duration))
+
+        values = {}
+        for start, stop in ranges:
+            values[(recurrence.id, start, stop)] = dict(
+                start=start,
+                stop=stop,
+                recurrence_id=recurrence.id,
+            )
+        if values:
+            recurrence.with_context(
+                default_activity_ids=[(6, 0, [])]
+            )._apply_recurrence(
+                specific_values_creation=values,
+            )
 
 
 @openupgrade.migrate()
