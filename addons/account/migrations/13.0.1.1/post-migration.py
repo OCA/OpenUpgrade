@@ -227,7 +227,7 @@ def migration_invoice_moves(env):
         ) group_by_ail
     ), sub AS (
         UPDATE account_move_line aml
-        SET exclude_from_invoice_tab = FALSE, sequence = ail.sequence,
+        SET exclude_from_invoice_tab = FALSE, sequence = ail.sequence, name = ail.name,
         price_unit = ail.price_unit, discount = ail.discount, price_subtotal = ail.price_subtotal,
         price_total = ail.price_total, display_type = ail.display_type,
         is_rounding_line = ail.is_rounding_line, old_invoice_line_id = ail.id,
