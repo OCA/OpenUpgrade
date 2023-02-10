@@ -1,4 +1,5 @@
 # Copyright 2020 ForgeFlow <http://www.forgeflow.com>
+# Copyright 2023 Tecnativa - Pedro M. Baeza
 # License AGPL-3.0 or later (http://www.gnu.org/licenses/agpl.html).
 
 from openupgradelib import openupgrade
@@ -46,8 +47,37 @@ def set_account_move_number_to_invoice_number(env):
     )
 
 
+def rename_food_taxes_xmlids(env):
+    renames = [
+        ("account_tax_template_p_iva0_a", "account_tax_template_p_iva0_s_bc"),
+        ("account_tax_template_p_iva5_a", "account_tax_template_p_iva5_bc"),
+        ("account_tax_template_p_iva0_ic_a", "account_tax_template_p_iva0_ic_bc"),
+        ("account_tax_template_p_iva5_ic_a", "account_tax_template_p_iva5_ic_bc"),
+        ("account_tax_template_p_iva0_ia", "account_tax_template_p_iva0_ibc"),
+        ("account_tax_template_p_iva5_ia", "account_tax_template_p_iva5_ibc"),
+        ("account_tax_template_p_req0625", "account_tax_template_p_req062"),
+        ("account_tax_template_s_iva0_a", "account_tax_template_s_iva0b"),
+        ("account_tax_template_s_iva5_a", "account_tax_template_s_iva5b"),
+        ("account_tax_template_s_req0625", "account_tax_template_s_req062"),
+    ]
+    companies = env["res.company"].with_context(active_test=False).search([])
+    for old, new in renames:
+        openupgrade.rename_xmlids(env.cr, [("l10n_es." + old, "l10n_es." + new)])
+        for company in companies:
+            openupgrade.rename_xmlids(
+                env.cr,
+                [
+                    (
+                        "l10n_es.%s_" % company.id + old,
+                        "l10n_es.%s_" % company.id + new,
+                    ),
+                ],
+            )
+
+
 @openupgrade.migrate()
 def migrate(env, version):
     if openupgrade.column_exists(
             env.cr, "account_invoice", "invoice_number"):
         set_account_move_number_to_invoice_number(env)
+    rename_food_taxes_xmlids(env)
