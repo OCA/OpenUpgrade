@@ -56,8 +56,7 @@ jobs:
               python3-serial \
               python3-simplejson \
               python3-werkzeug \
-              python3-yaml \
-              unixodbc-dev
+              python3-yaml
       - name: Requirements Installation
         run: |
           pip install -q -r odoo/requirements.txt
