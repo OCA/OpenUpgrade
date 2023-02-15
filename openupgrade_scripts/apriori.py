@@ -99,6 +99,7 @@ merged_modules = {
     "report_qweb_pdf_fixed_column": "web",
     # OCA/sale-workflow
     "sale_order_price_recalculation": "sale",
+    "sale_order_pricelist_tracking": "sale",
     # OCA/stock-logistics-warehouse
     "stock_inventory_include_exhausted": "stock",
     # OCA/web
