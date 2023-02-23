@@ -48,6 +48,8 @@ renamed_modules = {
     "edi_voxel_stock_picking_secondary_unit": "edi_voxel_stock_picking_secondary_unit_oca",  # noqa: B950
     "edi_webservice": "edi_webservice_oca",
     "edi_xml": "edi_xml_oca",
+    # OCA/hr-holidays
+    "hr_leave_hour": "hr_leave_custom_hour_interval",
     # OCA/l10n-spain
     "l10n_es_account_bank_statement_import_n43": "l10n_es_account_statement_import_n43",
     # OCA/server-tools
