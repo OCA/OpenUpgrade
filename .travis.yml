@@ -1,4 +1,5 @@
 language: python
+dist: trusty
 sudo: false
 
 python:
@@ -21,8 +22,10 @@ addons:
 env:
   - DB=openupgrade ODOO=./odoo-bin
 
-# Need flake8 for pep8 testing
 install:
+    # For avoiding incompatibility with Python 3.5
+    - pip install setuptools-scm
+    # Need flake8 for pep8 testing
     - pip install flake8==3.4.1 coveralls
 
 # Test with flake for:
