@@ -44,6 +44,8 @@ merged_modules = {
     "account_menu": "account_usability",
     # OCA/account-invoicing
     "purchase_invoicing_no_zero_line": "purchase",
+    # OCA/account-invoicing
+    "purchase_batch_invoicing": "purchase",
     # OCA/e-commerce
     "website_sale_cart_no_redirect": "website_sale",
     # OCA/hr
