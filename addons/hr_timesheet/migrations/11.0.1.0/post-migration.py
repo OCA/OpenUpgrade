@@ -52,6 +52,26 @@ def recompute_tasks_from_issues_fields(env):
     tasks._hours_get()
 
 
+def add_group_hr_timesheet_user_from_analytic_lines(env):
+    """All users for which there are timesheets in the system may need to be
+    added to hr_timesheet_user.
+    Ref: https://github.com/OCA/OpenUpgrade/pull/3189#issuecomment-1157250863"""
+    hr_timesheet_user_group = env.ref("hr_timesheet.group_hr_timesheet_user")
+    openupgrade.logged_query(
+        env.cr, """
+        INSERT INTO res_groups_users_rel
+            (gid, uid)
+        SELECT %s, aal.user_id
+        FROM account_analytic_line aal
+        WHERE aal.user_id IS NOT NULL AND aal.user_id NOT IN (
+            SELECT uid
+            FROM res_groups_users_rel
+            WHERE gid = %s
+        )
+        """, (hr_timesheet_user_group.id, hr_timesheet_user_group.id),
+    )
+
+
 @openupgrade.migrate()
 def migrate(env, version):
     openupgrade.load_data(
@@ -60,3 +80,4 @@ def migrate(env, version):
     update_employee_id(env)
     migrate_project_issue_sheet(env)
     recompute_tasks_from_issues_fields(env)
+    add_group_hr_timesheet_user_from_analytic_lines(env)
