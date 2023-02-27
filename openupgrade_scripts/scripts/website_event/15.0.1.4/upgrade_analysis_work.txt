@@ -1,0 +1,48 @@
+---Models in module 'website_event'---
+---Fields in module 'website_event'---
+website_event / event.event              / introduction_menu (boolean)   : NEW hasdefault: compute
+website_event / event.event              / introduction_menu_ids (one2many): NEW relation: website.event.menu
+website_event / event.event              / location_menu (boolean)       : NEW hasdefault: compute
+website_event / event.event              / location_menu_ids (one2many)  : NEW relation: website.event.menu
+website_event / event.event              / register_menu (boolean)       : NEW hasdefault: compute
+website_event / event.event              / register_menu_ids (one2many)  : NEW relation: website.event.menu
+website_event / event.tag.category       / is_published (boolean)        : NEW hasdefault: default
+website_event / website.event.menu       / menu_type (selection)         : selection_keys is now '['community', 'introduction', 'location', 'register']' ('['community']')
+website_event / website.event.menu       / view_id (many2one)            : NEW relation: ir.ui.view
+# NOTHING TO DO: new (computed) features
+
+---XML records in module 'website_event'---
+NEW ir.model.access: website_event.access_event_event
+NEW ir.model.access: website_event.access_event_event_ticket
+NEW ir.model.access: website_event.access_event_tag
+NEW ir.model.access: website_event.access_event_tag_category
+# NOTHING TO DO
+
+NEW ir.model.access: website_event.access_event_type [renamed from event module]
+# DONE: pre-migration: renamed xmlid
+
+NEW ir.model.access: website_event.access_website_event_menu
+NEW ir.model.access: website_event.access_website_event_menu_user
+NEW ir.model.access: website_event.access_website_visitor_user
+DEL ir.model.access: website_event.access_event_category_public
+DEL ir.model.access: website_event.access_event_event_portal
+DEL ir.model.access: website_event.access_event_event_public
+DEL ir.model.access: website_event.access_event_event_ticket_portal
+DEL ir.model.access: website_event.access_event_event_ticket_public
+DEL ir.model.access: website_event.access_event_tag_public
+DEL ir.model.access: website_event.access_event_type_public
+DEL ir.model.access: website_event.access_website_event_menu_manager
+DEL ir.model.access: website_event.access_website_event_menu_public
+DEL ir.model.access: website_event.website_visitor_access_event_user
+NEW ir.ui.view: website_event.display_timer_alert_widget
+NEW ir.ui.view: website_event.event_searchbar_input_snippet_options
+NEW ir.ui.view: website_event.event_tag_category_view_form
+NEW ir.ui.view: website_event.event_tag_category_view_tree
+NEW ir.ui.view: website_event.events_search_box_input
+NEW ir.ui.view: website_event.registration_configure_tickets_button
+DEL ir.ui.view: website_event.assets_common
+DEL ir.ui.view: website_event.assets_editor
+DEL ir.ui.view: website_event.assets_frontend
+DEL ir.ui.view: website_event.event_category_tag
+DEL ir.ui.view: website_event.website_visitor_view_kanban
+# NOTHING TO DO
