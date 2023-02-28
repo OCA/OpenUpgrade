@@ -381,6 +381,28 @@ def recompute_stock_location_complete_name(env):
     locations._compute_complete_name()
 
 
+def update_sml_index(env):
+    # As company_id is a new indexed column for stock_move_line we must update
+    # the index according to the upstream config.
+    openupgrade.logged_query(
+        env.cr,
+        "DROP INDEX stock_move_line_free_reservation_index"
+    )
+    openupgrade.logged_query(
+        env.cr,
+        """
+        CREATE INDEX stock_move_line_free_reservation_index
+        ON
+            stock_move_line (
+                id, company_id, product_id, lot_id,
+                location_id, owner_id, package_id
+            )
+        WHERE
+            (state IS NULL OR state NOT IN ('cancel', 'done'))
+            AND product_qty > 0"""
+    )
+
+
 @openupgrade.migrate()
 def migrate(env, version):
     main_company = _get_main_company(env.cr)
@@ -405,3 +427,4 @@ def migrate(env, version):
             ],
         )
     recompute_stock_location_complete_name(env)
+    update_sml_index(env)
