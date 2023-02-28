@@ -30,7 +30,7 @@ def fill_employee_contract_id(env):
         FROM (
             SELECT he.id AS employee_id, hc.id as contract_id
             FROM hr_contract hc, hr_employee he
-            WHERE he.id = hc.employee_id
+            WHERE he.id = hc.employee_id AND hc.state = 'open'
             LIMIT 1
         ) sub
         WHERE sub.employee_id = he.id AND he.contract_id IS NULL
@@ -51,6 +51,6 @@ def map_hr_contract_state(cr):
 @openupgrade.migrate()
 def migrate(env, version):
     fill_contract_company_id(env.cr)
-    fill_employee_contract_id(env)
     map_hr_contract_state(env.cr)
+    fill_employee_contract_id(env)
     openupgrade.load_data(env.cr, 'hr_contract', 'migrations/13.0.1.0/noupdate_changes.xml')
