@@ -1,0 +1,11 @@
+<?xml version='1.0' encoding='utf-8'?>
+<odoo>
+  <record id="provider_google" model="auth.oauth.provider">
+    <field name="data_endpoint" eval="None"/>
+    <field name="scope">openid profile email</field>
+    <field name="validation_endpoint">https://www.googleapis.com/oauth2/v3/userinfo</field>
+  </record>
+  <record id="provider_openerp" model="auth.oauth.provider">
+    <field name="data_endpoint" eval="None"/>
+  </record>
+</odoo>
