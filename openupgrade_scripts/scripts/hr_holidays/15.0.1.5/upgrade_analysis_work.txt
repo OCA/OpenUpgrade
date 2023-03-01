@@ -1,0 +1,200 @@
+---Models in module 'hr_holidays'---
+new model hr.leave.accrual.level
+new model hr.leave.accrual.plan
+new model hr.leave.employee.type.report [sql_view]
+# NOTHING TO DO: new model
+
+---Fields in module 'hr_holidays'---
+hr_holidays  / hr.department            / total_employee (integer)      : module is now 'hr' ('hr_holidays')
+hr_holidays  / hr.leave                 / attachment_ids (one2many)     : NEW relation: ir.attachment
+# NOTHING TO DO: non-stored field
+
+hr_holidays  / hr.leave                 / employee_company_id (many2one): NEW relation: res.company, isrelated: related, stored
+# NOTHING TO DO: odoo already fills it using queries
+
+hr_holidays  / hr.leave                 / employee_ids (many2many)      : NEW relation: hr.employee, isfunction: function, stored
+# DONE: pre-migration: create table hr_employee_hr_leave_rel and fill data
+
+hr_holidays  / hr.leave                 / holiday_allocation_id (many2one): NEW relation: hr.leave.allocation, isfunction: function, stored
+# NOTHING TO DO (due to https://github.com/odoo/odoo/pull/96545)
+
+hr_holidays  / hr.leave                 / multi_employee (boolean)      : NEW isfunction: function, stored
+# DONE: pre-migration: created column
+
+hr_holidays  / hr.leave                 / payslip_status (boolean)      : DEL
+# NOTHING TO DO
+
+hr_holidays  / hr.leave                 / state (selection)             : selection_keys is now '['confirm', 'draft', 'refuse', 'validate', 'validate1']' ('['cancel', 'confirm', 'draft', 'refuse', 'validate', 'validate1']')
+# DONE: post-migration: map cancel -> refuse
+
+hr_holidays  / hr.leave.accrual.level   / accrual_plan_id (many2one)    : NEW relation: hr.leave.accrual.plan, required
+hr_holidays  / hr.leave.accrual.level   / action_with_unused_accruals (selection): NEW required, selection_keys: ['lost', 'postponed'], req_default: function, hasdefault
+hr_holidays  / hr.leave.accrual.level   / added_value (float)           : NEW required
+hr_holidays  / hr.leave.accrual.level   / added_value_type (selection)  : NEW required, selection_keys: ['days', 'hours'], req_default: function, hasdefault
+hr_holidays  / hr.leave.accrual.level   / first_day (integer)           : NEW hasdefault
+hr_holidays  / hr.leave.accrual.level   / first_month (selection)       : NEW selection_keys: ['apr', 'feb', 'jan', 'jun', 'mar', 'may'], hasdefault
+hr_holidays  / hr.leave.accrual.level   / first_month_day (integer)     : NEW hasdefault
+hr_holidays  / hr.leave.accrual.level   / frequency (selection)         : NEW required, selection_keys: ['bimonthly', 'biyearly', 'daily', 'monthly', 'weekly', 'yearly'], req_default: function, hasdefault
+hr_holidays  / hr.leave.accrual.level   / is_based_on_worked_time (boolean): NEW
+hr_holidays  / hr.leave.accrual.level   / maximum_leave (float)         : NEW hasdefault
+hr_holidays  / hr.leave.accrual.level   / parent_id (many2one)          : NEW relation: hr.leave.accrual.level
+hr_holidays  / hr.leave.accrual.level   / second_day (integer)          : NEW hasdefault
+hr_holidays  / hr.leave.accrual.level   / second_month (selection)      : NEW selection_keys: ['aug', 'dec', 'jul', 'nov', 'oct', 'sep'], hasdefault
+hr_holidays  / hr.leave.accrual.level   / second_month_day (integer)    : NEW hasdefault
+hr_holidays  / hr.leave.accrual.level   / sequence (integer)            : NEW isfunction: function, stored
+hr_holidays  / hr.leave.accrual.level   / start_count (integer)         : NEW hasdefault
+hr_holidays  / hr.leave.accrual.level   / start_type (selection)        : NEW required, selection_keys: ['day', 'month', 'year'], req_default: function, hasdefault
+hr_holidays  / hr.leave.accrual.level   / week_day (selection)          : NEW required, selection_keys: ['fri', 'mon', 'sat', 'sun', 'thu', 'tue', 'wed'], req_default: function, hasdefault
+hr_holidays  / hr.leave.accrual.level   / yearly_day (integer)          : NEW hasdefault
+hr_holidays  / hr.leave.accrual.level   / yearly_month (selection)      : NEW selection_keys: ['apr', 'aug', 'dec', 'feb', 'jan', 'jul', 'jun', 'mar', 'may', 'nov', 'oct', 'sep'], hasdefault
+# NOTHING TO DO: new model
+
+hr_holidays  / hr.leave.accrual.plan    / allocation_ids (one2many)     : NEW relation: hr.leave.allocation
+hr_holidays  / hr.leave.accrual.plan    / level_ids (one2many)          : NEW relation: hr.leave.accrual.level
+hr_holidays  / hr.leave.accrual.plan    / name (char)                   : NEW required
+hr_holidays  / hr.leave.accrual.plan    / time_off_type_id (many2one)   : NEW relation: hr.leave.type
+hr_holidays  / hr.leave.accrual.plan    / transition_mode (selection)   : NEW required, selection_keys: ['end_of_accrual', 'immediately'], req_default: function, hasdefault
+# NOTHING TO DO: new model
+
+hr_holidays  / hr.leave.allocation      / accrual_limit (integer)       : DEL
+hr_holidays  / hr.leave.allocation      / active (boolean)              : NEW hasdefault
+# NOTHING TO DO
+
+hr_holidays  / hr.leave.allocation      / accrual_plan_id (many2one)    : NEW relation: hr.leave.accrual.plan, isfunction: function, stored
+# NOTHING TO DO: handled by ORM
+
+hr_holidays  / hr.leave.allocation      / first_approver_id (many2one)  : DEL relation: hr.employee
+hr_holidays  / hr.leave.allocation      / second_approver_id (many2one) : DEL relation: hr.employee
+hr_holidays  / hr.leave.allocation      / approver_id (many2one)        : NEW relation: hr.employee
+# DONE: pre-migration: map first_approver_id / second_approver_id to approver_id
+
+hr_holidays  / hr.leave.allocation      / date_from (datetime)          : now required, req_default: function
+hr_holidays  / hr.leave.allocation      / date_from (datetime)          : type is now 'date' ('datetime')
+hr_holidays  / hr.leave.allocation      / date_to (datetime)            : not a function anymore
+hr_holidays  / hr.leave.allocation      / date_to (datetime)            : type is now 'date' ('datetime')
+# DONE: pre-migration: convert datetime to date
+
+hr_holidays  / hr.leave.allocation      / employee_company_id (many2one): NEW relation: res.company, isrelated: related, stored
+# NOTHING TO DO: odoo already fills it using queries
+
+hr_holidays  / hr.leave.allocation      / employee_ids (many2many)      : NEW relation: hr.employee, isfunction: function, stored
+# DONE: pre-migration: create hr_employee_hr_leave_allocation_rel table and fill data
+
+hr_holidays  / hr.leave.allocation      / interval_number (integer)     : DEL
+hr_holidays  / hr.leave.allocation      / interval_unit (selection)     : DEL selection_keys: ['days', 'months', 'weeks', 'years']
+hr_holidays  / hr.leave.allocation      / number_per_interval (float)   : DEL
+hr_holidays  / hr.leave.allocation      / unit_per_interval (selection) : DEL selection_keys: ['days', 'hours']
+# ??: they should be used to create accrual plans/levels
+
+hr_holidays  / hr.leave.allocation      / lastcall (date)               : NEW hasdefault
+# DONE: pre-migration: set as write_date::date
+
+hr_holidays  / hr.leave.allocation      / multi_employee (boolean)      : NEW isfunction: function, stored
+# DONE: pre-migration: created column
+
+hr_holidays  / hr.leave.allocation      / state (selection)             : selection_keys is now '['cancel', 'confirm', 'draft', 'refuse', 'validate']' ('['cancel', 'confirm', 'draft', 'refuse', 'validate', 'validate1']')
+# DONE: post-migration: map validate1 -> confirm, and call to activity_update()
+
+hr_holidays  / hr.leave.allocation      / taken_leave_ids (one2many)    : NEW relation: hr.leave
+# NOTHING TO DO
+
+hr_holidays  / hr.leave.type            / _order                        : _order is now 'sequence' ('id')
+hr_holidays  / hr.leave.type            / accruals_ids (one2many)       : NEW relation: hr.leave.accrual.plan
+hr_holidays  / hr.leave.type            / allocation_type (selection)   : DEL selection_keys: ['fixed', 'fixed_allocation', 'no']
+# NOTHING TO DO
+
+hr_holidays  / hr.leave.type            / allocation_validation_type (selection): selection_keys is now '['no', 'officer', 'set']' ('['both', 'hr', 'manager']')
+# DONE: pre-migration: old values been saved. 'officer' if allocation_type = 'fixed_allocation', 'set' if allocation_type = 'fixed', else 'no'
+
+hr_holidays  / hr.leave.type            / employee_requests (selection) : NEW required, selection_keys: ['no', 'yes'], req_default: function, hasdefault
+# DONE: pre-migration: set employee_requests as 'yes' if allocation_type = 'fixed_allocation' else 'no'
+
+hr_holidays  / hr.leave.type            / requires_allocation (selection): NEW required, selection_keys: ['no', 'yes'], req_default: function, hasdefault
+# DONE: post-migration: set to 'no' if old allocation_type = 'no'
+
+hr_holidays  / hr.leave.type            / code (char)                   : DEL
+hr_holidays  / hr.leave.type            / color (integer)               : NEW
+hr_holidays  / hr.leave.type            / icon_id (many2one)            : NEW relation: ir.attachment
+hr_holidays  / hr.leave.type            / support_document (boolean)    : NEW
+hr_holidays  / hr.leave.type            / validity_start (date)         : DEL
+hr_holidays  / hr.leave.type            / validity_stop (date)          : DEL
+# NOTHING TO DO
+
+---XML records in module 'hr_holidays'---
+NEW ir.actions.act_window: hr_holidays.hr_leave_action_holiday_allocation_id
+NEW ir.actions.act_window: hr_holidays.open_view_accrual_plans
+NEW ir.actions.act_window: hr_holidays.open_view_public_holiday
+NEW ir.actions.act_window: hr_holidays.resource_calendar_global_leaves_action_from_calendar
+NEW ir.actions.server: hr_holidays.action_hr_holidays_by_employee_and_type_report
+DEL ir.actions.server: hr_holidays.action_report_to_payslip
+NEW ir.attachment: hr_holidays.icon_1
+NEW ir.attachment: hr_holidays.icon_10
+NEW ir.attachment: hr_holidays.icon_11
+NEW ir.attachment: hr_holidays.icon_12
+NEW ir.attachment: hr_holidays.icon_13
+NEW ir.attachment: hr_holidays.icon_14
+NEW ir.attachment: hr_holidays.icon_15
+NEW ir.attachment: hr_holidays.icon_16
+NEW ir.attachment: hr_holidays.icon_17
+NEW ir.attachment: hr_holidays.icon_18
+NEW ir.attachment: hr_holidays.icon_19
+NEW ir.attachment: hr_holidays.icon_2
+NEW ir.attachment: hr_holidays.icon_20
+NEW ir.attachment: hr_holidays.icon_21
+NEW ir.attachment: hr_holidays.icon_22
+NEW ir.attachment: hr_holidays.icon_23
+NEW ir.attachment: hr_holidays.icon_24
+NEW ir.attachment: hr_holidays.icon_25
+NEW ir.attachment: hr_holidays.icon_26
+NEW ir.attachment: hr_holidays.icon_27
+NEW ir.attachment: hr_holidays.icon_28
+NEW ir.attachment: hr_holidays.icon_29
+NEW ir.attachment: hr_holidays.icon_3
+NEW ir.attachment: hr_holidays.icon_30
+NEW ir.attachment: hr_holidays.icon_31
+NEW ir.attachment: hr_holidays.icon_4
+NEW ir.attachment: hr_holidays.icon_5
+NEW ir.attachment: hr_holidays.icon_6
+NEW ir.attachment: hr_holidays.icon_7
+NEW ir.attachment: hr_holidays.icon_8
+NEW ir.attachment: hr_holidays.icon_9
+NEW ir.model.access: hr_holidays.access_hr_leave_accrual_level_manager
+NEW ir.model.access: hr_holidays.access_hr_leave_accrual_level_user
+NEW ir.model.access: hr_holidays.access_hr_leave_accrual_plan_manager
+NEW ir.model.access: hr_holidays.access_hr_leave_accrual_plan_user
+NEW ir.model.access: hr_holidays.access_hr_leave_employee_type_report
+NEW ir.model.constraint: hr_holidays.constraint_hr_leave_accrual_level_added_value_greater_than_zero
+NEW ir.model.constraint: hr_holidays.constraint_hr_leave_accrual_level_check_dates
+NEW ir.model.constraint: hr_holidays.constraint_hr_leave_accrual_level_start_count_check
+# NOTHING TO DO
+
+ir.model.constraint: hr_holidays.constraint_hr_leave_allocation_duration_check (changed definition: is now 'check(( number_of_days > 0 and allocation_type='regular') or(allocation_type != 'regular'))' ('check( number_of_days >= 0 )'))
+ir.model.constraint: hr_holidays.constraint_hr_leave_allocation_type_value (changed definition: is now 'check((holiday_type='employee' and(employee_id is not null or multi_employee is true)) or(holiday_type='category' and category_id is not null) or(holiday_type='department' and department_id is not null) or(holiday_type='company' and mode_company_id is not null))' ('check((holiday_type='employee' and employee_id is not null) or(holiday_type='category' and category_id is not null) or(holiday_type='department' and department_id is not null) or(holiday_type='company' and mode_company_id is not null))'))
+ir.model.constraint: hr_holidays.constraint_hr_leave_type_value (changed definition: is now 'check((holiday_type='employee' and(employee_id is not null or multi_employee is true)) or(holiday_type='company' and mode_company_id is not null) or(holiday_type='category' and category_id is not null) or(holiday_type='department' and department_id is not null) )' ('check((holiday_type='employee' and employee_id is not null) or(holiday_type='company' and mode_company_id is not null) or(holiday_type='category' and category_id is not null) or(holiday_type='department' and department_id is not null) )'))
+# DONE: pre-migration: delete constraints and let ORM add them again
+
+DEL ir.model.constraint: hr_holidays.constraint_hr_leave_allocation_interval_number_check
+DEL ir.model.constraint: hr_holidays.constraint_hr_leave_allocation_number_per_interval_check
+# DONE: pre-migration: safely delete constraints
+
+NEW ir.rule: hr_holidays.hr_leave_report_rule_group_holiday_user (noupdate)
+NEW ir.rule: hr_holidays.hr_leave_report_rule_group_user (noupdate)
+NEW ir.ui.menu: hr_holidays.hr_holidays_accrual_menu_configuration
+NEW ir.ui.menu: hr_holidays.hr_holidays_public_time_off_menu_configuration
+NEW ir.ui.menu: hr_holidays.menu_hr_holidays_report_employee_time_off
+NEW ir.ui.view: hr_holidays.hr_accrual_level_view_form
+NEW ir.ui.view: hr_holidays.hr_accrual_plan_view_form
+NEW ir.ui.view: hr_holidays.hr_accrual_plan_view_tree
+NEW ir.ui.view: hr_holidays.hr_leave_allocation_view_form_manager_dashboard
+NEW ir.ui.view: hr_holidays.hr_leave_employee_type_report
+NEW ir.ui.view: hr_holidays.hr_leave_employee_view_dashboard
+NEW ir.ui.view: hr_holidays.hr_leave_report_calendar_view_search
+NEW ir.ui.view: hr_holidays.hr_leave_report_pivot
+NEW ir.ui.view: hr_holidays.resource_calendar_form_inherit
+NEW ir.ui.view: hr_holidays.resource_calendar_leaves_tree_inherit
+NEW ir.ui.view: hr_holidays.resource_calendar_leaves_view_search_inherit
+NEW ir.ui.view: hr_holidays.view_search_hr_holidays_employee_type_report
+DEL ir.ui.view: hr_holidays.assets_backend
+DEL ir.ui.view: hr_holidays.hr_leave_report_kanban
+DEL ir.ui.view: hr_holidays.qunit_suite
+# NOTHING TO DO
