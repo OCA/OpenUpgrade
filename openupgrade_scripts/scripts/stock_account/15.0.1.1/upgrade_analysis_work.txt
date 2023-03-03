@@ -1,0 +1,21 @@
+---Models in module 'stock_account'---
+---Fields in module 'stock_account'---
+stock_account / stock.inventory          / accounting_date (date)        : DEL
+stock_account / stock.quant              / accounting_date (date)        : NEW
+# DONE: post-migration: move the value from inventory to quant
+
+stock_account / stock.move               / analytic_account_line_id (many2one): NEW relation: account.analytic.line
+# NOTHING TO DO: feature for analytic accounting on MO
+
+---XML records in module 'stock_account'---
+NEW ir.ui.view: stock_account.stock_account_report_invoice_document
+NEW ir.ui.view: stock_account.stock_inventory_request_count_form_view_inherit_stock_account
+NEW ir.ui.view: stock_account.stock_valuation_layer_pivot
+NEW ir.ui.view: stock_account.view_category_property_form_stock
+NEW ir.ui.view: stock_account.view_stock_quant_tree_inventory_editable_inherit_stock_account
+DEL ir.ui.view: stock_account.view_inventory_form_inherit
+DEL ir.ui.view: stock_account.view_inventory_tree
+# NOTHING TO DO: noupdate="0" records
+
+NEW res.groups: stock_account.group_lot_on_invoice [renamed from sale_stock module] (noupdate) (noupdate switched)
+# DONE: pre-migration to rename_xmlids, set noupdate="1"
