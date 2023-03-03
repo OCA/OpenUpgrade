@@ -1,0 +1,289 @@
+---Models in module 'stock'---
+obsolete model stock.inventory (renamed to stock.quant)
+obsolete model stock.inventory.line (renamed to stock.quant)
+# NOTHING TO DO: if new fields, then these models will be used to fill up
+
+new model report.stock.label_product_product_view [abstract]
+new model report.stock.report_reception [abstract]
+new model stock.inventory.adjustment.name [transient]
+new model stock.inventory.conflict [transient]
+new model stock.inventory.warning [transient]
+new model stock.package.type
+new model stock.replenishment.info [transient]
+new model stock.request.count [transient]
+new model stock.storage.category
+new model stock.storage.category.capacity
+# NOTHING TO DO
+
+---Fields in module 'stock'---
+stock        / barcode.rule             / type (False)                  : selection_keys is now '['alias', 'expiration_date', 'location', 'location_dest', 'lot', 'package', 'package_type', 'packaging_date', 'product', 'quantity', 'use_date', 'weight']' ('['alias', 'location', 'lot', 'package', 'product', 'weight']')
+# NOTHING TO DO: new feature, keys added in new module barcodes_gs1_nomenclature to integrate and use GS1 nomenclature
+
+stock        / product.category         / packaging_reserve_method (selection): NEW selection_keys: ['full', 'partial'], hasdefault
+# NOTHING TO DO: new feature
+
+stock        / stock.package.type       / barcode (char)                : NEW
+stock        / stock.package.type       / company_id (many2one)         : NEW relation: res.company
+stock        / stock.package.type       / height (integer)              : NEW
+stock        / stock.package.type       / max_weight (float)            : NEW
+stock        / stock.package.type       / name (char)                   : NEW required
+stock        / stock.package.type       / packaging_length (integer)    : NEW
+stock        / stock.package.type       / sequence (integer)            : NEW hasdefault
+stock        / stock.package.type       / storage_category_capacity_ids (one2many): NEW relation: stock.storage.category.capacity
+stock        / stock.package.type       / width (integer)               : NEW
+# NOTHING TO DO: handled by delivery module
+
+stock        / product.packaging        / package_type_id (many2one)    : NEW relation: stock.package.type
+# NOTHING TO DO: new features
+
+stock        / stock.quant.package      / package_type_id (many2one)    : NEW relation: stock.package.type
+stock        / stock.quant.package      / packaging_id (many2one)       : DEL relation: product.packaging
+# NOTHING TO DO: handled by delivery module
+
+stock        / product.packaging        / route_ids (many2many)         : NEW relation: stock.location.route
+# NOTHING TO DO: new feature
+
+stock        / product.product          / storage_category_capacity_ids (one2many): NEW relation: stock.storage.category.capacity
+# NOTHING TO DO: new feature
+
+stock        / product.template         / detailed_type (False)         : NEW selection_keys: ['consu', 'gift', 'product', 'service'], mode: modify
+# NOTHING TO DO: already handled in 'product' module
+
+stock        / res.company              / annual_inventory_day (integer): NEW hasdefault
+stock        / res.company              / annual_inventory_month (selection): NEW selection_keys: ['1', '10', '11', '12', '2', '3', '4', '5', '6', '7', '8', '9'], hasdefault
+# NOTHING TO DO: new feature
+
+stock        / stock.inventory          / activity_ids (one2many)       : DEL relation: mail.activity
+stock        / stock.inventory          / company_id (many2one)         : DEL relation: res.company, required, req_default: function
+stock        / stock.inventory          / date (datetime)               : DEL required, req_default: function
+stock        / stock.inventory          / exhausted (boolean)           : DEL
+stock        / stock.inventory          / line_ids (one2many)           : DEL relation: stock.inventory.line
+stock        / stock.inventory          / location_ids (many2many)      : DEL relation: stock.location
+stock        / stock.inventory          / message_follower_ids (one2many): DEL relation: mail.followers
+stock        / stock.inventory          / message_ids (one2many)        : DEL relation: mail.message
+stock        / stock.inventory          / message_main_attachment_id (many2one): DEL relation: ir.attachment
+stock        / stock.inventory          / move_ids (one2many)           : DEL relation: stock.move
+stock        / stock.inventory          / name (char)                   : DEL required, req_default: function
+stock        / stock.inventory          / prefill_counted_quantity (selection): DEL selection_keys: ['counted', 'zero']
+stock        / stock.inventory          / product_ids (many2many)       : DEL relation: product.product
+stock        / stock.inventory          / start_empty (boolean)         : DEL
+stock        / stock.inventory          / state (selection)             : DEL selection_keys: ['cancel', 'confirm', 'done', 'draft']
+stock        / stock.inventory          / website_message_ids (one2many): DEL relation: mail.message
+stock        / stock.inventory.line     / categ_id (many2one)           : DEL relation: product.category
+stock        / stock.inventory.line     / company_id (many2one)         : DEL relation: res.company
+stock        / stock.inventory.line     / inventory_date (datetime)     : DEL
+stock        / stock.inventory.line     / inventory_id (many2one)       : DEL relation: stock.inventory
+stock        / stock.inventory.line     / is_editable (boolean)         : DEL
+stock        / stock.inventory.line     / location_id (many2one)        : DEL relation: stock.location, required
+stock        / stock.inventory.line     / package_id (many2one)         : DEL relation: stock.quant.package
+stock        / stock.inventory.line     / partner_id (many2one)         : DEL relation: res.partner
+stock        / stock.inventory.line     / prod_lot_id (many2one)        : DEL relation: stock.production.lot
+stock        / stock.inventory.line     / product_id (many2one)         : DEL relation: product.product, required
+stock        / stock.inventory.line     / product_qty (float)           : DEL
+stock        / stock.inventory.line     / product_uom_id (many2one)     : DEL relation: uom.uom, required
+stock        / stock.inventory.line     / theoretical_qty (float)       : DEL
+stock        / stock.move               / inventory_id (many2one)       : DEL relation: stock.inventory
+# NOTHING TO DO: feature removed
+
+stock        / stock.location           / comment (text)                : type is now 'html' ('text')
+# DONE: pre-migration: convert data text to html
+
+stock        / stock.location           / cyclic_inventory_frequency (integer): NEW hasdefault
+# NOTHING TO DO
+
+stock        / stock.location           / last_inventory_date (date)    : NEW
+stock        / stock.location           / next_inventory_date (date)    : NEW isfunction: function, stored
+# DONE: pre-migration: create column next_inventory_date to avoid computation
+# DONE: post-migration: filled last_inventory_date
+
+stock        / stock.location           / incoming_move_line_ids (one2many): NEW relation: stock.move.line
+stock        / stock.location           / outgoing_move_line_ids (one2many): NEW relation: stock.move.line
+# NOTHING TO DO: virtual field
+
+stock        / stock.location           / storage_category_id (many2one): NEW relation: stock.storage.category
+# NOTHING TO DO: new model, new feature
+
+stock        / stock.location           / warehouse_view_ids (one2many) : NEW relation: stock.warehouse
+stock        / stock.location           / warehouse_id (many2one)       : previously in module to_location_warehouse
+# NOTHING TO DO: non-stored field
+
+stock        / stock.location.route     / packaging_ids (many2many)     : NEW relation: product.packaging
+stock        / stock.location.route     / packaging_selectable (boolean): NEW
+# NOTHING TO DO: new feature
+
+stock        / stock.move               / is_inventory (boolean)        : NEW
+# DONE: post-migration: set True if inventory_id is not null
+
+stock        / stock.move               / note (text)                   : DEL
+# NOTHING TO DO: not used and always empty. (removed it by commit 71203e0aa28e358dfe432835557ea38bf1edae24)
+
+stock        / stock.move               / picking_type_id (many2one)    : now a function
+# NOTHING TO DO: not need recompute
+
+stock        / stock.move               / product_packaging_id (many2one): NEW relation: product.packaging
+# NOTHING TO DO: new feature
+
+stock        / stock.move.line          / _order                        : _order is now 'result_package_id desc, location_id asc, location_dest_id asc, picking_id asc, id' ('result_package_id desc, id')
+# NOTHING TO DO
+
+stock        / stock.picking            / note (text)                   : type is now 'html' ('text')
+# DONE: pre-migration: convert data text to html
+
+stock        / stock.picking.type       / print_label (boolean)         : NEW
+# DONE: post-migration: set True for all outgoing picking type
+
+stock        / stock.picking.type       / reservation_days_before (integer): NEW
+stock        / stock.picking.type       / reservation_days_before_priority (integer): NEW
+stock        / stock.picking.type       / reservation_method (selection): NEW required, selection_keys: ['at_confirm', 'by_date', 'manual'], req_default: function, hasdefault
+# NOTHING TO DO: new feature 'by_date', the default is 'at_confirm'
+
+stock        / stock.putaway.rule       / active (boolean)              : NEW hasdefault
+stock        / stock.putaway.rule       / package_type_ids (many2many)  : NEW relation: stock.package.type
+stock        / stock.putaway.rule       / storage_category_id (many2one): NEW relation: stock.storage.category
+# NOTHING TO DO: new feature
+
+stock        / stock.quant              / in_date (datetime)            : now required, req_default: function
+# DONE: pre-migration: set in_date = create_date if in_date is null
+
+stock        / stock.quant              / inventory_date (date)         : NEW isfunction: function, stored
+stock        / stock.quant              / user_id (many2one)            : NEW relation: res.users
+# NOTHING TO DO: new feature
+
+stock        / stock.quant              / inventory_quantity_set (boolean): NEW hasdefault, isfunction: function, stored
+stock        / stock.quant              / inventory_diff_quantity (float): NEW isfunction: function, stored
+stock        / stock.quant              / inventory_quantity (float)    : is now stored
+stock        / stock.quant              / inventory_quantity (float)    : not a function anymore
+# NOTHING TO DO: fields used in the UI to set new quantities
+
+stock        / stock.move               / reservation_date (date)       : NEW isfunction: function, stored
+# DONE: pre-migration: manually created column for avoiding the automatic launch of the useless compute (because only filled if picking_type_id.reservation_method = 'by_date')
+
+stock        / stock.quant.package      / name (char)                   : now required, req_default: function
+# DONE: pre-migration: Filled value when name is null
+
+stock        / stock.quant.package      / package_use (selection)       : NEW required, selection_keys: ['disposable', 'reusable'], req_default: function, hasdefault
+stock        / stock.rule               / propagate_carrier (boolean)   : NEW hasdefault
+# NOTHING TO DO: new feature default False
+
+stock        / stock.storage.category   / allow_new_product (selection) : NEW required, selection_keys: ['empty', 'mixed', 'same'], req_default: function, hasdefault
+stock        / stock.storage.category   / capacity_ids (one2many)       : NEW relation: stock.storage.category.capacity
+stock        / stock.storage.category   / company_id (many2one)         : NEW relation: res.company
+stock        / stock.storage.category   / location_ids (one2many)       : NEW relation: stock.location
+stock        / stock.storage.category   / max_weight (float)            : NEW
+stock        / stock.storage.category   / name (char)                   : NEW required
+stock        / stock.storage.category.capacity / package_type_id (many2one)    : NEW relation: stock.package.type
+stock        / stock.storage.category.capacity / product_id (many2one)         : NEW relation: product.product
+stock        / stock.storage.category.capacity / quantity (float)              : NEW required
+stock        / stock.storage.category.capacity / storage_category_id (many2one): NEW relation: stock.storage.category, required
+# NOTHING TO DO: new feature
+
+stock        / stock.warehouse          / return_type_id (many2one)     : NEW relation: stock.picking.type
+# DONE: post-migration: created / updated default return type for all warehouses
+
+---XML records in module 'stock'---
+NEW ir.actions.act_window: stock.action_get_picking_type_operations
+NEW ir.actions.act_window: stock.action_lead_mass_mail
+NEW ir.actions.act_window: stock.action_package_type_view
+NEW ir.actions.act_window: stock.action_stock_inventory_adjustement_name
+NEW ir.actions.act_window: stock.action_stock_replenishment_info
+NEW ir.actions.act_window: stock.action_stock_request_count
+NEW ir.actions.act_window: stock.action_storage_category
+NEW ir.actions.act_window: stock.action_storage_category_capacity
+NEW ir.actions.act_window: stock.action_storage_category_locations
+DEL ir.actions.act_window: stock.action_inventory_form
+NEW ir.actions.client: stock.stock_reception_action
+NEW ir.actions.report: stock.label_picking
+NEW ir.actions.report: stock.stock_reception_report_action
+DEL ir.actions.report: stock.action_label_transfer_template_pdf
+DEL ir.actions.report: stock.action_label_transfer_template_zpl
+DEL ir.actions.report: stock.label_barcode_product_product
+DEL ir.actions.report: stock.label_barcode_product_template
+DEL ir.actions.report: stock.label_product_template
+NEW ir.actions.server: stock.action_view_inventory_tree
+NEW ir.actions.server: stock.action_view_set_quants_tree
+DEL ir.actions.server: stock.model_stock_inventory_line_action_recompute_quantity
+DEL ir.actions.server: stock.model_stock_inventory_line_action_reset_product_qty
+DEL ir.actions.server: stock.stock_quant_stock_move_line_desynchronization
+NEW ir.model.access: stock.access_stock_inventory_adjustment_name
+NEW ir.model.access: stock.access_stock_inventory_conflict
+NEW ir.model.access: stock.access_stock_inventory_warning
+NEW ir.model.access: stock.access_stock_package_type_manager
+NEW ir.model.access: stock.access_stock_package_type_user
+NEW ir.model.access: stock.access_stock_replenishment_info
+NEW ir.model.access: stock.access_stock_request_count
+NEW ir.model.access: stock.access_stock_storage_category_capacity_manager
+NEW ir.model.access: stock.access_stock_storage_category_capacity_user
+NEW ir.model.access: stock.access_stock_storage_category_manager
+NEW ir.model.access: stock.access_stock_storage_category_user
+DEL ir.model.access: stock.access_stock_inventory_line_manager
+DEL ir.model.access: stock.access_stock_inventory_line_user
+DEL ir.model.access: stock.access_stock_inventory_manager
+DEL ir.model.access: stock.access_stock_inventory_user
+DEL ir.model.access: stock.access_stock_quant_manager
+NEW ir.model.constraint: stock.constraint_stock_location_inventory_freq_nonneg
+NEW ir.model.constraint: stock.constraint_stock_package_type_barcode_uniq
+NEW ir.model.constraint: stock.constraint_stock_package_type_positive_height
+NEW ir.model.constraint: stock.constraint_stock_package_type_positive_length
+NEW ir.model.constraint: stock.constraint_stock_package_type_positive_max_weight
+NEW ir.model.constraint: stock.constraint_stock_package_type_positive_width
+NEW ir.model.constraint: stock.constraint_stock_storage_category_capacity_positive_quantity
+NEW ir.model.constraint: stock.constraint_stock_storage_category_capacity_unique_package_type
+NEW ir.model.constraint: stock.constraint_stock_storage_category_capacity_unique_product
+NEW ir.model.constraint: stock.constraint_stock_storage_category_positive_max_weight
+NEW ir.model.constraint: stock.constraint_stock_warehouse_orderpoint_product_location_check
+NEW ir.rule: stock.stock_storage_category_rule (noupdate)
+# NOTHING TO DO: noupdate="0" records
+
+DEL ir.rule: stock.stock_inventory_comp_rule (noupdate)
+DEL ir.rule: stock.stock_inventory_line_comp_rule (noupdate)
+DEL ir.sequence: stock.sequence_tracking (noupdate)
+# DONE: post-migration: safely deleted xmlids
+
+NEW ir.ui.menu: stock.menu_action_inventory_tree
+NEW ir.ui.menu: stock.menu_delivery [renamed from delivery module]
+NEW ir.ui.menu: stock.menu_packaging_types
+NEW ir.ui.menu: stock.menu_storage_categoty_capacity_config
+NEW ir.ui.menu: stock.menu_storage_categoty_config
+DEL ir.ui.menu: stock.menu_action_inventory_form
+NEW ir.ui.view: stock.inventory_warning_reset_view
+NEW ir.ui.view: stock.inventory_warning_set_view
+NEW ir.ui.view: stock.product_label_layout_form_picking
+NEW ir.ui.view: stock.product_packaging_form_view
+NEW ir.ui.view: stock.product_packaging_tree_view
+NEW ir.ui.view: stock.report_reception
+NEW ir.ui.view: stock.report_reception_body
+NEW ir.ui.view: stock.report_reception_report_label
+NEW ir.ui.view: stock.stock_inventory_adjustment_name_form_view
+NEW ir.ui.view: stock.stock_inventory_conflict_form_view
+NEW ir.ui.view: stock.stock_inventory_request_count_form_view
+NEW ir.ui.view: stock.stock_package_type_form
+NEW ir.ui.view: stock.stock_package_type_tree
+NEW ir.ui.view: stock.stock_storage_category_capacity_tree
+NEW ir.ui.view: stock.stock_storage_category_form
+NEW ir.ui.view: stock.stock_storage_category_tree
+NEW ir.ui.view: stock.view_move_line_tree_detailed
+NEW ir.ui.view: stock.view_stock_quant_tree_inventory_editable
+NEW ir.ui.view: stock.view_stock_replenishment_info
+DEL ir.ui.view: stock.assets_common
+DEL ir.ui.view: stock.assets_common_replenishment_report
+DEL ir.ui.view: stock.assets_stock_print_report
+DEL ir.ui.view: stock.label_barcode_product_product_view
+DEL ir.ui.view: stock.label_barcode_product_template_view
+DEL ir.ui.view: stock.label_product_template_view
+DEL ir.ui.view: stock.qunit_suite
+DEL ir.ui.view: stock.stock_assets_backend
+DEL ir.ui.view: stock.stock_inventory_line_search
+DEL ir.ui.view: stock.stock_inventory_line_tree
+DEL ir.ui.view: stock.stock_inventory_line_tree_no_product_create
+DEL ir.ui.view: stock.view_inventory_filter
+DEL ir.ui.view: stock.view_inventory_form
+DEL ir.ui.view: stock.view_inventory_tree
+DEL ir.ui.view: stock.view_picking_type_list
+DEL ir.ui.view: stock.view_stock_inventory_kanban
+DEL ir.ui.view: stock.view_stock_quant_form
+NEW product.removal: stock.removal_closest
+NEW res.groups: stock.group_auto_reception_report
+NEW res.groups: stock.group_reception_report
+NEW res.groups: stock.group_stock_picking_wave
+NEW res.groups: stock.group_stock_storage_categories
+# NOTHING TO DO: noupdate="0" records
