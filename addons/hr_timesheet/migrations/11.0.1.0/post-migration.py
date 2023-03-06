@@ -61,7 +61,7 @@ def add_group_hr_timesheet_user_from_analytic_lines(env):
         env.cr, """
         INSERT INTO res_groups_users_rel
             (gid, uid)
-        SELECT %s, aal.user_id
+        SELECT DISTINCT %s, aal.user_id
         FROM account_analytic_line aal
         WHERE aal.user_id IS NOT NULL AND aal.user_id NOT IN (
             SELECT uid
