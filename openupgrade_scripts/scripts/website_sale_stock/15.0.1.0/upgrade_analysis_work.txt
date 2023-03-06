@@ -1,0 +1,18 @@
+---Models in module 'website_sale_stock'---
+---Fields in module 'website_sale_stock'---
+website_sale_stock / product.template         / allow_out_of_stock_order (boolean): NEW hasdefault
+# DONE: set allow_out_of_stock_order as True if inventory_availability = never
+
+website_sale_stock / product.template         / show_availability (boolean)   : NEW hasdefault
+# DONE: pre-migration: set show_availability as True if inventory_availability = threshold
+
+website_sale_stock / product.template         / custom_message (text)         : DEL
+website_sale_stock / product.template         / out_of_stock_message (html)   : NEW
+# DONE: pre-migration: convert text to html, renamed fields
+
+website_sale_stock / product.template         / inventory_availability (selection): DEL selection_keys: ['always', 'custom', 'never', 'threshold']
+# NOTHING TO DO
+
+---XML records in module 'website_sale_stock'---
+DEL ir.ui.view: website_sale_stock.assets_frontend
+# NOTHING TO DO
