@@ -1,0 +1,142 @@
+---Models in module 'website_event_track'---
+model event.sponsor (moved to website_event_exhibitor)
+model event.sponsor.type (moved to website_event_exhibitor)
+---Fields in module 'website_event_track'---
+website_event_track / event.event              / sponsor_count (integer)       : module is now 'website_event_exhibitor' ('website_event_track')
+website_event_track / event.event              / sponsor_ids (one2many)        : module is now 'website_event_exhibitor' ('website_event_track')
+website_event_track / event.sponsor            / __last_update (datetime)      : module is now 'website_event_exhibitor' ('website_event_track')
+website_event_track / event.sponsor            / _order                        : module is now 'website_event_exhibitor' ('website_event_track')
+website_event_track / event.sponsor            / active (boolean)              : module is now 'website_event_exhibitor' ('website_event_track')
+website_event_track / event.sponsor            / activity_date_deadline (date) : module is now 'website_event_exhibitor' ('website_event_track')
+website_event_track / event.sponsor            / activity_exception_decoration (selection): module is now 'website_event_exhibitor' ('website_event_track')
+website_event_track / event.sponsor            / activity_exception_icon (char): module is now 'website_event_exhibitor' ('website_event_track')
+website_event_track / event.sponsor            / activity_ids (one2many)       : module is now 'website_event_exhibitor' ('website_event_track')
+website_event_track / event.sponsor            / activity_state (selection)    : module is now 'website_event_exhibitor' ('website_event_track')
+website_event_track / event.sponsor            / activity_summary (char)       : module is now 'website_event_exhibitor' ('website_event_track')
+website_event_track / event.sponsor            / activity_type_icon (char)     : module is now 'website_event_exhibitor' ('website_event_track')
+website_event_track / event.sponsor            / activity_type_id (many2one)   : module is now 'website_event_exhibitor' ('website_event_track')
+website_event_track / event.sponsor            / activity_user_id (many2one)   : module is now 'website_event_exhibitor' ('website_event_track')
+website_event_track / event.sponsor            / display_name (char)           : module is now 'website_event_exhibitor' ('website_event_track')
+website_event_track / event.sponsor            / email (char)                  : module is now 'website_event_exhibitor' ('website_event_track')
+website_event_track / event.sponsor            / event_id (many2one)           : module is now 'website_event_exhibitor' ('website_event_track')
+website_event_track / event.sponsor            / image_128 (binary)            : module is now 'website_event_exhibitor' ('website_event_track')
+website_event_track / event.sponsor            / image_256 (binary)            : module is now 'website_event_exhibitor' ('website_event_track')
+website_event_track / event.sponsor            / image_512 (binary)            : module is now 'website_event_exhibitor' ('website_event_track')
+website_event_track / event.sponsor            / message_attachment_count (integer): module is now 'website_event_exhibitor' ('website_event_track')
+website_event_track / event.sponsor            / message_follower_ids (one2many): module is now 'website_event_exhibitor' ('website_event_track')
+website_event_track / event.sponsor            / message_has_error (boolean)   : module is now 'website_event_exhibitor' ('website_event_track')
+website_event_track / event.sponsor            / message_has_error_counter (integer): module is now 'website_event_exhibitor' ('website_event_track')
+website_event_track / event.sponsor            / message_has_sms_error (boolean): module is now 'website_event_exhibitor' ('website_event_track')
+website_event_track / event.sponsor            / message_ids (one2many)        : module is now 'website_event_exhibitor' ('website_event_track')
+website_event_track / event.sponsor            / message_is_follower (boolean) : module is now 'website_event_exhibitor' ('website_event_track')
+website_event_track / event.sponsor            / message_main_attachment_id (many2one): module is now 'website_event_exhibitor' ('website_event_track')
+website_event_track / event.sponsor            / message_needaction (boolean)  : module is now 'website_event_exhibitor' ('website_event_track')
+website_event_track / event.sponsor            / message_needaction_counter (integer): module is now 'website_event_exhibitor' ('website_event_track')
+website_event_track / event.sponsor            / message_partner_ids (many2many): module is now 'website_event_exhibitor' ('website_event_track')
+website_event_track / event.sponsor            / message_unread (boolean)      : module is now 'website_event_exhibitor' ('website_event_track')
+website_event_track / event.sponsor            / message_unread_counter (integer): module is now 'website_event_exhibitor' ('website_event_track')
+website_event_track / event.sponsor            / mobile (char)                 : module is now 'website_event_exhibitor' ('website_event_track')
+website_event_track / event.sponsor            / my_activity_date_deadline (date): module is now 'website_event_exhibitor' ('website_event_track')
+website_event_track / event.sponsor            / name (char)                   : module is now 'website_event_exhibitor' ('website_event_track')
+website_event_track / event.sponsor            / partner_email (char)          : module is now 'website_event_exhibitor' ('website_event_track')
+website_event_track / event.sponsor            / partner_id (many2one)         : module is now 'website_event_exhibitor' ('website_event_track')
+website_event_track / event.sponsor            / partner_mobile (char)         : module is now 'website_event_exhibitor' ('website_event_track')
+website_event_track / event.sponsor            / partner_name (char)           : module is now 'website_event_exhibitor' ('website_event_track')
+website_event_track / event.sponsor            / partner_phone (char)          : module is now 'website_event_exhibitor' ('website_event_track')
+website_event_track / event.sponsor            / phone (char)                  : module is now 'website_event_exhibitor' ('website_event_track')
+website_event_track / event.sponsor            / sequence (integer)            : module is now 'website_event_exhibitor' ('website_event_track')
+website_event_track / event.sponsor            / sponsor_type_id (many2one)    : module is now 'website_event_exhibitor' ('website_event_track')
+website_event_track / event.sponsor            / url (char)                    : module is now 'website_event_exhibitor' ('website_event_track')
+website_event_track / event.sponsor            / website_image_url (char)      : module is now 'website_event_exhibitor' ('website_event_track')
+website_event_track / event.sponsor            / website_message_ids (one2many): module is now 'website_event_exhibitor' ('website_event_track')
+website_event_track / event.sponsor.type       / __last_update (datetime)      : module is now 'website_event_exhibitor' ('website_event_track')
+website_event_track / event.sponsor.type       / _order                        : module is now 'website_event_exhibitor' ('website_event_track')
+website_event_track / event.sponsor.type       / display_name (char)           : module is now 'website_event_exhibitor' ('website_event_track')
+website_event_track / event.sponsor.type       / display_ribbon_style (selection): module is now 'website_event_exhibitor' ('website_event_track')
+website_event_track / event.sponsor.type       / name (char)                   : module is now 'website_event_exhibitor' ('website_event_track')
+website_event_track / event.sponsor.type       / sequence (integer)            : module is now 'website_event_exhibitor' ('website_event_track')
+# DONE: post-migration. If any data found, mark website_event_exhibitor to install
+
+website_event_track / event.track              / contact_email (char)          : NEW hasdefault: compute
+website_event_track / event.track              / contact_phone (char)          : NEW hasdefault: compute
+# DONE: pre-migration. Add columns to avoid the computation and do it manually through SQL
+
+website_event_track / event.track              / kanban_state_label (char)     : NEW isfunction: function, stored
+website_event_track / event.track.stage        / legend_blocked (char)         : NEW hasdefault: default
+website_event_track / event.track.stage        / legend_done (char)            : NEW hasdefault: default
+website_event_track / event.track.stage        / legend_normal (char)          : NEW hasdefault: default
+# NOTHING TO DO. Let the ORM to do the defaults + compute
+
+website_event_track / event.track              / partner_company_name (char)   : is now stored
+website_event_track / event.track              / partner_company_name (char)   : not related anymore
+# NOTHING TO DO: It exists already
+
+website_event_track / event.track              / partner_function (char)       : is now stored
+website_event_track / event.track              / partner_function (char)       : not related anymore
+# NOTHING TO DO: It exists already
+
+website_event_track / event.track.stage        / description (text)            : NEW
+# NOTHING TO DO: New informative text that can be empty
+
+website_event_track / event.track.stage        / is_accepted (boolean)         : DEL
+website_event_track / event.track.stage        / is_visible_in_agenda (boolean): NEW isfunction: function, stored
+# DONE: pre-migration. Rename the column to get the same effect
+
+website_event_track / event.track.stage        / is_done (boolean)             : DEL
+# NOTHING TO DO: It served for publishing tracks, but the result is already done in event.track.is_published
+
+website_event_track / event.track.stage        / is_fully_accessible (boolean) : NEW isfunction: function, stored
+# NOTHING TO DO: Let the ORM to compute this field
+
+website_event_track / website.event.menu       / menu_type (False)             : selection_keys is now '['booth', 'community', 'exhibitor', 'introduction', 'location', 'meeting_room', 'register', 'track', 'track_proposal']' ('['community', 'meeting_room', 'track', 'track_proposal']')
+# NOTHING TO DO: New values added
+
+---XML records in module 'website_event_track'---
+DEL event.sponsor.type: website_event_track.event_sponsor_type1 [renamed to website_event_exhibitor module] (noupdate)
+DEL event.sponsor.type: website_event_track.event_sponsor_type2 [renamed to website_event_exhibitor module] (noupdate)
+DEL event.sponsor.type: website_event_track.event_sponsor_type3 [renamed to website_event_exhibitor module] (noupdate)
+DEL ir.actions.act_window: website_event_track.event_sponsor_action_from_event [renamed to website_event_exhibitor module]
+DEL ir.actions.act_window: website_event_track.event_sponsor_type_action [renamed to website_event_exhibitor module]
+DEL ir.ui.menu: website_event_track.menu_event_sponsor_type [renamed to website_event_exhibitor module]
+DEL ir.ui.view: website_event_track.event_sponsor
+DEL ir.ui.view: website_event_track.event_sponsor_type_view_form
+DEL ir.ui.view: website_event_track.event_sponsor_type_view_tree
+DEL ir.ui.view: website_event_track.event_sponsor_view_form
+DEL ir.ui.view: website_event_track.event_sponsor_view_kanban
+DEL ir.ui.view: website_event_track.event_sponsor_view_search
+DEL ir.ui.view: website_event_track.event_sponsor_view_tree
+# DONE: post-migration. Renamed XML-IDs if website_event_exhibitor should be installed. Remove noupdate=1 record otherwise
+
+NEW ir.model.access: website_event_track.access_event_track
+NEW ir.model.access: website_event_track.access_event_track_location
+NEW ir.model.access: website_event_track.access_event_track_location_user
+NEW ir.model.access: website_event_track.access_event_track_stage
+NEW ir.model.access: website_event_track.access_event_track_stage_manager
+NEW ir.model.access: website_event_track.access_event_track_tag
+NEW ir.model.access: website_event_track.access_event_track_tag_category
+NEW ir.model.access: website_event_track.access_event_track_tag_category_user
+NEW ir.model.access: website_event_track.access_event_track_user
+NEW ir.model.access: website_event_track.access_event_track_visitor
+NEW ir.model.access: website_event_track.access_event_track_visitor_manager
+DEL ir.model.access: website_event_track.access_event_track__public
+DEL ir.model.access: website_event_track.access_event_track_location_public
+DEL ir.model.access: website_event_track.access_event_track_sponsor_manager
+DEL ir.model.access: website_event_track.access_event_track_sponsor_public
+DEL ir.model.access: website_event_track.access_event_track_sponsor_type_manager
+DEL ir.model.access: website_event_track.access_event_track_sponsor_type_public
+DEL ir.model.access: website_event_track.access_event_track_stage_all
+DEL ir.model.access: website_event_track.access_event_track_stage_event_manager
+DEL ir.model.access: website_event_track.access_event_track_tag_public
+DEL ir.model.access: website_event_track.event_track_tag_category_access_manager
+DEL ir.model.access: website_event_track.event_track_tag_category_access_public
+DEL ir.model.access: website_event_track.event_track_visitor_access_all
+DEL ir.model.access: website_event_track.event_track_visitor_access_manager
+NEW ir.ui.view: website_event_track.event_track_proposal_contact_details
+NEW ir.ui.view: website_event_track.track_card
+NEW ir.ui.view: website_event_track.track_cards_section
+DEL ir.ui.view: website_event_track.assets_frontend
+DEL ir.ui.view: website_event_track.event_layout
+DEL ir.ui.view: website_event_track.event_track_proposal_success
+DEL ir.ui.view: website_event_track.tracks_cards_track
+DEL ir.ui.view: website_event_track.website_visitor_view_kanban
+# NOTHING TO DO: noupdate=0 data
