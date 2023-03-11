@@ -1,0 +1,8 @@
+---Models in module 'coupon'---
+---Fields in module 'coupon'---
+coupon       / coupon.program           / company_id (many2one)         : now required
+# NOTHING TO DO: It was enforced in v14 through the view, so only incorrect code can insert programs without company_id, and the fix belongs to the creators of such code
+
+---XML records in module 'coupon'---
+DEL mail.template: coupon.mail_template_sale_coupon [renamed to sale_coupon module] (noupdate)
+# DONE: pre-migration: XML-ID renamed
