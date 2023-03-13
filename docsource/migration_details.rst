@@ -23,7 +23,7 @@ OpenUpgrade in order. Skipping versions is not supported.
 The OpenUpgrade repository includes both `openupgrade_framework` and
 `openupgrade_scripts`:
 
-https://github.com/OCA/openupgrade
+https://github.com/OCA/OpenUpgrade
 
 openupgradelib
 ..............
