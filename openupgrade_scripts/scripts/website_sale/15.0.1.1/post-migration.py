@@ -1,6 +1,21 @@
 from openupgradelib import openupgrade
 
 
+def set_visibility_product_attribute(env):
+    # Check that website_sale_product_attribute_filter_visibility was installed
+    if not openupgrade.column_exists(env.cr, "product_attribute", "is_published"):
+        return
+    openupgrade.logged_query(
+        env.cr,
+        """
+        UPDATE product_attribute
+        SET visibility = CASE WHEN is_published is not true THEN 'hidden'
+                              ELSE 'visible'
+                              END
+        """,
+    )
+
+
 @openupgrade.migrate()
 def migrate(env, version):
     # Load noupdate changes
@@ -16,3 +31,4 @@ def migrate(env, version):
             "mail_template_sale_cart_recovery",
         ],
     )
+    set_visibility_product_attribute(env)
