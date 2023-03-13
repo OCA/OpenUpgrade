@@ -2,12 +2,12 @@
 new model chat.room
 new model chat.room.mixin [abstract]
 ---Fields in module 'website_jitsi'---
-website_jitsi / chat.room                / lang_id (many2one)            : NEW relation: res.lang, hasdefault
-website_jitsi / chat.room                / last_activity (datetime)      : NEW hasdefault
-website_jitsi / chat.room                / max_capacity (selection)      : NEW required, selection_keys: ['12', '16', '20', '4', '8', 'no_limit'], req_default: function, hasdefault
+website_jitsi / chat.room                / lang_id (many2one)            : NEW relation: res.lang, hasdefault: default
+website_jitsi / chat.room                / last_activity (datetime)      : NEW
+website_jitsi / chat.room                / max_capacity (selection)      : NEW required, selection_keys: ['12', '16', '20', '4', '8', 'no_limit'], hasdefault: default
 website_jitsi / chat.room                / max_participant_reached (integer): NEW
-website_jitsi / chat.room                / name (char)                   : NEW required, req_default: function, hasdefault
-website_jitsi / chat.room                / participant_count (integer)   : NEW hasdefault
+website_jitsi / chat.room                / name (char)                   : NEW required, hasdefault: default
+website_jitsi / chat.room                / participant_count (integer)   : NEW hasdefault: default
 ---XML records in module 'website_jitsi'---
 NEW ir.actions.act_window: website_jitsi.chat_room_action
 NEW ir.model.access: website_jitsi.access_chat_room_all

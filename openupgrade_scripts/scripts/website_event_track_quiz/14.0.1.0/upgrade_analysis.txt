@@ -19,7 +19,7 @@ website_event_track_quiz / event.quiz.question      / quiz_id (many2one)        
 website_event_track_quiz / event.quiz.question      / sequence (integer)            : NEW
 website_event_track_quiz / event.track              / quiz_id (many2one)            : NEW relation: event.quiz
 website_event_track_quiz / event.track.visitor      / quiz_completed (boolean)      : NEW
-website_event_track_quiz / event.track.visitor      / quiz_points (integer)         : NEW hasdefault
+website_event_track_quiz / event.track.visitor      / quiz_points (integer)         : NEW hasdefault: default
 ---XML records in module 'website_event_track_quiz'---
 NEW ir.actions.act_window: website_event_track_quiz.event_quiz_action
 NEW ir.actions.act_window: website_event_track_quiz.event_quiz_question_action

@@ -4,46 +4,30 @@ obsolete model crm.partner.binding [transient]
 new model crm.recurring.plan
 ---Fields in module 'crm'---
 crm          / crm.lead                 / automated_probability (float) : now a function
-crm          / crm.lead                 / city (char)                   : now a function
-crm          / crm.lead                 / contact_name (char)           : now a function
-crm          / crm.lead                 / country_id (many2one)         : now a function
 crm          / crm.lead                 / date_last_stage_update (datetime): now a function
 crm          / crm.lead                 / date_open (datetime)          : now a function
 crm          / crm.lead                 / email_from (char)             : now a function
 crm          / crm.lead                 / expected_revenue (float)      : not a function anymore
-crm          / crm.lead                 / function (char)               : now a function
-crm          / crm.lead                 / mobile (char)                 : now a function
-crm          / crm.lead                 / name (char)                   : now a function
-crm          / crm.lead                 / partner_name (char)           : now a function
 crm          / crm.lead                 / phone (char)                  : now a function
 crm          / crm.lead                 / phone_mobile_search (char)    : NEW
 crm          / crm.lead                 / phone_sanitized (char)        : NEW isfunction: function, stored
 crm          / crm.lead                 / planned_revenue (float)       : DEL
-crm          / crm.lead                 / probability (float)           : now a function
 crm          / crm.lead                 / prorated_revenue (float)      : NEW isfunction: function, stored
 crm          / crm.lead                 / recurring_plan (many2one)     : NEW relation: crm.recurring.plan
 crm          / crm.lead                 / recurring_revenue (float)     : NEW
 crm          / crm.lead                 / recurring_revenue_monthly (float): NEW isfunction: function, stored
 crm          / crm.lead                 / recurring_revenue_monthly_prorated (float): NEW isfunction: function, stored
-crm          / crm.lead                 / stage_id (many2one)           : now a function
-crm          / crm.lead                 / state_id (many2one)           : now a function
-crm          / crm.lead                 / street (char)                 : now a function
-crm          / crm.lead                 / street2 (char)                : now a function
 crm          / crm.lead                 / tag_ids (many2many)           : relation is now 'crm.tag' ('crm.lead.tag') [nothing to do]
 crm          / crm.lead                 / tag_ids (many2many)           : table is now 'crm_tag_rel' ('crm_lead_tag_rel')
-crm          / crm.lead                 / team_id (many2one)            : now a function
-crm          / crm.lead                 / title (many2one)              : now a function
-crm          / crm.lead                 / website (char)                : now a function
-crm          / crm.lead                 / zip (char)                    : now a function
 crm          / crm.lead.tag             / __last_update (datetime)      : module is now 'sales_team' ('crm')
 crm          / crm.lead.tag             / _order                        : module is now 'sales_team' ('crm')
 crm          / crm.lead.tag             / color (integer)               : module is now 'sales_team' ('crm')
 crm          / crm.lead.tag             / display_name (char)           : module is now 'sales_team' ('crm')
 crm          / crm.lead.tag             / name (char)                   : module is now 'sales_team' ('crm')
-crm          / crm.recurring.plan       / active (boolean)              : NEW hasdefault
+crm          / crm.recurring.plan       / active (boolean)              : NEW hasdefault: default
 crm          / crm.recurring.plan       / name (char)                   : NEW required
 crm          / crm.recurring.plan       / number_of_months (integer)    : NEW required
-crm          / crm.recurring.plan       / sequence (integer)            : NEW hasdefault
+crm          / crm.recurring.plan       / sequence (integer)            : NEW hasdefault: default
 crm          / crm.team                 / opportunities_amount (integer): type is now 'float' ('integer')
 ---XML records in module 'crm'---
 NEW crm.recurring.plan: crm.crm_recurring_plan_monthly (noupdate)

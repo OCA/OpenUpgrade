@@ -10,9 +10,9 @@ new model test_read_group.order.line
 test_read_group / test_read_group.aggregate / key (integer)                 : NEW
 test_read_group / test_read_group.aggregate / partner_id (many2one)         : NEW relation: res.partner
 test_read_group / test_read_group.aggregate / value (integer)               : NEW
-test_read_group / test_read_group.aggregate.boolean / bool_and (boolean)            : NEW hasdefault
-test_read_group / test_read_group.aggregate.boolean / bool_array (boolean)          : NEW hasdefault
-test_read_group / test_read_group.aggregate.boolean / bool_or (boolean)             : NEW hasdefault
+test_read_group / test_read_group.aggregate.boolean / bool_and (boolean)            : NEW hasdefault: default
+test_read_group / test_read_group.aggregate.boolean / bool_array (boolean)          : NEW hasdefault: default
+test_read_group / test_read_group.aggregate.boolean / bool_or (boolean)             : NEW hasdefault: default
 test_read_group / test_read_group.aggregate.boolean / key (integer)                 : NEW
 test_read_group / test_read_group.fill_temporal / date (date)                   : NEW
 test_read_group / test_read_group.fill_temporal / datetime (datetime)           : NEW

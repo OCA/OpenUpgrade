@@ -1,7 +1,7 @@
 ---Models in module 'digest'---
 ---Fields in module 'digest'---
 digest       / digest.digest            / periodicity (selection)       : selection_keys is now '['daily', 'monthly', 'quarterly', 'weekly']' ('['monthly', 'quarterly', 'weekly']')
-digest       / digest.digest            / template_id (many2one)        : DEL relation: mail.template, required, req_default: function
+digest       / digest.digest            / template_id (many2one)        : DEL relation: mail.template, required
 digest       / digest.tip               / name (char)                   : NEW
 ---XML records in module 'digest'---
 NEW digest.tip: digest.digest_tip_digest_0 (noupdate)

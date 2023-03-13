@@ -2,7 +2,7 @@
 ---Fields in module 'website_forum'---
 website_forum / forum.forum              / authorized_group_id (many2one): NEW relation: res.groups
 website_forum / forum.forum              / menu_id (many2one)            : NEW relation: website.menu
-website_forum / forum.forum              / privacy (selection)           : NEW selection_keys: ['connected', 'private', 'public'], hasdefault
+website_forum / forum.forum              / privacy (selection)           : NEW selection_keys: ['connected', 'private', 'public'], hasdefault: default
 website_forum / forum.forum              / seo_name (char)               : NEW
 website_forum / forum.forum              / teaser (text)                 : NEW isfunction: function, stored
 website_forum / forum.post               / seo_name (char)               : NEW

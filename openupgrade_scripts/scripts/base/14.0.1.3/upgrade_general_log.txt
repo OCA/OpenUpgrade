@@ -50,9 +50,16 @@ obsolete model survey.label (renamed to survey.question.answer) [module survey]
 obsolete model survey.user_input_line (renamed to survey.user_input.line) [module survey]
 obsolete model test_performance.mail [module test_mail]
 new model account.automatic.entry.wizard [module account]
+new model account.edi.common [module account_edi_ubl_cii]
 new model account.edi.document [module account_edi]
 new model account.edi.format [module account_edi]
 new model account_edi_proxy_client.user [module account_edi_proxy_client]
+new model account.edi.xml.cii [module account_edi_ubl_cii]
+new model account.edi.xml.ubl_20 [module account_edi_ubl_cii]
+new model account.edi.xml.ubl_21 [module account_edi_ubl_cii]
+new model account.edi.xml.ubl_bis3 [module account_edi_ubl_cii]
+new model account.edi.xml.ubl_de [module account_edi_ubl_cii]
+new model account.edi.xml.ubl_efff [module account_edi_ubl_cii]
 new model account.group.template [module account]
 new model account.reconcile.model.line [module account]
 new model account.reconcile.model.line.template [module account]
@@ -100,6 +107,7 @@ new model event.track.visitor [module website_event_track]
 new model event.type.ticket [module event]
 new model expiry.picking.confirmation [module product_expiry]
 new model export.boolean [module test_impex]
+new model export.computed.binary [module test_xlsx_export]
 new model export.date [module test_impex]
 new model export.datetime [module test_impex]
 new model export.decimal [module test_impex]
@@ -139,6 +147,7 @@ new model hr.payroll.structure.type [module hr_contract]
 new model ir.qweb.field.image_url [module base]
 new model l10n_es_edi.certificate [module l10n_es_edi_sii]
 new model l10n_es.sii.account.tax.mixin [module l10n_es_edi_sii]
+new model l10n_ph_2307.wizard [module l10n_ph]
 new model mail.blacklist.remove [module mail]
 new model mail.performance.thread [module test_mail]
 new model mail.performance.tracking [module test_mail]
@@ -245,6 +254,7 @@ new model test_new_api.country [module test_new_api]
 new model test_new_api.creativework.book [module test_new_api]
 new model test_new_api.creativework.edition [module test_new_api]
 new model test_new_api.creativework.movie [module test_new_api]
+new model test_new_api.crew [module test_new_api]
 new model test_new_api.discussion [module test_new_api]
 new model test_new_api.display [module test_new_api]
 new model test_new_api.emailmessage [module test_new_api]
@@ -290,12 +300,15 @@ new model test_new_api.one2many.line [module test_new_api]
 new model test_new_api.order [module test_new_api]
 new model test_new_api.order.line [module test_new_api]
 new model test_new_api.payment [module test_new_api]
+new model test_new_api.pirate [module test_new_api]
+new model test_new_api.prisoner [module test_new_api]
 new model test_new_api.recursive [module test_new_api]
 new model test_new_api.recursive.tree [module test_new_api]
 new model test_new_api.related [module test_new_api]
 new model test_new_api.req_m2o [module test_new_api]
 new model test_new_api.req_m2o_transient [module test_new_api]
 new model test_new_api.selection [module test_new_api]
+new model test_new_api.ship [module test_new_api]
 new model test_new_api.state_mixin [module test_new_api]
 new model test_new_api.trigger.left [module test_new_api]
 new model test_new_api.trigger.middle [module test_new_api]
@@ -357,12 +370,12 @@ new model website.robots [module website]
 new model website.sale.extra.field [module website_sale]
 new model website.snippet.filter [module website]
 ---Fields in module 'general'---
-# 9852 fields matched,
-# Direct match: 9723
-# Found in other module: 129
+# 9985 fields matched,
+# Direct match: 9851
+# Found in other module: 134
 # Found with different type: 0
 # In obsolete models: 204
-# New columns: 3333
+# New columns: 3394
 # Not matched: 562
 ---XML records in module 'general'---
 ERROR: module not in list of installed modules:

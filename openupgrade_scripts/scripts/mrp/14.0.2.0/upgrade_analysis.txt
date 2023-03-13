@@ -12,7 +12,7 @@ new model mrp.immediate.production.line [transient]
 new model mrp.production.backorder [transient]
 new model mrp.production.backorder.line [transient]
 ---Fields in module 'mrp'---
-mrp          / mrp.bom                  / consumption (selection)       : now required, req_default: function
+mrp          / mrp.bom                  / consumption (selection)       : now required
 mrp          / mrp.bom                  / consumption (selection)       : selection_keys is now '['flexible', 'strict', 'warning']' ('['flexible', 'strict']')
 mrp          / mrp.bom                  / operation_ids (one2many)      : NEW relation: mrp.routing.workcenter
 mrp          / mrp.bom                  / routing_id (many2one)         : DEL relation: mrp.routing
@@ -23,8 +23,8 @@ mrp          / mrp.document             / theme_template_id (many2one)  : previo
 mrp          / mrp.document             / website_id (many2one)         : previously in module website
 mrp          / mrp.document             / website_url (char)            : previously in module website
 mrp          / mrp.production           / _order                        : _order is now 'priority desc, date_planned_start asc,id' ('date_planned_start asc,id')
-mrp          / mrp.production           / backorder_sequence (integer)  : NEW hasdefault
-mrp          / mrp.production           / consumption (selection)       : NEW required, selection_keys: ['flexible', 'strict', 'warning'], req_default: function, hasdefault
+mrp          / mrp.production           / backorder_sequence (integer)  : NEW hasdefault: default
+mrp          / mrp.production           / consumption (selection)       : NEW required, selection_keys: ['flexible', 'strict', 'warning']
 mrp          / mrp.production           / date_deadline (datetime)      : now a function
 mrp          / mrp.production           / date_start_wo (datetime)      : DEL
 mrp          / mrp.production           / lot_producing_id (many2one)   : NEW relation: stock.production.lot
@@ -44,7 +44,7 @@ mrp          / mrp.routing              / company_id (many2one)         : DEL re
 mrp          / mrp.routing              / name (char)                   : DEL required
 mrp          / mrp.routing              / note (text)                   : DEL
 mrp          / mrp.routing              / operation_ids (one2many)      : DEL relation: mrp.routing.workcenter
-mrp          / mrp.routing.workcenter   / batch (selection)             : DEL required, selection_keys: ['no', 'yes'], req_default: function
+mrp          / mrp.routing.workcenter   / batch (selection)             : DEL required, selection_keys: ['no', 'yes']
 mrp          / mrp.routing.workcenter   / batch_size (float)            : DEL
 mrp          / mrp.routing.workcenter   / bom_id (many2one)             : NEW relation: mrp.bom
 mrp          / mrp.routing.workcenter   / company_id (many2one)         : not related anymore
@@ -119,6 +119,7 @@ NEW ir.ui.view: mrp.view_immediate_production
 NEW ir.ui.view: mrp.view_mrp_consumption_warning_form
 NEW ir.ui.view: mrp.view_mrp_document_form
 NEW ir.ui.view: mrp.view_mrp_production_backorder_form
+NEW ir.ui.view: mrp.view_stock_move_line_operation_tree_finished
 NEW ir.ui.view: mrp.view_stock_move_operations_finished
 NEW ir.ui.view: mrp.view_stock_move_operations_raw
 NEW ir.ui.view: mrp.view_warehouse_orderpoint_tree_editable_inherited_purchase

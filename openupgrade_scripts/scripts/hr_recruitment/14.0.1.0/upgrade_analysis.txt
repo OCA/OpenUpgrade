@@ -2,16 +2,12 @@
 new model applicant.get.refuse.reason [transient]
 new model hr.applicant.refuse.reason
 ---Fields in module 'hr_recruitment'---
-hr_recruitment / hr.applicant             / company_id (many2one)         : now a function
 hr_recruitment / hr.applicant             / date_closed (datetime)        : now a function
-hr_recruitment / hr.applicant             / department_id (many2one)      : now a function
 hr_recruitment / hr.applicant             / email_from (char)             : now a function
 hr_recruitment / hr.applicant             / partner_mobile (char)         : now a function
 hr_recruitment / hr.applicant             / partner_phone (char)          : now a function
 hr_recruitment / hr.applicant             / refuse_reason_id (many2one)   : NEW relation: hr.applicant.refuse.reason
-hr_recruitment / hr.applicant             / stage_id (many2one)           : now a function
-hr_recruitment / hr.applicant             / user_id (many2one)            : now a function
-hr_recruitment / hr.applicant.refuse.reason / active (boolean)              : NEW hasdefault
+hr_recruitment / hr.applicant.refuse.reason / active (boolean)              : NEW hasdefault: default
 hr_recruitment / hr.applicant.refuse.reason / name (char)                   : NEW required
 hr_recruitment / hr.employee              / applicant_id (one2many)       : NEW relation: hr.applicant
 ---XML records in module 'hr_recruitment'---

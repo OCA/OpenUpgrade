@@ -15,42 +15,39 @@ survey       / survey.question          / answer_numerical_box (float)  : NEW
 survey       / survey.question          / answer_score (float)          : NEW
 survey       / survey.question          / display_mode (selection)      : DEL selection_keys: ['columns', 'dropdown']
 survey       / survey.question          / is_conditional (boolean)      : NEW
-survey       / survey.question          / is_scored_question (boolean)  : NEW isfunction: function, stored
+survey       / survey.question          / is_scored_question (boolean)  : NEW hasdefault: compute
 survey       / survey.question          / is_time_limited (boolean)     : NEW
 survey       / survey.question          / labels_ids (one2many)         : DEL relation: survey.label
 survey       / survey.question          / labels_ids_2 (one2many)       : DEL relation: survey.label
 survey       / survey.question          / matrix_row_ids (one2many)     : NEW relation: survey.question.answer
-survey       / survey.question          / question_type (selection)     : now a function
 survey       / survey.question          / question_type (selection)     : selection_keys is now '['char_box', 'date', 'datetime', 'matrix', 'multiple_choice', 'numerical_box', 'simple_choice', 'text_box']' ('['date', 'datetime', 'free_text', 'matrix', 'multiple_choice', 'numerical_box', 'simple_choice', 'textbox']')
-survey       / survey.question          / save_as_email (boolean)       : NEW isfunction: function, stored
-survey       / survey.question          / save_as_nickname (boolean)    : NEW isfunction: function, stored
+survey       / survey.question          / save_as_email (boolean)       : NEW hasdefault: compute
+survey       / survey.question          / save_as_nickname (boolean)    : NEW hasdefault: compute
 survey       / survey.question          / suggested_answer_ids (one2many): NEW relation: survey.question.answer
 survey       / survey.question          / time_limit (integer)          : NEW
-survey       / survey.question          / triggering_answer_id (many2one): NEW relation: survey.question.answer, isfunction: function, stored
-survey       / survey.question          / triggering_question_id (many2one): NEW relation: survey.question, isfunction: function, stored
+survey       / survey.question          / triggering_answer_id (many2one): NEW relation: survey.question.answer, hasdefault: compute
+survey       / survey.question          / triggering_question_id (many2one): NEW relation: survey.question, hasdefault: compute
 survey       / survey.question          / user_input_line_ids (one2many): relation is now 'survey.user_input.line' ('survey.user_input_line') [nothing to do]
 survey       / survey.question.answer   / matrix_question_id (many2one) : NEW relation: survey.question
 survey       / survey.question.answer   / value_image (binary)          : NEW attachment: True
 survey       / survey.survey            / background_image (binary)     : NEW attachment: True
-survey       / survey.survey            / category (selection)          : DEL required, selection_keys: ['default'], req_default: function
+survey       / survey.survey            / category (selection)          : DEL required, selection_keys: ['default']
 survey       / survey.survey            / certificate (boolean)         : DEL
-survey       / survey.survey            / certification (boolean)       : NEW isfunction: function, stored
-survey       / survey.survey            / certification_give_badge (boolean): now a function
-survey       / survey.survey            / certification_report_layout (selection): NEW selection_keys: ['classic_blue', 'classic_gold', 'classic_purple', 'modern_blue', 'modern_gold', 'modern_purple'], hasdefault
+survey       / survey.survey            / certification (boolean)       : NEW hasdefault: compute
+survey       / survey.survey            / certification_report_layout (selection): NEW selection_keys: ['classic_blue', 'classic_gold', 'classic_purple', 'modern_blue', 'modern_gold', 'modern_purple'], hasdefault: default
 survey       / survey.survey            / description_done (html)       : NEW
-survey       / survey.survey            / is_attempts_limited (boolean) : now a function
-survey       / survey.survey            / passing_score (float)         : DEL required, req_default: function
-survey       / survey.survey            / progression_mode (selection)  : NEW selection_keys: ['number', 'percent'], hasdefault
-survey       / survey.survey            / scoring_success_min (float)   : NEW hasdefault
-survey       / survey.survey            / session_code (char)           : NEW hasdefault
+survey       / survey.survey            / passing_score (float)         : DEL required
+survey       / survey.survey            / progression_mode (selection)  : NEW selection_keys: ['number', 'percent'], hasdefault: default
+survey       / survey.survey            / scoring_success_min (float)   : NEW hasdefault: default
+survey       / survey.survey            / session_code (char)           : NEW hasdefault: default
 survey       / survey.survey            / session_question_id (many2one): NEW relation: survey.question
 survey       / survey.survey            / session_question_start_time (datetime): NEW
 survey       / survey.survey            / session_speed_rating (boolean): NEW
 survey       / survey.survey            / session_start_time (datetime) : NEW
 survey       / survey.survey            / session_state (selection)     : NEW selection_keys: ['in_progress', 'ready']
 survey       / survey.survey            / thank_you_message (html)      : DEL
-survey       / survey.user_input        / access_token (char)           : NEW required, req_default: function, hasdefault
-survey       / survey.user_input        / input_type (selection)        : DEL required, selection_keys: ['link', 'manually'], req_default: function
+survey       / survey.user_input        / access_token (char)           : NEW required
+survey       / survey.user_input        / input_type (selection)        : DEL required, selection_keys: ['link', 'manually']
 survey       / survey.user_input        / is_session_answer (boolean)   : NEW
 survey       / survey.user_input        / nickname (char)               : NEW
 survey       / survey.user_input        / predefined_question_ids (many2many): NEW relation: survey.question
@@ -61,7 +58,7 @@ survey       / survey.user_input        / scoring_percentage (float)    : NEW is
 survey       / survey.user_input        / scoring_success (boolean)     : NEW isfunction: function, stored
 survey       / survey.user_input        / scoring_total (float)         : NEW isfunction: function, stored
 survey       / survey.user_input        / state (selection)             : selection_keys is now '['done', 'in_progress', 'new']' ('['done', 'new', 'skip']')
-survey       / survey.user_input        / token (char)                  : DEL required, req_default: function
+survey       / survey.user_input        / token (char)                  : DEL required
 survey       / survey.user_input        / user_input_line_ids (one2many): relation is now 'survey.user_input.line' ('survey.user_input_line') [nothing to do]
 survey       / survey.user_input.line   / matrix_row_id (many2one)      : NEW relation: survey.question.answer
 survey       / survey.user_input.line   / suggested_answer_id (many2one): NEW relation: survey.question.answer

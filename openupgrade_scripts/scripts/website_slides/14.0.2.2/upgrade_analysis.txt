@@ -15,7 +15,7 @@ website_slides / slide.channel.partner    / completed_slides_count (integer): NE
 website_slides / slide.channel.tag        / color (integer)               : NEW
 website_slides / slide.question           / _order                        : _order is now 'sequence' ('id')
 website_slides / slide.slide              / seo_name (char)               : NEW
-website_slides / slide.slide              / slide_resource_downloadable (boolean): NEW hasdefault
+website_slides / slide.slide              / slide_resource_downloadable (boolean): NEW hasdefault: default
 website_slides / slide.slide              / slide_resource_ids (one2many) : NEW relation: slide.slide.resource
 website_slides / slide.slide.resource     / data (binary)                 : NEW attachment: True
 website_slides / slide.slide.resource     / name (char)                   : NEW required
@@ -30,6 +30,8 @@ NEW ir.model.access: website_slides.access_slide_slide_link_officer
 NEW ir.model.access: website_slides.access_slide_slide_manager
 NEW ir.model.access: website_slides.access_slide_slide_officer
 NEW ir.model.access: website_slides.access_slide_slide_resource_all
+NEW ir.model.access: website_slides.access_slide_slide_resource_internal
+NEW ir.model.access: website_slides.access_slide_slide_resource_portal
 NEW ir.model.access: website_slides.access_slide_slide_resource_public
 NEW ir.model.access: website_slides.access_slide_slide_resource_publisher
 NEW ir.model.access: website_slides.access_slide_tag_officer
@@ -54,6 +56,9 @@ NEW ir.rule: website_slides.rule_slide_slide_officer_r (noupdate)
 NEW ir.rule: website_slides.rule_slide_slide_partner_manager (noupdate)
 NEW ir.rule: website_slides.rule_slide_slide_partner_officer (noupdate)
 NEW ir.rule: website_slides.rule_slide_slide_resource_downloadable (noupdate)
+NEW ir.rule: website_slides.rule_slide_slide_resource_manager (noupdate)
+NEW ir.rule: website_slides.rule_slide_slide_resource_officer_crud (noupdate)
+NEW ir.rule: website_slides.rule_slide_slide_resource_officer_read (noupdate)
 DEL ir.rule: website_slides.rule_slide_channel_website
 DEL ir.rule: website_slides.rule_slide_slide_website
 NEW ir.ui.menu: website_slides.website_slides_menu_config_course_groups

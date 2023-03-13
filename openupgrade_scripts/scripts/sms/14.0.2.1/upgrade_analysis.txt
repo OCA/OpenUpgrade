@@ -9,9 +9,11 @@ sms          / mail.test.activity       / message_has_sms_error (boolean): previ
 sms          / mail.test.cc             / message_has_sms_error (boolean): previously in module test_mail
 sms          / mail.test.field.type     / message_has_sms_error (boolean): previously in module test_mail
 sms          / mail.test.gateway        / message_has_sms_error (boolean): previously in module test_mail
+sms          / mail.test.gateway.groups / message_has_sms_error (boolean): previously in module test_mail
 sms          / mail.test.multi.company  / message_has_sms_error (boolean): previously in module test_mail
 sms          / mail.test.simple         / message_has_sms_error (boolean): previously in module test_mail
 sms          / mail.test.track          / message_has_sms_error (boolean): previously in module test_mail
+sms          / mail.test.track.selection / message_has_sms_error (boolean): previously in module test_mail
 sms          / mailing.contact          / message_has_sms_error (boolean): module is now 'mass_mailing' ('sms')
 sms          / mailing.mailing          / message_has_sms_error (boolean): module is now 'mass_mailing' ('sms')
 sms          / sms.sms                  / error_code (selection)        : selection_keys is now '['sms_acc', 'sms_blacklist', 'sms_credit', 'sms_duplicate', 'sms_number_format', 'sms_number_missing', 'sms_server']' ('['sms_blacklist', 'sms_credit', 'sms_duplicate', 'sms_number_format', 'sms_number_missing', 'sms_server']')

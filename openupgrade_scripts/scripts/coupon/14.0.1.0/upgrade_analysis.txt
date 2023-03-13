@@ -68,6 +68,7 @@ DEL ir.model.access: sale_coupon.access_program_salesman [moved to sale_coupon m
 DEL ir.model.access: sale_coupon.access_reward_manager [moved to sale_coupon module]
 DEL ir.model.access: sale_coupon.access_reward_salesman [moved to sale_coupon module]
 NEW ir.model.constraint: coupon.constraint_coupon_coupon_unique_coupon_code
+NEW ir.model.constraint: coupon.constraint_coupon_rule_check_coupon_rule_dates
 DEL ir.model.constraint: sale_coupon.constraint_sale_coupon_unique_coupon_code
 NEW ir.rule: coupon.sale_coupon_generate_rule (noupdate)
 NEW ir.rule: sale_coupon.sale_coupon_apply_code_rule (noupdate)

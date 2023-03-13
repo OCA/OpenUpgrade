@@ -5,15 +5,11 @@ mass_mailing / mailing.contact          / website_message_ids (one2many): previo
 mass_mailing / mailing.mailing          / copyvalue (char)              : NEW
 mass_mailing / mailing.mailing          / kpi_mail_required (boolean)   : NEW
 mass_mailing / mailing.mailing          / lang (char)                   : NEW
-mass_mailing / mailing.mailing          / mailing_domain (char)         : now a function
-mass_mailing / mailing.mailing          / mailing_model_id (many2one)   : now required, req_default: function
-mass_mailing / mailing.mailing          / medium_id (many2one)          : now a function
+mass_mailing / mailing.mailing          / mailing_model_id (many2one)   : now required
 mass_mailing / mailing.mailing          / message_has_sms_error (boolean): previously in module sms
 mass_mailing / mailing.mailing          / model_object_field (many2one) : NEW relation: ir.model.fields
 mass_mailing / mailing.mailing          / null_value (char)             : NEW
 mass_mailing / mailing.mailing          / preview (char)                : NEW
-mass_mailing / mailing.mailing          / reply_to (char)               : now a function
-mass_mailing / mailing.mailing          / reply_to_mode (selection)     : now a function
 mass_mailing / mailing.mailing          / sub_model_object_field (many2one): NEW relation: ir.model.fields
 mass_mailing / mailing.mailing          / sub_object (many2one)         : NEW relation: ir.model
 mass_mailing / mailing.mailing          / website_message_ids (one2many): previously in module portal

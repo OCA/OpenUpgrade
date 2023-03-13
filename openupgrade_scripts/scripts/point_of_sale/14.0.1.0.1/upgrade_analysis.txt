@@ -2,9 +2,9 @@
 ---Fields in module 'point_of_sale'---
 point_of_sale / pos.config               / iface_precompute_cash (boolean): DEL
 point_of_sale / pos.config               / manage_orders (boolean)       : NEW
-point_of_sale / pos.config               / manual_discount (boolean)     : NEW hasdefault
+point_of_sale / pos.config               / manual_discount (boolean)     : NEW hasdefault: default
 point_of_sale / pos.config               / module_pos_reprint (boolean)  : DEL
-point_of_sale / pos.config               / picking_type_id (many2one)    : now required, req_default: function
+point_of_sale / pos.config               / picking_type_id (many2one)    : now required
 point_of_sale / pos.config               / product_configurator (boolean): NEW
 point_of_sale / pos.order                / _order                        : _order is now 'date_order desc, name desc, id desc' ('id desc')
 point_of_sale / pos.order                / is_tipped (boolean)           : NEW
@@ -14,17 +14,17 @@ point_of_sale / pos.order                / picking_ids (one2many)        : NEW r
 point_of_sale / pos.order                / tip_amount (float)            : NEW
 point_of_sale / pos.order.line           / full_product_name (char)      : NEW
 point_of_sale / pos.payment              / cardholder_name (char)        : NEW
-point_of_sale / pos.payment              / is_change (boolean)           : NEW hasdefault
+point_of_sale / pos.payment              / is_change (boolean)           : NEW hasdefault: default
 point_of_sale / pos.payment              / payment_status (char)         : NEW
 point_of_sale / pos.payment              / ticket (char)                 : NEW
-point_of_sale / pos.payment.method       / active (boolean)              : NEW hasdefault
+point_of_sale / pos.payment.method       / active (boolean)              : NEW hasdefault: default
 point_of_sale / pos.session              / cash_real_difference (float)  : NEW
 point_of_sale / pos.session              / cash_real_expected (float)    : NEW
 point_of_sale / pos.session              / cash_real_transaction (float) : NEW
 point_of_sale / pos.session              / picking_ids (one2many)        : NEW relation: stock.picking
 point_of_sale / pos.session              / state (selection)             : selection_keys is now '['closed', 'closing_control', 'opened', 'opening_control']' ('['closed', 'closing_control', 'new_session', 'opened', 'opening_control']')
 point_of_sale / pos.session              / update_stock_at_closing (boolean): NEW
-point_of_sale / res.company              / point_of_sale_update_stock_quantities (selection): NEW selection_keys: ['closing', 'real'], hasdefault
+point_of_sale / res.company              / point_of_sale_update_stock_quantities (selection): NEW selection_keys: ['closing', 'real'], hasdefault: default
 point_of_sale / res.partner              / barcode (char)                : module is now 'base' ('point_of_sale')
 point_of_sale / res.partner              / barcode (char)                : not stored anymore
 point_of_sale / stock.picking            / pos_order_id (many2one)       : NEW relation: pos.order

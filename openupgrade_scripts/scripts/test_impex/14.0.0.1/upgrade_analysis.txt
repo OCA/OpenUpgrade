@@ -29,32 +29,32 @@ new model export.string.required
 new model export.text
 new model export.unique
 ---Fields in module 'test_impex'---
-test_impex   / export.boolean           / const (integer)               : NEW hasdefault
+test_impex   / export.boolean           / const (integer)               : NEW hasdefault: default
 test_impex   / export.boolean           / value (boolean)               : NEW
-test_impex   / export.date              / const (integer)               : NEW hasdefault
+test_impex   / export.date              / const (integer)               : NEW hasdefault: default
 test_impex   / export.date              / value (date)                  : NEW
-test_impex   / export.datetime          / const (integer)               : NEW hasdefault
+test_impex   / export.datetime          / const (integer)               : NEW hasdefault: default
 test_impex   / export.datetime          / value (datetime)              : NEW
-test_impex   / export.decimal           / const (integer)               : NEW hasdefault
+test_impex   / export.decimal           / const (integer)               : NEW hasdefault: default
 test_impex   / export.decimal           / value (float)                 : NEW
-test_impex   / export.float             / const (integer)               : NEW hasdefault
+test_impex   / export.float             / const (integer)               : NEW hasdefault: default
 test_impex   / export.float             / value (float)                 : NEW
-test_impex   / export.function          / const (integer)               : NEW hasdefault
+test_impex   / export.function          / const (integer)               : NEW hasdefault: default
 test_impex   / export.inherits.child    / _inherits                     : NEW _inherits: {'export.inherits.parent': 'parent_id'}
 test_impex   / export.inherits.child    / parent_id (many2one)          : NEW relation: export.inherits.parent, required
 test_impex   / export.inherits.child    / value (integer)               : NEW
 test_impex   / export.inherits.parent   / value_parent (integer)        : NEW
-test_impex   / export.integer           / const (integer)               : NEW hasdefault
+test_impex   / export.integer           / const (integer)               : NEW hasdefault: default
 test_impex   / export.integer           / value (integer)               : NEW
 test_impex   / export.m2o.str           / child_id (many2one)           : NEW relation: export.m2o.str.child
 test_impex   / export.m2o.str.child     / name (char)                   : NEW
-test_impex   / export.many2many         / const (integer)               : NEW hasdefault
+test_impex   / export.many2many         / const (integer)               : NEW hasdefault: default
 test_impex   / export.many2many         / value (many2many)             : NEW relation: export.many2many.other
 test_impex   / export.many2many.other   / str (char)                    : NEW
 test_impex   / export.many2many.other   / value (integer)               : NEW
-test_impex   / export.many2one          / const (integer)               : NEW hasdefault
+test_impex   / export.many2one          / const (integer)               : NEW hasdefault: default
 test_impex   / export.many2one          / value (many2one)              : NEW relation: export.integer
-test_impex   / export.one2many          / const (integer)               : NEW hasdefault
+test_impex   / export.one2many          / const (integer)               : NEW hasdefault: default
 test_impex   / export.one2many          / value (one2many)              : NEW relation: export.one2many.child
 test_impex   / export.one2many.child    / m2o (many2one)                : NEW relation: export.integer
 test_impex   / export.one2many.child    / parent_id (many2one)          : NEW relation: export.one2many
@@ -68,26 +68,26 @@ test_impex   / export.one2many.child.2  / str (char)                    : NEW
 test_impex   / export.one2many.child.2  / value (integer)               : NEW
 test_impex   / export.one2many.multiple / child1 (one2many)             : NEW relation: export.one2many.child.1
 test_impex   / export.one2many.multiple / child2 (one2many)             : NEW relation: export.one2many.child.2
-test_impex   / export.one2many.multiple / const (integer)               : NEW hasdefault
+test_impex   / export.one2many.multiple / const (integer)               : NEW hasdefault: default
 test_impex   / export.one2many.multiple / parent_id (many2one)          : NEW relation: export.one2many.recursive
 test_impex   / export.one2many.multiple.child / parent_id (many2one)          : NEW relation: export.one2many.multiple
 test_impex   / export.one2many.multiple.child / str (char)                    : NEW
 test_impex   / export.one2many.multiple.child / value (integer)               : NEW
 test_impex   / export.one2many.recursive / child (one2many)              : NEW relation: export.one2many.multiple
 test_impex   / export.one2many.recursive / value (integer)               : NEW
-test_impex   / export.selection         / const (integer)               : NEW hasdefault
+test_impex   / export.selection         / const (integer)               : NEW hasdefault: default
 test_impex   / export.selection         / value (selection)             : NEW selection_keys: ['1', '2', '3', '4']
-test_impex   / export.selection.function / const (integer)               : NEW hasdefault
+test_impex   / export.selection.function / const (integer)               : NEW hasdefault: default
 test_impex   / export.selection.function / value (selection)             : NEW selection_keys: function
-test_impex   / export.selection.withdefault / const (integer)               : NEW hasdefault
-test_impex   / export.selection.withdefault / value (selection)             : NEW selection_keys: ['1', '2'], hasdefault
-test_impex   / export.string            / const (integer)               : NEW hasdefault
+test_impex   / export.selection.withdefault / const (integer)               : NEW hasdefault: default
+test_impex   / export.selection.withdefault / value (selection)             : NEW selection_keys: ['1', '2'], hasdefault: default
+test_impex   / export.string            / const (integer)               : NEW hasdefault: default
 test_impex   / export.string            / value (char)                  : NEW
-test_impex   / export.string.bounded    / const (integer)               : NEW hasdefault
+test_impex   / export.string.bounded    / const (integer)               : NEW hasdefault: default
 test_impex   / export.string.bounded    / value (char)                  : NEW
-test_impex   / export.string.required   / const (integer)               : NEW hasdefault
+test_impex   / export.string.required   / const (integer)               : NEW hasdefault: default
 test_impex   / export.string.required   / value (char)                  : NEW required
-test_impex   / export.text              / const (integer)               : NEW hasdefault
+test_impex   / export.text              / const (integer)               : NEW hasdefault: default
 test_impex   / export.text              / value (text)                  : NEW
 test_impex   / export.unique            / value (integer)               : NEW
 test_impex   / export.unique            / value2 (integer)              : NEW

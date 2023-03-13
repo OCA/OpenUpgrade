@@ -1,0 +1,6 @@
+<?xml version='1.0' encoding='utf-8'?>
+<odoo>
+  <record id="sms_template_data_calendar_reminder" model="sms.template">
+    <field name="body">Event reminder: ${object.name}, ${object.get_display_time_tz(object.partner_id.tz)}</field>
+  </record>
+</odoo>

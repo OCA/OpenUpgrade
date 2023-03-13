@@ -17,7 +17,7 @@ test_mass_mailing / mailing.performance      / website_message_ids (one2many): N
 test_mass_mailing / mailing.performance.blacklist / container_id (many2one)       : NEW relation: mail.test.container
 test_mass_mailing / mailing.performance.blacklist / email_from (char)             : NEW
 test_mass_mailing / mailing.performance.blacklist / email_normalized (char)       : NEW isfunction: function, stored
-test_mass_mailing / mailing.performance.blacklist / message_bounce (integer)      : NEW hasdefault
+test_mass_mailing / mailing.performance.blacklist / message_bounce (integer)      : NEW hasdefault: default
 test_mass_mailing / mailing.performance.blacklist / message_follower_ids (one2many): NEW relation: mail.followers
 test_mass_mailing / mailing.performance.blacklist / message_ids (one2many)        : NEW relation: mail.message
 test_mass_mailing / mailing.performance.blacklist / message_main_attachment_id (many2one): NEW relation: ir.attachment
@@ -27,7 +27,7 @@ test_mass_mailing / mailing.performance.blacklist / website_message_ids (one2man
 test_mass_mailing / mailing.test.blacklist   / customer_id (many2one)        : NEW relation: res.partner
 test_mass_mailing / mailing.test.blacklist   / email_from (char)             : NEW
 test_mass_mailing / mailing.test.blacklist   / email_normalized (char)       : NEW isfunction: function, stored
-test_mass_mailing / mailing.test.blacklist   / message_bounce (integer)      : NEW hasdefault
+test_mass_mailing / mailing.test.blacklist   / message_bounce (integer)      : NEW hasdefault: default
 test_mass_mailing / mailing.test.blacklist   / message_follower_ids (one2many): NEW relation: mail.followers
 test_mass_mailing / mailing.test.blacklist   / message_ids (one2many)        : NEW relation: mail.message
 test_mass_mailing / mailing.test.blacklist   / message_main_attachment_id (many2one): NEW relation: ir.attachment
@@ -37,7 +37,7 @@ test_mass_mailing / mailing.test.blacklist   / website_message_ids (one2many): N
 test_mass_mailing / mailing.test.optout      / customer_id (many2one)        : NEW relation: res.partner
 test_mass_mailing / mailing.test.optout      / email_from (char)             : NEW
 test_mass_mailing / mailing.test.optout      / email_normalized (char)       : NEW isfunction: function, stored
-test_mass_mailing / mailing.test.optout      / message_bounce (integer)      : NEW hasdefault
+test_mass_mailing / mailing.test.optout      / message_bounce (integer)      : NEW hasdefault: default
 test_mass_mailing / mailing.test.optout      / message_follower_ids (one2many): NEW relation: mail.followers
 test_mass_mailing / mailing.test.optout      / message_ids (one2many)        : NEW relation: mail.message
 test_mass_mailing / mailing.test.optout      / message_main_attachment_id (many2one): NEW relation: ir.attachment

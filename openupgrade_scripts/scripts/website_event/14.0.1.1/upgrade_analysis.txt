@@ -1,14 +1,13 @@
 ---Models in module 'website_event'---
 model website.event.menu (moved from website_event_track)
 ---Fields in module 'website_event'---
-website_event / event.event              / community_menu (boolean)      : NEW isfunction: function, stored
+website_event / event.event              / community_menu (boolean)      : NEW hasdefault: compute
 website_event / event.event              / community_menu_ids (one2many) : NEW relation: website.event.menu
-website_event / event.event              / menu_register_cta (boolean)   : NEW isfunction: function, stored
+website_event / event.event              / menu_register_cta (boolean)   : NEW hasdefault: compute
 website_event / event.event              / seo_name (char)               : NEW
-website_event / event.event              / website_menu (boolean)        : now a function
 website_event / event.registration       / visitor_id (many2one)         : NEW relation: website.visitor
-website_event / event.type               / community_menu (boolean)      : NEW isfunction: function, stored
-website_event / event.type               / menu_register_cta (boolean)   : NEW isfunction: function, stored
+website_event / event.type               / community_menu (boolean)      : NEW hasdefault: compute
+website_event / event.type               / menu_register_cta (boolean)   : NEW hasdefault: compute
 website_event / website.event.menu       / __last_update (datetime)      : previously in module website_event_track
 website_event / website.event.menu       / _order                        : previously in module website_event_track
 website_event / website.event.menu       / display_name (char)           : previously in module website_event_track

@@ -6,22 +6,18 @@ new model event.tag
 new model event.tag.category
 new model event.type.ticket
 ---Fields in module 'event'---
-event        / event.event              / auto_confirm (boolean)        : now a function
 event        / event.event              / color (integer)               : DEL
-event        / event.event              / date_tz (selection)           : now a function
-event        / event.event              / event_mail_ids (one2many)     : now a function
 event        / event.event              / event_ticket_ids (one2many)   : previously in module event_sale
 event        / event.event              / is_online (boolean)           : DEL
-event        / event.event              / kanban_state (selection)      : NEW selection_keys: ['blocked', 'done', 'normal'], hasdefault
+event        / event.event              / kanban_state (selection)      : NEW selection_keys: ['blocked', 'done', 'normal'], hasdefault: default
 event        / event.event              / kanban_state_label (char)     : NEW isfunction: function, stored
 event        / event.event              / note (text)                   : NEW
-event        / event.event              / seats_availability (selection): DEL required, selection_keys: ['limited', 'unlimited'], req_default: function
-event        / event.event              / seats_limited (boolean)       : NEW required, isfunction: function, stored
-event        / event.event              / seats_max (integer)           : now a function
+event        / event.event              / seats_availability (selection): DEL required, selection_keys: ['limited', 'unlimited']
+event        / event.event              / seats_limited (boolean)       : NEW required, hasdefault: compute
 event        / event.event              / seats_min (integer)           : DEL
-event        / event.event              / stage_id (many2one)           : NEW relation: event.stage, hasdefault
-event        / event.event              / state (selection)             : DEL required, selection_keys: ['cancel', 'confirm', 'done', 'draft'], req_default: function
-event        / event.event              / tag_ids (many2many)           : NEW relation: event.tag, isfunction: function, stored
+event        / event.event              / stage_id (many2one)           : NEW relation: event.stage, hasdefault: default
+event        / event.event              / state (selection)             : DEL required, selection_keys: ['cancel', 'confirm', 'done', 'draft']
+event        / event.event              / tag_ids (many2many)           : NEW relation: event.tag, hasdefault: compute
 event        / event.event              / twitter_hashtag (char)        : DEL
 event        / event.event.ticket       / __last_update (datetime)      : previously in module event_sale
 event        / event.event.ticket       / _order                        : previously in module event_sale
@@ -42,44 +38,38 @@ event        / event.event.ticket       / seats_unconfirmed (integer)   : previo
 event        / event.event.ticket       / seats_used (integer)          : previously in module event_sale
 event        / event.event.ticket       / start_sale_date (date)        : NEW
 event        / event.registration       / _order                        : _order is now 'id desc' ('name, create_date desc')
-event        / event.registration       / date_closed (datetime)        : now a function
-event        / event.registration       / email (char)                  : now a function
 event        / event.registration       / event_ticket_id (many2one)    : previously in module event_sale
-event        / event.registration       / mobile (char)                 : now a function
-event        / event.registration       / name (char)                   : now a function
 event        / event.registration       / origin (char)                 : DEL
-event        / event.registration       / phone (char)                  : now a function
 event        / event.registration       / utm_campaign_id (many2one)    : NEW relation: utm.campaign
 event        / event.registration       / utm_medium_id (many2one)      : NEW relation: utm.medium
 event        / event.registration       / utm_source_id (many2one)      : NEW relation: utm.source
 event        / event.stage              / description (text)            : NEW
-event        / event.stage              / fold (boolean)                : NEW hasdefault
-event        / event.stage              / legend_blocked (char)         : NEW required, req_default: function, hasdefault
-event        / event.stage              / legend_done (char)            : NEW required, req_default: function, hasdefault
-event        / event.stage              / legend_normal (char)          : NEW required, req_default: function, hasdefault
+event        / event.stage              / fold (boolean)                : NEW hasdefault: default
+event        / event.stage              / legend_blocked (char)         : NEW required, hasdefault: default
+event        / event.stage              / legend_done (char)            : NEW required, hasdefault: default
+event        / event.stage              / legend_normal (char)          : NEW required, hasdefault: default
 event        / event.stage              / name (char)                   : NEW required
-event        / event.stage              / pipe_end (boolean)            : NEW hasdefault
-event        / event.stage              / sequence (integer)            : NEW hasdefault
+event        / event.stage              / pipe_end (boolean)            : NEW hasdefault: default
+event        / event.stage              / sequence (integer)            : NEW hasdefault: default
 event        / event.tag                / category_id (many2one)        : NEW relation: event.tag.category, required
-event        / event.tag                / color (integer)               : NEW hasdefault
+event        / event.tag                / color (integer)               : NEW hasdefault: default
 event        / event.tag                / name (char)                   : NEW required
-event        / event.tag                / sequence (integer)            : NEW hasdefault
+event        / event.tag                / sequence (integer)            : NEW hasdefault: default
 event        / event.tag.category       / name (char)                   : NEW required
-event        / event.tag.category       / sequence (integer)            : NEW hasdefault
+event        / event.tag.category       / sequence (integer)            : NEW hasdefault: default
 event        / event.tag.category       / tag_ids (one2many)            : NEW relation: event.tag
 event        / event.type               / default_hashtag (char)        : DEL
 event        / event.type               / default_registration_max (integer): DEL
 event        / event.type               / default_registration_min (integer): DEL
-event        / event.type               / event_type_mail_ids (one2many): now a function
-event        / event.type               / event_type_ticket_ids (one2many): NEW relation: event.type.ticket, isfunction: function, stored
+event        / event.type               / event_type_ticket_ids (one2many): NEW relation: event.type.ticket, hasdefault: compute
 event        / event.type               / is_online (boolean)           : DEL
-event        / event.type               / seats_max (integer)           : NEW isfunction: function, stored
+event        / event.type               / seats_max (integer)           : NEW hasdefault: compute
 event        / event.type               / tag_ids (many2many)           : NEW relation: event.tag
 event        / event.type               / use_hashtag (boolean)         : DEL
 event        / event.type               / use_ticket (boolean)          : NEW
 event        / event.type.ticket        / description (text)            : NEW
 event        / event.type.ticket        / event_type_id (many2one)      : NEW relation: event.type, required
-event        / event.type.ticket        / name (char)                   : NEW required, req_default: function, hasdefault
+event        / event.type.ticket        / name (char)                   : NEW required, hasdefault: default
 event        / event.type.ticket        / seats_limited (boolean)       : NEW isfunction: function, stored
 event        / event.type.ticket        / seats_max (integer)           : NEW
 ---XML records in module 'event'---

@@ -8,7 +8,7 @@ new model mail.template.preview (renamed from email_template.preview) [transient
 mail         / ir.ui.view               / type (False)                  : selection_keys is now '['activity', 'calendar', 'form', 'gantt', 'graph', 'kanban', 'pivot', 'qweb', 'search', 'tree']' ('['activity', 'calendar', 'diagram', 'form', 'gantt', 'graph', 'kanban', 'pivot', 'qweb', 'search', 'tree']')
 mail         / mail.activity            / request_partner_id (many2one) : NEW relation: res.partner
 mail         / mail.alias               / alias_bounced_content (html)  : NEW
-mail         / mail.channel             / active (boolean)              : NEW hasdefault
+mail         / mail.channel             / active (boolean)              : NEW hasdefault: default
 mail         / mail.mail                / description (char)            : previously in module website_mail
 mail         / mail.message             / description (char)            : previously in module website_mail
 mail         / mail.message             / is_internal (boolean)         : NEW

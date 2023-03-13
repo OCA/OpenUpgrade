@@ -25,6 +25,9 @@
   <record id="default_user" model="res.users">
     <field name="groups_id" eval="[(4, ref('base.group_partner_manager')), (4, ref('base.group_allow_export'))]"/>
   </record>
+  <record id="es" model="res.country">
+    <field eval="'%(street)s\n%(street2)s\n%(zip)s %(city)s (%(state_name)s)\n%(country_name)s'" name="address_format"/>
+  </record>
   <record id="hk" model="res.country">
     <field name="zip_required">0</field>
   </record>
@@ -85,8 +88,5 @@
   </record -->
   <record id="vn" model="res.country">
     <field name="zip_required">0</field>
-  </record>
-  <record id="es" model="res.country">
-    <field eval="'%(street)s\n%(street2)s\n%(zip)s %(city)s (%(state_name)s)\n%(country_name)s'" name="address_format"/>
   </record>
 </odoo>

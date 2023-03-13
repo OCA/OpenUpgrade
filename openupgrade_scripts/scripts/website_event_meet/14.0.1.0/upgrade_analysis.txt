@@ -1,17 +1,17 @@
 ---Models in module 'website_event_meet'---
 new model event.meeting.room
 ---Fields in module 'website_event_meet'---
-website_event_meet / event.event              / meeting_room_allow_creation (boolean): NEW isfunction: function, stored
+website_event_meet / event.event              / meeting_room_allow_creation (boolean): NEW hasdefault: compute
 website_event_meet / event.event              / meeting_room_ids (one2many)   : NEW relation: event.meeting.room
-website_event_meet / event.meeting.room       / active (boolean)              : NEW hasdefault
+website_event_meet / event.meeting.room       / active (boolean)              : NEW hasdefault: default
 website_event_meet / event.meeting.room       / chat_room_id (many2one)       : NEW relation: chat.room, required
 website_event_meet / event.meeting.room       / event_id (many2one)           : NEW relation: event.event, required
 website_event_meet / event.meeting.room       / is_pinned (boolean)           : NEW
-website_event_meet / event.meeting.room       / is_published (boolean)        : NEW hasdefault
+website_event_meet / event.meeting.room       / is_published (boolean)        : NEW hasdefault: default
 website_event_meet / event.meeting.room       / name (char)                   : NEW required
 website_event_meet / event.meeting.room       / summary (char)                : NEW
 website_event_meet / event.meeting.room       / target_audience (char)        : NEW
-website_event_meet / event.type               / meeting_room_allow_creation (boolean): NEW isfunction: function, stored
+website_event_meet / event.type               / meeting_room_allow_creation (boolean): NEW hasdefault: compute
 website_event_meet / website.event.menu       / menu_type (False)             : NEW selection_keys: ['community', 'meeting_room'], mode: modify
 ---XML records in module 'website_event_meet'---
 NEW ir.actions.act_window: website_event_meet.event_meeting_room_action

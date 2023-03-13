@@ -1,7 +1,7 @@
 ---Models in module 'lunch'---
 obsolete model lunch.order.temp [transient]
 ---Fields in module 'lunch'---
-lunch        / lunch.product.category   / active (boolean)              : NEW hasdefault
+lunch        / lunch.product.category   / active (boolean)              : NEW hasdefault: default
 lunch        / lunch.supplier           / company_id (many2one)         : is now stored
 ---XML records in module 'lunch'---
 NEW ir.rule: lunch.ir_rule_lunch_product_category_multi_company (noupdate)

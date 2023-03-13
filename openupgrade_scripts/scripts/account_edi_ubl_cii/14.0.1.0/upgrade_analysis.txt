@@ -1,0 +1,29 @@
+---Models in module 'account_edi_ubl_cii'---
+new model account.edi.common [abstract]
+new model account.edi.xml.cii [abstract]
+new model account.edi.xml.ubl_20 [abstract]
+new model account.edi.xml.ubl_21 [abstract]
+new model account.edi.xml.ubl_bis3 [abstract]
+new model account.edi.xml.ubl_de [abstract]
+new model account.edi.xml.ubl_efff [abstract]
+---Fields in module 'account_edi_ubl_cii'---
+---XML records in module 'account_edi_ubl_cii'---
+NEW account.edi.format: account_edi_ubl_cii.ubl_bis3
+NEW account.edi.format: account_edi_ubl_cii.ubl_de
+NEW ir.ui.view: account_edi_ubl_cii.account_invoice_address_facturx_export_22
+NEW ir.ui.view: account_edi_ubl_cii.account_invoice_facturx_export_22
+NEW ir.ui.view: account_edi_ubl_cii.account_invoice_line_facturx_export_22
+NEW ir.ui.view: account_edi_ubl_cii.account_invoice_partner_facturx_export_22
+NEW ir.ui.view: account_edi_ubl_cii.account_invoice_pdfa_3_facturx_metadata
+NEW ir.ui.view: account_edi_ubl_cii.ubl_20_AddressType
+NEW ir.ui.view: account_edi_ubl_cii.ubl_20_AllowanceChargeType
+NEW ir.ui.view: account_edi_ubl_cii.ubl_20_CreditNote
+NEW ir.ui.view: account_edi_ubl_cii.ubl_20_Invoice
+NEW ir.ui.view: account_edi_ubl_cii.ubl_20_InvoiceLineType
+NEW ir.ui.view: account_edi_ubl_cii.ubl_20_InvoiceType
+NEW ir.ui.view: account_edi_ubl_cii.ubl_20_PartyType
+NEW ir.ui.view: account_edi_ubl_cii.ubl_20_PaymentMeansType
+NEW ir.ui.view: account_edi_ubl_cii.ubl_20_TaxCategoryType
+NEW ir.ui.view: account_edi_ubl_cii.ubl_20_TaxTotalType
+NEW ir.ui.view: account_edi_ubl_cii.ubl_21_InvoiceLineType
+NEW ir.ui.view: account_edi_ubl_cii.ubl_21_InvoiceType

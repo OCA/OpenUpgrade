@@ -4,7 +4,7 @@ obsolete model repair.cancel [transient]
 repair       / repair.fee               / company_id (many2one)         : NEW relation: res.company, isrelated: related, stored
 repair       / repair.line              / company_id (many2one)         : NEW relation: res.company, isrelated: related, stored
 repair       / repair.line              / repair_id (many2one)          : now required
-repair       / repair.order             / company_id (many2one)         : now required, req_default: function
+repair       / repair.order             / company_id (many2one)         : now required
 ---XML records in module 'repair'---
 DEL ir.actions.act_window: repair.action_cancel_repair
 NEW ir.model.access: repair.access_repair_order_make_invoice

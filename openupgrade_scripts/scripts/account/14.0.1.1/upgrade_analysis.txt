@@ -18,13 +18,11 @@ new model sequence.mixin [abstract]
 account      / account.account          / _order                        : _order is now 'is_off_balance, code, company_id' ('code')
 account      / account.account          / allowed_journal_ids (many2many): NEW relation: account.journal
 account      / account.account          / group_id (many2one)           : now a function
-account      / account.account          / is_off_balance (boolean)      : NEW hasdefault, isfunction: function, stored
+account      / account.account          / is_off_balance (boolean)      : NEW isfunction: function, stored
 account      / account.account.template / group_id (many2one)           : DEL relation: account.group
 account      / account.account.template / root_id (many2one)            : DEL relation: account.root
 account      / account.bank.statement   / _order                        : _order is now 'date desc, name desc, id desc' ('date desc, id desc')
 account      / account.bank.statement   / accounting_date (date)        : DEL
-account      / account.bank.statement   / balance_end_real (float)      : now a function
-account      / account.bank.statement   / balance_start (float)         : now a function
 account      / account.bank.statement   / is_valid_balance_start (boolean): NEW isfunction: function, stored
 account      / account.bank.statement   / previous_statement_id (many2one): NEW relation: account.bank.statement, isfunction: function, stored
 account      / account.bank.statement   / sequence_number (integer)     : NEW isfunction: function, stored
@@ -53,12 +51,12 @@ account      / account.bank.statement.line / ref (char)                    : not
 account      / account.bank.statement.line / ref (char)                    : now related
 account      / account.cash.rounding    / account_id (many2one)         : DEL relation: account.account
 account      / account.cash.rounding    / loss_account_id (many2one)    : previously in module pos_cash_rounding
-account      / account.cash.rounding    / profit_account_id (many2one)  : NEW relation: account.account, hasdefault
+account      / account.cash.rounding    / profit_account_id (many2one)  : NEW relation: account.account
 account      / account.chart.template   / account_journal_suspense_account_id (many2one): NEW relation: account.account.template
 account      / account.chart.template   / property_cash_basis_base_account_id (many2one): NEW relation: account.account.template
 account      / account.fiscal.position.account / company_id (many2one)         : NEW relation: res.company, isrelated: related, stored
 account      / account.fiscal.position.tax / company_id (many2one)         : NEW relation: res.company, isrelated: related, stored
-account      / account.fiscal.year      / company_id (many2one)         : DEL relation: res.company, required, req_default: function
+account      / account.fiscal.year      / company_id (many2one)         : DEL relation: res.company, required
 account      / account.fiscal.year      / date_from (date)              : DEL required
 account      / account.fiscal.year      / date_to (date)                : DEL required
 account      / account.fiscal.year      / name (char)                   : DEL required
@@ -66,42 +64,37 @@ account      / account.group            / _order                        : _order
 account      / account.group            / code_prefix (char)            : DEL
 account      / account.group            / code_prefix_end (char)        : NEW
 account      / account.group            / code_prefix_start (char)      : NEW
-account      / account.group            / company_id (many2one)         : NEW relation: res.company, required, req_default: function, hasdefault
+account      / account.group            / company_id (many2one)         : NEW relation: res.company, required
 account      / account.group.template   / chart_template_id (many2one)  : NEW relation: account.chart.template, required
 account      / account.group.template   / code_prefix_end (char)        : NEW
 account      / account.group.template   / code_prefix_start (char)      : NEW
 account      / account.group.template   / name (char)                   : NEW required
 account      / account.group.template   / parent_id (many2one)          : NEW relation: account.group.template
 account      / account.journal          / account_control_ids (many2many): table is now 'journal_account_control_rel' ('account_account_type_rel')
-account      / account.journal          / alias_name (char)             : not a function anymore
-account      / account.journal          / alias_name (char)             : now related
 account      / account.journal          / default_account_id (many2one) : NEW relation: account.account
 account      / account.journal          / default_credit_account_id (many2one): DEL relation: account.account
 account      / account.journal          / default_debit_account_id (many2one): DEL relation: account.account
-account      / account.journal          / inbound_payment_method_ids (many2many): now a function
-account      / account.journal          / outbound_payment_method_ids (many2many): now a function
 account      / account.journal          / payment_credit_account_id (many2one): NEW relation: account.account
 account      / account.journal          / payment_debit_account_id (many2one): NEW relation: account.account
 account      / account.journal          / post_at (selection)           : DEL selection_keys: ['bank_rec', 'pay_val']
 account      / account.journal          / refund_sequence_id (many2one) : DEL relation: ir.sequence
 account      / account.journal          / sale_activity_note (text)     : NEW
-account      / account.journal          / sale_activity_type_id (many2one): NEW relation: mail.activity.type, hasdefault
+account      / account.journal          / sale_activity_type_id (many2one): NEW relation: mail.activity.type, hasdefault: default
 account      / account.journal          / sale_activity_user_id (many2one): NEW relation: res.users
 account      / account.journal          / sequence_id (many2one)        : DEL relation: ir.sequence, required
 account      / account.journal          / sequence_override_regex (text): NEW
-account      / account.journal          / suspense_account_id (many2one): NEW relation: account.account, isfunction: function, stored
+account      / account.journal          / suspense_account_id (many2one): NEW relation: account.account, hasdefault: compute
 account      / account.journal          / type_control_ids (many2many)  : table is now 'journal_account_type_control_rel' ('account_journal_type_rel')
 account      / account.move             / country_code (char)           : previously in module l10n_id_efaktur
 account      / account.move             / invoice_partner_bank_id (many2one): DEL relation: res.partner.bank
 account      / account.move             / invoice_payment_ref (char)    : DEL
 account      / account.move             / invoice_payment_state (selection): DEL selection_keys: ['in_payment', 'not_paid', 'paid']
 account      / account.move             / invoice_sent (boolean)        : DEL
-account      / account.move             / is_move_sent (boolean)        : NEW hasdefault
-account      / account.move             / move_type (selection)         : NEW required, selection_keys: ['entry', 'in_invoice', 'in_receipt', 'in_refund', 'out_invoice', 'out_receipt', 'out_refund'], req_default: function, hasdefault
-account      / account.move             / name (char)                   : now a function
-account      / account.move             / partner_bank_id (many2one)    : NEW relation: res.partner.bank
+account      / account.move             / is_move_sent (boolean)        : NEW
+account      / account.move             / move_type (selection)         : NEW required, selection_keys: ['entry', 'in_invoice', 'in_receipt', 'in_refund', 'out_invoice', 'out_receipt', 'out_refund']
+account      / account.move             / partner_bank_id (many2one)    : NEW relation: res.partner.bank, hasdefault: compute
 account      / account.move             / payment_id (many2one)         : NEW relation: account.payment
-account      / account.move             / payment_reference (char)      : NEW
+account      / account.move             / payment_reference (char)      : NEW hasdefault: compute
 account      / account.move             / payment_state (selection)     : NEW selection_keys: ['in_payment', 'invoicing_legacy', 'not_paid', 'paid', 'partial', 'reversed'], isfunction: function, stored
 account      / account.move             / posted_before (boolean)       : NEW
 account      / account.move             / qr_code_method (selection)    : NEW selection_keys: function
@@ -110,10 +103,8 @@ account      / account.move             / sequence_prefix (char)        : NEW is
 account      / account.move             / show_name_warning (boolean)   : NEW
 account      / account.move             / statement_line_id (many2one)  : NEW relation: account.bank.statement.line
 account      / account.move             / tax_cash_basis_move_id (many2one): NEW relation: account.move
-account      / account.move             / type (selection)              : DEL required, selection_keys: ['entry', 'in_invoice', 'in_receipt', 'in_refund', 'out_invoice', 'out_receipt', 'out_refund'], req_default: function
+account      / account.move             / type (selection)              : DEL required, selection_keys: ['entry', 'in_invoice', 'in_receipt', 'in_refund', 'out_invoice', 'out_receipt', 'out_refund']
 account      / account.move.line        / account_internal_type (selection): not stored anymore
-account      / account.move.line        / analytic_account_id (many2one): now a function
-account      / account.move.line        / analytic_tag_ids (many2many)  : now a function
 account      / account.move.line        / currency_id (many2one)        : now required
 account      / account.move.line        / matching_number (char)        : NEW isfunction: function, stored
 account      / account.move.line        / payment_id (many2one)         : now related
@@ -129,11 +120,11 @@ account      / account.partial.reconcile / debit_currency_id (many2one)  : NEW r
 account      / account.payment          / _inherits                     : NEW _inherits: {'account.move': 'move_id'}
 account      / account.payment          / _order                        : _order is now 'date desc, name desc' ('payment_date desc, name desc')
 account      / account.payment          / communication (char)          : DEL
-account      / account.payment          / currency_id (many2one)        : now a function
 account      / account.payment          / destination_account_id (many2one): is now stored
+account      / account.payment          / destination_account_id (many2one): not a function anymore
 account      / account.payment          / destination_journal_id (many2one): DEL relation: account.journal
 account      / account.payment          / invoice_ids (many2many)       : DEL relation: account.move
-account      / account.payment          / is_internal_transfer (boolean): NEW isfunction: function, stored
+account      / account.payment          / is_internal_transfer (boolean): NEW hasdefault: compute
 account      / account.payment          / is_matched (boolean)          : NEW isfunction: function, stored
 account      / account.payment          / is_reconciled (boolean)       : NEW isfunction: function, stored
 account      / account.payment          / journal_id (many2one)         : not stored anymore
@@ -144,12 +135,10 @@ account      / account.payment          / move_name (char)              : DEL
 account      / account.payment          / name (char)                   : not stored anymore
 account      / account.payment          / name (char)                   : now related
 account      / account.payment          / partner_bank_account_id (many2one): DEL relation: res.partner.bank
-account      / account.payment          / partner_bank_id (many2one)    : NEW relation: res.partner.bank, isfunction: function, stored
-account      / account.payment          / partner_id (many2one)         : now a function
-account      / account.payment          / partner_type (selection)      : now required, req_default: function
-account      / account.payment          / payment_date (date)           : DEL required, req_default: function
+account      / account.payment          / partner_bank_id (many2one)    : NEW relation: res.partner.bank, hasdefault: compute
+account      / account.payment          / partner_type (selection)      : now required
+account      / account.payment          / payment_date (date)           : DEL required
 account      / account.payment          / payment_difference_handling (selection): DEL selection_keys: ['open', 'reconcile']
-account      / account.payment          / payment_method_id (many2one)  : now a function
 account      / account.payment          / payment_type (selection)      : selection_keys is now '['inbound', 'outbound']' ('['inbound', 'outbound', 'transfer']')
 account      / account.payment          / state (selection)             : not stored anymore
 account      / account.payment          / state (selection)             : now related
@@ -158,12 +147,12 @@ account      / account.payment          / state (selection)             : select
 account      / account.payment          / writeoff_account_id (many2one): DEL relation: account.account
 account      / account.payment          / writeoff_label (char)         : DEL
 account      / account.payment.method   / _order                        : _order is now 'sequence' ('id')
-account      / account.payment.method   / sequence (integer)            : NEW hasdefault
+account      / account.payment.method   / sequence (integer)            : NEW hasdefault: default
 account      / account.reconcile.model  / account_id (many2one)         : DEL relation: account.account
-account      / account.reconcile.model  / active (boolean)              : NEW hasdefault
-account      / account.reconcile.model  / amount (float)                : DEL required, req_default: function
+account      / account.reconcile.model  / active (boolean)              : NEW hasdefault: default
+account      / account.reconcile.model  / amount (float)                : DEL required
 account      / account.reconcile.model  / amount_from_label_regex (char): DEL
-account      / account.reconcile.model  / amount_type (selection)       : DEL required, selection_keys: ['fixed', 'percentage', 'regex'], req_default: function
+account      / account.reconcile.model  / amount_type (selection)       : DEL required, selection_keys: ['fixed', 'percentage', 'regex']
 account      / account.reconcile.model  / analytic_account_id (many2one): DEL relation: account.analytic.account
 account      / account.reconcile.model  / analytic_tag_ids (many2many)  : DEL relation: account.analytic.tag
 account      / account.reconcile.model  / force_second_tax_included (boolean): DEL
@@ -172,16 +161,16 @@ account      / account.reconcile.model  / has_second_line (boolean)     : DEL
 account      / account.reconcile.model  / journal_id (many2one)         : DEL relation: account.journal
 account      / account.reconcile.model  / label (char)                  : DEL
 account      / account.reconcile.model  / line_ids (one2many)           : NEW relation: account.reconcile.model.line
-account      / account.reconcile.model  / match_text_location_label (boolean): NEW hasdefault
-account      / account.reconcile.model  / match_text_location_note (boolean): NEW hasdefault
-account      / account.reconcile.model  / match_text_location_reference (boolean): NEW hasdefault
-account      / account.reconcile.model  / matching_order (selection)    : NEW required, selection_keys: ['new_first', 'old_first'], req_default: function, hasdefault
+account      / account.reconcile.model  / match_text_location_label (boolean): NEW hasdefault: default
+account      / account.reconcile.model  / match_text_location_note (boolean): NEW hasdefault: default
+account      / account.reconcile.model  / match_text_location_reference (boolean): NEW hasdefault: default
+account      / account.reconcile.model  / matching_order (selection)    : NEW required, selection_keys: ['new_first', 'old_first'], hasdefault: default
 account      / account.reconcile.model  / partner_mapping_line_ids (one2many): NEW relation: account.reconcile.model.partner.mapping
-account      / account.reconcile.model  / past_months_limit (integer)   : NEW hasdefault
+account      / account.reconcile.model  / past_months_limit (integer)   : NEW hasdefault: default
 account      / account.reconcile.model  / second_account_id (many2one)  : DEL relation: account.account
-account      / account.reconcile.model  / second_amount (float)         : DEL required, req_default: function
+account      / account.reconcile.model  / second_amount (float)         : DEL required
 account      / account.reconcile.model  / second_amount_from_label_regex (char): DEL
-account      / account.reconcile.model  / second_amount_type (selection): DEL required, selection_keys: ['fixed', 'percentage', 'regex'], req_default: function
+account      / account.reconcile.model  / second_amount_type (selection): DEL required, selection_keys: ['fixed', 'percentage', 'regex']
 account      / account.reconcile.model  / second_analytic_account_id (many2one): DEL relation: account.analytic.account
 account      / account.reconcile.model  / second_analytic_tag_ids (many2many): DEL relation: account.analytic.tag
 account      / account.reconcile.model  / second_journal_id (many2one)  : DEL relation: account.journal
@@ -190,46 +179,46 @@ account      / account.reconcile.model  / second_tax_ids (many2many)    : DEL re
 account      / account.reconcile.model  / tax_ids (many2many)           : DEL relation: account.tax
 account      / account.reconcile.model.line / account_id (many2one)         : NEW relation: account.account, required
 account      / account.reconcile.model.line / amount (float)                : NEW isfunction: function, stored
-account      / account.reconcile.model.line / amount_string (char)          : NEW required, req_default: function, hasdefault
-account      / account.reconcile.model.line / amount_type (selection)       : NEW required, selection_keys: ['fixed', 'percentage', 'regex'], req_default: function, hasdefault
+account      / account.reconcile.model.line / amount_string (char)          : NEW required, hasdefault: default
+account      / account.reconcile.model.line / amount_type (selection)       : NEW required, selection_keys: ['fixed', 'percentage', 'regex'], hasdefault: default
 account      / account.reconcile.model.line / analytic_account_id (many2one): NEW relation: account.analytic.account
 account      / account.reconcile.model.line / analytic_tag_ids (many2many)  : NEW relation: account.analytic.tag
-account      / account.reconcile.model.line / company_id (many2one)         : NEW relation: res.company, hasdefault, isrelated: related, stored
+account      / account.reconcile.model.line / company_id (many2one)         : NEW relation: res.company, isrelated: related, stored
 account      / account.reconcile.model.line / force_tax_included (boolean)  : NEW
 account      / account.reconcile.model.line / journal_id (many2one)         : NEW relation: account.journal
 account      / account.reconcile.model.line / label (char)                  : NEW
 account      / account.reconcile.model.line / model_id (many2one)           : NEW relation: account.reconcile.model
-account      / account.reconcile.model.line / sequence (integer)            : NEW required, req_default: function, hasdefault
+account      / account.reconcile.model.line / sequence (integer)            : NEW required, hasdefault: default
 account      / account.reconcile.model.line / tax_ids (many2many)           : NEW relation: account.tax
 account      / account.reconcile.model.line.template / account_id (many2one)         : NEW relation: account.account.template
 account      / account.reconcile.model.line.template / amount_string (char)          : NEW
-account      / account.reconcile.model.line.template / amount_type (selection)       : NEW required, selection_keys: ['fixed', 'percentage', 'regex'], req_default: function, hasdefault
+account      / account.reconcile.model.line.template / amount_type (selection)       : NEW required, selection_keys: ['fixed', 'percentage', 'regex'], hasdefault: default
 account      / account.reconcile.model.line.template / force_tax_included (boolean)  : NEW
 account      / account.reconcile.model.line.template / label (char)                  : NEW
 account      / account.reconcile.model.line.template / model_id (many2one)           : NEW relation: account.reconcile.model.template
-account      / account.reconcile.model.line.template / sequence (integer)            : NEW required, req_default: function, hasdefault
+account      / account.reconcile.model.line.template / sequence (integer)            : NEW required, hasdefault: default
 account      / account.reconcile.model.line.template / tax_ids (many2many)           : NEW relation: account.tax.template
 account      / account.reconcile.model.partner.mapping / model_id (many2one)           : NEW relation: account.reconcile.model, required
 account      / account.reconcile.model.partner.mapping / narration_regex (char)        : NEW
 account      / account.reconcile.model.partner.mapping / partner_id (many2one)         : NEW relation: res.partner, required
 account      / account.reconcile.model.partner.mapping / payment_ref_regex (char)      : NEW
 account      / account.reconcile.model.template / account_id (many2one)         : DEL relation: account.account.template
-account      / account.reconcile.model.template / amount (float)                : DEL required, req_default: function
+account      / account.reconcile.model.template / amount (float)                : DEL required
 account      / account.reconcile.model.template / amount_from_label_regex (char): DEL
-account      / account.reconcile.model.template / amount_type (selection)       : DEL required, selection_keys: ['fixed', 'percentage', 'regex'], req_default: function
+account      / account.reconcile.model.template / amount_type (selection)       : DEL required, selection_keys: ['fixed', 'percentage', 'regex']
 account      / account.reconcile.model.template / force_second_tax_included (boolean): DEL
 account      / account.reconcile.model.template / force_tax_included (boolean)  : DEL
 account      / account.reconcile.model.template / has_second_line (boolean)     : DEL
 account      / account.reconcile.model.template / label (char)                  : DEL
 account      / account.reconcile.model.template / line_ids (one2many)           : NEW relation: account.reconcile.model.line.template
-account      / account.reconcile.model.template / match_text_location_label (boolean): NEW hasdefault
-account      / account.reconcile.model.template / match_text_location_note (boolean): NEW hasdefault
-account      / account.reconcile.model.template / match_text_location_reference (boolean): NEW hasdefault
+account      / account.reconcile.model.template / match_text_location_label (boolean): NEW hasdefault: default
+account      / account.reconcile.model.template / match_text_location_note (boolean): NEW hasdefault: default
+account      / account.reconcile.model.template / match_text_location_reference (boolean): NEW hasdefault: default
 account      / account.reconcile.model.template / matching_order (selection)    : NEW selection_keys: ['new_first', 'old_first']
 account      / account.reconcile.model.template / second_account_id (many2one)  : DEL relation: account.account.template
-account      / account.reconcile.model.template / second_amount (float)         : DEL required, req_default: function
+account      / account.reconcile.model.template / second_amount (float)         : DEL required
 account      / account.reconcile.model.template / second_amount_from_label_regex (char): DEL
-account      / account.reconcile.model.template / second_amount_type (selection): DEL required, selection_keys: ['fixed', 'percentage', 'regex'], req_default: function
+account      / account.reconcile.model.template / second_amount_type (selection): DEL required, selection_keys: ['fixed', 'percentage', 'regex']
 account      / account.reconcile.model.template / second_label (char)           : DEL
 account      / account.reconcile.model.template / second_tax_ids (many2many)    : DEL relation: account.tax.template
 account      / account.reconcile.model.template / tax_ids (many2many)           : DEL relation: account.tax.template
@@ -238,24 +227,25 @@ account      / account.tax              / tax_scope (selection)         : NEW se
 account      / account.tax.repartition.line / company_id (many2one)         : now a function
 account      / account.tax.repartition.line / use_in_tax_closing (boolean)  : NEW
 account      / account.tax.repartition.line.template / use_in_tax_closing (boolean)  : NEW
-account      / account.tax.report       / country_id (many2one)         : NEW relation: res.country, required, req_default: function, hasdefault
+account      / account.tax.report       / country_id (many2one)         : NEW relation: res.country, required, hasdefault: default
 account      / account.tax.report       / line_ids (one2many)           : NEW relation: account.tax.report.line
 account      / account.tax.report       / name (char)                   : NEW required
 account      / account.tax.report       / root_line_ids (one2many)      : NEW relation: account.tax.report.line
-account      / account.tax.report.line  / country_id (many2one)         : DEL relation: res.country, required, req_default: function
+account      / account.tax.report.line  / _order                        : _order is now 'sequence, id' ('sequence')
+account      / account.tax.report.line  / country_id (many2one)         : DEL relation: res.country, required
 account      / account.tax.report.line  / report_id (many2one)          : NEW relation: account.tax.report, required
 account      / account.tax.template     / cash_basis_base_account_id (many2one): DEL relation: account.account.template
 account      / account.tax.template     / tax_scope (selection)         : NEW selection_keys: ['consu', 'service']
 account      / res.company              / account_bank_reconciliation_start (date): DEL
 account      / res.company              / account_cash_basis_base_account_id (many2one): NEW relation: account.account
 account      / res.company              / account_journal_suspense_account_id (many2one): NEW relation: account.account
-account      / res.company              / account_onboarding_create_invoice_state (selection): NEW selection_keys: ['done', 'just_done', 'not_done'], hasdefault
+account      / res.company              / account_onboarding_create_invoice_state (selection): NEW selection_keys: ['done', 'just_done', 'not_done'], hasdefault: default
 account      / res.company              / account_onboarding_sample_invoice_state (selection): DEL selection_keys: ['done', 'just_done', 'not_done']
 account      / res.company              / account_opening_date (date)   : is now stored
 account      / res.company              / account_opening_date (date)   : not related anymore
-account      / res.company              / account_opening_date (date)   : now required, req_default: function
-account      / res.company              / account_setup_bill_state (selection): NEW selection_keys: ['done', 'just_done', 'not_done'], hasdefault
-account      / res.company              / account_tax_fiscal_country_id (many2one): NEW relation: res.country, isfunction: function, stored
+account      / res.company              / account_opening_date (date)   : now required
+account      / res.company              / account_setup_bill_state (selection): NEW selection_keys: ['done', 'just_done', 'not_done'], hasdefault: default
+account      / res.company              / account_tax_fiscal_country_id (many2one): NEW relation: res.country, hasdefault: compute
 account      / res.company              / accrual_default_journal_id (many2one): DEL relation: account.journal
 account      / res.company              / automatic_entry_default_journal_id (many2one): NEW relation: account.journal
 account      / res.company              / expense_currency_exchange_account_id (many2one): is now stored

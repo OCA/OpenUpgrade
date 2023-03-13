@@ -5,7 +5,7 @@ new model website.snippet.filter
 ---Fields in module 'website'---
 website      / ir.ui.view               / customize_show (boolean)      : module is now 'portal' ('website')
 website      / ir.ui.view               / seo_name (char)               : NEW
-website      / ir.ui.view               / visibility (selection)        : NEW selection_keys: ['', 'connected', 'password', 'restricted_group'], hasdefault
+website      / ir.ui.view               / visibility (selection)        : NEW selection_keys: ['', 'connected', 'password', 'restricted_group'], hasdefault: default
 website      / ir.ui.view               / visibility_password (char)    : NEW
 website      / mrp.document             / key (char)                    : module is now 'mrp' ('website')
 website      / mrp.document             / website_id (many2one)         : module is now 'mrp' ('website')
@@ -21,13 +21,13 @@ website      / website                  / google_search_console (char)  : NEW
 website      / website                  / has_social_default_image (boolean): NEW isfunction: function, stored
 website      / website                  / robots_txt (text)             : NEW
 website      / website.page             / cache_key_expr (char)         : NEW
-website      / website.page             / cache_time (integer)          : NEW hasdefault
-website      / website.page             / footer_visible (boolean)      : NEW hasdefault
-website      / website.page             / header_visible (boolean)      : NEW hasdefault
+website      / website.page             / cache_time (integer)          : NEW hasdefault: default
+website      / website.page             / footer_visible (boolean)      : NEW hasdefault: default
+website      / website.page             / header_visible (boolean)      : NEW hasdefault: default
 website      / website.snippet.filter   / action_server_id (many2one)   : NEW relation: ir.actions.server
 website      / website.snippet.filter   / field_names (char)            : NEW required
 website      / website.snippet.filter   / filter_id (many2one)          : NEW relation: ir.filters
-website      / website.snippet.filter   / is_published (boolean)        : NEW hasdefault
+website      / website.snippet.filter   / is_published (boolean)        : NEW hasdefault: default
 website      / website.snippet.filter   / limit (integer)               : NEW required
 website      / website.snippet.filter   / name (char)                   : NEW required
 website      / website.snippet.filter   / website_id (many2one)         : NEW relation: website, required

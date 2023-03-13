@@ -1,20 +1,13 @@
 ---Models in module 'hr_expense'---
 obsolete model hr.expense.sheet.register.payment.wizard [transient]
 ---Fields in module 'hr_expense'---
-hr_expense   / hr.employee              / expense_manager_id (many2one) : now a function
-hr_expense   / hr.expense               / account_id (many2one)         : now a function
 hr_expense   / hr.expense               / accounting_date (date)        : NEW isrelated: related, stored
-hr_expense   / hr.expense               / employee_id (many2one)        : now a function
 hr_expense   / hr.expense               / name (char)                   : now a function
 hr_expense   / hr.expense               / product_uom_id (many2one)     : now a function
 hr_expense   / hr.expense               / sample (boolean)              : NEW
-hr_expense   / hr.expense               / tax_ids (many2many)           : now a function
 hr_expense   / hr.expense               / unit_amount (float)           : now a function
-hr_expense   / hr.expense.sheet         / address_id (many2one)         : now a function
 hr_expense   / hr.expense.sheet         / amount_residual (float)       : NEW isfunction: function, stored
-hr_expense   / hr.expense.sheet         / department_id (many2one)      : now a function
 hr_expense   / hr.expense.sheet         / user_id (many2one)            : now a function
-hr_expense   / product.template         / can_be_expensed (boolean)     : now a function
 ---XML records in module 'hr_expense'---
 NEW digest.tip: hr_expense.digest_tip_hr_expense_0
 NEW ir.actions.act_window: hr_expense.action_hr_expense_account
