@@ -1,6 +1,9 @@
 ---Models in module 'payment'---
 ---Fields in module 'payment'---
 ---XML records in module 'payment'---
+account.payment.method: payment.account_payment_method_electronic_in (noupdate) (noupdate switched)
+# DONE: pre-migration: switched noupdate
+
 NEW ir.model.access: payment.access_payment_acquirer_onboarding_wizard
 NEW ir.model.access: payment.access_payment_link_wizard
 # NOTHING TO DO: noupdate = "0" records
