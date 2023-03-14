@@ -1,4 +1,5 @@
 ---Models in module 'test_xlsx_export'---
+new model export.computed.binary
 new model export.group_operator
 new model export.group_operator.one2many
 ---Fields in module 'test_xlsx_export'---
@@ -15,8 +16,9 @@ test_xlsx_export / export.group_operator    / many2one (many2one)           : NE
 test_xlsx_export / export.group_operator    / one2many (one2many)           : NEW relation: export.group_operator.one2many
 test_xlsx_export / export.group_operator.one2many / parent_id (many2one)          : NEW relation: export.group_operator
 test_xlsx_export / export.group_operator.one2many / value (integer)               : NEW
-test_xlsx_export / export.integer           / value (False)                 : NEW mode: modify, hasdefault
+test_xlsx_export / export.integer           / value (False)                 : NEW mode: modify, hasdefault: default
 ---XML records in module 'test_xlsx_export'---
+NEW ir.model.access: test_xlsx_export.access_export_computed_binary
 NEW ir.model.access: test_xlsx_export.access_export_group_operator
 NEW ir.model.access: test_xlsx_export.access_export_group_operator_one2many
 NEW ir.model.access: test_xlsx_export.access_export_integer

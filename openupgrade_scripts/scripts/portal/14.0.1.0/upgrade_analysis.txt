@@ -13,11 +13,13 @@ portal       / mail.test.cc             / website_message_ids (one2many): previo
 portal       / mail.test.container      / website_message_ids (one2many): NEW relation: mail.message
 portal       / mail.test.field.type     / website_message_ids (one2many): previously in module test_mail
 portal       / mail.test.gateway        / website_message_ids (one2many): previously in module test_mail
+portal       / mail.test.gateway.groups / website_message_ids (one2many): previously in module test_mail
 portal       / mail.test.multi.company  / website_message_ids (one2many): previously in module test_mail
 portal       / mail.test.simple         / website_message_ids (one2many): previously in module test_mail
 portal       / mail.test.ticket         / website_message_ids (one2many): NEW relation: mail.message
 portal       / mail.test.track          / website_message_ids (one2many): previously in module test_mail
 portal       / mail.test.track.compute  / website_message_ids (one2many): NEW relation: mail.message
+portal       / mail.test.track.selection / website_message_ids (one2many): previously in module test_mail
 portal       / mailing.contact          / website_message_ids (one2many): module is now 'mass_mailing' ('portal')
 portal       / mailing.mailing          / website_message_ids (one2many): module is now 'mass_mailing' ('portal')
 ---XML records in module 'portal'---

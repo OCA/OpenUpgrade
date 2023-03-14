@@ -1,9 +1,7 @@
 ---Models in module 'hr_timesheet'---
 new model project.task.create.timesheet [transient]
 ---Fields in module 'hr_timesheet'---
-hr_timesheet / account.analytic.line    / project_id (many2one)         : now a function
-hr_timesheet / account.analytic.line    / task_id (many2one)            : now a function
-hr_timesheet / project.project          / allow_timesheets (boolean)    : now a function
+hr_timesheet / account.analytic.line    / partner_id (False)            : NEW mode: modify, hasdefault: compute
 hr_timesheet / project.project          / timesheet_ids (one2many)      : NEW relation: account.analytic.line
 hr_timesheet / project.task             / analytic_account_active (boolean): not related anymore
 hr_timesheet / project.task             / analytic_account_active (boolean): now a function

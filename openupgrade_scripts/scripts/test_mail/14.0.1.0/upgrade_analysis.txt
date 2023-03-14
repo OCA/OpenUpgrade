@@ -13,7 +13,7 @@ test_mail    / mail.performance.thread  / message_ids (one2many)        : NEW re
 test_mail    / mail.performance.thread  / message_main_attachment_id (many2one): NEW relation: ir.attachment
 test_mail    / mail.performance.thread  / name (char)                   : NEW
 test_mail    / mail.performance.thread  / partner_id (many2one)         : NEW relation: res.partner
-test_mail    / mail.performance.thread  / track (char)                  : NEW hasdefault
+test_mail    / mail.performance.thread  / track (char)                  : NEW hasdefault: default
 test_mail    / mail.performance.thread  / value (integer)               : NEW
 test_mail    / mail.performance.thread  / value_pc (float)              : NEW isfunction: function, stored
 test_mail    / mail.performance.tracking / field_0 (char)                : NEW
@@ -60,14 +60,16 @@ test_mail    / mail.test.full           / user_id (many2one)            : DEL re
 test_mail    / mail.test.full           / website_message_ids (one2many): DEL relation: mail.message
 test_mail    / mail.test.gateway        / message_has_sms_error (boolean): module is now 'sms' ('test_mail')
 test_mail    / mail.test.gateway        / website_message_ids (one2many): module is now 'portal' ('test_mail')
+test_mail    / mail.test.gateway.groups / message_has_sms_error (boolean): module is now 'sms' ('test_mail')
+test_mail    / mail.test.gateway.groups / website_message_ids (one2many): module is now 'portal' ('test_mail')
 test_mail    / mail.test.multi.company  / message_has_sms_error (boolean): module is now 'sms' ('test_mail')
 test_mail    / mail.test.multi.company  / website_message_ids (one2many): module is now 'portal' ('test_mail')
 test_mail    / mail.test.simple         / message_has_sms_error (boolean): module is now 'sms' ('test_mail')
 test_mail    / mail.test.simple         / website_message_ids (one2many): module is now 'portal' ('test_mail')
 test_mail    / mail.test.ticket         / container_id (many2one)       : NEW relation: mail.test.container
-test_mail    / mail.test.ticket         / count (integer)               : NEW hasdefault
+test_mail    / mail.test.ticket         / count (integer)               : NEW hasdefault: default
 test_mail    / mail.test.ticket         / customer_id (many2one)        : NEW relation: res.partner
-test_mail    / mail.test.ticket         / datetime (datetime)           : NEW hasdefault
+test_mail    / mail.test.ticket         / datetime (datetime)           : NEW hasdefault: default
 test_mail    / mail.test.ticket         / email_from (char)             : NEW
 test_mail    / mail.test.ticket         / mail_template (many2one)      : NEW relation: mail.template
 test_mail    / mail.test.ticket         / message_follower_ids (one2many): NEW relation: mail.followers
@@ -85,6 +87,8 @@ test_mail    / mail.test.track.compute  / message_main_attachment_id (many2one):
 test_mail    / mail.test.track.compute  / partner_email (char)          : NEW isrelated: related, stored
 test_mail    / mail.test.track.compute  / partner_id (many2one)         : NEW relation: res.partner
 test_mail    / mail.test.track.compute  / partner_name (char)           : NEW isrelated: related, stored
+test_mail    / mail.test.track.selection / message_has_sms_error (boolean): module is now 'sms' ('test_mail')
+test_mail    / mail.test.track.selection / website_message_ids (one2many): module is now 'portal' ('test_mail')
 test_mail    / test_performance.mail    / message_follower_ids (one2many): DEL relation: mail.followers
 test_mail    / test_performance.mail    / message_ids (one2many)        : DEL relation: mail.message
 test_mail    / test_performance.mail    / message_main_attachment_id (many2one): DEL relation: ir.attachment

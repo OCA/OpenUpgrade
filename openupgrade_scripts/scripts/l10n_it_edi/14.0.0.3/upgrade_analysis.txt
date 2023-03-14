@@ -8,3 +8,5 @@ l10n_it_edi  / account.move             / l10n_it_einvoice_name (char)  : now a 
 NEW account.edi.format: l10n_it_edi.edi_fatturaPA
 ir.model.constraint: l10n_it_edi.constraint_res_partner_l10n_it_codice_fiscale (changed definition: is now 'check(l10n_it_codice_fiscale is null or l10n_it_codice_fiscale = '' or length(l10n_it_codice_fiscale) >= 11)' ('check(l10n_it_codice_fiscale is null or length(l10n_it_codice_fiscale) >= 11)'))
 ir.model.constraint: l10n_it_edi.constraint_res_partner_l10n_it_pa_index (changed definition: is now 'check(l10n_it_pa_index is null or l10n_it_pa_index = '' or length(l10n_it_pa_index) >= 6)' ('check(l10n_it_pa_index is null or length(l10n_it_pa_index) >= 6)'))
+NEW ir.ui.view: l10n_it_edi.account_invoice_it_simplified_FatturaPA_export
+NEW ir.ui.view: l10n_it_edi.account_invoice_line_it_simplified_FatturaPA

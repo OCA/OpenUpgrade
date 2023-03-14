@@ -8,14 +8,14 @@ website_sale / product.public.category  / seo_name (char)               : NEW
 website_sale / product.ribbon           / bg_color (char)               : NEW
 website_sale / product.ribbon           / html (char)                   : NEW required
 website_sale / product.ribbon           / text_color (char)             : NEW
-website_sale / product.style            / html_class (char)             : now required, req_default: function
+website_sale / product.style            / html_class (char)             : now required
 website_sale / product.style            / name (char)                   : DEL required
 website_sale / product.template         / seo_name (char)               : NEW
 website_sale / product.template         / website_ribbon_id (many2one)  : NEW relation: product.ribbon
 website_sale / product.template         / website_style_ids (many2many) : DEL relation: product.style
 website_sale / website                  / shop_extra_field_ids (one2many): NEW relation: website.sale.extra.field
 website_sale / website.sale.extra.field / field_id (many2one)           : NEW relation: ir.model.fields
-website_sale / website.sale.extra.field / sequence (integer)            : NEW hasdefault
+website_sale / website.sale.extra.field / sequence (integer)            : NEW hasdefault: default
 website_sale / website.sale.extra.field / website_id (many2one)         : NEW relation: website
 ---XML records in module 'website_sale'---
 DEL ir.actions.act_window: website_sale.action_abandoned_orders_ecommerce
@@ -35,6 +35,7 @@ NEW ir.ui.view: website_sale.ecom_show_extra_fields
 NEW ir.ui.view: website_sale.header_cart_link
 NEW ir.ui.view: website_sale.header_hide_empty_cart_link
 NEW ir.ui.view: website_sale.product_custom_text
+NEW ir.ui.view: website_sale.product_ribbon_view_tree
 NEW ir.ui.view: website_sale.products_images_full
 NEW ir.ui.view: website_sale.s_dynamic_snippet_products
 NEW ir.ui.view: website_sale.s_dynamic_snippet_products_options

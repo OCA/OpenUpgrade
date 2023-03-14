@@ -7,14 +7,13 @@ fleet        / fleet.vehicle            / description (text)            : NEW
 fleet        / fleet.vehicle            / log_fuel (one2many)           : DEL relation: fleet.vehicle.log.fuel
 fleet        / fleet.vehicle            / manager_id (many2one)         : is now stored
 fleet        / fleet.vehicle            / manager_id (many2one)         : not related anymore
-fleet        / fleet.vehicle            / manager_id (many2one)         : now a function
 fleet        / fleet.vehicle.cost       / amount (float)                : DEL
 fleet        / fleet.vehicle.cost       / auto_generated (boolean)      : DEL
 fleet        / fleet.vehicle.cost       / company_id (many2one)         : DEL relation: res.company
 fleet        / fleet.vehicle.cost       / contract_id (many2one)        : DEL relation: fleet.vehicle.log.contract
 fleet        / fleet.vehicle.cost       / cost_ids (one2many)           : DEL relation: fleet.vehicle.cost
 fleet        / fleet.vehicle.cost       / cost_subtype_id (many2one)    : DEL relation: fleet.service.type
-fleet        / fleet.vehicle.cost       / cost_type (selection)         : DEL required, selection_keys: ['contract', 'fuel', 'other', 'services'], req_default: function
+fleet        / fleet.vehicle.cost       / cost_type (selection)         : DEL required, selection_keys: ['contract', 'fuel', 'other', 'services']
 fleet        / fleet.vehicle.cost       / date (date)                   : DEL
 fleet        / fleet.vehicle.cost       / description (char)            : DEL
 fleet        / fleet.vehicle.cost       / name (char)                   : DEL
@@ -51,7 +50,7 @@ fleet        / fleet.vehicle.log.fuel   / price_per_liter (float)       : DEL
 fleet        / fleet.vehicle.log.fuel   / purchaser_id (many2one)       : DEL relation: res.partner
 fleet        / fleet.vehicle.log.fuel   / vendor_id (many2one)          : DEL relation: res.partner
 fleet        / fleet.vehicle.log.services / _inherits                     : DEL _inherits: {'fleet.vehicle.cost': 'cost_id'}
-fleet        / fleet.vehicle.log.services / active (boolean)              : NEW hasdefault
+fleet        / fleet.vehicle.log.services / active (boolean)              : NEW hasdefault: default
 fleet        / fleet.vehicle.log.services / activity_ids (one2many)       : NEW relation: mail.activity
 fleet        / fleet.vehicle.log.services / amount (float)                : is now stored
 fleet        / fleet.vehicle.log.services / amount (float)                : not related anymore
@@ -70,13 +69,12 @@ fleet        / fleet.vehicle.log.services / odometer (float)              : not 
 fleet        / fleet.vehicle.log.services / odometer (float)              : now a function
 fleet        / fleet.vehicle.log.services / odometer_id (many2one)        : is now stored
 fleet        / fleet.vehicle.log.services / odometer_id (many2one)        : not related anymore
-fleet        / fleet.vehicle.log.services / purchaser_id (many2one)       : now a function
-fleet        / fleet.vehicle.log.services / service_type_id (many2one)    : NEW relation: fleet.service.type, required, req_default: function, hasdefault
-fleet        / fleet.vehicle.log.services / state (selection)             : NEW selection_keys: ['cancelled', 'done', 'running', 'todo'], hasdefault
+fleet        / fleet.vehicle.log.services / service_type_id (many2one)    : NEW relation: fleet.service.type, required, hasdefault: default
+fleet        / fleet.vehicle.log.services / state (selection)             : NEW selection_keys: ['cancelled', 'done', 'running', 'todo'], hasdefault: default
 fleet        / fleet.vehicle.log.services / vehicle_id (many2one)         : is now stored
 fleet        / fleet.vehicle.log.services / vehicle_id (many2one)         : not related anymore
-fleet        / fleet.vehicle.model      / active (boolean)              : NEW hasdefault
-fleet        / fleet.vehicle.model      / vehicle_type (selection)      : NEW required, selection_keys: ['bike', 'car'], req_default: function, hasdefault
+fleet        / fleet.vehicle.model      / active (boolean)              : NEW hasdefault: default
+fleet        / fleet.vehicle.model      / vehicle_type (selection)      : NEW required, selection_keys: ['bike', 'car'], hasdefault: default
 fleet        / fleet.vehicle.model.brand / _order                        : _order is now 'model_count desc, name asc' ('name asc')
 fleet        / fleet.vehicle.model.brand / model_count (integer)         : NEW isfunction: function, stored
 fleet        / fleet.vehicle.model.brand / model_ids (one2many)          : NEW relation: fleet.vehicle.model

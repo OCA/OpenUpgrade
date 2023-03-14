@@ -1,0 +1,159 @@
+---Models in module 'l10n_ph'---
+new model l10n_ph_2307.wizard [transient]
+---Fields in module 'l10n_ph'---
+l10n_ph      / account.tax              / l10n_ph_atc (char)            : NEW
+l10n_ph      / account.tax.template     / l10n_ph_atc (char)            : NEW
+l10n_ph      / res.partner              / branch_code (char)            : NEW required, hasdefault: default
+l10n_ph      / res.partner              / first_name (char)             : NEW
+l10n_ph      / res.partner              / last_name (char)              : NEW
+l10n_ph      / res.partner              / middle_name (char)            : NEW
+---XML records in module 'l10n_ph'---
+NEW account.account.template: l10n_ph.l10n_ph_100000
+NEW account.account.template: l10n_ph.l10n_ph_110000
+NEW account.account.template: l10n_ph.l10n_ph_110003
+NEW account.account.template: l10n_ph.l10n_ph_110100
+NEW account.account.template: l10n_ph.l10n_ph_110101
+NEW account.account.template: l10n_ph.l10n_ph_110102
+NEW account.account.template: l10n_ph.l10n_ph_110103
+NEW account.account.template: l10n_ph.l10n_ph_110104
+NEW account.account.template: l10n_ph.l10n_ph_110105
+NEW account.account.template: l10n_ph.l10n_ph_110106
+NEW account.account.template: l10n_ph.l10n_ph_110200
+NEW account.account.template: l10n_ph.l10n_ph_110201
+NEW account.account.template: l10n_ph.l10n_ph_110202
+NEW account.account.template: l10n_ph.l10n_ph_110203
+NEW account.account.template: l10n_ph.l10n_ph_110205
+NEW account.account.template: l10n_ph.l10n_ph_110206
+NEW account.account.template: l10n_ph.l10n_ph_110207
+NEW account.account.template: l10n_ph.l10n_ph_110300
+NEW account.account.template: l10n_ph.l10n_ph_110301
+NEW account.account.template: l10n_ph.l10n_ph_110302
+NEW account.account.template: l10n_ph.l10n_ph_110303
+NEW account.account.template: l10n_ph.l10n_ph_110304
+NEW account.account.template: l10n_ph.l10n_ph_110400
+NEW account.account.template: l10n_ph.l10n_ph_110500
+NEW account.account.template: l10n_ph.l10n_ph_110501
+NEW account.account.template: l10n_ph.l10n_ph_110502
+NEW account.account.template: l10n_ph.l10n_ph_110503
+NEW account.account.template: l10n_ph.l10n_ph_110504
+NEW account.account.template: l10n_ph.l10n_ph_110505
+NEW account.account.template: l10n_ph.l10n_ph_110506
+NEW account.account.template: l10n_ph.l10n_ph_110507
+NEW account.account.template: l10n_ph.l10n_ph_200000
+NEW account.account.template: l10n_ph.l10n_ph_200200
+NEW account.account.template: l10n_ph.l10n_ph_200201
+NEW account.account.template: l10n_ph.l10n_ph_200202
+NEW account.account.template: l10n_ph.l10n_ph_200300
+NEW account.account.template: l10n_ph.l10n_ph_200301
+NEW account.account.template: l10n_ph.l10n_ph_200302
+NEW account.account.template: l10n_ph.l10n_ph_200303
+NEW account.account.template: l10n_ph.l10n_ph_200304
+NEW account.account.template: l10n_ph.l10n_ph_200305
+NEW account.account.template: l10n_ph.l10n_ph_200306
+NEW account.account.template: l10n_ph.l10n_ph_200307
+NEW account.account.template: l10n_ph.l10n_ph_200308
+NEW account.account.template: l10n_ph.l10n_ph_200400
+NEW account.account.template: l10n_ph.l10n_ph_300000
+NEW account.account.template: l10n_ph.l10n_ph_300001
+NEW account.account.template: l10n_ph.l10n_ph_300002
+NEW account.account.template: l10n_ph.l10n_ph_430400
+NEW account.account.template: l10n_ph.l10n_ph_510000
+NEW account.account.template: l10n_ph.l10n_ph_511100
+NEW account.account.template: l10n_ph.l10n_ph_511600
+NEW account.account.template: l10n_ph.l10n_ph_511700
+NEW account.account.template: l10n_ph.l10n_ph_511800
+NEW account.account.template: l10n_ph.l10n_ph_620000
+NEW account.account.template: l10n_ph.l10n_ph_620001
+NEW account.account.template: l10n_ph.l10n_ph_620100
+NEW account.account.template: l10n_ph.l10n_ph_621000
+NEW account.account.template: l10n_ph.l10n_ph_622000
+NEW account.account.template: l10n_ph.l10n_ph_623000
+NEW account.account.template: l10n_ph.l10n_ph_623001
+NEW account.account.template: l10n_ph.l10n_ph_623002
+NEW account.account.template: l10n_ph.l10n_ph_623003
+NEW account.account.template: l10n_ph.l10n_ph_623004
+NEW account.account.template: l10n_ph.l10n_ph_623005
+NEW account.account.template: l10n_ph.l10n_ph_623006
+NEW account.account.template: l10n_ph.l10n_ph_623007
+NEW account.account.template: l10n_ph.l10n_ph_623008
+NEW account.account.template: l10n_ph.l10n_ph_623009
+NEW account.account.template: l10n_ph.l10n_ph_623014
+NEW account.account.template: l10n_ph.l10n_ph_623015
+NEW account.account.template: l10n_ph.l10n_ph_624000
+NEW account.account.template: l10n_ph.l10n_ph_625000
+NEW account.account.template: l10n_ph.l10n_ph_626000
+NEW account.account.template: l10n_ph.l10n_ph_626001
+NEW account.account.template: l10n_ph.l10n_ph_627000
+NEW account.account.template: l10n_ph.l10n_ph_628000
+NEW account.account.template: l10n_ph.l10n_ph_629000
+NEW account.account.template: l10n_ph.l10n_ph_632000
+NEW account.account.template: l10n_ph.l10n_ph_633000
+NEW account.account.template: l10n_ph.l10n_ph_634000
+NEW account.account.template: l10n_ph.l10n_ph_634001
+NEW account.account.template: l10n_ph.l10n_ph_635000
+NEW account.account.template: l10n_ph.l10n_ph_635001
+NEW account.account.template: l10n_ph.l10n_ph_635002
+NEW account.account.template: l10n_ph.l10n_ph_635003
+NEW account.account.template: l10n_ph.l10n_ph_710100
+NEW account.account.template: l10n_ph.l10n_ph_710101
+NEW account.account.template: l10n_ph.l10n_ph_710102
+NEW account.account.template: l10n_ph.l10n_ph_710103
+NEW account.account.template: l10n_ph.l10n_ph_710200
+NEW account.account.template: l10n_ph.l10n_ph_710201
+NEW account.account.template: l10n_ph.l10n_ph_710300
+NEW account.account.template: l10n_ph.l10n_ph_710301
+NEW account.account.template: l10n_ph.l10n_ph_710400
+NEW account.account.template: l10n_ph.l10n_ph_710500
+NEW account.account.template: l10n_ph.l10n_ph_999999
+NEW account.chart.template: l10n_ph.l10n_ph_chart_template
+NEW account.fiscal.position.tax.template: l10n_ph.l10n_ph_fiscal_position_tax_purchase_vat_exempt_vat_registered
+NEW account.fiscal.position.tax.template: l10n_ph.l10n_ph_fiscal_position_tax_purchase_vat_registered_vat_exempt
+NEW account.fiscal.position.tax.template: l10n_ph.l10n_ph_fiscal_position_tax_sale_vat_exempt_vat_registered
+NEW account.fiscal.position.tax.template: l10n_ph.l10n_ph_fiscal_position_tax_sale_vat_registered_vat_exempt
+NEW account.fiscal.position.template: l10n_ph.l10n_ph_fiscal_position_vat_exempt
+NEW account.fiscal.position.template: l10n_ph.l10n_ph_fiscal_position_vat_registered
+NEW account.tax.group: l10n_ph.l10n_ph_tax_group_vat_12 (noupdate)
+NEW account.tax.group: l10n_ph.l10n_ph_tax_group_vat_exempt (noupdate)
+NEW account.tax.group: l10n_ph.l10n_ph_tax_group_wht_1 (noupdate)
+NEW account.tax.group: l10n_ph.l10n_ph_tax_group_wht_10 (noupdate)
+NEW account.tax.group: l10n_ph.l10n_ph_tax_group_wht_15 (noupdate)
+NEW account.tax.group: l10n_ph.l10n_ph_tax_group_wht_2 (noupdate)
+NEW account.tax.group: l10n_ph.l10n_ph_tax_group_wht_5 (noupdate)
+NEW account.tax.group: l10n_ph.l10n_ph_tax_group_wht_p5 (noupdate)
+NEW account.tax.template: l10n_ph.l10n_ph_tax_purchase_vat_12
+NEW account.tax.template: l10n_ph.l10n_ph_tax_purchase_vat_exempt
+NEW account.tax.template: l10n_ph.l10n_ph_tax_purchase_wc010
+NEW account.tax.template: l10n_ph.l10n_ph_tax_purchase_wc011
+NEW account.tax.template: l10n_ph.l10n_ph_tax_purchase_wc100
+NEW account.tax.template: l10n_ph.l10n_ph_tax_purchase_wc120
+NEW account.tax.template: l10n_ph.l10n_ph_tax_purchase_wc139
+NEW account.tax.template: l10n_ph.l10n_ph_tax_purchase_wc140
+NEW account.tax.template: l10n_ph.l10n_ph_tax_purchase_wc157
+NEW account.tax.template: l10n_ph.l10n_ph_tax_purchase_wc158_1
+NEW account.tax.template: l10n_ph.l10n_ph_tax_purchase_wc158_p5
+NEW account.tax.template: l10n_ph.l10n_ph_tax_purchase_wc160
+NEW account.tax.template: l10n_ph.l10n_ph_tax_purchase_wc515
+NEW account.tax.template: l10n_ph.l10n_ph_tax_purchase_wc516
+NEW account.tax.template: l10n_ph.l10n_ph_tax_purchase_wc640
+NEW account.tax.template: l10n_ph.l10n_ph_tax_purchase_wi010
+NEW account.tax.template: l10n_ph.l10n_ph_tax_purchase_wi011
+NEW account.tax.template: l10n_ph.l10n_ph_tax_purchase_wi100
+NEW account.tax.template: l10n_ph.l10n_ph_tax_purchase_wi120
+NEW account.tax.template: l10n_ph.l10n_ph_tax_purchase_wi139
+NEW account.tax.template: l10n_ph.l10n_ph_tax_purchase_wi140
+NEW account.tax.template: l10n_ph.l10n_ph_tax_purchase_wi157
+NEW account.tax.template: l10n_ph.l10n_ph_tax_purchase_wi158_1
+NEW account.tax.template: l10n_ph.l10n_ph_tax_purchase_wi158_p5
+NEW account.tax.template: l10n_ph.l10n_ph_tax_purchase_wi160
+NEW account.tax.template: l10n_ph.l10n_ph_tax_purchase_wi515
+NEW account.tax.template: l10n_ph.l10n_ph_tax_purchase_wi516
+NEW account.tax.template: l10n_ph.l10n_ph_tax_purchase_wi640
+NEW account.tax.template: l10n_ph.l10n_ph_tax_sale_vat_12
+NEW account.tax.template: l10n_ph.l10n_ph_tax_sale_vat_exempt
+NEW ir.actions.act_window: l10n_ph.view_l10n_ph_2307_wizard_act_window
+NEW ir.actions.server: l10n_ph.action_account_move_bir_2307
+NEW ir.actions.server: l10n_ph.action_account_payment_bir_2307
+NEW ir.model.access: l10n_ph.generate_2307_wizard
+NEW ir.ui.view: l10n_ph.l10n_ph_2307_wizard_view_form
+NEW ir.ui.view: l10n_ph.view_partner_form
+NEW ir.ui.view: l10n_ph.view_tax_form

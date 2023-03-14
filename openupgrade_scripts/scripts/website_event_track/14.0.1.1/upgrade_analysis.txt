@@ -3,31 +3,23 @@ model website.event.menu (moved to website_event)
 new model event.track.tag.category
 new model event.track.visitor
 ---Fields in module 'website_event_track'---
-website_event_track / event.event              / website_track (boolean)       : now a function
-website_event_track / event.event              / website_track_proposal (boolean): now a function
 website_event_track / event.sponsor            / _order                        : _order is now 'sequence, sponsor_type_id' ('sequence')
-website_event_track / event.sponsor            / active (boolean)              : NEW hasdefault
+website_event_track / event.sponsor            / active (boolean)              : NEW hasdefault: default
 website_event_track / event.sponsor            / activity_ids (one2many)       : NEW relation: mail.activity
-website_event_track / event.sponsor            / email (char)                  : NEW isfunction: function, stored
+website_event_track / event.sponsor            / email (char)                  : NEW hasdefault: compute
 website_event_track / event.sponsor            / image_128 (binary)            : not stored anymore
-website_event_track / event.sponsor            / image_512 (binary)            : NEW attachment: True, isfunction: function, stored
+website_event_track / event.sponsor            / image_512 (binary)            : NEW attachment: True, hasdefault: compute
 website_event_track / event.sponsor            / message_follower_ids (one2many): NEW relation: mail.followers
 website_event_track / event.sponsor            / message_ids (one2many)        : NEW relation: mail.message
 website_event_track / event.sponsor            / message_main_attachment_id (many2one): NEW relation: ir.attachment
-website_event_track / event.sponsor            / mobile (char)                 : NEW isfunction: function, stored
-website_event_track / event.sponsor            / name (char)                   : NEW isfunction: function, stored
-website_event_track / event.sponsor            / phone (char)                  : NEW isfunction: function, stored
+website_event_track / event.sponsor            / mobile (char)                 : NEW hasdefault: compute
+website_event_track / event.sponsor            / name (char)                   : NEW hasdefault: compute
+website_event_track / event.sponsor            / phone (char)                  : NEW hasdefault: compute
 website_event_track / event.sponsor            / sequence (integer)            : not related anymore
-website_event_track / event.sponsor            / url (char)                    : now a function
 website_event_track / event.sponsor            / website_message_ids (one2many): NEW relation: mail.message
 website_event_track / event.sponsor.type       / display_ribbon_style (selection): NEW selection_keys: ['Bronze', 'Gold', 'Silver', 'no_ribbon']
 website_event_track / event.track              / event_track_visitor_ids (one2many): NEW relation: event.track.visitor
 website_event_track / event.track              / image (binary)                : not related anymore
-website_event_track / event.track              / image (binary)                : now a function
-website_event_track / event.track              / partner_biography (html)      : now a function
-website_event_track / event.track              / partner_email (char)          : now a function
-website_event_track / event.track              / partner_name (char)           : now a function
-website_event_track / event.track              / partner_phone (char)          : now a function
 website_event_track / event.track              / seo_name (char)               : NEW
 website_event_track / event.track              / website_cta (boolean)         : NEW
 website_event_track / event.track              / website_cta_delay (integer)   : NEW
@@ -40,19 +32,17 @@ website_event_track / event.track.stage        / color (integer)               :
 website_event_track / event.track.stage        / is_accepted (boolean)         : NEW
 website_event_track / event.track.tag          / _order                        : _order is now 'category_id, sequence, name' ('name')
 website_event_track / event.track.tag          / category_id (many2one)        : NEW relation: event.track.tag.category
-website_event_track / event.track.tag          / sequence (integer)            : NEW hasdefault
+website_event_track / event.track.tag          / sequence (integer)            : NEW hasdefault: default
 website_event_track / event.track.tag.category / name (char)                   : NEW required
-website_event_track / event.track.tag.category / sequence (integer)            : NEW hasdefault
+website_event_track / event.track.tag.category / sequence (integer)            : NEW hasdefault: default
 website_event_track / event.track.tag.category / tag_ids (one2many)            : NEW relation: event.track.tag
 website_event_track / event.track.visitor      / is_blacklisted (boolean)      : NEW
 website_event_track / event.track.visitor      / is_wishlisted (boolean)       : NEW
-website_event_track / event.track.visitor      / partner_id (many2one)         : NEW relation: res.partner, isfunction: function, stored
+website_event_track / event.track.visitor      / partner_id (many2one)         : NEW relation: res.partner, hasdefault: compute
 website_event_track / event.track.visitor      / track_id (many2one)           : NEW relation: event.track, required
 website_event_track / event.track.visitor      / visitor_id (many2one)         : NEW relation: website.visitor
-website_event_track / event.type               / website_track (boolean)       : now a function
-website_event_track / event.type               / website_track_proposal (boolean): now a function
 website_event_track / website                  / app_icon (binary)             : NEW attachment: True, isfunction: function, stored
-website_event_track / website                  / events_app_name (char)        : NEW isfunction: function, stored
+website_event_track / website                  / events_app_name (char)        : NEW hasdefault: compute
 website_event_track / website.event.menu       / __last_update (datetime)      : module is now 'website_event' ('website_event_track')
 website_event_track / website.event.menu       / _order                        : module is now 'website_event' ('website_event_track')
 website_event_track / website.event.menu       / display_name (char)           : module is now 'website_event' ('website_event_track')

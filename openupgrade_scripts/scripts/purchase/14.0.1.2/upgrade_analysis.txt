@@ -2,15 +2,12 @@
 ---Fields in module 'purchase'---
 purchase     / purchase.order           / _order                        : _order is now 'priority desc, id desc' ('date_order desc, id desc')
 purchase     / purchase.order           / date_calendar_start (datetime): NEW isfunction: function, stored
-purchase     / purchase.order           / date_planned (datetime)       : now a function
-purchase     / purchase.order           / mail_reception_confirmed (boolean): NEW hasdefault
-purchase     / purchase.order           / mail_reminder_confirmed (boolean): NEW hasdefault
-purchase     / purchase.order           / priority (selection)          : NEW selection_keys: ['0', '1'], hasdefault
-purchase     / purchase.order.line      / account_analytic_id (many2one): now a function
-purchase     / purchase.order.line      / analytic_tag_ids (many2many)  : now a function
+purchase     / purchase.order           / mail_reception_confirmed (boolean): NEW
+purchase     / purchase.order           / mail_reminder_confirmed (boolean): NEW
+purchase     / purchase.order           / priority (selection)          : NEW selection_keys: ['0', '1'], hasdefault: default
 purchase     / purchase.order.line      / qty_to_invoice (float)        : NEW isfunction: function, stored
-purchase     / res.partner              / receipt_reminder_email (boolean): NEW hasdefault
-purchase     / res.partner              / reminder_date_before_receipt (integer): NEW hasdefault
+purchase     / res.partner              / receipt_reminder_email (boolean): NEW
+purchase     / res.partner              / reminder_date_before_receipt (integer): NEW
 ---XML records in module 'purchase'---
 NEW digest.tip: purchase.digest_tip_purchase_0
 NEW digest.tip: purchase.digest_tip_purchase_1

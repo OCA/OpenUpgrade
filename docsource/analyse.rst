@@ -7,7 +7,7 @@ steps.
   available: `upgrade_analysis` and `openupgrade_scripts`.
 
   In the case of a release before 14.0, you need to run the fork from the
-  corresponding branch in https://github.com/oca/openupgrade. That fork also
+  corresponding branch in https://github.com/OCA/OpenUpgrade. That fork also
   contains `openupgrade_records`.
 
 * On both instances, install a database without demo data and

@@ -34,7 +34,7 @@ test_base_automation / test_base_automation.project / name (char)               
 test_base_automation / test_base_automation.project / task_ids (one2many)           : NEW relation: test_base_automation.task
 test_base_automation / test_base_automation.task / name (char)                   : NEW
 test_base_automation / test_base_automation.task / parent_id (many2one)          : NEW relation: test_base_automation.task
-test_base_automation / test_base_automation.task / project_id (many2one)         : NEW relation: test_base_automation.project, isfunction: function, stored
+test_base_automation / test_base_automation.task / project_id (many2one)         : NEW relation: test_base_automation.project, hasdefault: compute
 ---XML records in module 'test_base_automation'---
 NEW ir.model.access: test_base_automation.access_base_automation_lead_test [renamed from base_automation module]
 NEW ir.model.access: test_base_automation.access_base_automation_line_test [renamed from base_automation module]

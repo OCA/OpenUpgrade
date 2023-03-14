@@ -6,26 +6,25 @@ new model res.users.apikeys.description [transient]
 new model res.users.apikeys.show [abstract]
 new model res.users.identitycheck [transient]
 ---Fields in module 'base'---
-base         / ir.model                 / order (char)                  : NEW required, req_default: function, hasdefault
+base         / ir.model                 / order (char)                  : NEW required, hasdefault: default
 base         / ir.model.data            / date_init (datetime)          : DEL
 base         / ir.model.data            / date_update (datetime)        : DEL
 base         / ir.model.data            / res_id (integer)              : relation is now 'model' ('False') [nothing to do]
 base         / ir.model.data            / res_id (integer)              : type is now 'many2one_reference' ('integer')
-base         / ir.model.fields          / copied (boolean)              : now a function
 base         / ir.model.fields          / group_expand (boolean)        : NEW
 base         / ir.module.module         / _order                        : _order is now 'application desc,sequence,name' ('sequence,name')
 base         / ir.ui.view               / model_ids (one2many)          : DEL relation: ir.model.data
 base         / ir.ui.view               / type (selection)              : selection_keys is now '['calendar', 'form', 'gantt', 'graph', 'kanban', 'pivot', 'qweb', 'search', 'tree']' ('['calendar', 'diagram', 'form', 'gantt', 'graph', 'kanban', 'pivot', 'qweb', 'search', 'tree']')
 base         / report.layout            / _order                        : _order is now 'sequence' ('id')
-base         / report.layout            / sequence (integer)            : NEW hasdefault
+base         / report.layout            / sequence (integer)            : NEW hasdefault: default
 base         / res.company              / account_no (char)             : DEL
 base         / res.country              / image (binary)                : DEL attachment: True
-base         / res.country              / state_required (boolean)      : NEW hasdefault
-base         / res.country              / zip_required (boolean)        : NEW hasdefault
+base         / res.country              / state_required (boolean)      : NEW hasdefault: default
+base         / res.country              / zip_required (boolean)        : NEW hasdefault: default
 base         / res.currency.rate        / currency_id (many2one)        : now required
 base         / res.lang                 / flag_image (binary)           : NEW attachment: True
 base         / res.partner              / barcode (char)                : previously in module point_of_sale
-base         / res.partner.bank         / active (boolean)              : NEW hasdefault
+base         / res.partner.bank         / active (boolean)              : NEW hasdefault: default
 base         / res.users                / api_key_ids (one2many)        : NEW relation: res.users.apikeys
 base         / res.users                / barcode (char)                : previously in module hr
 ---XML records in module 'base'---

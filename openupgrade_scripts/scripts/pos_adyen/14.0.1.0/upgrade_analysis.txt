@@ -11,7 +11,7 @@ pos_adyen    / adyen.store              / house_number_or_name (char)   : NEW re
 pos_adyen    / adyen.store              / name (char)                   : NEW required
 pos_adyen    / adyen.store              / phone_number (char)           : NEW required
 pos_adyen    / adyen.store              / state_id (many2one)           : NEW relation: res.country.state
-pos_adyen    / adyen.store              / store_reference (char)        : NEW hasdefault
+pos_adyen    / adyen.store              / store_reference (char)        : NEW hasdefault: default
 pos_adyen    / adyen.store              / store_uuid (char)             : NEW
 pos_adyen    / adyen.store              / street (char)                 : NEW required
 pos_adyen    / adyen.store              / terminal_ids (one2many)       : NEW relation: adyen.terminal

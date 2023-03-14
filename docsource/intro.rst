@@ -10,7 +10,7 @@ of the project refers to the old name of Odoo, *OpenERP*.
 
 The project is hosted as two separate GitHub projects:
 
-* https://github.com/OCA/openupgrade
+* https://github.com/OCA/OpenUpgrade
 * https://github.com/OCA/openupgradelib
 
 
@@ -22,7 +22,7 @@ can be used in the migration of any Odoo module.
 
 Older versions
 --------------
-Before Odoo 14.0, the branches in https://github.com/OCA/openupgrade
+Before Odoo 14.0, the branches in https://github.com/OCA/OpenUpgrade
 contain copies (or forks in Git terminology) of the Odoo main project, but
 with extra commits that include the framework, and the analysis and the
 migration scripts for each module.
@@ -32,7 +32,7 @@ Contribute
 In order to contribute to the OpenUpgrade project, please
 
 * Post your code contributions as pull requests on
-  https://github.com/oca/openupgrade
+  https://github.com/OCA/OpenUpgrade
 * Donate to the Odoo Community Association (https://github.com/sponsors/OCA)
 * Hire any active contributor to this project to help you migrate your
   database, and give back any code improvements developed during the project.

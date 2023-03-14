@@ -41,19 +41,19 @@ test_testing_utilities / o2m_readonly_subfield_child / name (char)              
 test_testing_utilities / o2m_readonly_subfield_child / parent_id (many2one)          : NEW relation: o2m_readonly_subfield_parent
 test_testing_utilities / o2m_readonly_subfield_parent / line_ids (one2many)           : NEW relation: o2m_readonly_subfield_child
 test_testing_utilities / test_testing_utilities.a / f1 (char)                     : NEW required
-test_testing_utilities / test_testing_utilities.a / f2 (integer)                  : NEW hasdefault
+test_testing_utilities / test_testing_utilities.a / f2 (integer)                  : NEW hasdefault: default
 test_testing_utilities / test_testing_utilities.a / f3 (integer)                  : NEW
 test_testing_utilities / test_testing_utilities.a / f5 (integer)                  : NEW
 test_testing_utilities / test_testing_utilities.a / f6 (integer)                  : NEW
 test_testing_utilities / test_testing_utilities.c / f2 (many2one)                 : NEW relation: test_testing_utilities.m2o
 test_testing_utilities / test_testing_utilities.c / name (char)                   : NEW required
-test_testing_utilities / test_testing_utilities.d / f (many2one)                  : NEW relation: test_testing_utilities.m2o, required, req_default: function, hasdefault
+test_testing_utilities / test_testing_utilities.d / f (many2one)                  : NEW relation: test_testing_utilities.m2o, required, hasdefault: default
 test_testing_utilities / test_testing_utilities.d / f2 (char)                     : NEW
-test_testing_utilities / test_testing_utilities.default / subs (one2many)               : NEW relation: test_testing_utilities.sub3, hasdefault
+test_testing_utilities / test_testing_utilities.default / subs (one2many)               : NEW relation: test_testing_utilities.sub3, hasdefault: default
 test_testing_utilities / test_testing_utilities.default / v (integer)                   : NEW
-test_testing_utilities / test_testing_utilities.default / value (integer)               : NEW hasdefault
+test_testing_utilities / test_testing_utilities.default / value (integer)               : NEW hasdefault: default
 test_testing_utilities / test_testing_utilities.e / m2m (many2many)               : NEW relation: test_testing_utilities.sub2
-test_testing_utilities / test_testing_utilities.f / m2m (many2many)               : NEW relation: test_testing_utilities.sub2, hasdefault
+test_testing_utilities / test_testing_utilities.f / m2m (many2many)               : NEW relation: test_testing_utilities.sub2, hasdefault: default
 test_testing_utilities / test_testing_utilities.f / m2o (many2one)                : NEW relation: test_testing_utilities.sub2
 test_testing_utilities / test_testing_utilities.g / m2m (many2many)               : NEW relation: test_testing_utilities.sub3
 test_testing_utilities / test_testing_utilities.m2o / name (char)                   : NEW required
@@ -67,25 +67,25 @@ test_testing_utilities / test_testing_utilities.onchange_line / parent (many2one
 test_testing_utilities / test_testing_utilities.onchange_parent / line_ids (one2many)           : NEW relation: test_testing_utilities.onchange_line
 test_testing_utilities / test_testing_utilities.parent / subs (one2many)               : NEW relation: test_testing_utilities.sub
 test_testing_utilities / test_testing_utilities.parent / v (integer)                   : NEW
-test_testing_utilities / test_testing_utilities.parent / value (integer)               : NEW hasdefault
-test_testing_utilities / test_testing_utilities.readonly / f1 (integer)                  : NEW hasdefault
+test_testing_utilities / test_testing_utilities.parent / value (integer)               : NEW hasdefault: default
+test_testing_utilities / test_testing_utilities.readonly / f1 (integer)                  : NEW
 test_testing_utilities / test_testing_utilities.recursive / many_to_one_ids (one2many)    : NEW relation: test_testing_utilities.recursive
 test_testing_utilities / test_testing_utilities.recursive / one_to_many_id (many2one)     : NEW relation: test_testing_utilities.recursive
 test_testing_utilities / test_testing_utilities.req_bool / f_bool (boolean)              : NEW required
 test_testing_utilities / test_testing_utilities.sub / has_parent (boolean)          : NEW
 test_testing_utilities / test_testing_utilities.sub / parent_id (many2one)          : NEW relation: test_testing_utilities.parent
 test_testing_utilities / test_testing_utilities.sub / v (integer)                   : NEW
-test_testing_utilities / test_testing_utilities.sub / value (integer)               : NEW hasdefault
+test_testing_utilities / test_testing_utilities.sub / value (integer)               : NEW hasdefault: default
 test_testing_utilities / test_testing_utilities.sub2 / m2o_ids (many2many)           : NEW relation: test_testing_utilities.m2o
 test_testing_utilities / test_testing_utilities.sub2 / name (char)                   : NEW
 test_testing_utilities / test_testing_utilities.sub3 / parent_id (many2one)          : NEW relation: test_testing_utilities.default
-test_testing_utilities / test_testing_utilities.sub3 / v (integer)                   : NEW hasdefault
-test_testing_utilities / test_testing_utilities.sub3 / value (integer)               : NEW hasdefault
+test_testing_utilities / test_testing_utilities.sub3 / v (integer)                   : NEW hasdefault: default
+test_testing_utilities / test_testing_utilities.sub3 / value (integer)               : NEW hasdefault: default
 test_testing_utilities / ttu.child                / move_line_ids (one2many)      : NEW relation: ttu.grandchild
 test_testing_utilities / ttu.child                / product_id (many2one)         : NEW relation: ttu.product
 test_testing_utilities / ttu.child                / root_id (many2one)            : NEW relation: ttu.root
 test_testing_utilities / ttu.child                / root_raw_id (many2one)        : NEW relation: ttu.root
-test_testing_utilities / ttu.child                / unit_factor (integer)         : NEW required, req_default: function, hasdefault
+test_testing_utilities / ttu.child                / unit_factor (integer)         : NEW required, hasdefault: default
 test_testing_utilities / ttu.grandchild           / move_id (many2one)            : NEW relation: ttu.child
 test_testing_utilities / ttu.grandchild           / product_id (many2one)         : NEW relation: ttu.product
 test_testing_utilities / ttu.grandchild           / product_uom_qty (integer)     : NEW

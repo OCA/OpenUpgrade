@@ -19,10 +19,10 @@
 <!--    <field name="global"/>-->
   </record>
   <record id="account_invoice_line_rule_portal" model="ir.rule">
-    <field name="domain_force">[('move_id.move_type', 'in', ('out_invoice', 'out_refund', 'in_invoice', 'in_refund')), ('move_id.message_partner_ids','child_of',[user.commercial_partner_id.id])]</field>
+    <field name="domain_force">[('parent_state', 'not in', ('cancel', 'draft')), ('move_id.is_move_sent', '=', True), ('move_id.move_type', 'in', ('out_invoice', 'out_refund', 'in_invoice', 'in_refund')), ('move_id.message_partner_ids','child_of',[user.commercial_partner_id.id])]</field>
   </record>
   <record id="account_invoice_rule_portal" model="ir.rule">
-    <field name="domain_force">[('move_type', 'in', ('out_invoice', 'out_refund', 'in_invoice', 'in_refund')), ('message_partner_ids','child_of',[user.commercial_partner_id.id])]</field>
+    <field name="domain_force">[('state', 'not in', ('cancel', 'draft')), ('is_move_sent', '=', True), ('move_type', 'in', ('out_invoice', 'out_refund', 'in_invoice', 'in_refund')), ('message_partner_ids','child_of',[user.commercial_partner_id.id])]</field>
   </record>
   <record id="account_move_comp_rule" model="ir.rule">
 <!--    <field name="global"/>-->
