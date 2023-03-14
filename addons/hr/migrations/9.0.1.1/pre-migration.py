@@ -22,3 +22,7 @@ def migrate(env, version):
         ('module', '=', 'base'),
         ('name', '=', 'group_hr_attendance'),
     ]).write({'noupdate': 0})
+    # Disappeared constraint
+    openupgrade.delete_sql_constraint_safely(
+        env, "hr", "hr_job", "hired_employee_check"
+    )
