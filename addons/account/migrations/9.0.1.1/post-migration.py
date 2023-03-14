@@ -7,7 +7,6 @@
 import logging
 import operator
 from openupgradelib import openupgrade, openupgrade_90
-from openerp.modules.registry import RegistryManager
 from psycopg2.extensions import AsIs
 
 _logger = logging.getLogger('account.migrations.9.0.1.1.post_migration')
@@ -1393,9 +1392,8 @@ def migrate(env, version):
         """
     )
 
-    registry = RegistryManager.get(cr.dbname)
     openupgrade.m2o_to_x2m(
-        cr, registry['account.bank.statement.line'],
+        cr, env['account.bank.statement.line'],
         'account_bank_statement_line',
         'journal_entry_ids',
         openupgrade.get_legacy_name('journal_entry_id'),
