@@ -1,0 +1,19 @@
+---Models in module 'crm'---
+---Fields in module 'crm'---
+crm          / crm.lead                 / lead_properties (properties)  : NEW hasdefault: compute
+# NOTHING TO DO: new feature
+
+crm          / crm.lead                 / lost_reason (many2one)        : DEL relation: crm.lost.reason
+crm          / crm.lead                 / lost_reason_id (many2one)     : NEW relation: crm.lost.reason
+# DONE: pre-migration: rename column
+
+crm          / crm.team                 / lead_properties_definition (properties_definition): NEW
+# NOTHING TO DO: new feature
+
+crm          / res.partner              / team_id (False)               : NEW mode: modify, hasdefault: compute
+# DONE: pre-migration: compute value in DB
+
+---XML records in module 'crm'---
+NEW ir.ui.view: crm.crm_lead_merge_summary
+NEW ir.ui.view: crm.crm_lead_view_tree_reporting
+# NOTHING TO DO
