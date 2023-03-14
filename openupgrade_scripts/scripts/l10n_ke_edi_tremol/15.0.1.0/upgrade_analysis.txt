@@ -1,0 +1,20 @@
+---Models in module 'l10n_ke_edi_tremol'---
+---Fields in module 'l10n_ke_edi_tremol'---
+l10n_ke_edi_tremol / account.move             / l10n_ke_cu_datetime (datetime): NEW
+l10n_ke_edi_tremol / account.move             / l10n_ke_cu_invoice_number (char): NEW
+l10n_ke_edi_tremol / account.move             / l10n_ke_cu_qrcode (char)      : NEW
+l10n_ke_edi_tremol / account.move             / l10n_ke_cu_serial_number (char): NEW
+l10n_ke_edi_tremol / product.template         / l10n_ke_hsn_code (char)       : NEW
+l10n_ke_edi_tremol / product.template         / l10n_ke_hsn_name (char)       : NEW
+l10n_ke_edi_tremol / res.company              / l10n_ke_cu_proxy_address (char): NEW hasdefault: default
+l10n_ke_edi_tremol / res.partner              / l10n_ke_exemption_number (char): NEW
+---XML records in module 'l10n_ke_edi_tremol'---
+NEW ir.actions.server: l10n_ke_edi_tremol.action_send_invoices_to_device
+NEW ir.ui.view: l10n_ke_edi_tremol.l10n_ke_inherit_account_move_form
+NEW ir.ui.view: l10n_ke_edi_tremol.l10n_ke_inherit_account_move_search_view
+NEW ir.ui.view: l10n_ke_edi_tremol.l10n_ke_inherit_account_move_tree_view
+NEW ir.ui.view: l10n_ke_edi_tremol.l10n_ke_inherit_product_product_form_view
+NEW ir.ui.view: l10n_ke_edi_tremol.l10n_ke_inherit_product_template_form_view
+NEW ir.ui.view: l10n_ke_edi_tremol.l10n_ke_invoice
+NEW ir.ui.view: l10n_ke_edi_tremol.res_config_settings_view_form
+NEW ir.ui.view: l10n_ke_edi_tremol.res_partner_view_form

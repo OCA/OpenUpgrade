@@ -45,7 +45,7 @@ payment      / payment.transaction      / token_id (many2one)           : NEW re
 payment      / payment.transaction      / tokenize (boolean)            : NEW
 payment      / payment.transaction      / type (selection)              : DEL required, selection_keys: ['form', 'form_save', 'server2server', 'validation']
 ---XML records in module 'payment'---
-DEL account.payment.method: payment.account_payment_method_electronic_in
+DEL account.payment.method: payment.account_payment_method_electronic_in (noupdate)
 NEW ir.actions.act_window: payment.action_payment_token
 NEW ir.actions.act_window: payment.action_payment_transaction_linked_to_token
 DEL ir.actions.act_window: payment.action_payment_tx_ids
@@ -118,7 +118,7 @@ DEL ir.ui.view: payment_fix_register_token.view_account_payment_register_form_in
 NEW payment.acquirer: payment.payment_acquirer_mollie (noupdate)
 NEW payment.acquirer: payment.payment_acquirer_ogone (noupdate)
 NEW payment.acquirer: payment.payment_acquirer_payumoney (noupdate)
-NEW payment.acquirer: payment.payment_acquirer_test (noupdate)
+NEW payment.acquirer: payment.payment_acquirer_test [renamed from payment_test module] (noupdate)
 DEL payment.acquirer: payment.payment_acquirer_ingenico (noupdate)
 DEL payment.acquirer: payment.payment_acquirer_odoo_by_adyen (noupdate)
 DEL payment.acquirer: payment.payment_acquirer_payu (noupdate)

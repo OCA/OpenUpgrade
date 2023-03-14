@@ -1,0 +1,38 @@
+---Models in module 'test_mail'---
+new model mail.test.composer.mixin
+new model mail.test.lang
+new model mail.test.track.monetary
+---Fields in module 'test_mail'---
+test_mail    / mail.test.composer.mixin / author_id (many2one)          : NEW relation: res.partner
+test_mail    / mail.test.composer.mixin / body (html)                   : NEW hasdefault: compute
+test_mail    / mail.test.composer.mixin / copyvalue (char)              : NEW
+test_mail    / mail.test.composer.mixin / description (html)            : NEW
+test_mail    / mail.test.composer.mixin / lang (char)                   : NEW
+test_mail    / mail.test.composer.mixin / model_object_field (many2one) : NEW relation: ir.model.fields
+test_mail    / mail.test.composer.mixin / name (char)                   : NEW
+test_mail    / mail.test.composer.mixin / null_value (char)             : NEW
+test_mail    / mail.test.composer.mixin / sub_model_object_field (many2one): NEW relation: ir.model.fields
+test_mail    / mail.test.composer.mixin / sub_object (many2one)         : NEW relation: ir.model
+test_mail    / mail.test.composer.mixin / subject (char)                : NEW hasdefault: compute
+test_mail    / mail.test.composer.mixin / template_id (many2one)        : NEW relation: mail.template
+test_mail    / mail.test.lang           / customer_id (many2one)        : NEW relation: res.partner
+test_mail    / mail.test.lang           / email_from (char)             : NEW
+test_mail    / mail.test.lang           / lang (char)                   : NEW
+test_mail    / mail.test.lang           / message_follower_ids (one2many): NEW relation: mail.followers
+test_mail    / mail.test.lang           / message_ids (one2many)        : NEW relation: mail.message
+test_mail    / mail.test.lang           / message_main_attachment_id (many2one): NEW relation: ir.attachment
+test_mail    / mail.test.lang           / name (char)                   : NEW
+test_mail    / mail.test.track.monetary / company_id (many2one)         : NEW relation: res.company
+test_mail    / mail.test.track.monetary / message_follower_ids (one2many): NEW relation: mail.followers
+test_mail    / mail.test.track.monetary / message_ids (one2many)        : NEW relation: mail.message
+test_mail    / mail.test.track.monetary / message_main_attachment_id (many2one): NEW relation: ir.attachment
+test_mail    / mail.test.track.monetary / revenue (float)               : NEW
+---XML records in module 'test_mail'---
+NEW ir.model.access: test_mail.access_mail_test_composer_mixin_all
+NEW ir.model.access: test_mail.access_mail_test_composer_mixin_user
+NEW ir.model.access: test_mail.access_mail_test_lang_portal
+NEW ir.model.access: test_mail.access_mail_test_lang_user
+NEW ir.model.access: test_mail.access_mail_test_track_monetary
+NEW ir.ui.view: test_mail.mail_template_simple_test
+NEW mail.activity.type: test_mail.mail_act_test_chained_1
+NEW mail.activity.type: test_mail.mail_act_test_chained_2

@@ -1,0 +1,14 @@
+---Models in module 'test_read_group'---
+new model test_read_group.task
+new model test_read_group.user
+---Fields in module 'test_read_group'---
+test_read_group / test_read_group.on_selection / dynamic_expand (selection)    : NEW selection_keys: function
+test_read_group / test_read_group.on_selection / no_expand (selection)         : NEW selection_keys: ['a', 'b', 'c']
+test_read_group / test_read_group.on_selection / static_expand (selection)     : NEW selection_keys: ['a', 'b', 'c']
+test_read_group / test_read_group.task     / name (char)                   : NEW required
+test_read_group / test_read_group.task     / user_ids (many2many)          : NEW relation: test_read_group.user
+test_read_group / test_read_group.user     / name (char)                   : NEW required
+test_read_group / test_read_group.user     / task_ids (many2many)          : NEW relation: test_read_group.task
+---XML records in module 'test_read_group'---
+NEW ir.model.access: test_read_group.access_test_read_group_task
+NEW ir.model.access: test_read_group.access_test_read_group_user

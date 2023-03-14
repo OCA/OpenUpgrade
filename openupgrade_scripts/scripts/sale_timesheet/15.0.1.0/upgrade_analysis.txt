@@ -35,7 +35,7 @@ NEW ir.actions.act_window.view: sale_timesheet.timesheet_action_view_report_by_b
 NEW ir.actions.act_window.view: sale_timesheet.timesheet_action_view_report_by_billing_rate_kanban
 NEW ir.actions.act_window.view: sale_timesheet.timesheet_action_view_report_by_billing_rate_tree
 DEL ir.model.access: sale_timesheet.access_project_task_create_sale_order
-DEL ir.model.constraint: sale_timesheet.constraint_project_project_timesheet_product_required_if_billable_and_timesheets
+DEL ir.model.constraint: sale_timesheet.constraint_project_project_timesheet_product_required_if_billable_and_time
 DEL ir.ui.menu: sale_timesheet.menu_project_profitability_analysis
 NEW ir.ui.view: sale_timesheet.hr_timesheet_line_form_inherit
 NEW ir.ui.view: sale_timesheet.hr_timesheet_line_tree_inherit
