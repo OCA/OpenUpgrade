@@ -7,3 +7,7 @@ def migrate(env, version):
         env.cr,
         {"rating_rating": [("rating_text", None, None)]},
     )
+    # Disappeared constraint
+    openupgrade.delete_sql_constraint_safely(
+        env, "rating", "rating_rating", "rating_range"
+    )
