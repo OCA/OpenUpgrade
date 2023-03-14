@@ -4,14 +4,12 @@
 <html lang="en">
   <head>
     <meta charset="utf-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" /><meta name="generator" content="Docutils 0.19: https://docutils.sourceforge.io/" />
+
     <title>OpenUpgrade API &#8212; OpenUpgrade 16.0 documentation</title>
     <link rel="stylesheet" type="text/css" href="_static/pygments.css" />
     <link rel="stylesheet" type="text/css" href="_static/alabaster.css" />
     <script data-url_root="./" id="documentation_options" src="_static/documentation_options.js"></script>
-    <script src="_static/jquery.js"></script>
-    <script src="_static/underscore.js"></script>
-    <script src="_static/_sphinx_javascript_frameworks_compat.js"></script>
     <script src="_static/doctools.js"></script>
     <script src="_static/sphinx_highlight.js"></script>
     <link rel="index" title="Index" href="genindex.html" />
@@ -33,19 +31,19 @@
 
           <div class="body" role="main">
             
-  <div class="section" id="openupgrade-api">
+  <section id="openupgrade-api">
 <h1>OpenUpgrade API<a class="headerlink" href="#openupgrade-api" title="Permalink to this heading">¶</a></h1>
 <p>The OpenUpgrade library contains all kinds of helper functions for your pre and
 post scripts, in OpenUpgrade itself or in the migration scripts of your own
 module (in either major or minor version upgrades). It can be installed with</p>
-<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>pip install openupgradelib
+<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>pip<span class="w"> </span>install<span class="w"> </span>openupgradelib
 </pre></div>
 </div>
 <p>and then used in your scripts as</p>
 <div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="kn">from</span> <span class="nn">openupgradelib</span> <span class="kn">import</span> <span class="n">openupgrade</span>
 </pre></div>
 </div>
-<div class="section" id="module-openupgradelib.openupgrade">
+<section id="module-openupgradelib.openupgrade">
 <span id="general-methods"></span><h2>General methods<a class="headerlink" href="#module-openupgradelib.openupgrade" title="Permalink to this heading">¶</a></h2>
 <dl class="py function">
 <dt class="sig sig-object py" id="openupgradelib.openupgrade.add_fields">
@@ -61,7 +59,7 @@ odoo/addons/base/models/ir_model.py#L794-L802, but you can still call
 this method for consistency and for avoiding to know the internal PG
 column type.</p>
 <dl class="field-list simple">
-<dt class="field-odd">Param</dt>
+<dt class="field-odd">Param<span class="colon">:</span></dt>
 <dd class="field-odd"><p>field_spec: List of tuples with the following expected elements
 for each tuple:</p>
 <ul class="simple">
@@ -95,7 +93,7 @@ Do not use for fields with additional SQL constraints, such as a
 reference to another table or the cascade constraint, but craft your
 own statement taking them into account.</p>
 <dl class="field-list simple">
-<dt class="field-odd">Parameters</dt>
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
 <dd class="field-odd"><p><strong>columnspec</strong> – tuple of (column name, column type)</p>
 </dd>
 </dl>
@@ -162,7 +160,7 @@ model becomes a ‘company dependent’ field.</p>
 the field is created, or in pre-migration if you have previously
 executed add_fields openupgradelib method.</p>
 <dl class="field-list simple">
-<dt class="field-odd">Parameters</dt>
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
 <dd class="field-odd"><ul class="simple">
 <li><p><strong>model_name</strong> – Name of the model.</p></li>
 <li><p><strong>origin_field_name</strong> – Name of the field from which the values
@@ -182,7 +180,7 @@ registered previously).</p></li>
 <span class="sig-prename descclassname"><span class="pre">openupgradelib.openupgrade.</span></span><span class="sig-name descname"><span class="pre">copy_columns</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">cr</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">column_spec</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#openupgradelib.openupgrade.copy_columns" title="Permalink to this definition">¶</a></dt>
 <dd><p>Copy table columns. Typically called in the pre script.</p>
 <dl class="field-list simple">
-<dt class="field-odd">Parameters</dt>
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
 <dd class="field-odd"><p><strong>column_spec</strong> – a hash with table keys, with lists of tuples as
 values. Tuples consist of (old_name, new_name, type). Use None for
 new_name to trigger a conversion of old_name using get_legacy_name()
@@ -201,7 +199,7 @@ SQL directive. eg. ‘“column”’</p>
 <span class="sig-prename descclassname"><span class="pre">openupgradelib.openupgrade.</span></span><span class="sig-name descname"><span class="pre">copy_fields_multilang</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">cr</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">destination_model</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">destination_table</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">destination_columns</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">relation_column</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">source_model</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">source_table</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">source_columns</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">translations_only</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">False</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#openupgradelib.openupgrade.copy_fields_multilang" title="Permalink to this definition">¶</a></dt>
 <dd><p>Copy field contents including translations.</p>
 <dl class="field-list simple">
-<dt class="field-odd">Parameters</dt>
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
 <dd class="field-odd"><ul class="simple">
 <li><p><strong>destination_model</strong> (<em>str</em>) – Name of the destination model where the data will be copied to.</p></li>
 <li><p><strong>destination_table</strong> (<em>str</em>) – Name of the destination table where the data will be copied to.
@@ -281,7 +279,7 @@ This can be necessary for automatic workflow transitions when writing
 to an object via the ORM in the post migration step.
 Returns a dictionary to be used on reactivate_workflow_transitions</p>
 <dl class="field-list simple">
-<dt class="field-odd">Parameters</dt>
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
 <dd class="field-odd"><ul class="simple">
 <li><p><strong>model</strong> – the model for which workflow transitions should be     deactivated</p></li>
 <li><p><strong>transitions</strong> – a list of (‘module’, ‘name’) xmlid tuples of     transitions to be deactivated. Don’t pass this if there’s no specific     reason to do so, the default is to deactivate all transitions</p></li>
@@ -299,7 +297,7 @@ Returns a dictionary to be used on reactivate_workflow_transitions</p>
 <dd><p>Forcefully remove active workflows for obsolete models,
 to prevent foreign key issues when the orm deletes the model.</p>
 <dl class="field-list simple">
-<dt class="field-odd">Parameters</dt>
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
 <dd class="field-odd"><ul class="simple">
 <li><p><strong>cr</strong> – DB cursor.</p></li>
 <li><p><strong>model</strong> (<em>str</em>) – Model name.</p></li>
@@ -316,7 +314,7 @@ probably.</p></li>
 <span class="sig-prename descclassname"><span class="pre">openupgradelib.openupgrade.</span></span><span class="sig-name descname"><span class="pre">delete_record_translations</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">cr</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">module</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">xml_ids</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#openupgradelib.openupgrade.delete_record_translations" title="Permalink to this definition">¶</a></dt>
 <dd><p>Cleanup translations of specific records in a module.</p>
 <dl class="field-list simple">
-<dt class="field-odd">Parameters</dt>
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
 <dd class="field-odd"><ul class="simple">
 <li><p><strong>module</strong> – module name</p></li>
 <li><p><strong>xml_ids</strong> – a tuple or list of xml record IDs</p></li>
@@ -334,7 +332,7 @@ passed as argument.</p>
 (noupdate=0), it’s switched to noupdate=1, for avoiding a later error when
 Odoo performs the regular update cleanup and trying to remove it as well.</p>
 <dl class="field-list simple">
-<dt class="field-odd">Parameters</dt>
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
 <dd class="field-odd"><ul class="simple">
 <li><p><strong>xml_ids</strong> – List of XML-ID string identifiers of the records to remove.</p></li>
 <li><p><strong>delete_childs</strong> – If true, also child ids of the given xml_ids will
@@ -363,7 +361,7 @@ them, or worse, if they are default filters when opening the model/action.</p>
 <p>To be run at the base end-migration script for having a general scope. Only
 assured to work on &gt; v8.</p>
 <dl class="field-list simple">
-<dt class="field-odd">Parameters</dt>
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
 <dd class="field-odd"><p><strong>env</strong> – Environment parameter.</p>
 </dd>
 </dl>
@@ -377,7 +375,7 @@ This covers the case of function fields that may or may not be stored.
 Consider that this may not be obvious: an additional module can govern
 a function fields’ store properties.</p>
 <dl class="field-list simple">
-<dt class="field-odd">Parameters</dt>
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
 <dd class="field-odd"><p><strong>column_spec</strong> – a list of (table, column) tuples</p>
 </dd>
 </dl>
@@ -389,7 +387,7 @@ a function fields’ store properties.</p>
 <dd><p>Change column type from float to integer. It will just
 truncate the float value (It won’t round it)</p>
 <dl class="field-list simple">
-<dt class="field-odd">Parameters</dt>
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
 <dd class="field-odd"><ul class="simple">
 <li><p><strong>table</strong> – The table</p></li>
 <li><p><strong>field</strong> – The field name for which we want to change the type</p></li>
@@ -408,7 +406,7 @@ truncate the float value (It won’t round it)</p>
 Use this function instead of some custom name to avoid
 collisions with future or past legacy tables/columns/etc</p>
 <dl class="field-list simple">
-<dt class="field-odd">Parameters</dt>
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
 <dd class="field-odd"><ul class="simple">
 <li><p><strong>original_name</strong> – the original name of the column</p></li>
 <li><p><strong>version</strong> – current version as passed to migrate()</p></li>
@@ -443,7 +441,7 @@ Leave it to the user to actually delete existing resources that are
 marked with ‘noupdate’ (other named items will be deleted
 automatically).</p>
 <dl class="field-list simple">
-<dt class="field-odd">Parameters</dt>
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
 <dd class="field-odd"><ul class="simple">
 <li><p><strong>module_name</strong> – the name of the module</p></li>
 <li><p><strong>filename</strong> – the path to the filename, relative to the module     directory. This may also be the module directory relative to –upgrade-path</p></li>
@@ -467,7 +465,7 @@ filled which are not contained in the data file.</p>
 <span class="sig-prename descclassname"><span class="pre">openupgradelib.openupgrade.</span></span><span class="sig-name descname"><span class="pre">logged_query</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">cr</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">query</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">args</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">skip_no_result</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">False</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#openupgradelib.openupgrade.logged_query" title="Permalink to this definition">¶</a></dt>
 <dd><p>Logs query and affected rows at level DEBUG.</p>
 <dl class="field-list simple">
-<dt class="field-odd">Parameters</dt>
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
 <dd class="field-odd"><ul class="simple">
 <li><p><strong>query</strong> – a query string suitable to pass to cursor.execute()</p></li>
 <li><p><strong>args</strong> – a list, tuple or dictionary passed as substitution values
@@ -488,7 +486,7 @@ if there are affected records.</p></li>
 <p>if a function is decorated, a log will be written each time the function
 is called.</p>
 <dl class="field-list simple">
-<dt class="field-odd">Parameters</dt>
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
 <dd class="field-odd"><ul class="simple">
 <li><p><strong>args_details</strong> – if True, arguments details are given in the log</p></li>
 <li><p><strong>step</strong> – The log will be done only every step times.</p></li>
@@ -526,7 +524,7 @@ one inverse record can be mapped in a one2many, but you can have multiple
 many2one pointing to the same target. Use it when the use case allows this
 conversion.</p>
 <dl class="field-list simple">
-<dt class="field-odd">Parameters</dt>
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
 <dd class="field-odd"><ul class="simple">
 <li><p><strong>model</strong> – The target model registry object</p></li>
 <li><p><strong>table</strong> – The source table</p></li>
@@ -547,7 +545,7 @@ conversion.</p>
 presumably come from a legacy column.
 You will typically want to use it in post-migration scripts.</p>
 <dl class="field-list simple">
-<dt class="field-odd">Parameters</dt>
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
 <dd class="field-odd"><ul class="simple">
 <li><p><strong>cr</strong> – The database cursor</p></li>
 <li><p><strong>source_column</strong> – the database column that contains old values to be     mapped</p></li>
@@ -584,7 +582,7 @@ tables. You should have to do that previously in the migration scripts.</p>
 <dd><p>Log handler for non-critical notifications about the upgrade.
 To be extended with logging to a table for reporting purposes.</p>
 <dl class="field-list simple">
-<dt class="field-odd">Parameters</dt>
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
 <dd class="field-odd"><ul class="simple">
 <li><p><strong>module</strong> – the module name that the message concerns</p></li>
 <li><p><strong>table</strong> – the model that this message concerns (may be False,     but preferably not if ‘column’ is defined)</p></li>
@@ -644,7 +642,7 @@ available on post script migration.
 <dd><p>Reactivate workflow transition previously deactivated by
 deactivate_workflow_transitions.</p>
 <dl class="field-list simple">
-<dt class="field-odd">Parameters</dt>
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
 <dd class="field-odd"><p><strong>transition_conditions</strong> – a dictionary returned by     deactivate_workflow_transitions</p>
 </dd>
 </dl>
@@ -672,7 +670,7 @@ deletion in other tables, even when this one has no more use.</p>
 <strong>not</strong> FKs that <em>point</em> to those tables.</p>
 </div>
 <dl class="field-list simple">
-<dt class="field-odd">Parameters</dt>
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
 <dd class="field-odd"><p><strong>tables</strong> (<em>[</em><em>str</em><em>, </em><em>...</em><em>]</em>) – List of tables where the FKs were declared, and where they will be
 removed too. If a table doesn’t exist, it is skipped.</p>
 </dd>
@@ -684,7 +682,7 @@ removed too. If a table doesn’t exist, it is skipped.</p>
 <span class="sig-prename descclassname"><span class="pre">openupgradelib.openupgrade.</span></span><span class="sig-name descname"><span class="pre">rename_columns</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">cr</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">column_spec</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#openupgradelib.openupgrade.rename_columns" title="Permalink to this definition">¶</a></dt>
 <dd><p>Rename table columns. Typically called in the pre script.</p>
 <dl class="field-list simple">
-<dt class="field-odd">Parameters</dt>
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
 <dd class="field-odd"><p><strong>column_spec</strong> – a hash with table keys, with lists of tuples as     values. Tuples consist of (old_name, new_name). Use None for new_name     to trigger a conversion of old_name using get_legacy_name()</p>
 </dd>
 </dl>
@@ -705,7 +703,7 @@ for other purposes (preserve a value for example).</p>
 <p>This method performs also the SQL column renaming, so only one call is
 needed.</p>
 <dl class="field-list simple">
-<dt class="field-odd">Parameters</dt>
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
 <dd class="field-odd"><ul class="simple">
 <li><p><strong>env</strong> – Environment/pool variable. The database cursor is the only
 thing needed, but added in prevision of TODO tasks for not breaking
@@ -748,7 +746,7 @@ in a pre-migration script.</p>
 This function also renames the id sequence if it exists and if it is
 not modified in the same run.</p>
 <dl class="field-list simple">
-<dt class="field-odd">Parameters</dt>
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
 <dd class="field-odd"><p><strong>table_spec</strong> – a list of tuples (old table name, new table name). Use     None for new_name to trigger a conversion of old_name to the result of     get_legacy_name()</p>
 </dd>
 </dl>
@@ -762,7 +760,7 @@ One usage example is when an ID changes module. In OpenERP 6 for example,
 a number of res_groups IDs moved to module base from other modules (
 although they were still being defined in their respective module).</p>
 <dl class="field-list simple">
-<dt class="field-odd">Parameters</dt>
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
 <dd class="field-odd"><ul class="simple">
 <li><p><strong>xmlids_spec</strong> – a list of tuples (old module.xmlid, new module.xmlid).</p></li>
 <li><p><strong>allow_merge</strong> – if the new ID already exists, try to merge the records.
@@ -784,7 +782,7 @@ to inconsistencies in the database.</p></li>
 <dd><p>Allow for errors to occur during unlinking of records.</p>
 <p>Prevent broken database transactions, and by default, catch exceptions.</p>
 <dl class="field-list simple">
-<dt class="field-odd">Parameters</dt>
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
 <dd class="field-odd"><ul class="simple">
 <li><p><strong>records</strong> – an iterable (not necessarily recordset) of records to
 unlink.</p></li>
@@ -801,7 +799,7 @@ be raised.</p></li>
 <dd><p>Set default value. Useful for fields that are newly required. Uses orm, so
 call from the post script.</p>
 <dl class="field-list simple">
-<dt class="field-odd">Parameters</dt>
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
 <dd class="field-odd"><ul class="simple">
 <li><p><strong>pool</strong> – you can pass ‘env’ as well.</p></li>
 <li><p><strong>default_spec</strong> – a hash with model names as keys. Values are lists     of tuples (field, value). None as a value has a special meaning: it     assigns the default value. If this value is provided by a function, the     function is called as the user that created the resource.</p></li>
@@ -817,7 +815,7 @@ call from the post script.</p>
 <span class="sig-prename descclassname"><span class="pre">openupgradelib.openupgrade.</span></span><span class="sig-name descname"><span class="pre">set_xml_ids_noupdate_value</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">env</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">module</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">xml_ids</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">value</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#openupgradelib.openupgrade.set_xml_ids_noupdate_value" title="Permalink to this definition">¶</a></dt>
 <dd><p>Set the xml_ids noupdate values in a module.</p>
 <dl class="field-list simple">
-<dt class="field-odd">Parameters</dt>
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
 <dd class="field-odd"><ul class="simple">
 <li><p><strong>module</strong> – module name</p></li>
 <li><p><strong>xml_ids</strong> – a tuple or list of xml record IDs</p></li>
@@ -838,7 +836,7 @@ call from the post script.</p>
 <span class="sig-prename descclassname"><span class="pre">openupgradelib.openupgrade.</span></span><span class="sig-name descname"><span class="pre">update_field_multilang</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">records</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">field</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">method</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#openupgradelib.openupgrade.update_field_multilang" title="Permalink to this definition">¶</a></dt>
 <dd><p>Update a field in all available languages in the database.</p>
 <dl class="field-list simple">
-<dt class="field-odd">Parameters</dt>
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
 <dd class="field-odd"><ul class="simple">
 <li><p><strong>records</strong> – Recordset to be updated.</p></li>
 <li><p><strong>field</strong> (<em>str</em>) – Field to be updated.</p></li>
@@ -858,7 +856,7 @@ moved from one module to another.</p>
 <p>No need to use this method: moving the XMLID is covered in
 Odoo and OpenUpgrade natively.</p>
 <dl class="field-list simple">
-<dt class="field-odd">Parameters</dt>
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
 <dd class="field-odd"><ul class="simple">
 <li><p><strong>cr</strong> – Database cursor</p></li>
 <li><p><strong>model</strong> – model name</p></li>
@@ -887,7 +885,7 @@ moved from one module to another.
 <dd><p>Deal with changed module names, making all the needed changes on the
 related tables, like XML-IDs, translations, and so on.</p>
 <dl class="field-list simple">
-<dt class="field-odd">Parameters</dt>
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
 <dd class="field-odd"><ul class="simple">
 <li><p><strong>namespec</strong> – list of tuples of (old name, new name)</p></li>
 <li><p><strong>merge_modules</strong> – Specify if the operation should be a merge instead
@@ -907,11 +905,11 @@ are in these actions need to be set to another to be able to continue the
 workflow properly.</p>
 <p>Run in pre-migration</p>
 <dl class="field-list simple">
-<dt class="field-odd">Parameters</dt>
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
 <dd class="field-odd"><p><strong>ref_spec_actions</strong> – list of tuples with couple of workflow.action’s
 external ids. The first id is replaced with the second.</p>
 </dd>
-<dt class="field-even">Returns</dt>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
 <dd class="field-even"><p>None</p>
 </dd>
 </dl>
@@ -930,7 +928,7 @@ This function will test if ‘B’ is installed.
 If not, count the number of different value and possibly warn the user.
 Use orm, so call from the post script.</p>
 <dl class="field-list simple">
-<dt class="field-odd">Parameters</dt>
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
 <dd class="field-odd"><ul class="simple">
 <li><p><strong>old_module</strong> – name of the old module</p></li>
 <li><p><strong>fields</strong> – list of dictionary with the following keys:
@@ -945,8 +943,8 @@ Use orm, so call from the post script.</p>
 </div>
 </dd></dl>
 
-</div>
-<div class="section" id="methods-for-openupgrade-7-0">
+</section>
+<section id="methods-for-openupgrade-7-0">
 <h2>Methods for OpenUpgrade 7.0<a class="headerlink" href="#methods-for-openupgrade-7-0" title="Permalink to this heading">¶</a></h2>
 <p>The following specific methods for 7.0 are available. These have been
 developed to cover specific needs as per data model changes in that
@@ -963,7 +961,7 @@ release.</p>
 <span class="sig-prename descclassname"><span class="pre">openupgradelib.openupgrade_70.</span></span><span class="sig-name descname"><span class="pre">set_partner_id_from_partner_address_id</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">cr</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">pool</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">model_name</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">partner_field</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">address_field</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">table</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#openupgradelib.openupgrade_70.set_partner_id_from_partner_address_id" title="Permalink to this definition">¶</a></dt>
 <dd><p>Set the new partner_id on any table with migrated contact ids</p>
 <dl class="field-list simple">
-<dt class="field-odd">Parameters</dt>
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
 <dd class="field-odd"><ul class="simple">
 <li><p><strong>model_name</strong> – the model name of the target table</p></li>
 <li><p><strong>partner_field</strong> – the column in the target model’s table                           that will store the new partner when found</p></li>
@@ -971,14 +969,14 @@ release.</p>
 <li><p><strong>table</strong> – override the target model’s table name in case it was renamed</p></li>
 </ul>
 </dd>
-<dt class="field-even">Returns</dt>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
 <dd class="field-even"><p>nothing</p>
 </dd>
 </dl>
 </dd></dl>
 
-</div>
-<div class="section" id="methods-for-openupgrade-8-0">
+</section>
+<section id="methods-for-openupgrade-8-0">
 <h2>Methods for OpenUpgrade 8.0<a class="headerlink" href="#methods-for-openupgrade-8-0" title="Permalink to this heading">¶</a></h2>
 <p>The following specific methods for 8.0 are available. These have been
 developed to cover specific needs as per data model changes in that
@@ -990,7 +988,7 @@ release.</p>
 their latest message date as a value.
 To be called in post-migration scripts</p>
 <dl class="field-list simple">
-<dt class="field-odd">Parameters</dt>
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
 <dd class="field-odd"><ul class="simple">
 <li><p><strong>cr</strong> – database cursor</p></li>
 <li><p><strong>uid</strong> – user id, assumed to be openerp.SUPERUSER_ID</p></li>
@@ -998,7 +996,7 @@ To be called in post-migration scripts</p>
 <li><p><strong>model_pool</strong> – orm model pool, assumed to be from pool.get()</p></li>
 </ul>
 </dd>
-<dt class="field-even">Returns</dt>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
 <dd class="field-even"><p>a dict with ids as keys and with dates as values</p>
 </dd>
 </dl>
@@ -1011,7 +1009,7 @@ To be called in post-migration scripts</p>
 estimated last post datetime.
 To be called in post-migration scripts</p>
 <dl class="field-list simple">
-<dt class="field-odd">Parameters</dt>
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
 <dd class="field-odd"><ul class="simple">
 <li><p><strong>cr</strong> – database cursor</p></li>
 <li><p><strong>uid</strong> – user id, assumed to be openerp.SUPERUSER_ID</p></li>
@@ -1019,7 +1017,7 @@ To be called in post-migration scripts</p>
 <li><p><strong>models</strong> – a list of model names for which ‘message_last_post’ needs     to be filled</p></li>
 </ul>
 </dd>
-<dt class="field-even">Returns</dt>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
 <dd class="field-even"><p></p>
 </dd>
 </dl>
@@ -1031,7 +1029,7 @@ To be called in post-migration scripts</p>
 <dd><p>Update a model’s aliases according to how they are configured
 in the model’s create() method.</p>
 <dl class="field-list simple">
-<dt class="field-odd">Parameters</dt>
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
 <dd class="field-odd"><ul class="simple">
 <li><p><strong>model_name</strong> – The name of the model whose aliases are to be updated.     The model_id is also set as the aliases’ alias_parent_model_id.</p></li>
 <li><p><strong>set_parent_thread_id'</strong> – When set, set the ids of the resources as     their alias’ alias_parent_thread_id</p></li>
@@ -1042,8 +1040,8 @@ in the model’s create() method.</p>
 </dl>
 </dd></dl>
 
-</div>
-<div class="section" id="methods-for-openupgrade-9-0">
+</section>
+<section id="methods-for-openupgrade-9-0">
 <h2>Methods for OpenUpgrade 9.0<a class="headerlink" href="#methods-for-openupgrade-9-0" title="Permalink to this heading">¶</a></h2>
 <p>The following specific methods for 9.0 are available. These have been
 developed to cover specific needs as per data model changes in that
@@ -1066,7 +1064,7 @@ with guessing MIME type, format and length, file saving in store…
 that is doesn’t worth to recreate it via SQL as there’s not too much
 performance problem.</p>
 <dl class="field-list simple">
-<dt class="field-odd">Parameters</dt>
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
 <dd class="field-odd"><ul class="simple">
 <li><p><strong>env</strong> – Odoo environment</p></li>
 <li><p><strong>field_spec</strong> – <p>A dictionary with the ORM model name as key, and as
@@ -1092,8 +1090,8 @@ type is allowed not to exist anymore, except when running unit tests.
 :param unlink: attempt to unlink the old account type</p>
 </dd></dl>
 
-</div>
-</div>
+</section>
+</section>
 
 
           </div>
@@ -1227,8 +1225,8 @@ type is allowed not to exist anymore, except when running unit tests.
       &copy;2012-2021, Odoo Community Association (OCA) / The OpenUpgrade developers.
       
       |
-      Powered by <a href="http://sphinx-doc.org/">Sphinx 5.3.0</a>
-      &amp; <a href="https://github.com/bitprophet/alabaster">Alabaster 0.7.12</a>
+      Powered by <a href="http://sphinx-doc.org/">Sphinx 6.1.3</a>
+      &amp; <a href="https://github.com/bitprophet/alabaster">Alabaster 0.7.13</a>
       
       |
       <a href="_sources/API.rst.txt"
