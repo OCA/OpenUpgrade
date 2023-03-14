@@ -23,6 +23,8 @@ renamed_modules = {
     'quality_control': 'quality_control_oca',
     'quality_control_mrp': 'quality_control_mrp_oca',
     'quality_control_stock': 'quality_control_stock_oca',
+    # OCA/margin-analysis
+    'product_pricelist_margin': 'product_pricelist_simulation',
     # OCA/product-attribute
     'product_pricelist_print_website_sale': 'product_pricelist_direct_print_website_sale',
     'sale_product_classification': 'product_abc_classification_sale',
