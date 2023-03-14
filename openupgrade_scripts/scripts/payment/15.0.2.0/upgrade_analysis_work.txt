@@ -95,7 +95,9 @@ payment      / payment.transaction      / type (selection)              : DEL re
 # DONE: post-migration: marked as true if 'form_save'
 
 ---XML records in module 'payment'---
-DEL account.payment.method: payment.account_payment_method_electronic_in
+DEL account.payment.method: payment.account_payment_method_electronic_in (noupdate)
+# DONE: safely deleted xmlid
+
 NEW ir.actions.act_window: payment.action_payment_token
 NEW ir.actions.act_window: payment.action_payment_transaction_linked_to_token
 DEL ir.actions.act_window: payment.action_payment_tx_ids
