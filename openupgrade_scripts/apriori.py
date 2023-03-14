@@ -91,6 +91,8 @@ merged_modules = {
     # OCA/partner-contact
     "base_vat_sanitized": "base_vat",
     "partner_bank_active": "base",
+    # OCA/pos
+    "pos_ticket_logo": "point_of_sale",
     # OCA/project
     "project_description": "project",
     "project_stage_closed": "project",
