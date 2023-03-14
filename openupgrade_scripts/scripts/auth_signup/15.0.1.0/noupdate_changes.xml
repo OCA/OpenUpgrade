@@ -149,7 +149,7 @@
         </tr>
       </table>
     </field>
-    <field name="email_from">"{{ object.company_id.name }}" &lt;{{ (object.company_id.email or user.email) }}&gt;</field>
+    <field name="email_from">{{ (object.company_id.email_formatted or user.email_formatted) }}</field>
     <field name="email_to">{{ object.email_formatted }}</field>
     <field name="lang">{{ object.lang }}</field>
     <field name="subject">Welcome to {{ object.company_id.name }}!</field>
@@ -253,7 +253,7 @@
         </tr>
       </table>
     </field>
-    <field name="email_from">"{{ object.company_id.name }}" &lt;{{ (object.company_id.email or user.email) }}&gt;</field>
+    <field name="email_from">{{ (object.company_id.email_formatted or user.email_formatted) }}</field>
     <field name="email_to">{{ object.email_formatted }}</field>
     <field name="lang">{{ object.lang }}</field>
   </record>
@@ -361,7 +361,7 @@
         </tr>
       </table>
     </field>
-    <field name="email_from">"{{ object.company_id.name }}" &lt;{{ (object.company_id.email or user.email) }}&gt;</field>
+    <field name="email_from">{{ (object.company_id.email_formatted or user.email_formatted) }}</field>
     <field name="email_to">{{ object.email_formatted }}</field>
     <field name="lang">{{ object.lang }}</field>
     <field name="subject">{{ object.create_uid.name }} from {{ object.company_id.name }} invites you to connect to Odoo</field>

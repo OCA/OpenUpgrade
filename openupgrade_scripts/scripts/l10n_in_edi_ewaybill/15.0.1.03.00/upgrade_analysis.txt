@@ -1,0 +1,34 @@
+---Models in module 'l10n_in_edi_ewaybill'---
+new model l10n.in.ewaybill.type
+---Fields in module 'l10n_in_edi_ewaybill'---
+l10n_in_edi_ewaybill / account.move             / l10n_in_distance (integer)    : NEW
+l10n_in_edi_ewaybill / account.move             / l10n_in_mode (selection)      : NEW selection_keys: ['0', '1', '2', '3', '4']
+l10n_in_edi_ewaybill / account.move             / l10n_in_transportation_doc_date (date): NEW
+l10n_in_edi_ewaybill / account.move             / l10n_in_transportation_doc_no (char): NEW
+l10n_in_edi_ewaybill / account.move             / l10n_in_transporter_id (many2one): NEW relation: res.partner
+l10n_in_edi_ewaybill / account.move             / l10n_in_type_id (many2one)    : NEW relation: l10n.in.ewaybill.type
+l10n_in_edi_ewaybill / account.move             / l10n_in_vehicle_no (char)     : NEW
+l10n_in_edi_ewaybill / account.move             / l10n_in_vehicle_type (selection): NEW selection_keys: ['O', 'R']
+l10n_in_edi_ewaybill / l10n.in.ewaybill.type    / active (boolean)              : NEW hasdefault: default
+l10n_in_edi_ewaybill / l10n.in.ewaybill.type    / allowed_supply_type (selection): NEW selection_keys: ['both', 'in', 'out']
+l10n_in_edi_ewaybill / l10n.in.ewaybill.type    / code (char)                   : NEW
+l10n_in_edi_ewaybill / l10n.in.ewaybill.type    / name (char)                   : NEW
+l10n_in_edi_ewaybill / l10n.in.ewaybill.type    / sub_type (char)               : NEW
+l10n_in_edi_ewaybill / l10n.in.ewaybill.type    / sub_type_code (char)          : NEW
+l10n_in_edi_ewaybill / res.company              / l10n_in_edi_ewaybill_auth_validity (datetime): NEW
+l10n_in_edi_ewaybill / res.company              / l10n_in_edi_ewaybill_password (char): NEW
+l10n_in_edi_ewaybill / res.company              / l10n_in_edi_ewaybill_username (char): NEW
+---XML records in module 'l10n_in_edi_ewaybill'---
+NEW account.edi.format: l10n_in_edi_ewaybill.edi_in_ewaybill_json_1_03
+NEW ir.model.access: l10n_in_edi_ewaybill.access_l10n_in_ewaybill_type
+NEW ir.ui.view: l10n_in_edi_ewaybill.invoice_form_inherit_l10n_in_edi_ewaybill
+NEW ir.ui.view: l10n_in_edi_ewaybill.l10n_in_einvoice_report_invoice_document_inherit
+NEW ir.ui.view: l10n_in_edi_ewaybill.res_config_settings_view_form_inherit_l10n_in_edi_ewaybill
+NEW l10n.in.ewaybill.type: l10n_in_edi_ewaybill.type_bill_of_entry_sub_skd_ckd_lots
+NEW l10n.in.ewaybill.type: l10n_in_edi_ewaybill.type_bill_of_entry_sub_type_import
+NEW l10n.in.ewaybill.type: l10n_in_edi_ewaybill.type_bill_of_supply_sub_type_export
+NEW l10n.in.ewaybill.type: l10n_in_edi_ewaybill.type_bill_of_supply_sub_type_skd_ckd_lots
+NEW l10n.in.ewaybill.type: l10n_in_edi_ewaybill.type_bill_of_supply_sub_type_supply
+NEW l10n.in.ewaybill.type: l10n_in_edi_ewaybill.type_tax_invoice_sub_type_export
+NEW l10n.in.ewaybill.type: l10n_in_edi_ewaybill.type_tax_invoice_sub_type_skd_ckd_lots
+NEW l10n.in.ewaybill.type: l10n_in_edi_ewaybill.type_tax_invoice_sub_type_supply

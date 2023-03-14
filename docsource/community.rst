@@ -4,7 +4,7 @@ Community involvement
 Writing migration scripts for Odoo is a lot of work, that can not be
 accomplished by a single party.  We need your help.
 
-If you are at all interested in discussing stategic, functional or
+If you are at all interested in discussing strategic, functional or
 technical issues, please post an issue on the Github project:
 `<https://github.com/OCA/OpenUpgrade>`_.
 
@@ -23,7 +23,7 @@ consider hiring a Odoo consulting company to migrate your configuration
 using the technology provided by this project, and insist that the
 resulting migration scripts be contributed back.
 
-If you are an independent, knowledgable user of Odoo and the OpenUpgrade
+If you are an independent, knowledgeable user of Odoo and the OpenUpgrade
 project covers the modules that you have in use, try and use the software
 to upgrade a copy of your database and give us feedback.
 

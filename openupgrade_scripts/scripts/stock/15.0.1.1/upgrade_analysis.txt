@@ -1,6 +1,6 @@
 ---Models in module 'stock'---
 obsolete model stock.inventory (renamed to stock.quant)
-obsolete model stock.inventory.line (renamed to stock.quant)
+obsolete model stock.inventory.line (renamed to stock.move.line)
 new model report.stock.label_product_product_view [abstract]
 new model report.stock.report_reception [abstract]
 new model stock.inventory.adjustment.name [transient]
@@ -16,6 +16,8 @@ stock        / barcode.rule             / type (False)                  : select
 stock        / product.category         / packaging_reserve_method (selection): NEW selection_keys: ['full', 'partial'], hasdefault: default
 stock        / product.packaging        / package_type_id (many2one)    : NEW relation: stock.package.type
 stock        / product.packaging        / route_ids (many2many)         : NEW relation: stock.location.route
+stock        / product.product          / show_on_hand_qty_status_button (boolean): not related anymore
+stock        / product.product          / show_on_hand_qty_status_button (boolean): now a function
 stock        / product.product          / storage_category_capacity_ids (one2many): NEW relation: stock.storage.category.capacity
 stock        / product.template         / detailed_type (False)         : NEW selection_keys: ['consu', 'gift', 'product', 'service'], mode: modify
 stock        / res.company              / annual_inventory_day (integer): NEW hasdefault: default

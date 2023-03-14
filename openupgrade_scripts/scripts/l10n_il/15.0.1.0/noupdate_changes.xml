@@ -7,6 +7,7 @@
     <field name="country_id" ref="base.il"/>
   </record>
   <record id="tax_group_vat_exempt" model="account.tax.group">
+    <field name="name">VAT exempt sale</field>
     <field name="country_id" ref="base.il"/>
   </record>
 </odoo>

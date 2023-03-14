@@ -2,7 +2,7 @@ Database analysis
 +++++++++++++++++
 
 Database analysis files are hosted in `scripts` subdirectory of the
-openupgrade_scripts module directory in the https://github.com/oca/openupgrade
+openupgrade_scripts module directory in the https://github.com/OCA/OpenUpgrade
 repository.
 
 You can create a custom set of analysis files on any set of modules between
@@ -13,8 +13,8 @@ Earlier versions
 ----------------
 
 In editions earlier than 14.0, the analysis files were hosted in the forks of
-Odoo at https://github.com/oca/openupgrade. The module to create the analysis
-was placed in each branch of the openupgrade repository under
+Odoo at https://github.com/OCA/OpenUpgrade. The module to create the analysis
+was placed in each branch of the OpenUpgrade repository under
 odoo/addons/openupgrade_records.
 
 Contents

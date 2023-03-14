@@ -100,5 +100,9 @@ def migrate(env, version):
     )
     openupgrade.delete_records_safely_by_xml_id(
         env,
-        ["payment.payment_acquirer_odoo_by_adyen", "payment.default_acquirer_button"],
+        [
+            "payment.payment_acquirer_odoo_by_adyen",
+            "payment.default_acquirer_button",
+            "payment.account_payment_method_electronic_in",
+        ],
     )

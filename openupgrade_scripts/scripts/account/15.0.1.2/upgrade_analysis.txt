@@ -27,7 +27,7 @@ account      / account.journal          / outbound_payment_method_ids (many2many
 account      / account.journal          / outbound_payment_method_line_ids (one2many): NEW relation: account.payment.method.line, hasdefault: compute
 account      / account.journal          / payment_credit_account_id (many2one): DEL relation: account.account
 account      / account.journal          / payment_debit_account_id (many2one): DEL relation: account.account
-account      / account.move             / always_tax_exigible (boolean) : NEW isfunction: function, stored
+account      / account.move             / always_tax_exigible (boolean) : NEW hasdefault: compute
 account      / account.move             / amount_total_in_currency_signed (float): NEW isfunction: function, stored
 account      / account.move             / narration (text)              : type is now 'html' ('text')
 account      / account.move             / tax_cash_basis_created_move_ids (one2many): NEW relation: account.move

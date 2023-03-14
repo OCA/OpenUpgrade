@@ -10,6 +10,7 @@ obsolete model adyen.terminal [module pos_adyen]
 obsolete model adyen.transaction [module adyen_platforms]
 obsolete model calendar.contacts (renamed to calendar.filters) [module calendar]
 obsolete model closing.balance.confirm.wizard [module point_of_sale]
+obsolete model export.computed.binary [module test_xlsx_export]
 obsolete model l10n_eu_service.service_tax_rate [module l10n_eu_oss]
 obsolete model l10n_eu_service.wizard [module l10n_eu_oss]
 obsolete model lunch.product.report [module lunch]
@@ -17,7 +18,7 @@ obsolete model mail.moderation (renamed to mail.group.moderation) [module mail]
 obsolete model phone.validation.mixin [module phone_validation]
 obsolete model project.task.create.sale.order [module sale_timesheet]
 obsolete model stock.inventory (renamed to stock.quant) [module stock]
-obsolete model stock.inventory.line (renamed to stock.quant) [module stock]
+obsolete model stock.inventory.line (renamed to stock.move.line) [module stock]
 obsolete model website.mass_mailing.popup [module website_mass_mailing]
 new model account.accrued.orders.wizard [module account]
 new model account.edi.xml.ubl_nl [module account_edi_ubl_cii]
@@ -59,6 +60,7 @@ new model l10n_eg_edi.activity.type [module l10n_eg_edi_eta]
 new model l10n_eg_edi.thumb.drive [module l10n_eg_edi_eta]
 new model l10n_eg_edi.uom.code [module l10n_eg_edi_eta]
 new model l10n_eg.eta.account.tax.mixin [module l10n_eg]
+new model l10n.in.ewaybill.type [module l10n_in_edi_ewaybill]
 new model mail.channel.rtc.session [module mail]
 new model mail.composer.mixin [module mail]
 new model mail.group [module mail_group]
@@ -69,6 +71,9 @@ new model mail.group.moderation (renamed from mail.moderation) [module mail_grou
 new model mail.guest [module mail]
 new model mail.ice.server [module mail]
 new model mail.message.reaction [module mail]
+new model mail.test.composer.mixin [module test_mail]
+new model mail.test.lang [module test_mail]
+new model mail.test.track.monetary [module test_mail]
 new model mailing.contact.to.list [module mass_mailing]
 new model mrp.workcenter.tag [module mrp]
 new model payment.refund.wizard [module payment]
@@ -99,18 +104,22 @@ new model stock.replenishment.info [module stock]
 new model stock.request.count [module stock]
 new model stock.storage.category [module stock]
 new model stock.storage.category.capacity [module stock]
+new model test_inherit.mixin [module test_inherit]
+new model test_new_api.model_constrained_unlinks [module test_new_api]
+new model test_read_group.task [module test_read_group]
+new model test_read_group.user [module test_read_group]
 new model theme.ir.asset [module website]
 new model website.base.unit [module website_sale]
 new model website.configurator.feature [module website]
 new model website.searchable.mixin [module website]
 ---Fields in module 'general'---
-# 10889 fields matched,
-# Direct match: 10775
-# Found in other module: 114
+# 12761 fields matched,
+# Direct match: 12688
+# Found in other module: 73
 # Found with different type: 0
-# In obsolete models: 162
-# New columns: 1763
-# Not matched: 587
+# In obsolete models: 166
+# New columns: 1946
+# Not matched: 618
 ---XML records in module 'general'---
 ERROR: module not in list of installed modules:
 ---Models in module 'adyen_platforms'---
@@ -234,69 +243,6 @@ DEL ir.ui.view: adyen_platforms.adyen_transaction_view_list
 DEL ir.ui.view: adyen_platforms.assets_backend
 DEL ir.ui.view: adyen_platforms.kyc_status_message
 ERROR: module not in list of installed modules:
----Models in module 'crm_iap_lead_website'---
-model crm.reveal.rule (moved to website_crm_iap_reveal)
-model crm.reveal.view (moved to website_crm_iap_reveal)
----Fields in module 'crm_iap_lead_website'---
-crm_iap_lead_website / crm.lead                 / reveal_iap_credits (integer)  : module is now 'website_crm_iap_reveal' ('crm_iap_lead_website')
-crm_iap_lead_website / crm.lead                 / reveal_ip (char)              : module is now 'website_crm_iap_reveal' ('crm_iap_lead_website')
-crm_iap_lead_website / crm.lead                 / reveal_rule_id (many2one)     : module is now 'website_crm_iap_reveal' ('crm_iap_lead_website')
-crm_iap_lead_website / crm.reveal.rule          / __last_update (datetime)      : module is now 'website_crm_iap_reveal' ('crm_iap_lead_website')
-crm_iap_lead_website / crm.reveal.rule          / _order                        : module is now 'website_crm_iap_reveal' ('crm_iap_lead_website')
-crm_iap_lead_website / crm.reveal.rule          / active (boolean)              : module is now 'website_crm_iap_reveal' ('crm_iap_lead_website')
-crm_iap_lead_website / crm.reveal.rule          / company_size_max (integer)    : module is now 'website_crm_iap_reveal' ('crm_iap_lead_website')
-crm_iap_lead_website / crm.reveal.rule          / company_size_min (integer)    : module is now 'website_crm_iap_reveal' ('crm_iap_lead_website')
-crm_iap_lead_website / crm.reveal.rule          / contact_filter_type (selection): module is now 'website_crm_iap_reveal' ('crm_iap_lead_website')
-crm_iap_lead_website / crm.reveal.rule          / country_ids (many2many)       : module is now 'website_crm_iap_reveal' ('crm_iap_lead_website')
-crm_iap_lead_website / crm.reveal.rule          / display_name (char)           : module is now 'website_crm_iap_reveal' ('crm_iap_lead_website')
-crm_iap_lead_website / crm.reveal.rule          / extra_contacts (integer)      : module is now 'website_crm_iap_reveal' ('crm_iap_lead_website')
-crm_iap_lead_website / crm.reveal.rule          / filter_on_size (boolean)      : module is now 'website_crm_iap_reveal' ('crm_iap_lead_website')
-crm_iap_lead_website / crm.reveal.rule          / industry_tag_ids (many2many)  : module is now 'website_crm_iap_reveal' ('crm_iap_lead_website')
-crm_iap_lead_website / crm.reveal.rule          / lead_count (integer)          : module is now 'website_crm_iap_reveal' ('crm_iap_lead_website')
-crm_iap_lead_website / crm.reveal.rule          / lead_for (selection)          : module is now 'website_crm_iap_reveal' ('crm_iap_lead_website')
-crm_iap_lead_website / crm.reveal.rule          / lead_ids (one2many)           : module is now 'website_crm_iap_reveal' ('crm_iap_lead_website')
-crm_iap_lead_website / crm.reveal.rule          / lead_type (selection)         : module is now 'website_crm_iap_reveal' ('crm_iap_lead_website')
-crm_iap_lead_website / crm.reveal.rule          / name (char)                   : module is now 'website_crm_iap_reveal' ('crm_iap_lead_website')
-crm_iap_lead_website / crm.reveal.rule          / opportunity_count (integer)   : module is now 'website_crm_iap_reveal' ('crm_iap_lead_website')
-crm_iap_lead_website / crm.reveal.rule          / other_role_ids (many2many)    : module is now 'website_crm_iap_reveal' ('crm_iap_lead_website')
-crm_iap_lead_website / crm.reveal.rule          / preferred_role_id (many2one)  : module is now 'website_crm_iap_reveal' ('crm_iap_lead_website')
-crm_iap_lead_website / crm.reveal.rule          / priority (selection)          : module is now 'website_crm_iap_reveal' ('crm_iap_lead_website')
-crm_iap_lead_website / crm.reveal.rule          / regex_url (char)              : module is now 'website_crm_iap_reveal' ('crm_iap_lead_website')
-crm_iap_lead_website / crm.reveal.rule          / seniority_id (many2one)       : module is now 'website_crm_iap_reveal' ('crm_iap_lead_website')
-crm_iap_lead_website / crm.reveal.rule          / sequence (integer)            : module is now 'website_crm_iap_reveal' ('crm_iap_lead_website')
-crm_iap_lead_website / crm.reveal.rule          / state_ids (many2many)         : module is now 'website_crm_iap_reveal' ('crm_iap_lead_website')
-crm_iap_lead_website / crm.reveal.rule          / suffix (char)                 : module is now 'website_crm_iap_reveal' ('crm_iap_lead_website')
-crm_iap_lead_website / crm.reveal.rule          / tag_ids (many2many)           : module is now 'website_crm_iap_reveal' ('crm_iap_lead_website')
-crm_iap_lead_website / crm.reveal.rule          / team_id (many2one)            : module is now 'website_crm_iap_reveal' ('crm_iap_lead_website')
-crm_iap_lead_website / crm.reveal.rule          / user_id (many2one)            : module is now 'website_crm_iap_reveal' ('crm_iap_lead_website')
-crm_iap_lead_website / crm.reveal.rule          / website_id (many2one)         : module is now 'website_crm_iap_reveal' ('crm_iap_lead_website')
-crm_iap_lead_website / crm.reveal.view          / __last_update (datetime)      : module is now 'website_crm_iap_reveal' ('crm_iap_lead_website')
-crm_iap_lead_website / crm.reveal.view          / _order                        : module is now 'website_crm_iap_reveal' ('crm_iap_lead_website')
-crm_iap_lead_website / crm.reveal.view          / display_name (char)           : module is now 'website_crm_iap_reveal' ('crm_iap_lead_website')
-crm_iap_lead_website / crm.reveal.view          / reveal_ip (char)              : module is now 'website_crm_iap_reveal' ('crm_iap_lead_website')
-crm_iap_lead_website / crm.reveal.view          / reveal_rule_id (many2one)     : module is now 'website_crm_iap_reveal' ('crm_iap_lead_website')
-crm_iap_lead_website / crm.reveal.view          / reveal_state (selection)      : module is now 'website_crm_iap_reveal' ('crm_iap_lead_website')
----XML records in module 'crm_iap_lead_website'---
-DEL ir.actions.act_window: crm_iap_lead_website.crm_reveal_rule_action [renamed to website_crm_iap_reveal module]
-DEL ir.actions.act_window: crm_iap_lead_website.crm_reveal_view_action [renamed to website_crm_iap_reveal module]
-DEL ir.cron: crm_iap_lead_website.ir_cron_crm_reveal_lead [renamed to website_crm_iap_reveal module] (noupdate)
-DEL ir.model.access: crm_iap_lead_website.access_crm_reveal_rule
-DEL ir.model.access: crm_iap_lead_website.access_crm_reveal_view
-DEL ir.model.constraint: crm_iap_lead_website.constraint_crm_reveal_rule_limit_extra_contacts [renamed to website_crm_iap_reveal module]
-DEL ir.ui.menu: crm_iap_lead_website.crm_reveal_rule_menu_action [renamed to website_crm_iap_reveal module]
-DEL ir.ui.menu: crm_iap_lead_website.crm_reveal_view_menu_action [renamed to website_crm_iap_reveal module]
-DEL ir.ui.view: crm_iap_lead_website.crm_lead_view_graph
-DEL ir.ui.view: crm_iap_lead_website.crm_lead_view_graph_report_lead
-DEL ir.ui.view: crm_iap_lead_website.crm_lead_view_graph_report_opportunity
-DEL ir.ui.view: crm_iap_lead_website.crm_lead_view_pivot
-DEL ir.ui.view: crm_iap_lead_website.crm_reveal_lead_opportunity_form
-DEL ir.ui.view: crm_iap_lead_website.crm_reveal_rule_form
-DEL ir.ui.view: crm_iap_lead_website.crm_reveal_rule_tree
-DEL ir.ui.view: crm_iap_lead_website.crm_reveal_rule_view_search
-DEL ir.ui.view: crm_iap_lead_website.crm_reveal_view_form
-DEL ir.ui.view: crm_iap_lead_website.crm_reveal_view_tree
-DEL ir.ui.view: crm_iap_lead_website.res_config_settings_view_form
-ERROR: module not in list of installed modules:
 ---Models in module 'l10n_ch_qriban'---
 ---Fields in module 'l10n_ch_qriban'---
 l10n_ch_qriban / res.partner.bank         / l10n_ch_qr_iban (char)        : module is now 'l10n_ch' ('l10n_ch_qriban')
@@ -309,16 +255,6 @@ ERROR: module not in list of installed modules:
 ---Fields in module 'odoo_referral'---
 ---XML records in module 'odoo_referral'---
 DEL ir.ui.view: odoo_referral.assets_backend
-ERROR: module not in list of installed modules:
----Models in module 'payment_adyen_paybylink'---
----Fields in module 'payment_adyen_paybylink'---
-payment_adyen_paybylink / payment.acquirer         / adyen_api_key (char)          : module is now 'payment_adyen' ('payment_adyen_paybylink')
-payment_adyen_paybylink / payment.acquirer         / adyen_checkout_api_url (char) : module is now 'payment_adyen' ('payment_adyen_paybylink')
-payment_adyen_paybylink / payment.acquirer         / adyen_hmac_key (char)         : module is now 'payment_adyen' ('payment_adyen_paybylink')
-payment_adyen_paybylink / payment.acquirer         / adyen_skin_code (False)       : DEL mode: modify
-payment_adyen_paybylink / payment.acquirer         / adyen_skin_hmac_key (False)   : DEL mode: modify
----XML records in module 'payment_adyen_paybylink'---
-DEL ir.ui.view: payment_adyen_paybylink.acquirer_form_adyen
 ERROR: module not in list of installed modules:
 ---Models in module 'payment_odoo_by_adyen'---
 ---Fields in module 'payment_odoo_by_adyen'---

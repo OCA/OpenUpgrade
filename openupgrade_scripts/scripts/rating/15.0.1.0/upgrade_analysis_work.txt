@@ -4,5 +4,7 @@ rating       / rating.rating            / rating_text (selection)       : select
 # DONE: post-migration: mapped value from old keys to new keys
 ---XML records in module 'rating'---
 DEL ir.model.constraint: rating.constraint_rating_rating_rating_range
+# DONE: pre-migration: deleted safely
+
 DEL ir.ui.view: rating.assets_frontend
 # NOTHING TO DO

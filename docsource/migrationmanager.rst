@@ -5,7 +5,7 @@ The core mechanism that OpenUpgrade relies on is the migration manager that is
 already built into Odoo itself. It is this mechanism that was used by Odoo to
 run migrations back in the days before TinyERP 4.2 when migration scripts where
 still included in the code. The same mechanism is probably still used by Odoo
-internally to run the proprietary migration, and occassionally it is used in
+internally to run the proprietary migration, and occasionally it is used in
 the code to fix glitches during the Odoo release lifecycle. For an example,
 see  `<https://github.com/odoo/odoo/commit/8b02879ff5>`_.
 
@@ -24,5 +24,5 @@ maintained to collect migration steps to be run after a full upgrade.
 
 Note that you can use this mechanism for your own custom
 module's lifecycle outside of the OpenUpgrade context. For that reason, the
-OpenUpgrade helper methods were collected into the python Openupgradelib that
+OpenUpgrade helper methods were collected into the python openupgradelib that
 you can make available in any Odoo instance using the *pip* tool.
