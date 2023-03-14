@@ -103,3 +103,17 @@ def migrate(env, version):
     )
     _fast_fill_project_sale_line_employee_map_cost(env)
     _re_fill_account_analytic_line_timesheet_invoice_type(env)
+    # Disappeared constraint
+    openupgrade.delete_sql_constraint_safely(
+        env,
+        "sale_timesheet",
+        "project_project",
+        "timesheet_product_required_if_billable_and_time",
+    )
+    # old name in case you have old constrain before renamed by odoo:
+    openupgrade.delete_sql_constraint_safely(
+        env,
+        "sale_timesheet",
+        "project_project",
+        "timesheet_product_required_if_billable_and_timesheets",
+    )
