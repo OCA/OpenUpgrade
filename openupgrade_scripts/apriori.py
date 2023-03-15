@@ -17,8 +17,6 @@ renamed_modules = {
     "helpdesk_sale_coupon": "helpdesk_sale_loyalty",
     "sale_coupon_taxcloud": "sale_loyalty_taxcloud",
     "sale_coupon_taxcloud_delivery": "sale_loyalty_taxcloud_delivery",
-    # OCA/account-financial-tools
-    "account_balance_line": "account",
     # OCA/knowledge
     "knowledge": "document_knowledge",
     # OCA/server-ux
@@ -47,6 +45,8 @@ merged_modules = {
     "sale_project_account": "sale_project",
     "website_sale_delivery_giftcard": "website_sale_loyalty_delivery",
     "website_sale_gift_card": "website_sale_loyalty",
+    # OCA/account-financial-tools
+    "account_balance_line": "account",
     # OCA/...
 }
 
