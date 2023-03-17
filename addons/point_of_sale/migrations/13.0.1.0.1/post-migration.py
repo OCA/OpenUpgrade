@@ -108,13 +108,22 @@ def create_pos_picking_types(env):
         env["pos.config"].browse(config_ids),
         location_ids
     ):
-        picking_type = config.picking_type_id.copy({
-            "name": "[OU] {} - {}".format(
-                config.picking_type_id.name, config.name
-            ),
+        vals = {
+            "name": f"[OU] {config.picking_type_id.name} - {config.name}",
             "company_id": config.company_id.id,
             "default_location_src_id": location_id,
-        })
+        }
+        if (
+            config.picking_type_id.sequence_id
+            and config.picking_type_id.sequence_id.company_id != config.company_id
+        ):
+            picking_type_seq = config.picking_type_id.sequence_id.copy(
+                {
+                    "company_id": config.company_id.id
+                }
+            )
+            vals["sequence_id"] = picking_type_seq.id
+        picking_type = config.picking_type_id.copy(vals)
         # Update via SQL to avoid possible open sessions errors. They shouldn't be open
         # but if only is they'd spoil the whole migration
         env.cr.execute(
