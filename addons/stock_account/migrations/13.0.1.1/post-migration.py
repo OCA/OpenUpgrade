@@ -287,8 +287,19 @@ def generate_stock_valuation_layer(env):
             all_svl_list.extend(svl_in_vals_list + svl_out_vals_list + svl_man_vals_list)
     if all_svl_list:
         all_svl_list = sorted(all_svl_list, key=lambda k: (k["create_date"]))
-        _logger.info("To create {} svl records".format(len(all_svl_list)))
-        query_insert(env.cr, "stock_valuation_layer", all_svl_list)
+        # MaxAllocSize has hardcoded value in Postgresql [1] of 1GB. Considering that
+        # each record can take an average of 200 bytes [2], we can't exceed 5 million
+        # records inserts at once. So we should do the inserts in batches with that size
+        # [1] https://github.com/postgres/postgres/blob/master/src/include/utils/memutils.h#L40
+        # [2] A gentle calculation
+        svl_length = len(all_svl_list)
+        batch_size = 5_000_000
+        _logger.info(f"To create {svl_length} svl records")
+        for offset in range(0, svl_length, batch_size):
+            query_insert(
+                env.cr, "stock_valuation_layer",
+                all_svl_list[offset:offset + batch_size]
+            )
 
 
 @openupgrade.migrate()
