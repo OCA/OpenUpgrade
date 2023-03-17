@@ -1,0 +1,86 @@
+---Models in module 'mrp'---
+new model mrp.workcenter.tag
+# NOTHING TO DO
+
+---Fields in module 'mrp'---
+mrp          / mrp.bom                  / _order                        : _order is now 'sequence, id' ('sequence')
+mrp          / mrp.bom.byproduct        / _order                        : _order is now 'sequence, id' ('id')
+mrp          / mrp.routing.workcenter   / _order                        : _order is now 'bom_id, sequence, id' ('sequence, id')
+# NOTHING TO DO
+
+mrp          / mrp.bom.byproduct        / allowed_operation_ids (many2many): not a function anymore
+mrp          / mrp.bom.byproduct        / allowed_operation_ids (many2many): now related
+mrp          / mrp.bom.byproduct        / allowed_operation_ids (many2many): type is now 'one2many' ('many2many')
+mrp          / mrp.bom.line             / allowed_operation_ids (many2many): not a function anymore
+mrp          / mrp.bom.line             / allowed_operation_ids (many2many): now related
+mrp          / mrp.bom.line             / allowed_operation_ids (many2many): type is now 'one2many' ('many2many')
+mrp          / mrp.bom.line             / possible_bom_product_template_attribute_value_ids (many2many): not a function anymore
+mrp          / mrp.bom.line             / possible_bom_product_template_attribute_value_ids (many2many): now related
+mrp          / stock.move               / allowed_operation_ids (many2many): not a function anymore
+mrp          / stock.move               / allowed_operation_ids (many2many): now related
+mrp          / stock.move               / allowed_operation_ids (many2many): type is now 'one2many' ('many2many')
+mrp          / mrp.routing.workcenter   / bom_id (many2one)             : now required
+# DONE: pre-migration: filled workcenter bom_id in case is empty
+
+mrp          / mrp.bom.byproduct        / bom_product_template_attribute_value_ids (many2many): NEW relation: product.template.attribute.value
+mrp          / mrp.routing.workcenter   / bom_product_template_attribute_value_ids (many2many): NEW relation: product.template.attribute.value
+mrp          / mrp.bom.byproduct        / cost_share (float)            : NEW
+mrp          / mrp.bom.byproduct        / sequence (integer)            : NEW
+# NOTHING TO DO: new features
+
+mrp          / mrp.bom.line             / product_tmpl_id (many2one)    : is now stored
+mrp          / mrp.production           / is_planned (boolean)          : is now stored
+# NOTHING TO DO: related/computed fields
+
+mrp          / mrp.routing.workcenter   / active (boolean)              : NEW hasdefault: default
+# DONE: pre-migration: set active = true
+
+mrp          / mrp.routing.workcenter   / company_id (many2one)         : not stored anymore
+mrp          / mrp.routing.workcenter   / company_id (many2one)         : now related
+mrp          / mrp.workorder            / consumption (selection)       : not stored anymore
+mrp          / mrp.workorder            / consumption (selection)       : now related
+mrp          / mrp.workorder            / consumption (selection)       : selection_keys is now 'function' ('['flexible', 'strict', 'warning']')
+# NOTHING TO DO
+
+mrp          / mrp.routing.workcenter   / note (text)                   : type is now 'html' ('text')
+mrp          / mrp.workcenter           / note (text)                   : type is now 'html' ('text')
+mrp          / mrp.workorder            / operation_note (text)         : type is now 'html' ('text')
+# DONE: pre-migration: converted fields (operation_note is related)
+
+mrp          / mrp.workcenter           / tag_ids (many2many)           : NEW relation: mrp.workcenter.tag
+mrp          / mrp.workcenter.tag       / color (integer)               : NEW hasdefault: default
+mrp          / mrp.workcenter.tag       / name (char)                   : NEW required
+# NOTHING TO DO: mrp.workcenter.tag is new model
+
+mrp          / mrp.workorder            / costs_hour (float)            : NEW hasdefault: default
+# DONE: post-migration: put same costs_hour as its workcenter when workorder.state = 'done'
+
+mrp          / stock.move               / cost_share (float)            : NEW
+# NOTHING TO DO: new feature
+
+mrp          / mrp.workorder            / state (selection)             : now a function
+mrp          / mrp.workorder            / state (selection)             : selection_keys is now '['cancel', 'done', 'pending', 'progress', 'ready', 'waiting']' ('['cancel', 'done', 'pending', 'progress', 'ready']')
+# NOTHING TO DO: added 'waiting' option
+
+---XML records in module 'mrp'---
+NEW ir.actions.act_window: mrp.act_assign_serial_numbers_production
+NEW ir.actions.report: mrp.label_production_order
+NEW ir.model.access: mrp.access_mrp_workcenter_tag_group_user
+NEW ir.model.access: mrp.access_mrp_workcenter_tag_manager
+NEW ir.model.constraint: mrp.constraint_mrp_workcenter_tag_tag_name_unique
+NEW ir.ui.view: mrp.mrp_routing_workcenter_bom_tree_view
+NEW ir.ui.view: mrp.mrp_routing_workcenter_copy_to_bom_tree_view
+NEW ir.ui.view: mrp.mrp_routing_workcenter_filter
+NEW ir.ui.view: mrp.report_mrp_byproduct_line
+NEW ir.ui.view: mrp.report_reception_report_label_mrp
+NEW ir.ui.view: mrp.stock_scrap_search_view_inherit_mrp
+NEW ir.ui.view: mrp.view_assign_serial_numbers_production
+NEW ir.ui.view: mrp.view_picking_form_inherit_mrp
+NEW ir.ui.view: mrp.view_stock_move_line_detailed_operation_tree_mrp
+DEL ir.ui.view: mrp.assets_backend
+DEL ir.ui.view: mrp.assets_common
+DEL ir.ui.view: mrp.qunit_suite
+DEL ir.ui.view: mrp.view_production_gantt
+NEW res.groups: mrp.group_unlocked_by_default
+DEL res.groups: mrp.group_locked_by_default
+# NOTHING TO DO
