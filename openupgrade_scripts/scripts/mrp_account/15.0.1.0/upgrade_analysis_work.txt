@@ -1,0 +1,21 @@
+---Models in module 'mrp_account'---
+---Fields in module 'mrp_account'---
+mrp_account  / account.analytic.account / bom_ids (one2many)            : NEW relation: mrp.bom
+mrp_account  / account.analytic.account / production_ids (one2many)     : NEW relation: mrp.production
+mrp_account  / account.analytic.account / workcenter_ids (one2many)     : NEW relation: mrp.workcenter
+mrp_account  / account.analytic.line    / category (False)              : NEW selection_keys: ['invoice', 'manufacturing_order', 'other', 'vendor_bill'], mode: modify
+mrp_account  / mrp.bom                  / analytic_account_id (many2one): NEW relation: account.analytic.account
+# NOTHING TO DO: new feature
+
+mrp_account  / mrp.production           / analytic_account_id (many2one): NEW relation: account.analytic.account, hasdefault: compute
+# DONE: pre-migration: pre-create column 'analytic_account_id' for avoiding computation on module upgrade
+
+mrp_account  / mrp.workorder            / mo_analytic_account_line_id (many2one): NEW relation: account.analytic.line
+mrp_account  / mrp.workorder            / wc_analytic_account_line_id (many2one): NEW relation: account.analytic.line
+# NOTHING TO DO: new feature
+
+---XML records in module 'mrp_account'---
+NEW ir.ui.view: mrp_account.account_analytic_account_view_form_mrp
+NEW ir.ui.view: mrp_account.mrp_bom_form_view_inherited
+NEW ir.ui.view: mrp_account.view_production_graph_inherit_mrp_account
+# NOTHING TO DO: new records
