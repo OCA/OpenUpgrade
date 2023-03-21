@@ -56,6 +56,7 @@ merged_modules = {
     # OCA/hr
     "hr_recruitment_notification": "hr_recruitment",
     # OCA/e-commerce
+    "website_sale_attribute_filter_price": "website_sale",
     "website_sale_stock_available_display": "website_sale_stock",
     # OCA/hr-attendance
     "hr_attendance_user_list": "hr_attendance",
