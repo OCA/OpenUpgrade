@@ -15,6 +15,7 @@ def enable_price_filter_view(env):
             website.with_context(website_id=website.id).viewref(
                 "website_sale.filter_products_price"
             ).active = True
+            view.unlink()
 
 
 @openupgrade.migrate()
