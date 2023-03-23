@@ -1,0 +1,14 @@
+---Models in module 'website_sale_coupon'---
+new model coupon.share [transient]
+# NOTHING TO DO
+
+---Fields in module 'website_sale_coupon'---
+---XML records in module 'website_sale_coupon'---
+NEW ir.model.access: website_sale_coupon.access_coupon_share
+NEW ir.ui.view: website_sale_coupon.coupon_share_view_form
+NEW ir.ui.view: website_sale_coupon.coupon_view_tree
+NEW ir.ui.view: website_sale_coupon.layout
+DEL ir.ui.view: website_sale_coupon.assets_tests
+DEL ir.ui.view: website_sale_coupon.cart_popover
+DEL ir.ui.view: website_sale_coupon.website_sale_coupon_cart_summary_show_img
+# NOTHING TO DO
