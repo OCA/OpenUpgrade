@@ -1,0 +1,71 @@
+---Models in module 'base'---
+obsolete model base.update.translations [transient]
+obsolete model ir.translation
+
+# PARTIALLY DONE for fields with translate=True (plain text)
+# TODO translations of fields with translate=callable (html etc)
+
+new model change.password.own [transient]
+new model ir.binary [abstract]
+new model ir.qweb.field.time [abstract]
+new model res.users.deletion
+
+# NOTHING TO DO
+
+---Fields in module 'base'---
+base         / ir.model.fields          / ttype (selection)             : selection_keys is now '['binary', 'boolean', 'char', 'date', 'datetime', 'float', 'html', 'integer', 'many2many', 'many2one', 'many2one_reference', 'monetary', 'one2many', 'properties', 'properties_definition', 'reference', 'selection', 'text']' ('['binary', 'boolean', 'char', 'date', 'datetime', 'float', 'html', 'integer', 'many2many', 'many2one', 'many2one_reference', 'monetary', 'one2many', 'reference', 'selection', 'text']')
+base         / ir.profile               / sql_count (integer)           : NEW
+base         / ir.translation           / comments (text)               : DEL
+base         / ir.translation           / lang (selection)              : DEL selection_keys: function
+base         / ir.translation           / module (char)                 : DEL
+base         / ir.translation           / name (char)                   : DEL required
+base         / ir.translation           / res_id (integer)              : DEL
+base         / ir.translation           / src (text)                    : DEL
+base         / ir.translation           / state (selection)             : DEL selection_keys: ['inprogress', 'to_translate', 'translated']
+base         / ir.translation           / type (selection)              : DEL selection_keys: ['code', 'model', 'model_terms']
+base         / ir.translation           / value (text)                  : DEL
+base         / res.company              / active (boolean)              : NEW hasdefault: default
+base         / res.company              / company_registry (char)       : not stored anymore
+base         / res.company              / company_registry (char)       : now related
+base         / res.company              / font (selection)              : selection_keys is now '['Lato', 'Montserrat', 'Open_Sans', 'Oswald', 'Raleway', 'Roboto', 'Tajawal']' ('['Lato', 'Montserrat', 'Open_Sans', 'Oswald', 'Raleway', 'Roboto']')
+base         / res.partner              / _order                        : _order is now 'display_name, id' ('display_name')
+base         / res.partner              / company_registry (char)       : NEW hasdefault: compute
+base         / res.partner              / credit_limit (float)          : module is now 'account' ('base')
+base         / res.partner              / credit_limit (float)          : not stored anymore
+base         / res.partner.bank         / allow_out_payment (boolean)   : NEW hasdefault: default
+base         / res.partner.bank         / company_id (many2one)         : now related
+base         / res.users                / credit_limit (float)          : module is now 'account' ('base')
+base         / res.users.deletion       / state (selection)             : NEW required, selection_keys: ['done', 'fail', 'todo'], hasdefault: default
+base         / res.users.deletion       / user_id (many2one)            : NEW relation: res.users
+base         / res.users.deletion       / user_id_int (integer)         : NEW isfunction: function, stored
+
+# NOTHING TO DO
+
+---XML records in module 'base'---
+DEL ir.actions.act_window: base.action_translation
+DEL ir.actions.act_window: base.action_wizard_update_translations
+NEW ir.model.access: base.access_change_password_own
+NEW ir.model.access: base.access_res_users_deletion_all
+NEW ir.model.access: base.access_res_users_deletion_group_erp_manager
+DEL ir.model.access: base.access_base_update_translations
+DEL ir.model.access: base.access_ir_translation_all
+DEL ir.model.access: base.access_ir_translation_group_system
+ir.model.constraint: base.constraint_ir_filters_name_model_uid_unique (changed definition: is now 'unique(model_id,user_id,action_id,name)' ('unique(name,model_id,user_id,action_id)'))
+ir.model.constraint: base.constraint_res_partner_bank_unique_number (changed definition: is now 'unique(sanitized_acc_number,partner_id)' ('unique(sanitized_acc_number,company_id)'))
+DEL ir.model.constraint: base.constraint_ir_translation_lang_fkey_res_lang
+NEW ir.rule: base.change_password_own_rule (noupdate)
+DEL ir.ui.menu: base.menu_action_translation
+DEL ir.ui.menu: base.menu_wizard_update_translations
+NEW ir.ui.view: base.change_password_own_form
+NEW ir.ui.view: base.language_install_view_form_lang_switch
+DEL ir.ui.view: base.onboarding_confetti
+DEL ir.ui.view: base.view_translation_dialog_tree
+DEL ir.ui.view: base.view_translation_form
+DEL ir.ui.view: base.view_translation_lang_src_value_tree
+DEL ir.ui.view: base.view_translation_lang_value_tree
+DEL ir.ui.view: base.view_translation_search
+DEL ir.ui.view: base.view_translation_tree
+DEL ir.ui.view: base.wizard_update_translations
+NEW res.groups: base.group_sanitize_override
+
+# NOTHING TO DO
