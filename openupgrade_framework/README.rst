@@ -20,7 +20,7 @@ Openupgrade Framework
     :target: https://translation.odoo-community.org/projects/OpenUpgrade-16-0/OpenUpgrade-16-0-openupgrade_framework
     :alt: Translate me on Weblate
 
-|badge1| |badge2| |badge3| |badge4|
+|badge1| |badge2| |badge3| |badge4| 
 
 This module is a technical module that contains a number of monkeypatches
 to improve the behaviour of Odoo when migrating your database using the
@@ -155,6 +155,7 @@ Authors
 * Therp BV
 * Opener B.V.
 * GRAP
+* Hunki Enterprises BV
 
 Contributors
 ~~~~~~~~~~~~
@@ -189,10 +190,13 @@ promote its widespread use.
 .. |maintainer-StefanRijnhart| image:: https://github.com/StefanRijnhart.png?size=40px
     :target: https://github.com/StefanRijnhart
     :alt: StefanRijnhart
+.. |maintainer-hbrunn| image:: https://github.com/hbrunn.png?size=40px
+    :target: https://github.com/hbrunn
+    :alt: hbrunn
 
 Current `maintainers <https://odoo-community.org/page/maintainer-role>`__:
 
-|maintainer-legalsylvain| |maintainer-StefanRijnhart| 
+|maintainer-legalsylvain| |maintainer-StefanRijnhart| |maintainer-hbrunn| 
 
 This module is part of the `OCA/OpenUpgrade <https://github.com/OCA/OpenUpgrade/tree/16.0/openupgrade_framework>`_ project on GitHub.
 
