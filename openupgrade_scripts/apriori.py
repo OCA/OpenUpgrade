@@ -47,6 +47,7 @@ merged_modules = {
     "website_sale_gift_card": "website_sale_loyalty",
     # OCA/account-financial-tools
     "account_balance_line": "account",
+    "account_move_force_removal": "account",
     # OCA/...
 }
 
