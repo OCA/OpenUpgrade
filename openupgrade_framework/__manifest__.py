@@ -13,5 +13,6 @@
     "license": "AGPL-3",
     "depends": ["base"],
     "images": ["static/description/banner.jpg"],
+    "external_dependencies": {"python": ["openupgradelib"]},
     "installable": True,
 }
