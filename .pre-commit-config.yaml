@@ -16,7 +16,7 @@ exclude: |
   (LICENSE.*|COPYING.*)
 default_language_version:
   python: python3
-  node: "14.18.0"
+  node: "16.17.0"
 repos:
   - repo: local
     hooks:
@@ -33,7 +33,7 @@ repos:
         language: fail
         files: '[a-zA-Z0-9_]*/i18n/en\.po$'
   - repo: https://github.com/oca/maintainer-tools
-    rev: 7d8a9f9ad73db0976fb03cbee43d953bc29b89e9
+    rev: 4cd2b852214dead80822e93e6749b16f2785b2fe
     hooks:
       # update the NOT INSTALLABLE ADDONS section above
       - id: oca-update-pre-commit-excluded-addons
@@ -43,7 +43,13 @@ repos:
     rev: v1.6.1
     hooks:
       - id: autoflake
-        args: ["-i", "--ignore-init-module-imports"]
+        args:
+          - --expand-star-imports
+          - --ignore-init-module-imports
+          - --in-place
+          - --remove-all-unused-imports
+          - --remove-duplicate-keys
+          - --remove-unused-variables
   - repo: https://github.com/psf/black
     rev: 22.8.0
     hooks:
@@ -54,8 +60,8 @@ repos:
       - id: prettier
         name: prettier (with plugin-xml)
         additional_dependencies:
-          - "prettier@2.4.1"
-          - "@prettier/plugin-xml@1.1.0"
+          - "prettier@2.7.1"
+          - "@prettier/plugin-xml@2.2.0"
         args:
           - --plugin=@prettier/plugin-xml
         files: \.(css|htm|html|js|json|jsx|less|md|scss|toml|ts|xml|yaml|yml)$
@@ -106,31 +112,27 @@ repos:
     rev: 3.1.8
     hooks:
       - id: setuptools-odoo-make-default
+      - id: setuptools-odoo-get-requirements
+        args:
+          - --output
+          - requirements.txt
+          - --header
+          - "# generated from manifests external_dependencies"
   - repo: https://github.com/PyCQA/flake8
     rev: 3.9.2
     hooks:
       - id: flake8
-        name: flake8 except __init__.py
-        exclude: /__init__\.py$
-        additional_dependencies: ["flake8-bugbear==20.1.4"]
-      - id: flake8
-        name: flake8 only __init__.py
-        args: ["--extend-ignore=F401"] # ignore unused imports in __init__.py
-        files: /__init__\.py$
-        additional_dependencies: ["flake8-bugbear==20.1.4"]
-  - repo: https://github.com/PyCQA/pylint
-    rev: v2.11.1
+        name: flake8
+        additional_dependencies: ["flake8-bugbear==21.9.2"]
+  - repo: https://github.com/OCA/pylint-odoo
+    rev: 7.0.2
     hooks:
-      - id: pylint
+      - id: pylint_odoo
         name: pylint with optional checks
         args:
           - --rcfile=.pylintrc
           - --exit-zero
         verbose: true
-        additional_dependencies: &pylint_deps
-          - pylint-odoo==5.0.4
-      - id: pylint
-        name: pylint with mandatory checks
+      - id: pylint_odoo
         args:
           - --rcfile=.pylintrc-mandatory
-        additional_dependencies: *pylint_deps
