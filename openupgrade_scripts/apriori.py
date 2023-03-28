@@ -35,6 +35,7 @@ merged_modules = {
     "payment_fix_register_token": "payment",
     "procurement_jit": "sale_stock",
     "sale_timesheet_edit": "sale_timesheet",
+    "sale_timesheet_purchase": "sale_timesheet",
     "website_event_track_exhibitor": "website_event_exhibitor",
     "website_form": "website",
     "website_sale_management": "website_sale",
