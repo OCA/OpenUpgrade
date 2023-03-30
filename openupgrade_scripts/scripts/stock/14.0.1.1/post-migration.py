@@ -1,4 +1,5 @@
 # Copyright 2021 ForgeFlow S.L.  <https://www.forgeflow.com>
+# Copyright 2023 Tecnativa - Pedro M. Baeza
 # License AGPL-3.0 or later (http://www.gnu.org/licenses/agpl.html).
 from openupgradelib import openupgrade
 
@@ -26,7 +27,7 @@ def recompute_stock_picking_scheduled_date(env):
         SELECT sp.id
         FROM stock_picking sp
         JOIN stock_move sm ON sm.picking_id = sp.id
-        WHERE sm.state NOT IN ('done', 'cancel')"""
+        WHERE sp.state NOT IN ('done', 'cancel')"""
     )
     picking_ids = [pick[0] for pick in env.cr.fetchall()]
     if picking_ids:
