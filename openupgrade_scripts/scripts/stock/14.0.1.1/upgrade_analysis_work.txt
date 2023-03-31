@@ -27,7 +27,7 @@ stock        / stock.move               / date_expected (datetime)      : DEL re
 # DONE: pre-migration: renamed field
 
 stock        / stock.move               / delay_alert_date (datetime)   : NEW isfunction: function, stored
-# NOTHING TO DO: computed during loading
+# DONE: pre-migration: Create field, post-migration: Fill data
 
 stock        / stock.move               / delay_alert (boolean)         : DEL
 stock        / stock.move               / propagate_date (boolean)      : DEL
@@ -49,7 +49,7 @@ stock        / stock.picking            / _order                        : _order
 
 stock        / stock.picking            / date_deadline (datetime)      : NEW isfunction: function, stored
 stock        / stock.picking            / has_deadline_issue (boolean)  : NEW hasdefault, isfunction: function, stored
-# NOTHING TO DO: computed during loading
+# DONE: pre-migration: Create fields, post-migration: Fill fields
 
 stock        / stock.picking            / priority (selection)          : not a function anymore
 stock        / stock.picking            / priority (selection)          : selection_keys is now '['0', '1']' ('['0', '1', '2', '3']')

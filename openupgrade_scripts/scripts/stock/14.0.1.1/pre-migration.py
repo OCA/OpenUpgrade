@@ -18,6 +18,20 @@ _xmlid_renames = [
     ("stock.access_stock_picking_portal", "sale_stock.access_stock_picking_portal"),
 ]
 
+_field_additons = [
+    ("delay_alert_date", "stock.move", "stock_move", "datetime", False, "stock"),
+    ("date_deadline", "stock.picking", "stock_picking", "datetime", False, "stock"),
+    (
+        "has_deadline_issue",
+        "stock.picking",
+        "stock_picking",
+        "boolean",
+        False,
+        "stock",
+        False,
+    ),
+]
+
 
 def fast_precreate_orderpoint_product_category_id(env):
     openupgrade.logged_query(
@@ -42,6 +56,7 @@ def migrate(env, version):
     openupgrade.copy_columns(env.cr, _column_copies)
     openupgrade.rename_fields(env, _field_renames)
     openupgrade.rename_xmlids(env.cr, _xmlid_renames)
+    openupgrade.add_fields(env, _field_additons)
     fast_precreate_orderpoint_product_category_id(env)
     # Disappeared constraint
     openupgrade.logged_query(
