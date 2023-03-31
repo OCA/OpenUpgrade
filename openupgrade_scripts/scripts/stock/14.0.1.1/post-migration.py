@@ -24,7 +24,7 @@ def merge_priorities(env):
 def recompute_stock_picking_scheduled_date(env):
     env.cr.execute(
         """
-        SELECT sp.id
+        SELECT DISTINCT sp.id
         FROM stock_picking sp
         JOIN stock_move sm ON sm.picking_id = sp.id
         WHERE sp.state NOT IN ('done', 'cancel')"""
