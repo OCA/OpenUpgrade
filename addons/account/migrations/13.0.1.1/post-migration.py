@@ -203,8 +203,7 @@ def migration_invoice_moves(env):
         FROM account_invoice ai
         WHERE ai.state in ('draft', 'cancel')""",
     )
-    _move_model_in_data(
-        env, 'account.invoice', 'account.move', 'old_invoice_id')
+    openupgrade.merge_models(env.cr, 'account.invoice', 'account.move', 'old_invoice_id')
     # Not Draft or Cancel Invoice Lines
     # 1st: update the ungrouped ones
     openupgrade.logged_query(env.cr, "ALTER TABLE account_invoice_line ADD aml_matched BOOLEAN")
@@ -346,6 +345,7 @@ def migration_invoice_moves(env):
         JOIN account_account aa ON ai.account_id = aa.id
         WHERE aa.internal_type in ('receivable', 'payable')""",
     )
+    openupgrade.merge_models(env.cr, 'account.invoice.line', 'account.move.line', 'old_invoice_line_id')
     # Not Draft or Cancel Invoice Taxes
     openupgrade.logged_query(
         env.cr, """
@@ -379,6 +379,7 @@ def migration_invoice_moves(env):
         LEFT JOIN account_move am ON am.old_invoice_id = ai.id
         WHERE COALESCE(ai.move_id, am.id) IS NOT NULL""",
     )
+    openupgrade.merge_models(env.cr, 'account.invoice.tax', 'account.move.line', 'old_invoice_tax_id')
     openupgrade.logged_query(
         env.cr, """
         INSERT INTO account_invoice_payment_rel
@@ -503,8 +504,7 @@ def migration_voucher_moves(env):
         WHERE av.state in ('draft', 'cancel', 'proforma')
         """,
     )
-    _move_model_in_data(
-        env, 'account.voucher', 'account.move', 'old_voucher_id')
+    openupgrade.merge_models(env.cr, 'account.voucher', 'account.move', 'old_voucher_id')
     # Not draft, cancel, proforma voucher lines
     openupgrade.logged_query(
         env.cr, """
@@ -553,6 +553,7 @@ def migration_voucher_moves(env):
         LEFT JOIN account_move am ON am.old_voucher_id = av.id
         WHERE COALESCE(av.move_id, am.id) IS NOT NULL""",
     )
+    openupgrade.merge_models(env.cr, 'account.voucher.line', 'account.move.line', 'old_voucher_line_id')
     openupgrade.logged_query(
         env.cr, """
         INSERT INTO account_analytic_tag_account_move_line_rel (
@@ -573,47 +574,6 @@ def migration_voucher_moves(env):
         ON aml.old_voucher_line_id = atavlr.account_voucher_line_id
         ON CONFLICT DO NOTHING""",
     )
-
-
-def _move_model_in_data(env, old_model, new_model, field):
-    renames = [
-        ('mail_message', 'model', 'res_id'),
-        ('ir_attachment', 'res_model', 'res_id'),
-        ('mail_activity', 'res_model', 'res_id'),
-        ('ir_model_data', 'model', 'res_id'),
-    ]
-    for rename in renames:
-        query = """
-            UPDATE {table} t
-            SET {field1} = %(new_value1)s, {field2} = am.id
-            FROM account_move am
-            WHERE t.{field1} = %(old_value1)s AND am.{field} = t.{field2}"""
-        openupgrade.logged_query(env.cr, sql.SQL(query).format(
-            table=sql.Identifier(rename[0]),
-            field1=sql.Identifier(rename[1]),
-            field2=sql.Identifier(rename[2]),
-            field=sql.Identifier(field)
-        ), {
-            "old_value1": old_model,
-            "new_value1": new_model,
-        })
-    openupgrade.logged_query(env.cr, sql.SQL("""
-        UPDATE mail_followers mf
-            SET res_model = %(new_value1)s, res_id = am.id
-            FROM account_move am
-                JOIN mail_followers mf1
-                    ON (am.{field} = mf1.res_id AND mf1.res_model = %(old_value1)s)
-                LEFT JOIN mail_followers mf2
-                    ON (am.id = mf2.res_id
-                        AND mf2.res_model = 'account.move'
-                        AND mf2.partner_id = mf1.partner_id)
-            WHERE mf.id = mf1.id AND mf2.id IS NULL
-    """).format(
-            field=sql.Identifier(field)
-        ), {
-            "old_value1": old_model,
-            "new_value1": new_model,
-        })
 
 
 def fill_account_move_reversed_entry_id(env):
