@@ -111,7 +111,6 @@ def convert_fields(env):
                 ("date", None),
             ],
             "account_payment": [
-                ("journal_id", None),
                 ("name", None),
                 ("payment_date", None),
             ],
@@ -222,8 +221,7 @@ def add_move_id_field_account_payment(env):
         SET currency_id = COALESCE(aj.currency_id, rc.currency_id)
         FROM account_journal aj
         JOIN res_company rc ON aj.company_id = rc.id
-        WHERE ap.%s = aj.id"""
-        % openupgrade.get_legacy_name("journal_id"),
+        WHERE ap.journal_id = aj.id""",
     )
     if not openupgrade.column_exists(env.cr, "account_payment", "move_id"):
         openupgrade.logged_query(
@@ -416,171 +414,43 @@ def fill_account_payment_data(env):
             AND ap.partner_id = rc.partner_id
         """,
     )
-    # Set data for customer transfers with partner
-    openupgrade.logged_query(
-        env.cr,
-        """
+    # Set data for customer/supplier transfers
+    query = """
         UPDATE account_payment ap
-        SET destination_account_id = CAST(substring(
-            ip.value_reference, '^account\\.account,(\\d*)$') as INT)
+        SET destination_account_id = substring(ip.value_reference, 17)::int
         FROM account_journal aj,
-            account_move am,
             ir_property ip,
             ir_model_fields imf
-        WHERE ap.partner_type = 'customer'
+        WHERE ap.partner_type IN ('customer', 'supplier')
             AND ap.destination_account_id IS NULL
-            AND ap.partner_id IS NOT NULL
-            AND am.journal_id = aj.id
-            AND ap.move_id = am.id
+            AND ap.journal_id = aj.id
             AND ip.fields_id = imf.id
-            AND imf.name = 'property_account_receivable_id'
+            AND imf.name = CASE
+                WHEN partner_type = 'customer' THEN 'property_account_receivable_id'
+                ELSE 'property_account_payable_id'
+            END
             AND imf.model = 'res.partner'
-            AND ip.res_id = CONCAT('res.partner,', CAST(ap.partner_id as CHAR))
-            AND ip.company_id = am.company_id
-        """,
-    )
+            AND ip.company_id = aj.company_id"""
+    # with partner with specific AR/AP account
     openupgrade.logged_query(
         env.cr,
-        """
-        UPDATE account_payment ap
-        SET destination_account_id = CAST(substring(
-            ip.value_reference, '^account\\.account,(\\d*)$') as INT)
-        FROM account_journal aj,
-            account_move am,
-            ir_property ip,
-            ir_model_fields imf
-        WHERE ap.partner_type = 'customer'
-            AND ap.destination_account_id IS NULL
-            AND ap.partner_id IS NOT NULL
-            AND am.journal_id = aj.id
-            AND ap.move_id = am.id
-            AND ip.fields_id = imf.id
-            AND imf.name = 'property_account_receivable_id'
-            AND imf.model = 'res.partner'
-            AND ip.res_id IS NULL
-            AND ip.company_id = am.company_id
+        query
+        + """
+        AND partner_id IS NOT NULL
+        AND ip.res_id = 'res.partner,' || ap.partner_id::VARCHAR
         """,
     )
-    # Set data for supplier transfers with partner
-    openupgrade.logged_query(
-        env.cr,
-        """
-        UPDATE account_payment ap
-        SET destination_account_id = CAST(substring(
-            ip.value_reference, '^account\\.account,(\\d*)$') as INT)
-        FROM account_journal aj,
-            account_move am,
-            ir_property ip,
-            ir_model_fields imf
-        WHERE ap.partner_type = 'supplier'
-            AND ap.destination_account_id IS NULL
-            AND ap.partner_id IS NOT NULL
-            AND am.journal_id = aj.id
-            AND ap.move_id = am.id
-            AND ip.fields_id = imf.id
-            AND imf.name = 'property_account_payable_id'
-            AND imf.model = 'res.partner'
-            AND ip.res_id = CONCAT('res.partner,', CAST(ap.partner_id as CHAR))
-            AND ip.company_id = am.company_id
-        """,
-    )
-    openupgrade.logged_query(
-        env.cr,
-        """
-        UPDATE account_payment ap
-        SET destination_account_id = CAST(substring(
-            ip.value_reference, '^account\\.account,(\\d*)$') as INT)
-        FROM account_journal aj,
-            account_move am,
-            ir_property ip,
-            ir_model_fields imf
-        WHERE ap.partner_type = 'supplier'
-            AND ap.destination_account_id IS NULL
-            AND ap.partner_id IS NOT NULL
-            AND am.journal_id = aj.id
-            AND ap.move_id = am.id
-            AND ip.fields_id = imf.id
-            AND imf.name = 'property_account_payable_id'
-            AND imf.model = 'res.partner'
-            AND ip.res_id IS NULL
-            AND ip.company_id = am.company_id
-        """,
-    )
-
-    # Set data for transfers without partner
-    for company in env["res.company"].search([]):
-        env.cr.execute(
-            """
-            SELECT aa.id
-            FROM account_account aa
-            WHERE company_id = %s
-                AND internal_type = 'receivable'
-                AND deprecated = FALSE
-            ORDER BY code, company_id
-            LIMIT 1
-            """,
-            (company.id,),
-        )
-        account = [row[0] for row in env.cr.fetchall()]
-        if account:
-            openupgrade.logged_query(
-                env.cr,
-                """
-                UPDATE account_payment ap
-                SET destination_account_id = %s
-                FROM account_journal aj,
-                    account_move am
-                WHERE ap.partner_type = 'customer'
-                    AND ap.destination_account_id IS NULL
-                    AND ap.partner_id IS NULL
-                    AND am.journal_id = aj.id
-                    AND ap.move_id = am.id
-                    AND aj.company_id = %s
-                """,
-                (account[0], company.id),
-            )
-
-        env.cr.execute(
-            """
-            SELECT aa.id
-            FROM account_account aa
-            WHERE company_id = %s
-                AND internal_type = 'payable'
-                AND deprecated = FALSE
-            ORDER BY code, company_id
-            LIMIT 1
-            """,
-            (company.id,),
-        )
-        account = [row[0] for row in env.cr.fetchall()]
-        if account:
-            openupgrade.logged_query(
-                env.cr,
-                """
-                UPDATE account_payment ap
-                SET destination_account_id = %s
-                FROM account_journal aj,
-                    account_move am
-                WHERE ap.partner_type = 'supplier'
-                    AND ap.destination_account_id IS NULL
-                    AND ap.partner_id IS NULL
-                    AND am.journal_id = aj.id
-                    AND ap.move_id = am.id
-                    AND aj.company_id = %s
-                """,
-                (account[0], company.id),
-            )
+    # and without partner or without specific AR/AP account
+    openupgrade.logged_query(env.cr, query + " AND ip.res_id IS NULL")
     # Set Partner Bank ID
     openupgrade.logged_query(
         env.cr,
         """
         UPDATE account_payment ap
         SET partner_bank_id = aj.bank_account_id
-        FROM account_journal aj,
-            account_move am
+        FROM account_journal aj
         WHERE payment_type = 'inbound'
-            AND am.journal_id = aj.id
-            AND ap.move_id = am.id
+            AND ap.journal_id = aj.id
         """,
     )
     openupgrade.logged_query(
@@ -589,13 +459,11 @@ def fill_account_payment_data(env):
         UPDATE account_payment ap
         SET partner_bank_id = rpb.id
         FROM res_partner_bank rpb,
-            account_journal aj,
-            account_move am
+            account_journal aj
         WHERE payment_type != 'inbound'
             AND ap.partner_id IS NOT NULL
             AND ap.partner_id = rpb.partner_id
-            AND am.journal_id = aj.id
-            AND ap.move_id = am.id
+            AND ap.journal_id = aj.id
             AND (rpb.company_id is NULL or rpb.company_id = aj.company_id)
         """,
     )
@@ -855,3 +723,5 @@ def migrate(env, version):
     openupgrade.lift_constraints(
         env.cr, "account_bank_statement_line", "partner_account_id"
     )
+    # Do this at the end for not having to use all time the get_legacy_name method
+    openupgrade.rename_columns(env.cr, {"account_payment": [("journal_id", None)]})
