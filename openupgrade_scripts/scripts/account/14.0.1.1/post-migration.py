@@ -560,6 +560,70 @@ def map_account_payment_transfer(env):
     )
 
 
+def fill_account_payment_reconciliation(env):
+    openupgrade.logged_query(
+        env.cr,
+        """
+            UPDATE account_payment ap
+            SET is_reconciled = True,
+                is_matched = True
+            FROM res_currency rcur
+            WHERE rcur.id = ap.currency_id
+                AND ROUND(ap.amount, rcur.decimal_places) = 0
+        """,
+    )
+    openupgrade.logged_query(
+        env.cr,
+        """
+            WITH matched_payments as (
+                SELECT ap.id,
+                    CASE WHEN aj.default_account_id IS NOT NULL
+                            AND bool_or(aj.default_account_id = aml.account_id)
+                        THEN TRUE
+                    ELSE
+                        ROUND(SUM(CASE
+                            WHEN aml.account_id in (
+                                aj.default_account_id,
+                                aj.payment_debit_account_id,
+                                aj.payment_credit_account_id
+                            ) THEN CASE
+                                WHEN rc.currency_id = rcur.id THEN aml.amount_residual
+                                ELSE aml.amount_residual_currency END
+                            ELSE 0 END
+                        ), rcur.decimal_places) = 0
+                    END as is_matched,
+                    ROUND(
+                        SUM(CASE
+                            WHEN NOT aa.reconcile THEN 0
+                            WHEN aml.account_id not in (
+                                aj.default_account_id,
+                                aj.payment_debit_account_id,
+                                aj.payment_credit_account_id
+                            ) THEN CASE
+                                WHEN rc.currency_id = rcur.id THEN aml.amount_residual
+                                ELSE aml.amount_residual_currency END
+                            ELSE 0 END
+                        ),
+                        rcur.decimal_places
+                    ) = 0 as is_reconciled
+                FROM account_payment ap
+                JOIN account_move am ON am.id = ap.move_id
+                JOIN account_move_line aml ON aml.move_id = am.id
+                JOIN account_account aa ON aa.id = aml.account_id
+                JOIN res_company rc ON rc.id = am.company_id
+                JOIN account_journal aj ON aj.id = am.journal_id
+                JOIN res_currency rcur ON rcur.id = ap.currency_id
+                GROUP BY ap.id, rcur.decimal_places, aj.default_account_id
+            )
+            UPDATE account_payment ap
+            SET is_matched = matched_payments.is_matched,
+                is_reconciled = matched_payments.is_reconciled
+            FROM matched_payments
+            where ap.id = matched_payments.id
+        """,
+    )
+
+
 def fill_account_payment_with_no_move(env):
     p_data = {}
     p_dates_by_company = {}
@@ -686,6 +750,60 @@ def fill_account_move_line_date(env):
     )
 
 
+def fill_account_bank_statement_line_reconciliation(env):
+    openupgrade.logged_query(
+        env.cr,
+        """
+        WITH absl_residual AS (
+            SELECT absl.id,
+                CASE
+                    WHEN am.to_check
+                        AND absl.foreign_currency_id IS NOT NULL
+                        THEN -absl.amount_currency
+                    WHEN am.to_check THEN -absl.amount
+                    ELSE SUM(
+                        CASE
+                            WHEN aa.reconcile AND aa.id != aj.default_account_id
+                                AND aa.id = aj.suspense_account_id
+                                THEN aml.amount_residual_currency
+                            WHEN aa.id != aj.default_account_id
+                                AND aa.id = aj.suspense_account_id
+                                THEN aml.amount_currency
+                            ELSE 0.
+                        END
+                    )
+                END as amount_residual,
+                MIN(CASE
+                    WHEN aa.id != aj.default_account_id
+                        AND aa.id = aj.suspense_account_id
+                        THEN aml.currency_id
+                    ELSE NULL END) as suspense_currency_id
+            FROM account_bank_statement_line absl
+                JOIN account_move am ON am.id = absl.move_id
+                JOIN account_move_line aml ON aml.move_id = am.id
+                JOIN account_journal aj ON aj.id = am.journal_id
+                JOIN account_account aa ON aa.id = aml.account_id
+                JOIN res_company rc ON rc.id = aj.company_id
+            GROUP BY
+                absl.id,
+                am.to_check,
+                absl.foreign_currency_id,
+                absl.amount_currency,
+                absl.amount
+        )
+        UPDATE account_bank_statement_line absl
+        SET amount_residual = absl_residual.amount_residual,
+            is_reconciled = CASE
+                WHEN suspense_currency_id IS NULL THEN TRUE
+                ELSE ROUND(absl_residual.amount_residual, rcur.decimal_places) = 0
+            END
+        FROM absl_residual
+            LEFT JOIN res_currency rcur ON rcur.id = absl_residual.suspense_currency_id
+        WHERE absl_residual.id = absl.id
+        """,
+    )
+
+
 @openupgrade.migrate()
 def migrate(env, version):
     fill_account_journal_posted_before(env)
@@ -710,7 +828,9 @@ def migrate(env, version):
     fill_account_journal_payment_credit_debit_account_id(env)
     create_new_counterpart_account_payment_transfer(env)
     map_account_payment_transfer(env)
+    fill_account_payment_reconciliation(env)
     fill_account_payment_with_no_move(env)
+    fill_account_bank_statement_line_reconciliation(env)
     _delete_hooks(env)
     openupgrade.delete_record_translations(
         env.cr,

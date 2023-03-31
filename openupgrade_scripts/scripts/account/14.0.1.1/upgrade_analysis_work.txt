@@ -54,19 +54,21 @@ account      / account.bank.statement   / state (selection)             : select
 
 account      / account.bank.statement   / balance_end_real (float)      : now a function
 account      / account.bank.statement   / balance_start (float)         : now a function
+# NOTHING TO DO: Fields created and adapted for better usability. Now start balance is computed using the end balance from the previous statement.
+
 account      / account.bank.statement   / is_valid_balance_start (boolean): NEW isfunction: function, stored
 account      / account.bank.statement   / previous_statement_id (many2one): NEW relation: account.bank.statement, isfunction: function, stored
-# NOTHING TO DO: Fields created and adapted for better usability. Now start balance is computed using the end balance from the previous statement.
+# DONE: pre-migrate: Add fields and compute
 
 account      / account.bank.statement   / sequence_number (integer)     : NEW isfunction: function, stored
 account      / account.bank.statement   / sequence_prefix (char)        : NEW isfunction: function, stored
-# NOTHING TO DO: fields that store the sequence name splitted in prefix and number for fixing ordering bugs.
+# DONE: pre-migration: Fill data. fields that store the sequence name splitted in prefix and number for fixing ordering bugs.
 
 account      / account.bank.statement.line / _inherits                     : NEW _inherits: {'account.move': 'move_id'}
 account      / account.bank.statement.line / move_id (many2one)            : NEW relation: account.move, required
 account      / account.move             / statement_line_id (many2one)  : NEW relation: account.bank.statement.line
-DONE: # pre-migration: created move_id column and assigned account.move ids when
-DONE: # post-migration: filled move_id where no move_name is is assigned to the bank statement line
+# DONE: pre-migration: created move_id column and assigned account.move ids when
+# DONE: post-migration: filled move_id where no move_name is is assigned to the bank statement line
 
 account      / account.bank.statement.line / account_id (many2one)         : DEL relation: account.account
 account      / account.bank.statement.line / journal_entry_ids (one2many)  : DEL relation: account.move.line
@@ -79,14 +81,16 @@ account      / account.bank.statement.line / bank_account_id (many2one)    : DEL
 # DONE: pre/post: filled partner_bank_id of linked account moves
 
 account      / account.bank.statement.line / amount_residual (float)       : NEW isfunction: function, stored
-# NOTHING TO DO: filled by Odoo.
+# DONE: pre-migration: Create field
+# DONE: post-migration: Fill field
 
 account      / account.bank.statement.line / foreign_currency_id (many2one): NEW relation: res.currency
 # DONE: pre-migration: This field is the "currency_id" field from v13. It has been renamed because now, "currency_id" in v14 stores
 # the "journal_currency_id" values from v13.
 
 account      / account.bank.statement.line / is_reconciled (boolean)       : NEW isfunction: function, stored
-# NOTHING TO DO: new feature. Technical field to indicate if statement line is already reconciled for display purposes.
+# DONE: pre-migration: Create field
+# DONE: post-migration: Fill field
 
 account      / account.bank.statement.line / company_id (many2one)         : not stored anymore
 account      / account.bank.statement.line / date (date)                   : not stored anymore
@@ -207,7 +211,7 @@ account      / account.move             / qr_code_method (selection)    : NEW se
 
 account      / account.move             / sequence_number (integer)     : NEW isfunction: function, stored
 account      / account.move             / sequence_prefix (char)        : NEW isfunction: function, stored
-# NOTHING TO DO: sequence.mixin model fields, filled by Odoo.
+# DONE: pre-migration: Fill data
 
 account      / account.move.line        / account_internal_type (selection): not stored anymore
 # NOTHING TO DO: not stored to improve performance
@@ -220,7 +224,7 @@ account      / account.move.line        / currency_id (many2one)        : now re
 # DONE: filled with company currency if empty
 
 account      / account.move.line        / matching_number (char)        : NEW isfunction: function, stored
-# NOTHING TO DO
+# DONE: pre-migration: Fill data
 
 account      / account.move.line        / payment_id (many2one)         : now related
 account      / account.move.line        / statement_line_id (many2one)  : now related
@@ -237,26 +241,31 @@ account      / account.partial.reconcile / debit_amount_currency (float) : NEW
 
 account      / account.partial.reconcile / credit_currency_id (many2one) : NEW relation: res.currency, isfunction: function, stored
 account      / account.partial.reconcile / debit_currency_id (many2one)  : NEW relation: res.currency, isfunction: function, stored
+# DONE: pre-migration: field created and filled
+
 account      / account.partial.reconcile / currency_id (many2one)        : DEL relation: res.currency
 # NOTHING TO DO: filled by Odoo.
 
 account      / account.payment          / _inherits                     : NEW _inherits: {'account.move': 'move_id'}
 account      / account.payment          / move_id (many2one)            : NEW relation: account.move, required
 account      / account.move             / payment_id (many2one)         : NEW relation: account.payment
-DONE: # pre-migration: created move_id column and assigned account.move ids when move_name exists
-DONE: # post-migration: filled move_id where no move_name or payment_reference is assigned to the payment.
+# DONE: pre-migration: created move_id column and assigned account.move ids when move_name exists
+# DONE: post-migration: filled move_id where no move_name or payment_reference is assigned to the payment.
 
 account      / account.payment          / _order                        : _order is now 'date desc, name desc' ('payment_date desc, name desc')
 # NOTHING TO DO
 
 account      / account.payment          / currency_id (many2one)        : now a function
-account      / account.payment          / destination_account_id (many2one): is now stored
 # NOTHING TO DO
 
+account      / account.payment          / destination_account_id (many2one): is now stored
 account      / account.payment          / is_internal_transfer (boolean): NEW isfunction: function, stored
+# DONE: pre-migration: Fill data
+
 account      / account.payment          / is_matched (boolean)          : NEW isfunction: function, stored
 account      / account.payment          / is_reconciled (boolean)       : NEW isfunction: function, stored
-# NOTHING TO DO: new features
+# DONE: pre-migration: Create columns
+# DONE: post-migration: Fill data
 
 account      / account.payment          / journal_id (many2one)         : not stored anymore
 account      / account.payment          / journal_id (many2one)         : now related
@@ -278,9 +287,13 @@ account      / account.payment          / move_name (char)              : DEL
 # NOTHING TO DO: now the relation is made with the new field move_id
 
 account      / account.payment          / partner_bank_account_id (many2one): DEL relation: res.partner.bank
+# NOTHING TO DO
+
 account      / account.payment          / partner_bank_id (many2one)    : NEW relation: res.partner.bank, isfunction: function, stored
+# DONE: pre-migration: Filled by SQL
+
 account      / account.payment          / partner_id (many2one)         : now a function
-# NOTHING TO DO: automated field filling
+# NOTHING TO DO
 
 account      / account.payment          / partner_type (selection)      : now required, req_default: function
 # DONE: pre-migration: ensuring empty records are filled with default value ('customer')
@@ -295,10 +308,10 @@ account      / account.payment          / payment_method_id (many2one)  : now a 
 # NOTHING TO DO
 
 account      / account.payment          / payment_type (selection)      : selection_keys is now '['inbound', 'outbound']' ('['inbound', 'outbound', 'transfer']')
-# DONE post-migration: mapped payment_type from 'transfer' to 'inbound'/'outbound' for account payment tranfer
+# DONE: post-migration: mapped payment_type from 'transfer' to 'inbound'/'outbound' for account payment tranfer
 # created new counterpart payment with account payment transfer
 # (see https://github.com/odoo/odoo/commit/a30cfee04eaf48b581d2e327c1b56e115a1c751f)
-# DONE pre-migration: filled partner_id with journal_id.company_id.partner_id to detect transfers
+# DONE: pre-migration: filled partner_id with journal_id.company_id.partner_id to detect transfers
 
 account      / account.payment          / writeoff_account_id (many2one): DEL relation: account.account
 account      / account.payment          / writeoff_label (char)         : DEL
