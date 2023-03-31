@@ -582,56 +582,42 @@ def fill_account_payment_reconciliation(env):
                         THEN TRUE
                     ELSE
                         ROUND(SUM(CASE
-                            WHEN rc.currency_id = rcur.id AND aml.account_id in (
-                                    aj.default_account_id,
-                                    aj.payment_debit_account_id,
-                                    aj.payment_credit_account_id
-                                ) THEN aml.amount_residual
                             WHEN aml.account_id in (
-                                    aj.default_account_id,
-                                    aj.payment_debit_account_id,
-                                    aj.payment_credit_account_id
-                                ) THEN aml.amount_residual_currency
+                                aj.default_account_id,
+                                aj.payment_debit_account_id,
+                                aj.payment_credit_account_id
+                            ) THEN CASE
+                                WHEN rc.currency_id = rcur.id THEN aml.amount_residual
+                                ELSE aml.amount_residual_currency END
                             ELSE 0 END
                         ), rcur.decimal_places) = 0
                     END as is_matched,
                     ROUND(
                         SUM(CASE
                             WHEN NOT aa.reconcile THEN 0
-                            WHEN rc.currency_id = rcur.id AND aml.account_id not in (
-                                    aj.default_account_id,
-                                    aj.payment_debit_account_id,
-                                    aj.payment_credit_account_id
-                                ) THEN aml.amount_residual
                             WHEN aml.account_id not in (
-                                    aj.default_account_id,
-                                    aj.payment_debit_account_id,
-                                    aj.payment_credit_account_id
-                                ) THEN aml.amount_residual_currency
+                                aj.default_account_id,
+                                aj.payment_debit_account_id,
+                                aj.payment_credit_account_id
+                            ) THEN CASE
+                                WHEN rc.currency_id = rcur.id THEN aml.amount_residual
+                                ELSE aml.amount_residual_currency END
                             ELSE 0 END
                         ),
                         rcur.decimal_places
                     ) = 0 as is_reconciled
-                FROM
-                    account_payment ap,
-                    account_move am,
-                    account_move_line aml,
-                    account_account aa,
-                    res_company rc,
-                    account_journal aj,
-                    res_currency rcur
-                WHERE
-                    am.id = ap.move_id
-                    AND aml.move_id = am.id
-                    AND aa.id = aml.account_id
-                    AND aj.id = am.journal_id
-                    AND rc.id = am.company_id
-                    AND rcur.id = ap.currency_id
-                    AND (ap.is_matched is NULL OR NOT ap.is_matched)
+                FROM account_payment ap
+                JOIN account_move am ON am.id = ap.move_id
+                JOIN account_move_line aml ON aml.move_id = am.id
+                JOIN account_account aa ON aa.id = aml.account_id
+                JOIN res_company rc ON rc.id = am.company_id
+                JOIN account_journal aj ON aj.id = am.journal_id
+                JOIN res_currency rcur ON rcur.id = ap.currency_id
                 GROUP BY ap.id, rcur.decimal_places, aj.default_account_id
             )
             UPDATE account_payment ap
-            SET is_matched = matched_payments.is_matched
+            SET is_matched = matched_payments.is_matched,
+                is_reconciled = matched_payments.is_reconciled
             FROM matched_payments
             where ap.id = matched_payments.id
         """,

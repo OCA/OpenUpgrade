@@ -480,6 +480,7 @@ def create_account_payment_reconciliation(env):
                 "boolean",
                 False,
                 "account",
+                False,
             ),
             (
                 "is_matched",
@@ -488,6 +489,7 @@ def create_account_payment_reconciliation(env):
                 "boolean",
                 False,
                 "account",
+                False,
             ),
         ],
     )
