@@ -11,6 +11,8 @@ renamed_modules = {
     "mail_client_extension": "mail_plugin",
     "payment_ingenico": "payment_ogone",
     "website_mail_channel": "website_mail_group",
+    # OCA/account-fiscal-rule
+    "l10n_eu_oss": "l10n_eu_oss_oca",
     # OCA/e-commerce
     "website_sale_attribute_filter_order": "website_sale_product_attribute_filter_order",
     # OCA/project
