@@ -50,6 +50,8 @@ merged_modules = {
     "account_move_force_removal": "account",
     # OCA/purchase-workflow
     "product_form_purchase_link": "purchase",
+    # OCA/stock-logistics-workflow
+    "stock_picking_backorder_strategy": "stock",
 }
 
 # only used here for upgrade_analysis
