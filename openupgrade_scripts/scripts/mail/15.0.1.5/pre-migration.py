@@ -1,3 +1,7 @@
+# Copyright 2022 Viindoo - sang250399
+# Copyright 2022 ForgeFlow - Miquel R.
+# Copyright 2023 Tecnativa - Pedro M. Baeza
+# License AGPL-3.0 or later (http://www.gnu.org/licenses/agpl.html).
 from openupgradelib import openupgrade, openupgrade_merge_records
 
 from odoo.tools import sql
@@ -211,36 +215,18 @@ def migration_to_mail_group(env):
         FROM mail_channel mc
         WHERE mc.email_send""",
     )
-    # add image_128 attachments
-    env.cr.execute(
-        """
-        SELECT ia.*, mg.id AS mail_group_id
-        FROM ir_attachment ia
-        JOIN mail_channel mc ON (ia.res_model = 'mail.channel' AND ia.res_id = mc.id)
-        JOIN mail_group mg ON mg.old_channel_id = mc.id
-        WHERE ia.res_field = 'image_128'
+    # transfer image_128 attachments
+    openupgrade.logged_query(
+        env.cr,
+        """UPDATE ir_attachment ia
+        SET res_model='mail.group',
+            res_id = mg.id
+        FROM mail_group mg
+        WHERE ia.res_model='mail.channel'
+            AND ia.res_id = mg.old_channel_id
+            AND ia.res_field = 'image_128'
         """,
     )
-    columns = [
-        x.name for x in env.cr._obj.description if x.name not in ("id", "mail_group_id")
-    ]
-    attachments = env.cr.dictfetchall()
-    values = []
-    for attachment in attachments:
-        attachment["res_model"] = "mail.group"
-        attachment["res_id"] = attachment["mail_group_id"]
-        vals = ["'%s'" % attachment[x] for x in columns]
-        vals = [x if x != "'None'" else "NULL" for x in vals]
-        values += ["(" + ", ".join(vals) + ")"]
-    if values:
-        openupgrade.logged_query(
-            env.cr,
-            """
-            INSERT INTO ir_attachment ({})
-            VALUES {};""".format(
-                ", ".join(columns), ", ".join(values)
-            ),
-        )
     # adapt m2m table
     openupgrade.logged_query(
         env.cr,
