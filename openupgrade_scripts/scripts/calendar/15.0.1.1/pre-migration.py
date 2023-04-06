@@ -27,7 +27,7 @@ def migrate(env, version):
         """,
     )
     openupgrade.convert_field_to_html(
-        env.cr, "calendar_event", "description", "description"
+        env.cr, "calendar_event", "description", "description", verbose=False
     )
     openupgrade.rename_fields(
         env,
@@ -40,6 +40,9 @@ def migrate(env, version):
             ("calendar.recurrence", "calendar_recurrence", "tu", "tue"),
             ("calendar.recurrence", "calendar_recurrence", "we", "wed"),
         ],
+    )
+    openupgrade.delete_sql_constraint_safely(
+        env, "calendar", "calendar_recurrence", "month_day"
     )
     # change the value of 'weekday' in the calendar_recurrence table
     openupgrade.logged_query(
@@ -55,7 +58,4 @@ def migrate(env, version):
                            WHEN weekday = 'WE' THEN 'WED'
                            END
         WHERE weekday IN ('FR', 'MO', 'SA', 'SU', 'TH', 'TU', 'WE')""",
-    )
-    openupgrade.delete_sql_constraint_safely(
-        env, "calendar", "calendar_recurrence", "month_day"
     )
