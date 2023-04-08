@@ -111,6 +111,20 @@ def _update_stock_quant_package_pack_date(env):
         """,
     )
 
+def _handle_stock_picking_backorder_strategy(env):
+    # Handle the merge of OCA/stock-logistics-workflow/stock_picking_backorder_strategy
+    # feature in odoo/stock V16 module.
+    if openupgrade.column_exists(env.cr, "stock_picking_type", "backorder_strategy"):
+        # Rename column
+        openupgrade.rename_columns(
+            env.cr,
+            {
+                "stock_picking_type": [
+                    ("backorder_strategy", None),
+                ],
+            },
+        )
+
 
 @openupgrade.migrate()
 def migrate(env, version):
@@ -122,3 +136,4 @@ def migrate(env, version):
     _update_stock_quant_package_pack_date(env)
     _update_sol_product_category_name(env)
     _compute_stock_location_replenish_location(env)
+    _handle_stock_picking_backorder_strategy(env)
