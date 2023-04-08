@@ -119,7 +119,8 @@ stock        / stock.picking            / move_lines (one2many)         : DEL re
 
 stock        / stock.picking.type       / auto_show_reception_report (boolean): NEW
 stock        / stock.picking.type       / create_backorder (selection)  : NEW required, selection_keys: ['always', 'ask', 'never'], hasdefault: default
-# NOTHING TO DO
+# - If stock_picking_backorder_strategy was installed, data are populated with the field backorder_strategy
+# - Otherwise, NOTHING TO DO
 
 stock        / stock.production.lot     / activity_ids (one2many)       : DEL relation: mail.activity
 stock        / stock.production.lot     / company_id (many2one)         : DEL relation: res.company, required
