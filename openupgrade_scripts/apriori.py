@@ -48,6 +48,8 @@ merged_modules = {
     # OCA/account-financial-tools
     "account_balance_line": "account",
     "account_move_force_removal": "account",
+    # OCA/account-invoice-reporting
+    "account_invoice_report_due_list": "account",
     # OCA/purchase-workflow
     "product_form_purchase_link": "purchase",
 }
