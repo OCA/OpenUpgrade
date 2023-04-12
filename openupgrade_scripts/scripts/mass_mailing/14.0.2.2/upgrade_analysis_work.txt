@@ -21,7 +21,11 @@ mass_mailing / mailing.mailing          / preview (char)                : NEW
 
 mass_mailing / mailing.mailing          / mailing_domain (char)         : now a function
 mass_mailing / mailing.mailing          / mailing_model_id (many2one)   : now required, req_default: function
+# NOTHING TO DO: computed in load
+
 mass_mailing / mailing.mailing          / medium_id (many2one)          : now a function
+# DONE: post-migration: the field is required in the mailing view, so we fill it according to its default computed values if empty
+
 mass_mailing / mailing.mailing          / reply_to (char)               : now a function
 mass_mailing / mailing.mailing          / reply_to_mode (selection)     : now a function
 # NOTHING TO DO: computed in load
