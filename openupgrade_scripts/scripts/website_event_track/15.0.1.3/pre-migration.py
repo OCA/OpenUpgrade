@@ -14,7 +14,7 @@ def migrate(env, version):
                 "event.track",
                 "event_track",
                 "char",
-                "False",
+                False,
                 "website_event_track",
             ),
             (
@@ -22,12 +22,12 @@ def migrate(env, version):
                 "event.track",
                 "event_track",
                 "char",
-                "False",
+                False,
                 "website_event_track",
             ),
         ],
     )
-    openupgrade.loggued_query(
+    openupgrade.logged_query(
         env.cr,
         """UPDATE event_track et
         SET contact_email = rp.email, contact_phone = rp.phone
