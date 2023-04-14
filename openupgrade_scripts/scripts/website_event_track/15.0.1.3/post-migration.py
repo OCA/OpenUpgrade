@@ -73,7 +73,7 @@ def _check_sponsors(env):
         )
     else:
         openupgrade.delete_records_safely_by_xml_id(
-            env.cr,
+            env,
             [
                 "website_event_track.event_sponsor_type1",
                 "website_event_track.event_sponsor_type2",
