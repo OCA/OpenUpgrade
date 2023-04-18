@@ -814,7 +814,6 @@ def migrate(env, version):
     create_account_reconcile_model_lines(env)
     create_account_reconcile_model_template_lines(env)
     create_account_tax_report_lines(env)
-    post_statements_with_unreconciled_lines(env)
     pass_bank_statement_line_note_to_journal_entry_narration(env)
     pass_payment_to_journal_entry_narration(env)
     fill_company_account_cash_basis_base_account_id(env)
@@ -831,6 +830,7 @@ def migrate(env, version):
     fill_account_payment_reconciliation(env)
     fill_account_payment_with_no_move(env)
     fill_account_bank_statement_line_reconciliation(env)
+    post_statements_with_unreconciled_lines(env)
     _delete_hooks(env)
     openupgrade.delete_record_translations(
         env.cr,
