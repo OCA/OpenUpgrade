@@ -83,8 +83,10 @@ account      / account.payment          / outstanding_account_id (many2one): NEW
 # DONE: end-migration: filled for outstanding_account_id
 
 account      / account.payment          / destination_journal_id (many2one): NEW relation: account.journal
+# DONE: post-migration: filled through an SQL
+
 account      / account.payment          / paired_internal_transfer_payment_id (many2one): NEW relation: account.payment
-# DONE: post-migration: filled using _create_paired_internal_transfer_payment method
+# TODO: Try to guess the twin payment on existing moves. For v13-, there should be a move, but not a payment
 
 account      / account.payment          / payment_method_id (many2one)  : not a function anymore
 account      / account.payment          / payment_method_id (many2one)  : now related
