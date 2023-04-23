@@ -6,7 +6,7 @@ def deprecate_website_crm_privacy_policy(env):
     module_website_crm_privacy_policy = env["ir.module.module"].search(
         [("name", "=", "website_crm_privacy_policy")]
     )
-    if module_website_crm_privacy_policy.state == "installed":
+    if module_website_crm_privacy_policy.state in ("installed", "to upgrade"):
         module_website_form_require_legal = env["ir.module.module"].search(
             [("name", "=", "website_form_require_legal")]
         )
