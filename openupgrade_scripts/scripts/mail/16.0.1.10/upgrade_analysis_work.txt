@@ -1,0 +1,221 @@
+---Models in module 'mail'---
+obsolete model mail.channel.partner
+obsolete model mail.resend.cancel [transient]
+model fetchmail.server (moved from fetchmail)
+new model mail.channel.member
+new model mail.gateway.allowed
+new model mail.link.preview
+new model mail.message.schedule
+new model mail.template.reset [transient]
+new model template.reset.mixin [abstract]
+---Fields in module 'mail'---
+mail         / fetchmail.server         / __last_update (datetime)      : previously in module fetchmail
+mail         / fetchmail.server         / _order                        : previously in module fetchmail
+mail         / fetchmail.server         / active (boolean)              : previously in module fetchmail
+mail         / fetchmail.server         / attach (boolean)              : previously in module fetchmail
+mail         / fetchmail.server         / configuration (text)          : previously in module fetchmail
+mail         / fetchmail.server         / date (datetime)               : previously in module fetchmail
+mail         / fetchmail.server         / display_name (char)           : previously in module fetchmail
+mail         / fetchmail.server         / is_ssl (boolean)              : previously in module fetchmail
+mail         / fetchmail.server         / message_ids (one2many)        : previously in module fetchmail
+mail         / fetchmail.server         / name (char)                   : previously in module fetchmail
+mail         / fetchmail.server         / object_id (many2one)          : previously in module fetchmail
+mail         / fetchmail.server         / original (boolean)            : previously in module fetchmail
+mail         / fetchmail.server         / password (char)               : previously in module fetchmail
+mail         / fetchmail.server         / port (integer)                : previously in module fetchmail
+mail         / fetchmail.server         / priority (integer)            : previously in module fetchmail
+mail         / fetchmail.server         / script (char)                 : previously in module fetchmail
+mail         / fetchmail.server         / server (char)                 : previously in module fetchmail
+mail         / fetchmail.server         / server_type (selection)       : previously in module fetchmail
+mail         / fetchmail.server         / state (selection)             : previously in module fetchmail
+mail         / fetchmail.server         / user (char)                   : previously in module fetchmail
+# NOTHING TO DO: modules merged in apriori.py
+
+mail         / ir.actions.server        / mail_post_autofollow (boolean): NEW hasdefault: compute
+mail         / ir.actions.server        / mail_post_method (selection)  : NEW selection_keys: ['comment', 'email', 'note'], hasdefault: compute
+# NOTHING TO DO: New fields
+mail         / ir.actions.server        / state (False)                 : selection_keys is now '['code', 'followers', 'mail_post', 'multi', 'next_activity', 'object_create', 'object_write']' ('['code', 'email', 'followers', 'multi', 'next_activity', 'object_create', 'object_write']')
+# DONE (pre-migration): selection_key 'email' has been renamed 'mail_post'
+
+mail         / ir.mail_server           / mail_template_ids (one2many)  : NEW relation: mail.template
+# NOTHING TO DO: new field
+
+mail         / mail.channel             / _inherits                     : DEL _inherits: {'mail.alias': 'alias_id'}
+mail         / mail.channel             / alias_id (many2one)           : DEL relation: mail.alias, required
+# NOTHING TO DO: removed mail.alias.mixin from channel. See commit https://github.com/odoo/odoo/commit/ac00d19c8db572932a3863ab21a9a1f432dd93b5
+mail         / mail.channel             / channel_last_seen_partner_ids (one2many): DEL relation: mail.channel.partner
+mail         / mail.channel             / channel_member_ids (one2many) : NEW relation: mail.channel.member
+# DONE (pre-migration): rename field
+mail         / mail.channel             / channel_type (selection)      : now required
+# DONE (pre-migration): set default value where no value was set
+mail         / mail.channel             / public (selection)            : DEL required, selection_keys: ['groups', 'private', 'public']
+# DONE (post-migration): load new data for mail.mail_channel_rule ir.rule in which this field was involved
+
+mail         / mail.channel.member      / channel_id (many2one)         : NEW relation: mail.channel, required
+mail         / mail.channel.member      / custom_channel_name (char)    : NEW
+mail         / mail.channel.member      / fetched_message_id (many2one) : NEW relation: mail.message
+mail         / mail.channel.member      / fold_state (selection)        : NEW selection_keys: ['closed', 'folded', 'open'], hasdefault: default
+mail         / mail.channel.member      / guest_id (many2one)           : NEW relation: mail.guest
+mail         / mail.channel.member      / is_minimized (boolean)        : NEW
+mail         / mail.channel.member      / is_pinned (boolean)           : NEW hasdefault: default
+mail         / mail.channel.member      / last_interest_dt (datetime)   : NEW hasdefault: default
+mail         / mail.channel.member      / last_seen_dt (datetime)       : NEW
+mail         / mail.channel.member      / partner_id (many2one)         : NEW relation: res.partner
+mail         / mail.channel.member      / rtc_inviting_session_id (many2one): NEW relation: mail.channel.rtc.session
+mail         / mail.channel.member      / rtc_session_ids (one2many)    : NEW relation: mail.channel.rtc.session
+mail         / mail.channel.member      / seen_message_id (many2one)    : NEW relation: mail.message
+mail         / mail.channel.partner     / channel_id (many2one)         : DEL relation: mail.channel, required
+mail         / mail.channel.partner     / custom_channel_name (char)    : DEL
+mail         / mail.channel.partner     / fetched_message_id (many2one) : DEL relation: mail.message
+mail         / mail.channel.partner     / fold_state (selection)        : DEL selection_keys: ['closed', 'folded', 'open']
+mail         / mail.channel.partner     / guest_id (many2one)           : DEL relation: mail.guest
+mail         / mail.channel.partner     / is_minimized (boolean)        : DEL
+mail         / mail.channel.partner     / is_pinned (boolean)           : DEL
+mail         / mail.channel.partner     / last_interest_dt (datetime)   : DEL
+mail         / mail.channel.partner     / partner_id (many2one)         : DEL relation: res.partner
+mail         / mail.channel.partner     / rtc_inviting_session_id (many2one): DEL relation: mail.channel.rtc.session
+mail         / mail.channel.partner     / rtc_session_ids (one2many)    : DEL relation: mail.channel.rtc.session
+mail         / mail.channel.partner     / seen_message_id (many2one)    : DEL relation: mail.message
+# DONE (pre-migration): mail.channel.partner renamed to mail.channel.member.
+# New datetime field last_seen_dt: NOTHING TO DO
+
+mail         / mail.channel.rtc.session / channel_member_id (many2one)  : NEW relation: mail.channel.member, required
+mail         / mail.channel.rtc.session / channel_partner_id (many2one) : DEL relation: mail.channel.partner, required
+# DONE (pre-migration): copy column channel_partner_id into channel_member_id
+
+mail         / mail.gateway.allowed     / email (char)                  : NEW
+mail         / mail.gateway.allowed     / email_normalized (char)       : NEW isfunction: function, stored
+# NOTHING TO DO: new model
+
+mail         / mail.guest               / channel_ids (many2many)       : table is now 'mail_channel_member' ('mail_channel_partner')
+# DONE in pre-migrate script when renaming the model
+
+mail         / mail.link.preview        / image_mimetype (char)         : NEW
+mail         / mail.link.preview        / message_id (many2one)         : NEW relation: mail.message, required
+mail         / mail.link.preview        / og_description (text)         : NEW
+mail         / mail.link.preview        / og_image (char)               : NEW
+mail         / mail.link.preview        / og_mimetype (char)            : NEW
+mail         / mail.link.preview        / og_title (char)               : NEW
+mail         / mail.link.preview        / og_type (char)                : NEW
+mail         / mail.link.preview        / source_url (char)             : NEW required
+# NOTHING TO DO: new model
+
+mail         / mail.mail                / fetchmail_server_id (many2one): previously in module fetchmail
+# NOTHING TO DO
+mail         / mail.mail                / scheduled_date (char)         : type is now 'datetime' ('char')
+# NOTHING TO DO: values were already encoded in standard datetime format in psql
+mail         / mail.mail                / to_delete (boolean)           : NEW
+# NOTHING TO DO: new field
+
+mail         / mail.message             / add_sign (boolean)            : DEL
+mail         / mail.message             / email_add_signature (boolean) : NEW hasdefault: default
+# DONE in pre-migration: Rename 'add_sign' into 'email_add_signature'
+mail         / mail.message             / link_preview_ids (one2many)   : NEW relation: mail.link.preview
+# NOTHING TO DO: new relation to new model
+
+mail         / mail.message.schedule    / mail_message_id (many2one)    : NEW relation: mail.message, required
+mail         / mail.message.schedule    / notification_parameters (text): NEW
+mail         / mail.message.schedule    / scheduled_datetime (datetime) : NEW required
+# NOTHING TO DO: new model
+
+mail         / mail.message.subtype     / track_recipients (boolean)    : NEW
+# NOTHING TO DO
+
+mail         / mail.notification        / author_id (many2one)          : NEW relation: res.partner
+# NOTHING TO DO
+
+mail         / mail.template            / active (boolean)              : NEW hasdefault: default
+mail         / mail.template            / copyvalue (char)              : DEL
+mail         / mail.template            / description (text)            : NEW
+mail         / mail.template            / model_object_field (many2one) : DEL relation: ir.model.fields
+mail         / mail.template            / null_value (char)             : DEL
+mail         / mail.template            / sub_model_object_field (many2one): DEL relation: ir.model.fields
+mail         / mail.template            / sub_object (many2one)         : DEL relation: ir.model
+mail         / mail.template            / template_fs (char)            : NEW
+# NOTHING TO DO
+
+
+mail         / res.partner              / channel_ids (many2many)       : table is now 'mail_channel_member' ('mail_channel_partner')
+# DONE in pre-migration script when renaming the model
+
+---XML records in module 'mail'---
+NEW ir.actions.act_window: mail.act_server_history [renamed from fetchmail module]
+NEW ir.actions.act_window: mail.action_email_server_tree [renamed from fetchmail module]
+NEW ir.actions.act_window: mail.mail_channel_member_action
+NEW ir.actions.act_window: mail.mail_gateway_allowed_action
+NEW ir.actions.act_window: mail.mail_link_preview_action
+NEW ir.actions.act_window: mail.mail_message_schedule_action
+NEW ir.actions.act_window: mail.mail_template_reset_action
+DEL ir.actions.act_window: mail.mail_channel_partner_action
+DEL ir.actions.act_window: mail.mail_resend_cancel_action
+# NOTHING TO DO: noupdate="0" records
+
+NEW ir.cron: mail.ir_cron_mail_gateway_action [renamed from fetchmail module] (noupdate)
+# NOTHING TO DO: modules merged in apriori.py
+
+NEW ir.cron: mail.ir_cron_send_scheduled_message (noupdate)
+# NOTHING TO DO: New noupdate="1" records
+
+NEW ir.model.access: mail.access_fetchmail_server [renamed from fetchmail module]
+NEW ir.model.access: mail.access_mail_channel_member_portal
+NEW ir.model.access: mail.access_mail_channel_member_public
+NEW ir.model.access: mail.access_mail_channel_member_user
+NEW ir.model.access: mail.access_mail_gateway_allowed_system
+NEW ir.model.access: mail.access_mail_link_preview_admin
+NEW ir.model.access: mail.access_mail_message_scheduled_all
+NEW ir.model.access: mail.access_mail_message_scheduled_system
+NEW ir.model.access: mail.access_mail_template_reset
+DEL ir.model.access: mail.access_mail_channel_partner_portal
+DEL ir.model.access: mail.access_mail_channel_partner_public
+DEL ir.model.access: mail.access_mail_channel_partner_user
+DEL ir.model.access: mail.access_mail_resend_cancel
+NEW ir.model.constraint: mail.constraint_mail_activity_check_res_id_is_set
+NEW ir.model.constraint: mail.constraint_mail_channel_channel_type_not_null
+NEW ir.model.constraint: mail.constraint_mail_channel_group_public_id_check
+NEW ir.model.constraint: mail.constraint_mail_channel_member_partner_or_guest_exists
+NEW ir.model.constraint: mail.constraint_mail_channel_rtc_session_channel_member_unique
+NEW ir.model.constraint: mail.constraint_res_users_notification_type
+
+DEL ir.model.constraint: mail.constraint_mail_channel_partner_partner_or_guest_exists
+DEL ir.model.constraint: mail.constraint_mail_channel_rtc_session_channel_partner_unique
+# DONE (pre-migration): safely deleting the constraints
+
+NEW ir.rule: mail.ir_rule_mail_channel_member_group_system (noupdate)
+NEW ir.rule: mail.ir_rule_mail_channel_member_group_user (noupdate)
+DEL ir.rule: mail.ir_rule_mail_channel_partner_group_system (noupdate)
+DEL ir.rule: mail.ir_rule_mail_channel_partner_group_user (noupdate)
+# DONE (pre-migration and post-migration): rename xmlids and load data from noupdate_changes.xml
+
+NEW ir.ui.menu: mail.mail_channel_member_menu
+NEW ir.ui.menu: mail.mail_gateway_allowed_menu
+NEW ir.ui.menu: mail.mail_link_preview_menu
+NEW ir.ui.menu: mail.mail_message_schedule_menu
+NEW ir.ui.menu: mail.menu_action_fetchmail_server_tree [renamed from fetchmail module]
+DEL ir.ui.menu: mail.mail_channel_partner_menu
+NEW ir.ui.view: mail.mail_channel_member_view_form
+NEW ir.ui.view: mail.mail_channel_member_view_tree
+NEW ir.ui.view: mail.mail_gateway_allowed_view_search
+NEW ir.ui.view: mail.mail_gateway_allowed_view_tree
+NEW ir.ui.view: mail.mail_link_preview_view_tree
+NEW ir.ui.view: mail.mail_message_schedule_view_form
+NEW ir.ui.view: mail.mail_message_schedule_view_search
+NEW ir.ui.view: mail.mail_message_schedule_view_tree
+NEW ir.ui.view: mail.mail_notification_layout
+NEW ir.ui.view: mail.mail_notification_layout_with_responsible_signature
+NEW ir.ui.view: mail.mail_template_reset_view_form
+NEW ir.ui.view: mail.message_notification_limit_email
+NEW ir.ui.view: mail.notification_preview
+NEW ir.ui.view: mail.view_email_server_form
+NEW ir.ui.view: mail.view_email_server_search
+NEW ir.ui.view: mail.view_email_server_tree
+DEL ir.ui.view: mail.mail_channel_partner_view_form
+DEL ir.ui.view: mail.mail_channel_partner_view_tree
+DEL ir.ui.view: mail.mail_notification_borders
+DEL ir.ui.view: mail.mail_notification_paynow
+DEL ir.ui.view: mail.mail_resend_cancel_view_form
+DEL ir.ui.view: mail.message_notification_email
+# NOTHING TO DO: noupdate="0" records
+
+NEW mail.channel.member: mail.channel_member_general_channel_for_admin (noupdate)
+DEL mail.channel.partner: mail.channel_partner_general_channel_for_admin (noupdate)
+# DONE (pre-migration): rename xmlid
