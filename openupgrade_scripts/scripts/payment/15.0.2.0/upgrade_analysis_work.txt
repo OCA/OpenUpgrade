@@ -27,7 +27,7 @@ payment      / payment.acquirer         / inline_form_view_id (many2one): NEW re
 # DONE: pre-migration: renamed field.
 
 payment      / payment.acquirer         / provider (selection)          : selection_keys is now '['none']' ('['manual']')
-# DONE: post-migration: converted value of provider (manual -> none)
+# DONE: pre-migration: converted value of provider (manual -> none). Done in pre for having it available for computed field account.payment.method.line->payment_acquirer_id
 
 payment      / payment.acquirer         / qr_code (boolean)             : module is now 'payment_transfer' ('payment')
 payment      / payment.acquirer         / redirect_form_view_id (many2one): NEW relation: ir.ui.view
