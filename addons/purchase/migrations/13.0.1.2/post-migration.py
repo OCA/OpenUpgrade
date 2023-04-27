@@ -15,16 +15,16 @@ def move_fields_from_invoice_to_moves(env):
 
 
 def change_type_purchase_order_date_approve(env):
-    openupgrade.logged_query(
-        env.cr, """
+    query = """
         UPDATE purchase_order po
         SET date_approve = mm.date
         FROM mail_message mm
         WHERE mm.subtype_id = %s
             AND mm.model = 'purchase.order'
-            AND mm.res_id = po.id""",
-        (env.ref('purchase.mt_rfq_approved').id, ),
-    )
+            AND mm.res_id = po.id
+            AND date_approve IS NULL"""
+    openupgrade.logged_query(env.cr, query, (env.ref('purchase.mt_rfq_approved').id,))
+    openupgrade.logged_query(env.cr, query, (env.ref('purchase.mt_rfq_confirmed').id,))
 
 
 def fill_account_move_purchase_order_rel_table(env):
