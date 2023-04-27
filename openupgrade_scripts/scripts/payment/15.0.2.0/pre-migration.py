@@ -90,11 +90,22 @@ def delete_payment_adquirer_inline_form_view_id(env):
     )
 
 
+def convert_payment_acquirer_provider(env):
+    openupgrade.logged_query(
+        env.cr,
+        f"""
+        UPDATE payment_acquirer
+        SET provider = 'none'
+        WHERE {openupgrade.get_legacy_name('provider')} = 'manual'""",
+    )
+
+
 @openupgrade.migrate()
 def migrate(env, version):
     openupgrade.copy_columns(env.cr, _copied_columns)
     openupgrade.rename_fields(env, _renamed_fields)
     openupgrade.rename_xmlids(env.cr, _renamed_xmlids)
+    convert_payment_acquirer_provider(env)
     fill_payment_token_name(env)
     fill_payment_transaction_partner_id(env)
     delete_payment_adquirer_inline_form_view_id(env)

@@ -21,16 +21,6 @@ def fill_payment_transaction_tokenize(env):
     )
 
 
-def convert_payment_acquirer_provider(env):
-    openupgrade.logged_query(
-        env.cr,
-        f"""
-        UPDATE payment_acquirer
-        SET provider = 'none'
-        WHERE {openupgrade.get_legacy_name('provider')} = 'manual'""",
-    )
-
-
 def fill_payment_transaction_last_state_change(env):
     openupgrade.logged_query(
         env.cr,
@@ -76,7 +66,6 @@ def create_account_payment_method_line(env):
 def migrate(env, version):
     fill_payment_adquirer_allow_tokenization(env)
     fill_payment_transaction_tokenize(env)
-    convert_payment_acquirer_provider(env)
     fill_payment_transaction_partner_state_id(env)
     fill_payment_transaction_last_state_change(env)
     create_account_payment_method_line(env)
