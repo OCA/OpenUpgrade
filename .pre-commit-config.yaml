@@ -89,10 +89,6 @@ repos:
         args:
           - --settings=.
         exclude: /__init__\.py$
-  - repo: https://github.com/acsone/setuptools-odoo
-    rev: 3.1.0
-    hooks:
-      - id: setuptools-odoo-make-default
   - repo: https://github.com/PyCQA/flake8
     rev: 3.9.2
     hooks:
