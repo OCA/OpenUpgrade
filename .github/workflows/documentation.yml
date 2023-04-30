@@ -1,7 +1,5 @@
-# This workflow will install Python dependencies, run tests and lint with a
-# single version of Python. For more information see:
-# https://help.github.com/actions/language-and-framework-guides\
-# /using-python-with-github-actions
+# On each Pull request against branch documentation,
+# build documentation and check that the sphinx build works
 
 name: OpenUpgrade documentation
 
@@ -10,34 +8,22 @@ on:
 
 jobs:
   documentation:
-    runs-on: ubuntu-22.04
-    env:
-      DB: "openupgrade"
-      DB_HOST: "localhost"
-      DB_PASSWORD: "odoo"
-      DB_PORT: 5432
-      DB_USERNAME: "odoo"
-      DOWNLOADS: https://github.com/OCA/OpenUpgrade/releases/download/databases
-      ODOO: "./odoo/odoo-bin"
-      PGHOST: "localhost"
-      PGPASSWORD: "odoo"
-      PGUSER: "odoo"
+    runs-on: ubuntu-latest
     steps:
+      - name: Check out OpenUpgrade Documentation
+        uses: actions/checkout@v2
+
       - name: Set up Python
-        uses: actions/setup-python@v2
+        uses: actions/setup-python@v4
         with:
-          python-version: 3.7
+          python-version: '3.10'
       - name: Check out Odoo
         uses: actions/checkout@v2
         with:
           repository: odoo/odoo
-          ref: "15.0"
+          ref: "16.0"
           fetch-depth: 1
           path: odoo
-      - name: Check out OpenUpgrade
-        uses: actions/checkout@v2
-        with:
-          path: openupgrade
       - name: Configuration
         run: |
           sudo apt update
@@ -56,7 +42,8 @@ jobs:
               python3-serial \
               python3-simplejson \
               python3-werkzeug \
-              python3-yaml
+              python3-yaml \
+              unixodbc-dev
       - name: Requirements Installation
         run: |
           pip install -q -r odoo/requirements.txt
@@ -66,4 +53,4 @@ jobs:
       - name: OpenUpgrade Docs
         run: |
           # try to build the documentation
-          sh openupgrade/build_openupgrade_docs
+          sh ./build_openupgrade_docs
