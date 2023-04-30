@@ -31,4 +31,4 @@ export PYTHONPATH=$PYTHONPATH:$ODOO_PYTHON_PATH
 
 mkdir -p $OUTPUT_DIR/source/.static
 
-python3 -m sphinx -W -q -d $OUTPUT_DIR/.doctrees $SOURCE_DIR $OUTPUT_DIR
+python3 -m sphinx -W -d $OUTPUT_DIR/.doctrees $SOURCE_DIR $OUTPUT_DIR
