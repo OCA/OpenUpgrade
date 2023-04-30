@@ -54,14 +54,6 @@ repos:
         args:
           - --plugin=@prettier/plugin-xml
         files: \.(css|htm|html|js|json|jsx|less|md|scss|toml|ts|xml|yaml|yml)$
-  - repo: https://github.com/pre-commit/mirrors-eslint
-    rev: v8.15.0
-    hooks:
-      - id: eslint
-        verbose: true
-        args:
-          - --color
-          - --fix
   - repo: https://github.com/pre-commit/pre-commit-hooks
     rev: v4.2.0
     hooks:
@@ -97,10 +89,6 @@ repos:
         args:
           - --settings=.
         exclude: /__init__\.py$
-  - repo: https://github.com/acsone/setuptools-odoo
-    rev: 3.1.0
-    hooks:
-      - id: setuptools-odoo-make-default
   - repo: https://github.com/PyCQA/flake8
     rev: 3.9.2
     hooks:

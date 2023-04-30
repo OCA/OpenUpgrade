@@ -9,6 +9,7 @@ developing parties. See below for an overview of module coverage per version.
 .. toctree::
    :maxdepth: 1
 
+   modules150-160
    modules140-150
    modules130-140
    modules120-130
