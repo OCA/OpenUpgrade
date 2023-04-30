@@ -50,3 +50,33 @@ release.
 
 .. automodule:: openupgradelib.openupgrade_90
    :members:
+
+Methods for OpenUpgrade 12.0
+----------------------------
+
+The following specific methods for 12.0 are available. These have been
+developed to cover specific needs as per data model changes in that
+release.
+
+.. automodule:: openupgradelib.openupgrade_120
+   :members:
+
+Methods for OpenUpgrade 13.0
+----------------------------
+
+The following specific methods for 13.0 are available. These have been
+developed to cover specific needs as per data model changes in that
+release.
+
+.. automodule:: openupgradelib.openupgrade_130
+   :members:
+
+Methods for OpenUpgrade 16.0
+----------------------------
+
+The following specific methods for 16.0 are available. These have been
+developed to cover specific needs as per data model changes in that
+release.
+
+.. automodule:: openupgradelib.openupgrade_160
+   :members:
