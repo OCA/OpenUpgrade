@@ -1090,6 +1090,106 @@ type is allowed not to exist anymore, except when running unit tests.
 </dd></dl>
 
 </section>
+<section id="methods-for-openupgrade-12-0">
+<h2>Methods for OpenUpgrade 12.0<a class="headerlink" href="#methods-for-openupgrade-12-0" title="Permalink to this heading">¶</a></h2>
+<p>The following specific methods for 12.0 are available. These have been
+developed to cover specific needs as per data model changes in that
+release.</p>
+<span class="target" id="module-openupgradelib.openupgrade_120"></span><p>Tools specific for migrating Odoo 11.0 to 12.0.</p>
+<p>Important changes come from the update from Bootstrap 3 to 4.
+To understand these changes, these sources have been consulted, among others
+specific to some rules that can be consulted in inline comments:</p>
+<ul class="simple">
+<li><p><a class="reference external" href="http://upgrade-bootstrap.bootply.com/">http://upgrade-bootstrap.bootply.com/</a></p></li>
+<li><p><a class="reference external" href="https://bit.ly/2xmUHmo">https://bit.ly/2xmUHmo</a></p></li>
+<li><p><a class="reference external" href="https://getbootstrap.com/docs/4.3/migration/#stable-changes">https://getbootstrap.com/docs/4.3/migration/#stable-changes</a></p></li>
+<li><p><a class="reference external" href="https://github.com/odoo/odoo/wiki/Tips-and-tricks:-BS3-to-BS4">https://github.com/odoo/odoo/wiki/Tips-and-tricks:-BS3-to-BS4</a></p></li>
+</ul>
+<p>Don’t expect perfection. But patches are welcome.</p>
+<dl class="py function">
+<dt class="sig sig-object py" id="openupgradelib.openupgrade_120.convert_field_bootstrap_3to4">
+<span class="sig-prename descclassname"><span class="pre">openupgradelib.openupgrade_120.</span></span><span class="sig-name descname"><span class="pre">convert_field_bootstrap_3to4</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">env</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">model_name</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">field_name</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">domain</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">method</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">'orm'</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#openupgradelib.openupgrade_120.convert_field_bootstrap_3to4" title="Permalink to this definition">¶</a></dt>
+<dd><p>This converts all the values for the given model and field, being
+able to restrict to a domain of affected records.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>env</strong> – Odoo environment.</p></li>
+<li><p><strong>model_name</strong> – Name of the model that contains the field.</p></li>
+<li><p><strong>field_name</strong> – Name of the field that contains the BS3 HTML content.</p></li>
+<li><p><strong>domain</strong> – Optional domain for filtering records in the model</p></li>
+<li><p><strong>method</strong> – ‘orm’ (default) for using ORM; ‘sql’ for avoiding problems
+with extra triggers in ORM.</p></li>
+</ul>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="openupgradelib.openupgrade_120.convert_string_bootstrap_3to4">
+<span class="sig-prename descclassname"><span class="pre">openupgradelib.openupgrade_120.</span></span><span class="sig-name descname"><span class="pre">convert_string_bootstrap_3to4</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">html_string</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">pretty_print</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">True</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#openupgradelib.openupgrade_120.convert_string_bootstrap_3to4" title="Permalink to this definition">¶</a></dt>
+<dd><p>Convert an HTML string from Bootstrap 3 to 4.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>html_string</strong> (<em>str</em>) – Raw HTML fragment to convert.</p></li>
+<li><p><strong>pretty_print</strong> (<em>bool</em>) – Indicate if you wish to return the HTML pretty formatted.</p></li>
+</ul>
+</dd>
+<dt class="field-even">Return str<span class="colon">:</span></dt>
+<dd class="field-even"><p>Raw HTML fragment converted.</p>
+</dd>
+</dl>
+</dd></dl>
+
+</section>
+<section id="methods-for-openupgrade-13-0">
+<h2>Methods for OpenUpgrade 13.0<a class="headerlink" href="#methods-for-openupgrade-13-0" title="Permalink to this heading">¶</a></h2>
+<p>The following specific methods for 13.0 are available. These have been
+developed to cover specific needs as per data model changes in that
+release.</p>
+<span class="target" id="module-openupgradelib.openupgrade_130"></span><p>Tools specific for migrating from Odoo 12.0 to 13.0.</p>
+<dl class="py function">
+<dt class="sig sig-object py" id="openupgradelib.openupgrade_130.unlink_invalid_tax_tags_from_repartition_lines">
+<span class="sig-prename descclassname"><span class="pre">openupgradelib.openupgrade_130.</span></span><span class="sig-name descname"><span class="pre">unlink_invalid_tax_tags_from_repartition_lines</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">env</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">module</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">base_tag_xmlids</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">tax_tag_xmlids</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#openupgradelib.openupgrade_130.unlink_invalid_tax_tags_from_repartition_lines" title="Permalink to this definition">¶</a></dt>
+<dd><p>The migration script of the account module assigns all tags of
+the account.tax’s tag_ids field to the tag_ids field of the new
+account.tax.repartition.line. However, because each repartition
+line only needs a ‘base’ - or ‘tax’ tag, we clean up the other
+tags.</p>
+</dd></dl>
+
+</section>
+<section id="methods-for-openupgrade-16-0">
+<h2>Methods for OpenUpgrade 16.0<a class="headerlink" href="#methods-for-openupgrade-16-0" title="Permalink to this heading">¶</a></h2>
+<p>The following specific methods for 16.0 are available. These have been
+developed to cover specific needs as per data model changes in that
+release.</p>
+<span class="target" id="module-openupgradelib.openupgrade_160"></span><p>This module provides simple tools for OpenUpgrade migration, specific for
+the &gt;=16.0 migration.</p>
+<dl class="py function">
+<dt class="sig sig-object py" id="openupgradelib.openupgrade_160.migrate_translations_to_jsonb">
+<span class="sig-prename descclassname"><span class="pre">openupgradelib.openupgrade_160.</span></span><span class="sig-name descname"><span class="pre">migrate_translations_to_jsonb</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">env</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">fields_spec</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#openupgradelib.openupgrade_160.migrate_translations_to_jsonb" title="Permalink to this definition">¶</a></dt>
+<dd><p>In Odoo 16, translated fields no longer use the model ir.translation.
+Instead they store all their values into jsonb columns
+in the model’s table.
+See <a class="reference external" href="https://github.com/odoo/odoo/pull/97692">https://github.com/odoo/odoo/pull/97692</a> for more details.</p>
+<p>Odoo provides a method _get_translation_upgrade_queries returning queries
+to execute to migrate all the translations of a particular field.</p>
+<p>The present openupgrade method executes the provided queries
+on table _ir_translation if exists (when ir_translation table was renamed
+by Odoo’s migration scripts) or on table ir_translation (if module was
+migrated by OCA).</p>
+<p>This should be called in a post-migration script of the module
+that contains the definition of the translatable field.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><p><strong>fields_spec</strong> – list of tuples of (model name, field name)</p>
+</dd>
+</dl>
+</dd></dl>
+
+</section>
 </section>
 
 
@@ -1184,6 +1284,19 @@ type is allowed not to exist anymore, except when running unit tests.
 <li class="toctree-l2"><a class="reference internal" href="#methods-for-openupgrade-9-0">Methods for OpenUpgrade 9.0</a><ul>
 <li class="toctree-l3"><a class="reference internal" href="#openupgradelib.openupgrade_90.convert_binary_field_to_attachment"><code class="docutils literal notranslate"><span class="pre">convert_binary_field_to_attachment()</span></code></a></li>
 <li class="toctree-l3"><a class="reference internal" href="#openupgradelib.openupgrade_90.replace_account_types"><code class="docutils literal notranslate"><span class="pre">replace_account_types()</span></code></a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="#methods-for-openupgrade-12-0">Methods for OpenUpgrade 12.0</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="#openupgradelib.openupgrade_120.convert_field_bootstrap_3to4"><code class="docutils literal notranslate"><span class="pre">convert_field_bootstrap_3to4()</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="#openupgradelib.openupgrade_120.convert_string_bootstrap_3to4"><code class="docutils literal notranslate"><span class="pre">convert_string_bootstrap_3to4()</span></code></a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="#methods-for-openupgrade-13-0">Methods for OpenUpgrade 13.0</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="#openupgradelib.openupgrade_130.unlink_invalid_tax_tags_from_repartition_lines"><code class="docutils literal notranslate"><span class="pre">unlink_invalid_tax_tags_from_repartition_lines()</span></code></a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="#methods-for-openupgrade-16-0">Methods for OpenUpgrade 16.0</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="#openupgradelib.openupgrade_160.migrate_translations_to_jsonb"><code class="docutils literal notranslate"><span class="pre">migrate_translations_to_jsonb()</span></code></a></li>
 </ul>
 </li>
 </ul>
