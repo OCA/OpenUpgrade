@@ -131,3 +131,27 @@ def migrate(env, version):
         ],
     )
     activate_proforma(env)
+    # Auto-create icp from old deposit_product_id_setting field (v10)
+    # to new default_deposit_product_id field (v11)
+    openupgrade.logged_query(
+        env.cr,
+        """
+        INSERT INTO ir_config_parameter (
+            key,
+            value,
+            create_uid,
+            create_date,
+            write_uid,
+            write_date
+        ) SELECT 'sale.default_deposit_product_id',
+            value,
+            create_uid,
+            create_date,
+            write_uid,
+            write_date
+        FROM ir_values AS iv
+        WHERE iv.model = 'sale.config.settings'
+            AND iv.name = 'deposit_product_id_setting'
+        LIMIT 1
+        """,
+    )
