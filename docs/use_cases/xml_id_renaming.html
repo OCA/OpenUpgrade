@@ -1,0 +1,318 @@
+<!DOCTYPE html>
+<html class="writer-html5" lang="en" >
+<head>
+  <meta charset="utf-8" /><meta name="generator" content="Docutils 0.18.1: http://docutils.sourceforge.net/" />
+
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>XML-ID Renaming &mdash; OpenUpgrade 16.0 documentation</title>
+      <link rel="stylesheet" href="../_static/pygments.css" type="text/css" />
+      <link rel="stylesheet" href="../_static/css/theme.css" type="text/css" />
+  <!--[if lt IE 9]>
+    <script src="../_static/js/html5shiv.min.js"></script>
+  <![endif]-->
+  
+        <script data-url_root="../" id="documentation_options" src="../_static/documentation_options.js"></script>
+        <script src="../_static/doctools.js"></script>
+        <script src="../_static/sphinx_highlight.js"></script>
+    <script src="../_static/js/theme.js"></script>
+    <link rel="index" title="Index" href="../genindex.html" />
+    <link rel="search" title="Search" href="../search.html" />
+    <link rel="next" title="The Odoo Migration Manager" href="../migrationmanager.html" />
+    <link rel="prev" title="Field Renaming" href="field_renaming.html" /> 
+</head>
+
+<body class="wy-body-for-nav"> 
+  <div class="wy-grid-for-nav">
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search" >
+
+          
+          
+          <a href="../index.html" class="icon icon-home">
+            OpenUpgrade
+          </a>
+              <div class="version">
+                16.0
+              </div>
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="../search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" aria-label="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+        </div><div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="Navigation menu">
+              <ul class="current">
+<li class="toctree-l1"><a class="reference internal" href="../intro.html">Introduction</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../intro.html#migrating-your-database">Migrating your database</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../community.html">Community involvement</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../status.html">Module coverage</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../analysis.html">Database analysis</a></li>
+<li class="toctree-l1 current"><a class="reference internal" href="../development.html">Migration script development</a><ul class="current">
+<li class="toctree-l2"><a class="reference internal" href="../development.html#overview">Overview</a></li>
+<li class="toctree-l2 current"><a class="reference internal" href="../development.html#learn-from-typical-use-cases">Learn from typical Use cases</a><ul class="current">
+<li class="toctree-l3"><a class="reference internal" href="field_renaming.html">Field Renaming</a></li>
+<li class="toctree-l3 current"><a class="current reference internal" href="#">XML-ID Renaming</a><ul>
+<li class="toctree-l4"><a class="reference internal" href="#example">Example</a></li>
+<li class="toctree-l4"><a class="reference internal" href="#source-code-differences">Source Code Differences</a></li>
+<li class="toctree-l4"><a class="reference internal" href="#analysis">Analysis</a></li>
+<li class="toctree-l4"><a class="reference internal" href="#result-without-migration-script-expected-result">Result without migration script / Expected Result</a></li>
+<li class="toctree-l4"><a class="reference internal" href="#contribution-to-openupgrade">Contribution to OpenUpgrade</a></li>
+<li class="toctree-l4"><a class="reference internal" href="#notes">Notes</a></li>
+</ul>
+</li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="../development.html#learn-from-existing-migration-scrips">Learn from existing migration scrips</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../development.html#learn-from-code-review-of-open-prs">Learn from code review of open PRs</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../development.html#the-trial-and-error-process-for-the-development-of-your-scripts">The Trial and error process for the development of your scripts</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../development.html#learning-resources">Learning resources</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="../API.html">OpenUpgrade API</a></li>
+</ul>
+
+        </div>
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap"><nav class="wy-nav-top" aria-label="Mobile navigation menu" >
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="../index.html">OpenUpgrade</a>
+      </nav>
+
+      <div class="wy-nav-content">
+        <div class="rst-content">
+          <div role="navigation" aria-label="Page navigation">
+  <ul class="wy-breadcrumbs">
+      <li><a href="../index.html" class="icon icon-home" aria-label="Home"></a></li>
+          <li class="breadcrumb-item"><a href="../development.html">Migration script development</a></li>
+      <li class="breadcrumb-item active">XML-ID Renaming</li>
+      <li class="wy-breadcrumbs-aside">
+            <a href="../_sources/use_cases/xml_id_renaming.rst.txt" rel="nofollow"> View page source</a>
+      </li>
+  </ul>
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+             
+  <section id="xml-id-renaming">
+<h1>XML-ID Renaming<a class="headerlink" href="#xml-id-renaming" title="Permalink to this heading"></a></h1>
+<section id="example">
+<h2>Example<a class="headerlink" href="#example" title="Permalink to this heading"></a></h2>
+<p>From version 11.0 to version 12.0, in the <code class="docutils literal notranslate"><span class="pre">crm</span></code> module,
+the XML-ID of the <code class="docutils literal notranslate"><span class="pre">ir.actions.act_window.view</span></code> that target opportunities
+has been renamed from <code class="docutils literal notranslate"><span class="pre">action_crm_tag_form_view_oppor11</span></code> (v11)
+to <code class="docutils literal notranslate"><span class="pre">crm_lead_opportunities_view_form</span></code> (v12).</p>
+</section>
+<section id="source-code-differences">
+<h2>Source Code Differences<a class="headerlink" href="#source-code-differences" title="Permalink to this heading"></a></h2>
+<section id="version-11-0">
+<h3>Version 11.0<a class="headerlink" href="#version-11-0" title="Permalink to this heading"></a></h3>
+<div class="highlight-xml notranslate"><div class="highlight"><pre><span></span><span class="nt">&lt;odoo&gt;</span>
+<span class="w">    </span><span class="nt">&lt;record</span><span class="w"> </span><span class="na">model=</span><span class="s">&quot;ir.actions.act_window.view&quot;</span><span class="w"> </span><span class="na">id=</span><span class="s">&quot;action_crm_tag_form_view_oppor11&quot;</span><span class="nt">&gt;</span>
+<span class="w">        </span><span class="nt">&lt;field</span><span class="w"> </span><span class="na">name=</span><span class="s">&quot;sequence&quot;</span><span class="w"> </span><span class="na">eval=</span><span class="s">&quot;2&quot;</span><span class="nt">/&gt;</span>
+<span class="w">        </span><span class="nt">&lt;field</span><span class="w"> </span><span class="na">name=</span><span class="s">&quot;view_mode&quot;</span><span class="nt">&gt;</span>form<span class="nt">&lt;/field&gt;</span>
+<span class="w">        </span><span class="nt">&lt;field</span><span class="w"> </span><span class="na">name=</span><span class="s">&quot;view_id&quot;</span><span class="w"> </span><span class="na">ref=</span><span class="s">&quot;crm_case_form_view_oppor&quot;</span><span class="nt">/&gt;</span>
+<span class="w">        </span><span class="nt">&lt;field</span><span class="w"> </span><span class="na">name=</span><span class="s">&quot;act_window_id&quot;</span><span class="w"> </span><span class="na">ref=</span><span class="s">&quot;crm_lead_opportunities&quot;</span><span class="nt">/&gt;</span>
+<span class="w">    </span><span class="nt">&lt;/record&gt;</span>
+<span class="nt">&lt;/odoo&gt;</span>
+</pre></div>
+</div>
+<p>See <a class="reference external" href="https://github.com/odoo/odoo/blob/84ab74c62a19d08de8b6c7c4e3f3300d7e79bcf9/addons/crm/views/crm_lead_views.xml#L869">Full v11 Code Source</a>.</p>
+</section>
+<section id="version-12-0">
+<h3>Version 12.0<a class="headerlink" href="#version-12-0" title="Permalink to this heading"></a></h3>
+<div class="highlight-xml notranslate"><div class="highlight"><pre><span></span><span class="nt">&lt;odoo&gt;</span>
+<span class="w">    </span><span class="nt">&lt;record</span><span class="w"> </span><span class="na">id=</span><span class="s">&quot;crm_lead_opportunities_view_form&quot;</span><span class="w"> </span><span class="na">model=</span><span class="s">&quot;ir.actions.act_window.view&quot;</span><span class="nt">&gt;</span>
+<span class="w">        </span><span class="nt">&lt;field</span><span class="w"> </span><span class="na">name=</span><span class="s">&quot;sequence&quot;</span><span class="w"> </span><span class="na">eval=</span><span class="s">&quot;2&quot;</span><span class="nt">/&gt;</span>
+<span class="w">        </span><span class="nt">&lt;field</span><span class="w"> </span><span class="na">name=</span><span class="s">&quot;view_mode&quot;</span><span class="nt">&gt;</span>form<span class="nt">&lt;/field&gt;</span>
+<span class="w">        </span><span class="nt">&lt;field</span><span class="w"> </span><span class="na">name=</span><span class="s">&quot;view_id&quot;</span><span class="w"> </span><span class="na">ref=</span><span class="s">&quot;crm_case_form_view_oppor&quot;</span><span class="nt">/&gt;</span>
+<span class="w">        </span><span class="nt">&lt;field</span><span class="w"> </span><span class="na">name=</span><span class="s">&quot;act_window_id&quot;</span><span class="w"> </span><span class="na">ref=</span><span class="s">&quot;crm_lead_opportunities&quot;</span><span class="nt">/&gt;</span>
+<span class="w">    </span><span class="nt">&lt;/record&gt;</span>
+<span class="nt">&lt;/odoo&gt;</span>
+</pre></div>
+</div>
+<p>See <a class="reference external" href="https://github.com/odoo/odoo/blob/0e56e4a7bd6de42d729441a53995ddd459d5e633/addons/crm/views/crm_lead_views.xml#L980">Full v12 Code Source</a>.</p>
+</section>
+</section>
+<section id="analysis">
+<h2>Analysis<a class="headerlink" href="#analysis" title="Permalink to this heading"></a></h2>
+<div class="highlight-text notranslate"><div class="highlight"><pre><span></span>---XML records in module &#39;crm&#39;---
+...
+DEL ir.actions.act_window.view: crm.action_crm_tag_form_view_oppor11
+...
+NEW ir.actions.act_window.view: crm.crm_lead_opportunities_view_form
+</pre></div>
+</div>
+<p>See <a class="reference external" href="https://github.com/OCA/OpenUpgrade/blob/568c9c5c35f443df9c2d0a83b869f9fb5a6de737/addons/crm/migrations/12.0.1.0/openupgrade_analysis.txt#L33">Full v12 Analysis File</a>.</p>
+</section>
+<section id="result-without-migration-script-expected-result">
+<h2>Result without migration script / Expected Result<a class="headerlink" href="#result-without-migration-script-expected-result" title="Permalink to this heading"></a></h2>
+<section id="v11-table-ir-act-window-view">
+<h3>V11 table <code class="docutils literal notranslate"><span class="pre">ir_act_window_view</span></code><a class="headerlink" href="#v11-table-ir-act-window-view" title="Permalink to this heading"></a></h3>
+<table class="docutils align-default">
+<thead>
+<tr class="row-odd"><th class="head"><p>id</p></th>
+<th class="head"><p>create_date</p></th>
+<th class="head"><p>write_date</p></th>
+</tr>
+</thead>
+<tbody>
+<tr class="row-even"><td><p>28</p></td>
+<td><p>2020-01-02 15:23:16</p></td>
+<td><p>2020-01-02 15:23:16</p></td>
+</tr>
+</tbody>
+</table>
+</section>
+<section id="v12-table-ir-act-window-view-without-migration-script">
+<h3>V12 table <code class="docutils literal notranslate"><span class="pre">ir_act_window_view</span></code> (Without migration script)<a class="headerlink" href="#v12-table-ir-act-window-view-without-migration-script" title="Permalink to this heading"></a></h3>
+<table class="docutils align-default">
+<thead>
+<tr class="row-odd"><th class="head"><p>id</p></th>
+<th class="head"><p>create_date</p></th>
+<th class="head"><p>write_date</p></th>
+</tr>
+</thead>
+<tbody>
+<tr class="row-even"><td><p>35</p></td>
+<td><p>2023-04-02 12:00:23</p></td>
+<td><p>2023-04-02 12:00:23</p></td>
+</tr>
+</tbody>
+</table>
+<p><strong>Problem</strong>:</p>
+<ul class="simple">
+<li><p>The previous element (id=28) has been deleted.</p></li>
+<li><p>A new one has been created.</p></li>
+</ul>
+<p>As a result, all the changes done previously has been lost. (values, translations, etc…)</p>
+</section>
+<section id="v12-table-ir-act-window-view-with-migration-script">
+<h3>V12 table <code class="docutils literal notranslate"><span class="pre">ir_act_window_view</span></code> (With migration script)<a class="headerlink" href="#v12-table-ir-act-window-view-with-migration-script" title="Permalink to this heading"></a></h3>
+<table class="docutils align-default">
+<thead>
+<tr class="row-odd"><th class="head"><p>id</p></th>
+<th class="head"><p>create_date</p></th>
+<th class="head"><p>write_date</p></th>
+</tr>
+</thead>
+<tbody>
+<tr class="row-even"><td><p>28</p></td>
+<td><p>2020-01-02 15:23:16</p></td>
+<td><p>2023-04-02 12:00:23</p></td>
+</tr>
+</tbody>
+</table>
+</section>
+</section>
+<section id="contribution-to-openupgrade">
+<h2>Contribution to OpenUpgrade<a class="headerlink" href="#contribution-to-openupgrade" title="Permalink to this heading"></a></h2>
+<section id="update-upgrade-analysis-work-txt-file">
+<h3>Update <code class="docutils literal notranslate"><span class="pre">upgrade_analysis_work.txt</span></code> file<a class="headerlink" href="#update-upgrade-analysis-work-txt-file" title="Permalink to this heading"></a></h3>
+<ul class="simple">
+<li><p>Place side by side the two lines that correspond to the change</p></li>
+<li><p>Mention the operation performed, starting with <code class="docutils literal notranslate"><span class="pre">#</span> <span class="pre">DONE:</span></code></p></li>
+</ul>
+<div class="highlight-text notranslate"><div class="highlight"><pre><span></span>---Fields in module &#39;crm&#39;---
+DEL ir.actions.act_window.view: crm.action_crm_tag_form_view_oppor11
+NEW ir.actions.act_window.view: crm.crm_lead_opportunities_view_form
+# DONE: pre-migration: Renamed XML-IDs
+</pre></div>
+</div>
+<p>See <a class="reference external" href="https://github.com/OCA/OpenUpgrade/blob/568c9c5c35f443df9c2d0a83b869f9fb5a6de737/addons/crm/migrations/12.0.1.0/openupgrade_analysis_work.txt#L38">Full v12 Work Analysis File</a>.</p>
+</section>
+<section id="write-migration-script">
+<h3>Write migration Script<a class="headerlink" href="#write-migration-script" title="Permalink to this heading"></a></h3>
+<p>in the <code class="docutils literal notranslate"><span class="pre">pre-migration.py</span></code> script add:</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="kn">from</span> <span class="nn">openupgradelib</span> <span class="kn">import</span> <span class="n">openupgrade</span>
+
+
+<span class="n">_xml_ids_renames</span> <span class="o">=</span> <span class="p">[</span>
+    <span class="p">(</span><span class="s1">&#39;crm.action_crm_tag_form_view_oppor11&#39;</span><span class="p">,</span>
+     <span class="s1">&#39;crm.crm_lead_opportunities_view_form&#39;</span><span class="p">),</span>
+<span class="p">]</span>
+
+<span class="nd">@openupgrade</span><span class="o">.</span><span class="n">migrate</span><span class="p">()</span>
+<span class="k">def</span> <span class="nf">migrate</span><span class="p">(</span><span class="n">env</span><span class="p">,</span> <span class="n">version</span><span class="p">):</span>
+    <span class="n">openupgrade</span><span class="o">.</span><span class="n">rename_xmlids</span><span class="p">(</span><span class="n">env</span><span class="o">.</span><span class="n">cr</span><span class="p">,</span> <span class="n">_xml_ids_renames</span><span class="p">)</span>
+</pre></div>
+</div>
+<p>See <a class="reference external" href="https://github.com/OCA/OpenUpgrade/blob/568c9c5c35f443df9c2d0a83b869f9fb5a6de737/addons/crm/migrations/12.0.1.0/pre-migration.py#L24">Full pre migration Script</a>.</p>
+</section>
+</section>
+<section id="notes">
+<h2>Notes<a class="headerlink" href="#notes" title="Permalink to this heading"></a></h2>
+<ul>
+<li><p>This operation is placed in the <code class="docutils literal notranslate"><span class="pre">pre-migration.py</span></code> step, to be executed before the
+load of the data, in the regular update process.</p></li>
+<li><p>In most cases, the XML-ID renaming is required because from a version to the next one,
+Odoo moves data from a module to another.</p>
+<p>For exemple, from 13.0 to 14.0 some data have been moved from <code class="docutils literal notranslate"><span class="pre">sale_timesheet</span></code>
+to <code class="docutils literal notranslate"><span class="pre">sale_project</span></code>.</p>
+<p>See : <a class="reference external" href="https://github.com/OCA/OpenUpgrade/blob/6fded25b7914ee3c1e5f3066252807e7f9b92cbe/openupgrade_scripts/scripts/sale_project/14.0.1.0/pre-migration.py#L1">Sale Project migration script</a>.</p>
+</li>
+<li><p>If the data is flagged as <code class="docutils literal notranslate"><span class="pre">noupdate=&quot;1&quot;</span></code> the table after the upgrade
+(without migration script) will contains a duplicates.</p>
+<p>This duplicates can generate a crash of your upgrade, if some constraints are present.</p>
+<p>For example, the <code class="docutils literal notranslate"><span class="pre">ir.config.parameter</span></code> named <code class="docutils literal notranslate"><span class="pre">mail.icp_mail_bounce_alias</span></code> (v14) has been
+renamed into <code class="docutils literal notranslate"><span class="pre">base.icp_mail_bounce_alias</span></code> (v15).
+As the <code class="docutils literal notranslate"><span class="pre">ir.config.parameter</span></code> is created with a <code class="docutils literal notranslate"><span class="pre">noupdate=&quot;1&quot;</span></code> flag AND there is
+a unicity constraint in the <code class="docutils literal notranslate"><span class="pre">key</span></code> field, the creation of the duplicates will fail, during the upgrade
+process.</p>
+</li>
+<li><p>In the case of merging a module, the renaming is done in two steps:</p>
+<p>For example, the v12 module <code class="docutils literal notranslate"><span class="pre">mrp_byproduct</span></code> has been merged into <code class="docutils literal notranslate"><span class="pre">mrp</span></code> module in v13.
+The <code class="docutils literal notranslate"><span class="pre">ir.model.access</span></code> in v12 (<code class="docutils literal notranslate"><span class="pre">mrp_byproduct.access_mrp_subproduct_manager</span></code>) is now <code class="docutils literal notranslate"><span class="pre">mrp.access_mrp_bom_byproduct_manager</span></code> in v13.</p>
+<p>The rename is done in two steps:</p>
+<blockquote>
+<div><ul class="simple">
+<li><p>First, at the beginning of the OpenUpgrade process, the <code class="docutils literal notranslate"><span class="pre">apriori.py</span></code> file is loaded,
+that indicates the merge of the module. At that step,
+<code class="docutils literal notranslate"><span class="pre">mrp_byproduct.access_mrp_subproduct_manager</span></code> is renamed into <code class="docutils literal notranslate"><span class="pre">mrp.access_mrp_subproduct_manager</span></code>.</p></li>
+<li><p>Then, when the <code class="docutils literal notranslate"><span class="pre">pre-migration.py</span></code> of the <code class="docutils literal notranslate"><span class="pre">mrp</span></code> module is executed,
+<code class="docutils literal notranslate"><span class="pre">mrp.access_mrp_subproduct_manager</span></code> is renamed into <code class="docutils literal notranslate"><span class="pre">mrp.access_mrp_bom_byproduct_manager</span></code>.</p></li>
+</ul>
+</div></blockquote>
+</li>
+</ul>
+</section>
+</section>
+
+
+           </div>
+          </div>
+          <footer><div class="rst-footer-buttons" role="navigation" aria-label="Footer">
+        <a href="field_renaming.html" class="btn btn-neutral float-left" title="Field Renaming" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left" aria-hidden="true"></span> Previous</a>
+        <a href="../migrationmanager.html" class="btn btn-neutral float-right" title="The Odoo Migration Manager" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right" aria-hidden="true"></span></a>
+    </div>
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>&#169; Copyright 2012-2021, Odoo Community Association (OCA) / The OpenUpgrade developers.
+      <span class="lastupdated">Last updated on May 03, 2023.
+      </span></p>
+  </div>
+
+  Built with <a href="https://www.sphinx-doc.org/">Sphinx</a> using a
+    <a href="https://github.com/readthedocs/sphinx_rtd_theme">theme</a>
+    provided by <a href="https://readthedocs.org">Read the Docs</a>.
+   
+
+</footer>
+        </div>
+      </div>
+    </section>
+  </div>
+  <script>
+      jQuery(function () {
+          SphinxRtdTheme.Navigation.enable(true);
+      });
+  </script> 
+
+</body>
+</html>
