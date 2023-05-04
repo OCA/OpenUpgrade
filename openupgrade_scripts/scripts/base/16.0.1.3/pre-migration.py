@@ -70,7 +70,7 @@ def migrate(cr, version):
             continue
         columns = tools.sql.table_columns(cr, table)
         if field in columns:
-            if columns[field]["udt_name"] == "varchar":
+            if columns[field]["udt_name"] in ["varchar", "text"]:
                 tools.sql.convert_column_translatable(cr, table, field, "jsonb")
         else:
             _logger.warning(
