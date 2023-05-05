@@ -150,7 +150,11 @@ stock        / stock.quant              / user_id (many2one)            : NEW re
 # NOTHING TO DO: new feature
 
 stock        / stock.quant              / inventory_quantity_set (boolean): NEW hasdefault, isfunction: function, stored
+# DONE: pre-migration: Pre-created with default=False, as the compute returns True by default
+
 stock        / stock.quant              / inventory_diff_quantity (float): NEW isfunction: function, stored
+# DONE: pre-migration: Pre-created for avoiding useless computation
+
 stock        / stock.quant              / inventory_quantity (float)    : is now stored
 stock        / stock.quant              / inventory_quantity (float)    : not a function anymore
 # NOTHING TO DO: fields used in the UI to set new quantities
