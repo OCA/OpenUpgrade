@@ -55,8 +55,12 @@ def remove_table_constrains(env):
 
 @openupgrade.migrate()
 def migrate(env, version):
-    openupgrade.convert_field_to_html(env.cr, "stock_location", "comment", "comment")
-    openupgrade.convert_field_to_html(env.cr, "stock_picking", "note", "note")
+    openupgrade.convert_field_to_html(
+        env.cr, "stock_location", "comment", "comment", verbose=False
+    )
+    openupgrade.convert_field_to_html(
+        env.cr, "stock_picking", "note", "note", verbose=False
+    )
     openupgrade.add_fields(
         env,
         [
