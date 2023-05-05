@@ -57,6 +57,29 @@ def remove_table_constrains(env):
 def migrate(env, version):
     openupgrade.convert_field_to_html(env.cr, "stock_location", "comment", "comment")
     openupgrade.convert_field_to_html(env.cr, "stock_picking", "note", "note")
+    openupgrade.add_fields(
+        env,
+        [
+            (
+                "inventory_quantity_set",
+                "stock.quant",
+                "stock_quant",
+                "boolean",
+                False,
+                "stock",
+                False,
+            ),
+            (
+                "inventory_diff_quantity",
+                "stock.quant",
+                "stock_quant",
+                "float",
+                False,
+                "stock",
+                0,
+            ),
+        ],
+    )
     _create_column_for_avoiding_automatic_computing(env)
     _fill_stock_quant_package_name_if_null(env)
     _fill_stock_quant_in_date(env)
