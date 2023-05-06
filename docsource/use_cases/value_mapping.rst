@@ -172,12 +172,36 @@ Notes
   But the last mapping is ``not satisfied`` -> ``ok``, which changes the semantics of the data.
   It is not always possible to do otherwise and the developer must make the best suited choices.
 
-* Sometimes, there is nothing to do.
-  This is the case, when there are just one or more new options available in the recent version
-  AND when no option is disappeared.
+* Sometimes, there is nothing to do. This is the case:
+
+    * when there are just one or more new options available in the recent version that are new features,
+    * AND when no option is disappeared,
+    * AND when every option in the old version has the same meaning in the new version.
+
+* Always be sure that none of the old cases in previous version may match one of the new selection values.
+  If it's the case, you will need to perform a query selecting and updating the proper
+  records that match this criteria.
+  For example, regarding the change in the field ``state`` on the model ``account.bank.statement``
+  between the v13 and the v14:
+
+    * In v13 : Two options are available: ``open`` / ``confirm``. `See v13 code <https://github.com/odoo/odoo/blob/34b6259b28eb963f6c5660c0e289219b6761645b/addons/account/models/account_bank_statement.py#L186>`_.
+    * In v14 : Three options are available: ``open`` / ``posted`` / ``confirm``.  `See v14 code <https://github.com/odoo/odoo/blob/58e7ff404e1b92df9f5e5958e5982373c69d7ca4/addons/account/models/account_bank_statement.py#L223-L231>`_.
+
+  At first sight, we could think that there is nothing to do.
+  But in reality, the meaning of the ``confirm`` value has changed between version 13 and version 14.
+
+    * In v13, ``confirm`` means "Validated". (reconciled or not)
+    * In v14:
+
+        * ``posted`` means "Validated but not fully reconciled"
+        * ``confirm`` means "Validated and fully reconciled"
+
+  As a result, some elements in the state ``confirm`` in v13 must be in the state ``confirm`` in v14,
+  but other elements in state ``confirm`` in v13 must be in the state ``posted`` in v14.
+  This is done by `this script <https://github.com/OCA/OpenUpgrade/blob/34507b317ee6f4a53bdcbf249bd2e91659029931/openupgrade_scripts/scripts/account/14.0.1.1/post-migration.py#LL316C22-L316C22>`_.
 
 * the old data is kept in the column whose name starts with ``openupgrade_legacy_``.
   This allows you to check that everything is correct after the migration,
-  and to make any custom fixes.
+  and to be used by further dependent modules in their migration scripts.
   Once this is done, you can delete this data.
   (See: :doc:`../after_migration`)
