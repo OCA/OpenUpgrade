@@ -47,9 +47,7 @@ jobs:
       - name: Requirements Installation
         run: |
           pip install -q -r odoo/requirements.txt
-          pip install --ignore-installed \
-              git+https://github.com/OCA/openupgradelib.git@master
-          pip install sphinx sphinx-rtd-theme
+          pip install -r ./requirements.txt
       - name: OpenUpgrade Docs
         run: |
           # try to build the documentation
