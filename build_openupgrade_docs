@@ -2,7 +2,6 @@
 
 OUTPUT_DIR=$(realpath $(dirname $0)/./docs)
 SOURCE_DIR=$(realpath $(dirname $0)/./docsource)
-ODOO_PYTHON_PATH=$(realpath $(dirname $0)/./odoo)
 
 BASE_URL=https://raw.githubusercontent.com/OCA/OpenUpgrade/
 DOC_PARTS="7.0/openerp/openupgrade/doc/source/modules50-60.rst
@@ -26,8 +25,6 @@ for line in $DOC_PARTS; do
     name=$(basename $line)
     wget -q $BASE_URL/$line -O $SOURCE_DIR/$name
 done
-
-export PYTHONPATH=$PYTHONPATH:$ODOO_PYTHON_PATH
 
 mkdir -p $OUTPUT_DIR/source/.static
 

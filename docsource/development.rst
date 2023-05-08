@@ -29,7 +29,7 @@ same file.
 
 Luckily, many pre-existing functions already exist within `openupgradelib` reducing
 significantly the work of development.
-See `OpenUpgrade API <https://oca.github.io/OpenUpgrade/API.html>`_
+See `OpenUpgrade API <https://oca.github.io/openupgradelib/API.html>`_
 
 For many modules, a developer will not even need to write any function, but will
 "simply" need to call pre-existing functions from `openupgradelib` with the appropriate
@@ -134,6 +134,6 @@ Learning resources
 
 You can also refer to the following:
 
-- `OpenUpgrade API <https://oca.github.io/OpenUpgrade/API.html>`_
+- `OpenUpgrade API <https://oca.github.io/openupgradelib/API.html>`_
 - the code of OpenUpgrade API
   `openupgrade.py <https://github.com/OCA/openupgradelib/blob/master/openupgradelib/openupgrade.py>`_

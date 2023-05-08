@@ -21,7 +21,6 @@ Contents:
    status.rst
    analysis.rst
    development.rst
-   API.rst
 
 You should find the latest version of this documentation here: `<https://oca.github.io/OpenUpgrade>`_
 

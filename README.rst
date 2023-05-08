@@ -2,7 +2,7 @@
 OpenUpgrade Documentation
 =========================
 
-This branch aims to deal with the Openupgrade and openupgradelib documentation
+This branch aims to deal with the Openupgrade documentation
 deployed on https://oca.github.io/OpenUpgrade/.
 
 - The main sources are present in the ``docsource`` folder.
@@ -35,9 +35,7 @@ To contribute to the Openupgrade documentation:
 
 .. code:: shell
 
-    git clone https://github.com/odoo/odoo -b 16.0 --depth=1 ./src/odoo
     virtualenv env --python=python3.10
-    ./env/bin/pip install -e ./src/odoo/
     ./env/bin/pip install -r ./requirements.txt
 
 
