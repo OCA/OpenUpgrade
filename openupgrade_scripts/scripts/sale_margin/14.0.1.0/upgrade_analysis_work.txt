@@ -2,7 +2,7 @@
 ---Fields in module 'sale_margin'---
 sale_margin  / sale.order               / margin_percent (float)        : NEW   : function, stored
 sale_margin  / sale.order.line          / margin_percent (float)        : NEW isfunction: function, stored
-# DONE: pre-migration fast filled
+# DONE: pre-migration fast filled and recompute if the column exists
 
 sale_margin  / sale.order.line          / purchase_price (float)        : now a function
 # NOTHING TO DO
