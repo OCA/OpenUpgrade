@@ -53,7 +53,7 @@ def migrate(cr, version):
     # exclude fields from translation update
     exclusions = {
         # ir.actions.* inherits the name column from ir.actions.actions
-        "ir.actions.act_window": ["name"],
+        "ir.actions.act_window": ["name", "help"],
         "ir.actions.act_url": ["name"],
         "ir.actions.server": ["name"],
         "ir.actions.client": ["name"],
