@@ -1,10 +1,9 @@
 ![Test OpenUpgrade Migration](https://github.com/OCA/OpenUpgrade/actions/workflows/test.yml/badge.svg?branch=14.0)
-![OpenUpgrade documentation](https://github.com/OCA/OpenUpgrade/actions/workflows/documentation.yml/badge.svg?branch=14.0)
 ![pre-commit](https://github.com/OCA/OpenUpgrade/actions/workflows/pre-commit.yml/badge.svg?branch=14.0)
 
 <!-- /!\ do not modify above this line -->
 
-![OpenUpgrade logo](/docsource/images/OpenUpgrade.svg?raw=true)
+![OpenUpgrade logo](https://oca.github.io/OpenUpgrade/_images/OpenUpgrade.png)
 # Tools to upgrade Odoo instances from a major version to another
 
 This <a href="https://odoo-community.org">OCA</a> project aims to provide an
