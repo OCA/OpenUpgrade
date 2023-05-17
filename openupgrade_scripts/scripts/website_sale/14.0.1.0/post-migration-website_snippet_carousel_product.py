@@ -1,5 +1,7 @@
 # Copyright 2022 Tecnativa - David Vidal
 # License AGPL-3.0 or later (https://www.gnu.org/licenses/agpl).
+import uuid
+
 from lxml import etree
 from openupgradelib import openupgrade
 
@@ -72,7 +74,8 @@ def update_carousels(env, views_with_carousel):
                 carousel_filter = env["ir.filters"].create(
                     {
                         "name": "Filter {} - {}".format(
-                            carousel.attrib.get("data-name"), view.id
+                            carousel.attrib.get("data-name", uuid.uuid4().hex[:6]),
+                            view.id,
                         ),
                         "model_id": "product.product",
                         "user_id": False,
