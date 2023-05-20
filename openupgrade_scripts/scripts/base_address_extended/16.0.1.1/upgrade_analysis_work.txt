@@ -1,0 +1,36 @@
+---Models in module 'base_address_extended'---
+model res.city (moved from base_address_city)
+# NOTHING TO DO
+
+---Fields in module 'base_address_extended'---
+base_address_extended / res.city                 / __last_update (datetime)      : previously in module base_address_city
+base_address_extended / res.city                 / _order                        : previously in module base_address_city
+base_address_extended / res.city                 / country_id (many2one)         : previously in module base_address_city
+base_address_extended / res.city                 / display_name (char)           : previously in module base_address_city
+base_address_extended / res.city                 / name (char)                   : previously in module base_address_city
+base_address_extended / res.city                 / state_id (many2one)           : previously in module base_address_city
+base_address_extended / res.city                 / zipcode (char)                : previously in module base_address_city
+base_address_extended / res.country              / enforce_cities (boolean)      : previously in module base_address_city
+base_address_extended / res.country              / street_format (text)          : DEL required
+base_address_extended / res.partner              / city_id (many2one)            : previously in module base_address_city
+base_address_extended / res.partner              / country_enforce_cities (boolean): previously in module base_address_city
+base_address_extended / res.users                / city_id (many2one)            : previously in module base_address_city
+base_address_extended / res.users                / country_enforce_cities (boolean): previously in module base_address_city
+# NOTHING TO DO
+
+---XML records in module 'base_address_extended'---
+NEW ir.actions.act_window: base_address_extended.action_res_city_tree [renamed from base_address_city module]
+NEW ir.model.access: base_address_extended.access_res_city_group_all [renamed from base_address_city module]
+NEW ir.model.access: base_address_extended.access_res_city_group_user [renamed from base_address_city module]
+# NOTHING TO DO
+
+NEW ir.ui.view: base_address_extended.address_street_extended_city_form
+NEW ir.ui.view: base_address_extended.address_street_extended_form
+NEW ir.ui.view: base_address_extended.view_city_filter
+NEW ir.ui.view: base_address_extended.view_city_tree
+NEW ir.ui.view: base_address_extended.view_res_country_city_extended_form
+DEL ir.ui.view: base_address_extended.view_partner_address_structured_form
+DEL ir.ui.view: base_address_extended.view_partner_structured_form
+DEL ir.ui.view: base_address_extended.view_res_company_extended_form
+DEL ir.ui.view: base_address_extended.view_res_country_extended_form
+# NOTHING TO DO
