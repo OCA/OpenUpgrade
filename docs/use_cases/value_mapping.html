@@ -1,0 +1,394 @@
+<!DOCTYPE html>
+<html class="writer-html5" lang="en" >
+<head>
+  <meta charset="utf-8" /><meta name="generator" content="Docutils 0.18.1: http://docutils.sourceforge.net/" />
+
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Value Mapping &mdash; OpenUpgrade 16.0 documentation</title>
+      <link rel="stylesheet" href="../_static/pygments.css" type="text/css" />
+      <link rel="stylesheet" href="../_static/css/theme.css" type="text/css" />
+  <!--[if lt IE 9]>
+    <script src="../_static/js/html5shiv.min.js"></script>
+  <![endif]-->
+  
+        <script data-url_root="../" id="documentation_options" src="../_static/documentation_options.js"></script>
+        <script src="../_static/doctools.js"></script>
+        <script src="../_static/sphinx_highlight.js"></script>
+    <script src="../_static/js/theme.js"></script>
+    <link rel="index" title="Index" href="../genindex.html" />
+    <link rel="search" title="Search" href="../search.html" />
+    <link rel="next" title="The Odoo Migration Manager" href="../migrationmanager.html" />
+    <link rel="prev" title="XML-ID Renaming" href="xml_id_renaming.html" /> 
+</head>
+
+<body class="wy-body-for-nav"> 
+  <div class="wy-grid-for-nav">
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search" >
+
+          
+          
+          <a href="../index.html" class="icon icon-home">
+            OpenUpgrade
+          </a>
+              <div class="version">
+                16.0
+              </div>
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="../search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" aria-label="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+        </div><div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="Navigation menu">
+              <ul class="current">
+<li class="toctree-l1"><a class="reference internal" href="../intro.html">Introduction</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../intro.html#migrating-your-database">Migrating your database</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../community.html">Community involvement</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../status.html">Module coverage</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../analysis.html">Database analysis</a></li>
+<li class="toctree-l1 current"><a class="reference internal" href="../development.html">Migration script development</a><ul class="current">
+<li class="toctree-l2"><a class="reference internal" href="../development.html#overview">Overview</a></li>
+<li class="toctree-l2 current"><a class="reference internal" href="../development.html#learn-from-typical-use-cases">Learn from typical Use cases</a><ul class="current">
+<li class="toctree-l3"><a class="reference internal" href="field_renaming.html">Field Renaming</a></li>
+<li class="toctree-l3"><a class="reference internal" href="xml_id_renaming.html">XML-ID Renaming</a></li>
+<li class="toctree-l3 current"><a class="current reference internal" href="#">Value Mapping</a><ul>
+<li class="toctree-l4"><a class="reference internal" href="#source-code-differences">Source Code Differences</a></li>
+<li class="toctree-l4"><a class="reference internal" href="#analysis">Analysis</a></li>
+<li class="toctree-l4"><a class="reference internal" href="#result-without-migration-script-expected-result">Result without migration script / Expected Result</a></li>
+<li class="toctree-l4"><a class="reference internal" href="#contribution-to-openupgrade">Contribution to OpenUpgrade</a></li>
+<li class="toctree-l4"><a class="reference internal" href="#notes">Notes</a></li>
+</ul>
+</li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="../development.html#learn-from-existing-migration-scrips">Learn from existing migration scrips</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../development.html#learn-from-code-review-of-open-prs">Learn from code review of open PRs</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../development.html#the-trial-and-error-process-for-the-development-of-your-scripts">The Trial and error process for the development of your scripts</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../development.html#learning-resources">Learning resources</a></li>
+</ul>
+</li>
+</ul>
+
+        </div>
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap"><nav class="wy-nav-top" aria-label="Mobile navigation menu" >
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="../index.html">OpenUpgrade</a>
+      </nav>
+
+      <div class="wy-nav-content">
+        <div class="rst-content">
+          <div role="navigation" aria-label="Page navigation">
+  <ul class="wy-breadcrumbs">
+      <li><a href="../index.html" class="icon icon-home" aria-label="Home"></a></li>
+          <li class="breadcrumb-item"><a href="../development.html">Migration script development</a></li>
+      <li class="breadcrumb-item active">Value Mapping</li>
+      <li class="wy-breadcrumbs-aside">
+      </li>
+  </ul>
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+             
+  <section id="value-mapping">
+<h1>Value Mapping<a class="headerlink" href="#value-mapping" title="Permalink to this heading"></a></h1>
+<p>From version 14.0 to version 15.0, in the module <code class="docutils literal notranslate"><span class="pre">rating</span></code>, the options
+available for the field <code class="docutils literal notranslate"><span class="pre">rating_text</span></code> (model <code class="docutils literal notranslate"><span class="pre">rating.rating</span></code>) has been changed.</p>
+<section id="source-code-differences">
+<h2>Source Code Differences<a class="headerlink" href="#source-code-differences" title="Permalink to this heading"></a></h2>
+<section id="version-14-0">
+<h3>Version 14.0<a class="headerlink" href="#version-14-0" title="Permalink to this heading"></a></h3>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="k">class</span> <span class="nc">Rating</span><span class="p">(</span><span class="n">models</span><span class="o">.</span><span class="n">Model</span><span class="p">):</span>
+    <span class="n">_name</span> <span class="o">=</span> <span class="s2">&quot;rating.rating&quot;</span>
+
+<span class="n">rating_text</span> <span class="o">=</span> <span class="n">fields</span><span class="o">.</span><span class="n">Selection</span><span class="p">(</span>
+    <span class="n">string</span><span class="o">=</span><span class="s1">&#39;Rating&#39;</span><span class="p">,</span>
+    <span class="n">selection</span><span class="o">=</span><span class="p">[</span>
+        <span class="p">(</span><span class="s1">&#39;satisfied&#39;</span><span class="p">,</span> <span class="s1">&#39;Satisfied&#39;</span><span class="p">),</span>
+        <span class="p">(</span><span class="s1">&#39;not_satisfied&#39;</span><span class="p">,</span> <span class="s1">&#39;Not satisfied&#39;</span><span class="p">),</span>
+        <span class="p">(</span><span class="s1">&#39;highly_dissatisfied&#39;</span><span class="p">,</span> <span class="s1">&#39;Highly dissatisfied&#39;</span><span class="p">),</span>
+        <span class="p">(</span><span class="s1">&#39;no_rating&#39;</span><span class="p">,</span> <span class="s1">&#39;No Rating yet&#39;</span><span class="p">),</span>
+    <span class="p">]</span>
+<span class="p">)</span>
+</pre></div>
+</div>
+<p>See <a class="reference external" href="https://github.com/odoo/odoo/blob/da9b89ad2697df7492e3f41c35f46c0b29afaef5/addons/rating/models/rating.py#L57">Full V14 Code Source</a>.</p>
+</section>
+<section id="version-15-0">
+<h3>Version 15.0<a class="headerlink" href="#version-15-0" title="Permalink to this heading"></a></h3>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="k">class</span> <span class="nc">Rating</span><span class="p">(</span><span class="n">models</span><span class="o">.</span><span class="n">Model</span><span class="p">):</span>
+    <span class="n">_name</span> <span class="o">=</span> <span class="s2">&quot;rating.rating&quot;</span>
+
+<span class="n">rating_text</span> <span class="o">=</span> <span class="n">fields</span><span class="o">.</span><span class="n">Selection</span><span class="p">(</span>
+    <span class="n">string</span><span class="o">=</span><span class="s1">&#39;Rating&#39;</span><span class="p">,</span>
+    <span class="n">selection</span><span class="o">=</span><span class="p">[</span>
+        <span class="p">(</span><span class="s1">&#39;top&#39;</span><span class="p">,</span> <span class="s1">&#39;Satisfied&#39;</span><span class="p">),</span>
+        <span class="p">(</span><span class="s1">&#39;ok&#39;</span><span class="p">,</span> <span class="s1">&#39;Okay&#39;</span><span class="p">),</span>
+        <span class="p">(</span><span class="s1">&#39;ko&#39;</span><span class="p">,</span> <span class="s1">&#39;Dissatisfied&#39;</span><span class="p">),</span>
+        <span class="p">(</span><span class="s1">&#39;none&#39;</span><span class="p">,</span> <span class="s1">&#39;No Rating yet&#39;</span><span class="p">),</span>
+    <span class="p">]</span>
+<span class="p">)</span>
+</pre></div>
+</div>
+<p>See <a class="reference external" href="https://github.com/odoo/odoo/blob/351b4e4b69629624158bad590c39e7930b6ae75f/addons/rating/models/rating.py#L58">Full V15 Code Source</a>.</p>
+</section>
+</section>
+<section id="analysis">
+<h2>Analysis<a class="headerlink" href="#analysis" title="Permalink to this heading"></a></h2>
+<div class="highlight-text notranslate"><div class="highlight"><pre><span></span>---Fields in module &#39;rating&#39;---
+rating       / rating.rating            / rating_text (selection)       :
+selection_keys is now &#39;[&#39;ko&#39;, &#39;none&#39;, &#39;ok&#39;, &#39;top&#39;]&#39;
+(&#39;[&#39;highly_dissatisfied&#39;, &#39;no_rating&#39;, &#39;not_satisfied&#39;, &#39;satisfied&#39;]&#39;)
+</pre></div>
+</div>
+<p>See <a class="reference external" href="https://github.com/OCA/OpenUpgrade/blob/0d918b5b5dfb3125a5d881c8ccf4237997d8c7f5/openupgrade_scripts/scripts/rating/15.0.1.0/upgrade_analysis.txt#L1">Full V15 Analysis File</a>.</p>
+</section>
+<section id="result-without-migration-script-expected-result">
+<h2>Result without migration script / Expected Result<a class="headerlink" href="#result-without-migration-script-expected-result" title="Permalink to this heading"></a></h2>
+<section id="v14-table-rating-rating">
+<h3>V14 table <code class="docutils literal notranslate"><span class="pre">rating_rating</span></code><a class="headerlink" href="#v14-table-rating-rating" title="Permalink to this heading"></a></h3>
+<table class="docutils align-default">
+<thead>
+<tr class="row-odd"><th class="head"><p>id</p></th>
+<th class="head"><p>res_id</p></th>
+<th class="head"><p>res_model</p></th>
+<th class="head"><p>rating</p></th>
+<th class="head"><p>rating_text</p></th>
+</tr>
+</thead>
+<tbody>
+<tr class="row-even"><td><p>1</p></td>
+<td><p>3</p></td>
+<td><p>project.task</p></td>
+<td><p>5</p></td>
+<td><p>satisfied</p></td>
+</tr>
+<tr class="row-odd"><td><p>2</p></td>
+<td><p>22</p></td>
+<td><p>project.task</p></td>
+<td><p>1</p></td>
+<td><p>highly_dissatisfied</p></td>
+</tr>
+<tr class="row-even"><td><p>3</p></td>
+<td><p>4</p></td>
+<td><p>project.task</p></td>
+<td><p>5</p></td>
+<td><p>satisfied</p></td>
+</tr>
+<tr class="row-odd"><td><p>4</p></td>
+<td><p>2</p></td>
+<td><p>project.task</p></td>
+<td><p>1</p></td>
+<td><p>highly_dissatisfied</p></td>
+</tr>
+</tbody>
+</table>
+</section>
+<section id="v15-table-rating-rating-without-migration-script">
+<h3>V15 table rating_rating (Without migration script)<a class="headerlink" href="#v15-table-rating-rating-without-migration-script" title="Permalink to this heading"></a></h3>
+<p>same table as in version 14.</p>
+<p><strong>Problem</strong>:</p>
+<p>The old value does not correspond to anything in the new version
+and is therefore no longer displayed in the interface.</p>
+<img alt="../_images/value-mapping-error.png" src="../_images/value-mapping-error.png" />
+</section>
+<section id="v15-table-mail-activity-type-with-migration-script">
+<h3>V15 table mail_activity_type (With migration script)<a class="headerlink" href="#v15-table-mail-activity-type-with-migration-script" title="Permalink to this heading"></a></h3>
+<table class="docutils align-default">
+<thead>
+<tr class="row-odd"><th class="head"><p>id</p></th>
+<th class="head"><p>res_id</p></th>
+<th class="head"><p>res_model</p></th>
+<th class="head"><p>rating</p></th>
+<th class="head"><p>rating_text</p></th>
+<th class="head"><p>openupgrade_legacy_14_0_rating_text</p></th>
+</tr>
+</thead>
+<tbody>
+<tr class="row-even"><td><p>1</p></td>
+<td><p>3</p></td>
+<td><p>project.task</p></td>
+<td><p>5</p></td>
+<td><p>top</p></td>
+<td><p>satisfied</p></td>
+</tr>
+<tr class="row-odd"><td><p>2</p></td>
+<td><p>22</p></td>
+<td><p>project.task</p></td>
+<td><p>1</p></td>
+<td><p>ko</p></td>
+<td><p>highly_dissatisfied</p></td>
+</tr>
+<tr class="row-even"><td><p>3</p></td>
+<td><p>4</p></td>
+<td><p>project.task</p></td>
+<td><p>5</p></td>
+<td><p>top</p></td>
+<td><p>satisfied</p></td>
+</tr>
+<tr class="row-odd"><td><p>4</p></td>
+<td><p>2</p></td>
+<td><p>project.task</p></td>
+<td><p>1</p></td>
+<td><p>ko</p></td>
+<td><p>highly_dissatisfied</p></td>
+</tr>
+</tbody>
+</table>
+</section>
+</section>
+<section id="contribution-to-openupgrade">
+<h2>Contribution to OpenUpgrade<a class="headerlink" href="#contribution-to-openupgrade" title="Permalink to this heading"></a></h2>
+<section id="update-upgrade-analysis-work-txt-file">
+<h3>Update <code class="docutils literal notranslate"><span class="pre">upgrade_analysis_work.txt</span></code> file<a class="headerlink" href="#update-upgrade-analysis-work-txt-file" title="Permalink to this heading"></a></h3>
+<ul class="simple">
+<li><p>Mention the operation performed, starting with <code class="docutils literal notranslate"><span class="pre">#</span> <span class="pre">DONE:</span></code></p></li>
+</ul>
+<div class="highlight-text notranslate"><div class="highlight"><pre><span></span>---Fields in module &#39;rating&#39;---
+rating       / rating.rating            / rating_text (selection)       :
+selection_keys is now &#39;[&#39;ko&#39;, &#39;none&#39;, &#39;ok&#39;, &#39;top&#39;]&#39;
+(&#39;[&#39;highly_dissatisfied&#39;, &#39;no_rating&#39;, &#39;not_satisfied&#39;, &#39;satisfied&#39;]&#39;)
+# DONE: post-migration: mapped value from old keys to new keys
+</pre></div>
+</div>
+<p>See <a class="reference external" href="https://github.com/OCA/OpenUpgrade/blob/0d918b5b5dfb3125a5d881c8ccf4237997d8c7f5/openupgrade_scripts/scripts/rating/15.0.1.0/upgrade_analysis_work.txt#L3">Full V15 Work Analysis File</a>.</p>
+</section>
+<section id="write-migration-script">
+<h3>Write migration Script<a class="headerlink" href="#write-migration-script" title="Permalink to this heading"></a></h3>
+<p>In the <code class="docutils literal notranslate"><span class="pre">pre-migration.py</span></code> script add:</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="kn">from</span> <span class="nn">openupgradelib</span> <span class="kn">import</span> <span class="n">openupgrade</span>
+
+<span class="nd">@openupgrade</span><span class="o">.</span><span class="n">migrate</span><span class="p">()</span>
+<span class="k">def</span> <span class="nf">migrate</span><span class="p">(</span><span class="n">env</span><span class="p">,</span> <span class="n">version</span><span class="p">):</span>
+    <span class="n">openupgrade</span><span class="o">.</span><span class="n">copy_columns</span><span class="p">(</span>
+        <span class="n">env</span><span class="o">.</span><span class="n">cr</span><span class="p">,</span>
+        <span class="p">{</span><span class="s2">&quot;rating_rating&quot;</span><span class="p">:</span> <span class="p">[(</span><span class="s2">&quot;rating_text&quot;</span><span class="p">,</span> <span class="kc">None</span><span class="p">,</span> <span class="kc">None</span><span class="p">)]},</span>
+    <span class="p">)</span>
+</pre></div>
+</div>
+<p>In the <code class="docutils literal notranslate"><span class="pre">post-migration.py</span></code> script add:</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="kn">from</span> <span class="nn">openupgradelib</span> <span class="kn">import</span> <span class="n">openupgrade</span>
+
+<span class="nd">@openupgrade</span><span class="o">.</span><span class="n">migrate</span><span class="p">()</span>
+<span class="k">def</span> <span class="nf">migrate</span><span class="p">(</span><span class="n">env</span><span class="p">,</span> <span class="n">version</span><span class="p">):</span>
+    <span class="n">openupgrade</span><span class="o">.</span><span class="n">map_values</span><span class="p">(</span>
+        <span class="n">env</span><span class="o">.</span><span class="n">cr</span><span class="p">,</span>
+        <span class="n">openupgrade</span><span class="o">.</span><span class="n">get_legacy_name</span><span class="p">(</span><span class="s2">&quot;rating_text&quot;</span><span class="p">),</span>
+        <span class="s2">&quot;rating_text&quot;</span><span class="p">,</span>
+        <span class="p">[</span>
+            <span class="p">(</span><span class="s2">&quot;satisfied&quot;</span><span class="p">,</span> <span class="s2">&quot;top&quot;</span><span class="p">),</span>
+            <span class="p">(</span><span class="s2">&quot;not satisfied&quot;</span><span class="p">,</span> <span class="s2">&quot;ok&quot;</span><span class="p">),</span>
+            <span class="p">(</span><span class="s2">&quot;highly_dissatisfied&quot;</span><span class="p">,</span> <span class="s2">&quot;ko&quot;</span><span class="p">),</span>
+            <span class="p">(</span><span class="s2">&quot;no_rating&quot;</span><span class="p">,</span> <span class="s2">&quot;none&quot;</span><span class="p">),</span>
+        <span class="p">],</span>
+        <span class="n">table</span><span class="o">=</span><span class="s2">&quot;rating_rating&quot;</span><span class="p">,</span>
+    <span class="p">)</span>
+</pre></div>
+</div>
+<p>See <a class="reference external" href="https://github.com/OCA/OpenUpgrade/blob/0d918b5b5dfb3125a5d881c8ccf4237997d8c7f5/openupgrade_scripts/scripts/rating/15.0.1.0/post-migration.py#L1">Full pre migration Script</a>.</p>
+</section>
+</section>
+<section id="notes">
+<h2>Notes<a class="headerlink" href="#notes" title="Permalink to this heading"></a></h2>
+<ul>
+<li><p>Sometimes, there is a loss of information.
+that is the case in the above example:
+Some mapping are correct:</p>
+<blockquote>
+<div><ul class="simple">
+<li><p><code class="docutils literal notranslate"><span class="pre">satisfied</span></code> -&gt; <code class="docutils literal notranslate"><span class="pre">top</span></code></p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">highly_dissatisfied</span></code> -&gt; <code class="docutils literal notranslate"><span class="pre">ko</span></code></p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">no_rating</span></code> -&gt; <code class="docutils literal notranslate"><span class="pre">none</span></code></p></li>
+</ul>
+</div></blockquote>
+<p>But the last mapping is <code class="docutils literal notranslate"><span class="pre">not</span> <span class="pre">satisfied</span></code> -&gt; <code class="docutils literal notranslate"><span class="pre">ok</span></code>, which changes the semantics of the data.
+It is not always possible to do otherwise and the developer must make the best suited choices.</p>
+</li>
+<li><p>Sometimes, there is nothing to do. This is the case:</p>
+<blockquote>
+<div><ul class="simple">
+<li><p>when there are just one or more new options available in the recent version that are new features,</p></li>
+<li><p>AND when no option is disappeared,</p></li>
+<li><p>AND when every option in the old version has the same meaning in the new version.</p></li>
+</ul>
+</div></blockquote>
+</li>
+<li><p>Always be sure that none of the old cases in previous version may match one of the new selection values.
+If it’s the case, you will need to perform a query selecting and updating the proper
+records that match this criteria.
+For example, regarding the change in the field <code class="docutils literal notranslate"><span class="pre">state</span></code> on the model <code class="docutils literal notranslate"><span class="pre">account.bank.statement</span></code>
+between the v13 and the v14:</p>
+<blockquote>
+<div><ul class="simple">
+<li><p>In v13 : Two options are available: <code class="docutils literal notranslate"><span class="pre">open</span></code> / <code class="docutils literal notranslate"><span class="pre">confirm</span></code>. <a class="reference external" href="https://github.com/odoo/odoo/blob/34b6259b28eb963f6c5660c0e289219b6761645b/addons/account/models/account_bank_statement.py#L186">See v13 code</a>.</p></li>
+<li><p>In v14 : Three options are available: <code class="docutils literal notranslate"><span class="pre">open</span></code> / <code class="docutils literal notranslate"><span class="pre">posted</span></code> / <code class="docutils literal notranslate"><span class="pre">confirm</span></code>.  <a class="reference external" href="https://github.com/odoo/odoo/blob/58e7ff404e1b92df9f5e5958e5982373c69d7ca4/addons/account/models/account_bank_statement.py#L223-L231">See v14 code</a>.</p></li>
+</ul>
+</div></blockquote>
+<p>At first sight, we could think that there is nothing to do.
+But in reality, the meaning of the <code class="docutils literal notranslate"><span class="pre">confirm</span></code> value has changed between version 13 and version 14.</p>
+<blockquote>
+<div><ul>
+<li><p>In v13, <code class="docutils literal notranslate"><span class="pre">confirm</span></code> means “Validated”. (reconciled or not)</p></li>
+<li><p>In v14:</p>
+<blockquote>
+<div><ul class="simple">
+<li><p><code class="docutils literal notranslate"><span class="pre">posted</span></code> means “Validated but not fully reconciled”</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">confirm</span></code> means “Validated and fully reconciled”</p></li>
+</ul>
+</div></blockquote>
+</li>
+</ul>
+</div></blockquote>
+<p>As a result, some elements in the state <code class="docutils literal notranslate"><span class="pre">confirm</span></code> in v13 must be in the state <code class="docutils literal notranslate"><span class="pre">confirm</span></code> in v14,
+but other elements in state <code class="docutils literal notranslate"><span class="pre">confirm</span></code> in v13 must be in the state <code class="docutils literal notranslate"><span class="pre">posted</span></code> in v14.
+This is done by <a class="reference external" href="https://github.com/OCA/OpenUpgrade/blob/34507b317ee6f4a53bdcbf249bd2e91659029931/openupgrade_scripts/scripts/account/14.0.1.1/post-migration.py#LL316C22-L316C22">this script</a>.</p>
+</li>
+<li><p>the old data is kept in the column whose name starts with <code class="docutils literal notranslate"><span class="pre">openupgrade_legacy_</span></code>.
+This allows you to check that everything is correct after the migration,
+and to be used by further dependent modules in their migration scripts.
+Once this is done, you can delete this data.
+(See: <a class="reference internal" href="../after_migration.html"><span class="doc">After migration</span></a>)</p></li>
+</ul>
+</section>
+</section>
+
+
+           </div>
+          </div>
+          <footer><div class="rst-footer-buttons" role="navigation" aria-label="Footer">
+        <a href="xml_id_renaming.html" class="btn btn-neutral float-left" title="XML-ID Renaming" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left" aria-hidden="true"></span> Previous</a>
+        <a href="../migrationmanager.html" class="btn btn-neutral float-right" title="The Odoo Migration Manager" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right" aria-hidden="true"></span></a>
+    </div>
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>&#169; Copyright 2012-2021, Odoo Community Association (OCA) / The OpenUpgrade developers.
+      <span class="lastupdated">Last updated on May 21, 2023.
+      </span></p>
+  </div>
+
+  Built with <a href="https://www.sphinx-doc.org/">Sphinx</a> using a
+    <a href="https://github.com/readthedocs/sphinx_rtd_theme">theme</a>
+    provided by <a href="https://readthedocs.org">Read the Docs</a>.
+   
+
+</footer>
+        </div>
+      </div>
+    </section>
+  </div>
+  <script>
+      jQuery(function () {
+          SphinxRtdTheme.Navigation.enable(true);
+      });
+  </script> 
+
+</body>
+</html>
