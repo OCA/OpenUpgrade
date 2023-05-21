@@ -55,6 +55,7 @@ Learn from typical Use cases
 
    use_cases/field_renaming
    use_cases/xml_id_renaming
+   use_cases/value_mapping
 
 
 Learn from existing migration scrips
