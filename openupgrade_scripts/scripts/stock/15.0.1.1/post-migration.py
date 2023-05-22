@@ -94,12 +94,23 @@ def _fill_stock_location_last_inventory_date(env):
     )
 
 
+def _set_propagate_carrier_default(env):
+    """Delivery route rules should have a default propage_carrier to True as it's set
+    when the WH is created. Otherwise, the default behavior will change.
+    https://github.com/odoo/odoo/blob/48b833513ac8f76febbc4ca7b935260d7ea85522
+    /addons/stock/models/stock_warehouse.py#L513
+    """
+    all_warehouses = env["stock.warehouse"].with_context(active_test=False).search([])
+    all_warehouses.delivery_route_id.rule_ids.propagate_carrier = True
+
+
 @openupgrade.migrate()
 def migrate(env, version):
     _fill_stock_move_is_inventory(env)
     _fill_stock_picking_type_print_label(env)
     _create_default_return_type_for_all_warehouses(env)
     _fill_stock_location_last_inventory_date(env)
+    _set_propagate_carrier_default(env)
     openupgrade.load_data(env.cr, "stock", "15.0.1.1/noupdate_changes.xml")
     openupgrade.delete_record_translations(
         env.cr,
