@@ -89,6 +89,8 @@ merged_modules = {
     # OCA/e-commerce
     "website_sale_product_style_badge": "website_sale",
     "website_snippet_carousel_product": "website_sale",
+    # OCA/l10n-netherlands
+    "l10n_nl_tax_invoice_basis": "l10n_nl_tax_statement",
     # OCA/margin-analysis
     "sale_order_margin_percent": "sale_margin",
     # OCA/partner-contact
