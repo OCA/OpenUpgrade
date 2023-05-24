@@ -1723,7 +1723,7 @@ class Many2one(_Relational):
             return value.id
 
     def convert_to_write(self, value):
-        return value.id
+        return value.id if value else False
 
     def convert_to_export(self, value, env):
         return value.name_get()[0][1] if value else ''
