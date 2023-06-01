@@ -1,8 +1,8 @@
 Noupdate XML entry Changed
 ++++++++++++++++++++++++++
 
-Rational
-++++++++
+Rationale
++++++++++
 
 When Odoo updates a module, it will reload all the entries described in XML (or CSV) files, excepted
 the entries flagged as ``noupdate="1"``.
