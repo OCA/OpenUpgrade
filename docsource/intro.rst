@@ -36,12 +36,3 @@ In order to contribute to the OpenUpgrade project, please
 * Donate to the Odoo Community Association (https://github.com/sponsors/OCA)
 * Hire any active contributor to this project to help you migrate your
   database, and give back any code improvements developed during the project.
-
-Migrating your database
-=======================
-
-.. toctree::
-   :maxdepth: 2
-
-   migration_details
-   after_migration
