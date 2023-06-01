@@ -23,6 +23,13 @@ jobs:
       - name: Requirements Installation
         run: |
           pip install -r ./requirements.txt
+      - name: Delete previously generated documentation
+        run: |
+          rm -r ./docs/
+      - name: Restore doc folder and .nojekill file
+        run: |
+          mkdir ./docs/
+          touch ./docs/.nojekyll
       - name: OpenUpgrade Docs
         run: |
           # try to build the documentation
