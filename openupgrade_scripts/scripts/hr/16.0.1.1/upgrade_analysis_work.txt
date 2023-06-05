@@ -1,0 +1,69 @@
+---Models in module 'hr'---
+model hr.contract.type (moved from hr_contract)
+# NOTHING TO DO: done by the ORM
+
+---Fields in module 'hr'---
+hr           / hr.contract.type         / __last_update (datetime)      : previously in module hr_contract
+hr           / hr.contract.type         / _order                        : previously in module hr_contract
+hr           / hr.contract.type         / display_name (char)           : previously in module hr_contract
+hr           / hr.contract.type         / name (char)                   : previously in module hr_contract
+# NOTHING TO DO: done by the ORM
+
+hr           / hr.contract.type         / sequence (integer)            : NEW
+hr           / hr.plan                  / department_id (many2one)      : NEW relation: hr.department
+hr           / res.users                / create_employee (boolean)     : NEW hasdefault: default
+# NOTHING TO DO: new feature
+
+hr           / res.users                / create_employee_id (many2one) : NEW relation: hr.employee
+# NOTHING TO DO: non stored fields
+
+hr           / resource.resource        / employee_id (one2many)        : NEW relation: hr.employee
+# NOTHING TO DO: inverse field already existing in previous version
+
+hr           / hr.department            / parent_path (char)            : NEW
+hr           / hr.department            / plan_ids (one2many)           : NEW relation: hr.plan
+# NOTHING TO DO: Computed by ORM in the module update.
+
+hr           / hr.job                   / active (boolean)              : NEW hasdefault: default
+hr           / hr.job                   / contract_type_id (many2one)   : NEW relation: hr.contract.type
+hr           / hr.job                   / state (selection)             : DEL required, selection_keys: ['open', 'recruit']
+# NOTHING TO DO: hr.job does not work with state anymore.
+
+hr           / hr.department            / master_department_id (many2one): NEW relation: hr.department, isfunction: function, stored
+# DONE: pre/post-migration: create field and compute after parent_path has been filled by ORM.
+
+hr           / hr.plan                  / company_id (many2one)         : NEW relation: res.company, hasdefault: default
+hr           / hr.plan.activity.type    / company_id (many2one)         : NEW relation: res.company, hasdefault: default
+# DONE: pre-migration: create field to set a default null value in order to not link these elements to a specific company
+
+hr           / hr.employee              / mobile_phone (char)           : now a function
+hr           / hr.employee              / work_contact_id (many2one)    : NEW relation: res.partner
+hr           / hr.employee              / work_email (char)             : now a function
+# DONE: post-migration: create work_contact_id for each employee
+
+hr           / hr.plan                  / plan_activity_type_ids (many2many): table is now 'False' ('hr_plan_hr_plan_activity_type_rel')
+hr           / hr.plan                  / plan_activity_type_ids (many2many): type is now 'one2many' ('many2many')
+# DONE: pre-migration and post-migration: move data from many2many table to plan_id colomn in hr.plan.activity.type
+
+hr           / hr.plan.activity.type    / plan_id (many2one)            : NEW relation: hr.plan
+# DONE: see plan_activity_type_ids from hr.plan
+
+---XML records in module 'hr'---
+NEW ir.model.access: hr.access_hr_contract_type_manager [renamed from hr_contract module]
+# DONE: pre-migration: renamed
+
+NEW ir.actions.act_window: hr.hr_contract_type_action
+NEW ir.actions.server: hr.action_hr_employee_create_user
+NEW ir.rule: hr.hr_plan_activity_type_company_rule (noupdate)
+NEW ir.rule: hr.hr_plan_company_rule (noupdate)
+NEW ir.ui.menu: hr.menu_config_employee
+NEW ir.ui.menu: hr.menu_config_recruitment
+NEW ir.ui.menu: hr.menu_view_hr_contract_type
+DEL ir.ui.menu: hr.menu_config_plan_types
+DEL ir.ui.menu: hr.menu_human_resources_configuration_employee
+NEW ir.ui.view: hr.hr_contract_type_view_form
+NEW ir.ui.view: hr.hr_contract_type_view_tree
+NEW ir.ui.view: hr.view_employee_form_smartbutton
+NEW ir.ui.view: hr.view_users_simple_form
+NEW ir.ui.view: hr.view_users_simple_form_inherit_hr
+# NOTHING TO DO: managed by migration mechanism
