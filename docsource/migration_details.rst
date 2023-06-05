@@ -54,10 +54,10 @@ backup of your live database before you start this process!
 
 Edit the configuration files and command line parameters to point to the
 database you are going to upgrade. The recommended command line parameters are the
-``--update all --stop-after-init --load=base,web,openupgrade_framework`` flags.
+``--upgrade-path=<path_to_openupgrade>/openupgrade_scripts/scripts --update all --stop-after-init --load=base,web,openupgrade_framework`` flags.
 
 For versions earlier than 14.0 that are running the OpenUpgrade fork rather
-than Odoo itself, you do not pass the `load` parameter.
+than Odoo itself, you do not pass the `load` parameter nor `upgrade-path` parameters.
 
 Configuration options
 .....................
