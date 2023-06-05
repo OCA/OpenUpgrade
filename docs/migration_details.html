@@ -150,9 +150,9 @@ backup of your live database before you start this process!</p>
 <h2>4. Adjust the configuration for Odoo and OpenUpgrade<a class="headerlink" href="#adjust-the-configuration-for-odoo-and-openupgrade" title="Permalink to this heading"></a></h2>
 <p>Edit the configuration files and command line parameters to point to the
 database you are going to upgrade. The recommended command line parameters are the
-<code class="docutils literal notranslate"><span class="pre">--update</span> <span class="pre">all</span> <span class="pre">--stop-after-init</span> <span class="pre">--load=base,web,openupgrade_framework</span></code> flags.</p>
+<code class="docutils literal notranslate"><span class="pre">--upgrade-path=&lt;path_to_openupgrade&gt;/openupgrade_scripts/scripts</span> <span class="pre">--update</span> <span class="pre">all</span> <span class="pre">--stop-after-init</span> <span class="pre">--load=base,web,openupgrade_framework</span></code> flags.</p>
 <p>For versions earlier than 14.0 that are running the OpenUpgrade fork rather
-than Odoo itself, you do not pass the <cite>load</cite> parameter.</p>
+than Odoo itself, you do not pass the <cite>load</cite> parameter nor <cite>upgrade-path</cite> parameters.</p>
 <section id="configuration-options">
 <h3>Configuration options<a class="headerlink" href="#configuration-options" title="Permalink to this heading"></a></h3>
 <ul>
