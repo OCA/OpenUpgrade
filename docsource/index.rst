@@ -17,6 +17,7 @@ Contents:
    :maxdepth: 3
 
    intro.rst
+   migrating_database.rst
    community.rst
    status.rst
    analysis.rst

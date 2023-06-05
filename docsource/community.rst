@@ -28,3 +28,13 @@ project covers the modules that you have in use, try and use the software
 to upgrade a copy of your database and give us feedback.
 
 Thank you!
+
+Contribute
+----------
+In order to contribute to the OpenUpgrade project, please
+
+* Post your code contributions as pull requests on
+  https://github.com/OCA/OpenUpgrade
+* Donate to the Odoo Community Association (https://github.com/sponsors/OCA)
+* Hire any active contributor to this project to help you migrate your
+  database, and give back any code improvements developed during the project.
