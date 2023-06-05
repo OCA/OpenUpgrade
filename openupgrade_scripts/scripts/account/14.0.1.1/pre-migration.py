@@ -436,7 +436,7 @@ def fill_account_payment_data(env):
         env.cr,
         query
         + """
-        AND partner_id IS NOT NULL
+        AND ap.partner_id IS NOT NULL
         AND ip.res_id = 'res.partner,' || ap.partner_id::VARCHAR
         """,
     )
