@@ -13,32 +13,7 @@ from odoo.addons.openupgrade_scripts.apriori import merged_modules, renamed_modu
 _logger = logging.getLogger(__name__)
 
 
-@openupgrade.migrate(use_env=False)
-def migrate(cr, version):
-    """
-    Don't request an env for the base pre-migration as flushing the env in
-    odoo/modules/registry.py will break on the 'base' module not yet having
-    been instantiated.
-    """
-    if "openupgrade_framework" not in tools.config["server_wide_modules"]:
-        _logger.error(
-            "openupgrade_framework is not preloaded. You are highly "
-            "recommended to run the Odoo with --load=openupgrade_framework "
-            "when migrating your database."
-        )
-    openupgrade.update_module_names(cr, renamed_modules.items())
-    openupgrade.update_module_names(cr, merged_modules.items(), merge_modules=True)
-    # restricting inherited views to groups isn't allowed any more
-    cr.execute(
-        "DELETE FROM ir_ui_view_group_rel r "
-        "USING ir_ui_view v "
-        "WHERE r.view_id=v.id AND v.inherit_id IS NOT NULL AND v.mode != 'primary'"
-    )
-    # update all translatable fields
-    cr.execute(
-        "SELECT f.name, m.model FROM ir_model_fields f "
-        "JOIN ir_model m ON f.model_id=m.id WHERE f.translate"
-    )
+def update_translatable_fields(cr):
     # map of nonstandard table names
     model2table = {
         "ir.actions.actions": "ir_actions",
@@ -59,6 +34,10 @@ def migrate(cr, version):
         "ir.actions.client": ["name"],
         "ir.actions.report": ["name"],
     }
+    cr.execute(
+        "SELECT f.name, m.model FROM ir_model_fields f "
+        "JOIN ir_model m ON f.model_id=m.id WHERE f.translate"
+    )
     for field, model in cr.fetchall():
         if field in exclusions.get(model, []):
             continue
@@ -108,3 +87,28 @@ def migrate(cr, version):
             "DELETE FROM ir_translation WHERE type = 'model' AND name = %s",
             [translation_name],
         )
+
+
+@openupgrade.migrate(use_env=False)
+def migrate(cr, version):
+    """
+    Don't request an env for the base pre-migration as flushing the env in
+    odoo/modules/registry.py will break on the 'base' module not yet having
+    been instantiated.
+    """
+    if "openupgrade_framework" not in tools.config["server_wide_modules"]:
+        _logger.error(
+            "openupgrade_framework is not preloaded. You are highly "
+            "recommended to run the Odoo with --load=openupgrade_framework "
+            "when migrating your database."
+        )
+    openupgrade.update_module_names(cr, renamed_modules.items())
+    openupgrade.update_module_names(cr, merged_modules.items(), merge_modules=True)
+    # restricting inherited views to groups isn't allowed any more
+    cr.execute(
+        "DELETE FROM ir_ui_view_group_rel r "
+        "USING ir_ui_view v "
+        "WHERE r.view_id=v.id AND v.inherit_id IS NOT NULL AND v.mode != 'primary'"
+    )
+    # update all translatable fields
+    update_translatable_fields(cr)
