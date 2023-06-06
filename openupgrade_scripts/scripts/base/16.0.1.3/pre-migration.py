@@ -83,17 +83,25 @@ def migrate(cr, version):
             cr,
             """
             WITH t AS (
-                SELECT res_id, jsonb_object_agg(lang, value) AS value
-                FROM ir_translation
-                WHERE type = 'model' AND name = %(name)s AND state = 'translated'
-                GROUP BY res_id
+                SELECT it.res_id as res_id, jsonb_object_agg(it.lang, it.value) AS value,
+                    bool_or(imd.noupdate) AS noupdate
+                FROM ir_translation it
+                LEFT JOIN ir_model_data imd ON imd.model = %(model)s AND imd.res_id = it.res_id
+                WHERE it.type = 'model' AND it.name = %(name)s AND it.state = 'translated'
+                GROUP BY it.res_id
             )
             UPDATE "%(table)s" m
-                SET "%(field_name)s" =  t.value || m."%(field_name)s"
-                FROM t
-                WHERE t.res_id = m.id
+            SET "%(field_name)s" = CASE WHEN t.noupdate THEN m.%(field_name)s || t.value
+                                    ELSE t.value || m.%(field_name)s END
+            FROM t
+            WHERE t.res_id = m.id
             """,
-            {"table": AsIs(table), "name": translation_name, "field_name": AsIs(field)},
+            {
+                "table": AsIs(table),
+                "model": model,
+                "name": translation_name,
+                "field_name": AsIs(field),
+            },
         )
         openupgrade.logged_query(
             cr,
