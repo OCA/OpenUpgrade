@@ -50,6 +50,8 @@ merged_modules = {
     "account_move_force_removal": "account",
     # OCA/account-invoice-reporting
     "account_invoice_report_due_list": "account",
+    # OCA/margin-analysis
+    "sale_order_margin_percent": "sale_margin",
     # OCA/purchase-workflow
     "product_form_purchase_link": "purchase",
 }
