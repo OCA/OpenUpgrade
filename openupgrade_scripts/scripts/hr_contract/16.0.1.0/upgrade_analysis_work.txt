@@ -1,0 +1,23 @@
+---Models in module 'hr_contract'---
+model hr.contract.type (moved to hr)
+# DONE: in migration script of module hr
+
+---Fields in module 'hr_contract'---
+hr_contract  / hr.contract.type         / __last_update (datetime)      : module is now 'hr' ('hr_contract')
+hr_contract  / hr.contract.type         / _order                        : _order is now 'sequence' ('id')
+hr_contract  / hr.contract.type         / _order                        : module is now 'hr' ('hr_contract')
+hr_contract  / hr.contract.type         / display_name (char)           : module is now 'hr' ('hr_contract')
+hr_contract  / hr.contract.type         / name (char)                   : module is now 'hr' ('hr_contract')
+# DONE: in migration script of module hr
+
+---XML records in module 'hr_contract'---
+NEW ir.model.access: hr_contract.access_hr_contract_hr_employee_manager
+# NOTHING TO DO: New role with less privilege. No need to move user to this group in migration script. See: https://github.com/odoo/odoo/commit/9e14c112eef3b4098c0756b8da17a7253ea0c4d3
+
+DEL ir.model.access: hr_contract.access_hr_contract_type_manager [renamed to hr module]
+# DONE: in migration script of module hr
+
+NEW ir.rule: hr_contract.ir_rule_hr_contract_employee_manager (noupdate)
+NEW ir.rule: hr_contract.ir_rule_hr_contract_manager (noupdate)
+NEW res.groups: hr_contract.group_hr_contract_employee_manager (noupdate)
+# NOTHING TO DO
