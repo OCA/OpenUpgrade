@@ -1,0 +1,16 @@
+---Models in module 'rating'---
+---Fields in module 'rating'---
+rating       / rating.rating            / _order                        : _order is now 'write_date desc, id desc' ('write_date desc')
+rating       / rating.rating            / res_id (integer)              : relation is now 'res_model' ('False') [nothing to do]
+rating       / rating.rating            / res_id (integer)              : type is now 'many2one_reference' ('integer')
+# NOTHING TO DO: these changes do not imply any changes in DB
+---XML records in module 'rating'---
+NEW ir.actions.act_window: rating.rating_rating_action
+DEL ir.actions.act_window: rating.rating_rating_view
+# NOTHING TO DO: rating.rating_rating_action replace rating.rating_rating_view
+NEW ir.actions.act_window.view: rating.rating_rating_action_view_form
+NEW ir.actions.act_window.view: rating.rating_rating_action_view_kanban
+NEW ir.ui.view: rating.rating_rating_view_form_complete
+NEW ir.ui.view: rating.rating_rating_view_form_text
+NEW ir.ui.view: rating.rating_rating_view_kanban_stars
+# NOTHING TO DO: new views
