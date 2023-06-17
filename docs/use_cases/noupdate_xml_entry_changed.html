@@ -1,0 +1,386 @@
+<!DOCTYPE html>
+<html class="writer-html5" lang="en" >
+<head>
+  <meta charset="utf-8" /><meta name="generator" content="Docutils 0.18.1: http://docutils.sourceforge.net/" />
+
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Noupdate XML entry Changed &mdash; OpenUpgrade 16.0 documentation</title>
+      <link rel="stylesheet" href="../_static/pygments.css" type="text/css" />
+      <link rel="stylesheet" href="../_static/css/theme.css" type="text/css" />
+  <!--[if lt IE 9]>
+    <script src="../_static/js/html5shiv.min.js"></script>
+  <![endif]-->
+  
+        <script src="../_static/jquery.js"></script>
+        <script src="../_static/_sphinx_javascript_frameworks_compat.js"></script>
+        <script data-url_root="../" id="documentation_options" src="../_static/documentation_options.js"></script>
+        <script src="../_static/doctools.js"></script>
+        <script src="../_static/sphinx_highlight.js"></script>
+    <script src="../_static/js/theme.js"></script>
+    <link rel="index" title="Index" href="../genindex.html" />
+    <link rel="search" title="Search" href="../search.html" />
+    <link rel="next" title="Value Mapping" href="value_mapping.html" />
+    <link rel="prev" title="XML-ID Renaming" href="xml_id_renaming.html" /> 
+</head>
+
+<body class="wy-body-for-nav"> 
+  <div class="wy-grid-for-nav">
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search" >
+
+          
+          
+          <a href="../index.html" class="icon icon-home">
+            OpenUpgrade
+          </a>
+              <div class="version">
+                16.0
+              </div>
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="../search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" aria-label="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+        </div><div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="Navigation menu">
+              <ul class="current">
+<li class="toctree-l1"><a class="reference internal" href="../intro.html">Introduction</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../migrating_database.html">Migrating your database</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../community.html">Community involvement</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../status.html">Module coverage</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../analysis.html">Database analysis</a></li>
+<li class="toctree-l1 current"><a class="reference internal" href="../development.html">Migration script development</a><ul class="current">
+<li class="toctree-l2"><a class="reference internal" href="../development.html#overview">Overview</a></li>
+<li class="toctree-l2 current"><a class="reference internal" href="../development.html#learn-from-typical-use-cases">Learn from typical Use cases</a><ul class="current">
+<li class="toctree-l3"><a class="reference internal" href="field_renaming.html">Field Renaming</a></li>
+<li class="toctree-l3"><a class="reference internal" href="xml_id_renaming.html">XML-ID Renaming</a></li>
+<li class="toctree-l3 current"><a class="current reference internal" href="#">Noupdate XML entry Changed</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#rationale">Rationale</a><ul>
+<li class="toctree-l4"><a class="reference internal" href="#source-code-differences">Source Code Differences</a></li>
+<li class="toctree-l4"><a class="reference internal" href="#noupdate-changes-xml-file">noupdate_changes.xml File</a></li>
+<li class="toctree-l4"><a class="reference internal" href="#result-without-migration-script-expected-result">Result without migration script / Expected Result</a></li>
+<li class="toctree-l4"><a class="reference internal" href="#contribution-to-openupgrade">Contribution to OpenUpgrade</a></li>
+<li class="toctree-l4"><a class="reference internal" href="#notes">Notes</a></li>
+</ul>
+</li>
+<li class="toctree-l3"><a class="reference internal" href="value_mapping.html">Value Mapping</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="../development.html#learn-from-existing-migration-scrips">Learn from existing migration scrips</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../development.html#learn-from-code-review-of-open-prs">Learn from code review of open PRs</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../development.html#the-trial-and-error-process-for-the-development-of-your-scripts">The Trial and error process for the development of your scripts</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../development.html#learning-resources">Learning resources</a></li>
+</ul>
+</li>
+</ul>
+
+        </div>
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap"><nav class="wy-nav-top" aria-label="Mobile navigation menu" >
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="../index.html">OpenUpgrade</a>
+      </nav>
+
+      <div class="wy-nav-content">
+        <div class="rst-content">
+          <div role="navigation" aria-label="Page navigation">
+  <ul class="wy-breadcrumbs">
+      <li><a href="../index.html" class="icon icon-home" aria-label="Home"></a></li>
+          <li class="breadcrumb-item"><a href="../development.html">Migration script development</a></li>
+      <li class="breadcrumb-item active">Noupdate XML entry Changed</li>
+      <li class="wy-breadcrumbs-aside">
+      </li>
+  </ul>
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+             
+  <section id="noupdate-xml-entry-changed">
+<h1>Noupdate XML entry Changed<a class="headerlink" href="#noupdate-xml-entry-changed" title="Permalink to this heading"></a></h1>
+</section>
+<section id="rationale">
+<h1>Rationale<a class="headerlink" href="#rationale" title="Permalink to this heading"></a></h1>
+<p>When Odoo updates a module, it will reload all the entries described in XML (or CSV) files, excepted
+the entries flagged as <code class="docutils literal notranslate"><span class="pre">noupdate=&quot;1&quot;</span></code>.</p>
+<p>Between 2 major Odoo release, some “no updatable” entries changed.</p>
+<p>When Openupgrade Maintainers initialize the project for a new release, a new file
+is created for each module, named <code class="docutils literal notranslate"><span class="pre">noupdate_changes.xml</span></code>.
+It will contain all the changes between the two versions for the “no updatable” entries.</p>
+<section id="source-code-differences">
+<h2>Source Code Differences<a class="headerlink" href="#source-code-differences" title="Permalink to this heading"></a></h2>
+<section id="version-14-0">
+<h3>Version 14.0<a class="headerlink" href="#version-14-0" title="Permalink to this heading"></a></h3>
+<p>In : <code class="docutils literal notranslate"><span class="pre">odoo/addons/base/security/base_security.xml</span></code></p>
+<div class="highlight-xml notranslate"><div class="highlight"><pre><span></span><span class="nt">&lt;odoo</span><span class="w"> </span><span class="na">noupdate=</span><span class="s">&quot;1&quot;</span><span class="nt">&gt;</span>
+<span class="w">    </span><span class="nt">&lt;record</span><span class="w"> </span><span class="na">model=</span><span class="s">&quot;ir.rule&quot;</span><span class="w"> </span><span class="na">id=</span><span class="s">&quot;ir_default_system_rule&quot;</span><span class="nt">&gt;</span>
+<span class="w">        </span><span class="nt">&lt;field</span><span class="w"> </span><span class="na">name=</span><span class="s">&quot;name&quot;</span><span class="nt">&gt;</span>Defaults:<span class="w"> </span>alter<span class="w"> </span>all<span class="w"> </span>defaults<span class="nt">&lt;/field&gt;</span>
+<span class="w">        </span><span class="nt">&lt;field</span><span class="w"> </span><span class="na">name=</span><span class="s">&quot;model_id&quot;</span><span class="w"> </span><span class="na">ref=</span><span class="s">&quot;model_ir_default&quot;</span><span class="nt">/&gt;</span>
+<span class="w">        </span><span class="nt">&lt;field</span><span class="w"> </span><span class="na">name=</span><span class="s">&quot;domain_force&quot;</span><span class="nt">&gt;</span>[(1,&#39;=&#39;,1)]<span class="nt">&lt;/field&gt;</span>
+<span class="w">        </span><span class="nt">&lt;field</span><span class="w"> </span><span class="na">name=</span><span class="s">&quot;groups&quot;</span><span class="w"> </span><span class="na">eval=</span><span class="s">&quot;[(4, ref(&#39;base.group_system&#39;))]&quot;</span><span class="nt">/&gt;</span>
+<span class="w">        </span><span class="nt">&lt;field</span><span class="w"> </span><span class="na">name=</span><span class="s">&quot;perm_read&quot;</span><span class="w"> </span><span class="na">eval=</span><span class="s">&quot;False&quot;</span><span class="nt">/&gt;</span>
+<span class="w">    </span><span class="nt">&lt;/record&gt;</span>
+<span class="nt">&lt;/odoo&gt;</span>
+</pre></div>
+</div>
+<p>See <a class="reference external" href="https://github.com/odoo/odoo/blob/194e57355470565cd3b7a62f74fe93cfb87c06e9/odoo/addons/base/security/base_security.xml#LL44C1-L50C18">Full v14 Code Source of base_security</a>.</p>
+<p>And in : <code class="docutils literal notranslate"><span class="pre">odoo/addons/base/data/report_paperformat_data.xml</span></code></p>
+<div class="highlight-xml notranslate"><div class="highlight"><pre><span></span><span class="nt">&lt;odoo</span><span class="w"> </span><span class="na">noupdate=</span><span class="s">&quot;1&quot;</span><span class="nt">&gt;</span>
+
+<span class="w">    </span><span class="nt">&lt;record</span><span class="w"> </span><span class="na">id=</span><span class="s">&quot;paperformat_batch_deposit&quot;</span><span class="w"> </span><span class="na">model=</span><span class="s">&quot;report.paperformat&quot;</span><span class="nt">&gt;</span>
+<span class="w">        </span><span class="nt">&lt;field</span><span class="w"> </span><span class="na">name=</span><span class="s">&quot;name&quot;</span><span class="nt">&gt;</span>US<span class="w"> </span>Batch<span class="w"> </span>Deposit<span class="nt">&lt;/field&gt;</span>
+<span class="w">        </span><span class="nt">&lt;field</span><span class="w"> </span><span class="na">name=</span><span class="s">&quot;default&quot;</span><span class="w"> </span><span class="na">eval=</span><span class="s">&quot;False&quot;</span><span class="w"> </span><span class="nt">/&gt;</span>
+<span class="w">        </span><span class="nt">&lt;field</span><span class="w"> </span><span class="na">name=</span><span class="s">&quot;format&quot;</span><span class="nt">&gt;</span>Letter<span class="nt">&lt;/field&gt;</span>
+<span class="w">        </span><span class="nt">&lt;field</span><span class="w"> </span><span class="na">name=</span><span class="s">&quot;page_height&quot;</span><span class="nt">&gt;</span>0<span class="nt">&lt;/field&gt;</span>
+<span class="w">        </span><span class="nt">&lt;field</span><span class="w"> </span><span class="na">name=</span><span class="s">&quot;page_width&quot;</span><span class="nt">&gt;</span>0<span class="nt">&lt;/field&gt;</span>
+<span class="w">        </span><span class="nt">&lt;field</span><span class="w"> </span><span class="na">name=</span><span class="s">&quot;orientation&quot;</span><span class="nt">&gt;</span>Portrait<span class="nt">&lt;/field&gt;</span>
+<span class="w">        </span><span class="nt">&lt;field</span><span class="w"> </span><span class="na">name=</span><span class="s">&quot;margin_top&quot;</span><span class="nt">&gt;</span>15<span class="nt">&lt;/field&gt;</span>
+<span class="w">        </span><span class="nt">&lt;field</span><span class="w"> </span><span class="na">name=</span><span class="s">&quot;margin_bottom&quot;</span><span class="nt">&gt;</span>10<span class="nt">&lt;/field&gt;</span>
+<span class="w">        </span><span class="nt">&lt;field</span><span class="w"> </span><span class="na">name=</span><span class="s">&quot;margin_left&quot;</span><span class="nt">&gt;</span>10<span class="nt">&lt;/field&gt;</span>
+<span class="w">        </span><span class="nt">&lt;field</span><span class="w"> </span><span class="na">name=</span><span class="s">&quot;margin_right&quot;</span><span class="nt">&gt;</span>10<span class="nt">&lt;/field&gt;</span>
+<span class="w">        </span><span class="nt">&lt;field</span><span class="w"> </span><span class="na">name=</span><span class="s">&quot;header_line&quot;</span><span class="w"> </span><span class="na">eval=</span><span class="s">&quot;False&quot;</span><span class="w"> </span><span class="nt">/&gt;</span>
+<span class="w">        </span><span class="nt">&lt;field</span><span class="w"> </span><span class="na">name=</span><span class="s">&quot;header_spacing&quot;</span><span class="nt">&gt;</span>0<span class="nt">&lt;/field&gt;</span>
+<span class="w">        </span><span class="nt">&lt;field</span><span class="w"> </span><span class="na">name=</span><span class="s">&quot;dpi&quot;</span><span class="nt">&gt;</span>90<span class="nt">&lt;/field&gt;</span>
+<span class="w">    </span><span class="nt">&lt;/record&gt;</span>
+
+<span class="nt">&lt;/odoo&gt;</span>
+</pre></div>
+</div>
+<p>See <a class="reference external" href="https://github.com/odoo/odoo/blob/194e57355470565cd3b7a62f74fe93cfb87c06e9/odoo/addons/base/data/report_paperformat_data.xml#LL36C1-L50C18">Full v14 Code Source of report_paperformat_data</a>.</p>
+</section>
+<section id="version-15-0">
+<h3>Version 15.0<a class="headerlink" href="#version-15-0" title="Permalink to this heading"></a></h3>
+<ul class="simple">
+<li><p>In : <code class="docutils literal notranslate"><span class="pre">odoo/addons/base/security/base_security.xml</span></code></p></li>
+</ul>
+<div class="highlight-xml notranslate"><div class="highlight"><pre><span></span><span class="nt">&lt;odoo</span><span class="w"> </span><span class="na">noupdate=</span><span class="s">&quot;1&quot;</span><span class="nt">&gt;</span>
+<span class="w">    </span><span class="nt">&lt;record</span><span class="w"> </span><span class="na">model=</span><span class="s">&quot;ir.rule&quot;</span><span class="w"> </span><span class="na">id=</span><span class="s">&quot;ir_default_system_rule&quot;</span><span class="nt">&gt;</span>
+<span class="w">        </span><span class="nt">&lt;field</span><span class="w"> </span><span class="na">name=</span><span class="s">&quot;name&quot;</span><span class="nt">&gt;</span>Defaults:<span class="w"> </span>alter<span class="w"> </span>all<span class="w"> </span>defaults<span class="nt">&lt;/field&gt;</span>
+<span class="w">        </span><span class="nt">&lt;field</span><span class="w"> </span><span class="na">name=</span><span class="s">&quot;model_id&quot;</span><span class="w"> </span><span class="na">ref=</span><span class="s">&quot;model_ir_default&quot;</span><span class="nt">/&gt;</span>
+<span class="w">        </span><span class="nt">&lt;field</span><span class="w"> </span><span class="na">name=</span><span class="s">&quot;domain_force&quot;</span><span class="nt">&gt;</span>[(1,&#39;=&#39;,1)]<span class="nt">&lt;/field&gt;</span>
+<span class="w">        </span><span class="nt">&lt;field</span><span class="w"> </span><span class="na">name=</span><span class="s">&quot;groups&quot;</span><span class="w"> </span><span class="na">eval=</span><span class="s">&quot;[Command.link(ref(&#39;base.group_system&#39;))]&quot;</span><span class="nt">/&gt;</span>
+<span class="w">        </span><span class="nt">&lt;field</span><span class="w"> </span><span class="na">name=</span><span class="s">&quot;perm_read&quot;</span><span class="w"> </span><span class="na">eval=</span><span class="s">&quot;False&quot;</span><span class="nt">/&gt;</span>
+<span class="w">    </span><span class="nt">&lt;/record&gt;</span>
+<span class="nt">&lt;/odoo&gt;</span>
+</pre></div>
+</div>
+<p>See <a class="reference external" href="https://github.com/odoo/odoo/blob/aa482513a5c520ec0d650eab8677378c116127a3/odoo/addons/base/security/base_security.xml#LL44C1-L50C18">Full v15 Code Source of base_security</a>.</p>
+<ul class="simple">
+<li><p>In : <code class="docutils literal notranslate"><span class="pre">odoo/addons/base/data/report_paperformat_data.xml</span></code></p></li>
+</ul>
+<div class="highlight-xml notranslate"><div class="highlight"><pre><span></span><span class="nt">&lt;odoo</span><span class="w"> </span><span class="na">noupdate=</span><span class="s">&quot;1&quot;</span><span class="nt">&gt;</span>
+
+<span class="w">    </span><span class="nt">&lt;record</span><span class="w"> </span><span class="na">id=</span><span class="s">&quot;paperformat_batch_deposit&quot;</span><span class="w"> </span><span class="na">model=</span><span class="s">&quot;report.paperformat&quot;</span><span class="nt">&gt;</span>
+<span class="w">        </span><span class="nt">&lt;field</span><span class="w"> </span><span class="na">name=</span><span class="s">&quot;name&quot;</span><span class="nt">&gt;</span>US<span class="w"> </span>Batch<span class="w"> </span>Deposit<span class="nt">&lt;/field&gt;</span>
+<span class="w">        </span><span class="nt">&lt;field</span><span class="w"> </span><span class="na">name=</span><span class="s">&quot;default&quot;</span><span class="w"> </span><span class="na">eval=</span><span class="s">&quot;False&quot;</span><span class="w"> </span><span class="nt">/&gt;</span>
+<span class="w">        </span><span class="nt">&lt;field</span><span class="w"> </span><span class="na">name=</span><span class="s">&quot;format&quot;</span><span class="nt">&gt;</span>Letter<span class="nt">&lt;/field&gt;</span>
+<span class="w">        </span><span class="nt">&lt;field</span><span class="w"> </span><span class="na">name=</span><span class="s">&quot;page_height&quot;</span><span class="nt">&gt;</span>0<span class="nt">&lt;/field&gt;</span>
+<span class="w">        </span><span class="nt">&lt;field</span><span class="w"> </span><span class="na">name=</span><span class="s">&quot;page_width&quot;</span><span class="nt">&gt;</span>0<span class="nt">&lt;/field&gt;</span>
+<span class="w">        </span><span class="nt">&lt;field</span><span class="w"> </span><span class="na">name=</span><span class="s">&quot;orientation&quot;</span><span class="nt">&gt;</span>Portrait<span class="nt">&lt;/field&gt;</span>
+<span class="w">        </span><span class="nt">&lt;field</span><span class="w"> </span><span class="na">name=</span><span class="s">&quot;margin_top&quot;</span><span class="nt">&gt;</span>15<span class="nt">&lt;/field&gt;</span>
+<span class="w">        </span><span class="nt">&lt;field</span><span class="w"> </span><span class="na">name=</span><span class="s">&quot;margin_bottom&quot;</span><span class="nt">&gt;</span>30<span class="nt">&lt;/field&gt;</span>
+<span class="w">        </span><span class="nt">&lt;field</span><span class="w"> </span><span class="na">name=</span><span class="s">&quot;margin_left&quot;</span><span class="nt">&gt;</span>10<span class="nt">&lt;/field&gt;</span>
+<span class="w">        </span><span class="nt">&lt;field</span><span class="w"> </span><span class="na">name=</span><span class="s">&quot;margin_right&quot;</span><span class="nt">&gt;</span>10<span class="nt">&lt;/field&gt;</span>
+<span class="w">        </span><span class="nt">&lt;field</span><span class="w"> </span><span class="na">name=</span><span class="s">&quot;header_line&quot;</span><span class="w"> </span><span class="na">eval=</span><span class="s">&quot;False&quot;</span><span class="w"> </span><span class="nt">/&gt;</span>
+<span class="w">        </span><span class="nt">&lt;field</span><span class="w"> </span><span class="na">name=</span><span class="s">&quot;header_spacing&quot;</span><span class="nt">&gt;</span>15<span class="nt">&lt;/field&gt;</span>
+<span class="w">        </span><span class="nt">&lt;field</span><span class="w"> </span><span class="na">name=</span><span class="s">&quot;dpi&quot;</span><span class="nt">&gt;</span>90<span class="nt">&lt;/field&gt;</span>
+<span class="w">    </span><span class="nt">&lt;/record&gt;</span>
+
+<span class="nt">&lt;/odoo&gt;</span>
+</pre></div>
+</div>
+<p>See <a class="reference external" href="https://github.com/odoo/odoo/blob/aa482513a5c520ec0d650eab8677378c116127a3/odoo/addons/base/data/report_paperformat_data.xml#LL36C1-L50C18">Full v15 Code Source of report_paperformat_data</a>.</p>
+</section>
+</section>
+<section id="noupdate-changes-xml-file">
+<h2>noupdate_changes.xml File<a class="headerlink" href="#noupdate-changes-xml-file" title="Permalink to this heading"></a></h2>
+<p>For the two elements mentioned above, here is what the file contains</p>
+<div class="highlight-xml notranslate"><div class="highlight"><pre><span></span><span class="nt">&lt;odoo&gt;</span>
+
+<span class="w">    </span><span class="nt">&lt;record</span><span class="w"> </span><span class="na">id=</span><span class="s">&quot;ir_default_system_rule&quot;</span><span class="w"> </span><span class="na">model=</span><span class="s">&quot;ir.rule&quot;</span><span class="nt">&gt;</span>
+<span class="w">        </span><span class="nt">&lt;field</span><span class="w"> </span><span class="na">name=</span><span class="s">&quot;groups&quot;</span><span class="w"> </span><span class="na">eval=</span><span class="s">&quot;[Command.link(ref(&#39;base.group_system&#39;))]&quot;</span><span class="nt">/&gt;</span>
+<span class="w">    </span><span class="nt">&lt;/record&gt;</span>
+
+<span class="w">    </span><span class="nt">&lt;record</span><span class="w"> </span><span class="na">id=</span><span class="s">&quot;paperformat_batch_deposit&quot;</span><span class="w"> </span><span class="na">model=</span><span class="s">&quot;report.paperformat&quot;</span><span class="nt">&gt;</span>
+<span class="w">        </span><span class="nt">&lt;field</span><span class="w"> </span><span class="na">name=</span><span class="s">&quot;header_spacing&quot;</span><span class="nt">&gt;</span>15<span class="nt">&lt;/field&gt;</span>
+<span class="w">        </span><span class="nt">&lt;field</span><span class="w"> </span><span class="na">name=</span><span class="s">&quot;margin_bottom&quot;</span><span class="nt">&gt;</span>30<span class="nt">&lt;/field&gt;</span>
+<span class="w">    </span><span class="nt">&lt;/record&gt;</span>
+
+<span class="nt">&lt;/odoo&gt;</span>
+</pre></div>
+</div>
+<p>We can see that:</p>
+<ul class="simple">
+<li><p>2 values changed for the paperformat <code class="docutils literal notranslate"><span class="pre">paperformat_batch_deposit</span></code>.</p></li>
+<li><p>A changed is mentionned for the rule <code class="docutils literal notranslate"><span class="pre">ir_default_system_rule</span></code>. however, nothing changed
+and it is only a syntaxic changes.
+<code class="docutils literal notranslate"><span class="pre">[(4,</span> <span class="pre">ref('base.group_system'))]</span></code> is equivalent to <code class="docutils literal notranslate"><span class="pre">[Command.link(ref('base.group_system'))]</span></code></p></li>
+</ul>
+</section>
+<section id="result-without-migration-script-expected-result">
+<h2>Result without migration script / Expected Result<a class="headerlink" href="#result-without-migration-script-expected-result" title="Permalink to this heading"></a></h2>
+<section id="v14-table-report-paperformat">
+<h3>V14 table <code class="docutils literal notranslate"><span class="pre">report_paperformat</span></code><a class="headerlink" href="#v14-table-report-paperformat" title="Permalink to this heading"></a></h3>
+<table class="docutils align-default">
+<thead>
+<tr class="row-odd"><th class="head"><p>id</p></th>
+<th class="head"><p>name</p></th>
+<th class="head"><p>header_spacing</p></th>
+<th class="head"><p>margin_bottom</p></th>
+</tr>
+</thead>
+<tbody>
+<tr class="row-even"><td><p>28</p></td>
+<td><p>US Batch Deposit</p></td>
+<td><p>0</p></td>
+<td><p>10</p></td>
+</tr>
+</tbody>
+</table>
+</section>
+<section id="v15-table-report-paperformat-without-migration-script">
+<h3>V15 table <code class="docutils literal notranslate"><span class="pre">report_paperformat</span></code> (Without migration script)<a class="headerlink" href="#v15-table-report-paperformat-without-migration-script" title="Permalink to this heading"></a></h3>
+<table class="docutils align-default">
+<thead>
+<tr class="row-odd"><th class="head"><p>id</p></th>
+<th class="head"><p>name</p></th>
+<th class="head"><p>header_spacing”</p></th>
+<th class="head"><p>margin_bottom</p></th>
+</tr>
+</thead>
+<tbody>
+<tr class="row-even"><td><p>28</p></td>
+<td><p>US Batch Deposit</p></td>
+<td><p>0</p></td>
+<td><p>10</p></td>
+</tr>
+</tbody>
+</table>
+<p><strong>Problem</strong>:</p>
+<ul class="simple">
+<li><p>The paperformat doesn’t contains the new default values.</p></li>
+</ul>
+</section>
+<section id="v15-table-ir-act-window-view-with-migration-script">
+<h3>V15 table <code class="docutils literal notranslate"><span class="pre">ir_act_window_view</span></code> (With migration script)<a class="headerlink" href="#v15-table-ir-act-window-view-with-migration-script" title="Permalink to this heading"></a></h3>
+<table class="docutils align-default">
+<thead>
+<tr class="row-odd"><th class="head"><p>id</p></th>
+<th class="head"><p>name</p></th>
+<th class="head"><p>header_spacing”</p></th>
+<th class="head"><p>margin_bottom</p></th>
+</tr>
+</thead>
+<tbody>
+<tr class="row-even"><td><p>28</p></td>
+<td><p>US Batch Deposit</p></td>
+<td><p>15</p></td>
+<td><p>30</p></td>
+</tr>
+</tbody>
+</table>
+</section>
+</section>
+<section id="contribution-to-openupgrade">
+<h2>Contribution to OpenUpgrade<a class="headerlink" href="#contribution-to-openupgrade" title="Permalink to this heading"></a></h2>
+<section id="update-noupdate-changes-xml-file">
+<h3>Update <code class="docutils literal notranslate"><span class="pre">noupdate_changes.xml</span></code> file<a class="headerlink" href="#update-noupdate-changes-xml-file" title="Permalink to this heading"></a></h3>
+<p>Open the file and for each item, try to know
+if it is a real change (as in the case of the <code class="docutils literal notranslate"><span class="pre">report.paperformat</span></code>),
+or a false positive (as in the case of the <code class="docutils literal notranslate"><span class="pre">ir.rule</span></code>)</p>
+<p>Then comment all the false positives elements.</p>
+<div class="highlight-xml notranslate"><div class="highlight"><pre><span></span><span class="nt">&lt;odoo&gt;</span>
+
+<span class="w">    </span><span class="cm">&lt;!--</span>
+<span class="cm">    &lt;record id=&quot;ir_default_system_rule&quot; model=&quot;ir.rule&quot;&gt;</span>
+<span class="cm">        &lt;field name=&quot;groups&quot; eval=&quot;[Command.link(ref(&#39;base.group_system&#39;))]&quot;/&gt;</span>
+<span class="cm">    &lt;/record&gt;</span>
+<span class="cm">    --&gt;</span>
+
+<span class="w">    </span><span class="nt">&lt;record</span><span class="w"> </span><span class="na">id=</span><span class="s">&quot;paperformat_batch_deposit&quot;</span><span class="w"> </span><span class="na">model=</span><span class="s">&quot;report.paperformat&quot;</span><span class="nt">&gt;</span>
+<span class="w">        </span><span class="nt">&lt;field</span><span class="w"> </span><span class="na">name=</span><span class="s">&quot;header_spacing&quot;</span><span class="nt">&gt;</span>15<span class="nt">&lt;/field&gt;</span>
+<span class="w">        </span><span class="nt">&lt;field</span><span class="w"> </span><span class="na">name=</span><span class="s">&quot;margin_bottom&quot;</span><span class="nt">&gt;</span>30<span class="nt">&lt;/field&gt;</span>
+<span class="w">    </span><span class="nt">&lt;/record&gt;</span>
+
+<span class="nt">&lt;/odoo&gt;</span>
+</pre></div>
+</div>
+<p>See <a class="reference external" href="https://github.com/OCA/OpenUpgrade/blob/171db072829c011576da50994055826afd7f5cab/openupgrade_scripts/scripts/base/15.0.1.3/noupdate_changes.xml">Full noupdate_changes file for base module between v14 et v15</a>.</p>
+</section>
+<section id="write-migration-script">
+<h3>Write migration Script<a class="headerlink" href="#write-migration-script" title="Permalink to this heading"></a></h3>
+<p>in the <code class="docutils literal notranslate"><span class="pre">post-migration.py</span></code> script, add:</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="kn">from</span> <span class="nn">openupgradelib</span> <span class="kn">import</span> <span class="n">openupgrade</span>
+
+
+<span class="nd">@openupgrade</span><span class="o">.</span><span class="n">migrate</span><span class="p">()</span>
+<span class="k">def</span> <span class="nf">migrate</span><span class="p">(</span><span class="n">env</span><span class="p">,</span> <span class="n">version</span><span class="p">):</span>
+    <span class="n">openupgrade</span><span class="o">.</span><span class="n">load_data</span><span class="p">(</span><span class="n">env</span><span class="o">.</span><span class="n">cr</span><span class="p">,</span> <span class="s2">&quot;base&quot;</span><span class="p">,</span> <span class="s2">&quot;15.0.1.3/noupdate_changes.xml&quot;</span><span class="p">)</span>
+</pre></div>
+</div>
+<p>See <a class="reference external" href="https://github.com/OCA/OpenUpgrade/blob/171db072829c011576da50994055826afd7f5cab/openupgrade_scripts/scripts/base/15.0.1.3/post-migration.py">Full post migration Script</a>.</p>
+</section>
+</section>
+<section id="notes">
+<h2>Notes<a class="headerlink" href="#notes" title="Permalink to this heading"></a></h2>
+<ul>
+<li><p>For some people, resetting to the new defaults may not be desirable.
+In this case you will have to change the item to the previous values after the migration.</p></li>
+<li><p>If the field whose value has changed was translatable,
+then changing the value will not reset the translation(s),
+For exemple, for the <code class="docutils literal notranslate"><span class="pre">mail.template</span></code> named <code class="docutils literal notranslate"><span class="pre">project.mail_template_data_project_task</span></code>.</p>
+<p>See <a class="reference external" href="https://github.com/OCA/OpenUpgrade/blob/171db072829c011576da50994055826afd7f5cab/openupgrade_scripts/scripts/project/15.0.1.2/noupdate_changes.xml#L3-L16">Full noupdate_changes file</a>.</p>
+<p>In that case, delete the translation:</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="kn">from</span> <span class="nn">openupgradelib</span> <span class="kn">import</span> <span class="n">openupgrade</span>
+
+
+<span class="nd">@openupgrade</span><span class="o">.</span><span class="n">migrate</span><span class="p">()</span>
+<span class="k">def</span> <span class="nf">migrate</span><span class="p">(</span><span class="n">env</span><span class="p">,</span> <span class="n">version</span><span class="p">):</span>
+    <span class="n">openupgrade</span><span class="o">.</span><span class="n">load_data</span><span class="p">(</span><span class="n">env</span><span class="o">.</span><span class="n">cr</span><span class="p">,</span> <span class="s2">&quot;project&quot;</span><span class="p">,</span> <span class="s2">&quot;15.0.1.2/noupdate_changes.xml&quot;</span><span class="p">)</span>
+    <span class="n">openupgrade</span><span class="o">.</span><span class="n">delete_record_translations</span><span class="p">(</span><span class="n">env</span><span class="o">.</span><span class="n">cr</span><span class="p">,</span> <span class="s2">&quot;project&quot;</span><span class="p">,</span> <span class="p">[</span><span class="s2">&quot;mail_template_data_project_task&quot;</span><span class="p">])</span>
+</pre></div>
+</div>
+<p>See <a class="reference external" href="https://github.com/OCA/OpenUpgrade/blob/171db072829c011576da50994055826afd7f5cab/openupgrade_scripts/scripts/project/15.0.1.2/post-migration.py#L80-L88">Full post migration file of the project module</a>.</p>
+</li>
+</ul>
+</section>
+</section>
+
+
+           </div>
+          </div>
+          <footer><div class="rst-footer-buttons" role="navigation" aria-label="Footer">
+        <a href="xml_id_renaming.html" class="btn btn-neutral float-left" title="XML-ID Renaming" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left" aria-hidden="true"></span> Previous</a>
+        <a href="value_mapping.html" class="btn btn-neutral float-right" title="Value Mapping" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right" aria-hidden="true"></span></a>
+    </div>
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>&#169; Copyright 2012-2021, Odoo Community Association (OCA) / The OpenUpgrade developers.
+      <span class="lastupdated">Last updated on Jun 17, 2023.
+      </span></p>
+  </div>
+
+  Built with <a href="https://www.sphinx-doc.org/">Sphinx</a> using a
+    <a href="https://github.com/readthedocs/sphinx_rtd_theme">theme</a>
+    provided by <a href="https://readthedocs.org">Read the Docs</a>.
+   
+
+</footer>
+        </div>
+      </div>
+    </section>
+  </div>
+  <script>
+      jQuery(function () {
+          SphinxRtdTheme.Navigation.enable(true);
+      });
+  </script> 
+
+</body>
+</html>
