@@ -159,7 +159,7 @@ V15 table ``report_paperformat`` (Without migration script)
 
 - The paperformat doesn't contains the new default values.
 
-V12 table ``ir_act_window_view`` (With migration script)
+V15 table ``ir_act_window_view`` (With migration script)
 """"""""""""""""""""""""""""""""""""""""""""""""""""""""
 
 .. csv-table::
