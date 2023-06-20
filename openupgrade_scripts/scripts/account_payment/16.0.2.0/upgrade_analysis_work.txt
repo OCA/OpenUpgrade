@@ -1,0 +1,59 @@
+---Models in module 'account_payment'---
+model payment.refund.wizard (moved from payment) [transient]
+# NOTHING TO DO: it's transient model
+
+---Fields in module 'account_payment'---
+account_payment / account.bank.statement.line / amount_paid (float)           : previously in module payment
+account_payment / account.bank.statement.line / authorized_transaction_ids (many2many): previously in module payment
+account_payment / account.bank.statement.line / transaction_ids (many2many)   : previously in module payment
+account_payment / account.move             / amount_paid (float)           : previously in module payment
+account_payment / account.move             / authorized_transaction_ids (many2many): previously in module payment
+account_payment / account.move             / transaction_ids (many2many)   : previously in module payment
+account_payment / account.payment          / amount_available_for_refund (float): previously in module payment
+account_payment / account.payment          / amount_paid (float)           : previously in module payment
+account_payment / account.payment          / authorized_transaction_ids (many2many): previously in module payment
+account_payment / account.payment          / payment_token_id (many2one)   : previously in module payment
+account_payment / account.payment          / payment_transaction_id (many2one): previously in module payment
+account_payment / account.payment          / refunds_count (integer)       : previously in module payment
+account_payment / account.payment          / source_payment_id (many2one)  : previously in module payment
+account_payment / account.payment          / suitable_payment_token_ids (many2many): previously in module payment
+account_payment / account.payment          / transaction_ids (many2many)   : previously in module payment
+account_payment / account.payment          / use_electronic_payment_method (boolean): previously in module payment
+# NOTHING TO DO: managed in the pre-migration script of the `payment` module.
+
+account_payment / account.payment.method.line / payment_provider_id (many2one): NEW relation: payment.provider, isfunction: function, stored
+# NOTHING TO DO: comes from `payment` module with a different name.  Managed in the pre-migration script of the `payment` module.
+
+account_payment / payment.transaction      / invoice_ids (many2many)       : previously in module payment
+account_payment / payment.transaction      / invoices_count (integer)      : previously in module payment
+account_payment / payment.transaction      / payment_id (many2one)         : previously in module payment
+# NOTHING TO DO: managed in the pre-migration script of the `payment` module.
+
+---XML records in module 'account_payment'---
+NEW ir.actions.act_window: account_payment.action_invoice_order_generate_link [renamed from payment module]
+NEW ir.model.access: account_payment.payment_link_wizard [renamed from payment module]
+NEW ir.model.access: account_payment.payment_refund_wizard [renamed from payment module]
+NEW ir.rule: account_payment.payment_token_billing_rule [renamed from payment module] (noupdate)
+NEW ir.rule: account_payment.payment_transaction_billing_rule [renamed from payment module] (noupdate)
+NEW ir.ui.menu: account_payment.payment_icon_menu [renamed from payment module]
+NEW ir.ui.menu: account_payment.payment_provider_menu
+NEW ir.ui.menu: account_payment.payment_token_menu [renamed from payment module]
+NEW ir.ui.menu: account_payment.payment_transaction_menu [renamed from payment module]
+NEW ir.ui.view: account_payment.account_invoice_view_form_inherit_payment
+# NOTHING TO DO: managed in the pre-migration script of the `payment` module.
+
+NEW ir.ui.view: account_payment.payment_checkout_inherit
+NEW ir.ui.view: account_payment.payment_manage_inherit
+# NOTHING TO DO: new feature
+
+NEW ir.ui.view: account_payment.payment_provider_form
+NEW ir.ui.view: account_payment.payment_refund_wizard_view_form
+# NOTHING TO DO: managed in the pre-migration script of the `payment` module.
+
+NEW ir.ui.view: account_payment.payment_transaction_form
+# NOTHING TO DO: new feature
+
+NEW ir.ui.view: account_payment.view_account_journal_form
+NEW ir.ui.view: account_payment.view_account_payment_form_inherit_payment
+NEW ir.ui.view: account_payment.view_account_payment_register_form_inherit_payment
+# NOTHING TO DO: managed in the pre-migration script of the `payment` module.
