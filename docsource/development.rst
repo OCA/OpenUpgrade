@@ -54,6 +54,7 @@ Learn from typical Use cases
    :maxdepth: 2
 
    use_cases/field_renaming
+   use_cases/model_renaming
    use_cases/xml_id_renaming
    use_cases/noupdate_xml_entry_changed
    use_cases/value_mapping
