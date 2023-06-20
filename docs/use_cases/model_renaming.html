@@ -1,0 +1,316 @@
+<!DOCTYPE html>
+<html class="writer-html5" lang="en" >
+<head>
+  <meta charset="utf-8" /><meta name="generator" content="Docutils 0.18.1: http://docutils.sourceforge.net/" />
+
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Model Renaming &mdash; OpenUpgrade 16.0 documentation</title>
+      <link rel="stylesheet" href="../_static/pygments.css" type="text/css" />
+      <link rel="stylesheet" href="../_static/css/theme.css" type="text/css" />
+  <!--[if lt IE 9]>
+    <script src="../_static/js/html5shiv.min.js"></script>
+  <![endif]-->
+  
+        <script src="../_static/jquery.js"></script>
+        <script src="../_static/_sphinx_javascript_frameworks_compat.js"></script>
+        <script data-url_root="../" id="documentation_options" src="../_static/documentation_options.js"></script>
+        <script src="../_static/doctools.js"></script>
+        <script src="../_static/sphinx_highlight.js"></script>
+    <script src="../_static/js/theme.js"></script>
+    <link rel="index" title="Index" href="../genindex.html" />
+    <link rel="search" title="Search" href="../search.html" />
+    <link rel="next" title="XML-ID Renaming" href="xml_id_renaming.html" />
+    <link rel="prev" title="Field Renaming" href="field_renaming.html" /> 
+</head>
+
+<body class="wy-body-for-nav"> 
+  <div class="wy-grid-for-nav">
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search" >
+
+          
+          
+          <a href="../index.html" class="icon icon-home">
+            OpenUpgrade
+          </a>
+              <div class="version">
+                16.0
+              </div>
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="../search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" aria-label="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+        </div><div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="Navigation menu">
+              <ul class="current">
+<li class="toctree-l1"><a class="reference internal" href="../intro.html">Introduction</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../migrating_database.html">Migrating your database</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../community.html">Community involvement</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../status.html">Module coverage</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../analysis.html">Database analysis</a></li>
+<li class="toctree-l1 current"><a class="reference internal" href="../development.html">Migration script development</a><ul class="current">
+<li class="toctree-l2"><a class="reference internal" href="../development.html#overview">Overview</a></li>
+<li class="toctree-l2 current"><a class="reference internal" href="../development.html#learn-from-typical-use-cases">Learn from typical Use cases</a><ul class="current">
+<li class="toctree-l3"><a class="reference internal" href="field_renaming.html">Field Renaming</a></li>
+<li class="toctree-l3 current"><a class="current reference internal" href="#">Model Renaming</a><ul>
+<li class="toctree-l4"><a class="reference internal" href="#source-code-differences">Source Code Differences</a></li>
+<li class="toctree-l4"><a class="reference internal" href="#result-without-migration-script-expected-result">Result without migration script / Expected Result</a></li>
+<li class="toctree-l4"><a class="reference internal" href="#contribution-to-openupgrade">Contribution to OpenUpgrade</a></li>
+</ul>
+</li>
+<li class="toctree-l3"><a class="reference internal" href="xml_id_renaming.html">XML-ID Renaming</a></li>
+<li class="toctree-l3"><a class="reference internal" href="noupdate_xml_entry_changed.html">Noupdate XML entry Changed</a></li>
+<li class="toctree-l3"><a class="reference internal" href="noupdate_xml_entry_changed.html#rationale">Rationale</a></li>
+<li class="toctree-l3"><a class="reference internal" href="value_mapping.html">Value Mapping</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="../development.html#learn-from-existing-migration-scrips">Learn from existing migration scrips</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../development.html#learn-from-code-review-of-open-prs">Learn from code review of open PRs</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../development.html#the-trial-and-error-process-for-the-development-of-your-scripts">The Trial and error process for the development of your scripts</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../development.html#learning-resources">Learning resources</a></li>
+</ul>
+</li>
+</ul>
+
+        </div>
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap"><nav class="wy-nav-top" aria-label="Mobile navigation menu" >
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="../index.html">OpenUpgrade</a>
+      </nav>
+
+      <div class="wy-nav-content">
+        <div class="rst-content">
+          <div role="navigation" aria-label="Page navigation">
+  <ul class="wy-breadcrumbs">
+      <li><a href="../index.html" class="icon icon-home" aria-label="Home"></a></li>
+          <li class="breadcrumb-item"><a href="../development.html">Migration script development</a></li>
+      <li class="breadcrumb-item active">Model Renaming</li>
+      <li class="wy-breadcrumbs-aside">
+      </li>
+  </ul>
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+             
+  <section id="model-renaming">
+<h1>Model Renaming<a class="headerlink" href="#model-renaming" title="Permalink to this heading"></a></h1>
+<p>From version 14.0 to version 15.0, in the module <code class="docutils literal notranslate"><span class="pre">calendar</span></code>, the model
+<code class="docutils literal notranslate"><span class="pre">calendar.contacts</span></code> has been renamed into <code class="docutils literal notranslate"><span class="pre">calendar.filters</span></code>.</p>
+<section id="source-code-differences">
+<h2>Source Code Differences<a class="headerlink" href="#source-code-differences" title="Permalink to this heading"></a></h2>
+<section id="version-14-0">
+<h3>Version 14.0<a class="headerlink" href="#version-14-0" title="Permalink to this heading"></a></h3>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="k">class</span> <span class="nc">Contacts</span><span class="p">(</span><span class="n">models</span><span class="o">.</span><span class="n">Model</span><span class="p">):</span>
+    <span class="n">_name</span> <span class="o">=</span> <span class="s2">&quot;calendar.contacts&quot;</span>
+    <span class="n">_description</span> <span class="o">=</span> <span class="s2">&quot;Calendar Contacts&quot;</span>
+
+    <span class="n">user_id</span> <span class="o">=</span> <span class="n">fields</span><span class="o">.</span><span class="n">Many2one</span><span class="p">(</span>
+        <span class="n">comodel_name</span><span class="o">=</span><span class="s2">&quot;res.users&quot;</span><span class="p">,</span>
+        <span class="n">string</span><span class="o">=</span><span class="s2">&quot;Me&quot;</span><span class="p">,</span>
+        <span class="n">required</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span>
+        <span class="n">default</span><span class="o">=</span><span class="k">lambda</span> <span class="bp">self</span><span class="p">:</span> <span class="bp">self</span><span class="o">.</span><span class="n">env</span><span class="o">.</span><span class="n">user</span><span class="p">,</span>
+    <span class="p">)</span>
+    <span class="n">partner_id</span> <span class="o">=</span> <span class="n">fields</span><span class="o">.</span><span class="n">Many2one</span><span class="p">(</span>
+        <span class="n">comodel_name</span><span class="o">=</span><span class="s2">&quot;res.partner&quot;</span><span class="p">,</span>
+        <span class="n">string</span><span class="o">=</span><span class="s2">&quot;Employee&quot;</span><span class="p">,</span>
+        <span class="n">required</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span>
+    <span class="p">)</span>
+    <span class="n">active</span> <span class="o">=</span> <span class="n">fields</span><span class="o">.</span><span class="n">Boolean</span><span class="p">(</span><span class="n">string</span><span class="o">=</span><span class="s2">&quot;Active&quot;</span><span class="p">,</span> <span class="n">default</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
+    <span class="c1"># ...</span>
+</pre></div>
+</div>
+<p>See <a class="reference external" href="https://github.com/odoo/odoo/blob/68814f52e4fd44e190a2a71ee99a010a08eef674/addons/calendar/models/calendar_contact.py#LL7-L21">Full V14 Code Source</a>.</p>
+</section>
+<section id="version-15-0">
+<h3>Version 15.0<a class="headerlink" href="#version-15-0" title="Permalink to this heading"></a></h3>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="k">class</span> <span class="nc">Contacts</span><span class="p">(</span><span class="n">models</span><span class="o">.</span><span class="n">Model</span><span class="p">):</span>
+    <span class="n">_name</span> <span class="o">=</span> <span class="s2">&quot;calendar.filters&quot;</span>
+    <span class="n">_description</span> <span class="o">=</span> <span class="s2">&quot;Calendar Filters&quot;</span>
+
+    <span class="n">user_id</span> <span class="o">=</span> <span class="n">fields</span><span class="o">.</span><span class="n">Many2one</span><span class="p">(</span>
+        <span class="n">comodel_name</span><span class="o">=</span><span class="s2">&quot;res.users&quot;</span><span class="p">,</span>
+        <span class="n">string</span><span class="o">=</span><span class="s2">&quot;Me&quot;</span><span class="p">,</span>
+        <span class="n">required</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span>
+        <span class="n">default</span><span class="o">=</span><span class="k">lambda</span> <span class="bp">self</span><span class="p">:</span> <span class="bp">self</span><span class="o">.</span><span class="n">env</span><span class="o">.</span><span class="n">user</span><span class="p">,</span>
+    <span class="p">)</span>
+    <span class="n">partner_id</span> <span class="o">=</span> <span class="n">fields</span><span class="o">.</span><span class="n">Many2one</span><span class="p">(</span>
+        <span class="n">comodel_name</span><span class="o">=</span><span class="s2">&quot;res.partner&quot;</span><span class="p">,</span>
+        <span class="n">string</span><span class="o">=</span><span class="s2">&quot;Employee&quot;</span><span class="p">,</span>
+        <span class="n">required</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span>
+    <span class="p">)</span>
+    <span class="n">active</span> <span class="o">=</span> <span class="n">fields</span><span class="o">.</span><span class="n">Boolean</span><span class="p">(</span><span class="n">string</span><span class="o">=</span><span class="s2">&quot;Active&quot;</span><span class="p">,</span> <span class="n">default</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
+    <span class="n">partner_checked</span> <span class="o">=</span> <span class="n">fields</span><span class="o">.</span><span class="n">Boolean</span><span class="p">(</span><span class="n">string</span><span class="o">=</span><span class="s2">&quot;Checked&quot;</span><span class="p">,</span> <span class="n">default</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
+    <span class="c1"># ...</span>
+</pre></div>
+</div>
+<p>See <a class="reference external" href="https://github.com/odoo/odoo/blob/45e4be17f3f73d6e4122a43383afd774f4cbc926/addons/calendar/models/calendar_filter.py#LL7-L23">Full V15 Code Source</a>.</p>
+</section>
+</section>
+<section id="result-without-migration-script-expected-result">
+<h2>Result without migration script / Expected Result<a class="headerlink" href="#result-without-migration-script-expected-result" title="Permalink to this heading"></a></h2>
+<section id="v14-table-calendar-contacts">
+<h3>V14 table <code class="docutils literal notranslate"><span class="pre">calendar_contacts</span></code><a class="headerlink" href="#v14-table-calendar-contacts" title="Permalink to this heading"></a></h3>
+<table class="docutils align-default">
+<thead>
+<tr class="row-odd"><th class="head"><p>id</p></th>
+<th class="head"><p>user_id</p></th>
+<th class="head"><p>partner_id</p></th>
+<th class="head"><p>active</p></th>
+</tr>
+</thead>
+<tbody>
+<tr class="row-even"><td><p>1</p></td>
+<td><p>1</p></td>
+<td><p>34</p></td>
+<td><p>true</p></td>
+</tr>
+<tr class="row-odd"><td><p>1</p></td>
+<td><p>2</p></td>
+<td><p>52</p></td>
+<td><p>true</p></td>
+</tr>
+<tr class="row-even"><td><p>1</p></td>
+<td><p>3</p></td>
+<td><p>22</p></td>
+<td><p>false</p></td>
+</tr>
+</tbody>
+</table>
+</section>
+<section id="v15-table-calendar-filters-without-migration-script">
+<h3>V15 table <code class="docutils literal notranslate"><span class="pre">calendar_filters</span></code> (Without migration script)<a class="headerlink" href="#v15-table-calendar-filters-without-migration-script" title="Permalink to this heading"></a></h3>
+<table class="docutils align-default">
+<thead>
+<tr class="row-odd"><th class="head"><p>id</p></th>
+<th class="head"><p>user_id</p></th>
+<th class="head"><p>partner_id</p></th>
+<th class="head"><p>active</p></th>
+<th class="head"><p>partner_checked</p></th>
+</tr>
+</thead>
+<tbody>
+<tr class="row-even"><td><p>[empty table]</p></td>
+<td></td>
+<td></td>
+<td></td>
+<td></td>
+</tr>
+</tbody>
+</table>
+<p><strong>Problem</strong> : the data is lost during the migration process, and the new table is empty.</p>
+</section>
+<section id="v15-table-calendar-filters-with-migration-script">
+<h3>V15 table <code class="docutils literal notranslate"><span class="pre">calendar_filters</span></code> (With migration script)<a class="headerlink" href="#v15-table-calendar-filters-with-migration-script" title="Permalink to this heading"></a></h3>
+<table class="docutils align-default">
+<thead>
+<tr class="row-odd"><th class="head"><p>id</p></th>
+<th class="head"><p>user_id</p></th>
+<th class="head"><p>partner_id</p></th>
+<th class="head"><p>active</p></th>
+<th class="head"><p>partner_checked</p></th>
+</tr>
+</thead>
+<tbody>
+<tr class="row-even"><td><p>1</p></td>
+<td><p>1</p></td>
+<td><p>34</p></td>
+<td><p>true</p></td>
+<td><p>true</p></td>
+</tr>
+<tr class="row-odd"><td><p>1</p></td>
+<td><p>2</p></td>
+<td><p>52</p></td>
+<td><p>true</p></td>
+<td><p>true</p></td>
+</tr>
+<tr class="row-even"><td><p>1</p></td>
+<td><p>3</p></td>
+<td><p>22</p></td>
+<td><p>false</p></td>
+<td><p>true</p></td>
+</tr>
+</tbody>
+</table>
+</section>
+</section>
+<section id="contribution-to-openupgrade">
+<h2>Contribution to OpenUpgrade<a class="headerlink" href="#contribution-to-openupgrade" title="Permalink to this heading"></a></h2>
+<section id="apriori-py-file">
+<h3>apriori.py file<a class="headerlink" href="#apriori-py-file" title="Permalink to this heading"></a></h3>
+<p>The list of the renamed models is present in a <code class="docutils literal notranslate"><span class="pre">apriori.py</span></code> file in each version
+of openupgrade.</p>
+<ul class="simple">
+<li><p>Until version 13, the file is present in this path:
+<code class="docutils literal notranslate"><span class="pre">odoo/addons/openupgrade_records/lib/apriori.py</span></code>.</p></li>
+<li><p>from version 14.0 onwards, the file is present in this path:
+<code class="docutils literal notranslate"><span class="pre">openupgrade_scripts/apriori.py</span></code>.</p></li>
+</ul>
+<p>Add a key in the following dict:</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="n">renamed_models</span> <span class="o">=</span> <span class="p">{</span>
+    <span class="s2">&quot;calendar.contacts&quot;</span><span class="p">:</span> <span class="s2">&quot;calendar.filters&quot;</span><span class="p">,</span>
+<span class="p">}</span>
+</pre></div>
+</div>
+<p>See <a class="reference external" href="https://github.com/OCA/OpenUpgrade/blob/97491cb7d9a8ed494a49cf1db9b7fc8852aac254/openupgrade_scripts/apriori.py#LL93-L98">Full v15 apriori file</a>.</p>
+<p><strong>Note:</strong></p>
+<p>This code is NOT used by openupgrade itself, during the migration process.
+It is used to generate correctly the analysis files,
+during the initialization of the Openupgrade project, for each release.</p>
+</section>
+<section id="write-migration-script">
+<h3>Write migration Script<a class="headerlink" href="#write-migration-script" title="Permalink to this heading"></a></h3>
+<p>in the <code class="docutils literal notranslate"><span class="pre">pre-migration.py</span></code> script add:</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="kn">from</span> <span class="nn">openupgradelib</span> <span class="kn">import</span> <span class="n">openupgrade</span>
+
+<span class="nd">@openupgrade</span><span class="o">.</span><span class="n">migrate</span><span class="p">()</span>
+<span class="k">def</span> <span class="nf">migrate</span><span class="p">(</span><span class="n">env</span><span class="p">,</span> <span class="n">version</span><span class="p">):</span>
+    <span class="n">openupgrade</span><span class="o">.</span><span class="n">rename_models</span><span class="p">(</span><span class="n">env</span><span class="o">.</span><span class="n">cr</span><span class="p">,</span> <span class="p">[(</span><span class="s2">&quot;calendar.contacts&quot;</span><span class="p">,</span> <span class="s2">&quot;calendar.filters&quot;</span><span class="p">)])</span>
+    <span class="n">openupgrade</span><span class="o">.</span><span class="n">rename_tables</span><span class="p">(</span><span class="n">env</span><span class="o">.</span><span class="n">cr</span><span class="p">,</span> <span class="p">[(</span><span class="s2">&quot;calendar_contacts&quot;</span><span class="p">,</span> <span class="s2">&quot;calendar_filters&quot;</span><span class="p">)])</span>
+</pre></div>
+</div>
+<p>See <a class="reference external" href="https://github.com/OCA/OpenUpgrade/blob/534a550faf166f2908c68327ee979411917e6c3d/openupgrade_scripts/scripts/calendar/15.0.1.1/pre-migration.py#LL3-L19">Full pre migration Script</a>.</p>
+</section>
+</section>
+</section>
+
+
+           </div>
+          </div>
+          <footer><div class="rst-footer-buttons" role="navigation" aria-label="Footer">
+        <a href="field_renaming.html" class="btn btn-neutral float-left" title="Field Renaming" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left" aria-hidden="true"></span> Previous</a>
+        <a href="xml_id_renaming.html" class="btn btn-neutral float-right" title="XML-ID Renaming" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right" aria-hidden="true"></span></a>
+    </div>
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>&#169; Copyright 2012-2021, Odoo Community Association (OCA) / The OpenUpgrade developers.
+      <span class="lastupdated">Last updated on Jun 20, 2023.
+      </span></p>
+  </div>
+
+  Built with <a href="https://www.sphinx-doc.org/">Sphinx</a> using a
+    <a href="https://github.com/readthedocs/sphinx_rtd_theme">theme</a>
+    provided by <a href="https://readthedocs.org">Read the Docs</a>.
+   
+
+</footer>
+        </div>
+      </div>
+    </section>
+  </div>
+  <script>
+      jQuery(function () {
+          SphinxRtdTheme.Navigation.enable(true);
+      });
+  </script> 
+
+</body>
+</html>
