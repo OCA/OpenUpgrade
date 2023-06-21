@@ -1,0 +1,274 @@
+<!DOCTYPE html>
+<html class="writer-html5" lang="en" >
+<head>
+  <meta charset="utf-8" /><meta name="generator" content="Docutils 0.18.1: http://docutils.sourceforge.net/" />
+
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Field Fast Precomputation &mdash; OpenUpgrade 16.0 documentation</title>
+      <link rel="stylesheet" href="../_static/pygments.css" type="text/css" />
+      <link rel="stylesheet" href="../_static/css/theme.css" type="text/css" />
+  <!--[if lt IE 9]>
+    <script src="../_static/js/html5shiv.min.js"></script>
+  <![endif]-->
+  
+        <script src="../_static/jquery.js"></script>
+        <script src="../_static/_sphinx_javascript_frameworks_compat.js"></script>
+        <script data-url_root="../" id="documentation_options" src="../_static/documentation_options.js"></script>
+        <script src="../_static/doctools.js"></script>
+        <script src="../_static/sphinx_highlight.js"></script>
+    <script src="../_static/js/theme.js"></script>
+    <link rel="index" title="Index" href="../genindex.html" />
+    <link rel="search" title="Search" href="../search.html" />
+    <link rel="next" title="Field Renaming" href="field_renaming.html" />
+    <link rel="prev" title="Migration script development" href="../development.html" /> 
+</head>
+
+<body class="wy-body-for-nav"> 
+  <div class="wy-grid-for-nav">
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search" >
+
+          
+          
+          <a href="../index.html" class="icon icon-home">
+            OpenUpgrade
+          </a>
+              <div class="version">
+                16.0
+              </div>
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="../search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" aria-label="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+        </div><div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="Navigation menu">
+              <ul class="current">
+<li class="toctree-l1"><a class="reference internal" href="../intro.html">Introduction</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../migrating_database.html">Migrating your database</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../community.html">Community involvement</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../status.html">Module coverage</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../analysis.html">Database analysis</a></li>
+<li class="toctree-l1 current"><a class="reference internal" href="../development.html">Migration script development</a><ul class="current">
+<li class="toctree-l2"><a class="reference internal" href="../development.html#overview">Overview</a></li>
+<li class="toctree-l2 current"><a class="reference internal" href="../development.html#learn-from-typical-use-cases">Learn from typical Use cases</a><ul class="current">
+<li class="toctree-l3 current"><a class="current reference internal" href="#">Field Fast Precomputation</a><ul>
+<li class="toctree-l4"><a class="reference internal" href="#example">Example</a></li>
+<li class="toctree-l4"><a class="reference internal" href="#source-code-differences">Source Code Differences</a></li>
+<li class="toctree-l4"><a class="reference internal" href="#analysis">Analysis</a></li>
+<li class="toctree-l4"><a class="reference internal" href="#result-without-migration-script-expected-result">Result without migration script / Expected Result</a></li>
+<li class="toctree-l4"><a class="reference internal" href="#contribution-to-openupgrade">Contribution to OpenUpgrade</a></li>
+<li class="toctree-l4"><a class="reference internal" href="#notes">Notes</a></li>
+</ul>
+</li>
+<li class="toctree-l3"><a class="reference internal" href="field_renaming.html">Field Renaming</a></li>
+<li class="toctree-l3"><a class="reference internal" href="model_renaming.html">Model Renaming</a></li>
+<li class="toctree-l3"><a class="reference internal" href="xml_id_renaming.html">XML-ID Renaming</a></li>
+<li class="toctree-l3"><a class="reference internal" href="noupdate_xml_entry_changed.html">Noupdate XML entry Changed</a></li>
+<li class="toctree-l3"><a class="reference internal" href="noupdate_xml_entry_changed.html#rationale">Rationale</a></li>
+<li class="toctree-l3"><a class="reference internal" href="value_mapping.html">Value Mapping</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="../development.html#learn-from-existing-migration-scrips">Learn from existing migration scrips</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../development.html#learn-from-code-review-of-open-prs">Learn from code review of open PRs</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../development.html#the-trial-and-error-process-for-the-development-of-your-scripts">The Trial and error process for the development of your scripts</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../development.html#learning-resources">Learning resources</a></li>
+</ul>
+</li>
+</ul>
+
+        </div>
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap"><nav class="wy-nav-top" aria-label="Mobile navigation menu" >
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="../index.html">OpenUpgrade</a>
+      </nav>
+
+      <div class="wy-nav-content">
+        <div class="rst-content">
+          <div role="navigation" aria-label="Page navigation">
+  <ul class="wy-breadcrumbs">
+      <li><a href="../index.html" class="icon icon-home" aria-label="Home"></a></li>
+          <li class="breadcrumb-item"><a href="../development.html">Migration script development</a></li>
+      <li class="breadcrumb-item active">Field Fast Precomputation</li>
+      <li class="wy-breadcrumbs-aside">
+      </li>
+  </ul>
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+             
+  <section id="field-fast-precomputation">
+<h1>Field Fast Precomputation<a class="headerlink" href="#field-fast-precomputation" title="Permalink to this heading"></a></h1>
+<section id="example">
+<h2>Example<a class="headerlink" href="#example" title="Permalink to this heading"></a></h2>
+<p>From version 14.0 to version 15.0, in the <code class="docutils literal notranslate"><span class="pre">product</span></code> module,
+a new field <code class="docutils literal notranslate"><span class="pre">value_count</span></code> appeared on the model <code class="docutils literal notranslate"><span class="pre">product.template.attribute.line</span></code>.
+This is a simple field that stores the amount of <code class="docutils literal notranslate"><span class="pre">value_ids</span></code>
+associated with each element.</p>
+</section>
+<section id="source-code-differences">
+<h2>Source Code Differences<a class="headerlink" href="#source-code-differences" title="Permalink to this heading"></a></h2>
+<section id="version-14-0">
+<h3>Version 14.0<a class="headerlink" href="#version-14-0" title="Permalink to this heading"></a></h3>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="k">class</span> <span class="nc">ProductTemplateAttributeLine</span><span class="p">(</span><span class="n">models</span><span class="o">.</span><span class="n">Model</span><span class="p">):</span>
+    <span class="n">_name</span> <span class="o">=</span> <span class="s2">&quot;product.template.attribute.line&quot;</span>
+
+    <span class="n">value_ids</span> <span class="o">=</span> <span class="n">fields</span><span class="o">.</span><span class="n">Many2many</span><span class="p">(</span>
+        <span class="n">comodel_name</span><span class="o">=</span><span class="s2">&quot;product.attribute.value&quot;</span><span class="p">,</span>
+        <span class="n">relation</span><span class="o">=</span><span class="s2">&quot;product_attribute_value_product_template_attribute_line_rel&quot;</span>
+    <span class="p">)</span>
+</pre></div>
+</div>
+<p>See <a class="reference external" href="https://github.com/odoo/odoo/blob/8b522e5c4b7ef406446596b719be84692a712c44/addons/product/models/product_attribute.py#LL165-L179">Full v14 Code Source</a>.</p>
+</section>
+<section id="version-15-0">
+<h3>Version 15.0<a class="headerlink" href="#version-15-0" title="Permalink to this heading"></a></h3>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="k">class</span> <span class="nc">ProductTemplateAttributeLine</span><span class="p">(</span><span class="n">models</span><span class="o">.</span><span class="n">Model</span><span class="p">):</span>
+    <span class="n">_name</span> <span class="o">=</span> <span class="s2">&quot;product.template.attribute.line&quot;</span>
+
+    <span class="n">value_ids</span> <span class="o">=</span> <span class="n">fields</span><span class="o">.</span><span class="n">Many2many</span><span class="p">(</span>
+        <span class="n">comodel_name</span><span class="o">=</span><span class="s2">&quot;product.attribute.value&quot;</span><span class="p">,</span>
+        <span class="n">relation</span><span class="o">=</span><span class="s2">&quot;product_attribute_value_product_template_attribute_line_rel&quot;</span>
+    <span class="p">)</span>
+    <span class="n">value_count</span> <span class="o">=</span> <span class="n">fields</span><span class="o">.</span><span class="n">Integer</span><span class="p">(</span>
+        <span class="n">compute</span><span class="o">=</span><span class="s2">&quot;_compute_value_count&quot;</span><span class="p">,</span>
+        <span class="n">store</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span>
+    <span class="p">)</span>
+
+<span class="nd">@api</span><span class="o">.</span><span class="n">depends</span><span class="p">(</span><span class="s2">&quot;value_ids&quot;</span><span class="p">)</span>
+<span class="k">def</span> <span class="nf">_compute_value_count</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+    <span class="k">for</span> <span class="n">record</span> <span class="ow">in</span> <span class="bp">self</span><span class="p">:</span>
+        <span class="n">record</span><span class="o">.</span><span class="n">value_count</span> <span class="o">=</span> <span class="nb">len</span><span class="p">(</span><span class="n">record</span><span class="o">.</span><span class="n">value_ids</span><span class="p">)</span>
+</pre></div>
+</div>
+<p>See <a class="reference external" href="https://github.com/odoo/odoo/blob/2f817a7b36cc7e5ab235829eecd61a1d71ce546e/addons/product/models/product_attribute.py#LL189-L209">Full v15 Code Source</a>.</p>
+</section>
+</section>
+<section id="analysis">
+<h2>Analysis<a class="headerlink" href="#analysis" title="Permalink to this heading"></a></h2>
+<div class="highlight-text notranslate"><div class="highlight"><pre><span></span>---Fields in module &#39;product&#39;---
+
+product      / product.template.attribute.line / value_count (integer):
+    NEW isfunction: function, stored
+</pre></div>
+</div>
+<p>See <a class="reference external" href="https://github.com/OCA/OpenUpgrade/blob/97491cb7d9a8ed494a49cf1db9b7fc8852aac254/openupgrade_scripts/scripts/product/15.0.1.2/upgrade_analysis.txt#L16">Full v15 Analysis File</a>.</p>
+</section>
+<section id="result-without-migration-script-expected-result">
+<h2>Result without migration script / Expected Result<a class="headerlink" href="#result-without-migration-script-expected-result" title="Permalink to this heading"></a></h2>
+<p>The new field will be computed, by the ORM.
+So in absolute terms, there is nothing to do.
+However, the calculation will be performed for all the rows of the table.
+If the table contains a very large amount of data, the calculation can be slow:
+Indeed, even if the ORM contains some prefetch system for reading the data,
+the writing will be done item by item, via an SQL request of the UPDATE type,
+which is not at all optimized, and will generate a (quasi) linear type of time complexity.</p>
+<p>See : <a class="reference external" href="https://en.wikipedia.org/wiki/Time_complexity#Linear_time">https://en.wikipedia.org/wiki/Time_complexity#Linear_time</a></p>
+<p>As a result, some compute on huge database can take hours, or days, or worse,
+generate an insufficient memory error, which stops the migration.</p>
+<p>These inconveniences obviously depend on the size of the table in question
+and the power and the configuration of the server that is performing the migration.</p>
+</section>
+<section id="contribution-to-openupgrade">
+<h2>Contribution to OpenUpgrade<a class="headerlink" href="#contribution-to-openupgrade" title="Permalink to this heading"></a></h2>
+<section id="update-upgrade-analysis-work-txt-file">
+<h3>Update <code class="docutils literal notranslate"><span class="pre">upgrade_analysis_work.txt</span></code> file<a class="headerlink" href="#update-upgrade-analysis-work-txt-file" title="Permalink to this heading"></a></h3>
+<p>Add a comment after the line:</p>
+<div class="highlight-text notranslate"><div class="highlight"><pre><span></span>product      / product.template.attribute.line / value_count (integer):
+    NEW isfunction: function, stored
+# DONE: pre-migration: fast computed value_count
+</pre></div>
+</div>
+<p>See <a class="reference external" href="https://github.com/OCA/OpenUpgrade/blob/97491cb7d9a8ed494a49cf1db9b7fc8852aac254/openupgrade_scripts/scripts/product/15.0.1.2/upgrade_analysis_work.txt#LL32-L33">Full v15 Work Analysis File</a>.</p>
+</section>
+<section id="write-migration-script">
+<h3>Write migration Script<a class="headerlink" href="#write-migration-script" title="Permalink to this heading"></a></h3>
+<p>in the <code class="docutils literal notranslate"><span class="pre">pre-migration.py</span></code> script add:</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="kn">from</span> <span class="nn">openupgradelib</span> <span class="kn">import</span> <span class="n">openupgrade</span>
+
+<span class="k">def</span> <span class="nf">compute_product_template_attribute_line_value_count</span><span class="p">(</span><span class="n">env</span><span class="p">):</span>
+    <span class="n">openupgrade</span><span class="o">.</span><span class="n">add_fields</span><span class="p">(</span><span class="n">env</span><span class="p">,</span> <span class="p">[(</span>
+        <span class="s2">&quot;value_count&quot;</span><span class="p">,</span>                      <span class="c1"># Field name</span>
+        <span class="s2">&quot;product.template.attribute.line&quot;</span><span class="p">,</span>  <span class="c1"># Model name</span>
+        <span class="s2">&quot;product_template_attribute_line&quot;</span><span class="p">,</span>  <span class="c1"># Table name</span>
+        <span class="s2">&quot;integer&quot;</span><span class="p">,</span>                          <span class="c1"># Odoo Field type (in lower case)</span>
+        <span class="kc">False</span><span class="p">,</span>                              <span class="c1"># [Optional] SQL type (if custom fields)</span>
+        <span class="s2">&quot;product&quot;</span><span class="p">,</span>                          <span class="c1"># Module name</span>
+        <span class="kc">False</span><span class="p">,</span>                              <span class="c1"># [Optional] Default value</span>
+    <span class="p">)])</span>
+
+    <span class="n">openupgrade</span><span class="o">.</span><span class="n">logged_query</span><span class="p">(</span>
+        <span class="n">env</span><span class="o">.</span><span class="n">cr</span><span class="p">,</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        UPDATE product_template_attribute_line al</span>
+<span class="sd">        SET value_count = (</span>
+<span class="sd">            SELECT COUNT(*)</span>
+<span class="sd">            FROM product_attribute_value_product_template_attribute_line_rel</span>
+<span class="sd">            WHERE product_template_attribute_line_id = al.id</span>
+<span class="sd">        )&quot;&quot;&quot;</span><span class="p">,</span>
+    <span class="p">)</span>
+
+<span class="nd">@openupgrade</span><span class="o">.</span><span class="n">migrate</span><span class="p">()</span>
+<span class="k">def</span> <span class="nf">migrate</span><span class="p">(</span><span class="n">env</span><span class="p">,</span> <span class="n">version</span><span class="p">):</span>
+    <span class="n">compute_product_template_attribute_line_value_count</span><span class="p">(</span><span class="n">env</span><span class="p">)</span>
+</pre></div>
+</div>
+<p>See <a class="reference external" href="https://github.com/OCA/OpenUpgrade/blob/97491cb7d9a8ed494a49cf1db9b7fc8852aac254/openupgrade_scripts/scripts/product/15.0.1.2/pre-migration.py#LL4-L25">Full V15 pre migration Script</a>.</p>
+<p>See <a class="reference external" href="https://github.com/OCA/openupgradelib/blob/master/openupgradelib/openupgrade.py">Full add_fields specification</a>.</p>
+</section>
+</section>
+<section id="notes">
+<h2>Notes<a class="headerlink" href="#notes" title="Permalink to this heading"></a></h2>
+<ul>
+<li><p>these scripts are about optimization.
+As a contributor of openupgrade for a module,
+if you do not have a problem of excessive duration,
+you can propose migration scripts _without_ such optimizations,
+especially when the SQL queries are complex to write.</p>
+<p>Another contributor can always propose a PR for performance improvement,
+if he faces this problem.</p>
+</li>
+</ul>
+</section>
+</section>
+
+
+           </div>
+          </div>
+          <footer><div class="rst-footer-buttons" role="navigation" aria-label="Footer">
+        <a href="../development.html" class="btn btn-neutral float-left" title="Migration script development" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left" aria-hidden="true"></span> Previous</a>
+        <a href="field_renaming.html" class="btn btn-neutral float-right" title="Field Renaming" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right" aria-hidden="true"></span></a>
+    </div>
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>&#169; Copyright 2012-2021, Odoo Community Association (OCA) / The OpenUpgrade developers.
+      <span class="lastupdated">Last updated on Jun 21, 2023.
+      </span></p>
+  </div>
+
+  Built with <a href="https://www.sphinx-doc.org/">Sphinx</a> using a
+    <a href="https://github.com/readthedocs/sphinx_rtd_theme">theme</a>
+    provided by <a href="https://readthedocs.org">Read the Docs</a>.
+   
+
+</footer>
+        </div>
+      </div>
+    </section>
+  </div>
+  <script>
+      jQuery(function () {
+          SphinxRtdTheme.Navigation.enable(true);
+      });
+  </script> 
+
+</body>
+</html>
