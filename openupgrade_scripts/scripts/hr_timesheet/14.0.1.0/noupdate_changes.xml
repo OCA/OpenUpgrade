@@ -1,8 +1,12 @@
 <?xml version='1.0' encoding='utf-8'?>
 <odoo>
+  <!--
+  This permission is specifically disabled because although odoo adds it, it is too high
+  and inherits others that are not used / necessary for a "basic" user.
   <record id="base.default_user" model="res.users">
     <field name="groups_id" eval="[(4,ref('group_timesheet_manager'))]"/>
   </record>
+  !-->
   <record id="base.module_category_services_timesheets" model="ir.module.category">
     <field name="description">Helps you manage the timesheets.</field>
     <field name="sequence">13</field>
