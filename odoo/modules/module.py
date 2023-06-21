@@ -19,6 +19,7 @@ import threading
 import warnings
 from operator import itemgetter
 from os.path import join as opj
+from pathlib import Path
 
 import odoo
 import odoo.tools as tools
@@ -158,7 +159,7 @@ def initialize_sys_path():
     legacy_upgrade_path = os.path.join(base_path, 'base', 'maintenance', 'migrations')
     for up in (tools.config['upgrade_path'] or legacy_upgrade_path).split(','):
         up = os.path.normcase(os.path.abspath(tools.ustr(up.strip())))
-        if up not in upgrade.__path__:
+        if os.path.isdir(up) and up not in upgrade.__path__:
             upgrade.__path__.append(up)
 
     # create decrecated module alias from odoo.addons.base.maintenance.migrations to odoo.upgrade
@@ -472,7 +473,7 @@ def get_test_modules(module, openupgrade_prefix=None):
     except ImportError:
         pass
     else:
-        results += _get_tests_modules('odoo.upgrade', module, openupgrade_prefix)
+        results += list(_get_upgrade_test_modules(module, openupgrade_prefix))
 
     return results
 
@@ -503,6 +504,25 @@ def _get_tests_modules(path, module, openupgrade_prefix=None):
     result = [mod_obj for name, mod_obj in inspect.getmembers(mod, inspect.ismodule)
               if name.startswith('test_')]
     return result
+
+def _get_upgrade_test_modules(module, openupgrade_prefix=None):
+    if openupgrade_prefix is None:
+        openupgrade_prefix = ''
+    name = openupgrade_prefix + '.tests'
+    upg = importlib.import_module("odoo.upgrade")
+    for path in map(Path, upg.__path__):
+        if openupgrade_prefix:
+            tests = (path / module / openupgrade_prefix[1:] / "tests").glob("test_*.py")
+        else:
+            tests = (path / module / "tests").glob("test_*.py")
+        for test in tests:
+            spec = importlib.util.spec_from_file_location(f"odoo.upgrade.{module}{name}.{test.stem}", test)
+            if not spec:
+                continue
+            pymod = importlib.util.module_from_spec(spec)
+            sys.modules[spec.name] = pymod
+            spec.loader.exec_module(pymod)
+            yield pymod
 
 
 class OdooTestResult(unittest.result.TestResult):
