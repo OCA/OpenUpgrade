@@ -53,6 +53,7 @@ Learn from typical Use cases
 .. toctree::
    :maxdepth: 2
 
+   use_cases/field_fast_precomputation
    use_cases/field_renaming
    use_cases/model_renaming
    use_cases/xml_id_renaming
