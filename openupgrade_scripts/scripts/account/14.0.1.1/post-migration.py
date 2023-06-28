@@ -804,6 +804,24 @@ def fill_account_bank_statement_line_reconciliation(env):
     )
 
 
+def update_payment_state_partial(env):
+    """As the 'Partially paid' didn't exist before, invoices with this condition are
+    still marked as 'Not paid', so we should update them as if they were partially paid
+    in this new version.
+    """
+    openupgrade.logged_query(
+        env.cr,
+        """
+        UPDATE account_move
+        SET payment_state='partial'
+        WHERE move_type IN ('out_invoice', 'out_refund', 'in_invoice', 'in_refund')
+            AND amount_residual > 0
+            AND amount_residual < amount_total
+            AND payment_state != 'partial'
+        """,
+    )
+
+
 @openupgrade.migrate()
 def migrate(env, version):
     fill_account_journal_posted_before(env)
@@ -832,6 +850,7 @@ def migrate(env, version):
     fill_account_bank_statement_line_reconciliation(env)
     post_statements_with_unreconciled_lines(env)
     _delete_hooks(env)
+    update_payment_state_partial(env)
     openupgrade.delete_record_translations(
         env.cr,
         "account",
