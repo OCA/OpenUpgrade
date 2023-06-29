@@ -20,7 +20,7 @@ project      / project.task             / analytic_tag_ids (many2many)  : DEL re
 # NOTHING TO DO
 
 project      / project.task             / ancestor_id (many2one)        : NEW relation: project.task, isfunction: function, stored
-# TODO: pre-migration: Add new column & set value for it
+# DONE: pre-migration: Add new column & set value for it
 
 project      / project.task             / is_analytic_account_id_changed (boolean): NEW isfunction: function, stored
 # DONE: pre-migration: Add new column & set value for it
