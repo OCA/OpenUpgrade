@@ -88,6 +88,7 @@ merged_modules = {
     # OCA/web
     "web_decimal_numpad_dot": "web",
     # OCA/website
+    "website_google_analytics_4": "website",
     "website_snippet_timeline": "website",
 }
 
