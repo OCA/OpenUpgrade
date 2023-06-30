@@ -1,6 +1,8 @@
 # Copyright 2021 ForgeFlow S.L.  <https://www.forgeflow.com>
+# Copyright 2023 Tecnativa - Pilar Vargas
 # License AGPL-3.0 or later (http://www.gnu.org/licenses/agpl.html).
 from openupgradelib import openupgrade
+from openupgradelib.openupgrade_140 import convert_html_string_13to14
 
 
 def website_cookie_notice_post_migration(env):
@@ -26,8 +28,19 @@ def website_cookie_notice_post_migration(env):
             env["ir.ui.view"].browse(view_ids).unlink()
 
 
+def convert_html_string(env):
+    website_views = env["ir.ui.view"].search(
+        [("type", "=", "qweb"), ("website_id", "!=", False)]
+    )
+    for view in website_views:
+        new_arch_db = convert_html_string_13to14(view.arch_db)
+        if new_arch_db != view.arch_db:
+            view.arch_db = new_arch_db
+
+
 @openupgrade.migrate()
 def migrate(env, version):
     openupgrade.load_data(env.cr, "website", "14.0.1.0/noupdate_changes.xml")
     openupgrade.delete_records_safely_by_xml_id(env, ["website.aboutus_page"])
     website_cookie_notice_post_migration(env)
+    convert_html_string(env)
