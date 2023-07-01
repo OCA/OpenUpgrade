@@ -39,6 +39,7 @@ merged_modules = {
     "l10n_be_edi": "account_edi_ubl_cii",
     "l10n_nl_edi": "account_edi_ubl_cii",
     "l10n_no_edi": "account_edi_ubl_cii",
+    "pad": "web_editor",
     "pos_coupon": "pos_loyalty",
     "pos_gift_card": "pos_loyalty",
     "sale_gift_card": "sale_loyalty",
