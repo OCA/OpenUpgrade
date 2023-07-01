@@ -7,7 +7,7 @@
     "author": "Odoo Community Association (OCA)",
     "website": "https://github.com/OCA/OpenUpgrade",
     "category": "Migration",
-    "version": "16.0.1.0.2",
+    "version": "16.0.1.0.3",
     "license": "AGPL-3",
     "depends": ["base"],
     "images": ["static/description/banner.jpg"],
