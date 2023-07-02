@@ -1,0 +1,9 @@
+---Models in module 'note'---
+---Fields in module 'note'---
+note         / note.note                / company_id (many2one)         : NEW relation: res.company
+note         / note.note                / name (text)                   : not a function anymore
+# NOTHING TO DO
+
+---XML records in module 'note'---
+NEW ir.rule: note.ir_rule_note_note_multi_company (noupdate)
+# NOTHING TO DO: new record with no-update = 1
