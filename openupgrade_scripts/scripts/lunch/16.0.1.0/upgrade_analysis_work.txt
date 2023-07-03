@@ -1,0 +1,13 @@
+---Models in module 'lunch'---
+---Fields in module 'lunch'---
+lunch        / lunch.order              / notified (boolean)            : NEW hasdefault: default
+# NOTHING TO DO: default = False
+
+lunch        / lunch.order              / state (selection)             : selection_keys is now '['cancelled', 'confirmed', 'new', 'ordered', 'sent']' ('['cancelled', 'confirmed', 'new', 'ordered']')
+lunch        / res.company              / lunch_notify_message (html)   : NEW hasdefault: default
+# NOTHING TO DO
+
+---XML records in module 'lunch'---
+NEW ir.actions.server: lunch.lunch_order_action_notify
+DEL ir.model.access: lunch.lunch_alert_user
+# NOTHING TO DO
