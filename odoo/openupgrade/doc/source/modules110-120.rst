@@ -668,18 +668,15 @@ missing in the new release are marked with |del|.
     by the Odoo Community Association module 'Account Budget OCA':
     See : https://github.com/OCA/account-budgeting/tree/12.0/account_budget_oca
 
-OCA modules
-===========
+**OCA modules**
 
 Here you will find the coverage of OpenUpgrade for other OCA modules that has
 suffered any kind of transformation and it has been taken into account here:
 
-OCA/account-financial-tools
----------------------------
+* OCA/account-financial-tools
 
-* |del| account_reversal: Feature is now included in core account module.
+    * |del| account_reversal: Feature is now included in core account module.
 
-OCA/stock-logistics-warehouse
------------------------------
+* OCA/stock-logistics-warehouse
 
-* |del| stock_putaway_product: Feature is now included in core stock module.
+    * |del| stock_putaway_product: Feature is now included in core stock module.
