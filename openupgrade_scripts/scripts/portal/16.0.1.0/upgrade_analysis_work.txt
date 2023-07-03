@@ -1,0 +1,10 @@
+---Models in module 'portal'---
+---Fields in module 'portal'---
+portal       / loyalty.card             / website_message_ids (one2many): NEW relation: mail.message
+# Nothing to do: loyalty is a new addon, and loyalty.card is a new model inheriting from mail.thread
+
+---XML records in module 'portal'---
+NEW ir.ui.view: portal.portal_my_details_fields
+# NOTHING TO DO
+
+# Done (post-migration): load data from noupdate_changes.xml
