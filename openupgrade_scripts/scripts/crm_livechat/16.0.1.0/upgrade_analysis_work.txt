@@ -1,0 +1,18 @@
+---Models in module 'crm_livechat'---
+---Fields in module 'crm_livechat'---
+crm_livechat / chatbot.script.step      / crm_team_id (many2one)        : NEW relation: crm.team
+crm_livechat / chatbot.script.step      / step_type (False)             : NEW selection_keys: ['create_lead', 'forward_operator', 'free_input_multi', 'free_input_single', 'question_email', 'question_phone', 'question_selection', 'text'], mode: modify
+
+# NOTHING TO DO: new field
+
+---XML records in module 'crm_livechat'---
+NEW chatbot.script: crm_livechat.chatbot_script_lead_generation_bot (noupdate)
+NEW chatbot.script.step: crm_livechat.chatbot_script_lead_generation_step_forward_operator (noupdate)
+NEW chatbot.script.step: crm_livechat.chatbot_script_lead_generation_step_noone_available (noupdate)
+NEW chatbot.script.step: crm_livechat.chatbot_script_lead_generation_step_welcome (noupdate)
+NEW chatbot.script.step: crm_livechat.chatbot_script_welcome_step_just_looking (noupdate)
+NEW chatbot.script.step: crm_livechat.chatbot_script_welcome_step_pricing_email (noupdate)
+NEW ir.ui.view: crm_livechat.chatbot_script_step_view_form
+NEW ir.ui.view: crm_livechat.chatbot_script_view_form
+
+# NOTHING TO DODO: new xml
