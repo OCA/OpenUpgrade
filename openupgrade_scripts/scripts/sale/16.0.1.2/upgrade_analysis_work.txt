@@ -1,0 +1,97 @@
+---Models in module 'sale'---
+obsolete model report.all.channels.sales [sql_view]
+# DONE: pre-migration: drop view
+
+obsolete model report.sale.report_saleproforma [abstract]
+# NOTHING TO DO: obsolete model, does not exist in the database
+
+obsolete model sale.payment.acquirer.onboarding.wizard [transient]
+new model sale.payment.provider.onboarding.wizard [transient]
+# DONE: pre-migration: renamed model sale.payment.acquirer.onboarding.wizard to sale.payment.provider.onboarding.wizard
+
+---Fields in module 'sale'---
+sale         / account.analytic.applicability / business_domain (False)       : NEW selection_keys: ['bill', 'expense', 'general', 'invoice', 'purchase_order', 'sale_order'], mode: modify
+# NOTHING TO DO
+
+sale         / account.bank.statement.line / partner_shipping_id (many2one): module is now 'account' ('sale')
+sale         / account.move             / partner_shipping_id (many2one): module is now 'account' ('sale')
+sale         / account.move.line        / is_downpayment (boolean)      : NEW
+sale         / account.payment          / partner_shipping_id (many2one): module is now 'account' ('sale')
+# NOTHING TO DO
+
+sale         / payment.acquirer         / so_reference_type (selection) : DEL selection_keys: ['partner', 'so_name']
+sale         / payment.provider         / so_reference_type (selection) : NEW selection_keys: ['partner', 'so_name'], hasdefault: default
+# NOTHING TO DO
+
+sale         / sale.order               / show_update_fpos (boolean)    : NEW
+sale         / sale.order               / show_update_pricelist (boolean): not stored anymore
+# NOTHING TO DO: handle by ORM
+
+sale         / sale.order.line          / analytic_distribution_stored_char (char): NEW isfunction: function, stored
+# NOTHING TO DO: handle by ORM
+
+sale         / sale.order.line          / analytic_tag_ids (many2many)  : DEL relation: account.analytic.tag
+# DONE: fast fill analytic_distribution in pre-migration
+
+sale         / sale.order.line          / product_type (selection)      : previously in module sale_stock
+# NOTHING TO DO: handle by ORM
+
+sale         / sale.order.line          / qty_delivered (float)         : not a function anymore
+# NOTHING TO DO: only the inverse compute function was removed
+
+sale         / sale.order.line          / qty_delivered_manual (float)  : DEL
+# NOTHING TO DO: not used any more, this field is useless since the new compute method from 13.0
+
+---XML records in module 'sale'---
+NEW ir.actions.act_window: sale.action_open_sale_payment_provider_onboarding_wizard
+DEL ir.actions.act_window: sale.action_open_sale_onboarding_payment_acquirer_wizard
+DEL ir.actions.act_window: sale.action_sale_order_form_view
+# NOTHING TO DO: noupdate="0" records
+
+ir.actions.server: sale.model_sale_order_action_share (noupdate switched)
+# DONE: pre-migration: noupdate switched to 0
+
+NEW ir.config_parameter: sale.default_invoice_email_template (noupdate)
+# NOTHING TODO
+
+NEW ir.model.access: sale.access_product_product_attribute_custom_value_sale_user
+NEW ir.model.access: sale.access_product_tag_sale_manager
+NEW ir.model.access: sale.access_sale_payment_provider_onboarding_wizard
+DEL ir.model.access: sale.access_account_account_sale_manager
+DEL ir.model.access: sale.access_account_account_type_sale_salesman
+DEL ir.model.access: sale.access_account_analytic_tag_sale_salesman
+DEL ir.model.access: sale.access_account_move_manager
+DEL ir.model.access: sale.access_account_tax_sale_manager
+DEL ir.model.access: sale.access_product_product_attribute_custom_value_sale_manager
+DEL ir.model.access: sale.access_report_all_channels_sales
+DEL ir.model.access: sale.access_sale_payment_acquirer_onboarding_wizard
+DEL ir.model.access: sale.access_sale_report_manager
+# NOTHING TO DO
+
+ir.model.constraint: sale.constraint_sale_order_date_order_conditional_required (changed definition: is now 'check((state in('sale','done') and date_order is not null) or state not in('sale','done'))' ('check((state in('sale','done') and date_order is not null) or state not in('sale','done') )'))
+# DONE: pre-migration: dropped constraint and let ORM add it again with the new definition
+
+NEW ir.rule: sale.sale_payment_provider_onboarding_wizard_rule (noupdate)
+DEL ir.rule: sale.sale_payment_acquirer_onboarding_wizard_rule (noupdate)
+# DONE: post-migration: delete record noupdate="1"
+
+NEW ir.ui.menu: sale.menu_product_attribute_action [renamed from sale_management module]
+# DONE: pre-migration: renamed xmlids
+
+DEL ir.ui.menu: sale.menu_product
+NEW ir.ui.view: sale.payment_provider_form
+DEL ir.ui.view: sale.acquirer_form_inherit_sale
+# NOTHING TO DO
+
+DEL ir.ui.view: sale.mail_notification_paynow_online (noupdate)
+# DONE: post-migration: delete record noupdate="1"
+
+DEL ir.ui.view: sale.product_template_form_view_invoice_policy
+DEL ir.ui.view: sale.product_template_sale_form_view
+DEL ir.ui.view: sale.report_invoice_document_inherit_sale
+DEL ir.ui.view: sale.sale_onboarding_order_confirmation_form
+NEW mail.template: sale.mail_template_sale_cancellation (noupdate)
+# NOTHING TO DO
+
+DEL res.groups: sale.group_delivery_invoice_address [renamed to account module]
+# NOTHING TO DO: handle in migration script of 'account' module
