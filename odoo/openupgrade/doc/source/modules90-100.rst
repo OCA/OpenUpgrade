@@ -608,26 +608,22 @@ missing in the new release are marked with |del|.
 |website_twitter                    | Nothing to do                     |
 +-----------------------------------+-----------------------------------+
 
-OCA modules
-===========
+**OCA modules**
 
 Here you will find the coverage of OpenUpgrade for other OCA modules that has
 suffered any kind of transformation and it has been taken into account here:
 
-OCA/account-invoicing
----------------------
+* OCA/account-invoicing
 
-* |del| account_invoice_shipping address: Feature is now included in core sale
-  module.
+    * |del| account_invoice_shipping address: Feature is now included in core sale 
+      module.
 
-OCA/sale-workflow
------------------
+* OCA/sale-workflow
 
-* |del| sale_order_back2draft: Feature is now included in core sale module.
+    * |del| sale_order_back2draft: Feature is now included in core sale module.
 
-OCA/social
-----------
+* OCA/social
 
-* |del| mass_mailing_security_group: These extra permissions are not needed
-  anymore. Anyway, you will need to manually assign the "Mass mailing user"
-  permission for granting access to required users.
+    * |del| mass_mailing_security_group: These extra permissions are not needed
+      anymore. Anyway, you will need to manually assign the "Mass mailing user"
+      permission for granting access to required users.
