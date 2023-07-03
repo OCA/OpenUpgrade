@@ -755,9 +755,3 @@ missing in the new release are marked with |del|.
 +----------------------------------------------+-------------------------------------------------+
 |website_twitter                               | Nothing to do                                   |
 +----------------------------------------------+-------------------------------------------------+
-
-OCA modules
-+++++++++++
-
-Here you will find the coverage of OpenUpgrade for other OCA modules that has
-suffered any kind of transformation and it has been taken into account here:
