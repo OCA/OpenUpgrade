@@ -1,0 +1,58 @@
+---Models in module 'sale_timesheet'---
+obsolete model project.profitability.report [sql_view]
+# NOTHING TO DO
+
+---Fields in module 'sale_timesheet'---
+sale_timesheet / account.analytic.line    / timesheet_invoice_type (selection): selection_keys is now '['billable_fixed', 'billable_manual', 'billable_milestones', 'billable_time', 'non_billable', 'other_costs', 'other_revenues', 'service_revenues', 'timesheet_revenues']' ('['billable_fixed', 'billable_time', 'non_billable', 'other_costs', 'other_revenues', 'service_revenues', 'timesheet_revenues']')
+# DONE: pre-migration: update the value for timesheet_invoice_type.
+
+sale_timesheet / product.product          / service_policy (selection)    : module is now 'sale_project' ('sale_timesheet')
+sale_timesheet / product.template         / service_policy (selection)    : module is now 'sale_project' ('sale_timesheet')
+sale_timesheet / project.project          / allow_billable (boolean)      : module is now 'sale_project' ('sale_timesheet')
+# NOTHING TO DO: Module changes handled by ORM.
+
+sale_timesheet / product.template         / service_policy (selection)    : selection_keys is now 'function' ('['delivered_manual', 'delivered_timesheet', 'ordered_timesheet']')
+# NOTHING TO DO: store="False"
+
+sale_timesheet / product.template         / service_type (False)          : selection_keys is now '['manual', 'milestones', 'timesheet']' ('['manual', 'timesheet']')
+sale_timesheet / sale.order.line          / qty_delivered_method (False)  : selection_keys is now '['analytic', 'manual', 'milestones', 'stock_move', 'timesheet']' ('['analytic', 'manual', 'stock_move', 'timesheet']')
+sale_timesheet / sale.order.line          / timesheet_ids (one2many)      : NEW relation: account.analytic.line
+# NOTHING TO DO: New feature of invoicing by milestones.
+
+sale_timesheet / project.project          / allocated_hours (False)       : NEW mode: modify, hasdefault: compute
+# NOTHING TO DO
+
+---XML records in module 'sale_timesheet'---
+NEW ir.actions.act_window: sale_timesheet.timesheet_action_from_sales_order_item
+NEW ir.actions.act_window.view: sale_timesheet.timesheet_action_from_sales_order_item_form
+NEW ir.actions.act_window.view: sale_timesheet.timesheet_action_from_sales_order_item_graph
+NEW ir.actions.act_window.view: sale_timesheet.timesheet_action_from_sales_order_item_kanban
+NEW ir.actions.act_window.view: sale_timesheet.timesheet_action_from_sales_order_item_pivot
+NEW ir.actions.act_window.view: sale_timesheet.timesheet_action_from_sales_order_item_tree
+DEL ir.actions.act_window.view: sale_timesheet.timesheet_action_view_report_by_billing_rate_form
+DEL ir.actions.act_window.view: sale_timesheet.timesheet_action_view_report_by_billing_rate_kanban
+DEL ir.actions.act_window.view: sale_timesheet.timesheet_action_view_report_by_billing_rate_tree
+NEW ir.actions.report: sale_timesheet.timesheet_report_account_move
+NEW ir.actions.report: sale_timesheet.timesheet_report_sale_order
+DEL ir.filters: sale_timesheet.ir_filter_project_profitability_report_costs_and_revenues
+DEL ir.model.access: sale_timesheet.access_project_profitability_report_analysis_manager
+NEW ir.ui.view: sale_timesheet.hr_timesheet_report_search_sale_timesheet
+NEW ir.ui.view: sale_timesheet.project_project_view_kanban_inherit_sale_timesheet_so_button
+NEW ir.ui.view: sale_timesheet.project_sharing_inherit_project_task_view_tree_sale_timesheet
+NEW ir.ui.view: sale_timesheet.report_timesheet_account_move
+NEW ir.ui.view: sale_timesheet.report_timesheet_sale_order
+NEW ir.ui.view: sale_timesheet.timesheet_sale_page
+NEW ir.ui.view: sale_timesheet.timesheets_analysis_report_graph_inherit
+NEW ir.ui.view: sale_timesheet.timesheets_analysis_report_graph_invoice_type
+NEW ir.ui.view: sale_timesheet.timesheets_analysis_report_pivot_inherit
+NEW ir.ui.view: sale_timesheet.timesheets_analysis_report_pivot_invoice_type
+NEW ir.ui.view: sale_timesheet.view_hr_timesheet_line_graph_employee_per_date
+NEW ir.ui.view: sale_timesheet.view_task_tree2_inherited
+DEL ir.ui.view: sale_timesheet.project_profitability_report_view_graph
+DEL ir.ui.view: sale_timesheet.project_profitability_report_view_pivot
+DEL ir.ui.view: sale_timesheet.project_profitability_report_view_search
+DEL ir.ui.view: sale_timesheet.project_profitability_report_view_tree
+DEL ir.ui.view: sale_timesheet.project_project_view_form_salesman
+DEL ir.ui.view: sale_timesheet.project_task_view_form_inherit_sale_timesheet_editable
+DEL ir.ui.view: sale_timesheet.timesheet_view_pivot_revenue
+# NOTHING TO DO: noupdate="0" records
