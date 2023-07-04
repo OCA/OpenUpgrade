@@ -1,0 +1,94 @@
+---Models in module 'analytic'---
+obsolete model account.analytic.distribution
+obsolete model account.analytic.tag
+new model account.analytic.applicability
+new model account.analytic.distribution.model
+new model analytic.mixin [abstract]
+# NOTHING TO DO
+
+obsolete model account.analytic.group (renamed to account.analytic.plan)
+new model account.analytic.plan (renamed from account.analytic.group)
+# DONE pre-migration: rename model
+
+---Fields in module 'analytic'---
+analytic     / account.analytic.account / _order                        : _order is now 'plan_id, name asc' ('code, name asc')
+# NOTHING TO DO
+
+analytic     / account.analytic.account / group_id (many2one)           : DEL relation: account.analytic.group
+analytic     / account.analytic.account / plan_id (many2one)            : NEW relation: account.analytic.plan, required
+# DONE pre-migration: rename field and fill value for null row
+
+analytic     / account.analytic.account / root_plan_id (many2one)       : NEW relation: account.analytic.plan, isfunction: function, stored
+# DONE pre-migration: create column and pre-fill value to avoid computed by ORM
+
+analytic     / account.analytic.applicability / analytic_plan_id (many2one)   : NEW relation: account.analytic.plan
+analytic     / account.analytic.applicability / applicability (selection)     : NEW required, selection_keys: ['mandatory', 'optional', 'unavailable']
+analytic     / account.analytic.applicability / business_domain (selection)   : NEW required, selection_keys: ['general']
+# NOTHING TO DO
+
+analytic     / account.analytic.distribution / account_id (many2one)         : DEL relation: account.analytic.account, required
+analytic     / account.analytic.distribution / percentage (float)            : DEL required
+analytic     / account.analytic.distribution / tag_id (many2one)             : DEL relation: account.analytic.tag, required
+# NOTHING TO DO
+
+analytic     / account.analytic.distribution.model / analytic_distribution (json)  : NEW hasdefault: compute
+analytic     / account.analytic.distribution.model / analytic_distribution_search (json): NEW
+analytic     / account.analytic.distribution.model / analytic_precision (integer)  : NEW hasdefault: default
+analytic     / account.analytic.distribution.model / company_id (many2one)         : NEW relation: res.company, hasdefault: default
+analytic     / account.analytic.distribution.model / partner_category_id (many2one): NEW relation: res.partner.category
+analytic     / account.analytic.distribution.model / partner_id (many2one)         : NEW relation: res.partner
+# NOTHING TO DO
+
+analytic     / account.analytic.group   / _order                        : _order is now 'complete_name asc' ('id')
+analytic     / account.analytic.group   / children_ids (one2many)       : relation is now 'account.analytic.plan' ('account.analytic.group') [nothing to do]
+analytic     / account.analytic.group   / parent_id (many2one)          : relation is now 'account.analytic.plan' ('account.analytic.group') [nothing to do]
+# NOTHING TO DO
+
+analytic     / account.analytic.line    / group_id (many2one)           : DEL relation: account.analytic.group
+analytic     / account.analytic.line    / plan_id (many2one)            : NEW relation: account.analytic.plan, isrelated: related, stored
+# DONE pre-migration: rename field
+
+analytic     / account.analytic.line    / tag_ids (many2many)           : DEL relation: account.analytic.tag
+analytic     / account.analytic.plan    / account_ids (one2many)        : NEW relation: account.analytic.account
+analytic     / account.analytic.plan    / applicability_ids (one2many)  : NEW relation: account.analytic.applicability
+analytic     / account.analytic.plan    / color (integer)               : NEW hasdefault: default
+analytic     / account.analytic.plan    / default_applicability (selection): NEW required, selection_keys: ['mandatory', 'optional', 'unavailable'], hasdefault: default
+analytic     / account.analytic.tag     / active (boolean)              : DEL
+analytic     / account.analytic.tag     / active_analytic_distribution (boolean): DEL
+analytic     / account.analytic.tag     / analytic_distribution_ids (one2many): DEL relation: account.analytic.distribution
+analytic     / account.analytic.tag     / color (integer)               : DEL
+analytic     / account.analytic.tag     / company_id (many2one)         : DEL relation: res.company
+analytic     / account.analytic.tag     / name (char)                   : DEL required
+# NOTHING TO DO
+
+---XML records in module 'analytic'---
+NEW decimal.precision: analytic.decimal_percentage_analytic (noupdate)
+NEW ir.actions.act_window: analytic.account_analytic_plan_action
+NEW ir.actions.act_window: analytic.action_analytic_distribution_model
+DEL ir.actions.act_window: analytic.account_analytic_group_action
+DEL ir.actions.act_window: analytic.account_analytic_tag_action
+NEW ir.model.access: analytic.access_account_analytic_applicability
+NEW ir.model.access: analytic.access_account_analytic_distribution_model
+NEW ir.model.access: analytic.access_account_analytic_plan
+DEL ir.model.access: analytic.access_account_analytic_distribution
+DEL ir.model.access: analytic.access_account_analytic_group
+DEL ir.model.access: analytic.access_account_analytic_tag
+DEL ir.model.constraint: analytic.constraint_account_analytic_distribution_check_percentage
+NEW ir.rule: analytic.analytic_distribution_model_comp_rule (noupdate)
+NEW ir.rule: analytic.analytic_plan_comp_rule (noupdate)
+NEW ir.ui.view: analytic.account_analytic_distribution_model_form_view
+NEW ir.ui.view: analytic.account_analytic_distribution_model_tree_view
+NEW ir.ui.view: analytic.account_analytic_plan_form_view
+NEW ir.ui.view: analytic.account_analytic_plan_tree_view
+NEW ir.ui.view: analytic.view_account_analytic_account_list_select
+DEL ir.ui.view: analytic.account_analytic_group_form_view
+DEL ir.ui.view: analytic.account_analytic_group_tree_view
+DEL ir.ui.view: analytic.account_analytic_tag_form_view
+DEL ir.ui.view: analytic.account_analytic_tag_tree_view
+DEL ir.ui.view: analytic.account_analytic_tag_view_search
+DEL res.groups: analytic.group_analytic_tags
+# NOTHING TO DO
+
+DEL ir.rule: analytic.analytic_tag_comp_rule (noupdate)
+DEL ir.rule: analytic.analytic_group_comp_rule (noupdate)
+# DONE post-migration: safely deleted xmlid
