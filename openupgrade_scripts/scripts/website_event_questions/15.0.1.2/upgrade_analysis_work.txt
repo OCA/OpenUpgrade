@@ -1,0 +1,21 @@
+---Models in module 'website_event_questions'---
+---Fields in module 'website_event_questions'---
+website_event_questions / event.type               / use_questions (boolean)       : DEL
+# DONE: post-migration: Set event_type_id = NULL on existing questions if the field was not marked in the event type. This way, we preserve possible existing answers.
+
+---XML records in module 'website_event_questions'---
+NEW ir.model.access: website_event_questions.access_event_question
+NEW ir.model.access: website_event_questions.access_event_question_answer
+NEW ir.model.access: website_event_questions.access_event_question_answer_user
+NEW ir.model.access: website_event_questions.access_event_question_user
+DEL ir.model.access: website_event_questions.event_question_all
+DEL ir.model.access: website_event_questions.event_question_answer_all
+DEL ir.model.access: website_event_questions.event_question_answer_event_user
+DEL ir.model.access: website_event_questions.event_question_event_user
+# DONE: pre-migration: Renamed XML-IDs
+
+DEL ir.model.access: website_event_questions.event_registration_answer_event_user
+DEL ir.ui.view: website_event_questions.assets_tests
+NEW ir.model.access: website_event_questions.access_event_registration_answer_registration
+NEW ir.model.access: website_event_questions.access_event_question_answer_registration
+# NOTHING TO DO: Extra noupdate=0 records
