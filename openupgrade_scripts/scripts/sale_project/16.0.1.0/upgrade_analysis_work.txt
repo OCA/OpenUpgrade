@@ -1,0 +1,22 @@
+---Models in module 'sale_project'---
+---Fields in module 'sale_project'---
+sale_project / product.product          / service_policy (selection)    : previously in module sale_timesheet
+sale_project / product.template         / service_policy (selection)    : previously in module sale_timesheet
+sale_project / project.project          / allow_billable (boolean)      : previously in module sale_timesheet
+sale_project / project.project          / invoice_count (integer)       : previously in module account_sale_timesheet
+sale_project / project.project          / vendor_bill_count (integer)   : previously in module sale_project_account
+# NOTHING TO DO: Covered by ORM
+
+sale_project / product.template         / service_type (False)          : NEW selection_keys: ['manual', 'milestones'], mode: modify
+sale_project / project.milestone        / quantity_percentage (float)   : NEW
+sale_project / project.milestone        / sale_line_id (many2one)       : NEW relation: sale.order.line
+sale_project / sale.order.line          / qty_delivered_method (False)  : NEW selection_keys: ['analytic', 'manual', 'milestones', 'stock_move'], mode: modify
+sale_project / sale.order.line          / reached_milestones_ids (one2many): NEW relation: project.milestone
+# NOTHING TO DO: New feature of billing by milestones.
+
+---XML records in module 'sale_project'---
+NEW ir.ui.view: sale_project.project_milestone_view_form
+NEW ir.ui.view: sale_project.project_milestone_view_tree
+NEW ir.ui.view: sale_project.sale_project_milestone_view_tree
+DEL ir.ui.view: sale_project.project_task_view_form_inherit_sale_line_editable
+# NOTHING TO DO: noupdate="0" records
