@@ -8,7 +8,14 @@ def _check_sponsors(env):
     """If any sponsor found, mark website_event_exhibitor module to be installed, as
     this is the new host for such model. Also renamed XML-IDs for commodity.
     """
-    if openupgrade.logged_query(env.cr, "SELECT id FROM event_sponsor LIMIT 1"):
+    env.cr.execute("SELECT id FROM event_sponsor LIMIT 1")
+    has_sponsor = env.cr.fetchone()
+    env.cr.execute(
+        "SELECT state FROM ir_module_module WHERE name='website_event_exhibitor'"
+    )
+    row = env.cr.fetchone()
+    module_not_installed = row and row[0] == "uninstalled"
+    if has_sponsor and module_not_installed:
         openupgrade.logged_query(
             env.cr,
             "UPDATE ir_module_module SET state='to install' "
@@ -44,30 +51,6 @@ def _check_sponsors(env):
                 (
                     "website_event_track.event_sponsor",
                     "website_event_exhibitor.event_sponsor",
-                ),
-                (
-                    "website_event_track.event_sponsor_type_view_form",
-                    "website_event_exhibitor.event_sponsor_type_view_form",
-                ),
-                (
-                    "website_event_track.event_sponsor_type_view_tree",
-                    "website_event_exhibitor.event_sponsor_type_view_tree",
-                ),
-                (
-                    "website_event_track.event_sponsor_view_form",
-                    "website_event_exhibitor.event_sponsor_view_form",
-                ),
-                (
-                    "website_event_track.event_sponsor_view_kanban",
-                    "website_event_exhibitor.event_sponsor_view_kanban",
-                ),
-                (
-                    "website_event_track.event_sponsor_view_search",
-                    "website_event_exhibitor.event_sponsor_view_search",
-                ),
-                (
-                    "website_event_track.event_sponsor_view_tree",
-                    "website_event_exhibitor.event_sponsor_view_tree",
                 ),
             ],
         )
