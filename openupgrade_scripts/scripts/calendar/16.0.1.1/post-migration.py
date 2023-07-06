@@ -4,7 +4,7 @@
 from openupgradelib import openupgrade
 
 _translations_to_delete = [
-    "calendar_template_meeting",
+    "calendar_template_meeting_changedate",
     "calendar_template_meeting_invitation",
     "calendar_template_meeting_reminder",
     "calendar_template_meeting_update",
