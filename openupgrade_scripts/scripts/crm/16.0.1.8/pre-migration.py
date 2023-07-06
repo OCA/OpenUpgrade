@@ -18,7 +18,7 @@ def res_partner_compute_team_id(env):
               JOIN res_partner parent
               ON p.parent_id = parent.id
             WHERE p.team_id IS NULL
-              AND p.is_company='f'
+              AND NOT p.is_company
               AND parent.team_id IS NOT NULL
         ) as res(partner_id, parent_team_id)
         WHERE p.id = res.partner_id
