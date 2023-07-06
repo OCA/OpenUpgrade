@@ -9,6 +9,11 @@ hr_recruitment / hr.job                   / interviewer_ids (many2many)   : NEW 
 hr_recruitment / hr.recruitment.source    / _inherits                     : DEL _inherits: {'utm.source': 'source_id'}
 hr_recruitment / hr.recruitment.source    / medium_id (many2one)          : NEW relation: utm.medium, hasdefault: default
 ---XML records in module 'hr_recruitment'---
+NEW hr.applicant.refuse.reason: hr_recruitment.refuse_reason_4 (noupdate)
+NEW hr.applicant.refuse.reason: hr_recruitment.refuse_reason_5 (noupdate)
+NEW hr.applicant.refuse.reason: hr_recruitment.refuse_reason_6 (noupdate)
+NEW hr.applicant.refuse.reason: hr_recruitment.refuse_reason_7 (noupdate)
+NEW hr.applicant.refuse.reason: hr_recruitment.refuse_reason_8 (noupdate)
 NEW ir.actions.act_window: hr_recruitment.action_hr_applicant_new
 NEW ir.actions.act_window: hr_recruitment.action_hr_job_interviewer
 DEL ir.actions.act_window: hr_recruitment.hr_recruitment_source_action

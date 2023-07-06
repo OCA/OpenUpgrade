@@ -5,7 +5,7 @@ new model timesheets.analysis.report [sql_view]
 hr_timesheet / account.analytic.line    / ancestor_task_id (many2one)   : NEW relation: project.task, isrelated: related, stored
 hr_timesheet / account.analytic.line    / manager_id (many2one)         : NEW relation: hr.employee, isrelated: related, stored
 hr_timesheet / account.analytic.line    / partner_id (False)            : module is now 'account' ('hr_timesheet')
-hr_timesheet / hr.employee              / currency_id (many2one)        : module is now 'hr_hourly_cost' ('hr_timesheet')
+hr_timesheet / hr.employee              / currency_id (many2one)        : module is now 'hr' ('hr_timesheet')
 hr_timesheet / hr.employee              / timesheet_cost (float)        : DEL
 hr_timesheet / project.project          / allocated_hours (float)       : NEW
 hr_timesheet / project.project          / timesheet_count (boolean)     : type is now 'integer' ('boolean')
@@ -29,6 +29,9 @@ NEW ir.model.access: hr_timesheet.access_timesheets_analysis_report_manager
 NEW ir.model.access: hr_timesheet.access_timesheets_analysis_report_user
 DEL ir.model.access: hr_timesheet.access_project_task_create_timesheet
 DEL ir.model.constraint: hr_timesheet.constraint_project_task_create_timesheet_time_positive
+NEW ir.rule: hr_timesheet.timesheet_analysis_report_approver (noupdate)
+NEW ir.rule: hr_timesheet.timesheet_analysis_report_manager (noupdate)
+NEW ir.rule: hr_timesheet.timesheet_analysis_report_user (noupdate)
 NEW ir.rule: hr_timesheet.timesheets_analysis_report_comp_rule (noupdate)
 NEW ir.ui.view: hr_timesheet.hr_timesheet_report_search
 NEW ir.ui.view: hr_timesheet.project_project_view_tree_inherit_sale_project

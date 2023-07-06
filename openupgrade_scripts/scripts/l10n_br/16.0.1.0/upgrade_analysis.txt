@@ -1523,7 +1523,6 @@ NEW account.fiscal.position.template: l10n_br.fiscal_position_template_1
 NEW account.fiscal.position.template: l10n_br.fiscal_position_template_2
 NEW account.fiscal.position.template: l10n_br.fiscal_position_template_interstate
 NEW account.fiscal.position.template: l10n_br.fiscal_position_template_ss_nnm
-NEW account.report: l10n_br.tax_report
 NEW account.report.column: l10n_br.tax_report_balance
 NEW account.report.expression: l10n_br.tax_report_cofins_1_tag
 NEW account.report.expression: l10n_br.tax_report_cofins_2_tag
@@ -1547,45 +1546,12 @@ NEW account.report.expression: l10n_br.tax_report_issqn_1_tag
 NEW account.report.expression: l10n_br.tax_report_issqn_2_tag
 NEW account.report.expression: l10n_br.tax_report_pis_1_tag
 NEW account.report.expression: l10n_br.tax_report_pis_2_tag
-NEW account.report.line: l10n_br.tax_report_cofins
-NEW account.report.line: l10n_br.tax_report_cofins_1
-NEW account.report.line: l10n_br.tax_report_cofins_2
-NEW account.report.line: l10n_br.tax_report_cofins_oper_bas
-NEW account.report.line: l10n_br.tax_report_csll
-NEW account.report.line: l10n_br.tax_report_csll_1
-NEW account.report.line: l10n_br.tax_report_csll_2
-NEW account.report.line: l10n_br.tax_report_icms
-NEW account.report.line: l10n_br.tax_report_icms_1
-NEW account.report.line: l10n_br.tax_report_icms_2
-NEW account.report.line: l10n_br.tax_report_icms_tributada
-NEW account.report.line: l10n_br.tax_report_icms_tributada_com
-NEW account.report.line: l10n_br.tax_report_icmsst
-NEW account.report.line: l10n_br.tax_report_icmsst_1
-NEW account.report.line: l10n_br.tax_report_icmsst_2
 NEW account.report.line: l10n_br.tax_report_ii
 NEW account.report.line: l10n_br.tax_report_ii_1
 NEW account.report.line: l10n_br.tax_report_ii_2
 NEW account.report.line: l10n_br.tax_report_inss
 NEW account.report.line: l10n_br.tax_report_inss_1
 NEW account.report.line: l10n_br.tax_report_inss_2
-NEW account.report.line: l10n_br.tax_report_ipi
-NEW account.report.line: l10n_br.tax_report_ipi_1
-NEW account.report.line: l10n_br.tax_report_ipi_2
-NEW account.report.line: l10n_br.tax_report_ipi_extrada_com
-NEW account.report.line: l10n_br.tax_report_ipi_extrada_tributada
-NEW account.report.line: l10n_br.tax_report_ir
-NEW account.report.line: l10n_br.tax_report_ir_1
-NEW account.report.line: l10n_br.tax_report_ir_2
-NEW account.report.line: l10n_br.tax_report_irpj
-NEW account.report.line: l10n_br.tax_report_irpj_1
-NEW account.report.line: l10n_br.tax_report_irpj_2
-NEW account.report.line: l10n_br.tax_report_issqn
-NEW account.report.line: l10n_br.tax_report_issqn_1
-NEW account.report.line: l10n_br.tax_report_issqn_2
-NEW account.report.line: l10n_br.tax_report_pis
-NEW account.report.line: l10n_br.tax_report_pis_1
-NEW account.report.line: l10n_br.tax_report_pis_2
-NEW account.report.line: l10n_br.tax_report_pis_oper_tri_basica
 NEW account.tax.group: l10n_br.tax_group_icms_17 (noupdate)
 NEW account.tax.group: l10n_br.tax_group_ii_0 (noupdate)
 NEW account.tax.group: l10n_br.tax_group_inss_0 (noupdate)
@@ -1621,12 +1587,7 @@ DEL account.tax.group: l10n_br.tax_group_issqn_1 (noupdate)
 DEL account.tax.group: l10n_br.tax_group_issqn_3 (noupdate)
 DEL account.tax.group: l10n_br.tax_group_issqn_4 (noupdate)
 DEL account.tax.group: l10n_br.tax_group_issqn_5 (noupdate)
-DEL account.tax.report: l10n_br.tax_report
-DEL account.tax.report.line: l10n_br.tax_report_cofins
-DEL account.tax.report.line: l10n_br.tax_report_cofins_1
-DEL account.tax.report.line: l10n_br.tax_report_cofins_2
 DEL account.tax.report.line: l10n_br.tax_report_cofins_line12
-DEL account.tax.report.line: l10n_br.tax_report_cofins_oper_bas
 DEL account.tax.report.line: l10n_br.tax_report_cofins_oper_com
 DEL account.tax.report.line: l10n_br.tax_report_cofins_oper_dif
 DEL account.tax.report.line: l10n_br.tax_report_cofins_oper_export
@@ -1649,12 +1610,6 @@ DEL account.tax.report.line: l10n_br.tax_report_credito_oper_receitas
 DEL account.tax.report.line: l10n_br.tax_report_credito_oper_tri
 DEL account.tax.report.line: l10n_br.tax_report_credito_oper_tributadas
 DEL account.tax.report.line: l10n_br.tax_report_credito_outras_oper
-DEL account.tax.report.line: l10n_br.tax_report_csll
-DEL account.tax.report.line: l10n_br.tax_report_csll_1
-DEL account.tax.report.line: l10n_br.tax_report_csll_2
-DEL account.tax.report.line: l10n_br.tax_report_icms
-DEL account.tax.report.line: l10n_br.tax_report_icms_1
-DEL account.tax.report.line: l10n_br.tax_report_icms_2
 DEL account.tax.report.line: l10n_br.tax_report_icms_cobrado
 DEL account.tax.report.line: l10n_br.tax_report_icms_com_red
 DEL account.tax.report.line: l10n_br.tax_report_icms_diferimento
@@ -1674,20 +1629,10 @@ DEL account.tax.report.line: l10n_br.tax_report_icms_simples_nacional_sem
 DEL account.tax.report.line: l10n_br.tax_report_icms_simples_nacional_tributada
 DEL account.tax.report.line: l10n_br.tax_report_icms_simples_nacional_tributada_pelo
 DEL account.tax.report.line: l10n_br.tax_report_icms_suspensao
-DEL account.tax.report.line: l10n_br.tax_report_icms_tributada
-DEL account.tax.report.line: l10n_br.tax_report_icms_tributada_com
-DEL account.tax.report.line: l10n_br.tax_report_icmsst
-DEL account.tax.report.line: l10n_br.tax_report_icmsst_1
-DEL account.tax.report.line: l10n_br.tax_report_icmsst_2
-DEL account.tax.report.line: l10n_br.tax_report_ipi
-DEL account.tax.report.line: l10n_br.tax_report_ipi_1
-DEL account.tax.report.line: l10n_br.tax_report_ipi_2
 DEL account.tax.report.line: l10n_br.tax_report_ipi_entrada_com_suspensao
 DEL account.tax.report.line: l10n_br.tax_report_ipi_entrada_imune
 DEL account.tax.report.line: l10n_br.tax_report_ipi_entrada_isenta
 DEL account.tax.report.line: l10n_br.tax_report_ipi_entrada_nao_tributada
-DEL account.tax.report.line: l10n_br.tax_report_ipi_extrada_com
-DEL account.tax.report.line: l10n_br.tax_report_ipi_extrada_tributada
 DEL account.tax.report.line: l10n_br.tax_report_ipi_outras_entradas
 DEL account.tax.report.line: l10n_br.tax_report_ipi_outras_saidas
 DEL account.tax.report.line: l10n_br.tax_report_ipi_saida_com
@@ -1696,15 +1641,6 @@ DEL account.tax.report.line: l10n_br.tax_report_ipi_saida_isenta
 DEL account.tax.report.line: l10n_br.tax_report_ipi_saida_nao_tributada
 DEL account.tax.report.line: l10n_br.tax_report_ipi_saida_tributada
 DEL account.tax.report.line: l10n_br.tax_report_ipi_saida_tributada_com
-DEL account.tax.report.line: l10n_br.tax_report_ir
-DEL account.tax.report.line: l10n_br.tax_report_ir_1
-DEL account.tax.report.line: l10n_br.tax_report_ir_2
-DEL account.tax.report.line: l10n_br.tax_report_irpj
-DEL account.tax.report.line: l10n_br.tax_report_irpj_1
-DEL account.tax.report.line: l10n_br.tax_report_irpj_2
-DEL account.tax.report.line: l10n_br.tax_report_issqn
-DEL account.tax.report.line: l10n_br.tax_report_issqn_1
-DEL account.tax.report.line: l10n_br.tax_report_issqn_2
 DEL account.tax.report.line: l10n_br.tax_report_oper_aqui_com
 DEL account.tax.report.line: l10n_br.tax_report_oper_aqui_com_sus
 DEL account.tax.report.line: l10n_br.tax_report_oper_aqui_contri
@@ -1714,9 +1650,6 @@ DEL account.tax.report.line: l10n_br.tax_report_oper_aqui_zero
 DEL account.tax.report.line: l10n_br.tax_report_oper_interno_export
 DEL account.tax.report.line: l10n_br.tax_report_oper_no_marcado_interno_export
 DEL account.tax.report.line: l10n_br.tax_report_outras_oper_entrada
-DEL account.tax.report.line: l10n_br.tax_report_pis
-DEL account.tax.report.line: l10n_br.tax_report_pis_1
-DEL account.tax.report.line: l10n_br.tax_report_pis_2
 DEL account.tax.report.line: l10n_br.tax_report_pis_credito_presumido_export
 DEL account.tax.report.line: l10n_br.tax_report_pis_credito_presumido_interno
 DEL account.tax.report.line: l10n_br.tax_report_pis_credito_presumido_interno_export
@@ -1742,7 +1675,6 @@ DEL account.tax.report.line: l10n_br.tax_report_pis_oper_com_vinculada_rec
 DEL account.tax.report.line: l10n_br.tax_report_pis_oper_isenta
 DEL account.tax.report.line: l10n_br.tax_report_pis_oper_sem
 DEL account.tax.report.line: l10n_br.tax_report_pis_oper_tri_ali_zero
-DEL account.tax.report.line: l10n_br.tax_report_pis_oper_tri_basica
 DEL account.tax.report.line: l10n_br.tax_report_pis_oper_tri_diferenciada
 DEL account.tax.report.line: l10n_br.tax_report_pis_oper_tri_produto
 DEL account.tax.report.line: l10n_br.tax_report_pis_oper_tri_sub

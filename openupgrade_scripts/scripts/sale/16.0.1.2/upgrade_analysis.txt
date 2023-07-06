@@ -1,20 +1,21 @@
 ---Models in module 'sale'---
 obsolete model report.all.channels.sales [sql_view]
 obsolete model report.sale.report_saleproforma [abstract]
-obsolete model sale.payment.acquirer.onboarding.wizard [transient]
-new model sale.payment.provider.onboarding.wizard [transient]
+obsolete model sale.payment.acquirer.onboarding.wizard (renamed to sale.payment.provider.onboarding.wizard) [transient]
+new model sale.payment.provider.onboarding.wizard (renamed from sale.payment.acquirer.onboarding.wizard) [transient]
 ---Fields in module 'sale'---
 sale         / account.analytic.applicability / business_domain (False)       : NEW selection_keys: ['bill', 'expense', 'general', 'invoice', 'purchase_order', 'sale_order'], mode: modify
 sale         / account.bank.statement.line / partner_shipping_id (many2one): module is now 'account' ('sale')
 sale         / account.move             / partner_shipping_id (many2one): module is now 'account' ('sale')
 sale         / account.move.line        / is_downpayment (boolean)      : NEW
 sale         / account.payment          / partner_shipping_id (many2one): module is now 'account' ('sale')
-sale         / payment.acquirer         / so_reference_type (selection) : DEL selection_keys: ['partner', 'so_name']
-sale         / payment.provider         / so_reference_type (selection) : NEW selection_keys: ['partner', 'so_name'], hasdefault: default
 sale         / sale.order               / show_update_fpos (boolean)    : NEW
 sale         / sale.order               / show_update_pricelist (boolean): not stored anymore
-sale         / sale.order.line          / analytic_distribution_stored_char (char): NEW isfunction: function, stored
+sale         / sale.order.line          / analytic_distribution (json)  : NEW hasdefault: compute
+sale         / sale.order.line          / analytic_distribution_search (json): NEW
+sale         / sale.order.line          / analytic_precision (integer)  : NEW hasdefault: default
 sale         / sale.order.line          / analytic_tag_ids (many2many)  : DEL relation: account.analytic.tag
+sale         / sale.order.line          / product_template_id (many2one): not related anymore
 sale         / sale.order.line          / product_type (selection)      : previously in module sale_stock
 sale         / sale.order.line          / qty_delivered (float)         : not a function anymore
 sale         / sale.order.line          / qty_delivered_manual (float)  : DEL
@@ -41,6 +42,7 @@ NEW ir.rule: sale.sale_payment_provider_onboarding_wizard_rule (noupdate)
 DEL ir.rule: sale.sale_payment_acquirer_onboarding_wizard_rule (noupdate)
 NEW ir.ui.menu: sale.menu_product_attribute_action [renamed from sale_management module]
 DEL ir.ui.menu: sale.menu_product
+DEL ir.ui.menu: sale.menu_report_product_all
 NEW ir.ui.view: sale.payment_provider_form
 DEL ir.ui.view: sale.acquirer_form_inherit_sale
 DEL ir.ui.view: sale.mail_notification_paynow_online (noupdate)
