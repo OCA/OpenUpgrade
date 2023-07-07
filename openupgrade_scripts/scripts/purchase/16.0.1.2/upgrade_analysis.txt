@@ -1,10 +1,13 @@
 ---Models in module 'purchase'---
 ---Fields in module 'purchase'---
 purchase     / account.analytic.applicability / business_domain (False)       : NEW selection_keys: ['bill', 'expense', 'general', 'invoice', 'purchase_order'], mode: modify
-purchase     / product.category         / property_account_creditor_price_difference_categ (many2one): DEL relation: account.account
-purchase     / product.template         / property_account_creditor_price_difference (many2one): DEL relation: account.account
+purchase     / product.category         / property_account_creditor_price_difference_categ (many2one): module is now 'purchase_price_diff' ('purchase')
+purchase     / product.product          / property_account_creditor_price_difference (many2one): module is now 'purchase_price_diff' ('purchase')
+purchase     / product.template         / property_account_creditor_price_difference (many2one): module is now 'purchase_price_diff' ('purchase')
 purchase     / purchase.order.line      / account_analytic_id (many2one): DEL relation: account.analytic.account
-purchase     / purchase.order.line      / analytic_distribution_stored_char (char): NEW isfunction: function, stored
+purchase     / purchase.order.line      / analytic_distribution (json)  : NEW hasdefault: compute
+purchase     / purchase.order.line      / analytic_distribution_search (json): NEW
+purchase     / purchase.order.line      / analytic_precision (integer)  : NEW hasdefault: default
 purchase     / purchase.order.line      / analytic_tag_ids (many2many)  : DEL relation: account.analytic.tag
 ---XML records in module 'purchase'---
 NEW ir.actions.act_window: purchase.action_purchase_history

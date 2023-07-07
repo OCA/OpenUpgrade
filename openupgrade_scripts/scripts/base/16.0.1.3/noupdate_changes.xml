@@ -1,5 +1,23 @@
 <?xml version='1.0' encoding='utf-8'?>
 <odoo>
+  <record id="EGP" model="res.currency">
+    <field name="symbol">LE</field>
+  </record>
+  <record id="au" model="res.country">
+    <field name="vat_label">ABN</field>
+  </record>
+  <record id="cl" model="res.country">
+    <field name="vat_label">RUT</field>
+  </record>
+  <record id="hr" model="res.country">
+    <field name="currency_id" ref="EUR"/>
+  </record>
+  <record id="nz" model="res.country">
+    <field name="vat_label">IRD/GST</field>
+  </record>
+  <record id="pe" model="res.country">
+    <field name="vat_label">RUC</field>
+  </record>
   <record id="res_partner_industry_A" model="res.partner.industry">
     <field name="full_name">A - AGRICULTURE, FORESTRY AND FISHING</field>
   </record>
@@ -66,7 +84,10 @@
   <record id="res_partner_industry_U" model="res.partner.industry">
     <field name="full_name">U - ACTIVITIES OF EXTRATERRITORIAL ORGANISATIONS AND BODIES</field>
   </record>
-  <record id="es" model="res.country">
-    <field eval="'%(street)s\n%(street2)s\n%(zip)s %(city)s (%(state_name)s)\n%(country_name)s'" name="address_format"/>
+  <record id="sz" model="res.country">
+    <field name="name">Eswatini</field>
+  </record>
+  <record id="us" model="res.country">
+    <field name="vat_label"/>
   </record>
 </odoo>

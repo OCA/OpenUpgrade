@@ -1,0 +1,12 @@
+<?xml version='1.0' encoding='utf-8'?>
+<odoo>
+  <record id="hr_resume_rule_employee" model="ir.rule">
+    <field name="name">Resume: employee: read all</field>
+  </record>
+  <record id="hr_resume_rule_employee_hr_user" model="ir.rule">
+    <field name="name">Resume: HR user: all</field>
+  </record>
+  <record id="hr_skills_rule_employee_update" model="ir.rule">
+    <field name="name">Resume: employee: create/write/unlink own</field>
+  </record>
+</odoo>

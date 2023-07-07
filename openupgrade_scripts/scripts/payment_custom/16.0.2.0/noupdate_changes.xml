@@ -1,0 +1,9 @@
+<?xml version='1.0' encoding='utf-8'?>
+<odoo>
+  <record id="payment.payment_provider_transfer" model="payment.provider">
+    <field name="code">custom</field>
+    <field name="custom_mode">wire_transfer</field>
+    <field name="pending_msg" eval="False"/>
+    <field name="redirect_form_view_id" ref="redirect_form"/>
+  </record>
+</odoo>
