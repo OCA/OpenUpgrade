@@ -1,0 +1,20 @@
+'---Models in module 'purchase_stock'---
+---Fields in module 'purchase_stock'---
+purchase_stock / purchase.order           / dest_address_id (False)       : NEW mode: modify, hasdefault: compute
+purchase_stock / purchase.order           / incoterm_location (char)      : NEW
+# NOTHING TO DO
+
+purchase_stock / purchase.order           / receipt_status (selection)    : NEW selection_keys: ['full', 'partial', 'pending'], isfunction: function, stored
+# DONE: pre-migration: create column and fill values
+
+purchase_stock / stock.warehouse.orderpoint / purchase_visibility_days (float): NEW hasdefault: default
+# NOTHING TO DO
+
+---XML records in module 'purchase_stock'---
+NEW ir.ui.view: purchase_stock.purchase_order_view_tree_inherit
+DEL ir.ui.view: purchase_stock.product_category_view_form
+# NOTHING TO DO: noupdate="0" records
+
+DEL stock.location.route: purchase_stock.route_warehouse0_buy (noupdate)
+NEW stock.route: purchase_stock.route_warehouse0_buy (noupdate)
+# NOTHING TO DO: handle in 'stock' module
