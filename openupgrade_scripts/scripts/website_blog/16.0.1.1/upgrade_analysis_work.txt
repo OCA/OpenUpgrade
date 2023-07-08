@@ -1,0 +1,10 @@
+---Models in module 'website_blog'---
+---Fields in module 'website_blog'---
+---XML records in module 'website_blog'---
+NEW ir.actions.act_window: website_blog.blog_post_action_add
+NEW ir.ui.menu: website_blog.menu_blog_post_pages
+DEL ir.ui.menu: website_blog.menu_website_blog_root
+NEW ir.ui.view: website_blog.blog_post_view_form_add
+DEL ir.ui.view: website_blog.blog_edit_options
+DEL ir.ui.view: website_blog.user_navbar_inherit_website_blog
+# NOTHING TO DO
