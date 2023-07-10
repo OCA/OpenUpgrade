@@ -1,0 +1,38 @@
+---Models in module 'event'---
+---Fields in module 'event'---
+event        / event.event              / seats_available (integer)     : not stored anymore
+event        / event.event              / seats_reserved (integer)      : not stored anymore
+event        / event.event              / seats_unconfirmed (integer)   : not stored anymore
+event        / event.event              / seats_used (integer)          : not stored anymore
+event        / event.event.ticket       / seats_available (integer)     : not stored anymore
+event        / event.event.ticket       / seats_reserved (integer)      : not stored anymore
+event        / event.event.ticket       / seats_unconfirmed (integer)   : not stored anymore
+event        / event.event.ticket       / seats_used (integer)          : not stored anymore
+# NOTHING TO DO
+
+event        / event.registration       / date_open (datetime)          : DEL
+# NOTHING TO DO: obsolete feature
+
+event        / event.tag                / _order                        : _order is now 'category_sequence, sequence, id' ('sequence')
+# NOTHING TO DO
+
+event        / event.tag                / category_sequence (integer)   : NEW isrelated: related, stored
+# NOTHING TO DO: new field
+
+---XML records in module 'event'---
+NEW ir.actions.act_window: event.event_registration_action_kanban
+NEW ir.actions.act_window: event.event_registration_action_stats_from_event
+# NOTHING TO DO
+
+DEL ir.actions.act_window: event.event_event_action_pivot
+DEL ir.ui.menu: event.event_event_menu_pivot_report
+# NOTHING TO DO: deleted by the ORM
+
+NEW ir.ui.view: event.event_registration_view_search_event_specific
+# NOTHING TO DO
+
+DEL ir.ui.view: event.event_event_view_graph
+DEL ir.ui.view: event.event_event_view_pivot
+# NOTHING TO DO: deleted by the ORM
+
+# Done (post-migration): load noupdate_changes.xml and delete obsolete translations

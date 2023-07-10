@@ -1,0 +1,14 @@
+---Models in module 'google_calendar'---
+---Fields in module 'google_calendar'---
+google_calendar / res.users                / google_cal_account_id (many2one): DEL relation: google.calendar.credentials
+google_calendar / res.users                / google_calendar_account_id (many2one): NEW relation: google.calendar.credentials
+# DONE pre-migration: rename google_cal_account_id -> google_calendar_account_id
+
+---XML records in module 'google_calendar'---
+ir.model.constraint: google_calendar.constraint_res_users_google_token_uniq (changed definition: is now 'unique(google_calendar_account_id)' ('unique(google_cal_account_id)'))
+# DONE pre-migration: safely delete constraint to recreate it
+
+NEW ir.rule: google_calendar.google_calendar_not_own_token_rule (noupdate)
+NEW ir.rule: google_calendar.google_calendar_own_token_rule (noupdate)
+NEW ir.rule: google_calendar.google_calendar_token_system_access (noupdate)
+# NOTHING TO DO
