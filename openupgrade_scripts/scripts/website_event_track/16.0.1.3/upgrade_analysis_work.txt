@@ -1,0 +1,17 @@
+---Models in module 'website_event_track'---
+---Fields in module 'website_event_track'---
+website_event_track / event.track.location     / _order                        : _order is now 'sequence, id' ('id')
+# NOTHING TO DO
+
+website_event_track / event.track.location     / sequence (integer)            : NEW hasdefault: default
+# NOTHING TO DO: Default value applied by ORM is OK
+
+website_event_track / website.event.menu       / menu_type (False)             : selection_keys is now '['booth', 'community', 'introduction', 'location', 'register', 'track', 'track_proposal']' ('['booth', 'community', 'exhibitor', 'introduction', 'location', 'meeting_room', 'register', 'track', 'track_proposal']')
+# NOTHING TO DO: nothing change in website.event.menu of module website_event_track
+
+---XML records in module 'website_event_track'---
+NEW ir.ui.view: website_event_track.event_track_content_partner_info
+NEW ir.ui.view: website_event_track.event_track_view_form_quick_create
+NEW ir.ui.view: website_event_track.snippet_options
+DEL ir.ui.view: website_event_track.track_edit_options
+# NOTHING TO DO
