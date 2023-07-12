@@ -55,6 +55,16 @@ def activate_pos_config_manage_orders(env):
     )
 
 
+def fill_full_product_name_on_pos_order_line(env):
+    for product in env['product.product'].with_context(active_test=False).search([]):
+        openupgrade.logged_query(
+            env.cr,
+            """
+            UPDATE pos_order_line SET full_product_name=%s
+            WHERE product_id=%s""",
+            (product.display_name, product.id))
+
+
 @openupgrade.migrate()
 def migrate(env, version):
     convert_pos_order_pickings(env)
@@ -62,4 +72,5 @@ def migrate(env, version):
     set_point_of_sale_update_stock_quantities_to_real(env)
     transfer_new_session_state(env)
     activate_pos_config_manage_orders(env)
+    fill_full_product_name_on_pos_order_line(env)
     openupgrade.load_data(env.cr, "point_of_sale", "14.0.1.0.1/noupdate_changes.xml")
