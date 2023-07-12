@@ -23,8 +23,10 @@ point_of_sale / pos.order                / picking_id (many2one)         : DEL r
 point_of_sale / pos.order                / picking_ids (one2many)        : NEW relation: stock.picking
 # DONE: post-migration convert data many2one to one2many
 
-point_of_sale / pos.order                / tip_amount (float)            : NEW
 point_of_sale / pos.order.line           / full_product_name (char)      : NEW
+# DONE: post-migration: filled full_product_name with product display_name
+
+point_of_sale / pos.order                / tip_amount (float)            : NEW
 point_of_sale / pos.payment              / cardholder_name (char)        : NEW
 point_of_sale / pos.payment              / is_change (boolean)           : NEW hasdefault
 point_of_sale / pos.payment              / payment_status (char)         : NEW

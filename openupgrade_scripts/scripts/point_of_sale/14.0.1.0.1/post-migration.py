@@ -56,13 +56,18 @@ def activate_pos_config_manage_orders(env):
 
 
 def fill_full_product_name_on_pos_order_line(env):
-    for product in env['product.product'].with_context(active_test=False).search([]):
-        openupgrade.logged_query(
-            env.cr,
-            """
-            UPDATE pos_order_line SET full_product_name=%s
-            WHERE product_id=%s""",
-            (product.display_name, product.id))
+    openupgrade.logged_query(
+        env.cr,
+        """
+        UPDATE pos_order_line pol
+        SET full_product_name = (
+            CASE WHEN COALESCE(pp.default_code, '') != ''
+                THEN '[' || pp.default_code || '] ' ELSE '' END
+            ) || pt.name
+        FROM product_product pp
+        JOIN product_template pt ON pp.product_tmpl_id = pt.id
+        WHERE pol.product_id = pp.id""",
+    )
 
 
 @openupgrade.migrate()
