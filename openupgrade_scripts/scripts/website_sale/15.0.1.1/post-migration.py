@@ -1,4 +1,38 @@
+import re
+
 from openupgradelib import openupgrade
+
+
+def replace_content_in_product_custom_text(env):
+    """Replace Terms and Conditions content in the new v15 template so as not to lose
+    content from previous versions if it has been customised."""
+    product_views = env["ir.ui.view"].search(
+        [("key", "=", "website_sale.product"), ("website_id", "!=", False)]
+    )
+    for view in product_views:
+        product_arch = view.arch_db
+        product_pattern = r'<p class="text-muted"(.*?)<\/p>'
+        product_matches = re.findall(product_pattern, product_arch, re.DOTALL)
+
+        if product_matches:
+            product_custom_text_view = env["ir.ui.view"].search(
+                [("key", "=", "website_sale.product_custom_text")]
+            )
+            if product_custom_text_view:
+                product_custom_text_arch = product_custom_text_view.arch_db
+                product_custom_text_pattern = (
+                    r'<p class="text-muted h6 mt-3">(.*?)<\/p>'
+                )
+                product_custom_text_matches = re.findall(
+                    product_custom_text_pattern, product_custom_text_arch, re.DOTALL
+                )
+                new_arch = product_custom_text_arch.replace(
+                    product_custom_text_matches, product_matches
+                )
+                new_product_custom_text_view = product_custom_text_view.copy()
+                new_product_custom_text_view.write(
+                    {"website_id": view.website_id, "arch_db": new_arch}
+                )
 
 
 def set_visibility_product_attribute(env):
@@ -53,3 +87,4 @@ def migrate(env, version):
     )
     set_visibility_product_attribute(env)
     enable_price_filter_view(env)
+    replace_content_in_product_custom_text(env)
