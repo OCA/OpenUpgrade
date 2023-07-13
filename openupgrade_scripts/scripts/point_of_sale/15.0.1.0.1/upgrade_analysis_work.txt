@@ -1,0 +1,140 @@
+---Models in module 'point_of_sale'---
+obsolete model closing.balance.confirm.wizard [transient]
+new model pos.bill
+new model pos.close.session.wizard [transient]
+# NOTHING TO DO
+
+---Fields in module 'point_of_sale'---
+point_of_sale / account.bank.statement.cashbox / is_a_template (boolean)       : DEL
+point_of_sale / account.bank.statement.cashbox / pos_config_ids (one2many)     : DEL relation: pos.config
+point_of_sale / account.bank.statement.line / pos_statement_id (many2one)   : DEL relation: pos.order
+# NOTHING TO DO
+
+point_of_sale / account.move             / pos_payment_ids (one2many)    : NEW relation: pos.payment
+point_of_sale / pos.payment              / account_move_id (many2one)    : NEW relation: account.move
+# NOTHING TO DO: new relation
+
+point_of_sale / account.payment          / force_outstanding_account_id (many2one): NEW relation: account.account
+point_of_sale / account.payment          / pos_payment_method_id (many2one): NEW relation: pos.payment.method
+# NOTHING TO DO: new relations
+
+point_of_sale / account.payment          / pos_session_id (many2one)     : NEW relation: pos.session
+point_of_sale / pos.session              / bank_payment_ids (one2many)   : NEW relation: account.payment
+# NOTHING TO DO: new relation
+
+point_of_sale / barcode.rule             / type (False)                  : selection_keys is now '['alias', 'cashier', 'client', 'discount', 'expiration_date', 'location', 'location_dest', 'lot', 'package', 'package_type', 'packaging_date', 'price', 'product', 'quantity', 'use_date', 'weight']' ('['alias', 'cashier', 'client', 'discount', 'location', 'lot', 'package', 'price', 'product', 'weight']')
+# NOTHING TO DO: same selection options in this module
+
+point_of_sale / pos.bill                 / name (char)                   : NEW
+point_of_sale / pos.bill                 / pos_config_ids (many2many)    : NEW relation: pos.config
+point_of_sale / pos.bill                 / value (float)                 : NEW required
+# NOTHING TO DO: new model
+
+point_of_sale / pos.config               / cash_control (boolean)        : not stored anymore
+point_of_sale / pos.config               / cash_control (boolean)        : now a function
+# NOTHING TO DO
+
+point_of_sale / pos.config               / default_bill_ids (many2many)  : NEW relation: pos.bill
+point_of_sale / pos.config               / default_cashbox_id (many2one) : DEL relation: account.bank.statement.cashbox
+# NOTHING TO DO (?): statement cashbox is replaced by pos bills
+
+point_of_sale / pos.config               / iface_customer_facing_display (boolean): not stored anymore
+point_of_sale / pos.config               / iface_customer_facing_display (boolean): now a function
+point_of_sale / pos.config               / iface_customer_facing_display_local (boolean): NEW
+point_of_sale / pos.config               / iface_customer_facing_display_via_proxy (boolean): NEW
+# DONE: pre-migration: renamed iface_customer_facing_display to iface_customer_facing_display_via_proxy
+
+point_of_sale / pos.config               / iface_orderline_customer_notes (boolean): NEW
+point_of_sale / pos.order.line           / customer_note (char)          : NEW
+# NOTHING TO DO: new feature
+
+point_of_sale / pos.config               / iface_vkeyboard (boolean)     : DEL
+point_of_sale / pos.config               / manage_orders (boolean)       : DEL
+# NOTHING TO DO: obsolete features
+
+point_of_sale / pos.config               / limited_partners_amount (integer): NEW hasdefault
+point_of_sale / pos.config               / limited_partners_loading (boolean): NEW
+point_of_sale / pos.config               / limited_products_amount (integer): NEW hasdefault
+point_of_sale / pos.config               / limited_products_loading (boolean): NEW
+point_of_sale / pos.config               / partner_load_background (boolean): NEW
+point_of_sale / pos.config               / picking_policy (selection)    : NEW required, selection_keys: ['direct', 'one'], req_default: function, hasdefault
+point_of_sale / pos.config               / product_load_background (boolean): NEW
+point_of_sale / pos.config               / route_id (many2one)           : NEW relation: stock.location.route
+point_of_sale / pos.config               / set_maximum_difference (boolean): NEW
+point_of_sale / pos.config               / ship_later (boolean)          : NEW
+# NOTHING TO DO: new features
+
+point_of_sale / pos.config               / warehouse_id (many2one)       : NEW relation: stock.warehouse, hasdefault
+# DONE: pre-migration: pre-created column to avoid default
+
+point_of_sale / pos.order                / procurement_group_id (many2one): NEW relation: procurement.group
+point_of_sale / procurement.group        / pos_order_id (many2one)       : NEW relation: pos.order
+# NOTHING TO DO: new relations
+
+point_of_sale / pos.order                / to_ship (boolean)             : NEW
+point_of_sale / pos.order.line           / is_total_cost_computed (boolean): NEW
+point_of_sale / pos.order.line           / total_cost (float)            : NEW
+# NOTHING TO DO: new features
+
+point_of_sale / pos.order.line           / refund_orderline_ids (one2many): NEW relation: pos.order.line
+point_of_sale / pos.order.line           / refunded_orderline_id (many2one): NEW relation: pos.order.line
+# NOTHING TO DO: new relations
+
+point_of_sale / pos.payment              / company_id (many2one)         : is now stored
+# NOTHING TO DO: is a related field
+
+point_of_sale / pos.payment.method       / is_cash_count (boolean)       : now a function
+# NOTHING TO DO
+
+point_of_sale / pos.payment.method       / cash_journal_id (many2one)    : DEL relation: account.journal
+point_of_sale / pos.payment.method       / journal_id (many2one)         : NEW relation: account.journal
+# DONE: pre-migration: renamed fields
+
+point_of_sale / pos.payment.method       / outstanding_account_id (many2one): NEW relation: account.account
+# NOTHING TO DO: new feature
+
+point_of_sale / pos.session              / opening_notes (text)          : NEW
+# NOTHING TO DO: new feature
+
+---XML records in module 'point_of_sale'---
+NEW ir.actions.act_window: point_of_sale.action_pos_bill
+DEL ir.actions.report: point_of_sale.pos_invoice_report
+NEW ir.model.access: point_of_sale.access_account_payment_method_line_pos_user
+NEW ir.model.access: point_of_sale.access_pos_bill
+NEW ir.model.access: point_of_sale.access_pos_close_session_wizard
+DEL ir.model.access: point_of_sale.access_closing_balance_confirm_wizard
+NEW ir.ui.menu: point_of_sale.menu_pos_bill
+NEW ir.ui.view: point_of_sale.product_product_tree_view
+NEW ir.ui.view: point_of_sale.product_template_only_form_view
+NEW ir.ui.view: point_of_sale.product_template_tree_view
+NEW ir.ui.view: point_of_sale.report_invoice_document
+NEW ir.ui.view: point_of_sale.report_pos_order_view_tree
+NEW ir.ui.view: point_of_sale.view_form_pos_close_session_wizard
+NEW ir.ui.view: point_of_sale.view_pos_bill_form
+NEW ir.ui.view: point_of_sale.view_pos_bill_tree
+DEL ir.ui.view: point_of_sale.assets
+DEL ir.ui.view: point_of_sale.assets_backend
+DEL ir.ui.view: point_of_sale.assets_tests
+DEL ir.ui.view: point_of_sale.closing_balance_confirm
+DEL ir.ui.view: point_of_sale.customer_facing_display_html
+DEL ir.ui.view: point_of_sale.pos_assets_backend
+DEL ir.ui.view: point_of_sale.qunit_suite_tests
+DEL ir.ui.view: point_of_sale.report_invoice
+DEL ir.ui.view: point_of_sale.view_account_bnk_stmt_cashbox
+DEL ir.ui.view: point_of_sale.view_account_bnk_stmt_cashbox_footer
+NEW pos.bill: point_of_sale.0_01 (noupdate)
+NEW pos.bill: point_of_sale.0_02 (noupdate)
+NEW pos.bill: point_of_sale.0_05 (noupdate)
+NEW pos.bill: point_of_sale.0_10 (noupdate)
+NEW pos.bill: point_of_sale.0_20 (noupdate)
+NEW pos.bill: point_of_sale.0_50 (noupdate)
+NEW pos.bill: point_of_sale.100_00 (noupdate)
+NEW pos.bill: point_of_sale.10_00 (noupdate)
+NEW pos.bill: point_of_sale.1_00 (noupdate)
+NEW pos.bill: point_of_sale.200_00 (noupdate)
+NEW pos.bill: point_of_sale.20_00 (noupdate)
+NEW pos.bill: point_of_sale.2_00 (noupdate)
+NEW pos.bill: point_of_sale.500_00 (noupdate)
+NEW pos.bill: point_of_sale.50_00 (noupdate)
+NEW pos.bill: point_of_sale.5_00 (noupdate)
+# NOTHING TO DO
