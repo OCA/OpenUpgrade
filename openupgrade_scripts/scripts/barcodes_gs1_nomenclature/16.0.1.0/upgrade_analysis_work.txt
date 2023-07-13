@@ -1,0 +1,17 @@
+---Models in module 'barcodes_gs1_nomenclature'---
+---Fields in module 'barcodes_gs1_nomenclature'---
+barcodes_gs1_nomenclature / barcode.rule             / type (False)                  : selection_keys is now '['alias', 'expiration_date', 'location', 'location_dest', 'lot', 'pack_date', 'package', 'package_type', 'product', 'quantity', 'use_date']' ('['alias', 'expiration_date', 'location', 'location_dest', 'lot', 'package', 'package_type', 'packaging_date', 'product', 'quantity', 'use_date']')
+
+# DONE: update type value = packaging_date to pack_date
+
+---XML records in module 'barcodes_gs1_nomenclature'---
+NEW barcode.rule: barcodes_gs1_nomenclature.barcode_rule_gs1_314y (noupdate)
+NEW barcode.rule: barcodes_gs1_nomenclature.barcode_rule_gs1_320y (noupdate)
+NEW barcode.rule: barcodes_gs1_nomenclature.barcode_rule_gs1_322y (noupdate)
+NEW barcode.rule: barcodes_gs1_nomenclature.barcode_rule_gs1_323y (noupdate)
+NEW barcode.rule: barcodes_gs1_nomenclature.barcode_rule_gs1_351y (noupdate)
+NEW barcode.rule: barcodes_gs1_nomenclature.barcode_rule_gs1_360y (noupdate)
+NEW barcode.rule: barcodes_gs1_nomenclature.barcode_rule_gs1_361y (noupdate)
+NEW barcode.rule: barcodes_gs1_nomenclature.barcode_rule_gs1_364y (noupdate)
+
+# NOTHING TO DO
