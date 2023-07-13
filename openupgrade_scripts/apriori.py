@@ -21,6 +21,10 @@ renamed_modules = {
     # OCA/server-ux
     "mass_editing": "server_action_mass_edit",
     # OCA/...
+    # Viindoo/tvtmaaddons
+    "viin_webp": "viin_web_editor",
+    # Viindoo/enterprise
+    # Viindoo/odoo-tvtma
 }
 
 # Merged modules contain a mapping from old module names to other,
@@ -55,6 +59,14 @@ merged_modules = {
     "account_invoice_report_due_list": "account",
     # OCA/purchase-workflow
     "product_form_purchase_link": "purchase",
+    # Viindoo/tvtmaaddons
+    "to_project_access": "viin_project",
+    "to_project_stages": "viin_project",
+    "viin_project_kanban_state_notification": "viin_project",
+    "viin_project_update": "viin_project",
+    "viin_website_image_optimization_disable": "viin_webp",
+    # Viindoo/enterprise
+    # Viindoo/odoo-tvtma
 }
 
 # only used here for upgrade_analysis
@@ -76,6 +88,16 @@ renamed_models = {
     "stock.location.route": "stock.route",
     "stock.production.lot": "stock.lot",
     # OCA/...
+    # Viindoo/tvtmaaddons
+    "approval.request": "viin.approval.request",
+    "helpdesk.sla": "viin.helpdesk.sla",
+    "helpdesk.stage": "viin.helpdesk.stage",
+    "helpdesk.tag": "viin.helpdesk.tag",
+    "helpdesk.team": "viin.helpdesk.team",
+    "helpdesk.ticket": "viin.helpdesk.ticket",
+    "helpdesk.ticket.type": "viin.helpdesk.ticket.type",
+    # Viindoo/enterprise
+    # Viindoo/odoo-tvtma
 }
 
 # only used here for upgrade_analysis
@@ -83,4 +105,7 @@ merged_models = {
     # odoo
     "gift.card": "loyalty.card",
     # OCA/...
+    # Viindoo/tvtmaaddons
+    # Viindoo/enterprise
+    # Viindoo/odoo-tvtma
 }
