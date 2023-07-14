@@ -24,9 +24,15 @@ renamed_modules = {
     # Viindoo/tvtmaaddons
     "to_hr_contract_actions": "viin_hr_contract",
     "to_hr_skills_recruitment": "viin_hr_recruitment_skills_resume",
+    "to_orderpoint_mail_thread": "viin_mail_thread_stock",
+    "to_partner_tax_code": "viin_partner_tax_code",
     "to_stock_backdate": "viin_stock_backdate",
     "to_stock_picking_backdate": "viin_stock_account_backdate",
     "to_uom_mail_thread": "viin_mail_thread_uom",
+    "to_uom_mail_thread": "viin_mail_thread_uom",
+    "viin_google_drive_support_oauth2": "viin_google_drive",
+    "viin_product_categ_mail_thread_purchase": "viin_mail_thread_purchase",
+    "viin_product_categ_mail_thread_stock_account": "viin_mail_thread_stock_account",
     "viin_webp": "viin_web_editor",
     # Viindoo/enterprise
     # Viindoo/odoo-tvtma
