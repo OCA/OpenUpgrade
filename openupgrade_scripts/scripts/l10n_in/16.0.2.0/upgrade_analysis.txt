@@ -55,7 +55,9 @@ NEW account.account.tag: l10n_in.tax_tag_sgst
 NEW account.account.tag: l10n_in.tax_tag_sgst_rc
 NEW account.account.tag: l10n_in.tax_tag_state_cess
 NEW account.account.tag: l10n_in.tax_tag_zero_rated
-DEL account.tax.report: l10n_in.tax_report
+NEW account.account.template: l10n_in.p10059
+NEW account.account.template: l10n_in.p11239
+DEL account.tax.report: l10n_in.tax_report [renamed to l10n_hr_euro module]
 DEL account.tax.report.line: l10n_in.tax_report_line_cess
 DEL account.tax.report.line: l10n_in.tax_report_line_cess_rc
 DEL account.tax.report.line: l10n_in.tax_report_line_cgst
@@ -72,8 +74,13 @@ DEL account.tax.report.line: l10n_in.tax_report_line_sgst
 DEL account.tax.report.line: l10n_in.tax_report_line_sgst_rc
 DEL account.tax.report.line: l10n_in.tax_report_line_state_cess
 DEL account.tax.report.line: l10n_in.tax_report_line_zero_rated
+NEW ir.actions.act_window: l10n_in.action_l10n_in_audit_trail_report
 DEL ir.model.access: l10n_in.access_l10n_in_account_invoice_report
 DEL ir.model.access: l10n_in.access_l10n_in_advances_payment_adjustment_report
 DEL ir.model.access: l10n_in.access_l10n_in_advances_payment_report
 DEL ir.model.access: l10n_in.access_l10n_in_exempted_report
 DEL ir.model.access: l10n_in.access_l10n_in_product_hsn_report
+NEW ir.ui.menu: l10n_in.l10n_in_audit_trail_report_menu
+NEW ir.ui.view: l10n_in.view_message_tree_audit_log
+NEW ir.ui.view: l10n_in.view_message_tree_audit_log_search
+NEW res.country.state: l10n_in.state_in_oc

@@ -1,20 +1,9 @@
 ---Models in module 'payment_sips'---
 ---Fields in module 'payment_sips'---
 payment_sips / payment.acquirer         / provider (False)              : DEL selection_keys: ['adyen', 'alipay', 'authorize', 'buckaroo', 'mollie', 'none', 'ogone', 'paypal', 'payulatam', 'payumoney', 'sips'], mode: modify
-payment_sips / payment.acquirer         / sips_key_version (integer)    : DEL
-payment_sips / payment.acquirer         / sips_merchant_id (char)       : DEL
-payment_sips / payment.acquirer         / sips_prod_url (char)          : DEL
-payment_sips / payment.acquirer         / sips_secret (char)            : DEL
-payment_sips / payment.acquirer         / sips_test_url (char)          : DEL
-payment_sips / payment.acquirer         / sips_version (char)           : DEL
-payment_sips / payment.provider         / code (False)                  : NEW selection_keys: ['adyen', 'alipay', 'aps', 'asiapay', 'authorize', 'buckaroo', 'custom', 'demo', 'flutterwave', 'mercado_pago', 'mollie', 'none', 'ogone', 'paypal', 'payulatam', 'payumoney', 'razorpay', 'sips'], mode: modify
-payment_sips / payment.provider         / sips_key_version (integer)    : NEW hasdefault: default
-payment_sips / payment.provider         / sips_merchant_id (char)       : NEW
-payment_sips / payment.provider         / sips_prod_url (char)          : NEW hasdefault: default
-payment_sips / payment.provider         / sips_secret (char)            : NEW
-payment_sips / payment.provider         / sips_test_url (char)          : NEW hasdefault: default
-payment_sips / payment.provider         / sips_version (char)           : NEW hasdefault: default
+payment_sips / payment.provider         / code (False)                  : NEW selection_keys: ['adyen', 'aps', 'asiapay', 'authorize', 'buckaroo', 'custom', 'demo', 'flutterwave', 'mercado_pago', 'mollie', 'none', 'paypal', 'razorpay', 'sips'], mode: modify
 ---XML records in module 'payment_sips'---
 DEL account.payment.method: payment_sips.payment_method_sips (noupdate)
 NEW ir.ui.view: payment_sips.payment_provider_form
 DEL ir.ui.view: payment_sips.payment_acquirer_form
+DEL payment.acquirer: payment.payment_acquirer_sips (noupdate)

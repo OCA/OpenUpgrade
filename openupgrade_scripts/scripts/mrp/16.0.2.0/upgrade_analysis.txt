@@ -45,6 +45,7 @@ DEL ir.actions.server: mrp.production_order_server_action
 NEW ir.model.access: mrp.access_mrp_production_split
 NEW ir.model.access: mrp.access_mrp_production_split_line
 NEW ir.model.access: mrp.access_mrp_production_split_multi
+NEW ir.model.access: mrp.access_mrp_workcenter_capacity_group_user
 NEW ir.model.access: mrp.access_mrp_workcenter_capacity_manager
 NEW ir.model.access: mrp.access_product_tag_mrp_manager
 DEL ir.model.access: mrp.access_stock_location_mrp_worker
@@ -68,5 +69,3 @@ DEL ir.ui.view: mrp.report_mrp_operation_line
 DEL ir.ui.view: mrp.report_reception_report_label_mrp
 NEW res.groups: mrp.group_mrp_reception_report
 NEW res.groups: mrp.group_mrp_workorder_dependencies
-DEL stock.location.route: mrp.route_warehouse0_manufacture (noupdate)
-NEW stock.route: mrp.route_warehouse0_manufacture (noupdate)

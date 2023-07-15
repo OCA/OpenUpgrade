@@ -1,0 +1,30 @@
+---Models in module 'l10n_latam_check'---
+new model l10n_latam.payment.mass.transfer [transient]
+---Fields in module 'l10n_latam_check'---
+l10n_latam_check / account.journal          / l10n_latam_manual_checks (boolean): NEW
+l10n_latam_check / account.payment          / l10n_latam_check_bank_id (many2one): NEW relation: res.bank, hasdefault: compute
+l10n_latam_check / account.payment          / l10n_latam_check_current_journal_id (many2one): NEW relation: account.journal, isfunction: function, stored
+l10n_latam_check / account.payment          / l10n_latam_check_id (many2one): NEW relation: account.payment
+l10n_latam_check / account.payment          / l10n_latam_check_issuer_vat (char): NEW hasdefault: compute
+l10n_latam_check / account.payment          / l10n_latam_check_operation_ids (one2many): NEW relation: account.payment
+l10n_latam_check / account.payment          / l10n_latam_check_payment_date (date): NEW
+---XML records in module 'l10n_latam_check'---
+NEW account.payment.method: l10n_latam_check.account_payment_method_in_third_party_checks (noupdate)
+NEW account.payment.method: l10n_latam_check.account_payment_method_new_third_party_checks (noupdate)
+NEW account.payment.method: l10n_latam_check.account_payment_method_out_third_party_checks (noupdate)
+NEW ir.actions.act_window: l10n_latam_check.action_own_check
+NEW ir.actions.act_window: l10n_latam_check.action_third_party_check
+NEW ir.actions.act_window: l10n_latam_check.action_view_l10n_latam_payment_mass_transfer
+NEW ir.model.access: l10n_latam_check.access_l10n_latam_payment_mass_transfer
+NEW ir.ui.menu: l10n_latam_check.menu_own_check
+NEW ir.ui.menu: l10n_latam_check.menu_third_party_check
+NEW ir.ui.view: l10n_latam_check.view_account_check_calendar
+NEW ir.ui.view: l10n_latam_check.view_account_check_pivot
+NEW ir.ui.view: l10n_latam_check.view_account_journal_tree
+NEW ir.ui.view: l10n_latam_check.view_account_own_check_tree
+NEW ir.ui.view: l10n_latam_check.view_account_payment_form_inherited
+NEW ir.ui.view: l10n_latam_check.view_account_payment_register_form
+NEW ir.ui.view: l10n_latam_check.view_account_payment_search
+NEW ir.ui.view: l10n_latam_check.view_account_third_party_check_operations_tree
+NEW ir.ui.view: l10n_latam_check.view_account_third_party_check_tree
+NEW ir.ui.view: l10n_latam_check.view_l10n_latam_payment_mass_transfer_form

@@ -1,0 +1,18 @@
+---Models in module 'transifex'---
+new model transifex.code.translation
+new model transifex.translation [abstract]
+---Fields in module 'transifex'---
+transifex    / transifex.code.translation / lang (selection)              : NEW selection_keys: function
+transifex    / transifex.code.translation / module (char)                 : NEW
+transifex    / transifex.code.translation / source (text)                 : NEW
+transifex    / transifex.code.translation / value (text)                  : NEW
+---XML records in module 'transifex'---
+NEW ir.actions.server: transifex.action_code_translations
+NEW ir.cron: transifex.transifex_code_translation_reload (noupdate)
+NEW ir.model.access: transifex.access_transifex_code_translation
+NEW ir.ui.menu: transifex.menu_transifex_code_translations
+NEW ir.ui.view: transifex.transifex_code_translation_tree_view
+NEW ir.ui.view: transifex.transifex_code_translation_view_search
+DEL ir.ui.view: transifex.ir_translation_dialog_view_src_value_tree_transifex
+DEL ir.ui.view: transifex.ir_translation_dialog_view_tree_transifex
+DEL ir.ui.view: transifex.ir_translation_view_tree_transifex

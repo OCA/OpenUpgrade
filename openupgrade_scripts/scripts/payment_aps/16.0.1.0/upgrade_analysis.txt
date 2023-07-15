@@ -4,7 +4,7 @@ payment_aps  / payment.provider         / aps_access_code (char)        : NEW
 payment_aps  / payment.provider         / aps_merchant_identifier (char): NEW
 payment_aps  / payment.provider         / aps_sha_request (char)        : NEW
 payment_aps  / payment.provider         / aps_sha_response (char)       : NEW
-payment_aps  / payment.provider         / code (False)                  : NEW selection_keys: ['adyen', 'alipay', 'aps', 'none'], mode: modify
+payment_aps  / payment.provider         / code (False)                  : NEW selection_keys: ['adyen', 'aps', 'none'], mode: modify
 ---XML records in module 'payment_aps'---
 NEW ir.ui.view: payment_aps.payment_provider_form
 NEW ir.ui.view: payment_aps.redirect_form

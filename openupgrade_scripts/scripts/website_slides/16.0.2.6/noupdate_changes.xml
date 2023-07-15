@@ -2,6 +2,7 @@
 <odoo>
   <record id="mail_template_channel_completed" model="mail.template">
     <field name="name">Elearning: Completed Course</field>
+    <field name="subject">Congratulations! You completed {{ object.channel_id.name }}</field>
     <field name="description">Sent to attendees once they've completed the course</field>
   </record>
   <record id="mail_template_slide_channel_invite" model="mail.template">

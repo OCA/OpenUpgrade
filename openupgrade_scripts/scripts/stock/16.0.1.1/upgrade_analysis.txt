@@ -1,11 +1,11 @@
 ---Models in module 'stock'---
-obsolete model stock.location.route
-obsolete model stock.production.lot
+obsolete model stock.location.route (renamed to stock.route)
+obsolete model stock.production.lot (renamed to stock.lot)
 new model lot.label.layout [transient]
 new model picking.label.type [transient]
-new model stock.lot
+new model stock.lot (renamed from stock.production.lot)
 new model stock.replenishment.option [transient]
-new model stock.route
+new model stock.route (renamed from stock.location.route)
 ---Fields in module 'stock'---
 stock        / barcode.rule             / type (False)                  : selection_keys is now '['alias', 'expiration_date', 'location', 'location_dest', 'lot', 'pack_date', 'package', 'package_type', 'product', 'quantity', 'use_date', 'weight']' ('['alias', 'expiration_date', 'location', 'location_dest', 'lot', 'package', 'package_type', 'packaging_date', 'product', 'quantity', 'use_date', 'weight']')
 stock        / product.category         / route_ids (many2many)         : relation is now 'stock.route' ('stock.location.route') [nothing to do]
@@ -21,33 +21,8 @@ stock        / product.template         / route_from_categ_ids (many2many): tabl
 stock        / product.template         / route_ids (many2many)         : relation is now 'stock.route' ('stock.location.route') [nothing to do]
 stock        / stock.location           / replenish_location (boolean)  : NEW hasdefault: compute
 stock        / stock.location           / warehouse_id (many2one)       : is now stored
-stock        / stock.location.route     / active (boolean)              : DEL
-stock        / stock.location.route     / categ_ids (many2many)         : DEL relation: product.category
-stock        / stock.location.route     / company_id (many2one)         : DEL relation: res.company
-stock        / stock.location.route     / name (char)                   : DEL required
-stock        / stock.location.route     / packaging_ids (many2many)     : DEL relation: product.packaging
-stock        / stock.location.route     / packaging_selectable (boolean): DEL
-stock        / stock.location.route     / product_categ_selectable (boolean): DEL
-stock        / stock.location.route     / product_ids (many2many)       : DEL relation: product.template
-stock        / stock.location.route     / product_selectable (boolean)  : DEL
-stock        / stock.location.route     / rule_ids (one2many)           : DEL relation: stock.rule
-stock        / stock.location.route     / sequence (integer)            : DEL
-stock        / stock.location.route     / supplied_wh_id (many2one)     : DEL relation: stock.warehouse
-stock        / stock.location.route     / supplier_wh_id (many2one)     : DEL relation: stock.warehouse
-stock        / stock.location.route     / warehouse_ids (many2many)     : DEL relation: stock.warehouse
-stock        / stock.location.route     / warehouse_selectable (boolean): DEL
-stock        / stock.lot                / activity_ids (one2many)       : NEW relation: mail.activity
-stock        / stock.lot                / company_id (many2one)         : NEW relation: res.company, required
-stock        / stock.lot                / message_follower_ids (one2many): NEW relation: mail.followers
-stock        / stock.lot                / message_ids (one2many)        : NEW relation: mail.message
-stock        / stock.lot                / message_main_attachment_id (many2one): NEW relation: ir.attachment
-stock        / stock.lot                / name (char)                   : NEW required, hasdefault: default
-stock        / stock.lot                / note (html)                   : NEW
-stock        / stock.lot                / product_id (many2one)         : NEW relation: product.product, required
-stock        / stock.lot                / product_uom_id (many2one)     : NEW relation: uom.uom, isrelated: related, stored
-stock        / stock.lot                / quant_ids (one2many)          : NEW relation: stock.quant
-stock        / stock.lot                / ref (char)                    : NEW
-stock        / stock.lot                / website_message_ids (one2many): NEW relation: mail.message
+stock        / stock.location.route     / categ_ids (many2many)         : table is now 'stock_route_categ' ('stock_location_route_categ')
+stock        / stock.location.route     / packaging_ids (many2many)     : table is now 'stock_route_packaging' ('stock_location_route_packaging')
 stock        / stock.move               / lot_ids (many2many)           : relation is now 'stock.lot' ('stock.production.lot') [nothing to do]
 stock        / stock.move               / quantity_done (float)         : is now stored
 stock        / stock.move               / route_ids (many2many)         : relation is now 'stock.route' ('stock.location.route') [nothing to do]
@@ -63,41 +38,13 @@ stock        / stock.picking            / move_ids (one2many)           : NEW re
 stock        / stock.picking            / move_lines (one2many)         : DEL relation: stock.move
 stock        / stock.picking.type       / auto_show_reception_report (boolean): NEW
 stock        / stock.picking.type       / create_backorder (selection)  : NEW required, selection_keys: ['always', 'ask', 'never'], hasdefault: default
-stock        / stock.production.lot     / activity_ids (one2many)       : DEL relation: mail.activity
-stock        / stock.production.lot     / company_id (many2one)         : DEL relation: res.company, required
-stock        / stock.production.lot     / message_follower_ids (one2many): DEL relation: mail.followers
-stock        / stock.production.lot     / message_ids (one2many)        : DEL relation: mail.message
-stock        / stock.production.lot     / message_main_attachment_id (many2one): DEL relation: ir.attachment
-stock        / stock.production.lot     / name (char)                   : DEL required
-stock        / stock.production.lot     / note (html)                   : DEL
-stock        / stock.production.lot     / product_id (many2one)         : DEL relation: product.product, required
-stock        / stock.production.lot     / product_uom_id (many2one)     : DEL relation: uom.uom
-stock        / stock.production.lot     / quant_ids (one2many)          : DEL relation: stock.quant
-stock        / stock.production.lot     / ref (char)                    : DEL
-stock        / stock.production.lot     / website_message_ids (one2many): DEL relation: mail.message
 stock        / stock.quant              / lot_id (many2one)             : relation is now 'stock.lot' ('stock.production.lot') [nothing to do]
 stock        / stock.quant              / storage_category_id (many2one): NEW relation: stock.storage.category, isrelated: related, stored
 stock        / stock.quant.package      / pack_date (date)              : NEW hasdefault: default
-stock        / stock.route              / active (boolean)              : NEW hasdefault: default
-stock        / stock.route              / categ_ids (many2many)         : NEW relation: product.category
-stock        / stock.route              / company_id (many2one)         : NEW relation: res.company, hasdefault: default
-stock        / stock.route              / name (char)                   : NEW required
-stock        / stock.route              / packaging_ids (many2many)     : NEW relation: product.packaging
-stock        / stock.route              / packaging_selectable (boolean): NEW
-stock        / stock.route              / product_categ_selectable (boolean): NEW
-stock        / stock.route              / product_ids (many2many)       : NEW relation: product.template
-stock        / stock.route              / product_selectable (boolean)  : NEW hasdefault: default
-stock        / stock.route              / rule_ids (one2many)           : NEW relation: stock.rule
-stock        / stock.route              / sequence (integer)            : NEW hasdefault: default
-stock        / stock.route              / supplied_wh_id (many2one)     : NEW relation: stock.warehouse
-stock        / stock.route              / supplier_wh_id (many2one)     : NEW relation: stock.warehouse
-stock        / stock.route              / warehouse_ids (many2many)     : NEW relation: stock.warehouse
-stock        / stock.route              / warehouse_selectable (boolean): NEW
 stock        / stock.rule               / location_dest_id (many2one)   : NEW relation: stock.location, required
 stock        / stock.rule               / location_id (many2one)        : DEL relation: stock.location, required
 stock        / stock.rule               / route_id (many2one)           : relation is now 'stock.route' ('stock.location.route') [nothing to do]
 stock        / stock.scrap              / lot_id (many2one)             : relation is now 'stock.lot' ('stock.production.lot') [nothing to do]
-stock        / stock.scrap              / scrap_qty (float)             : now a function
 stock        / stock.warehouse          / crossdock_route_id (many2one) : relation is now 'stock.route' ('stock.location.route') [nothing to do]
 stock        / stock.warehouse          / delivery_route_id (many2one)  : relation is now 'stock.route' ('stock.location.route') [nothing to do]
 stock        / stock.warehouse          / reception_route_id (many2one) : relation is now 'stock.route' ('stock.location.route') [nothing to do]
@@ -108,6 +55,7 @@ stock        / stock.warehouse.orderpoint / route_id (many2one)           : rela
 NEW ir.actions.act_window: stock.action_product_stock_view
 DEL ir.actions.act_window: stock.report_stock_quantity_action
 DEL ir.actions.act_window: stock.report_stock_quantity_action_product
+NEW ir.actions.client: stock.stock_replenishment_product_template_action
 NEW ir.actions.report: stock.action_report_picking_packages
 DEL ir.actions.report: stock.stock_replenishment_report_product_product_action
 DEL ir.actions.report: stock.stock_replenishment_report_product_template_action
@@ -133,5 +81,3 @@ DEL ir.ui.view: stock.stock_report_view_search
 DEL ir.ui.view: stock.view_warehouse_orderpoint_tree_editable_config
 NEW res.groups: stock.group_stock_lot_print_gs1
 DEL res.groups: stock.group_auto_reception_report
-DEL stock.location.route: stock.route_warehouse0_mto (noupdate)
-NEW stock.route: stock.route_warehouse0_mto (noupdate)
