@@ -82,7 +82,7 @@ merged_modules = {
     "viin_hr_employee_resource_calendar": "viin_hr_contract",
     "viin_project_kanban_state_notification": "viin_project",
     "viin_project_update": "viin_project",
-    "viin_website_image_optimization_disable": "viin_webp",
+    "viin_website_image_optimization_disable": "viin_web_editor",
     # Viindoo/enterprise
     "viin_website_seo_advisor_patch1": "viin_website_seo_advisor",
     # Viindoo/odoo-tvtma
