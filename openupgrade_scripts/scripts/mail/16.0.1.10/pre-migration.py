@@ -86,6 +86,26 @@ def scheduled_date_set_empty_strings_to_null(env):
     )
 
 
+def _to_mail_notif_and_email_create_mail_notification_index(env):
+    """
+    Only execute this method when module 'to_mail_notif_and_email'
+    is found and installed to avoid error when init mail module
+    because it has a constrain that we have overide in 'to_mail_notif_and_email'
+    if not then we will get error when running migration of mail module
+    """
+    module_to_mail_notif_and_email = env["ir.module.module"].search(
+        [("name", "=", "to_mail_notif_and_email"), ("state", "=", "to upgrade")]
+    )
+    if module_to_mail_notif_and_email:
+        env.cr.execute(
+            """
+            CREATE UNIQUE INDEX IF NOT EXISTS unique_mail_message_id_res_partner_id_if_set
+            ON mail_notification (mail_message_id, res_partner_id, notification_type)
+            WHERE res_partner_id IS NOT NULL
+            """
+        )
+
+
 @openupgrade.migrate()
 def migrate(env, version):
     delete_obsolete_constraints(env)
@@ -98,3 +118,6 @@ def migrate(env, version):
     ir_act_server_rename_state_email(env)
     mail_channel_channel_type_required(env)
     scheduled_date_set_empty_strings_to_null(env)
+    # This method is only exist in Viindoo/Openupgrade for some
+    # Technical reason
+    _to_mail_notif_and_email_create_mail_notification_index(env)
