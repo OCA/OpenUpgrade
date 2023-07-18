@@ -32,6 +32,7 @@ renamed_modules = {
     "viin_product_categ_mail_thread_purchase": "viin_mail_thread_purchase",
     "viin_product_categ_mail_thread_stock_account": "viin_mail_thread_stock_account",
     "viin_webp": "viin_web_editor",
+    "viin_user_assignment_log_project": "test_viin_user_assignment_log_project",
     # Viindoo/enterprise
     # Viindoo/odoo-tvtma
 }
