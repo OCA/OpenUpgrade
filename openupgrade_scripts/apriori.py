@@ -85,6 +85,8 @@ merged_modules = {
     "viin_website_image_optimization_disable": "viin_web_editor",
     # Viindoo/enterprise
     "viin_website_seo_advisor_patch1": "viin_website_seo_advisor",
+    "viin_website_patch1": "viin_website",
+    "viin_website_helpdesk_patch1": "viin_website_helpdesk",
     # Viindoo/odoo-tvtma
 }
 
