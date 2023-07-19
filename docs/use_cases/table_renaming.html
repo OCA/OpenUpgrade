@@ -4,7 +4,7 @@
   <meta charset="utf-8" /><meta name="generator" content="Docutils 0.18.1: http://docutils.sourceforge.net/" />
 
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Field Renaming &mdash; OpenUpgrade 16.0 documentation</title>
+  <title>Table Renaming &mdash; OpenUpgrade 16.0 documentation</title>
       <link rel="stylesheet" href="../_static/pygments.css" type="text/css" />
       <link rel="stylesheet" href="../_static/css/theme.css" type="text/css" />
   <!--[if lt IE 9]>
@@ -19,8 +19,8 @@
     <script src="../_static/js/theme.js"></script>
     <link rel="index" title="Index" href="../genindex.html" />
     <link rel="search" title="Search" href="../search.html" />
-    <link rel="next" title="Model Renaming" href="model_renaming.html" />
-    <link rel="prev" title="Field Fast Precomputation" href="field_fast_precomputation.html" /> 
+    <link rel="next" title="XML-ID Renaming" href="xml_id_renaming.html" />
+    <link rel="prev" title="Model Renaming" href="model_renaming.html" /> 
 </head>
 
 <body class="wy-body-for-nav"> 
@@ -55,15 +55,16 @@
 <li class="toctree-l2"><a class="reference internal" href="../development.html#overview">Overview</a></li>
 <li class="toctree-l2 current"><a class="reference internal" href="../development.html#learn-from-typical-use-cases">Learn from typical Use cases</a><ul class="current">
 <li class="toctree-l3"><a class="reference internal" href="field_fast_precomputation.html">Field Fast Precomputation</a></li>
-<li class="toctree-l3 current"><a class="current reference internal" href="#">Field Renaming</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="field_renaming.html">Field Renaming</a></li>
+<li class="toctree-l3"><a class="reference internal" href="model_renaming.html">Model Renaming</a></li>
+<li class="toctree-l3 current"><a class="current reference internal" href="#">Table Renaming</a><ul>
 <li class="toctree-l4"><a class="reference internal" href="#analysis">Analysis</a></li>
 <li class="toctree-l4"><a class="reference internal" href="#source-code-differences">Source Code Differences</a></li>
 <li class="toctree-l4"><a class="reference internal" href="#result-without-migration-script-expected-result">Result without migration script / Expected Result</a></li>
 <li class="toctree-l4"><a class="reference internal" href="#contribution-to-openupgrade">Contribution to OpenUpgrade</a></li>
+<li class="toctree-l4"><a class="reference internal" href="#notes">Notes</a></li>
 </ul>
 </li>
-<li class="toctree-l3"><a class="reference internal" href="model_renaming.html">Model Renaming</a></li>
-<li class="toctree-l3"><a class="reference internal" href="table_renaming.html">Table Renaming</a></li>
 <li class="toctree-l3"><a class="reference internal" href="xml_id_renaming.html">XML-ID Renaming</a></li>
 <li class="toctree-l3"><a class="reference internal" href="module_renaming.html">Module Renaming</a></li>
 <li class="toctree-l3"><a class="reference internal" href="noupdate_xml_entry_changed.html">Noupdate XML entry Changed</a></li>
@@ -94,7 +95,7 @@
   <ul class="wy-breadcrumbs">
       <li><a href="../index.html" class="icon icon-home" aria-label="Home"></a></li>
           <li class="breadcrumb-item"><a href="../development.html">Migration script development</a></li>
-      <li class="breadcrumb-item active">Field Renaming</li>
+      <li class="breadcrumb-item active">Table Renaming</li>
       <li class="wy-breadcrumbs-aside">
       </li>
   </ul>
@@ -103,19 +104,21 @@
           <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
            <div itemprop="articleBody">
              
-  <section id="field-renaming">
-<h1>Field Renaming<a class="headerlink" href="#field-renaming" title="Permalink to this heading"></a></h1>
-<p>From version 14.0 to version 15.0, in the module <code class="docutils literal notranslate"><span class="pre">mail</span></code>, in the model
-<code class="docutils literal notranslate"><span class="pre">mail.activity.type</span></code> the html field <code class="docutils literal notranslate"><span class="pre">default_description</span></code> has been renamed
-into <code class="docutils literal notranslate"><span class="pre">default_note</span></code>.</p>
+  <section id="table-renaming">
+<h1>Table Renaming<a class="headerlink" href="#table-renaming" title="Permalink to this heading"></a></h1>
+<p>From version 14.0 to version 15.0, in the module <code class="docutils literal notranslate"><span class="pre">mail</span></code>, the table
+of the model <code class="docutils literal notranslate"><span class="pre">mail.notification</span></code> has been renamed from
+<code class="docutils literal notranslate"><span class="pre">mail_message_res_partner_needaction_rel</span></code> to <code class="docutils literal notranslate"><span class="pre">mail_notification</span></code>.</p>
 <section id="analysis">
 <h2>Analysis<a class="headerlink" href="#analysis" title="Permalink to this heading"></a></h2>
+<p>For the time being, this change is not automatically detected and reported in the
+<code class="docutils literal notranslate"><span class="pre">upgrade_analysis.txt</span></code> file.</p>
+<p>However, if the table is used as part of a many2many field, the following lines will be present.</p>
 <div class="highlight-text notranslate"><div class="highlight"><pre><span></span>...
 ---Fields in module &#39;mail&#39;---
 ...
-mail         / mail.activity.type       / default_description (html)    : DEL
-...
-mail         / mail.activity.type       / default_note (html)           : NEW
+mail         / mail.message             / notified_partner_ids (many2many):
+    table is now &#39;mail_notification&#39; (&#39;mail_message_res_partner_needaction_rel&#39;)
 </pre></div>
 </div>
 <p>See <a class="reference external" href="https://github.com/OCA/OpenUpgrade/blob/15.0/openupgrade_scripts/scripts/mail/15.0.1.5/upgrade_analysis.txt">Full V15 Analysis File</a>.</p>
@@ -124,107 +127,81 @@ mail         / mail.activity.type       / default_note (html)           : NEW
 <h2>Source Code Differences<a class="headerlink" href="#source-code-differences" title="Permalink to this heading"></a></h2>
 <section id="version-14-0">
 <h3>Version 14.0<a class="headerlink" href="#version-14-0" title="Permalink to this heading"></a></h3>
-<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="k">class</span> <span class="nc">MailActivityType</span><span class="p">(</span><span class="n">models</span><span class="o">.</span><span class="n">Model</span><span class="p">):</span>
-
-    <span class="n">_name</span> <span class="o">=</span> <span class="s1">&#39;mail.activity.type&#39;</span>
-
-    <span class="n">default_description</span> <span class="o">=</span> <span class="n">fields</span><span class="o">.</span><span class="n">Html</span><span class="p">(</span>
-        <span class="n">string</span><span class="o">=</span><span class="s2">&quot;Default Description&quot;</span><span class="p">,</span>
-        <span class="n">translate</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span>
-    <span class="p">)</span>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="k">class</span> <span class="nc">MailNotification</span><span class="p">(</span><span class="n">models</span><span class="o">.</span><span class="n">Model</span><span class="p">):</span>
+    <span class="n">_name</span> <span class="o">=</span> <span class="s2">&quot;mail.notification&quot;</span>
+    <span class="n">_table</span> <span class="o">=</span> <span class="s2">&quot;mail_message_res_partner_needaction_rel&quot;</span>
 </pre></div>
 </div>
-<p>See <a class="reference external" href="https://github.com/odoo/odoo/blob/14.0/addons/mail/models/mail_activity.py#L80">Full V14 Code Source</a>.</p>
+<p>See <a class="reference external" href="https://github.com/odoo/odoo/blob/14.0/addons/mail/models/mail_notification.py#L11-L13">Full V14 Code Source</a>.</p>
 </section>
 <section id="version-15-0">
 <h3>Version 15.0<a class="headerlink" href="#version-15-0" title="Permalink to this heading"></a></h3>
-<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="k">class</span> <span class="nc">MailActivityType</span><span class="p">(</span><span class="n">models</span><span class="o">.</span><span class="n">Model</span><span class="p">):</span>
-
-    <span class="n">_name</span> <span class="o">=</span> <span class="s1">&#39;mail.activity.type&#39;</span>
-
-    <span class="n">default_note</span> <span class="o">=</span> <span class="n">fields</span><span class="o">.</span><span class="n">Html</span><span class="p">(</span>
-        <span class="n">string</span><span class="o">=</span><span class="s2">&quot;Default Description&quot;</span><span class="p">,</span>
-        <span class="n">translate</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span>
-    <span class="p">)</span>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="k">class</span> <span class="nc">MailNotification</span><span class="p">(</span><span class="n">models</span><span class="o">.</span><span class="n">Model</span><span class="p">):</span>
+    <span class="n">_name</span> <span class="o">=</span> <span class="s2">&quot;mail.notification&quot;</span>
+    <span class="n">_table</span> <span class="o">=</span> <span class="s2">&quot;mail_notification&quot;</span>
 </pre></div>
 </div>
-<p>See <a class="reference external" href="https://github.com/odoo/odoo/blob/15.0/addons/mail/models/mail_activity_type.py#L73">Full V15 Code Source</a>.</p>
+<p>See <a class="reference external" href="https://github.com/odoo/odoo/blob/15.0/addons/mail/models/mail_notification.py#L11-L13">Full V15 Code Source</a>.</p>
 </section>
 </section>
 <section id="result-without-migration-script-expected-result">
 <h2>Result without migration script / Expected Result<a class="headerlink" href="#result-without-migration-script-expected-result" title="Permalink to this heading"></a></h2>
-<section id="v14-table-mail-activity-type">
-<h3>V14 table <code class="docutils literal notranslate"><span class="pre">mail_activity_type</span></code><a class="headerlink" href="#v14-table-mail-activity-type" title="Permalink to this heading"></a></h3>
+<section id="v14-table-mail-message-res-partner-needaction-rel">
+<h3>V14 table <code class="docutils literal notranslate"><span class="pre">mail_message_res_partner_needaction_rel</span></code><a class="headerlink" href="#v14-table-mail-message-res-partner-needaction-rel" title="Permalink to this heading"></a></h3>
 <table class="docutils align-default">
 <thead>
 <tr class="row-odd"><th class="head"><p>id</p></th>
-<th class="head"><p>name</p></th>
-<th class="head"><p>default_description</p></th>
+<th class="head"><p>mail_message_id</p></th>
+<th class="head"><p>notification_type</p></th>
 </tr>
 </thead>
 <tbody>
 <tr class="row-even"><td><p>1</p></td>
-<td><p>Email</p></td>
-<td><p>&lt;p&gt;A description&lt;/p&gt;</p></td>
+<td><p>92</p></td>
+<td><p>email</p></td>
 </tr>
 <tr class="row-odd"><td><p>2</p></td>
-<td><p>Call</p></td>
-<td></td>
-</tr>
-<tr class="row-even"><td><p>3</p></td>
-<td><p>Meeting</p></td>
-<td><p>&lt;p&gt;Another description&lt;/p&gt;</p></td>
+<td><p>94</p></td>
+<td><p>sms</p></td>
 </tr>
 </tbody>
 </table>
 </section>
-<section id="v15-table-mail-activity-type-without-migration-script">
-<h3>V15 table mail_activity_type (Without migration script)<a class="headerlink" href="#v15-table-mail-activity-type-without-migration-script" title="Permalink to this heading"></a></h3>
+<section id="v15-table-mail-notification-without-migration-script">
+<h3>V15 table <code class="docutils literal notranslate"><span class="pre">mail_notification</span></code> (Without migration script)<a class="headerlink" href="#v15-table-mail-notification-without-migration-script" title="Permalink to this heading"></a></h3>
 <table class="docutils align-default">
 <thead>
 <tr class="row-odd"><th class="head"><p>id</p></th>
-<th class="head"><p>name</p></th>
-<th class="head"><p>default_note</p></th>
+<th class="head"><p>mail_message_id</p></th>
+<th class="head"><p>notification_type</p></th>
 </tr>
 </thead>
 <tbody>
-<tr class="row-even"><td><p>1</p></td>
-<td><p>Email</p></td>
+<tr class="row-even"><td></td>
 <td></td>
-</tr>
-<tr class="row-odd"><td><p>2</p></td>
-<td><p>Call</p></td>
-<td></td>
-</tr>
-<tr class="row-even"><td><p>3</p></td>
-<td><p>Meeting</p></td>
 <td></td>
 </tr>
 </tbody>
 </table>
-<p><strong>Problem</strong> : the data is lost during them migration process, and the new column is empty.</p>
+<p><strong>Problem</strong> : the data is lost during the migration process.</p>
 </section>
-<section id="v15-table-mail-activity-type-with-migration-script">
-<h3>V15 table mail_activity_type (With migration script)<a class="headerlink" href="#v15-table-mail-activity-type-with-migration-script" title="Permalink to this heading"></a></h3>
+<section id="v15-table-mail-notification-with-migration-script">
+<h3>V15 table <code class="docutils literal notranslate"><span class="pre">mail_notification</span></code> (With migration script)<a class="headerlink" href="#v15-table-mail-notification-with-migration-script" title="Permalink to this heading"></a></h3>
 <table class="docutils align-default">
 <thead>
 <tr class="row-odd"><th class="head"><p>id</p></th>
-<th class="head"><p>name</p></th>
-<th class="head"><p>default_note</p></th>
+<th class="head"><p>mail_message_id</p></th>
+<th class="head"><p>notification_type</p></th>
 </tr>
 </thead>
 <tbody>
 <tr class="row-even"><td><p>1</p></td>
-<td><p>Email</p></td>
-<td><p>&lt;p&gt;A description&lt;/p&gt;</p></td>
+<td><p>92</p></td>
+<td><p>email</p></td>
 </tr>
 <tr class="row-odd"><td><p>2</p></td>
-<td><p>Call</p></td>
-<td></td>
-</tr>
-<tr class="row-even"><td><p>3</p></td>
-<td><p>Meeting</p></td>
-<td><p>&lt;p&gt;Another description&lt;/p&gt;</p></td>
+<td><p>94</p></td>
+<td><p>sms</p></td>
 </tr>
 </tbody>
 </table>
@@ -232,45 +209,42 @@ mail         / mail.activity.type       / default_note (html)           : NEW
 </section>
 <section id="contribution-to-openupgrade">
 <h2>Contribution to OpenUpgrade<a class="headerlink" href="#contribution-to-openupgrade" title="Permalink to this heading"></a></h2>
-<section id="update-upgrade-analysis-work-txt-file">
-<h3>Update <code class="docutils literal notranslate"><span class="pre">upgrade_analysis_work.txt</span></code> file<a class="headerlink" href="#update-upgrade-analysis-work-txt-file" title="Permalink to this heading"></a></h3>
-<ul class="simple">
-<li><p>Place side by side the two lines that correspond to the change</p></li>
-<li><p>Mention the operation performed, starting with <code class="docutils literal notranslate"><span class="pre">#</span> <span class="pre">DONE:</span></code></p></li>
-</ul>
-<div class="highlight-text notranslate"><div class="highlight"><pre><span></span>---Fields in module &#39;mail&#39;---
-mail         / mail.activity.type       / default_note (html)           : NEW
-mail         / mail.activity.type       / default_description (html)    : DEL
-# DONE: pre-migration, rename fields default_description -&gt; default_note
-</pre></div>
-</div>
-<p>See <a class="reference external" href="https://github.com/OCA/OpenUpgrade/blob/15.0/openupgrade_scripts/scripts/mail/15.0.1.5/upgrade_analysis_work.txt">Full V15 Work Analysis File</a>.</p>
-</section>
 <section id="write-migration-script">
 <h3>Write migration Script<a class="headerlink" href="#write-migration-script" title="Permalink to this heading"></a></h3>
 <p>in the <code class="docutils literal notranslate"><span class="pre">pre-migration.py</span></code> script add:</p>
 <div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="kn">from</span> <span class="nn">openupgradelib</span> <span class="kn">import</span> <span class="n">openupgrade</span>
 
-<span class="k">def</span> <span class="nf">_rename_fields</span><span class="p">(</span><span class="n">env</span><span class="p">):</span>
-    <span class="n">openupgrade</span><span class="o">.</span><span class="n">rename_fields</span><span class="p">(</span>
-        <span class="n">env</span><span class="p">,</span>
-        <span class="p">[</span>
-            <span class="p">(</span>
-                <span class="s2">&quot;mail.activity.type&quot;</span><span class="p">,</span>
-                <span class="s2">&quot;mail_activity_type&quot;</span><span class="p">,</span>
-                <span class="s2">&quot;default_description&quot;</span><span class="p">,</span>
-                <span class="s2">&quot;default_note&quot;</span><span class="p">,</span>
-            <span class="p">),</span>
-        <span class="p">]</span>
-    <span class="p">)</span>
-
 <span class="nd">@openupgrade</span><span class="o">.</span><span class="n">migrate</span><span class="p">()</span>
 <span class="k">def</span> <span class="nf">migrate</span><span class="p">(</span><span class="n">env</span><span class="p">,</span> <span class="n">version</span><span class="p">):</span>
-    <span class="n">_rename_fields</span><span class="p">(</span><span class="n">env</span><span class="p">)</span>
+    <span class="n">openupgrade</span><span class="o">.</span><span class="n">rename_tables</span><span class="p">(</span>
+        <span class="n">env</span><span class="o">.</span><span class="n">cr</span><span class="p">,</span> <span class="p">[(</span><span class="s2">&quot;mail_message_res_partner_needaction_rel&quot;</span><span class="p">,</span> <span class="s2">&quot;mail_notification&quot;</span><span class="p">)]</span>
+    <span class="p">)</span>
 </pre></div>
 </div>
-<p>See <a class="reference external" href="https://github.com/OCA/OpenUpgrade/blob/15.0/openupgrade_scripts/scripts/mail/15.0.1.5/pre-migration.py">Full pre migration Script</a>.</p>
+<p>See <a class="reference external" href="https://github.com/OCA/OpenUpgrade/blob/b504f239cd3175ae7acc3e75d234ca3ea15f41ec/openupgrade_scripts/scripts/mail/15.0.1.5/pre-migration.py#LL52C1-L66C6">Full pre migration Script</a>.</p>
 </section>
+</section>
+<section id="notes">
+<h2>Notes<a class="headerlink" href="#notes" title="Permalink to this heading"></a></h2>
+<ul>
+<li><p>If you think the new name may already be used by an existing table,
+you can backup the table before the renaming as follows.</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="k">if</span> <span class="n">openupgrade</span><span class="o">.</span><span class="n">table_exists</span><span class="p">(</span><span class="n">env</span><span class="o">.</span><span class="n">cr</span><span class="p">,</span> <span class="s2">&quot;mail_notification&quot;</span><span class="p">):</span>
+    <span class="n">openupgrade</span><span class="o">.</span><span class="n">rename_tables</span><span class="p">(</span><span class="n">env</span><span class="o">.</span><span class="n">cr</span><span class="p">,</span> <span class="p">[(</span><span class="s2">&quot;mail_notification&quot;</span><span class="p">,</span> <span class="kc">None</span><span class="p">)])</span>
+</pre></div>
+</div>
+</li>
+<li><p>If the table has SQL constraints, you should drop them before the renaming</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="n">openupgrade</span><span class="o">.</span><span class="n">delete_sql_constraint_safely</span><span class="p">(</span>
+    <span class="n">env</span><span class="p">,</span>
+    <span class="s2">&quot;mail&quot;</span><span class="p">,</span>                                     <span class="c1"># module name</span>
+    <span class="s2">&quot;mail_message_res_partner_needaction_rel&quot;</span><span class="p">,</span>  <span class="c1"># old table name</span>
+    <span class="s2">&quot;notification_partner_required&quot;</span><span class="p">,</span>            <span class="c1"># constraint name</span>
+<span class="p">)</span>
+</pre></div>
+</div>
+</li>
+</ul>
 </section>
 </section>
 
@@ -278,8 +252,8 @@ mail         / mail.activity.type       / default_description (html)    : DEL
            </div>
           </div>
           <footer><div class="rst-footer-buttons" role="navigation" aria-label="Footer">
-        <a href="field_fast_precomputation.html" class="btn btn-neutral float-left" title="Field Fast Precomputation" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left" aria-hidden="true"></span> Previous</a>
-        <a href="model_renaming.html" class="btn btn-neutral float-right" title="Model Renaming" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right" aria-hidden="true"></span></a>
+        <a href="model_renaming.html" class="btn btn-neutral float-left" title="Model Renaming" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left" aria-hidden="true"></span> Previous</a>
+        <a href="xml_id_renaming.html" class="btn btn-neutral float-right" title="XML-ID Renaming" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right" aria-hidden="true"></span></a>
     </div>
 
   <hr/>
