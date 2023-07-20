@@ -88,7 +88,7 @@ jobs:
           sudo npm install -g less less-plugin-clean-css
           pip install -q -r odoo/requirements.txt
           pip install --ignore-installed \
-              git+https://github.com/OCA/openupgradelib.git@master
+              git+https://github.com/duong77476/openupgradelib.git@master_imp_boostrap4_to_5_transformation
           # this is for v15 l10n_eg_edi_eta which crashes without it
           pip install asn1crypto
       - name: Test data
