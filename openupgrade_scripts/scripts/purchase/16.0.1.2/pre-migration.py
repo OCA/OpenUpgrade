@@ -1,8 +1,17 @@
 from openupgradelib import openupgrade
 
 
-def _fill_analytic_distribution(env):
-
+def _fill_analytic_distribution_on_purchase_order_line(env):
+    if not openupgrade.column_exists(
+        env.cr, "purchase_order_line", "analytic_distribution"
+    ):
+        openupgrade.logged_query(
+            env.cr,
+            """
+            ALTER TABLE purchase_order_line
+            ADD COLUMN IF NOT EXISTS analytic_distribution jsonb;
+            """,
+        )
     openupgrade.logged_query(
         env.cr,
         """
@@ -54,4 +63,4 @@ def _fill_analytic_distribution(env):
 
 @openupgrade.migrate()
 def migrate(env, version):
-    _fill_analytic_distribution(env)
+    _fill_analytic_distribution_on_purchase_order_line(env)
