@@ -40,7 +40,7 @@ def _compute_purchase_order_receipt_status(env):
             ORDER BY 1
         )
         UPDATE purchase_order as po
-        SET receipt_status = po_receipt_status.receipt_status
+            SET receipt_status = po_receipt_status.receipt_status
         FROM po_receipt_status
         WHERE po_receipt_status.id = po.id;
         """,
