@@ -35,7 +35,7 @@ def _compute_purchase_order_receipt_status(env):
             END as receipt_status
             FROM stock_picking as sp
             JOIN purchase_order_stock_picking_rel as rel
-            ON rel.stock_picking_id = sp.id
+                ON rel.stock_picking_id = sp.id
             GROUP BY 1
             ORDER BY 1
         )
