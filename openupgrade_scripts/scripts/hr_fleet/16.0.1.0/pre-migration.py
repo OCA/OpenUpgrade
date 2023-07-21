@@ -13,10 +13,10 @@ def create_drive_employee(env):
     openupgrade.logged_query(
         env.cr,
         """
-        UPDATE fleet_vehicle_assignation_log AS fval
-        SET driver_employee_id = fv.driver_employee_id
-        FROM fleet_vehicle AS fv
-        WHERE fval.vehicle_id = fv.id
+        UPDATE fleet_vehicle_assignation_log log
+            SET driver_employee_id = emp.id
+        FROM hr_employee emp
+        WHERE log.driver_id IS NOT NULL and log.driver_id = emp.address_home_id
         """,
     )
 
