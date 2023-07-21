@@ -19,4 +19,8 @@
   <record id="ir_rule_hr_expense_sheet_employee" model="ir.rule">
     <field name="domain_force">[('employee_id.user_id', '=', user.id), ('state', '=', 'draft')]</field>
   </record>
+  <record id="product_product_no_cost" model="product.product">
+    <field name="name">Others</field>
+    <field name="image_1920" type="base64" file="hr_expense/static/img/other.svg"/>
+  </record>
 </odoo>
