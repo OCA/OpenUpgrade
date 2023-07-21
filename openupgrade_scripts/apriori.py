@@ -78,6 +78,7 @@ merged_modules = {
     "to_hr_contract_actions": "viin_hr_contract",
     "to_partner_check_unique_vat": "viin_partner_tax_code",
     "to_project_stages": "viin_project",
+    "to_tax_is_vat": "viin_account",
     "viin_account_balance_carry_forward_advanced": "to_account_balance_carry_forward",
     "viin_hr_holidays_accrual_plan": "viin_hr_holidays",
     "viin_hr_employee_resource_calendar": "viin_hr_contract",
