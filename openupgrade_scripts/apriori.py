@@ -29,6 +29,7 @@ renamed_modules = {
     "to_stock_backdate": "viin_stock_backdate",
     "to_stock_picking_backdate": "viin_stock_account_backdate",
     "to_uom_mail_thread": "viin_mail_thread_uom",
+    "to_stock_production_lot_partner_infor": "viin_stock_lot_partner_infor",
     "viin_google_drive_support_oauth2": "viin_google_drive",
     "viin_product_categ_mail_thread_purchase": "viin_mail_thread_purchase",
     "viin_product_categ_mail_thread_stock_account": "viin_mail_thread_stock_account",
