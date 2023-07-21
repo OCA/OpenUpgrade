@@ -6,7 +6,7 @@ def fill_skill_type_id_data(env):
         env.cr,
         """
         INSERT INTO hr_skill_type
-        (name) VALUES ('dummy_skill_type(dummy data)')
+        (name) VALUES ('Dummy Skill Type')
         RETURNING id;
         """,
     )
