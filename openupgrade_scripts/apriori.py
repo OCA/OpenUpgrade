@@ -37,6 +37,8 @@ renamed_modules = {
     "viin_user_assignment_log_project": "test_viin_user_assignment_log_project",
     # Viindoo/enterprise
     # Viindoo/odoo-tvtma
+    "viin_saas_membership_white_label": "viin_saas_reseller_white_label",
+    "viin_viindoo_membership": "viin_viindoo_saas_reseller",
 }
 
 # Merged modules contain a mapping from old module names to other,
@@ -90,6 +92,9 @@ merged_modules = {
     "viin_website_patch1": "viin_website",
     "viin_website_helpdesk_patch1": "viin_website_helpdesk",
     # Viindoo/odoo-tvtma
+    "viin_saas_membership": "viin_saas_reseller",
+    "viin_saas_reseller_portal": "viin_saas_reseller",
+    "viin_viindoo_membership_white_label": "viin_viindoo_saas_reseller",
 }
 
 # only used here for upgrade_analysis
