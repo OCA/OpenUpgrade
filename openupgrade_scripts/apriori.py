@@ -30,7 +30,10 @@ renamed_modules = {
     "to_stock_picking_backdate": "viin_stock_account_backdate",
     "to_uom_mail_thread": "viin_mail_thread_uom",
     "to_stock_production_lot_partner_infor": "viin_stock_lot_partner_infor",
-    "viin_google_drive_support_oauth2": "viin_google_drive",
+    # google_drive, google_spreadsheet is orinally from odoo but has been remove since 16.0
+    # because of some technical problem but they have been brought back in viindoo yeahh
+    "google_drive": "viin_google_drive",
+    "google_spreadsheet": "viin_google_spreadsheet",
     "viin_product_categ_mail_thread_purchase": "viin_mail_thread_purchase",
     "viin_product_categ_mail_thread_stock_account": "viin_mail_thread_stock_account",
     "viin_webp": "viin_web_editor",
@@ -82,6 +85,7 @@ merged_modules = {
     "to_project_stages": "viin_project",
     "to_tax_is_vat": "viin_account",
     "viin_account_balance_carry_forward_advanced": "to_account_balance_carry_forward",
+    "viin_google_drive_support_oauth2": "viin_google_drive",
     "viin_hr_holidays_accrual_plan": "viin_hr_holidays",
     "viin_hr_employee_resource_calendar": "viin_hr_contract",
     "viin_project_kanban_state_notification": "viin_project",
