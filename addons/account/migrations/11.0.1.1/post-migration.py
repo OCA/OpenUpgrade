@@ -44,6 +44,10 @@ def migrate_account_tax_cash_basis(env):
             WHERE company_id = rc.id AND tax_exigibility = 'on_payment')""")
 
 
+def migrate_account_report_invoice_with_payments(env):
+    env.ref("account.account_invoices").attachment_use = False
+
+
 @openupgrade.logging()
 def fill_account_invoice_line_total(env):
     """Try to compute the field `price_total` in a more optimized way for
@@ -199,6 +203,7 @@ def migrate(env, version):
             WHERE company_id = rc.id)""")
 
     migrate_account_tax_cash_basis(env)
+    migrate_account_report_invoice_with_payments(env)
     fill_account_invoice_line_total(env)
     fill_account_move_line_tax_base_amount(env)
     _migrate_security(env)
