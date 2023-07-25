@@ -263,6 +263,7 @@ account      / res.company              / account_onboarding_create_invoice_stat
 account      / res.company              / account_storno (boolean)      : NEW
 account      / res.company              / account_use_credit_limit (boolean): NEW
 account      / res.company              / early_pay_discount_computation (selection): NEW selection_keys: ['excluded', 'included', 'mixed'], hasdefault: compute
+account      / res.company              / fiscal_position_ids (one2many): NEW relation: account.fiscal.position
 account      / res.company              / message_follower_ids (one2many): NEW relation: mail.followers
 account      / res.company              / message_ids (one2many)        : NEW relation: mail.message
 account      / res.company              / message_main_attachment_id (many2one): NEW relation: ir.attachment

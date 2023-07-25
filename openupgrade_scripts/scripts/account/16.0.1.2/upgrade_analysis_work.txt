@@ -103,7 +103,7 @@ account      / account.bank.statement   / difference (float)            : DEL
 
 account      / account.bank.statement   / first_line_index (char)       : NEW isfunction: function, stored
 account      / account.bank.statement   / is_complete (boolean)         : NEW isfunction: function, stored
-# DONE: pre-migration: create column and fill value
+# NOTHING TO DO: Handled by ORM
 
 account      / account.bank.statement   / is_valid_balance_start (boolean): DEL
 account      / account.bank.statement   / journal_id (many2one)         : now a function
@@ -205,7 +205,7 @@ account      / account.move.line        / analytic_distribution (json)  : NEW is
 account      / account.move.line        / analytic_distribution_search (json): NEW
 account      / account.move.line        / analytic_precision (integer)  : NEW hasdefault: default
 account      / account.move.line        / analytic_tag_ids (many2many)  : DEL relation: account.analytic.tag
-# TODO: like the one in account.move
+# DONE pre-migration: create column analytic_distribution and fill value
 
 account      / account.move.line        / balance (float)               : not a function anymore
 account      / account.move.line        / credit (float)                : now a function
@@ -236,7 +236,7 @@ account      / account.partial.reconcile / exchange_move_id (many2one)   : NEW r
 # NOTHING TO DO
 
 account      / account.payment          / amount_company_currency_signed (float): is now stored
-# DONE pre-migration: create column (Done) and fill value (undone)
+# DONE pre-migration: create column
 
 account      / account.payment          / auto_post (boolean)           : now required
 account      / account.payment          / auto_post (boolean)           : selection_keys is now 'function' ('False')
@@ -271,7 +271,7 @@ account      / account.reconcile.model.line / analytic_distribution (json)  : NE
 account      / account.reconcile.model.line / analytic_distribution_search (json): NEW
 account      / account.reconcile.model.line / analytic_precision (integer)  : NEW hasdefault: default
 account      / account.reconcile.model.line / analytic_tag_ids (many2many)  : DEL relation: account.analytic.tag
-# TODO: like the change in account.move
+# DONE pre-migration: create column analytic_distribution and fill value
 
 account      / account.report           / availability_condition (selection): NEW selection_keys: ['always', 'coa', 'country'], hasdefault: compute
 account      / account.report           / chart_template_id (many2one)  : NEW relation: account.chart.template
