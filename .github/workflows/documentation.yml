@@ -10,7 +10,7 @@ on:
 
 jobs:
   documentation:
-    runs-on: ubuntu-latest
+    runs-on: ubuntu-22.04
     env:
       DB: "openupgrade"
       DB_USERNAME: "odoo"
@@ -31,6 +31,8 @@ jobs:
         run: |
           sudo apt update
           sudo apt install libldap2-dev nodejs libxml2-dev libxslt1-dev libevent-dev libsasl2-dev expect unixodbc-dev expect-dev python3-lxml python3-simplejson python3-serial python3-yaml python3-passlib python3-psycopg2 python3-werkzeug
+          pip install wheel
+          pip install --no-build-isolation vatnumber==1.2
           pip install -r requirements.txt
           pip install sphinx
       - name: OpenUpgrade Docs

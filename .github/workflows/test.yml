@@ -10,7 +10,7 @@ on:
 
 jobs:
   test:
-    runs-on: ubuntu-latest
+    runs-on: ubuntu-22.04
     env:
       DB: "openupgrade"
       DB_USERNAME: "odoo"
@@ -58,6 +58,8 @@ jobs:
       - name: Requirements Installation
         run: |
           sudo npm install -g less less-plugin-clean-css
+          pip install wheel
+          pip install --no-build-isolation vatnumber==1.2
           pip install -q -r requirements.txt
           # don't use pypi's openupgradelib, but the one from source to avoid choking
           # on unreleased features in openupgradelib
