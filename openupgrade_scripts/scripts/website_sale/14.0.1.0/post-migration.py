@@ -26,9 +26,9 @@ def extract_custom_product_page_term_conditions(env):
             new_arch = product_custom_text_arch.replace(
                 product_custom_text_content, product_matches[0]
             )
-            product_custom_text_view.copy(
-                {"website_id": view.website_id.id, "arch_db": new_arch}
-            )
+            product_custom_text_view.with_context(
+                website_id=view.website_id.id
+            ).arch_db = new_arch
 
 
 @openupgrade.migrate()
