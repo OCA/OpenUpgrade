@@ -1,9 +1,44 @@
 # Copyright (C) 2021 Open Source Integrators <https://www.opensourceintegrators.com/>
 # Copyright 2021 ForgeFlow S.L.  <https://www.forgeflow.com>
+# Copyright 2023 Tecnativa - Pilar Vargas
 # License AGPL-3.0 or later (https://www.gnu.org/licenses/agpl).
 import re
 
 from openupgradelib import openupgrade
+
+
+def extract_footer_copyright_company_name(env):
+    """Replace Copyright content in the footer so as not to lose
+    content from previous versions if the copyright has been customised."""
+    for website in env["website"].search([]):
+        # Search for old copyright and if it does not exist set the default company name
+        web_frontend_layout_view = env["ir.ui.view"].search(
+            [("key", "=", "web.frontend_layout"), ("website_id", "=", website.id)]
+        )
+        if web_frontend_layout_view:
+            frontend_layout_pattern = r"<span(?:.*?)>(.*?)</span>"
+            frontend_layout_matches = re.findall(
+                frontend_layout_pattern,
+                web_frontend_layout_view.arch_db,
+                re.DOTALL,
+            )
+            copyright_content = " ".join(
+                match.strip() for match in frontend_layout_matches
+            )
+        else:
+            copyright_content = f"Copyright © {website.company_id.name}"
+        # Set new copyright
+        website_layout_view = env.ref("website.layout")
+        website_layout_pattern = (
+            r'<span class="o_footer_copyright_name mr-2">(.*?)<\/span>'
+        )
+        website_layout_matches, *_ = re.findall(
+            website_layout_pattern, website_layout_view.arch_db, re.DOTALL
+        )
+        new_arch = website_layout_view.arch_db.replace(
+            website_layout_matches, copyright_content
+        )
+        website_layout_view.with_context(website_id=website.id).arch_db = new_arch
 
 
 def extract_custom_product_page_term_conditions(env):
@@ -84,3 +119,4 @@ def migrate(env, version):
         """,
     )
     extract_custom_product_page_term_conditions(env)
+    extract_footer_copyright_company_name(env)
