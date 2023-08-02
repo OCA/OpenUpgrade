@@ -14,7 +14,7 @@ Contents:
 .. toctree::
    :maxdepth: 3
 
-   intro.rst
+   010_introduction.rst
    migrating_database.rst
    community.rst
    status.rst
