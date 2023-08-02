@@ -15,6 +15,7 @@ Contents:
    :maxdepth: 3
 
    010_introduction.rst
+   020_required_knowledge.rst
    migrating_database.rst
    community.rst
    status.rst
