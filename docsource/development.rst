@@ -4,10 +4,8 @@ Migration script development
 Overview
 --------
 
-The execution of the migration scripts is triggered by the "Migration Manager":
-:doc:`migrationmanager`.
-
-As explained with more detail in the page :doc:`migrationmanager`, the migration scripts
+As explained with more detail in the page "Migration Manager"
+(:doc:`060_odoo_migration_manager`), the migration scripts
 of a module are usually the combination of 3 python files (might be less if some
 steps are not necessary):
 
@@ -138,7 +136,6 @@ Learning resources
 .. toctree::
    :maxdepth: 2
 
-   migrationmanager
    devfaq
 
 You can also refer to the following:

@@ -19,6 +19,7 @@ Contents:
    030_coverage_analysis.rst
    040_run_migration.rst
    050_after_migration.rst
+   060_odoo_migration_manager.rst
    community.rst
    analysis.rst
    development.rst
