@@ -133,11 +133,6 @@ https://github.com/OCA/OpenUpgrade/pulls?q=is%3Apr+%5BFIX%5D+reset+exception
 Learning resources
 ------------------
 
-.. toctree::
-   :maxdepth: 2
-
-   devfaq
-
 You can also refer to the following:
 
 - `OpenUpgrade API <https://oca.github.io/openupgradelib/API.html>`_

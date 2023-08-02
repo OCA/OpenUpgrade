@@ -46,5 +46,4 @@ release of Odoo anymore.
    :maxdepth: 2
 
    analyse
-   xmlids
    format
