@@ -17,7 +17,8 @@ Contents:
    010_introduction.rst
    020_required_knowledge.rst
    030_coverage_analysis.rst
-   migrating_database.rst
+   040_run_migration.rst
+   050_after_migration.rst
    community.rst
    analysis.rst
    development.rst

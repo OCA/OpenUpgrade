@@ -97,7 +97,7 @@ The Trial and error process for the development of your scripts
 ---------------------------------------------------------------
 
 Basically, this is the happening during the step when you try to run the upgrade
-described in :doc:`migration_details`:
+described in :doc:`040_run_migration`:
 
 - [A] get the copy of your database in old version as `db-upgrade`, it is
   easy to do through the database manager of your old odoo
