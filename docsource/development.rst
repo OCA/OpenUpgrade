@@ -59,6 +59,7 @@ Learn from typical Use cases
    use_cases/table_renaming
    use_cases/xml_id_renaming
    use_cases/module_renaming
+   use_cases/module_merging
    use_cases/noupdate_xml_entry_changed
    use_cases/format_value_changing
    use_cases/value_mapping
