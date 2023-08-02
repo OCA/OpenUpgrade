@@ -4,7 +4,7 @@
   <meta charset="utf-8" /><meta name="generator" content="Docutils 0.18.1: http://docutils.sourceforge.net/" />
 
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Module Renaming &mdash; OpenUpgrade 16.0 documentation</title>
+  <title>Module Merging &mdash; OpenUpgrade 16.0 documentation</title>
       <link rel="stylesheet" href="../_static/pygments.css" type="text/css" />
       <link rel="stylesheet" href="../_static/css/theme.css" type="text/css" />
   <!--[if lt IE 9]>
@@ -19,8 +19,8 @@
     <script src="../_static/js/theme.js"></script>
     <link rel="index" title="Index" href="../genindex.html" />
     <link rel="search" title="Search" href="../search.html" />
-    <link rel="next" title="Module Merging" href="module_merging.html" />
-    <link rel="prev" title="XML-ID Renaming" href="xml_id_renaming.html" /> 
+    <link rel="next" title="Noupdate XML entry Changed" href="noupdate_xml_entry_changed.html" />
+    <link rel="prev" title="Module Renaming" href="module_renaming.html" /> 
 </head>
 
 <body class="wy-body-for-nav"> 
@@ -59,14 +59,14 @@
 <li class="toctree-l3"><a class="reference internal" href="model_renaming.html">Model Renaming</a></li>
 <li class="toctree-l3"><a class="reference internal" href="table_renaming.html">Table Renaming</a></li>
 <li class="toctree-l3"><a class="reference internal" href="xml_id_renaming.html">XML-ID Renaming</a></li>
-<li class="toctree-l3 current"><a class="current reference internal" href="#">Module Renaming</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="module_renaming.html">Module Renaming</a></li>
+<li class="toctree-l3 current"><a class="current reference internal" href="#">Module Merging</a><ul>
 <li class="toctree-l4"><a class="reference internal" href="#example">Example</a></li>
 <li class="toctree-l4"><a class="reference internal" href="#result-without-migration-script-expected-result">Result without migration script / Expected Result</a></li>
 <li class="toctree-l4"><a class="reference internal" href="#contribution-to-openupgrade">Contribution to OpenUpgrade</a></li>
 <li class="toctree-l4"><a class="reference internal" href="#notes">Notes</a></li>
 </ul>
 </li>
-<li class="toctree-l3"><a class="reference internal" href="module_merging.html">Module Merging</a></li>
 <li class="toctree-l3"><a class="reference internal" href="noupdate_xml_entry_changed.html">Noupdate XML entry Changed</a></li>
 <li class="toctree-l3"><a class="reference internal" href="noupdate_xml_entry_changed.html#rationale">Rationale</a></li>
 <li class="toctree-l3"><a class="reference internal" href="format_value_changing.html">Format Value Changing</a></li>
@@ -97,7 +97,7 @@
   <ul class="wy-breadcrumbs">
       <li><a href="../index.html" class="icon icon-home" aria-label="Home"></a></li>
           <li class="breadcrumb-item"><a href="../development.html">Migration script development</a></li>
-      <li class="breadcrumb-item active">Module Renaming</li>
+      <li class="breadcrumb-item active">Module Merging</li>
       <li class="wy-breadcrumbs-aside">
       </li>
   </ul>
@@ -106,19 +106,18 @@
           <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
            <div itemprop="articleBody">
              
-  <section id="module-renaming">
-<h1>Module Renaming<a class="headerlink" href="#module-renaming" title="Permalink to this heading"></a></h1>
+  <section id="module-merging">
+<h1>Module Merging<a class="headerlink" href="#module-merging" title="Permalink to this heading"></a></h1>
 <section id="example">
 <h2>Example<a class="headerlink" href="#example" title="Permalink to this heading"></a></h2>
-<p>From version 14.0 to version 15.0, the <code class="docutils literal notranslate"><span class="pre">crm_iap_lead_enrich</span></code> module
-has been renamed into <code class="docutils literal notranslate"><span class="pre">crm_iap_enrich</span></code>.</p>
-<p>See <a class="reference external" href="https://github.com/odoo/odoo/tree/14.0/addons/crm_iap_lead_enrich">Full v14 Module</a>.</p>
-<p>See <a class="reference external" href="https://github.com/odoo/odoo/tree/15.0/addons/crm_iap_enrich">Full v15 Module</a>.</p>
+<p>From version 15.0 to version 16.0, the <code class="docutils literal notranslate"><span class="pre">fetchmail_outlook</span></code> module
+has been merged into <code class="docutils literal notranslate"><span class="pre">microsoft_outlook</span></code>.</p>
+<p>See <a class="reference external" href="https://github.com/odoo/odoo/pull/88215">According Odoo Pull Request</a>.</p>
 </section>
 <section id="result-without-migration-script-expected-result">
 <h2>Result without migration script / Expected Result<a class="headerlink" href="#result-without-migration-script-expected-result" title="Permalink to this heading"></a></h2>
-<section id="v14-table-ir-module-module">
-<h3>V14 table <code class="docutils literal notranslate"><span class="pre">ir_module_module</span></code><a class="headerlink" href="#v14-table-ir-module-module" title="Permalink to this heading"></a></h3>
+<section id="v15-table-ir-module-module">
+<h3>V15 table <code class="docutils literal notranslate"><span class="pre">ir_module_module</span></code><a class="headerlink" href="#v15-table-ir-module-module" title="Permalink to this heading"></a></h3>
 <table class="docutils align-default">
 <thead>
 <tr class="row-odd"><th class="head"><p>id</p></th>
@@ -129,15 +128,20 @@ has been renamed into <code class="docutils literal notranslate"><span class="pr
 </thead>
 <tbody>
 <tr class="row-even"><td><p>200</p></td>
-<td><p>crm_iap_lead_enrich</p></td>
+<td><p>fetchmail_outlook</p></td>
 <td><p>installed</p></td>
-<td><p>14.0.1.1</p></td>
+<td><p>15.0.1.0</p></td>
+</tr>
+<tr class="row-odd"><td><p>304</p></td>
+<td><p>microsoft_outlook</p></td>
+<td><p>installed</p></td>
+<td><p>15.0.1.0</p></td>
 </tr>
 </tbody>
 </table>
 </section>
-<section id="v15-table-ir-module-module-without-openupgrade">
-<h3>V15 table <code class="docutils literal notranslate"><span class="pre">ir_module_module</span></code> (Without openupgrade)<a class="headerlink" href="#v15-table-ir-module-module-without-openupgrade" title="Permalink to this heading"></a></h3>
+<section id="v16-table-ir-module-module-without-openupgrade">
+<h3>V16 table <code class="docutils literal notranslate"><span class="pre">ir_module_module</span></code> (Without openupgrade)<a class="headerlink" href="#v16-table-ir-module-module-without-openupgrade" title="Permalink to this heading"></a></h3>
 <table class="docutils align-default">
 <thead>
 <tr class="row-odd"><th class="head"><p>id</p></th>
@@ -148,27 +152,29 @@ has been renamed into <code class="docutils literal notranslate"><span class="pr
 </thead>
 <tbody>
 <tr class="row-even"><td><p>200</p></td>
-<td><p>crm_iap_lead_enrich</p></td>
+<td><p>fetchmail_outlook</p></td>
 <td><p>to upgrade</p></td>
-<td><p>14.0.1.1</p></td>
+<td><p>15.0.1.0</p></td>
 </tr>
-<tr class="row-odd"><td><p>405</p></td>
-<td><p>crm_iap_enrich</p></td>
-<td><p>uninstalled</p></td>
-<td></td>
+<tr class="row-odd"><td><p>304</p></td>
+<td><p>microsoft_outlook</p></td>
+<td><p>installed</p></td>
+<td><p>16.0.1.0</p></td>
 </tr>
 </tbody>
 </table>
 <p><strong>Problem</strong>:</p>
 <ul class="simple">
-<li><p>The v14 module remains in a <code class="docutils literal notranslate"><span class="pre">to</span> <span class="pre">upgrade</span></code> state.</p></li>
-<li><p>The v15 module has not been installed.</p></li>
+<li><p>The v15 module remains in a <code class="docutils literal notranslate"><span class="pre">to</span> <span class="pre">upgrade</span></code> state.</p></li>
 </ul>
-<p>As a result, the models of the module have not been loaded, the related features
-are not available, and the database is in a unstable state.</p>
+<p>As a result:</p>
+<ul class="simple">
+<li><p>the data will be recreated instead of having their xml_id renamed</p></li>
+<li><p>the database is in a unstable state.</p></li>
+</ul>
 </section>
-<section id="v15-table-ir-module-module-with-openupgrade">
-<h3>V15 table <code class="docutils literal notranslate"><span class="pre">ir_module_module</span></code> (With openupgrade)<a class="headerlink" href="#v15-table-ir-module-module-with-openupgrade" title="Permalink to this heading"></a></h3>
+<section id="v16-table-ir-module-module-with-openupgrade">
+<h3>V16 table <code class="docutils literal notranslate"><span class="pre">ir_module_module</span></code> (With openupgrade)<a class="headerlink" href="#v16-table-ir-module-module-with-openupgrade" title="Permalink to this heading"></a></h3>
 <table class="docutils align-default">
 <thead>
 <tr class="row-odd"><th class="head"><p>id</p></th>
@@ -178,10 +184,10 @@ are not available, and the database is in a unstable state.</p>
 </tr>
 </thead>
 <tbody>
-<tr class="row-even"><td><p>200</p></td>
-<td><p>crm_iap_enrich</p></td>
+<tr class="row-even"><td><p>304</p></td>
+<td><p>microsoft_outlook</p></td>
 <td><p>installed</p></td>
-<td><p>15.0.1.1</p></td>
+<td><p>16.0.1.0</p></td>
 </tr>
 </tbody>
 </table>
@@ -191,7 +197,7 @@ are not available, and the database is in a unstable state.</p>
 <h2>Contribution to OpenUpgrade<a class="headerlink" href="#contribution-to-openupgrade" title="Permalink to this heading"></a></h2>
 <section id="apriori-py-file">
 <h3>apriori.py file<a class="headerlink" href="#apriori-py-file" title="Permalink to this heading"></a></h3>
-<p>The list of the renamed module is present in a <code class="docutils literal notranslate"><span class="pre">apriori.py</span></code> file in each version
+<p>The list of the merged modules is present in a <code class="docutils literal notranslate"><span class="pre">apriori.py</span></code> file in each version
 of openupgrade.</p>
 <ul class="simple">
 <li><p>Until version 13, the file is present in this path:
@@ -200,24 +206,28 @@ of openupgrade.</p>
 <code class="docutils literal notranslate"><span class="pre">openupgrade_scripts/apriori.py</span></code>.</p></li>
 </ul>
 <p>Add a key in the following dict:</p>
-<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="n">renamed_modules</span> <span class="o">=</span> <span class="p">{</span>
-    <span class="s2">&quot;crm_iap_lead_enrich&quot;</span><span class="p">:</span> <span class="s2">&quot;crm_iap_enrich&quot;</span><span class="p">,</span>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="n">merged_modules</span> <span class="o">=</span> <span class="p">{</span>
+    <span class="s2">&quot;fetchmail_outlook&quot;</span><span class="p">:</span> <span class="s2">&quot;microsoft_outlook&quot;</span><span class="p">,</span>
 <span class="p">}</span>
 </pre></div>
 </div>
-<p>See <a class="reference external" href="https://github.com/OCA/OpenUpgrade/blob/97491cb7d9a8ed494a49cf1db9b7fc8852aac254/openupgrade_scripts/apriori.py#L9-L27">Full v15 apriori file</a>.</p>
+<p>See <a class="reference external" href="https://github.com/OCA/OpenUpgrade/blob/41b843404bd454051f4115da87eb39b4f1c5e5b0/openupgrade_scripts/apriori.py#L37">Full v16 apriori file</a>.</p>
 </section>
 <section id="pre-migration-py-file">
 <h3>pre-migration.py file<a class="headerlink" href="#pre-migration-py-file" title="Permalink to this heading"></a></h3>
 <p>in the migration folder of the <code class="docutils literal notranslate"><span class="pre">base</span></code> module, add:</p>
-<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="kn">from</span> <span class="nn">odoo.addons.openupgrade_scripts.apriori</span> <span class="kn">import</span> <span class="n">renamed_modules</span>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="kn">from</span> <span class="nn">odoo.addons.openupgrade_scripts.apriori</span> <span class="kn">import</span> <span class="n">merged_modules</span>
 
 <span class="nd">@openupgrade</span><span class="o">.</span><span class="n">migrate</span><span class="p">(</span><span class="n">use_env</span><span class="o">=</span><span class="kc">False</span><span class="p">)</span>
 <span class="k">def</span> <span class="nf">migrate</span><span class="p">(</span><span class="n">cr</span><span class="p">,</span> <span class="n">version</span><span class="p">):</span>
-    <span class="n">openupgrade</span><span class="o">.</span><span class="n">update_module_names</span><span class="p">(</span><span class="n">cr</span><span class="p">,</span> <span class="n">renamed_modules</span><span class="o">.</span><span class="n">items</span><span class="p">())</span>
+    <span class="n">openupgrade</span><span class="o">.</span><span class="n">update_module_names</span><span class="p">(</span>
+        <span class="n">cr</span><span class="p">,</span>
+        <span class="n">merged_modules</span><span class="o">.</span><span class="n">items</span><span class="p">(),</span>
+        <span class="n">merge_modules</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span>
+    <span class="p">)</span>
 </pre></div>
 </div>
-<p>See <a class="reference external" href="https://github.com/OCA/OpenUpgrade/blob/97491cb7d9a8ed494a49cf1db9b7fc8852aac254/openupgrade_scripts/scripts/base/15.0.1.3/pre-migration.py#L73">Full v15 base pre migration file</a>.</p>
+<p>See <a class="reference external" href="https://github.com/OCA/OpenUpgrade/blob/5f341b7f80b66b06714a257237f4c76c5141983d/openupgrade_scripts/scripts/base/15.0.1.3/pre-migration.py#L74">Full v16 base pre migration file</a>.</p>
 <p>Note: The addition is done at the initialization of the OpenUpgrade Project,
 for each new version. So you will generally not have to do this, as it’s only OpenUpgrade maintainers that initialize the OpenUpgrade Project.</p>
 </section>
@@ -235,57 +245,37 @@ for each new version. So you will generally not have to do this, as it’s only 
 <span class="o">|</span> Module                            | Status  + Extra Information                               |
 +===================================+=========+=================================================+
 +-----------------------------------+---------+-------------------------------------------------+
-<span class="o">|</span> |new| crm_iap_enrich              |         | Renamed from crm_iap_lead_enrich                |
-+-----------------------------------+---------+-------------------------------------------------+
-<span class="o">|</span> |del| crm_iap_lead_enrich         |         | Renamed to crm_iap_enrich                       |
+<span class="o">|</span> |del| fetchmail_outlook           | Done    | Merged into microsoft_outlook.                  |
 +-----------------------------------+---------+-------------------------------------------------+
 </pre></div>
 </div>
-</section>
-<section id="generate-update-analysis-file">
-<h3>Generate / Update analysis file<a class="headerlink" href="#generate-update-analysis-file" title="Permalink to this heading"></a></h3>
-<p>As long as the renaming has not been identified, the <code class="docutils literal notranslate"><span class="pre">upgrade_analysis.txt</span></code> generated
-at the initialization of the OpenUpgrade version is partially wrong, because openupgrade
-considers that the xml_id of the module are new, while they can come from the module of
-the previous version.</p>
-<p>For the Odoo modules that are concerned by the renaming, you must update the version
-analysis with the upgrade_analysis tool present in the OCA/server-tools project.</p>
-<p>Once the analysis is done with the updated <code class="docutils literal notranslate"><span class="pre">apriory.py</span></code> file, the analysis
-file contains correct information, and can be studied to write remaining
-pre / post migration scripts.</p>
-<div class="highlight-xml notranslate"><div class="highlight"><pre><span></span>---XML<span class="w"> </span>records<span class="w"> </span>in<span class="w"> </span>module<span class="w"> </span>&#39;crm_iap_enrich&#39;---
-NEW<span class="w"> </span>ir.actions.server:<span class="w"> </span>crm_iap_enrich.action_enrich_mail<span class="w"> </span>[renamed<span class="w"> </span>from<span class="w"> </span>crm_iap_lead_enrich<span class="w"> </span>module]
-DEL<span class="w"> </span>ir.actions.server:<span class="w"> </span>crm_iap_lead_enrich.action_enrich_mail<span class="w"> </span>[renamed<span class="w"> </span>to<span class="w"> </span>crm_iap_enrich<span class="w"> </span>module]
-</pre></div>
-</div>
-<p>See <a class="reference external" href="https://github.com/OCA/OpenUpgrade/blob/97491cb7d9a8ed494a49cf1db9b7fc8852aac254/openupgrade_scripts/scripts/crm_iap_enrich/15.0.1.1/upgrade_analysis.txt">Full v15 upgrade analysis file</a>.</p>
 </section>
 </section>
 <section id="notes">
 <h2>Notes<a class="headerlink" href="#notes" title="Permalink to this heading"></a></h2>
 <ul class="simple">
-<li><p>In the <code class="docutils literal notranslate"><span class="pre">apriori.py</span></code> file, in the <code class="docutils literal notranslate"><span class="pre">renamed_modules</span></code> dict, put the Odoo renaming at
+<li><p>In the <code class="docutils literal notranslate"><span class="pre">apriori.py</span></code> file, in the <code class="docutils literal notranslate"><span class="pre">merged_modules</span></code> dict, put the Odoo renaming at
 the beginning, ordered by module name, then OCA modules renaming, with the mention of
 OCA repository. Example:</p></li>
 </ul>
-<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="n">renamed_modules</span> <span class="o">=</span> <span class="p">{</span>
-    <span class="c1"># Odoo</span>
-    <span class="s1">&#39;crm_reveal&#39;</span><span class="p">:</span> <span class="s1">&#39;crm_iap_lead&#39;</span><span class="p">,</span>
-    <span class="s1">&#39;payment_ogone&#39;</span><span class="p">:</span> <span class="s1">&#39;payment_ingenico&#39;</span><span class="p">,</span>
-    <span class="c1"># OCA/delivery-carrier</span>
-    <span class="s1">&#39;delivery_carrier_label_ups&#39;</span><span class="p">:</span> <span class="s1">&#39;delivery_ups_oca&#39;</span><span class="p">,</span>
-    <span class="c1"># OCA/event</span>
-    <span class="s1">&#39;website_event_filter_selector&#39;</span><span class="p">:</span> <span class="s1">&#39;website_event_filter_city&#39;</span><span class="p">,</span>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="n">merged_modules</span> <span class="o">=</span> <span class="p">{</span>
+    <span class="c1"># odoo</span>
+    <span class="s2">&quot;account_edi_facturx&quot;</span><span class="p">:</span> <span class="s2">&quot;account_edi_ubl_cii&quot;</span><span class="p">,</span>
+    <span class="s2">&quot;account_edi_ubl&quot;</span><span class="p">:</span> <span class="s2">&quot;account_edi_ubl_cii&quot;</span><span class="p">,</span>
+    <span class="s2">&quot;website_sale_gift_card&quot;</span><span class="p">:</span> <span class="s2">&quot;website_sale_loyalty&quot;</span><span class="p">,</span>
+    <span class="c1"># OCA/account-financial-tools</span>
+    <span class="s2">&quot;account_balance_line&quot;</span><span class="p">:</span> <span class="s2">&quot;account&quot;</span><span class="p">,</span>
+    <span class="s2">&quot;account_move_force_removal&quot;</span><span class="p">:</span> <span class="s2">&quot;account&quot;</span><span class="p">,</span>
 <span class="p">}</span>
 </pre></div>
 </div>
 <ul class="simple">
 <li><p>If your instance has custom modules, and if you took advantage of the migration
-to refactor these custom modules by renaming them,
+to refactor these custom modules by merging them,
 you can add the following lines at the end of this file:</p></li>
 </ul>
-<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="n">renamed_modules</span><span class="o">.</span><span class="n">update</span><span class="p">({</span>
-    <span class="s2">&quot;my_obsolete_module&quot;</span><span class="p">:</span> <span class="s2">&quot;my_renamed_module&quot;</span><span class="p">,</span>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="n">merged_modules</span><span class="o">.</span><span class="n">update</span><span class="p">({</span>
+    <span class="s2">&quot;my_obsolete_module&quot;</span><span class="p">:</span> <span class="s2">&quot;my_main_module&quot;</span><span class="p">,</span>
 <span class="p">})</span>
 </pre></div>
 </div>
@@ -297,8 +287,8 @@ you can add the following lines at the end of this file:</p></li>
            </div>
           </div>
           <footer><div class="rst-footer-buttons" role="navigation" aria-label="Footer">
-        <a href="xml_id_renaming.html" class="btn btn-neutral float-left" title="XML-ID Renaming" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left" aria-hidden="true"></span> Previous</a>
-        <a href="module_merging.html" class="btn btn-neutral float-right" title="Module Merging" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right" aria-hidden="true"></span></a>
+        <a href="module_renaming.html" class="btn btn-neutral float-left" title="Module Renaming" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left" aria-hidden="true"></span> Previous</a>
+        <a href="noupdate_xml_entry_changed.html" class="btn btn-neutral float-right" title="Noupdate XML entry Changed" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right" aria-hidden="true"></span></a>
     </div>
 
   <hr/>
