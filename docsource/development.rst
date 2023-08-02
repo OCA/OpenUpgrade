@@ -60,6 +60,7 @@ Learn from typical Use cases
    use_cases/xml_id_renaming
    use_cases/module_renaming
    use_cases/noupdate_xml_entry_changed
+   use_cases/format_value_changing
    use_cases/value_mapping
    use_cases/sql_constraint_deleted
 
