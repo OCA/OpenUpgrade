@@ -2,6 +2,7 @@
 
 OUTPUT_DIR=$(realpath $(dirname $0)/./docs)
 SOURCE_DIR=$(realpath $(dirname $0)/./docsource)
+COVERAGE_DIR=$(realpath $(dirname $0)/./docsource/coverage_analysis)
 
 BASE_URL=https://raw.githubusercontent.com/OCA/OpenUpgrade/
 DOC_PARTS="7.0/openerp/openupgrade/doc/source/modules50-60.rst
@@ -23,7 +24,7 @@ for line in $DOC_PARTS; do
         continue
     fi
     name=$(basename $line)
-    wget -q $BASE_URL/$line -O $SOURCE_DIR/$name
+    wget -q $BASE_URL/$line -O $COVERAGE_DIR/$name
 done
 
 mkdir -p $OUTPUT_DIR/source/.static

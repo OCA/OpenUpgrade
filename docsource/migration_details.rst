@@ -40,7 +40,7 @@ Check if there are migration scripts provided for the set of modules that
 are installed in your Odoo database. If there are modules for which no
 migration scripts have been developed yet, your migration may fail or the
 integrity of your database may be lacking. Check the module coverage in
-this documentation under :doc:`status` and refer to the :doc:`development`
+this documentation under :doc:`030_coverage_analysis` and refer to the :doc:`development`
 documentation to add the missing migration scripts.
 
 3. Make a copy of the database to migrate

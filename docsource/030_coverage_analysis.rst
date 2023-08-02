@@ -9,15 +9,15 @@ developing parties. See below for an overview of module coverage per version.
 .. toctree::
    :maxdepth: 1
 
-   modules150-160
-   modules140-150
-   modules130-140
-   modules120-130
-   modules110-120
-   modules100-110
-   modules90-100
-   modules80-90
-   modules70-80
-   modules61-70
-   modules60-61
-   modules50-60
+   coverage_analysis/modules150-160
+   coverage_analysis/modules140-150
+   coverage_analysis/modules130-140
+   coverage_analysis/modules120-130
+   coverage_analysis/modules110-120
+   coverage_analysis/modules100-110
+   coverage_analysis/modules90-100
+   coverage_analysis/modules80-90
+   coverage_analysis/modules70-80
+   coverage_analysis/modules61-70
+   coverage_analysis/modules60-61
+   coverage_analysis/modules50-60
