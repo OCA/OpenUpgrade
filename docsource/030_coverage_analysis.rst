@@ -6,6 +6,12 @@ between subsequent major releases of Odoo. This is the goal of the project.
 The design is such that the effort can be distributed between different
 developing parties. See below for an overview of module coverage per version.
 
+Check if there are migration scripts provided for the set of modules that
+are installed in your Odoo database. If there are modules for which no
+migration scripts have been developed yet, your migration may fail or the
+integrity of your database may be lacking.
+Refer to the :doc:`development` documentation to add the missing migration scripts.
+
 .. toctree::
    :maxdepth: 1
 

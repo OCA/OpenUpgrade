@@ -33,23 +33,13 @@ openupgradelib
 
     pip install git+https://github.com/OCA/openupgradelib.git@master#egg=openupgradelib
 
-2. Check coverage of the migration scripts for your installed modules
-*********************************************************************
-
-Check if there are migration scripts provided for the set of modules that
-are installed in your Odoo database. If there are modules for which no
-migration scripts have been developed yet, your migration may fail or the
-integrity of your database may be lacking. Check the module coverage in
-this documentation under :doc:`030_coverage_analysis` and refer to the :doc:`development`
-documentation to add the missing migration scripts.
-
-3. Make a copy of the database to migrate
+2. Make a copy of the database to migrate
 *****************************************
 
 Decide which database you are going to upgrade. You absolutely *must* make a
 backup of your live database before you start this process!
 
-4. Adjust the configuration for Odoo and OpenUpgrade
+3. Adjust the configuration for Odoo and OpenUpgrade
 ****************************************************
 
 Edit the configuration files and command line parameters to point to the
@@ -90,7 +80,7 @@ file under a header *[openupgrade]*
   selected for installation (as will their dependencies). Be careful not to
   introduce a circular dependency using this directive.
 
-5. Run the upgrade, fix data and repeat...
+4. Run the upgrade, fix data and repeat...
 ******************************************
 
 Run the upgrade and check for errors. You will probably learn a lot about
