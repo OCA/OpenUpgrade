@@ -1,5 +1,5 @@
-Module coverage
-===============
+Coverage Analysis
+=================
 
 For all official addons, migration scripts should be provided for migrating
 between subsequent major releases of Odoo. This is the goal of the project.
