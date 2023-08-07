@@ -29,7 +29,12 @@ For documentation, see <a href="https://oca.github.io/OpenUpgrade">here</a> incl
 
 [//]: # (addons)
 
-This part will be replaced when running the oca-gen-addons-table script from OCA/maintainer-tools.
+Available addons
+----------------
+addon | version | maintainers | summary
+--- | --- | --- | ---
+[openupgrade_framework](openupgrade_framework/) | 16.0.1.0.0 | [![legalsylvain](https://github.com/legalsylvain.png?size=30px)](https://github.com/legalsylvain) [![StefanRijnhart](https://github.com/StefanRijnhart.png?size=30px)](https://github.com/StefanRijnhart) [![hbrunn](https://github.com/hbrunn.png?size=30px)](https://github.com/hbrunn) | Module to integrate in the server_wide_modules option to make upgrades between two major revisions.
+[openupgrade_scripts](openupgrade_scripts/) | 16.0.1.0.3 |  | Module that contains all the migrations analysis and scripts for migrate Odoo SA modules.
 
 [//]: # (end addons)
 
