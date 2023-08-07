@@ -16,6 +16,8 @@ renamed_modules = {
     "helpdesk_sale_coupon": "helpdesk_sale_loyalty",
     "sale_coupon_taxcloud": "sale_loyalty_taxcloud",
     "sale_coupon_taxcloud_delivery": "sale_loyalty_taxcloud_delivery",
+    # OCA/bank-statement-import
+    "account_statement_import": "account_statement_import_file",
     # OCA/knowledge
     "knowledge": "document_knowledge",
     # OCA/server-ux
