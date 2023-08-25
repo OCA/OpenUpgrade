@@ -69,7 +69,6 @@ def _handle_website_legal_page(env):
             )
             company.write(
                 {
-                    "terms_type": "html",
                     "invoice_terms_html": view_temp._render({}, engine="ir.qweb"),
                 }
             )
