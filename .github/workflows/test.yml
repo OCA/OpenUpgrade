@@ -95,6 +95,12 @@ jobs:
           for snippet in openupgrade/openupgrade_scripts/scripts/*/*/tests/data*.py; do
             odoo-old/odoo-bin shell -d $DB < $snippet
           done
+      - name: Test end-migration script for newly installed module (i.e. "spreadsheet" for v16)
+        run: |
+          END_SCRIPT_TEST=openupgrade/openupgrade_scripts/scripts/base/16.0.1.3/tests/end-migration_test.py
+          NEW_MODULE_SCRIPT_DIR=openupgrade/openupgrade_scripts/scripts/spreadsheet/16.0.1.0/
+          mkdir -p $NEW_MODULE_SCRIPT_DIR
+          cp $END_SCRIPT_TEST $NEW_MODULE_SCRIPT_DIR
       - name: OpenUpgrade test
         run: |
           # select modules and perform the upgrade
