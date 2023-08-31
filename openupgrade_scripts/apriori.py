@@ -55,6 +55,8 @@ merged_modules = {
     "account_move_force_removal": "account",
     # OCA/account-invoice-reporting
     "account_invoice_report_due_list": "account",
+    # OCA/e-commerce
+    "website_sale_require_login": "website_sale",
     # OCA/purchase-workflow
     "product_form_purchase_link": "purchase",
 }
