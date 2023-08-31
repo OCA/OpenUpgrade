@@ -13,6 +13,32 @@ from odoo.addons.openupgrade_scripts.apriori import merged_modules, renamed_modu
 _logger = logging.getLogger(__name__)
 
 
+def login_or_registration_required_at_checkout(cr):
+    """website_sale_require_login merged into website_sale. Check if the
+    website_sale_require_login module was installed in v15 to set the
+    website.account_on_checkout field as mandatory so that the functionality
+    remains the same, login/registration required for checkout."""
+    # Check if the module is installed and its status is "installed".
+    module_name = "website_sale_require_login"
+    if openupgrade.is_module_installed(cr, module_name):
+        # Add the field 'account_on_checkout' to the 'website' table if it doesn't exist yet.
+        openupgrade.logged_query(
+            cr,
+            """
+            ALTER TABLE website
+            ADD COLUMN IF NOT EXISTS account_on_checkout
+            """,
+        )
+        # Set the value 'mandatory' in the field for all records in the table 'website'.
+        openupgrade.logged_query(
+            cr,
+            """
+            UPDATE website
+            SET account_on_checkout = 'mandatory'
+            """,
+        )
+
+
 def update_translatable_fields(cr):
     # map of nonstandard table names
     model2table = {
@@ -102,6 +128,7 @@ def migrate(cr, version):
             "recommended to run the Odoo with --load=openupgrade_framework "
             "when migrating your database."
         )
+    login_or_registration_required_at_checkout(cr)
     openupgrade.update_module_names(cr, renamed_modules.items())
     openupgrade.update_module_names(cr, merged_modules.items(), merge_modules=True)
     # restricting inherited views to groups isn't allowed any more
