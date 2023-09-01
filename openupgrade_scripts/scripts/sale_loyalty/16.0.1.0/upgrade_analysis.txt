@@ -1,25 +1,38 @@
 ---Models in module 'sale_loyalty'---
-new model sale.loyalty.coupon.wizard [transient]
+obsolete model sale.coupon.apply.code (renamed to sale.loyalty.coupon.wizard) [transient]
+new model sale.loyalty.coupon.wizard (renamed from sale.coupon.apply.code) [transient]
 new model sale.loyalty.reward.wizard [transient]
 new model sale.order.coupon.points
 ---Fields in module 'sale_loyalty'---
-sale_loyalty / loyalty.card             / order_id (many2one)           : NEW relation: sale.order
+sale_coupon  / coupon.coupon            / sales_order_id (many2one)     : DEL relation: sale.order
+sale_coupon  / sale.order               / applied_coupon_ids (one2many) : relation is now 'loyalty.card' ('coupon.coupon') [nothing to do]
+sale_coupon  / sale.order               / applied_coupon_ids (one2many) : table is now 'loyalty_card_sale_order_rel' ('False')
+sale_coupon  / sale.order               / applied_coupon_ids (one2many) : type is now 'many2many' ('one2many')
+sale_coupon  / sale.order               / code_promo_program_id (many2one): DEL relation: coupon.program
+sale_coupon  / sale.order               / generated_coupon_ids (one2many): DEL relation: coupon.coupon
+sale_coupon  / sale.order               / no_code_promo_program_ids (many2many): DEL relation: coupon.program
+sale_coupon  / sale.order.line          / is_reward_line (boolean)      : not stored anymore
+sale_coupon  / sale.order.line          / is_reward_line (boolean)      : now a function
+sale_gift_card / gift.card                / buy_line_id (many2one)        : DEL relation: sale.order.line
+sale_gift_card / gift.card                / redeem_line_ids (one2many)    : DEL relation: sale.order.line
+sale_gift_card / sale.order.line          / generated_gift_card_ids (one2many): DEL relation: gift.card
+sale_gift_card / sale.order.line          / gift_card_id (many2one)       : DEL relation: gift.card
 sale_loyalty / loyalty.program          / sale_ok (boolean)             : NEW hasdefault: default
-sale_loyalty / sale.order               / applied_coupon_ids (many2many): NEW relation: loyalty.card
 sale_loyalty / sale.order               / code_enabled_rule_ids (many2many): NEW relation: loyalty.rule
 sale_loyalty / sale.order               / coupon_point_ids (one2many)   : NEW relation: sale.order.coupon.points
-sale_loyalty / sale.order               / reward_amount (float)         : previously in module sale_coupon
 sale_loyalty / sale.order.coupon.points / coupon_id (many2one)          : NEW relation: loyalty.card, required
 sale_loyalty / sale.order.coupon.points / order_id (many2one)           : NEW relation: sale.order, required
 sale_loyalty / sale.order.coupon.points / points (float)                : NEW required
 sale_loyalty / sale.order.line          / coupon_id (many2one)          : NEW relation: loyalty.card
-sale_loyalty / sale.order.line          / is_reward_line (boolean)      : previously in module sale_coupon
 sale_loyalty / sale.order.line          / points_cost (float)           : NEW
 sale_loyalty / sale.order.line          / reward_id (many2one)          : NEW relation: loyalty.reward
 sale_loyalty / sale.order.line          / reward_identifier_code (char) : NEW
 ---XML records in module 'sale_loyalty'---
 NEW ir.actions.act_window: sale_loyalty.sale_loyalty_coupon_wizard_action
 NEW ir.actions.act_window: sale_loyalty.sale_loyalty_reward_wizard_action
+DEL ir.actions.act_window: sale_coupon.sale_coupon_apply_code_action
+DEL ir.actions.act_window: sale_coupon.sale_order_action
+DEL ir.actions.act_window: sale_gift_card.gift_card_sale_order_action
 NEW ir.model.access: sale_loyalty.access_applicability_manager [renamed from sale_coupon module]
 NEW ir.model.access: sale_loyalty.access_applicability_salesman [renamed from sale_coupon module]
 NEW ir.model.access: sale_loyalty.access_communication_manager
@@ -35,9 +48,24 @@ NEW ir.model.access: sale_loyalty.access_sale_coupon_apply_code_line
 NEW ir.model.access: sale_loyalty.access_sale_coupon_generate
 NEW ir.model.access: sale_loyalty.access_sale_order_coupon_points_manager
 NEW ir.model.access: sale_loyalty.access_sale_order_coupon_points_salesman
+DEL ir.model.access: sale_coupon.access_applicability_manager [renamed to sale_loyalty module]
+DEL ir.model.access: sale_coupon.access_applicability_salesman [renamed to sale_loyalty module]
+DEL ir.model.access: sale_coupon.access_coupon_manager [renamed to sale_loyalty module]
+DEL ir.model.access: sale_coupon.access_coupon_salesman [renamed to sale_loyalty module]
+DEL ir.model.access: sale_coupon.access_program_manager [renamed to sale_loyalty module]
+DEL ir.model.access: sale_coupon.access_program_salesman [renamed to sale_loyalty module]
+DEL ir.model.access: sale_coupon.access_reward_manager [renamed to sale_loyalty module]
+DEL ir.model.access: sale_coupon.access_reward_salesman [renamed to sale_loyalty module]
+DEL ir.model.access: sale_coupon.access_sale_coupon_apply_code [renamed to sale_loyalty module]
+DEL ir.model.access: sale_coupon.access_sale_coupon_generate [renamed to pos_loyalty module]
+DEL ir.model.access: sale_gift_card.access_gift_card_manager
+DEL ir.model.access: sale_gift_card.access_gift_card_sales
 NEW ir.model.constraint: sale_loyalty.constraint_sale_order_coupon_points_order_coupon_unique
+DEL ir.rule: sale_coupon.sale_coupon_apply_code_rule (noupdate)
 NEW ir.ui.menu: sale_loyalty.menu_discount_loyalty_type_config
 NEW ir.ui.menu: sale_loyalty.menu_gift_ewallet_type_config
+DEL ir.ui.menu: sale_coupon.menu_coupon_type_config
+DEL ir.ui.menu: sale_coupon.menu_promotion_type_config
 NEW ir.ui.view: sale_loyalty.loyalty_card_view_form_inherit_sale_loyalty
 NEW ir.ui.view: sale_loyalty.loyalty_program_view_form_inherit_sale_loyalty
 NEW ir.ui.view: sale_loyalty.sale_loyalty_coupon_wizard_view_form
@@ -46,3 +74,18 @@ NEW ir.ui.view: sale_loyalty.sale_order_portal_content_inherit
 NEW ir.ui.view: sale_loyalty.sale_order_view_form_inherit_sale_loyalty
 NEW ir.ui.view: sale_loyalty.sale_purchased_gift_card
 NEW ir.ui.view: sale_loyalty.used_gift_card
+DEL ir.ui.view: sale_coupon.res_config_settings_view_form
+DEL ir.ui.view: sale_coupon.sale_coupon_apply_code_view_form
+DEL ir.ui.view: sale_coupon.sale_coupon_program_view_coupon_program_form
+DEL ir.ui.view: sale_coupon.sale_coupon_program_view_promo_program_form
+DEL ir.ui.view: sale_coupon.sale_coupon_view_coupon_program_kanban
+DEL ir.ui.view: sale_coupon.sale_coupon_view_form
+DEL ir.ui.view: sale_coupon.sale_coupon_view_tree
+DEL ir.ui.view: sale_coupon.sale_order_view_form
+DEL ir.ui.view: sale_gift_card.sale_gift_card_view_form
+DEL ir.ui.view: sale_gift_card.sale_order_portal_content_inherit
+DEL ir.ui.view: sale_gift_card.sale_order_view_extend_gift_card_form
+DEL ir.ui.view: sale_gift_card.sale_purchased_gift_card
+DEL ir.ui.view: sale_gift_card.used_gift_card
+DEL mail.template: sale_coupon.mail_template_sale_coupon (noupdate)
+DEL mail.template: sale_gift_card.mail_template_gift_card [renamed to loyalty module]

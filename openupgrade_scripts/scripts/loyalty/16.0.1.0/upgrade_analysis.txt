@@ -1,42 +1,74 @@
 ---Models in module 'loyalty'---
-new model loyalty.card
+obsolete model coupon.coupon (renamed to loyalty.card)
+obsolete model coupon.generate.wizard [transient]
+obsolete model coupon.program (renamed to loyalty.program)
+obsolete model coupon.reward (renamed to loyalty.reward)
+obsolete model coupon.rule (renamed to loyalty.rule)
+obsolete model report.coupon.report_coupon [abstract]
+new model loyalty.card (renamed from coupon.coupon)
 new model loyalty.generate.wizard [transient]
 new model loyalty.mail
-new model loyalty.program
-new model loyalty.reward
-new model loyalty.rule
+new model loyalty.program (renamed from coupon.program)
+new model loyalty.reward (renamed from coupon.reward)
+new model loyalty.rule (renamed from coupon.rule)
 ---Fields in module 'loyalty'---
-loyalty      / loyalty.card             / code (char)                   : NEW required, hasdefault: default
+coupon       / coupon.coupon            / expiration_date (date)        : is now stored
+coupon       / coupon.coupon            / expiration_date (date)        : not a function anymore
+coupon       / coupon.coupon            / program_id (many2one)         : relation is now 'loyalty.program' ('coupon.program') [nothing to do]
+coupon       / coupon.coupon            / state (selection)             : DEL required, selection_keys: ['cancel', 'expired', 'new', 'reserved', 'sent', 'used']
+coupon       / coupon.program           / _inherits                     : DEL _inherits: {'coupon.rule': 'rule_id', 'coupon.reward': 'reward_id'}
+coupon       / coupon.program           / _order                        : _order is now 'sequence' ('sequence, reward_type')
+coupon       / coupon.program           / coupon_ids (one2many)         : relation is now 'loyalty.card' ('coupon.coupon') [nothing to do]
+coupon       / coupon.program           / currency_id (many2one)        : is now stored
+coupon       / coupon.program           / currency_id (many2one)        : not related anymore
+coupon       / coupon.program           / currency_id (many2one)        : now required
+coupon       / coupon.program           / maximum_use_number (integer)  : DEL
+coupon       / coupon.program           / program_type (selection)      : now required
+coupon       / coupon.program           / program_type (selection)      : selection_keys is now '['buy_x_get_y', 'coupons', 'ewallet', 'gift_card', 'loyalty', 'next_order_coupons', 'promo_code', 'promotion']' ('['coupon_program', 'promotion_program']')
+coupon       / coupon.program           / promo_applicability (selection): DEL selection_keys: ['on_current_order', 'on_next_order']
+coupon       / coupon.program           / promo_code (char)             : DEL
+coupon       / coupon.program           / promo_code_usage (selection)  : DEL selection_keys: ['code_needed', 'no_code_needed']
+coupon       / coupon.program           / reward_id (many2one)          : DEL relation: coupon.reward, required
+coupon       / coupon.program           / rule_id (many2one)            : DEL relation: coupon.rule, required
+coupon       / coupon.program           / validity_duration (integer)   : DEL
+coupon       / coupon.reward            / _order                        : _order is now 'required_points asc' ('id')
+coupon       / coupon.reward            / discount_apply_on (selection) : DEL selection_keys: ['cheapest_product', 'on_order', 'specific_products']
+coupon       / coupon.reward            / discount_fixed_amount (float) : DEL
+coupon       / coupon.reward            / discount_percentage (float)   : DEL
+coupon       / coupon.reward            / discount_specific_product_ids (many2many): DEL relation: product.product
+coupon       / coupon.reward            / discount_type (selection)     : DEL selection_keys: ['fixed_amount', 'percentage']
+coupon       / coupon.reward            / reward_description (char)     : DEL
+coupon       / coupon.reward            / reward_product_quantity (integer): DEL
+coupon       / coupon.reward            / reward_product_uom_id (many2one): not related anymore
+coupon       / coupon.reward            / reward_product_uom_id (many2one): now a function
+coupon       / coupon.reward            / reward_type (selection)       : now required
+coupon       / coupon.rule              / rule_date_from (datetime)     : DEL
+coupon       / coupon.rule              / rule_date_to (datetime)       : DEL
+coupon       / coupon.rule              / rule_min_quantity (integer)   : DEL
+coupon       / coupon.rule              / rule_minimum_amount (float)   : DEL
+coupon       / coupon.rule              / rule_minimum_amount_tax_inclusion (selection): DEL selection_keys: ['tax_excluded', 'tax_included']
+coupon       / coupon.rule              / rule_partners_domain (char)   : DEL
+coupon       / coupon.rule              / rule_products_domain (char)   : DEL
 loyalty      / loyalty.card             / company_id (many2one)         : NEW relation: res.company, isrelated: related, stored
-loyalty      / loyalty.card             / expiration_date (date)        : NEW
 loyalty      / loyalty.card             / message_follower_ids (one2many): NEW relation: mail.followers
 loyalty      / loyalty.card             / message_ids (one2many)        : NEW relation: mail.message
 loyalty      / loyalty.card             / message_main_attachment_id (many2one): NEW relation: ir.attachment
-loyalty      / loyalty.card             / partner_id (many2one)         : NEW relation: res.partner
 loyalty      / loyalty.card             / points (float)                : NEW
-loyalty      / loyalty.card             / program_id (many2one)         : NEW relation: loyalty.program, hasdefault: default
 loyalty      / loyalty.mail             / active (boolean)              : NEW hasdefault: default
 loyalty      / loyalty.mail             / mail_template_id (many2one)   : NEW relation: mail.template, required
 loyalty      / loyalty.mail             / points (float)                : NEW
 loyalty      / loyalty.mail             / program_id (many2one)         : NEW relation: loyalty.program, required
 loyalty      / loyalty.mail             / trigger (selection)           : NEW required, selection_keys: ['create', 'points_reach']
-loyalty      / loyalty.program          / active (boolean)              : NEW hasdefault: default
 loyalty      / loyalty.program          / applies_on (selection)        : NEW required, selection_keys: ['both', 'current', 'future'], hasdefault: default
 loyalty      / loyalty.program          / available_on (boolean)        : NEW
 loyalty      / loyalty.program          / communication_plan_ids (one2many): NEW relation: loyalty.mail, hasdefault: compute
-loyalty      / loyalty.program          / company_id (many2one)         : NEW relation: res.company, hasdefault: default
-loyalty      / loyalty.program          / coupon_ids (one2many)         : NEW relation: loyalty.card
-loyalty      / loyalty.program          / currency_id (many2one)        : NEW relation: res.currency, required, hasdefault: compute
 loyalty      / loyalty.program          / date_to (date)                : NEW
 loyalty      / loyalty.program          / limit_usage (boolean)         : NEW
 loyalty      / loyalty.program          / max_usage (integer)           : NEW
-loyalty      / loyalty.program          / name (char)                   : NEW required
 loyalty      / loyalty.program          / portal_point_name (char)      : NEW hasdefault: default
 loyalty      / loyalty.program          / portal_visible (boolean)      : NEW hasdefault: default
-loyalty      / loyalty.program          / program_type (selection)      : NEW required, selection_keys: ['buy_x_get_y', 'coupons', 'ewallet', 'gift_card', 'loyalty', 'next_order_coupons', 'promo_code', 'promotion'], hasdefault: default
 loyalty      / loyalty.program          / reward_ids (one2many)         : NEW relation: loyalty.reward, hasdefault: compute
 loyalty      / loyalty.program          / rule_ids (one2many)           : NEW relation: loyalty.rule, hasdefault: compute
-loyalty      / loyalty.program          / sequence (integer)            : NEW
 loyalty      / loyalty.program          / trigger (selection)           : NEW selection_keys: ['auto', 'with_code'], hasdefault: compute
 loyalty      / loyalty.reward           / active (boolean)              : NEW hasdefault: default
 loyalty      / loyalty.reward           / clear_wallet (boolean)        : NEW hasdefault: default
@@ -44,8 +76,6 @@ loyalty      / loyalty.reward           / company_id (many2one)         : NEW re
 loyalty      / loyalty.reward           / description (char)            : NEW hasdefault: compute
 loyalty      / loyalty.reward           / discount (float)              : NEW hasdefault: default
 loyalty      / loyalty.reward           / discount_applicability (selection): NEW selection_keys: ['cheapest', 'order', 'specific'], hasdefault: default
-loyalty      / loyalty.reward           / discount_line_product_id (many2one): NEW relation: product.product
-loyalty      / loyalty.reward           / discount_max_amount (float)   : NEW
 loyalty      / loyalty.reward           / discount_mode (selection)     : NEW required, selection_keys: function, hasdefault: default
 loyalty      / loyalty.reward           / discount_product_category_id (many2one): NEW relation: product.category
 loyalty      / loyalty.reward           / discount_product_domain (char): NEW hasdefault: default
@@ -53,10 +83,8 @@ loyalty      / loyalty.reward           / discount_product_ids (many2many): NEW 
 loyalty      / loyalty.reward           / discount_product_tag_id (many2one): NEW relation: product.tag
 loyalty      / loyalty.reward           / program_id (many2one)         : NEW relation: loyalty.program, required
 loyalty      / loyalty.reward           / required_points (float)       : NEW hasdefault: default
-loyalty      / loyalty.reward           / reward_product_id (many2one)  : NEW relation: product.product
 loyalty      / loyalty.reward           / reward_product_qty (integer)  : NEW hasdefault: default
 loyalty      / loyalty.reward           / reward_product_tag_id (many2one): NEW relation: product.tag
-loyalty      / loyalty.reward           / reward_type (selection)       : NEW required, selection_keys: ['discount', 'product'], hasdefault: default
 loyalty      / loyalty.rule             / active (boolean)              : NEW hasdefault: default
 loyalty      / loyalty.rule             / code (char)                   : NEW hasdefault: compute
 loyalty      / loyalty.rule             / company_id (many2one)         : NEW relation: res.company, isrelated: related, stored
@@ -77,28 +105,43 @@ NEW ir.actions.act_window: loyalty.loyalty_card_action
 NEW ir.actions.act_window: loyalty.loyalty_generate_wizard_action
 NEW ir.actions.act_window: loyalty.loyalty_program_discount_loyalty_action
 NEW ir.actions.act_window: loyalty.loyalty_program_gift_ewallet_action
+DEL ir.actions.act_window: coupon.coupon_action
+DEL ir.actions.act_window: coupon.coupon_generate_action
+DEL ir.actions.act_window: coupon.coupon_program_action_coupon_program
+DEL ir.actions.act_window: coupon.coupon_program_action_promo_program
 NEW ir.actions.act_window.view: loyalty.action_loyalty_program_form_discount_loyalty
 NEW ir.actions.act_window.view: loyalty.action_loyalty_program_form_gift_card_ewallet
 NEW ir.actions.act_window.view: loyalty.action_loyalty_program_tree_discount_loyalty
 NEW ir.actions.act_window.view: loyalty.action_loyalty_program_tree_gift_card_ewallet
 NEW ir.actions.report: loyalty.report_gift_card
 NEW ir.actions.report: loyalty.report_loyalty_card
+DEL ir.actions.report: coupon.report_coupon_code
+NEW ir.config_parameter: loyalty.config_online_sync_proxy_mode (noupdate)
+DEL ir.cron: coupon.expire_coupon_cron (noupdate)
 NEW ir.model.access: loyalty.access_loyalty_card
 NEW ir.model.access: loyalty.access_loyalty_generate_wizard
 NEW ir.model.access: loyalty.access_loyalty_mail
 NEW ir.model.access: loyalty.access_loyalty_program
 NEW ir.model.access: loyalty.access_loyalty_reward
 NEW ir.model.access: loyalty.access_loyalty_rule
+DEL ir.model.access: coupon.access_coupon_coupon
+DEL ir.model.access: coupon.access_coupon_generate_wizard
+DEL ir.model.access: coupon.access_coupon_program
+DEL ir.model.access: coupon.access_coupon_reward
+DEL ir.model.access: coupon.access_coupon_rule
 NEW ir.model.constraint: loyalty.constraint_loyalty_card_card_code_unique
 NEW ir.model.constraint: loyalty.constraint_loyalty_program_check_max_usage
 NEW ir.model.constraint: loyalty.constraint_loyalty_reward_discount_positive
 NEW ir.model.constraint: loyalty.constraint_loyalty_reward_product_qty_positive
 NEW ir.model.constraint: loyalty.constraint_loyalty_reward_required_points_positive
 NEW ir.model.constraint: loyalty.constraint_loyalty_rule_reward_point_amount_positive
+DEL ir.model.constraint: coupon.constraint_coupon_coupon_unique_coupon_code
+DEL ir.model.constraint: coupon.constraint_coupon_rule_check_coupon_rule_dates
 NEW ir.rule: loyalty.sale_loyalty_card_company_rule (noupdate)
 NEW ir.rule: loyalty.sale_loyalty_program_company_rule (noupdate)
 NEW ir.rule: loyalty.sale_loyalty_reward_company_rule (noupdate)
 NEW ir.rule: loyalty.sale_loyalty_rule_company_rule (noupdate)
+DEL ir.rule: coupon.sale_coupon_generate_rule (noupdate)
 NEW ir.ui.view: loyalty.gift_card_report
 NEW ir.ui.view: loyalty.gift_card_report_i18n
 NEW ir.ui.view: loyalty.loyalty_card_view_form
@@ -116,6 +159,19 @@ NEW ir.ui.view: loyalty.loyalty_reward_view_form
 NEW ir.ui.view: loyalty.loyalty_reward_view_kanban
 NEW ir.ui.view: loyalty.loyalty_rule_view_form
 NEW ir.ui.view: loyalty.loyalty_rule_view_kanban
+DEL ir.ui.view: coupon.coupon_generate_view_form
+DEL ir.ui.view: coupon.coupon_program_view_coupon_program_form
+DEL ir.ui.view: coupon.coupon_program_view_form_common
+DEL ir.ui.view: coupon.coupon_program_view_promo_program_form
+DEL ir.ui.view: coupon.coupon_program_view_promo_program_search
+DEL ir.ui.view: coupon.coupon_program_view_promo_program_tree
+DEL ir.ui.view: coupon.coupon_program_view_search
+DEL ir.ui.view: coupon.coupon_program_view_tree
+DEL ir.ui.view: coupon.coupon_view_form
+DEL ir.ui.view: coupon.coupon_view_tree
+DEL ir.ui.view: coupon.report_coupon
+DEL ir.ui.view: coupon.report_coupon_i18n
+DEL ir.ui.view: coupon.view_coupon_program_kanban
 NEW mail.template: loyalty.mail_template_gift_card [renamed from sale_gift_card module]
 NEW mail.template: loyalty.mail_template_loyalty_card
 NEW product.product: loyalty.ewallet_product_50

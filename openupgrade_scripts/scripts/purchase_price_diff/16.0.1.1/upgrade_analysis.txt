@@ -1,0 +1,8 @@
+---Models in module 'purchase_price_diff'---
+---Fields in module 'purchase_price_diff'---
+purchase_price_diff / product.category         / property_account_creditor_price_difference_categ (many2one): previously in module purchase
+purchase_price_diff / product.product          / property_account_creditor_price_difference (many2one): previously in module purchase
+purchase_price_diff / product.template         / property_account_creditor_price_difference (many2one): previously in module purchase
+---XML records in module 'purchase_price_diff'---
+NEW ir.ui.view: purchase_price_diff.product_template_form_view
+NEW ir.ui.view: purchase_price_diff.view_category_property_form

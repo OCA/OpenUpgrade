@@ -15,6 +15,10 @@ l10n_it_edi  / res.company              / l10n_it_mail_pec_server_id (many2one):
 ---XML records in module 'l10n_it_edi'---
 NEW ir.cron: l10n_it_edi.ir_cron_receive_fattura_pa_invoice [renamed from l10n_it_edi_sdicoop module]
 NEW ir.ui.view: l10n_it_edi.res_config_settings_view_form
+NEW ir.ui.view: l10n_it_edi.view_account_invoice_filter
+NEW ir.ui.view: l10n_it_edi.view_in_bill_tree_inherit
+NEW ir.ui.view: l10n_it_edi.view_invoice_tree_inherit
+NEW ir.ui.view: l10n_it_edi.view_out_invoice_tree_inherit
 DEL ir.ui.view: l10n_it_edi.fetchmail_server_form_l10n_it
 DEL ir.ui.view: l10n_it_edi.invoice_kanban_l10n_it
 DEL ir.ui.view: l10n_it_edi.invoice_supplier_tree_l10n_it

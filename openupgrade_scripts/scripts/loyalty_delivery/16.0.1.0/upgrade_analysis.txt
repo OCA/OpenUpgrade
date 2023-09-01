@@ -1,6 +1,6 @@
 ---Models in module 'loyalty_delivery'---
 ---Fields in module 'loyalty_delivery'---
-loyalty_delivery / loyalty.reward           / reward_type (False)           : NEW selection_keys: ['discount', 'product', 'shipping'], mode: modify
+loyalty_delivery / coupon.reward            / reward_type (False)           : previously in module sale_coupon_delivery
 ---XML records in module 'loyalty_delivery'---
 NEW ir.ui.view: loyalty_delivery.loyalty_reward_view_form_inherit_loyalty_delivery
 NEW ir.ui.view: loyalty_delivery.loyalty_reward_view_kanban_inherit_loyalty_delivery

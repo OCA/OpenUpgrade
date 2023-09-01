@@ -3,7 +3,6 @@ new model mailing.contact.import [transient]
 new model mailing.filter
 ---Fields in module 'mass_mailing'---
 mass_mailing / ir.mail_server           / active_mailing_ids (one2many) : NEW relation: mailing.mailing
-mass_mailing / mailing.contact.subscription / _order                        : _order is now 'list_id DESC, contact_id DESC' ('id')
 mass_mailing / mailing.filter           / mailing_domain (char)         : NEW required
 mass_mailing / mailing.filter           / mailing_model_id (many2one)   : NEW relation: ir.model, required
 mass_mailing / mailing.filter           / name (char)                   : NEW required

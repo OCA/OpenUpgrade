@@ -1,8 +1,8 @@
 ---Models in module 'payment'---
-obsolete model payment.acquirer
+obsolete model payment.acquirer (renamed to payment.provider)
 obsolete model payment.acquirer.onboarding.wizard [transient]
 model payment.refund.wizard (moved to account_payment) [transient]
-new model payment.provider
+new model payment.provider (renamed from payment.acquirer)
 new model payment.provider.onboarding.wizard [transient]
 ---Fields in module 'payment'---
 payment      / account.bank.statement.line / amount_paid (float)           : module is now 'account_payment' ('payment')
@@ -22,69 +22,26 @@ payment      / account.payment          / suitable_payment_token_ids (many2many)
 payment      / account.payment          / transaction_ids (many2many)   : module is now 'account_payment' ('payment')
 payment      / account.payment          / use_electronic_payment_method (boolean): module is now 'account_payment' ('payment')
 payment      / account.payment.method.line / payment_acquirer_id (many2one): DEL relation: payment.acquirer
-payment      / payment.acquirer         / allow_tokenization (boolean)  : DEL
-payment      / payment.acquirer         / auth_msg (html)               : DEL
-payment      / payment.acquirer         / cancel_msg (html)             : DEL
-payment      / payment.acquirer         / capture_manually (boolean)    : DEL
-payment      / payment.acquirer         / color (integer)               : DEL
-payment      / payment.acquirer         / company_id (many2one)         : DEL relation: res.company, required
 payment      / payment.acquirer         / country_ids (many2many)       : DEL relation: res.country
 payment      / payment.acquirer         / description (html)            : DEL
-payment      / payment.acquirer         / display_as (char)             : DEL
-payment      / payment.acquirer         / done_msg (html)               : DEL
-payment      / payment.acquirer         / fees_active (boolean)         : DEL
-payment      / payment.acquirer         / fees_dom_fixed (float)        : DEL
-payment      / payment.acquirer         / fees_dom_var (float)          : DEL
-payment      / payment.acquirer         / fees_int_fixed (float)        : DEL
-payment      / payment.acquirer         / fees_int_var (float)          : DEL
-payment      / payment.acquirer         / image_128 (binary)            : DEL attachment: True
-payment      / payment.acquirer         / inline_form_view_id (many2one): DEL relation: ir.ui.view
-payment      / payment.acquirer         / module_id (many2one)          : DEL relation: ir.module.module
-payment      / payment.acquirer         / module_state (selection)      : DEL selection_keys: function
-payment      / payment.acquirer         / name (char)                   : DEL required
-payment      / payment.acquirer         / payment_icon_ids (many2many)  : DEL relation: payment.icon
-payment      / payment.acquirer         / pending_msg (html)            : DEL
-payment      / payment.acquirer         / pre_msg (html)                : DEL
+payment      / payment.acquirer         / journal_id (many2one)         : module is now 'account_payment' ('payment')
+payment      / payment.acquirer         / payment_icon_ids (many2many)  : column1 is now 'payment_provider_id' ('payment_acquirer_id') [payment_acquirer_payment_icon_rel]
+payment      / payment.acquirer         / payment_icon_ids (many2many)  : table is now 'payment_icon_payment_provider_rel' ('payment_acquirer_payment_icon_rel')
 payment      / payment.acquirer         / provider (selection)          : DEL required, selection_keys: ['none']
-payment      / payment.acquirer         / redirect_form_view_id (many2one): DEL relation: ir.ui.view
-payment      / payment.acquirer         / sequence (integer)            : DEL
-payment      / payment.acquirer         / state (selection)             : DEL required, selection_keys: ['disabled', 'enabled', 'test']
 payment      / payment.acquirer         / support_authorization (boolean): DEL
 payment      / payment.acquirer         / support_fees_computation (boolean): DEL
-payment      / payment.acquirer         / support_refund (selection)    : DEL selection_keys: ['full_only', 'partial']
-payment      / payment.acquirer         / support_tokenization (boolean): DEL
+payment      / payment.acquirer         / support_refund (selection)    : not stored anymore
+payment      / payment.acquirer         / support_refund (selection)    : now a function
+payment      / payment.acquirer         / support_tokenization (boolean): not stored anymore
+payment      / payment.acquirer         / support_tokenization (boolean): now a function
 payment      / payment.icon             / acquirer_ids (many2many)      : DEL relation: payment.acquirer
 payment      / payment.icon             / provider_ids (many2many)      : NEW relation: payment.provider
 payment      / payment.provider         / allow_express_checkout (boolean): NEW
-payment      / payment.provider         / allow_tokenization (boolean)  : NEW
-payment      / payment.provider         / auth_msg (html)               : NEW hasdefault: default
 payment      / payment.provider         / available_country_ids (many2many): NEW relation: res.country
-payment      / payment.provider         / cancel_msg (html)             : NEW hasdefault: default
-payment      / payment.provider         / capture_manually (boolean)    : NEW
 payment      / payment.provider         / code (selection)              : NEW required, selection_keys: ['none'], hasdefault: default
-payment      / payment.provider         / color (integer)               : NEW isfunction: function, stored
-payment      / payment.provider         / company_id (many2one)         : NEW relation: res.company, required, hasdefault: default
-payment      / payment.provider         / display_as (char)             : NEW
-payment      / payment.provider         / done_msg (html)               : NEW hasdefault: default
 payment      / payment.provider         / express_checkout_form_view_id (many2one): NEW relation: ir.ui.view
-payment      / payment.provider         / fees_active (boolean)         : NEW
-payment      / payment.provider         / fees_dom_fixed (float)        : NEW
-payment      / payment.provider         / fees_dom_var (float)          : NEW
-payment      / payment.provider         / fees_int_fixed (float)        : NEW
-payment      / payment.provider         / fees_int_var (float)          : NEW
-payment      / payment.provider         / image_128 (binary)            : NEW attachment: True
-payment      / payment.provider         / inline_form_view_id (many2one): NEW relation: ir.ui.view
 payment      / payment.provider         / is_published (boolean)        : NEW
 payment      / payment.provider         / maximum_amount (float)        : NEW
-payment      / payment.provider         / module_id (many2one)          : NEW relation: ir.module.module
-payment      / payment.provider         / module_state (selection)      : NEW selection_keys: function, isrelated: related, stored
-payment      / payment.provider         / name (char)                   : NEW required
-payment      / payment.provider         / payment_icon_ids (many2many)  : NEW relation: payment.icon
-payment      / payment.provider         / pending_msg (html)            : NEW hasdefault: default
-payment      / payment.provider         / pre_msg (html)                : NEW
-payment      / payment.provider         / redirect_form_view_id (many2one): NEW relation: ir.ui.view
-payment      / payment.provider         / sequence (integer)            : NEW
-payment      / payment.provider         / state (selection)             : NEW required, selection_keys: ['disabled', 'enabled', 'test'], hasdefault: default
 payment      / payment.provider         / token_inline_form_view_id (many2one): NEW relation: ir.ui.view
 payment      / payment.token            / acquirer_id (many2one)        : DEL relation: payment.acquirer, required
 payment      / payment.token            / acquirer_ref (char)           : DEL required

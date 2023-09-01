@@ -9,6 +9,7 @@ hr           / hr.contract.type         / sequence (integer)            : NEW
 hr           / hr.department            / master_department_id (many2one): NEW relation: hr.department, isfunction: function, stored
 hr           / hr.department            / parent_path (char)            : NEW
 hr           / hr.department            / plan_ids (one2many)           : NEW relation: hr.plan
+hr           / hr.employee              / currency_id (many2one)        : previously in module hr_timesheet
 hr           / hr.employee              / mobile_phone (char)           : now a function
 hr           / hr.employee              / work_contact_id (many2one)    : NEW relation: res.partner
 hr           / hr.employee              / work_email (char)             : now a function

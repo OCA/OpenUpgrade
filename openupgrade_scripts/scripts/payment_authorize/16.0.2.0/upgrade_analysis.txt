@@ -1,20 +1,9 @@
 ---Models in module 'payment_authorize'---
 ---Fields in module 'payment_authorize'---
-payment_authorize / payment.acquirer         / authorize_client_key (char)   : DEL
-payment_authorize / payment.acquirer         / authorize_currency_id (many2one): DEL relation: res.currency
-payment_authorize / payment.acquirer         / authorize_login (char)        : DEL
-payment_authorize / payment.acquirer         / authorize_payment_method_type (selection): DEL selection_keys: ['bank_account', 'credit_card']
-payment_authorize / payment.acquirer         / authorize_signature_key (char): DEL
-payment_authorize / payment.acquirer         / authorize_transaction_key (char): DEL
 payment_authorize / payment.acquirer         / provider (False)              : DEL selection_keys: ['adyen', 'alipay', 'authorize', 'none'], mode: modify
-payment_authorize / payment.provider         / authorize_client_key (char)   : NEW
-payment_authorize / payment.provider         / authorize_currency_id (many2one): NEW relation: res.currency
-payment_authorize / payment.provider         / authorize_login (char)        : NEW
-payment_authorize / payment.provider         / authorize_payment_method_type (selection): NEW selection_keys: ['bank_account', 'credit_card'], hasdefault: default
-payment_authorize / payment.provider         / authorize_signature_key (char): NEW
-payment_authorize / payment.provider         / authorize_transaction_key (char): NEW
-payment_authorize / payment.provider         / code (False)                  : NEW selection_keys: ['adyen', 'alipay', 'aps', 'asiapay', 'authorize', 'none'], mode: modify
+payment_authorize / payment.provider         / code (False)                  : NEW selection_keys: ['adyen', 'aps', 'asiapay', 'authorize', 'none'], mode: modify
 ---XML records in module 'payment_authorize'---
 DEL account.payment.method: payment_authorize.payment_method_authorize (noupdate)
 NEW ir.ui.view: payment_authorize.payment_provider_form
 DEL ir.ui.view: payment_authorize.payment_acquirer_form
+DEL payment.acquirer: payment.payment_acquirer_authorize (noupdate)

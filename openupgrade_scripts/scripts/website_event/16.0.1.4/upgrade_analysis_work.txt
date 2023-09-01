@@ -1,0 +1,32 @@
+---Models in module 'website_event'---
+---Fields in module 'website_event'---
+website_event / website.visitor          / parent_id (many2one)          : DEL relation: website.visitor
+
+# NOTHING TO DO
+
+---XML records in module 'website_event'---
+NEW ir.actions.act_window: website_event.action_event_pages_list
+NEW ir.actions.act_window: website_event.event_event_action_add
+NEW ir.asset: website_event.s_events_000_js
+NEW ir.asset: website_event.s_events_000_scss
+NEW ir.filters: website_event.ir_filters_event_list_snippet
+NEW ir.ui.menu: website_event.menu_event_pages
+NEW ir.ui.view: website_event.dynamic_filter_template_event_event_card
+NEW ir.ui.view: website_event.dynamic_filter_template_event_event_picture
+NEW ir.ui.view: website_event.event_event_view_form_add
+NEW ir.ui.view: website_event.event_event_view_search
+NEW ir.ui.view: website_event.event_pages_kanban_view
+NEW ir.ui.view: website_event.event_pages_tree_view
+NEW ir.ui.view: website_event.remove_external_snippets
+NEW ir.ui.view: website_event.s_dynamic_snippet_options_template
+NEW ir.ui.view: website_event.s_events
+NEW ir.ui.view: website_event.s_events_options
+DEL ir.ui.view: website_event.country_events_list
+DEL ir.ui.view: website_event.event_edit_options
+DEL ir.ui.view: website_event.index_sidebar_country_event
+DEL ir.ui.view: website_event.s_country_events
+DEL ir.ui.view: website_event.user_navbar_inherit_website_event
+DEL ir.ui.view: website_event.website_visitor_view_search
+NEW website.snippet.filter: website_event.website_snippet_filter_event_list
+
+# NOTHING TO DO
