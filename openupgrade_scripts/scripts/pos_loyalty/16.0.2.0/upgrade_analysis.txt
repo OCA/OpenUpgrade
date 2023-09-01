@@ -1,19 +1,39 @@
 ---Models in module 'pos_loyalty'---
 ---Fields in module 'pos_loyalty'---
-pos_loyalty  / barcode.rule             / type (False)                  : previously in module pos_coupon
-pos_loyalty  / loyalty.card             / source_pos_order_id (many2one): NEW relation: pos.order
+pos_coupon   / barcode.rule             / type (False)                  : selection_keys is now '['alias', 'cashier', 'client', 'coupon', 'discount', 'expiration_date', 'location', 'location_dest', 'lot', 'pack_date', 'package', 'package_type', 'price', 'product', 'quantity', 'use_date', 'weight']' ('['alias', 'cashier', 'client', 'coupon', 'discount', 'expiration_date', 'location', 'location_dest', 'lot', 'package', 'package_type', 'packaging_date', 'price', 'product', 'quantity', 'use_date', 'weight']')
+pos_coupon   / coupon.coupon            / pos_order_id (many2one)       : DEL relation: pos.order
+pos_coupon   / coupon.program           / pos_config_ids (many2many)    : column1 is now 'loyalty_program_id' ('coupon_program_id') [coupon_program_pos_config_rel]
+pos_coupon   / coupon.program           / pos_config_ids (many2many)    : table is now 'loyalty_program_pos_config_rel' ('coupon_program_pos_config_rel')
+pos_coupon   / coupon.program           / pos_order_ids (many2many)     : DEL relation: pos.order
+pos_coupon   / coupon.program           / pos_order_line_ids (one2many) : DEL relation: pos.order.line
+pos_coupon   / coupon.program           / promo_barcode (char)          : DEL
+pos_coupon   / pos.config               / program_ids (many2many)       : DEL relation: coupon.program
+pos_coupon   / pos.config               / use_coupon_programs (boolean) : DEL
+pos_coupon   / pos.order                / applied_program_ids (many2many): DEL relation: coupon.program
+pos_coupon   / pos.order                / generated_coupon_ids (one2many): DEL relation: coupon.coupon
+pos_coupon   / pos.order                / used_coupon_ids (one2many)    : DEL relation: coupon.coupon
+pos_coupon   / pos.order.line           / coupon_id (many2one)          : relation is now 'loyalty.card' ('coupon.coupon') [nothing to do]
+pos_coupon   / pos.order.line           / is_program_reward (boolean)   : DEL
+pos_coupon   / pos.order.line           / program_id (many2one)         : DEL relation: coupon.program
+pos_gift_card / barcode.rule             / type (False)                  : DEL selection_keys: ['alias', 'cashier', 'client', 'coupon', 'discount', 'expiration_date', 'gift_card', 'location', 'location_dest', 'lot', 'package', 'package_type', 'packaging_date', 'price', 'product', 'quantity', 'use_date', 'weight'], mode: modify
+pos_gift_card / gift.card                / buy_pos_order_line_id (many2one): DEL relation: pos.order.line
+pos_gift_card / gift.card                / redeem_pos_order_line_ids (one2many): DEL relation: pos.order.line
+pos_gift_card / pos.config               / gift_card_product_id (many2one): DEL relation: product.product
+pos_gift_card / pos.config               / gift_card_settings (selection): selection_keys is now '['create_set', 'scan_use']' ('['create_set', 'scan_set', 'scan_use']')
+pos_gift_card / pos.config               / use_gift_card (boolean)       : DEL
+pos_gift_card / pos.order.line           / generated_gift_card_ids (one2many): DEL relation: gift.card
+pos_gift_card / pos.order.line           / gift_card_id (many2one)       : DEL relation: gift.card
 pos_loyalty  / loyalty.mail             / pos_report_print_id (many2one): NEW relation: ir.actions.report
-pos_loyalty  / loyalty.program          / pos_config_ids (many2many)    : NEW relation: pos.config, hasdefault: compute
 pos_loyalty  / loyalty.program          / pos_ok (boolean)              : NEW hasdefault: default
 pos_loyalty  / loyalty.rule             / promo_barcode (char)          : NEW hasdefault: compute
-pos_loyalty  / pos.config               / gift_card_settings (selection): previously in module pos_gift_card
-pos_loyalty  / pos.order.line           / coupon_id (many2one)          : previously in module pos_coupon
 pos_loyalty  / pos.order.line           / is_reward_line (boolean)      : NEW
 pos_loyalty  / pos.order.line           / points_cost (float)           : NEW
 pos_loyalty  / pos.order.line           / reward_id (many2one)          : NEW relation: loyalty.reward
 pos_loyalty  / pos.order.line           / reward_identifier_code (char) : NEW
 ---XML records in module 'pos_loyalty'---
 NEW barcode.rule: pos_loyalty.barcode_rule_coupon [renamed from pos_coupon module] (noupdate)
+DEL barcode.rule: pos_coupon.barcode_rule_coupon [renamed to pos_loyalty module] (noupdate)
+DEL ir.actions.report: pos_gift_card.gift_card_report_pdf (noupdate)
 NEW ir.model.access: pos_loyalty.access_applicability_pos_manager
 NEW ir.model.access: pos_loyalty.access_applicability_pos_user
 NEW ir.model.access: pos_loyalty.access_communication_pos_manager
@@ -25,10 +45,34 @@ NEW ir.model.access: pos_loyalty.access_program_pos_user [renamed from pos_coupo
 NEW ir.model.access: pos_loyalty.access_reward_pos_manager [renamed from pos_coupon module]
 NEW ir.model.access: pos_loyalty.access_reward_pos_user [renamed from pos_coupon module]
 NEW ir.model.access: pos_loyalty.access_sale_coupon_generate [renamed from sale_coupon module]
+DEL ir.model.access: pos_coupon.access_coupon_generate_wizard
+DEL ir.model.access: pos_coupon.access_coupon_pos_manager [renamed to pos_loyalty module]
+DEL ir.model.access: pos_coupon.access_coupon_pos_user [renamed to pos_loyalty module]
+DEL ir.model.access: pos_coupon.access_program_pos_manager [renamed to pos_loyalty module]
+DEL ir.model.access: pos_coupon.access_program_pos_user [renamed to pos_loyalty module]
+DEL ir.model.access: pos_coupon.access_reward_pos_manager [renamed to pos_loyalty module]
+DEL ir.model.access: pos_coupon.access_reward_pos_user [renamed to pos_loyalty module]
+DEL ir.model.access: pos_coupon.access_rule_pos_manager
+DEL ir.model.access: pos_coupon.access_rule_pos_user
+DEL ir.model.access: pos_gift_card.access_gift_card_sales
+DEL ir.model.access: pos_gift_card.access_pos_gift_card_manager
 NEW ir.ui.menu: pos_loyalty.menu_discount_loyalty_type_config
 NEW ir.ui.menu: pos_loyalty.menu_gift_ewallet_type_config
+DEL ir.ui.menu: pos_coupon.menu_coupon_type_config
+DEL ir.ui.menu: pos_coupon.menu_promotion_type_config
+DEL ir.ui.menu: pos_gift_card.pos_gift_card_menu
 NEW ir.ui.view: pos_loyalty.loyalty_card_view_form_inherit_pos_loyalty
 NEW ir.ui.view: pos_loyalty.loyalty_mail_view_tree_inherit_pos_loyalty
 NEW ir.ui.view: pos_loyalty.loyalty_program_view_form_inherit_pos_loyalty
 NEW ir.ui.view: pos_loyalty.loyalty_program_view_tree_inherit_pos_loyalty
 NEW ir.ui.view: pos_loyalty.res_config_view_form_inherit_pos_loyalty
+DEL ir.ui.view: pos_coupon.pos_coupon_pos_config_view_form
+DEL ir.ui.view: pos_coupon.pos_coupon_program_view_coupon_program_form
+DEL ir.ui.view: pos_coupon.pos_coupon_program_view_promo_program_form
+DEL ir.ui.view: pos_coupon.pos_coupon_view_form
+DEL ir.ui.view: pos_coupon.res_config_view_form_inherit_pos_coupon
+DEL ir.ui.view: pos_gift_card.gift_card_template (noupdate)
+DEL ir.ui.view: pos_gift_card.pos_gift_card_config_view_form
+DEL ir.ui.view: pos_gift_card.pos_gift_card_view_form
+DEL ir.ui.view: pos_gift_card.res_config_view_form_inherit_pos_coupon
+DEL mail.template: pos_coupon.mail_coupon_template (noupdate)

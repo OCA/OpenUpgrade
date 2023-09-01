@@ -58,6 +58,7 @@
     </p>
       </div>
     </field>
+    <field name="email_from">{{ (object.invoice_user_id.email_formatted or object.company_id.email_formatted or user.email_formatted) }}</field>
     <field name="name">Credit Note: Sending</field>
     <field name="description">Sent to customers with the credit note in attachment</field>
   </record>
@@ -98,6 +99,7 @@
     </p>
       </div>
     </field>
+    <field name="email_from">{{ (object.invoice_user_id.email_formatted or object.company_id.email_formatted or user.email_formatted) }}</field>
     <field name="name">Invoice: Sending</field>
     <field name="description">Sent to customers with their invoices in attachment</field>
   </record>

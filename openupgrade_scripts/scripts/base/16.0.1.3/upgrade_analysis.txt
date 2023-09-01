@@ -6,7 +6,7 @@ new model ir.binary [abstract]
 new model ir.qweb.field.time [abstract]
 new model res.users.deletion
 ---Fields in module 'base'---
-base         / ir.model.fields          / ttype (selection)             : selection_keys is now '['binary', 'boolean', 'char', 'date', 'datetime', 'float', 'html', 'integer', 'many2many', 'many2one', 'many2one_reference', 'monetary', 'one2many', 'properties', 'properties_definition', 'reference', 'selection', 'text']' ('['binary', 'boolean', 'char', 'date', 'datetime', 'float', 'html', 'integer', 'many2many', 'many2one', 'many2one_reference', 'monetary', 'one2many', 'reference', 'selection', 'text']')
+base         / ir.model.fields          / ttype (selection)             : selection_keys is now '['binary', 'boolean', 'char', 'date', 'datetime', 'float', 'html', 'integer', 'json', 'many2many', 'many2one', 'many2one_reference', 'monetary', 'one2many', 'properties', 'properties_definition', 'reference', 'selection', 'text']' ('['binary', 'boolean', 'char', 'date', 'datetime', 'float', 'html', 'integer', 'many2many', 'many2one', 'many2one_reference', 'monetary', 'one2many', 'reference', 'selection', 'text']')
 base         / ir.profile               / sql_count (integer)           : NEW
 base         / ir.translation           / comments (text)               : DEL
 base         / ir.translation           / lang (selection)              : DEL selection_keys: function
@@ -43,10 +43,13 @@ DEL ir.model.access: base.access_ir_translation_group_system
 ir.model.constraint: base.constraint_ir_filters_name_model_uid_unique (changed definition: is now 'unique(model_id,user_id,action_id,name)' ('unique(name,model_id,user_id,action_id)'))
 ir.model.constraint: base.constraint_res_partner_bank_unique_number (changed definition: is now 'unique(sanitized_acc_number,partner_id)' ('unique(sanitized_acc_number,company_id)'))
 DEL ir.model.constraint: base.constraint_ir_translation_lang_fkey_res_lang
+NEW ir.module.module: base.module_knowledge (noupdate)
+NEW ir.module.module: base.module_social (noupdate)
 NEW ir.rule: base.change_password_own_rule (noupdate)
 DEL ir.ui.menu: base.menu_action_translation
 DEL ir.ui.menu: base.menu_wizard_update_translations
 NEW ir.ui.view: base.change_password_own_form
+NEW ir.ui.view: base.demo_wizard_form_view
 NEW ir.ui.view: base.language_install_view_form_lang_switch
 DEL ir.ui.view: base.onboarding_confetti
 DEL ir.ui.view: base.view_translation_dialog_tree
@@ -56,4 +59,110 @@ DEL ir.ui.view: base.view_translation_lang_value_tree
 DEL ir.ui.view: base.view_translation_search
 DEL ir.ui.view: base.view_translation_tree
 DEL ir.ui.view: base.wizard_update_translations
+NEW res.country.group: base.ch_and_li (noupdate)
+NEW res.country.state: base.state_ch_ag
+NEW res.country.state: base.state_ch_ai
+NEW res.country.state: base.state_ch_ar
+NEW res.country.state: base.state_ch_be
+NEW res.country.state: base.state_ch_bl
+NEW res.country.state: base.state_ch_bs
+NEW res.country.state: base.state_ch_fr
+NEW res.country.state: base.state_ch_ge
+NEW res.country.state: base.state_ch_gl
+NEW res.country.state: base.state_ch_gr
+NEW res.country.state: base.state_ch_ju
+NEW res.country.state: base.state_ch_lu
+NEW res.country.state: base.state_ch_ne
+NEW res.country.state: base.state_ch_nw
+NEW res.country.state: base.state_ch_ow
+NEW res.country.state: base.state_ch_sg
+NEW res.country.state: base.state_ch_sh
+NEW res.country.state: base.state_ch_so
+NEW res.country.state: base.state_ch_sz
+NEW res.country.state: base.state_ch_tg
+NEW res.country.state: base.state_ch_ti
+NEW res.country.state: base.state_ch_ur
+NEW res.country.state: base.state_ch_vd
+NEW res.country.state: base.state_ch_vs
+NEW res.country.state: base.state_ch_zg
+NEW res.country.state: base.state_ch_zh
+NEW res.country.state: base.state_th_001
+NEW res.country.state: base.state_th_002
+NEW res.country.state: base.state_th_003
+NEW res.country.state: base.state_th_004
+NEW res.country.state: base.state_th_005
+NEW res.country.state: base.state_th_006
+NEW res.country.state: base.state_th_007
+NEW res.country.state: base.state_th_008
+NEW res.country.state: base.state_th_009
+NEW res.country.state: base.state_th_010
+NEW res.country.state: base.state_th_011
+NEW res.country.state: base.state_th_012
+NEW res.country.state: base.state_th_013
+NEW res.country.state: base.state_th_014
+NEW res.country.state: base.state_th_015
+NEW res.country.state: base.state_th_016
+NEW res.country.state: base.state_th_017
+NEW res.country.state: base.state_th_018
+NEW res.country.state: base.state_th_019
+NEW res.country.state: base.state_th_020
+NEW res.country.state: base.state_th_021
+NEW res.country.state: base.state_th_022
+NEW res.country.state: base.state_th_023
+NEW res.country.state: base.state_th_024
+NEW res.country.state: base.state_th_025
+NEW res.country.state: base.state_th_026
+NEW res.country.state: base.state_th_027
+NEW res.country.state: base.state_th_028
+NEW res.country.state: base.state_th_029
+NEW res.country.state: base.state_th_030
+NEW res.country.state: base.state_th_031
+NEW res.country.state: base.state_th_032
+NEW res.country.state: base.state_th_033
+NEW res.country.state: base.state_th_034
+NEW res.country.state: base.state_th_035
+NEW res.country.state: base.state_th_036
+NEW res.country.state: base.state_th_037
+NEW res.country.state: base.state_th_038
+NEW res.country.state: base.state_th_039
+NEW res.country.state: base.state_th_040
+NEW res.country.state: base.state_th_041
+NEW res.country.state: base.state_th_042
+NEW res.country.state: base.state_th_043
+NEW res.country.state: base.state_th_044
+NEW res.country.state: base.state_th_045
+NEW res.country.state: base.state_th_046
+NEW res.country.state: base.state_th_047
+NEW res.country.state: base.state_th_048
+NEW res.country.state: base.state_th_049
+NEW res.country.state: base.state_th_050
+NEW res.country.state: base.state_th_051
+NEW res.country.state: base.state_th_052
+NEW res.country.state: base.state_th_053
+NEW res.country.state: base.state_th_054
+NEW res.country.state: base.state_th_055
+NEW res.country.state: base.state_th_056
+NEW res.country.state: base.state_th_057
+NEW res.country.state: base.state_th_058
+NEW res.country.state: base.state_th_059
+NEW res.country.state: base.state_th_060
+NEW res.country.state: base.state_th_061
+NEW res.country.state: base.state_th_062
+NEW res.country.state: base.state_th_063
+NEW res.country.state: base.state_th_064
+NEW res.country.state: base.state_th_065
+NEW res.country.state: base.state_th_066
+NEW res.country.state: base.state_th_067
+NEW res.country.state: base.state_th_068
+NEW res.country.state: base.state_th_069
+NEW res.country.state: base.state_th_070
+NEW res.country.state: base.state_th_071
+NEW res.country.state: base.state_th_072
+NEW res.country.state: base.state_th_073
+NEW res.country.state: base.state_th_074
+NEW res.country.state: base.state_th_075
+NEW res.country.state: base.state_th_076
+NEW res.country.state: base.state_th_077
 NEW res.groups: base.group_sanitize_override
+NEW res.lang: base.lang_az
+NEW res.lang: base.lang_ml

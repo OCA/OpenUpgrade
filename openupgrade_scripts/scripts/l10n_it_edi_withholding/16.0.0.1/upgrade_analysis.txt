@@ -1,0 +1,40 @@
+---Models in module 'l10n_it_edi_withholding'---
+---Fields in module 'l10n_it_edi_withholding'---
+l10n_it_edi_withholding / account.tax              / l10n_it_pension_fund_type (selection): NEW selection_keys: ['TC01', 'TC02', 'TC03', 'TC04', 'TC05', 'TC06', 'TC07', 'TC08', 'TC09', 'TC10', 'TC11', 'TC12', 'TC13', 'TC14', 'TC15', 'TC16', 'TC17', 'TC18', 'TC19', 'TC20', 'TC21', 'TC22']
+l10n_it_edi_withholding / account.tax              / l10n_it_withholding_reason (selection): NEW selection_keys: ['A', 'B', 'C', 'D', 'E', 'G', 'H', 'I', 'K', 'L', 'L1', 'M', 'M1', 'M2', 'N', 'O', 'O1', 'P', 'Q', 'R', 'S', 'T', 'U', 'V', 'V1', 'V2', 'W', 'X', 'Y', 'Z', 'ZO']
+l10n_it_edi_withholding / account.tax              / l10n_it_withholding_type (selection): NEW selection_keys: ['RT01', 'RT02', 'RT03', 'RT04', 'RT05', 'RT06']
+l10n_it_edi_withholding / account.tax.template     / l10n_it_pension_fund_type (selection): NEW selection_keys: ['TC01', 'TC02', 'TC03', 'TC04', 'TC05', 'TC06', 'TC07', 'TC08', 'TC09', 'TC10', 'TC11', 'TC12', 'TC13', 'TC14', 'TC15', 'TC16', 'TC17', 'TC18', 'TC19', 'TC20', 'TC21', 'TC22']
+l10n_it_edi_withholding / account.tax.template     / l10n_it_withholding_reason (selection): NEW selection_keys: ['A', 'B', 'C', 'D', 'E', 'G', 'H', 'I', 'K', 'L', 'L1', 'M', 'M1', 'M2', 'N', 'O', 'O1', 'P', 'Q', 'R', 'S', 'T', 'U', 'V', 'V1', 'V2', 'W', 'X', 'Y', 'Z', 'ZO']
+l10n_it_edi_withholding / account.tax.template     / l10n_it_withholding_type (selection): NEW selection_keys: ['RT01', 'RT02', 'RT03', 'RT04', 'RT05', 'RT06']
+---XML records in module 'l10n_it_edi_withholding'---
+NEW account.account.template: l10n_it_edi_withholding.1611
+NEW account.account.template: l10n_it_edi_withholding.2603
+NEW account.report: l10n_it_edi_withholding.withh_tax_report_it
+NEW account.report.column: l10n_it_edi_withholding.withh_tax_report_balance
+NEW account.report.expression: l10n_it_edi_withholding.enasarco_purchase_tax_report_it_line_tag
+NEW account.report.expression: l10n_it_edi_withholding.enasarco_sale_tax_report_it_line_tag
+NEW account.report.expression: l10n_it_edi_withholding.withh_purchase_tax_report_it_line_tag
+NEW account.report.expression: l10n_it_edi_withholding.withh_sale_tax_report_it_line_tag
+NEW account.report.line: l10n_it_edi_withholding.enasarco_purchase_tax_report_it_line
+NEW account.report.line: l10n_it_edi_withholding.enasarco_sale_tax_report_it_line
+NEW account.report.line: l10n_it_edi_withholding.withh_purchase_tax_report_it_line
+NEW account.report.line: l10n_it_edi_withholding.withh_sale_tax_report_it_line
+NEW account.tax.group: l10n_it_edi_withholding.tax_group_enasarco (noupdate)
+NEW account.tax.group: l10n_it_edi_withholding.tax_group_pension_fund (noupdate)
+NEW account.tax.group: l10n_it_edi_withholding.tax_group_withholding (noupdate)
+NEW account.tax.template: l10n_it_edi_withholding.20awc
+NEW account.tax.template: l10n_it_edi_withholding.20awi
+NEW account.tax.template: l10n_it_edi_withholding.20vwc
+NEW account.tax.template: l10n_it_edi_withholding.20vwi
+NEW account.tax.template: l10n_it_edi_withholding.23awo
+NEW account.tax.template: l10n_it_edi_withholding.23vwo
+NEW account.tax.template: l10n_it_edi_withholding.4acp
+NEW account.tax.template: l10n_it_edi_withholding.4ainps
+NEW account.tax.template: l10n_it_edi_withholding.4vcp
+NEW account.tax.template: l10n_it_edi_withholding.4vinps
+NEW account.tax.template: l10n_it_edi_withholding.enasarcoa
+NEW account.tax.template: l10n_it_edi_withholding.enasarcov
+NEW ir.ui.view: l10n_it_edi_withholding.account_invoice_it_FatturaPA_export_withholding
+NEW ir.ui.view: l10n_it_edi_withholding.account_invoice_line_it_FatturaPA_withholding
+NEW ir.ui.view: l10n_it_edi_withholding.account_view_tax_form_l10n_it_edi_extended
+NEW ir.ui.view: l10n_it_edi_withholding.view_invoice_tree_l10n_it_edi_extended

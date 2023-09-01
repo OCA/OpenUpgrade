@@ -127,4 +127,10 @@
   <record id="group_hr_recruitment_user" model="res.groups">
     <field name="name">Officer : Manage all applicants</field>
   </record>
+  <record id="refuse_reason_2" model="hr.applicant.refuse.reason">
+    <field name="name">Refused by Applicant: don't like job</field>
+  </record>
+  <record id="refuse_reason_3" model="hr.applicant.refuse.reason">
+    <field name="name">Refused by Applicant: better offer</field>
+  </record>
 </odoo>

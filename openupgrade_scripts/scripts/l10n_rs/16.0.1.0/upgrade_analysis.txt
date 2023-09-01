@@ -1,0 +1,24 @@
+---Models in module 'l10n_rs'---
+---Fields in module 'l10n_rs'---
+l10n_rs      / res.partner              / l10n_rs_company_registry (char): DEL
+---XML records in module 'l10n_rs'---
+NEW account.report.column: l10n_rs.tax_report_vat_balance
+NEW account.report.expression: l10n_rs.tax_report_line_001_tag
+NEW account.report.expression: l10n_rs.tax_report_line_002_tag
+NEW account.report.expression: l10n_rs.tax_report_line_003_tag
+NEW account.report.expression: l10n_rs.tax_report_line_004_tag
+NEW account.report.expression: l10n_rs.tax_report_line_005_formula
+NEW account.report.expression: l10n_rs.tax_report_line_006_tag
+NEW account.report.expression: l10n_rs.tax_report_line_007_tag
+NEW account.report.expression: l10n_rs.tax_report_line_008_tag
+NEW account.report.expression: l10n_rs.tax_report_line_009_formula
+NEW account.report.expression: l10n_rs.tax_report_line_103_tag
+NEW account.report.expression: l10n_rs.tax_report_line_104_tag
+NEW account.report.expression: l10n_rs.tax_report_line_105_formula
+NEW account.report.expression: l10n_rs.tax_report_line_106_tag
+NEW account.report.expression: l10n_rs.tax_report_line_107_tag
+NEW account.report.expression: l10n_rs.tax_report_line_108_tag
+NEW account.report.expression: l10n_rs.tax_report_line_109_formula
+NEW account.report.expression: l10n_rs.tax_report_line_110_formula
+DEL ir.model.constraint: l10n_rs.constraint_res_partner_company_registry_country_uniq
+DEL ir.ui.view: l10n_rs.view_partner_form_inherit

@@ -1,69 +1,25 @@
 ---Models in module 'mail'---
-obsolete model mail.channel.partner
+obsolete model mail.channel.partner (renamed to mail.channel.member)
 obsolete model mail.resend.cancel [transient]
-model fetchmail.server (moved from fetchmail)
-new model mail.channel.member
+new model mail.channel.member (renamed from mail.channel.partner)
 new model mail.gateway.allowed
 new model mail.link.preview
 new model mail.message.schedule
 new model mail.template.reset [transient]
 new model template.reset.mixin [abstract]
 ---Fields in module 'mail'---
-mail         / fetchmail.server         / __last_update (datetime)      : previously in module fetchmail
-mail         / fetchmail.server         / _order                        : previously in module fetchmail
-mail         / fetchmail.server         / active (boolean)              : previously in module fetchmail
-mail         / fetchmail.server         / attach (boolean)              : previously in module fetchmail
-mail         / fetchmail.server         / configuration (text)          : previously in module fetchmail
-mail         / fetchmail.server         / date (datetime)               : previously in module fetchmail
-mail         / fetchmail.server         / display_name (char)           : previously in module fetchmail
-mail         / fetchmail.server         / is_ssl (boolean)              : previously in module fetchmail
-mail         / fetchmail.server         / message_ids (one2many)        : previously in module fetchmail
-mail         / fetchmail.server         / name (char)                   : previously in module fetchmail
-mail         / fetchmail.server         / object_id (many2one)          : previously in module fetchmail
-mail         / fetchmail.server         / original (boolean)            : previously in module fetchmail
-mail         / fetchmail.server         / password (char)               : previously in module fetchmail
-mail         / fetchmail.server         / port (integer)                : previously in module fetchmail
-mail         / fetchmail.server         / priority (integer)            : previously in module fetchmail
-mail         / fetchmail.server         / script (char)                 : previously in module fetchmail
-mail         / fetchmail.server         / server (char)                 : previously in module fetchmail
-mail         / fetchmail.server         / server_type (selection)       : previously in module fetchmail
-mail         / fetchmail.server         / state (selection)             : previously in module fetchmail
-mail         / fetchmail.server         / user (char)                   : previously in module fetchmail
 mail         / ir.actions.server        / mail_post_autofollow (boolean): NEW hasdefault: compute
 mail         / ir.actions.server        / mail_post_method (selection)  : NEW selection_keys: ['comment', 'email', 'note'], hasdefault: compute
 mail         / ir.actions.server        / state (False)                 : selection_keys is now '['code', 'followers', 'mail_post', 'multi', 'next_activity', 'object_create', 'object_write']' ('['code', 'email', 'followers', 'multi', 'next_activity', 'object_create', 'object_write']')
 mail         / ir.mail_server           / mail_template_ids (one2many)  : NEW relation: mail.template
+mail         / mail.activity            / _order                        : _order is now 'date_deadline ASC, id ASC' ('date_deadline ASC')
 mail         / mail.channel             / _inherits                     : DEL _inherits: {'mail.alias': 'alias_id'}
 mail         / mail.channel             / alias_id (many2one)           : DEL relation: mail.alias, required
 mail         / mail.channel             / channel_last_seen_partner_ids (one2many): DEL relation: mail.channel.partner
 mail         / mail.channel             / channel_member_ids (one2many) : NEW relation: mail.channel.member
 mail         / mail.channel             / channel_type (selection)      : now required
 mail         / mail.channel             / public (selection)            : DEL required, selection_keys: ['groups', 'private', 'public']
-mail         / mail.channel.member      / channel_id (many2one)         : NEW relation: mail.channel, required
-mail         / mail.channel.member      / custom_channel_name (char)    : NEW
-mail         / mail.channel.member      / fetched_message_id (many2one) : NEW relation: mail.message
-mail         / mail.channel.member      / fold_state (selection)        : NEW selection_keys: ['closed', 'folded', 'open'], hasdefault: default
-mail         / mail.channel.member      / guest_id (many2one)           : NEW relation: mail.guest
-mail         / mail.channel.member      / is_minimized (boolean)        : NEW
-mail         / mail.channel.member      / is_pinned (boolean)           : NEW hasdefault: default
-mail         / mail.channel.member      / last_interest_dt (datetime)   : NEW hasdefault: default
 mail         / mail.channel.member      / last_seen_dt (datetime)       : NEW
-mail         / mail.channel.member      / partner_id (many2one)         : NEW relation: res.partner
-mail         / mail.channel.member      / rtc_inviting_session_id (many2one): NEW relation: mail.channel.rtc.session
-mail         / mail.channel.member      / rtc_session_ids (one2many)    : NEW relation: mail.channel.rtc.session
-mail         / mail.channel.member      / seen_message_id (many2one)    : NEW relation: mail.message
-mail         / mail.channel.partner     / channel_id (many2one)         : DEL relation: mail.channel, required
-mail         / mail.channel.partner     / custom_channel_name (char)    : DEL
-mail         / mail.channel.partner     / fetched_message_id (many2one) : DEL relation: mail.message
-mail         / mail.channel.partner     / fold_state (selection)        : DEL selection_keys: ['closed', 'folded', 'open']
-mail         / mail.channel.partner     / guest_id (many2one)           : DEL relation: mail.guest
-mail         / mail.channel.partner     / is_minimized (boolean)        : DEL
-mail         / mail.channel.partner     / is_pinned (boolean)           : DEL
-mail         / mail.channel.partner     / last_interest_dt (datetime)   : DEL
-mail         / mail.channel.partner     / partner_id (many2one)         : DEL relation: res.partner
-mail         / mail.channel.partner     / rtc_inviting_session_id (many2one): DEL relation: mail.channel.rtc.session
-mail         / mail.channel.partner     / rtc_session_ids (one2many)    : DEL relation: mail.channel.rtc.session
-mail         / mail.channel.partner     / seen_message_id (many2one)    : DEL relation: mail.message
 mail         / mail.channel.rtc.session / channel_member_id (many2one)  : NEW relation: mail.channel.member, required
 mail         / mail.channel.rtc.session / channel_partner_id (many2one) : DEL relation: mail.channel.partner, required
 mail         / mail.gateway.allowed     / email (char)                  : NEW
@@ -77,7 +33,6 @@ mail         / mail.link.preview        / og_mimetype (char)            : NEW
 mail         / mail.link.preview        / og_title (char)               : NEW
 mail         / mail.link.preview        / og_type (char)                : NEW
 mail         / mail.link.preview        / source_url (char)             : NEW required
-mail         / mail.mail                / fetchmail_server_id (many2one): previously in module fetchmail
 mail         / mail.mail                / scheduled_date (char)         : type is now 'datetime' ('char')
 mail         / mail.mail                / to_delete (boolean)           : NEW
 mail         / mail.message             / add_sign (boolean)            : DEL
@@ -105,10 +60,13 @@ NEW ir.actions.act_window: mail.mail_gateway_allowed_action
 NEW ir.actions.act_window: mail.mail_link_preview_action
 NEW ir.actions.act_window: mail.mail_message_schedule_action
 NEW ir.actions.act_window: mail.mail_template_reset_action
+DEL ir.actions.act_window: fetchmail.act_server_history [renamed to mail module]
+DEL ir.actions.act_window: fetchmail.action_email_server_tree [renamed to mail module]
 DEL ir.actions.act_window: mail.mail_channel_partner_action
 DEL ir.actions.act_window: mail.mail_resend_cancel_action
 NEW ir.cron: mail.ir_cron_mail_gateway_action [renamed from fetchmail module] (noupdate)
 NEW ir.cron: mail.ir_cron_send_scheduled_message (noupdate)
+DEL ir.cron: fetchmail.ir_cron_mail_gateway_action [renamed to mail module] (noupdate)
 NEW ir.model.access: mail.access_fetchmail_server [renamed from fetchmail module]
 NEW ir.model.access: mail.access_mail_channel_member_portal
 NEW ir.model.access: mail.access_mail_channel_member_public
@@ -118,6 +76,7 @@ NEW ir.model.access: mail.access_mail_link_preview_admin
 NEW ir.model.access: mail.access_mail_message_scheduled_all
 NEW ir.model.access: mail.access_mail_message_scheduled_system
 NEW ir.model.access: mail.access_mail_template_reset
+DEL ir.model.access: fetchmail.access_fetchmail_server [renamed to mail module]
 DEL ir.model.access: mail.access_mail_channel_partner_portal
 DEL ir.model.access: mail.access_mail_channel_partner_public
 DEL ir.model.access: mail.access_mail_channel_partner_user
@@ -139,6 +98,7 @@ NEW ir.ui.menu: mail.mail_gateway_allowed_menu
 NEW ir.ui.menu: mail.mail_link_preview_menu
 NEW ir.ui.menu: mail.mail_message_schedule_menu
 NEW ir.ui.menu: mail.menu_action_fetchmail_server_tree [renamed from fetchmail module]
+DEL ir.ui.menu: fetchmail.menu_action_fetchmail_server_tree [renamed to mail module]
 DEL ir.ui.menu: mail.mail_channel_partner_menu
 NEW ir.ui.view: mail.mail_channel_member_view_form
 NEW ir.ui.view: mail.mail_channel_member_view_tree
@@ -156,6 +116,11 @@ NEW ir.ui.view: mail.notification_preview
 NEW ir.ui.view: mail.view_email_server_form
 NEW ir.ui.view: mail.view_email_server_search
 NEW ir.ui.view: mail.view_email_server_tree
+DEL ir.ui.view: fetchmail.email_message_tree_view
+DEL ir.ui.view: fetchmail.res_config_settings_view_form
+DEL ir.ui.view: fetchmail.view_email_server_form
+DEL ir.ui.view: fetchmail.view_email_server_search
+DEL ir.ui.view: fetchmail.view_email_server_tree
 DEL ir.ui.view: mail.mail_channel_partner_view_form
 DEL ir.ui.view: mail.mail_channel_partner_view_tree
 DEL ir.ui.view: mail.mail_notification_borders

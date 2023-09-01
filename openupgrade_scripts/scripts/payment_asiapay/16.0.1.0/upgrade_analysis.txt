@@ -4,7 +4,7 @@ payment_asiapay / payment.provider         / asiapay_currency_id (many2one): NEW
 payment_asiapay / payment.provider         / asiapay_merchant_id (char)    : NEW
 payment_asiapay / payment.provider         / asiapay_secure_hash_function (selection): NEW selection_keys: ['sha1', 'sha256', 'sha512'], hasdefault: default
 payment_asiapay / payment.provider         / asiapay_secure_hash_secret (char): NEW
-payment_asiapay / payment.provider         / code (False)                  : NEW selection_keys: ['adyen', 'alipay', 'aps', 'asiapay', 'none'], mode: modify
+payment_asiapay / payment.provider         / code (False)                  : NEW selection_keys: ['adyen', 'aps', 'asiapay', 'none'], mode: modify
 ---XML records in module 'payment_asiapay'---
 NEW ir.ui.view: payment_asiapay.payment_provider_form
 NEW ir.ui.view: payment_asiapay.redirect_form

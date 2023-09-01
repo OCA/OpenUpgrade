@@ -46,6 +46,7 @@
         </tr>
       </table>
     </field>
+    <field name="email_from">{{ (object.company_id.email_formatted or user.email_formatted) }}</field>
     <field name="name">Settings: Unregistered User Reminder</field>
     <field name="description">Sent automatically to admin if new user haven't responded to the invitation</field>
   </record>

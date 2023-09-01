@@ -1,0 +1,10 @@
+---Models in module 'pos_daily_sales_reports'---
+new model pos.daily.sales.reports.wizard [transient]
+---Fields in module 'pos_daily_sales_reports'---
+pos_daily_sales_reports / pos.session              / closing_notes (text)          : NEW
+---XML records in module 'pos_daily_sales_reports'---
+NEW ir.actions.act_window: pos_daily_sales_reports.action_report_pos_daily_sales_reports
+NEW ir.model.access: pos_daily_sales_reports.access_pos_daily_sales_reports_wizard
+NEW ir.ui.menu: pos_daily_sales_reports.menu_report_daily_details
+NEW ir.ui.view: pos_daily_sales_reports.pos_daily_report
+NEW ir.ui.view: pos_daily_sales_reports.view_pos_daily_sales_reports_wizard

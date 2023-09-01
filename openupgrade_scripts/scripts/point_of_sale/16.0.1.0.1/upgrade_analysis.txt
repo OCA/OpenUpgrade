@@ -35,6 +35,7 @@ NEW ir.model.access: point_of_sale.access_product_tag_pos_manager
 DEL ir.model.access: point_of_sale.access_account_cashbox_line_user
 DEL ir.model.access: point_of_sale.access_bank_statement_cashbox_user
 DEL ir.model.access: point_of_sale.access_money_in_out_wizard
+DEL ir.rule: point_of_sale.rule_pos_bank_statement_user (noupdate)
 DEL ir.rule: point_of_sale.rule_pos_cashbox_line_accountant (noupdate)
 DEL ir.ui.menu: point_of_sale.menu_pos_config_pos
 NEW ir.ui.view: point_of_sale.ticket_validation_screen
