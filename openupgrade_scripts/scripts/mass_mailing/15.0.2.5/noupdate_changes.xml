@@ -1,8 +1,9 @@
 <?xml version='1.0' encoding='utf-8'?>
 <odoo>
   <record id="ir_cron_mass_mailing_queue" model="ir.cron">
-    <field name="interval_number">1</field>
-    <field name="interval_type">days</field>
+    <!-- We don't need to change the previous interval -->
+    <!-- <field name="interval_number">1</field>
+    <field name="interval_type">days</field> -->
     <field name="name">Mail Marketing: Process queue</field>
   </record>
   <template id="mass_mailing_mail_layout">
