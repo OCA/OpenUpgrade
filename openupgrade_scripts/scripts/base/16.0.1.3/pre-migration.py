@@ -14,19 +14,18 @@ _logger = logging.getLogger(__name__)
 
 
 def login_or_registration_required_at_checkout(cr):
-    """website_sale_require_login merged into website_sale. Check if the
-    website_sale_require_login module was installed in v15 to set the
-    website.account_on_checkout field as mandatory so that the functionality
-    remains the same, login/registration required for checkout."""
+    """The website_sale_require_login module is merged into website_sale. Check if the
+    it was installed in v15 to set the website.account_on_checkout field as mandatory
+    so that the functionality remains the same, login/registration required for
+    checkout."""
     # Check if the module is installed and its status is "installed".
-    module_name = "website_sale_require_login"
-    if openupgrade.is_module_installed(cr, module_name):
+    if openupgrade.is_module_installed(cr, "website_sale_require_login"):
         # Add the field 'account_on_checkout' to the 'website' table if it doesn't exist yet.
         openupgrade.logged_query(
             cr,
             """
             ALTER TABLE website
-            ADD COLUMN IF NOT EXISTS account_on_checkout
+            ADD COLUMN IF NOT EXISTS account_on_checkout VARCHAR
             """,
         )
         # Set the value 'mandatory' in the field for all records in the table 'website'.
