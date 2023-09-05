@@ -20,6 +20,8 @@ renamed_modules = {
     "account_statement_import": "account_statement_import_file",
     # OCA/knowledge
     "knowledge": "document_knowledge",
+    # OCA/sale-promotion
+    "website_sale_coupon_page": "website_sale_loyalty_page",
     # OCA/server-ux
     "mass_editing": "server_action_mass_edit",
     # OCA/...
