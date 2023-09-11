@@ -3,7 +3,16 @@ from openupgradelib import openupgrade, openupgrade_140
 
 
 def convert_field_html_string(env):
-    exclusions = ["mail.message"]
+    exclusions = [
+        "mail.message",
+        "mail.mail",
+        "mail.template",
+        "res.users",
+        "mail.channel",
+        "mailing.mailing",
+        "account.invoice.send",
+        "mail.alias",
+    ]
     fields = env["ir.model.fields"].search(
         [("ttype", "=", "html"), ("store", "=", True)]
     )
