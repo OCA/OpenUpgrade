@@ -5,7 +5,7 @@ setuptools.setup(
     odoo_addon={
         'external_dependencies_override': {
             'python': {
-                'openupgradelib': 'git+https://github.com/OCA/openupgradelib.git@master',
+                'openupgradelib': 'openupgradelib @ git+https://github.com/OCA/openupgradelib.git@master',
             }
         }
     },
