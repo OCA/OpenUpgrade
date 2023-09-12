@@ -38,17 +38,6 @@ def login_or_registration_required_at_checkout(cr):
 
 
 def update_translatable_fields(cr):
-    # map of nonstandard table names
-    model2table = {
-        "ir.actions.actions": "ir_actions",
-        "ir.actions.act_window": "ir_act_window",
-        "ir.actions.act_window.view": "ir_act_window_view",
-        "ir.actions.act_window_close": "ir_actions",
-        "ir.actions.act_url": "ir_act_url",
-        "ir.actions.server": "ir_act_server",
-        "ir.actions.client": "ir_act_client",
-        "ir.actions.report": "ir_act_report_xml",
-    }
     # exclude fields from translation update
     exclusions = {
         # ir.actions.* inherits the name column from ir.actions.actions
@@ -65,7 +54,7 @@ def update_translatable_fields(cr):
     for field, model in cr.fetchall():
         if field in exclusions.get(model, []):
             continue
-        table = model2table.get(model, model.replace(".", "_"))
+        table = openupgrade.get_model2table(model)
         if not openupgrade.table_exists(cr, table):
             _logger.warning(
                 "Couldn't find table for model %s - not updating translations", model
