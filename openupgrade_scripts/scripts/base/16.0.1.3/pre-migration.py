@@ -4,7 +4,6 @@
 import logging
 
 from openupgradelib import openupgrade
-from psycopg2.extensions import AsIs
 
 from odoo import tools
 
@@ -85,7 +84,7 @@ def update_translatable_fields(cr):
         translation_name = "%s,%s" % (model, field)
         openupgrade.logged_query(
             cr,
-            """
+            f"""
             WITH t AS (
                 SELECT it.res_id as res_id, jsonb_object_agg(it.lang, it.value) AS value,
                     bool_or(imd.noupdate) AS noupdate
@@ -94,17 +93,15 @@ def update_translatable_fields(cr):
                 WHERE it.type = 'model' AND it.name = %(name)s AND it.state = 'translated'
                 GROUP BY it.res_id
             )
-            UPDATE "%(table)s" m
-            SET "%(field_name)s" = CASE WHEN t.noupdate THEN m.%(field_name)s || t.value
-                                    ELSE t.value || m.%(field_name)s END
+            UPDATE {table} m
+            SET "{field}" = CASE WHEN t.noupdate IS FALSE THEN t.value || m."{field}"
+                                 ELSE m."{field}" || t.value END
             FROM t
             WHERE t.res_id = m.id
             """,
             {
-                "table": AsIs(table),
                 "model": model,
                 "name": translation_name,
-                "field_name": AsIs(field),
             },
         )
         openupgrade.logged_query(
