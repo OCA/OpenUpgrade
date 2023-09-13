@@ -4,7 +4,6 @@
 import logging
 
 from openupgradelib import openupgrade
-from psycopg2.extensions import AsIs
 
 from odoo import tools
 
@@ -39,17 +38,6 @@ def login_or_registration_required_at_checkout(cr):
 
 
 def update_translatable_fields(cr):
-    # map of nonstandard table names
-    model2table = {
-        "ir.actions.actions": "ir_actions",
-        "ir.actions.act_window": "ir_act_window",
-        "ir.actions.act_window.view": "ir_act_window_view",
-        "ir.actions.act_window_close": "ir_actions",
-        "ir.actions.act_url": "ir_act_url",
-        "ir.actions.server": "ir_act_server",
-        "ir.actions.client": "ir_act_client",
-        "ir.actions.report": "ir_act_report_xml",
-    }
     # exclude fields from translation update
     exclusions = {
         # ir.actions.* inherits the name column from ir.actions.actions
@@ -66,7 +54,7 @@ def update_translatable_fields(cr):
     for field, model in cr.fetchall():
         if field in exclusions.get(model, []):
             continue
-        table = model2table.get(model, model.replace(".", "_"))
+        table = openupgrade.get_model2table(model)
         if not openupgrade.table_exists(cr, table):
             _logger.warning(
                 "Couldn't find table for model %s - not updating translations", model
@@ -85,7 +73,7 @@ def update_translatable_fields(cr):
         translation_name = "%s,%s" % (model, field)
         openupgrade.logged_query(
             cr,
-            """
+            f"""
             WITH t AS (
                 SELECT it.res_id as res_id, jsonb_object_agg(it.lang, it.value) AS value,
                     bool_or(imd.noupdate) AS noupdate
@@ -94,17 +82,15 @@ def update_translatable_fields(cr):
                 WHERE it.type = 'model' AND it.name = %(name)s AND it.state = 'translated'
                 GROUP BY it.res_id
             )
-            UPDATE "%(table)s" m
-            SET "%(field_name)s" = CASE WHEN t.noupdate THEN m.%(field_name)s || t.value
-                                    ELSE t.value || m.%(field_name)s END
+            UPDATE {table} m
+            SET "{field}" = CASE WHEN t.noupdate IS FALSE THEN t.value || m."{field}"
+                                 ELSE m."{field}" || t.value END
             FROM t
             WHERE t.res_id = m.id
             """,
             {
-                "table": AsIs(table),
                 "model": model,
                 "name": translation_name,
-                "field_name": AsIs(field),
             },
         )
         openupgrade.logged_query(
