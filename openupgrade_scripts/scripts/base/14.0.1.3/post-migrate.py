@@ -1,7 +1,12 @@
 # Copyright 2020 Odoo Community Association (OCA)
 # Copyright 2020 Opener B.V. <stefan@opener.am>
 # License AGPL-3.0 or later (https://www.gnu.org/licenses/agpl).
+import base64
+import logging
+
 from openupgradelib import openupgrade
+
+_logger = logging.getLogger(__name__)
 
 
 def fix_module_category_parent_id(env):
@@ -111,10 +116,30 @@ def users_should_export(env):
     )
 
 
+def binary_conversion_for_db_attachments(env):
+    attachments = env["ir.attachment"].search(
+        [
+            ("db_datas", "!=", False),
+        ]
+    )
+    for attachment in attachments:
+        try:
+            # Decoding base64 encoded data to binary
+            binary_data = base64.b64decode(attachment.db_datas)
+            attachment.write({"db_datas": binary_data})
+        except Exception as e:
+            _logger.error(
+                "Error while migrating attachment id %s: %s",
+                attachment.id,
+                repr(e),
+            )
+
+
 @openupgrade.migrate()
 def migrate(env, version):
     fix_module_category_parent_id(env)
     assign_module_category_parent(env)
     users_should_export(env)
+    binary_conversion_for_db_attachments(env)
     # Load noupdate changes
     openupgrade.load_data(env.cr, "base", "14.0.1.3/noupdate_changes.xml")
