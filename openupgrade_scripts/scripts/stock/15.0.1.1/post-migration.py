@@ -104,6 +104,20 @@ def _set_propagate_carrier_default(env):
     all_warehouses.delivery_route_id.rule_ids.propagate_carrier = True
 
 
+def _set_default_visibility_days(env):
+    """Odoo now uses a global config parameter (or the delay field in stock.rule)
+    for determining the maximum window for searching for incoming moves when applying
+    reordering rules.
+
+    For preserving the previous behavior, and making sure no delay was previously set
+    (as in that case, in v14 the showing window is applied using it), we set a high
+    global window delay.
+    """
+    rules = env["stock.rule"].search([])
+    if not any(x.delay for x in rules):
+        env["ir.config_parameter"].set_param("stock.visibility_days", 9999)
+
+
 @openupgrade.migrate()
 def migrate(env, version):
     _fill_stock_move_is_inventory(env)
@@ -111,6 +125,7 @@ def migrate(env, version):
     _create_default_return_type_for_all_warehouses(env)
     _fill_stock_location_last_inventory_date(env)
     _set_propagate_carrier_default(env)
+    _set_default_visibility_days(env)
     openupgrade.load_data(env.cr, "stock", "15.0.1.1/noupdate_changes.xml")
     openupgrade.delete_record_translations(
         env.cr,
