@@ -32,6 +32,8 @@ renamed_modules = {
     "account_bank_statement_import_txt_xlsx": "account_statement_import_txt_xlsx",
     # OCA/e-commerce
     "website_sale_attribute_filter_category": "website_sale_product_attribute_filter_category",  # noqa: B950
+    # OCA/event
+    "website_event_crm": "website_event_crm_invitation",
     # OCA/edi
     "account_e-invoice_generate": "account_einvoice_generate",
     "edi": "edi_oca",
