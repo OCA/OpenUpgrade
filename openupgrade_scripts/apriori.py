@@ -11,6 +11,8 @@ renamed_modules = {
     "mail_client_extension": "mail_plugin",
     "payment_ingenico": "payment_ogone",
     "website_mail_channel": "website_mail_group",
+    # OCA/account-financial-tools
+    "account_menu": "account_usability",
     # OCA/account-fiscal-rule
     "l10n_eu_oss": "l10n_eu_oss_oca",
     # OCA/e-commerce
@@ -53,7 +55,6 @@ merged_modules = {
     "stock_account_prepare_anglo_saxon_out_lines_hook": "stock_account",
     # OCA/e-commerce
     "website_sale_product_attribute_filter_visibility": "website_sale",
-    "account_menu": "account_usability",
     # OCA/account-invoicing
     "purchase_invoicing_no_zero_line": "purchase",
     # OCA/account-invoicing
