@@ -1,14 +1,20 @@
 ---Models in module 'l10n_ch'---
 ---Fields in module 'l10n_ch'---
 l10n_ch      / account.invoice          / l10n_ch_isr_number (char)     : DEL
-l10n_ch      / account.invoice          / l10n_ch_isr_sent (boolean)    : DEL
-l10n_ch      / account.journal          / invoice_reference_model (False): NEW selection_keys: ['ch', 'euro', 'odoo'], mode: modify
 l10n_ch      / account.move             / l10n_ch_isr_number (char)     : NEW isfunction: function, stored
+l10n_ch      / account.invoice          / l10n_ch_isr_sent (boolean)    : DEL
 l10n_ch      / account.move             / l10n_ch_isr_sent (boolean)    : NEW hasdefault
+# DONE: post-migration: moved fields from invoice to move
+
+l10n_ch      / account.journal          / invoice_reference_model (False): NEW selection_keys: ['ch', 'euro', 'odoo'], mode: modify
+# NOTHING TO DO: new feature
+
 l10n_ch      / res.bank                 / l10n_ch_postal_chf (char)     : DEL
 l10n_ch      / res.bank                 / l10n_ch_postal_eur (char)     : DEL
 l10n_ch      / res.partner.bank         / l10n_ch_isr_subscription_chf (char): NEW
 l10n_ch      / res.partner.bank         / l10n_ch_isr_subscription_eur (char): NEW
+# DONE: post-migration: moved fields from bank to partner bank
+
 ---XML records in module 'l10n_ch'---
 DEL account.account.tag: l10n_ch.vat_tag_200
 DEL account.account.tag: l10n_ch.vat_tag_220
@@ -34,6 +40,13 @@ DEL account.account.tag: l10n_ch.vat_tag_415
 DEL account.account.tag: l10n_ch.vat_tag_420
 DEL account.account.tag: l10n_ch.vat_tag_dedouanement
 NEW account.account.template: l10n_ch.ch_coa_1101
+# NOTHING TO DO
+
+account.chart.template: l10n_ch.l10nch_chart_template (noupdate switched)
+# DONE: pre-migration: switched noupdate
+
+NEW account.fiscal.position.template: l10n_ch.fiscal_position_template_1 (noupdate)
+NEW account.tax.group: l10n_ch.tax_group_tva_100
 NEW account.tax.report.line: l10n_ch.account_tax_report_line_calc_impot
 NEW account.tax.report.line: l10n_ch.account_tax_report_line_calc_impot_base
 NEW account.tax.report.line: l10n_ch.account_tax_report_line_calc_impot_chiffre
@@ -70,11 +83,11 @@ NEW account.tax.report.line: l10n_ch.account_tax_report_line_chtax_900
 NEW account.tax.report.line: l10n_ch.account_tax_report_line_chtax_910
 NEW account.tax.report.line: l10n_ch.account_tax_report_line_chtax_autres_mouv
 NEW account.tax.report.line: l10n_ch.account_tax_report_line_chtax_solde
+NEW account.tax.template: l10n_ch.vat_100_import_invest
 NEW account.tax.template: l10n_ch.vat_other_movements_900
 NEW account.tax.template: l10n_ch.vat_other_movements_910
-NEW ir.actions.act_window: account.action_move_out_invoice_type
-DEL ir.actions.act_window: account.action_invoice_tree1
 NEW ir.ui.view: l10n_ch.isr_partner_bank_tree
 NEW ir.ui.view: l10n_ch.isr_partner_property_bank_tree
 NEW ir.ui.view: l10n_ch.setup_bank_account_wizard_inherit
 DEL ir.ui.view: l10n_ch.isr_res_bank_form
+# NOTHING TO DO
