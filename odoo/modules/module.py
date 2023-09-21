@@ -467,13 +467,7 @@ def get_test_modules(module, openupgrade_prefix=None):
     feed unittest.TestLoader.loadTestsFromModule() """
     # Try to import the module
     results = _get_tests_modules('odoo.addons', module, openupgrade_prefix)
-
-    try:
-        importlib.import_module('odoo.upgrade.%s' % module)
-    except ImportError:
-        pass
-    else:
-        results += list(_get_upgrade_test_modules(module, openupgrade_prefix))
+    results += list(_get_upgrade_test_modules(module, openupgrade_prefix))
 
     return results
 
@@ -509,20 +503,29 @@ def _get_upgrade_test_modules(module, openupgrade_prefix=None):
     if openupgrade_prefix is None:
         openupgrade_prefix = ''
     name = openupgrade_prefix + '.tests'
-    upg = importlib.import_module("odoo.upgrade")
-    for path in map(Path, upg.__path__):
-        if openupgrade_prefix:
-            tests = (path / module / openupgrade_prefix[1:] / "tests").glob("test_*.py")
-        else:
-            tests = (path / module / "tests").glob("test_*.py")
-        for test in tests:
-            spec = importlib.util.spec_from_file_location(f"odoo.upgrade.{module}{name}.{test.stem}", test)
-            if not spec:
-                continue
-            pymod = importlib.util.module_from_spec(spec)
-            sys.modules[spec.name] = pymod
-            spec.loader.exec_module(pymod)
-            yield pymod
+    upgrade_modules = (
+        f"odoo.upgrade.{module}",
+        f"odoo.addons.{module}.migrations",
+        f"odoo.addons.{module}.upgrades",
+    )
+    for module_name in upgrade_modules:
+        try:
+            upg = importlib.import_module(module_name)
+        except ImportError:
+            continue
+        for path in map(Path, upg.__path__):
+            if openupgrade_prefix:
+                tests = path.glob(openupgrade_prefix[1:] + "/tests/test_*.py")
+            else:
+                tests = path.glob("tests/test_*.py")
+            for test in tests:
+                spec = importlib.util.spec_from_file_location(f"{upg.__name__}{name}.{test.stem}", test)
+                if not spec:
+                    continue
+                pymod = importlib.util.module_from_spec(spec)
+                sys.modules[spec.name] = pymod
+                spec.loader.exec_module(pymod)
+                yield pymod
 
 
 class OdooTestResult(unittest.result.TestResult):
