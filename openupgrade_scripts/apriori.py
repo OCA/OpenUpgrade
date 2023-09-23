@@ -63,6 +63,8 @@ merged_modules = {
     "product_form_purchase_link": "purchase",
     # OCA/stock-logistics-workflow
     "stock_picking_backorder_strategy": "stock",
+    # OCA/web
+    "web_drop_target": "web",
 }
 
 # only used here for upgrade_analysis
