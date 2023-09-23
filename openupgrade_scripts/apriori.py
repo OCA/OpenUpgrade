@@ -61,6 +61,8 @@ merged_modules = {
     "website_sale_require_login": "website_sale",
     # OCA/purchase-workflow
     "product_form_purchase_link": "purchase",
+    # OCA/stock-logistics-workflow
+    "stock_picking_backorder_strategy": "stock",
 }
 
 # only used here for upgrade_analysis
