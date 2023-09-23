@@ -11,11 +11,11 @@
     <script src="../_static/js/html5shiv.min.js"></script>
   <![endif]-->
   
-        <script src="../_static/jquery.js"></script>
-        <script src="../_static/_sphinx_javascript_frameworks_compat.js"></script>
-        <script data-url_root="../" id="documentation_options" src="../_static/documentation_options.js"></script>
-        <script src="../_static/doctools.js"></script>
-        <script src="../_static/sphinx_highlight.js"></script>
+        <script src="../_static/jquery.js?v=5d32c60e"></script>
+        <script src="../_static/_sphinx_javascript_frameworks_compat.js?v=2cd50e6c"></script>
+        <script src="../_static/documentation_options.js?v=42b9a8fd"></script>
+        <script src="../_static/doctools.js?v=888ff710"></script>
+        <script src="../_static/sphinx_highlight.js?v=dc90522c"></script>
     <script src="../_static/js/theme.js"></script>
     <link rel="index" title="Index" href="../genindex.html" />
     <link rel="search" title="Search" href="../search.html" />
@@ -107,17 +107,17 @@
            <div itemprop="articleBody">
              
   <section id="module-merging">
-<h1>Module Merging<a class="headerlink" href="#module-merging" title="Permalink to this heading"></a></h1>
+<h1>Module Merging<a class="headerlink" href="#module-merging" title="Link to this heading"></a></h1>
 <section id="example">
-<h2>Example<a class="headerlink" href="#example" title="Permalink to this heading"></a></h2>
+<h2>Example<a class="headerlink" href="#example" title="Link to this heading"></a></h2>
 <p>From version 15.0 to version 16.0, the <code class="docutils literal notranslate"><span class="pre">fetchmail_outlook</span></code> module
 has been merged into <code class="docutils literal notranslate"><span class="pre">microsoft_outlook</span></code>.</p>
 <p>See <a class="reference external" href="https://github.com/odoo/odoo/pull/88215">According Odoo Pull Request</a>.</p>
 </section>
 <section id="result-without-migration-script-expected-result">
-<h2>Result without migration script / Expected Result<a class="headerlink" href="#result-without-migration-script-expected-result" title="Permalink to this heading"></a></h2>
+<h2>Result without migration script / Expected Result<a class="headerlink" href="#result-without-migration-script-expected-result" title="Link to this heading"></a></h2>
 <section id="v15-table-ir-module-module">
-<h3>V15 table <code class="docutils literal notranslate"><span class="pre">ir_module_module</span></code><a class="headerlink" href="#v15-table-ir-module-module" title="Permalink to this heading"></a></h3>
+<h3>V15 table <code class="docutils literal notranslate"><span class="pre">ir_module_module</span></code><a class="headerlink" href="#v15-table-ir-module-module" title="Link to this heading"></a></h3>
 <table class="docutils align-default">
 <thead>
 <tr class="row-odd"><th class="head"><p>id</p></th>
@@ -141,7 +141,7 @@ has been merged into <code class="docutils literal notranslate"><span class="pre
 </table>
 </section>
 <section id="v16-table-ir-module-module-without-openupgrade">
-<h3>V16 table <code class="docutils literal notranslate"><span class="pre">ir_module_module</span></code> (Without openupgrade)<a class="headerlink" href="#v16-table-ir-module-module-without-openupgrade" title="Permalink to this heading"></a></h3>
+<h3>V16 table <code class="docutils literal notranslate"><span class="pre">ir_module_module</span></code> (Without openupgrade)<a class="headerlink" href="#v16-table-ir-module-module-without-openupgrade" title="Link to this heading"></a></h3>
 <table class="docutils align-default">
 <thead>
 <tr class="row-odd"><th class="head"><p>id</p></th>
@@ -174,7 +174,7 @@ has been merged into <code class="docutils literal notranslate"><span class="pre
 </ul>
 </section>
 <section id="v16-table-ir-module-module-with-openupgrade">
-<h3>V16 table <code class="docutils literal notranslate"><span class="pre">ir_module_module</span></code> (With openupgrade)<a class="headerlink" href="#v16-table-ir-module-module-with-openupgrade" title="Permalink to this heading"></a></h3>
+<h3>V16 table <code class="docutils literal notranslate"><span class="pre">ir_module_module</span></code> (With openupgrade)<a class="headerlink" href="#v16-table-ir-module-module-with-openupgrade" title="Link to this heading"></a></h3>
 <table class="docutils align-default">
 <thead>
 <tr class="row-odd"><th class="head"><p>id</p></th>
@@ -194,9 +194,9 @@ has been merged into <code class="docutils literal notranslate"><span class="pre
 </section>
 </section>
 <section id="contribution-to-openupgrade">
-<h2>Contribution to OpenUpgrade<a class="headerlink" href="#contribution-to-openupgrade" title="Permalink to this heading"></a></h2>
+<h2>Contribution to OpenUpgrade<a class="headerlink" href="#contribution-to-openupgrade" title="Link to this heading"></a></h2>
 <section id="apriori-py-file">
-<h3>apriori.py file<a class="headerlink" href="#apriori-py-file" title="Permalink to this heading"></a></h3>
+<h3>apriori.py file<a class="headerlink" href="#apriori-py-file" title="Link to this heading"></a></h3>
 <p>The list of the merged modules is present in a <code class="docutils literal notranslate"><span class="pre">apriori.py</span></code> file in each version
 of openupgrade.</p>
 <ul class="simple">
@@ -214,7 +214,7 @@ of openupgrade.</p>
 <p>See <a class="reference external" href="https://github.com/OCA/OpenUpgrade/blob/41b843404bd454051f4115da87eb39b4f1c5e5b0/openupgrade_scripts/apriori.py#L37">Full v16 apriori file</a>.</p>
 </section>
 <section id="pre-migration-py-file">
-<h3>pre-migration.py file<a class="headerlink" href="#pre-migration-py-file" title="Permalink to this heading"></a></h3>
+<h3>pre-migration.py file<a class="headerlink" href="#pre-migration-py-file" title="Link to this heading"></a></h3>
 <p>in the migration folder of the <code class="docutils literal notranslate"><span class="pre">base</span></code> module, add:</p>
 <div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="kn">from</span> <span class="nn">odoo.addons.openupgrade_scripts.apriori</span> <span class="kn">import</span> <span class="n">merged_modules</span>
 
@@ -232,7 +232,7 @@ of openupgrade.</p>
 for each new version. So you will generally not have to do this, as it’s only OpenUpgrade maintainers that initialize the OpenUpgrade Project.</p>
 </section>
 <section id="coverage-file">
-<h3>Coverage File<a class="headerlink" href="#coverage-file" title="Permalink to this heading"></a></h3>
+<h3>Coverage File<a class="headerlink" href="#coverage-file" title="Link to this heading"></a></h3>
 <p>A coverage file is present in each version:</p>
 <ul class="simple">
 <li><p>Until version 13, the file is present in this path:
@@ -252,7 +252,7 @@ for each new version. So you will generally not have to do this, as it’s only 
 </section>
 </section>
 <section id="notes">
-<h2>Notes<a class="headerlink" href="#notes" title="Permalink to this heading"></a></h2>
+<h2>Notes<a class="headerlink" href="#notes" title="Link to this heading"></a></h2>
 <ul class="simple">
 <li><p>In the <code class="docutils literal notranslate"><span class="pre">apriori.py</span></code> file, in the <code class="docutils literal notranslate"><span class="pre">merged_modules</span></code> dict, put the Odoo renaming at
 the beginning, ordered by module name, then OCA modules renaming, with the mention of
@@ -295,7 +295,7 @@ you can add the following lines at the end of this file:</p></li>
 
   <div role="contentinfo">
     <p>&#169; Copyright 2012-2021, Odoo Community Association (OCA) / The OpenUpgrade developers.
-      <span class="lastupdated">Last updated on Aug 02, 2023.
+      <span class="lastupdated">Last updated on Sep 23, 2023.
       </span></p>
   </div>
 

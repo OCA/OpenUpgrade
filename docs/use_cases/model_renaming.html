@@ -11,11 +11,11 @@
     <script src="../_static/js/html5shiv.min.js"></script>
   <![endif]-->
   
-        <script src="../_static/jquery.js"></script>
-        <script src="../_static/_sphinx_javascript_frameworks_compat.js"></script>
-        <script data-url_root="../" id="documentation_options" src="../_static/documentation_options.js"></script>
-        <script src="../_static/doctools.js"></script>
-        <script src="../_static/sphinx_highlight.js"></script>
+        <script src="../_static/jquery.js?v=5d32c60e"></script>
+        <script src="../_static/_sphinx_javascript_frameworks_compat.js?v=2cd50e6c"></script>
+        <script src="../_static/documentation_options.js?v=42b9a8fd"></script>
+        <script src="../_static/doctools.js?v=888ff710"></script>
+        <script src="../_static/sphinx_highlight.js?v=dc90522c"></script>
     <script src="../_static/js/theme.js"></script>
     <link rel="index" title="Index" href="../genindex.html" />
     <link rel="search" title="Search" href="../search.html" />
@@ -106,13 +106,13 @@
            <div itemprop="articleBody">
              
   <section id="model-renaming">
-<h1>Model Renaming<a class="headerlink" href="#model-renaming" title="Permalink to this heading"></a></h1>
+<h1>Model Renaming<a class="headerlink" href="#model-renaming" title="Link to this heading"></a></h1>
 <p>From version 14.0 to version 15.0, in the module <code class="docutils literal notranslate"><span class="pre">calendar</span></code>, the model
 <code class="docutils literal notranslate"><span class="pre">calendar.contacts</span></code> has been renamed into <code class="docutils literal notranslate"><span class="pre">calendar.filters</span></code>.</p>
 <section id="source-code-differences">
-<h2>Source Code Differences<a class="headerlink" href="#source-code-differences" title="Permalink to this heading"></a></h2>
+<h2>Source Code Differences<a class="headerlink" href="#source-code-differences" title="Link to this heading"></a></h2>
 <section id="version-14-0">
-<h3>Version 14.0<a class="headerlink" href="#version-14-0" title="Permalink to this heading"></a></h3>
+<h3>Version 14.0<a class="headerlink" href="#version-14-0" title="Link to this heading"></a></h3>
 <div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="k">class</span> <span class="nc">Contacts</span><span class="p">(</span><span class="n">models</span><span class="o">.</span><span class="n">Model</span><span class="p">):</span>
     <span class="n">_name</span> <span class="o">=</span> <span class="s2">&quot;calendar.contacts&quot;</span>
     <span class="n">_description</span> <span class="o">=</span> <span class="s2">&quot;Calendar Contacts&quot;</span>
@@ -135,7 +135,7 @@
 <p>See <a class="reference external" href="https://github.com/odoo/odoo/blob/68814f52e4fd44e190a2a71ee99a010a08eef674/addons/calendar/models/calendar_contact.py#LL7-L21">Full V14 Code Source</a>.</p>
 </section>
 <section id="version-15-0">
-<h3>Version 15.0<a class="headerlink" href="#version-15-0" title="Permalink to this heading"></a></h3>
+<h3>Version 15.0<a class="headerlink" href="#version-15-0" title="Link to this heading"></a></h3>
 <div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="k">class</span> <span class="nc">Contacts</span><span class="p">(</span><span class="n">models</span><span class="o">.</span><span class="n">Model</span><span class="p">):</span>
     <span class="n">_name</span> <span class="o">=</span> <span class="s2">&quot;calendar.filters&quot;</span>
     <span class="n">_description</span> <span class="o">=</span> <span class="s2">&quot;Calendar Filters&quot;</span>
@@ -160,9 +160,9 @@
 </section>
 </section>
 <section id="result-without-migration-script-expected-result">
-<h2>Result without migration script / Expected Result<a class="headerlink" href="#result-without-migration-script-expected-result" title="Permalink to this heading"></a></h2>
+<h2>Result without migration script / Expected Result<a class="headerlink" href="#result-without-migration-script-expected-result" title="Link to this heading"></a></h2>
 <section id="v14-table-calendar-contacts">
-<h3>V14 table <code class="docutils literal notranslate"><span class="pre">calendar_contacts</span></code><a class="headerlink" href="#v14-table-calendar-contacts" title="Permalink to this heading"></a></h3>
+<h3>V14 table <code class="docutils literal notranslate"><span class="pre">calendar_contacts</span></code><a class="headerlink" href="#v14-table-calendar-contacts" title="Link to this heading"></a></h3>
 <table class="docutils align-default">
 <thead>
 <tr class="row-odd"><th class="head"><p>id</p></th>
@@ -191,7 +191,7 @@
 </table>
 </section>
 <section id="v15-table-calendar-filters-without-migration-script">
-<h3>V15 table <code class="docutils literal notranslate"><span class="pre">calendar_filters</span></code> (Without migration script)<a class="headerlink" href="#v15-table-calendar-filters-without-migration-script" title="Permalink to this heading"></a></h3>
+<h3>V15 table <code class="docutils literal notranslate"><span class="pre">calendar_filters</span></code> (Without migration script)<a class="headerlink" href="#v15-table-calendar-filters-without-migration-script" title="Link to this heading"></a></h3>
 <table class="docutils align-default">
 <thead>
 <tr class="row-odd"><th class="head"><p>id</p></th>
@@ -213,7 +213,7 @@
 <p><strong>Problem</strong> : the data is lost during the migration process, and the new table is empty.</p>
 </section>
 <section id="v15-table-calendar-filters-with-migration-script">
-<h3>V15 table <code class="docutils literal notranslate"><span class="pre">calendar_filters</span></code> (With migration script)<a class="headerlink" href="#v15-table-calendar-filters-with-migration-script" title="Permalink to this heading"></a></h3>
+<h3>V15 table <code class="docutils literal notranslate"><span class="pre">calendar_filters</span></code> (With migration script)<a class="headerlink" href="#v15-table-calendar-filters-with-migration-script" title="Link to this heading"></a></h3>
 <table class="docutils align-default">
 <thead>
 <tr class="row-odd"><th class="head"><p>id</p></th>
@@ -247,9 +247,9 @@
 </section>
 </section>
 <section id="contribution-to-openupgrade">
-<h2>Contribution to OpenUpgrade<a class="headerlink" href="#contribution-to-openupgrade" title="Permalink to this heading"></a></h2>
+<h2>Contribution to OpenUpgrade<a class="headerlink" href="#contribution-to-openupgrade" title="Link to this heading"></a></h2>
 <section id="apriori-py-file">
-<h3>apriori.py file<a class="headerlink" href="#apriori-py-file" title="Permalink to this heading"></a></h3>
+<h3>apriori.py file<a class="headerlink" href="#apriori-py-file" title="Link to this heading"></a></h3>
 <p>The list of the renamed models is present in a <code class="docutils literal notranslate"><span class="pre">apriori.py</span></code> file in each version
 of openupgrade.</p>
 <ul class="simple">
@@ -271,7 +271,7 @@ It is used to generate correctly the analysis files,
 during the initialization of the Openupgrade project, for each release.</p>
 </section>
 <section id="write-migration-script">
-<h3>Write migration Script<a class="headerlink" href="#write-migration-script" title="Permalink to this heading"></a></h3>
+<h3>Write migration Script<a class="headerlink" href="#write-migration-script" title="Link to this heading"></a></h3>
 <p>in the <code class="docutils literal notranslate"><span class="pre">pre-migration.py</span></code> script add:</p>
 <div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="kn">from</span> <span class="nn">openupgradelib</span> <span class="kn">import</span> <span class="n">openupgrade</span>
 
@@ -298,7 +298,7 @@ during the initialization of the Openupgrade project, for each release.</p>
 
   <div role="contentinfo">
     <p>&#169; Copyright 2012-2021, Odoo Community Association (OCA) / The OpenUpgrade developers.
-      <span class="lastupdated">Last updated on Aug 02, 2023.
+      <span class="lastupdated">Last updated on Sep 23, 2023.
       </span></p>
   </div>
 

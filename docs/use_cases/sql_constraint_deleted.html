@@ -11,11 +11,11 @@
     <script src="../_static/js/html5shiv.min.js"></script>
   <![endif]-->
   
-        <script src="../_static/jquery.js"></script>
-        <script src="../_static/_sphinx_javascript_frameworks_compat.js"></script>
-        <script data-url_root="../" id="documentation_options" src="../_static/documentation_options.js"></script>
-        <script src="../_static/doctools.js"></script>
-        <script src="../_static/sphinx_highlight.js"></script>
+        <script src="../_static/jquery.js?v=5d32c60e"></script>
+        <script src="../_static/_sphinx_javascript_frameworks_compat.js?v=2cd50e6c"></script>
+        <script src="../_static/documentation_options.js?v=42b9a8fd"></script>
+        <script src="../_static/doctools.js?v=888ff710"></script>
+        <script src="../_static/sphinx_highlight.js?v=dc90522c"></script>
     <script src="../_static/js/theme.js"></script>
     <link rel="index" title="Index" href="../genindex.html" />
     <link rel="search" title="Search" href="../search.html" />
@@ -106,11 +106,11 @@
            <div itemprop="articleBody">
              
   <section id="sql-constraint-deleted">
-<h1>SQL Constraint Deleted<a class="headerlink" href="#sql-constraint-deleted" title="Permalink to this heading"></a></h1>
+<h1>SQL Constraint Deleted<a class="headerlink" href="#sql-constraint-deleted" title="Link to this heading"></a></h1>
 <p>From version 14.0 to version 15.0, in the module <code class="docutils literal notranslate"><span class="pre">bus</span></code>, the constraint
 named <code class="docutils literal notranslate"><span class="pre">bus_user_presence_unique</span></code> on table <code class="docutils literal notranslate"><span class="pre">bus_presence</span></code> has been deleted.</p>
 <section id="analysis">
-<h2>Analysis<a class="headerlink" href="#analysis" title="Permalink to this heading"></a></h2>
+<h2>Analysis<a class="headerlink" href="#analysis" title="Link to this heading"></a></h2>
 <div class="highlight-text notranslate"><div class="highlight"><pre><span></span>...
 ---Fields in module &#39;bus&#39;---
 ...
@@ -121,9 +121,9 @@ DEL ir.model.constraint: bus.constraint_bus_presence_bus_user_presence_unique
 <p>See <a class="reference external" href="https://github.com/OCA/OpenUpgrade/blob/15.0/openupgrade_scripts/scripts/bus/15.0.1.0/upgrade_analysis.txt">Full V15 Analysis File</a>.</p>
 </section>
 <section id="source-code-differences">
-<h2>Source Code Differences<a class="headerlink" href="#source-code-differences" title="Permalink to this heading"></a></h2>
+<h2>Source Code Differences<a class="headerlink" href="#source-code-differences" title="Link to this heading"></a></h2>
 <section id="version-14-0">
-<h3>Version 14.0<a class="headerlink" href="#version-14-0" title="Permalink to this heading"></a></h3>
+<h3>Version 14.0<a class="headerlink" href="#version-14-0" title="Link to this heading"></a></h3>
 <div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="k">class</span> <span class="nc">BusPresence</span><span class="p">(</span><span class="n">models</span><span class="o">.</span><span class="n">Model</span><span class="p">):</span>
     <span class="n">_name</span> <span class="o">=</span> <span class="s2">&quot;bus.presence&quot;</span>
 
@@ -139,7 +139,7 @@ DEL ir.model.constraint: bus.constraint_bus_presence_bus_user_presence_unique
 <p>See <a class="reference external" href="https://github.com/odoo/odoo/blob/14.0/addons/bus/models/bus_presence.py#L17-L28">Full V14 Code Source</a>.</p>
 </section>
 <section id="version-15-0">
-<h3>Version 15.0<a class="headerlink" href="#version-15-0" title="Permalink to this heading"></a></h3>
+<h3>Version 15.0<a class="headerlink" href="#version-15-0" title="Link to this heading"></a></h3>
 <div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="k">class</span> <span class="nc">BusPresence</span><span class="p">(</span><span class="n">models</span><span class="o">.</span><span class="n">Model</span><span class="p">):</span>
     <span class="n">_name</span> <span class="o">=</span> <span class="s2">&quot;bus.presence&quot;</span>
 </pre></div>
@@ -148,9 +148,9 @@ DEL ir.model.constraint: bus.constraint_bus_presence_bus_user_presence_unique
 </section>
 </section>
 <section id="contribution-to-openupgrade">
-<h2>Contribution to OpenUpgrade<a class="headerlink" href="#contribution-to-openupgrade" title="Permalink to this heading"></a></h2>
+<h2>Contribution to OpenUpgrade<a class="headerlink" href="#contribution-to-openupgrade" title="Link to this heading"></a></h2>
 <section id="update-upgrade-analysis-work-txt-file">
-<h3>Update <code class="docutils literal notranslate"><span class="pre">upgrade_analysis_work.txt</span></code> file<a class="headerlink" href="#update-upgrade-analysis-work-txt-file" title="Permalink to this heading"></a></h3>
+<h3>Update <code class="docutils literal notranslate"><span class="pre">upgrade_analysis_work.txt</span></code> file<a class="headerlink" href="#update-upgrade-analysis-work-txt-file" title="Link to this heading"></a></h3>
 <ul class="simple">
 <li><p>Mention the operation performed, starting with <code class="docutils literal notranslate"><span class="pre">#</span> <span class="pre">DONE:</span></code></p></li>
 </ul>
@@ -163,7 +163,7 @@ DEL ir.model.constraint: bus.constraint_bus_presence_bus_user_presence_unique
 <p>See <a class="reference external" href="https://github.com/OCA/OpenUpgrade/blob/15.0/openupgrade_scripts/scripts/bus/15.0.1.0/upgrade_analysis_work.txt">Full V15 Work Analysis File</a>.</p>
 </section>
 <section id="write-migration-script">
-<h3>Write migration Script<a class="headerlink" href="#write-migration-script" title="Permalink to this heading"></a></h3>
+<h3>Write migration Script<a class="headerlink" href="#write-migration-script" title="Link to this heading"></a></h3>
 <p>in the <code class="docutils literal notranslate"><span class="pre">pre-migration.py</span></code> script add:</p>
 <div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="kn">from</span> <span class="nn">openupgradelib</span> <span class="kn">import</span> <span class="n">openupgrade</span>
 
@@ -195,7 +195,7 @@ DEL ir.model.constraint: bus.constraint_bus_presence_bus_user_presence_unique
 
   <div role="contentinfo">
     <p>&#169; Copyright 2012-2021, Odoo Community Association (OCA) / The OpenUpgrade developers.
-      <span class="lastupdated">Last updated on Aug 02, 2023.
+      <span class="lastupdated">Last updated on Sep 23, 2023.
       </span></p>
   </div>
 
