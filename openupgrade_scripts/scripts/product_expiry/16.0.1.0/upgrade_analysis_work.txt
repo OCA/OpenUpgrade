@@ -1,0 +1,15 @@
+---Models in module 'product_expiry'---
+---Fields in module 'product_expiry'---
+product_expiry / stock.lot                / alert_date (datetime)         : NEW hasdefault: compute
+product_expiry / stock.lot                / expiration_date (datetime)    : NEW hasdefault: compute
+product_expiry / stock.lot                / product_expiry_reminded (boolean): NEW
+product_expiry / stock.lot                / removal_date (datetime)       : NEW hasdefault: compute
+product_expiry / stock.lot                / use_date (datetime)           : NEW hasdefault: compute
+product_expiry / stock.production.lot     / alert_date (datetime)         : DEL
+product_expiry / stock.production.lot     / expiration_date (datetime)    : DEL
+product_expiry / stock.production.lot     / product_expiry_reminded (boolean): DEL
+product_expiry / stock.production.lot     / removal_date (datetime)       : DEL
+product_expiry / stock.production.lot     / use_date (datetime)           : DEL
+---XML records in module 'product_expiry'---
+NEW ir.ui.view: product_expiry.report_package_barcode_expiry
+# Nothing to do.
