@@ -3,4 +3,7 @@
   <!-- <record id="stock_valuation_layer_company_rule" model="ir.rule">
     <field name="global"/>
   </record> -->
+  <record id="stock.group_stock_manager" model="res.groups">
+    <field name="implied_ids" eval="[(3, ref('account.group_account_invoice'))]"/>
+  </record>
 </odoo>
