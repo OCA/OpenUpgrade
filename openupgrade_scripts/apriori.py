@@ -22,6 +22,7 @@ renamed_modules = {
     "knowledge": "document_knowledge",
     # OCA/sale-promotion
     "sale_coupon_order_line_link": "sale_loyalty_order_line_link",
+    "sale_coupon_partner": "sale_loyalty_partner",
     "website_sale_coupon_page": "website_sale_loyalty_page",
     # OCA/server-ux
     "mass_editing": "server_action_mass_edit",
