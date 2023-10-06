@@ -26,6 +26,8 @@ renamed_modules = {
     "website_sale_coupon_page": "website_sale_loyalty_page",
     # OCA/server-ux
     "mass_editing": "server_action_mass_edit",
+    # OCA/l10n-italy
+    "assets_management": "l10n_it_asset_management",
     # OCA/...
 }
 
