@@ -83,7 +83,7 @@ def finish_migration_to_mail_group(env):
 def _migrate_placeholder_char(string):
     """
     Replace dynamic placeholders in char/text fields:
-    Example: "Dear ${object.name}," -> "Dear {{object.name}},"
+    Example: "Dear ${object.name | safe}," -> "Dear {{object.name}},"
     """
     if not string:
         return string
@@ -103,8 +103,9 @@ def repl_placeholder(match):
 def _migrate_placeholder_html(string):
     """
     Replace dynamic placeholders in HTML fields:
-    Example: 'Your name is ${object.name}' -> 'Your name is <t t-out="object.name"></t>'
+    Example: 'Your name is ${object.name | safe}' -> 'Your name is <t t-out="object.name"></t>'
     """
+    string = re.sub(r"\s?\|\s?safe\s?", "", string)
     pattern = r"\$\{([^}]*)\}"
     string = re.sub(pattern, repl_placeholder, string)
     return string
