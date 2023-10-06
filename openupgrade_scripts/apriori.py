@@ -21,6 +21,7 @@ renamed_modules = {
     # OCA/knowledge
     "knowledge": "document_knowledge",
     # OCA/sale-promotion
+    "coupon_limit": "loyalty_limit",
     "sale_coupon_order_line_link": "sale_loyalty_order_line_link",
     "sale_coupon_partner": "sale_loyalty_partner",
     "website_sale_coupon_page": "website_sale_loyalty_page",
