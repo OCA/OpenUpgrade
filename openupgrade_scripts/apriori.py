@@ -8,6 +8,8 @@ renamed_modules = {
     "account_facturx": "account_edi_facturx",
     "sale_coupon": "coupon",
     "website_rating": "portal_rating",
+    # OCA/account-consolidation
+    "account_consolidation": "account_consolidation_oca",
     # OCA/account-invoice-reporting
     "account_invoice_comment_template": "account_comment_template",
     # OCA/bank-statement-import
