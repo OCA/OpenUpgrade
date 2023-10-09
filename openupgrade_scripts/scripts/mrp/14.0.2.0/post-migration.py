@@ -89,6 +89,6 @@ def migrate(env, version):
     map_mrp_production_state_planned(env)
     generate_workorders_for_draft_orders(env)
     openupgrade.load_data(env.cr, "mrp", "14.0.2.0/noupdate_changes.xml")
-    openupgrade.delete_records_safely_by_xml_id(
-        env, ["mrp.mrp_routing_rule", "mrp.sequence_mrp_route"]
-    )
+    openupgrade.delete_records_safely_by_xml_id(env, ["mrp.mrp_routing_rule"])
+    if not env["ir.module.module"].search([("name", "=", "mrp_routing")]):
+        openupgrade.delete_records_safely_by_xml_id(env, ["mrp.sequence_mrp_route"])
