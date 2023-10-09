@@ -1,7 +1,7 @@
 
 A module can have one of the following statuses:
 
-* **Nothing to do**: Analyse has been done, and there is nothing to do or
+* **Nothing to do**: Analysis has been done, and there is nothing to do or
   there's no change between the old edition and the new one;
 
 * **Done**: Scripts are ready to run and can be found in this distribution;
