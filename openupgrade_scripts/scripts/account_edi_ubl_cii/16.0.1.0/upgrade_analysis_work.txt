@@ -1,0 +1,34 @@
+---Models in module 'account_edi_ubl_cii'---
+new model account.edi.xml.ubl_a_nz [abstract]
+# NOTHING TO DO
+
+---Fields in module 'account_edi_ubl_cii'---
+---XML records in module 'account_edi_ubl_cii'---
+NEW account.edi.format: account_edi_ubl_cii.edi_efff_1 [renamed from l10n_be_edi module]
+NEW account.edi.format: account_edi_ubl_cii.edi_facturx_1_0_05 [renamed from account_edi_facturx module]
+NEW account.edi.format: account_edi_ubl_cii.edi_nlcius_1 [renamed from l10n_nl_edi module]
+NEW account.edi.format: account_edi_ubl_cii.edi_ubl_2_1 [renamed from account_edi_ubl module]
+DEL account.edi.format: account_edi_facturx.edi_facturx_1_0_05 [renamed to account_edi_ubl_cii module]
+DEL account.edi.format: account_edi_ubl.edi_ubl_2_1 [renamed to account_edi_ubl_cii module]
+DEL account.edi.format: l10n_be_edi.edi_efff_1 [renamed to account_edi_ubl_cii module]
+DEL account.edi.format: l10n_nl_edi.edi_nlcius_1 [renamed to account_edi_ubl_cii module]
+# NOTHING TO DO: done via module merge in apriori
+
+NEW account.edi.format: account_edi_ubl_cii.ubl_a_nz
+DEL account.edi.format: l10n_no_edi.edi_ehf_3
+DEL ir.ui.view: account_edi_facturx.account_invoice_facturx_export
+DEL ir.ui.view: account_edi_facturx.account_invoice_line_facturx_export
+DEL ir.ui.view: account_edi_facturx.account_invoice_partner_facturx_export
+DEL ir.ui.view: account_edi_facturx.account_invoice_pdfa_3_facturx_metadata
+DEL ir.ui.view: account_edi_ubl.export_ubl_invoice
+DEL ir.ui.view: account_edi_ubl.export_ubl_invoice_line
+DEL ir.ui.view: account_edi_ubl.export_ubl_invoice_partner
+DEL ir.ui.view: account_edi_ubl_bis3.export_bis3_invoice
+DEL ir.ui.view: account_edi_ubl_bis3.export_bis3_invoice_line
+DEL ir.ui.view: account_edi_ubl_bis3.export_bis3_invoice_partner
+DEL ir.ui.view: l10n_be_edi.export_efff_invoice
+DEL ir.ui.view: l10n_nl_edi.export_nlcius_invoice
+DEL ir.ui.view: l10n_nl_edi.export_nlcius_invoice_partner
+DEL ir.ui.view: l10n_no_edi.export_ehf_3_invoice
+DEL ir.ui.view: l10n_no_edi.export_ehf_3_invoice_partner
+# NOTHING TO DO
