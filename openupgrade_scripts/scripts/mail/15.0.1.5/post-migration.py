@@ -228,6 +228,16 @@ def _migrate_mail_templates(env):
             tmpl_lang.body_html = mako_html_to_qweb(tmpl_lang.body_html)
 
 
+def _pin_mail_channel_partners(env):
+    """Since this version, a check is performed on JS side on discuss initialization
+    for unsubscribing from channels that are not pinned, so we should fill the DB, which
+    by default put a NULL value on that field, with a True value.
+    """
+    openupgrade.logged_query(
+        env.cr, "UPDATE mail_channel_partner SET is_pinned=True WHERE is_pinned IS NULL"
+    )
+
+
 @openupgrade.migrate()
 def migrate(env, version):
     openupgrade.load_data(env.cr, "mail", "15.0.1.5/noupdate_changes.xml")
@@ -243,3 +253,4 @@ def migrate(env, version):
     )
     finish_migration_to_mail_group(env)
     _migrate_mail_templates(env)
+    _pin_mail_channel_partners(env)
