@@ -69,6 +69,8 @@ renamed_modules = {
     "l10n_it_causali_pagamento": "l10n_it_payment_reason",
     "l10n_it_codici_carica": "l10n_it_appointment_code",
     "l10n_it_withholding_tax_causali": "l10n_it_withholding_tax_reason",
+    # OCA/l10n-france
+    "account_bank_statement_import_fr_cfonb": "account_statement_import_fr_cfonb",
     # OCA/...
 }
 
