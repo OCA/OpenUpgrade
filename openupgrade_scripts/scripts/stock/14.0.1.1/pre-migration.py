@@ -38,7 +38,7 @@ def fast_precreate_orderpoint_product_category_id(env):
         env.cr,
         """
         ALTER TABLE stock_warehouse_orderpoint
-        ADD COLUMN product_category_id integer""",
+        ADD COLUMN IF NOT EXISTS product_category_id integer""",
     )
     openupgrade.logged_query(
         env.cr,
