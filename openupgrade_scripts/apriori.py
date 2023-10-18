@@ -18,6 +18,7 @@ renamed_modules = {
     "sale_coupon_taxcloud_delivery": "sale_loyalty_taxcloud_delivery",
     # OCA/bank-statement-import
     "account_statement_import": "account_statement_import_file",
+    "account_statement_import_txt_xlsx": "account_statement_import_sheet_file",
     # OCA/knowledge
     "knowledge": "document_knowledge",
     # OCA/sale-promotion
