@@ -1,0 +1,21 @@
+---Models in module 'payment_paypal'---
+---Fields in module 'payment_paypal'---
+payment_paypal / payment.acquirer         / paypal_email_account (char)   : DEL
+payment_paypal / payment.acquirer         / paypal_pdt_token (char)       : DEL
+payment_paypal / payment.acquirer         / paypal_seller_account (char)  : DEL
+payment_paypal / payment.acquirer         / paypal_use_ipn (boolean)      : DEL
+payment_paypal / payment.acquirer         / provider (False)              : DEL selection_keys: ['adyen', 'alipay', 'authorize', 'buckaroo', 'mollie', 'none', 'ogone', 'paypal'], mode: modify
+payment_paypal / payment.provider         / code (False)                  : NEW selection_keys: ['adyen', 'alipay', 'aps', 'asiapay', 'authorize', 'buckaroo', 'custom', 'demo', 'flutterwave', 'mercado_pago', 'mollie', 'none', 'ogone', 'paypal'], mode: modify
+payment_paypal / payment.provider         / paypal_email_account (char)   : NEW
+payment_paypal / payment.provider         / paypal_pdt_token (char)       : NEW
+payment_paypal / payment.provider         / paypal_seller_account (char)  : NEW
+payment_paypal / payment.provider         / paypal_use_ipn (boolean)      : NEW hasdefault: default
+# NOTHING TO DO: `payment.acquirer` renamed to `payment.provider` in payment module
+
+---XML records in module 'payment_paypal'---
+DEL account.payment.method: payment_paypal.payment_method_paypal (noupdate)
+# DONE: post-migration (delete record)
+
+NEW ir.ui.view: payment_paypal.payment_provider_form
+DEL ir.ui.view: payment_paypal.payment_acquirer_form
+# DONE: pre-migration (renamed)
