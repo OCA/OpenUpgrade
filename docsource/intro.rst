@@ -32,7 +32,7 @@ Migration from one version to the next
 
 In the following, **Openupgrade X** will be understood as the tool used
 to migrate a database **from version X-1 to version X**.
-For exemple, if you want to migrate from version 14.0 to 15.0:
+For example, if you want to migrate from version 14.0 to 15.0:
 
 .. image:: images/migration-14-15.png
 
@@ -41,7 +41,7 @@ Migration of several versions
 
 It is perfectly possible to migrate several versions.
 In this case, you'll need to perform all intermediate migrations sequentially.
-For exemple, if you want to migrate from version 14.0 to version 16.0, you
+For example, if you want to migrate from version 14.0 to version 16.0, you
 should perform two Upgrades via OpenUpgrade 15.0, then OpenUpgrade 16.0:
 
 .. image:: images/migration-14-16.png
@@ -62,7 +62,7 @@ Openupgrade design
 Why migrate to a more recent major version
 ------------------------------------------
 
-* `Security holes <https://www.cvedetails.com/vulnerability-list/vendor_id-16543/Odoo.html>`_
+* `Security holes <https://www.cvedetails.com/product/38140/Odoo-Odoo.html?vendor_id=16543>`_
   are regularly found in Odoo.
   Only the latest versions are patched, so older versions are left with security breeches that can be exploited.
   For several years now, Odoo's `policy <https://www.odoo.com/documentation/master/administration/maintain/supported_versions.html#what-s-the-support-status-of-my-odoo>`_ has been to support the latest 3 versions.
@@ -89,7 +89,7 @@ Why migrate to a more recent major version
 In short, not migrating your Odoo instance to a recent version means increasing
 `your technical debt <https://en.wikipedia.org/wiki/Technical_debt>`_.
 
-For more information, see `Daniel Reis presentation <https://www.youtube.com/watch?v=u7_k8lCZeY0>`_ on the benefits of migration.
+For more information, see `Daniel Reis' presentation <https://www.youtube.com/watch?v=u7_k8lCZeY0>`_ on the benefits of migration.
 
 Alternative to Openupgrade
 --------------------------
