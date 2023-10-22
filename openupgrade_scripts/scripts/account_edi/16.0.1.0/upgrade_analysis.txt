@@ -1,4 +1,8 @@
 ---Models in module 'account_edi'---
 ---Fields in module 'account_edi'---
+account_edi  / account.payment          / edi_show_abandon_cancel_button (boolean): not a function anymore
+account_edi  / account.payment          / edi_show_abandon_cancel_button (boolean): now related
+account_edi  / account.payment          / edi_show_cancel_button (boolean): not a function anymore
+account_edi  / account.payment          / edi_show_cancel_button (boolean): now related
 ---XML records in module 'account_edi'---
----nothing has changed in this module--
+NEW ir.ui.view: account_edi.view_in_invoice_refund_tree_inherit

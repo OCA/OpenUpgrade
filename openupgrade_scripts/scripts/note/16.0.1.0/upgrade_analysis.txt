@@ -2,5 +2,7 @@
 ---Fields in module 'note'---
 note         / note.note                / company_id (many2one)         : NEW relation: res.company
 note         / note.note                / name (text)                   : not a function anymore
+note_pad     / note.note                / note_pad_url (char)           : DEL
 ---XML records in module 'note'---
 NEW ir.rule: note.ir_rule_note_note_multi_company (noupdate)
+DEL ir.ui.view: note_pad.view_note_note_pad_form

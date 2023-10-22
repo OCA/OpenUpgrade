@@ -34,10 +34,23 @@
         </tbody>
       </table>
     </field>
+    <field name="email_from">{{ (object.user_id.email_formatted or object.company_id.email_formatted or user.email_formatted or '') }}</field>
     <field name="name">Ecommerce: Cart Recovery</field>
     <field name="description">If the setting is set, sent to authenticated visitors who abandoned their cart</field>
   </record>
+  <record id="new_ribbon" model="product.ribbon">
+    <field name="html_class">text-bg-primary o_ribbon_left</field>
+  </record>
+  <record id="out_of_stock_ribbon" model="product.ribbon">
+    <field name="html_class">text-bg-warning o_ribbon_left</field>
+  </record>
+  <record id="sale_ribbon" model="product.ribbon">
+    <field name="html_class">text-bg-success o_ribbon_left</field>
+  </record>
   <record id="sales_team.group_sale_manager" model="res.groups">
     <field name="implied_ids" eval="[(4, ref('website.group_website_restricted_editor'))]"/>
+  </record>
+  <record id="sold_out_ribbon" model="product.ribbon">
+    <field name="html_class">text-bg-danger o_ribbon_left</field>
   </record>
 </odoo>

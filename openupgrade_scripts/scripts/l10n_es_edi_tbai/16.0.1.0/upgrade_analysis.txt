@@ -1,0 +1,25 @@
+---Models in module 'l10n_es_edi_tbai'---
+---Fields in module 'l10n_es_edi_tbai'---
+l10n_es_edi_tbai / account.move             / l10n_es_tbai_cancel_xml (binary): NEW attachment: True
+l10n_es_edi_tbai / account.move             / l10n_es_tbai_chain_index (integer): NEW
+l10n_es_edi_tbai / account.move             / l10n_es_tbai_post_xml (binary): NEW attachment: True
+l10n_es_edi_tbai / account.move             / l10n_es_tbai_refund_reason (selection): NEW selection_keys: ['R1', 'R2', 'R3', 'R4', 'R5']
+l10n_es_edi_tbai / res.company              / l10n_es_tbai_chain_sequence_id (many2one): NEW relation: ir.sequence
+l10n_es_edi_tbai / res.company              / l10n_es_tbai_tax_agency (selection): NEW selection_keys: ['araba', 'bizkaia', 'gipuzkoa']
+---XML records in module 'l10n_es_edi_tbai'---
+NEW account.edi.format: l10n_es_edi_tbai.edi_es_tbai
+NEW ir.ui.menu: l10n_es_edi_tbai.menu_l10n_es_edi_tbai_license
+NEW ir.ui.view: l10n_es_edi_tbai.l10n_es_tbai_external_layout_standard
+NEW ir.ui.view: l10n_es_edi_tbai.res_company_form_l10n_es_edi_tbai
+NEW ir.ui.view: l10n_es_edi_tbai.res_config_settings_view_form
+NEW ir.ui.view: l10n_es_edi_tbai.template_LROE_240_inner
+NEW ir.ui.view: l10n_es_edi_tbai.template_LROE_240_main
+NEW ir.ui.view: l10n_es_edi_tbai.template_digital_signature
+NEW ir.ui.view: l10n_es_edi_tbai.template_invoice_bundle
+NEW ir.ui.view: l10n_es_edi_tbai.template_invoice_desglose
+NEW ir.ui.view: l10n_es_edi_tbai.template_invoice_factura
+NEW ir.ui.view: l10n_es_edi_tbai.template_invoice_main_cancel
+NEW ir.ui.view: l10n_es_edi_tbai.template_invoice_main_post
+NEW ir.ui.view: l10n_es_edi_tbai.template_invoice_sujetos
+NEW ir.ui.view: l10n_es_edi_tbai.view_account_move_reversal
+NEW ir.ui.view: l10n_es_edi_tbai.view_move_form_inherit_l10n_es_edi_tbai
