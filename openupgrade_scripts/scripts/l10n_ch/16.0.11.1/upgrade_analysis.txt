@@ -1,0 +1,47 @@
+---Models in module 'l10n_ch'---
+new model l10n_ch.qr_invoice.wizard [transient]
+---Fields in module 'l10n_ch'---
+---XML records in module 'l10n_ch'---
+NEW account.report.column: l10n_ch.tax_report_balance
+NEW account.report.expression: l10n_ch.account_tax_report_line_chtax_220_289_tag
+NEW account.report.expression: l10n_ch.account_tax_report_line_chtax_221_tag
+NEW account.report.expression: l10n_ch.account_tax_report_line_chtax_225_tag
+NEW account.report.expression: l10n_ch.account_tax_report_line_chtax_230_tag
+NEW account.report.expression: l10n_ch.account_tax_report_line_chtax_235_tag
+NEW account.report.expression: l10n_ch.account_tax_report_line_chtax_280_tag
+NEW account.report.expression: l10n_ch.account_tax_report_line_chtax_302a_tag
+NEW account.report.expression: l10n_ch.account_tax_report_line_chtax_302b_tag
+NEW account.report.expression: l10n_ch.account_tax_report_line_chtax_303a_tag
+NEW account.report.expression: l10n_ch.account_tax_report_line_chtax_303b_tag
+NEW account.report.expression: l10n_ch.account_tax_report_line_chtax_312a_tag
+NEW account.report.expression: l10n_ch.account_tax_report_line_chtax_312b_tag
+NEW account.report.expression: l10n_ch.account_tax_report_line_chtax_313a_tag
+NEW account.report.expression: l10n_ch.account_tax_report_line_chtax_313b_tag
+NEW account.report.expression: l10n_ch.account_tax_report_line_chtax_342a_tag
+NEW account.report.expression: l10n_ch.account_tax_report_line_chtax_342b_tag
+NEW account.report.expression: l10n_ch.account_tax_report_line_chtax_343a_tag
+NEW account.report.expression: l10n_ch.account_tax_report_line_chtax_343b_tag
+NEW account.report.expression: l10n_ch.account_tax_report_line_chtax_381a_tag
+NEW account.report.expression: l10n_ch.account_tax_report_line_chtax_381b_tag
+NEW account.report.expression: l10n_ch.account_tax_report_line_chtax_382a_tag
+NEW account.report.expression: l10n_ch.account_tax_report_line_chtax_382b_tag
+NEW account.report.expression: l10n_ch.account_tax_report_line_chtax_383a_tag
+NEW account.report.expression: l10n_ch.account_tax_report_line_chtax_383b_tag
+NEW account.report.expression: l10n_ch.account_tax_report_line_chtax_400_tag
+NEW account.report.expression: l10n_ch.account_tax_report_line_chtax_405_tag
+NEW account.report.expression: l10n_ch.account_tax_report_line_chtax_410_tag
+NEW account.report.expression: l10n_ch.account_tax_report_line_chtax_415_tag
+NEW account.report.expression: l10n_ch.account_tax_report_line_chtax_420_tag
+NEW account.report.expression: l10n_ch.account_tax_report_line_chtax_500_formula
+NEW account.report.expression: l10n_ch.account_tax_report_line_chtax_510_formula
+NEW account.report.expression: l10n_ch.account_tax_report_line_chtax_900_tag
+NEW account.report.expression: l10n_ch.account_tax_report_line_chtax_910_tag
+NEW account.report.expression: l10n_ch.account_tax_report_line_chtax_solde_formula
+NEW ir.actions.act_window: l10n_ch.l10n_ch_qr_invoice_wizard
+NEW ir.actions.report: l10n_ch.l10n_ch_qr_header
+NEW ir.actions.server: l10n_ch.l10n_ch_qr_server_action
+NEW ir.model.access: l10n_ch.access_l10n_ch_qr_invoice_wizard
+DEL ir.ui.menu: l10n_ch.account_reports_ch_statements_menu
+NEW ir.ui.view: l10n_ch.l10n_ch_header_template
+NEW ir.ui.view: l10n_ch.l10n_ch_qr_invoice_wizard_form
+NEW ir.ui.view: l10n_ch.qr_report_header

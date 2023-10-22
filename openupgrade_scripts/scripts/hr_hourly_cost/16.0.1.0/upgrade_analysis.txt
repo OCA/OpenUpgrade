@@ -1,6 +1,5 @@
 ---Models in module 'hr_hourly_cost'---
 ---Fields in module 'hr_hourly_cost'---
-hr_hourly_cost / hr.employee              / currency_id (many2one)        : previously in module hr_timesheet
 hr_hourly_cost / hr.employee              / hourly_cost (float)           : NEW hasdefault: default
 ---XML records in module 'hr_hourly_cost'---
 NEW ir.ui.view: hr_hourly_cost.view_employee_form

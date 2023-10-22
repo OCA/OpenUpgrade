@@ -7,7 +7,9 @@ purchase_requisition / product.template         / purchase_requisition (selectio
 purchase_requisition / purchase.order           / purchase_group_id (many2one)  : NEW relation: purchase.order.group
 purchase_requisition / purchase.order.group     / order_ids (one2many)          : NEW relation: purchase.order
 purchase_requisition / purchase.requisition.line / account_analytic_id (many2one): DEL relation: account.analytic.account
-purchase_requisition / purchase.requisition.line / analytic_distribution_stored_char (char): NEW isfunction: function, stored
+purchase_requisition / purchase.requisition.line / analytic_distribution (json)  : NEW hasdefault: compute
+purchase_requisition / purchase.requisition.line / analytic_distribution_search (json): NEW
+purchase_requisition / purchase.requisition.line / analytic_precision (integer)  : NEW hasdefault: default
 purchase_requisition / purchase.requisition.line / analytic_tag_ids (many2many)  : DEL relation: account.analytic.tag
 ---XML records in module 'purchase_requisition'---
 DEL ir.actions.act_window: purchase_requisition.tender_type_action

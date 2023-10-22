@@ -1,0 +1,26 @@
+<?xml version='1.0' encoding='utf-8'?>
+<odoo>
+  <record id="l10n_ec_ifrs" model="account.chart.template">
+    <field name="name">Ecuador - Plan Cuentas NIIF SupCias</field>
+    <field name="property_account_expense_id" ref="ec_expense_others"/>
+    <field name="account_journal_early_pay_discount_gain_account_id" ref="ec_early_pay_discount_gain"/>
+    <field name="account_journal_early_pay_discount_loss_account_id" ref="ec_early_pay_discount_loss"/>
+    <field name="default_cash_difference_expense_account_id" ref="ec_expense_cash_difference"/>
+    <field name="default_cash_difference_income_account_id" ref="ec_income_cash_difference"/>
+  </record>
+  <record id="tax_group_ice" model="account.tax.group">
+    <field name="sequence">5</field>
+  </record>
+  <record id="tax_group_vat0" model="account.tax.group">
+    <field name="sequence">40</field>
+  </record>
+  <record id="tax_group_vat14" model="account.tax.group">
+    <field name="sequence">30</field>
+  </record>
+  <record id="tax_group_vat_12" model="account.tax.group">
+    <field name="sequence">20</field>
+  </record>
+  <record id="tax_group_vat_not_charged" model="account.tax.group">
+    <field name="sequence">50</field>
+  </record>
+</odoo>
