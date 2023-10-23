@@ -1,3 +1,7 @@
+# Copyright 2023 Viindoo - locdang8
+# Copyright 2023 Tecnativa - Pedro M. Baeza
+# License AGPL-3.0 or later (http://www.gnu.org/licenses/agpl.html).
+
 from openupgradelib import openupgrade
 
 _delete_xmlids = [
@@ -20,4 +24,5 @@ _delete_xmlids = [
 
 @openupgrade.migrate()
 def migrate(env, version):
+    openupgrade.load_data(env.cr, "mass_mailing", "16.0.2.5/noupdate_changes.xml")
     openupgrade.delete_records_safely_by_xml_id(env, _delete_xmlids)
