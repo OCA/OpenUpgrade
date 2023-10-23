@@ -1,0 +1,179 @@
+---Models in module 'loyalty'---
+new model loyalty.card
+new model loyalty.rule
+new model loyalty.program
+new model loyalty.reward
+# DONE pre-migration: renamed models and tables
+
+new model loyalty.generate.wizard [transient]
+# NOTHING TO DO: transient model
+
+new model loyalty.mail
+# NOTHING TO DO: new model
+
+---Fields in module 'loyalty'---
+loyalty      / loyalty.program          / program_type (selection)      : NEW required, selection_keys: ['buy_x_get_y', 'coupons', 'ewallet', 'gift_card', 'loyalty', 'next_order_coupons', 'promo_code', 'promotion'], hasdefault: default
+# DONE pre-migration: update selection_keys
+
+loyalty      / loyalty.program          / applies_on (selection)        : NEW required, selection_keys: ['both', 'current', 'future'], hasdefault: default
+loyalty      / loyalty.program          / trigger (selection)           : NEW selection_keys: ['auto', 'with_code'], hasdefault: compute
+loyalty      / loyalty.reward           / discount_applicability (selection): NEW selection_keys: ['cheapest', 'order', 'specific'], hasdefault: default
+loyalty      / loyalty.reward           / discount_mode (selection)     : NEW required, selection_keys: function, hasdefault: default
+loyalty      / loyalty.rule             / minimum_amount_tax_mode (selection): NEW required, selection_keys: ['excl', 'incl'], hasdefault: default
+# DONE pre-migration: rename field and update selection_keys
+
+loyalty      / loyalty.program          / max_usage (integer)           : NEW
+loyalty      / loyalty.reward           / description (char)            : NEW hasdefault: compute
+loyalty      / loyalty.reward           / discount_product_ids (many2many): NEW relation: product.product
+loyalty      / loyalty.reward           / reward_product_qty (integer)  : NEW hasdefault: default
+loyalty      / loyalty.rule             / minimum_amount (float)        : NEW
+loyalty      / loyalty.rule             / minimum_qty (integer)         : NEW hasdefault: default
+loyalty      / loyalty.rule             / product_domain (char)         : NEW hasdefault: default
+# DONE pre-migration: rename field
+
+loyalty      / loyalty.program          / active (boolean)              : NEW hasdefault: default
+loyalty      / loyalty.program          / limit_usage (boolean)         : NEW
+loyalty      / loyalty.reward           / active (boolean)              : NEW hasdefault: default
+loyalty      / loyalty.rule             / active (boolean)              : NEW hasdefault: default
+# DONE pre-migration: setting values
+
+loyalty      / loyalty.program          / reward_ids (one2many)         : NEW relation: loyalty.reward, hasdefault: compute
+loyalty      / loyalty.program          / rule_ids (one2many)           : NEW relation: loyalty.rule, hasdefault: compute
+# DONE post-migration: convert data many2many to one2many
+
+loyalty      / loyalty.program          / date_to (date)                : NEW
+loyalty      / loyalty.reward           / program_id (many2one)         : NEW relation: loyalty.program, required
+loyalty      / loyalty.reward           / company_id (many2one)         : NEW relation: res.company, isrelated: related, stored
+loyalty      / loyalty.reward           / discount (float)              : NEW hasdefault: default
+loyalty      / loyalty.rule             / code (char)                   : NEW hasdefault: compute
+loyalty      / loyalty.rule             / company_id (many2one)         : NEW relation: res.company, isrelated: related, stored
+loyalty      / loyalty.rule             / mode (selection)              : NEW selection_keys: ['auto', 'with_code'], hasdefault: compute
+loyalty      / loyalty.rule             / program_id (many2one)         : NEW relation: loyalty.program, required
+loyalty      / loyalty.card             / company_id (many2one)         : NEW relation: res.company, isrelated: related, stored
+loyalty      / loyalty.card             / points (float)                : NEW
+# DONE pre-migration: fill in data
+
+loyalty      / loyalty.program          / portal_visible (boolean)      : NEW hasdefault: default
+loyalty      / loyalty.reward           / clear_wallet (boolean)        : NEW hasdefault: default
+loyalty      / loyalty.reward           / required_points (float)       : NEW hasdefault: default
+loyalty      / loyalty.rule             / reward_point_amount (float)   : NEW hasdefault: default
+loyalty      / loyalty.rule             / reward_point_mode (selection) : NEW required, selection_keys: function, hasdefault: default
+loyalty      / loyalty.rule             / reward_point_split (boolean)  : NEW hasdefault: default
+# DONE pre-migration: set default value
+
+loyalty      / loyalty.program          / portal_point_name (char)      : NEW hasdefault: default
+# DONE post-migration: compute value
+
+loyalty      / loyalty.program          / name (char)                   : NEW required
+loyalty      / loyalty.program          / sequence (integer)            : NEW
+loyalty      / loyalty.program          / company_id (many2one)         : NEW relation: res.company, hasdefault: default
+loyalty      / loyalty.program          / currency_id (many2one)        : NEW relation: res.currency, required, hasdefault: compute
+loyalty      / loyalty.program          / coupon_ids (one2many)         : NEW relation: loyalty.card
+loyalty      / loyalty.reward           / discount_line_product_id (many2one): NEW relation: product.product
+loyalty      / loyalty.reward           / discount_max_amount (float)   : NEW
+loyalty      / loyalty.reward           / reward_product_id (many2one)  : NEW relation: product.product
+loyalty      / loyalty.reward           / reward_type (selection)       : NEW required, selection_keys: ['discount', 'product'], hasdefault: default
+loyalty      / loyalty.card             / code (char)                   : NEW required, hasdefault: default
+loyalty      / loyalty.card             / expiration_date (date)        : NEW
+loyalty      / loyalty.card             / partner_id (many2one)         : NEW relation: res.partner
+loyalty      / loyalty.card             / program_id (many2one)         : NEW relation: loyalty.program, hasdefault: default
+# NOTHING TO DO
+
+loyalty      / loyalty.program          / available_on (boolean)        : NEW
+loyalty      / loyalty.program          / communication_plan_ids (one2many): NEW relation: loyalty.mail, hasdefault: compute
+loyalty      / loyalty.reward           / discount_product_category_id (many2one): NEW relation: product.category
+loyalty      / loyalty.reward           / discount_product_domain (char): NEW hasdefault: default
+loyalty      / loyalty.reward           / discount_product_tag_id (many2one): NEW relation: product.tag
+loyalty      / loyalty.reward           / reward_product_tag_id (many2one): NEW relation: product.tag
+loyalty      / loyalty.rule             / product_category_id (many2one): NEW relation: product.category
+loyalty      / loyalty.rule             / product_ids (many2many)       : NEW relation: product.product
+loyalty      / loyalty.rule             / product_tag_id (many2one)     : NEW relation: product.tag
+loyalty      / loyalty.card             / message_follower_ids (one2many): NEW relation: mail.followers
+loyalty      / loyalty.card             / message_ids (one2many)        : NEW relation: mail.message
+loyalty      / loyalty.card             / message_main_attachment_id (many2one): NEW relation: ir.attachment
+loyalty      / loyalty.mail             / active (boolean)              : NEW hasdefault: default
+loyalty      / loyalty.mail             / mail_template_id (many2one)   : NEW relation: mail.template, required
+loyalty      / loyalty.mail             / points (float)                : NEW
+loyalty      / loyalty.mail             / program_id (many2one)         : NEW relation: loyalty.program, required
+loyalty      / loyalty.mail             / trigger (selection)           : NEW required, selection_keys: ['create', 'points_reach']
+# NOTHING TO DO: new field
+
+---XML records in module 'loyalty'---
+NEW ir.actions.act_window: loyalty.loyalty_card_action
+NEW ir.actions.act_window: loyalty.loyalty_generate_wizard_action
+# DONE pre-migration: rename xmlids
+
+NEW ir.actions.act_window: loyalty.loyalty_program_discount_loyalty_action
+NEW ir.actions.act_window: loyalty.loyalty_program_gift_ewallet_action
+# NOTHING TO DO
+
+NEW ir.actions.act_window.view: loyalty.action_loyalty_program_form_discount_loyalty
+NEW ir.actions.act_window.view: loyalty.action_loyalty_program_form_gift_card_ewallet
+NEW ir.actions.act_window.view: loyalty.action_loyalty_program_tree_discount_loyalty
+NEW ir.actions.act_window.view: loyalty.action_loyalty_program_tree_gift_card_ewallet
+# NOTHING TO DO
+
+NEW ir.actions.report: loyalty.report_gift_card
+# NOTHING TO DO
+
+NEW ir.actions.report: loyalty.report_loyalty_card
+# DONE pre-migration: rename xmlids
+
+NEW ir.model.access: loyalty.access_loyalty_card
+NEW ir.model.access: loyalty.access_loyalty_generate_wizard
+NEW ir.model.access: loyalty.access_loyalty_mail
+NEW ir.model.access: loyalty.access_loyalty_program
+NEW ir.model.access: loyalty.access_loyalty_reward
+NEW ir.model.access: loyalty.access_loyalty_rule
+# NOTHING TO DO
+
+NEW ir.model.constraint: loyalty.constraint_loyalty_card_card_code_unique
+NEW ir.model.constraint: loyalty.constraint_loyalty_program_check_max_usage
+NEW ir.model.constraint: loyalty.constraint_loyalty_reward_discount_positive
+NEW ir.model.constraint: loyalty.constraint_loyalty_reward_product_qty_positive
+NEW ir.model.constraint: loyalty.constraint_loyalty_reward_required_points_positive
+NEW ir.model.constraint: loyalty.constraint_loyalty_rule_reward_point_amount_positive
+# DONE pre-migration: safely delete constraint to recreate it
+
+NEW ir.rule: loyalty.sale_loyalty_card_company_rule (noupdate)
+NEW ir.rule: loyalty.sale_loyalty_program_company_rule (noupdate)
+NEW ir.rule: loyalty.sale_loyalty_reward_company_rule (noupdate)
+NEW ir.rule: loyalty.sale_loyalty_rule_company_rule (noupdate)
+# DONE post-migration: safely deleted xmlid
+
+NEW ir.ui.view: loyalty.gift_card_report
+NEW ir.ui.view: loyalty.gift_card_report_i18n
+# NOTHING TO DO
+
+NEW ir.ui.view: loyalty.loyalty_report
+NEW ir.ui.view: loyalty.loyalty_report_i18n
+# DONE pre-migration: update template keys
+
+NEW ir.ui.view: loyalty.loyalty_card_view_form
+NEW ir.ui.view: loyalty.loyalty_card_view_tree
+NEW ir.ui.view: loyalty.loyalty_generate_wizard_view_form
+NEW ir.ui.view: loyalty.loyalty_program_view_form
+NEW ir.ui.view: loyalty.loyalty_program_view_search
+NEW ir.ui.view: loyalty.loyalty_program_view_tree
+# DONE pre-migration: rename xmlids
+
+NEW ir.ui.view: loyalty.loyalty_card_view_search
+NEW ir.ui.view: loyalty.loyalty_mail_view_tree
+NEW ir.ui.view: loyalty.loyalty_program_gift_ewallet_view_form
+NEW ir.ui.view: loyalty.loyalty_reward_view_form
+NEW ir.ui.view: loyalty.loyalty_reward_view_kanban
+NEW ir.ui.view: loyalty.loyalty_rule_view_form
+NEW ir.ui.view: loyalty.loyalty_rule_view_kanban
+# NOTHING TO DO
+
+NEW mail.template: loyalty.mail_template_gift_card [renamed from sale_gift_card module]
+# NOTHING TO DO
+
+NEW mail.template: loyalty.mail_template_loyalty_card
+# DONE pre-migration: rename xmlids and set noupdate value
+
+NEW product.product: loyalty.ewallet_product_50
+# NOTHING TO DO
+
+NEW product.product: loyalty.gift_card_product_50 [renamed from gift_card module] (noupdate switched)
+# DONE pre-migration: rename and set to noupdate=0
