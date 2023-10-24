@@ -1,5 +1,4 @@
 ---Models in module 'account'---
-obsolete model account.account.type
 obsolete model account.analytic.default
 obsolete model account.bank.statement.cashbox
 obsolete model account.bank.statement.closebalance [transient]
@@ -7,14 +6,12 @@ obsolete model account.cashbox.line
 obsolete model account.common.journal.report [transient]
 obsolete model account.common.report [transient]
 obsolete model account.print.journal [transient]
-obsolete model account.tax.carryover.line (renamed to account.report.external.value)
-obsolete model account.tax.report (renamed to account.report)
-obsolete model account.tax.report.line (renamed to account.report.line)
 obsolete model cash.box.out [transient]
 obsolete model report.account.report_journal [abstract]
 obsolete model tax.adjustments.wizard [transient]
 # NOTHING TO DO
 
+obsolete model account.tax.report (renamed to account.report)
 new model account.report (renamed from account.tax.report)
 # DONE: pre-migration: rename model
 
@@ -22,17 +19,24 @@ new model account.report.column
 new model account.report.expression
 # NOTHING TO DO
 
+obsolete model account.tax.carryover.line (renamed to account.report.external.value)
 new model account.report.external.value (renamed from account.tax.carryover.line)
+# DONE: pre-migration: rename model
+
+obsolete model account.tax.report.line (renamed to account.report.line)
 new model account.report.line (renamed from account.tax.report.line)
-# DONE pre-migration: rename model
+# DONE: pre-migration: rename model
 
 ---Fields in module 'account'---
+
+obsolete model account.account.type
 account      / account.account          / account_type (selection)      : NEW required, selection_keys: ['asset_cash', 'asset_current', 'asset_fixed', 'asset_non_current', 'asset_prepayments', 'asset_receivable', 'equity', 'equity_unaffected', 'expense', 'expense_depreciation', 'expense_direct_cost', 'income', 'income_other', 'liability_credit_card', 'liability_current', 'liability_non_current', 'liability_payable', 'off_balance'], hasdefault: compute
 account      / account.account          / user_type_id (many2one)       : DEL relation: account.account.type, required
-# DONE: pre-migration: _fast_fill_account_account_type
+# DONE: pre-migration: _fill_account_account_type
 
 account      / account.account          / include_initial_balance (boolean): NEW isfunction: function, stored
-# NOTHING TO DO: new feature
+account      / account.account.type     / include_initial_balance (boolean): DEL
+# DONE: pre-migration: _fill_account_account_include_initial_balance: Fill from the old type
 
 account      / account.account          / internal_group (selection)    : not related anymore
 account      / account.account          / internal_group (selection)    : now a function
@@ -41,16 +45,15 @@ account      / account.account          / internal_type (selection)     : DEL se
 # NOTHING TO DO: Logic unchanged
 
 account      / account.account          / non_trade (boolean)           : NEW hasdefault: default
-# NOTHING TO DO
+# NOTHING TO DO: The most usual AR/AP is the non trade one
 
 account      / account.account.tag      / tax_report_line_ids (many2many): DEL relation: account.tax.report.line
 # NOTHING TO DO
 
 account      / account.account.template / account_type (selection)      : NEW selection_keys: ['asset_cash', 'asset_current', 'asset_fixed', 'asset_non_current', 'asset_prepayments', 'asset_receivable', 'equity', 'equity_unaffected', 'expense', 'expense_depreciation', 'expense_direct_cost', 'income', 'income_other', 'liability_credit_card', 'liability_current', 'liability_non_current', 'liability_payable', 'off_balance']
 account      / account.account.template / user_type_id (many2one)       : DEL relation: account.account.type, required
-# DONE: pre-migration: _fast_fill_account_account_type
+# DONE: pre-migration: _fill_account_account_type
 
-account      / account.account.type     / include_initial_balance (boolean): DEL
 account      / account.account.type     / internal_group (selection)    : DEL required, selection_keys: ['asset', 'equity', 'expense', 'income', 'liability', 'off_balance']
 account      / account.account.type     / name (char)                   : DEL required
 account      / account.account.type     / note (text)                   : DEL
@@ -75,24 +78,26 @@ account      / account.analytic.default / user_id (many2one)            : DEL re
 account      / account.analytic.distribution.model / account_prefix (char)         : NEW
 account      / account.analytic.distribution.model / product_categ_id (many2one)   : NEW relation: product.category
 account      / account.analytic.distribution.model / product_id (many2one)         : NEW relation: product.product
-# DONE *pre-migration: create table and fill value
+# DONE: pre-migration: create table and fill value
 
 account      / account.analytic.line    / general_account_id (many2one) : not related anymore
 # NOTHING TO DO: the value will stay the same as compute method's behaviour not different to related
 
 account      / account.analytic.line    / journal_id (many2one)         : NEW relation: account.journal, isrelated: related, stored
-# DONE pre-migration: fill value to avoid computing by ORM
+# NOTHING TO DO: ORM already uses SQL to fill this
 
 account      / account.analytic.line    / move_id (many2one)            : DEL relation: account.move.line
 account      / account.analytic.line    / move_line_id (many2one)       : NEW relation: account.move.line
-# DONE pre-migration: rename field
+# DONE: pre-migration: rename field
 
 account      / account.analytic.line    / partner_id (False)            : previously in module hr_timesheet
 # NOTHING TO DO
 
 account      / account.bank.statement   / _order                        : _order is now 'first_line_index desc' ('date desc, name desc, id desc')
-account      / account.bank.statement   / attachment_ids (many2many)    : NEW relation: ir.attachment
 # NOTHING TO DO
+
+account      / account.bank.statement   / attachment_ids (many2many)    : NEW relation: ir.attachment
+# Put in this field existing chatter attachments?
 
 account      / account.bank.statement   / cashbox_end_id (many2one)     : DEL relation: account.bank.statement.cashbox
 account      / account.bank.statement   / cashbox_start_id (many2one)   : DEL relation: account.bank.statement.cashbox
@@ -189,7 +194,7 @@ account      / account.move             / partner_shipping_id (many2one): previo
 # NOTHING TO DO
 
 account      / account.move             / payment_ids (one2many)        : NEW relation: account.payment
-# NOTHING TO DO: field converted from many2many to one2many
+# NOTHING TO DO: new field and the inverse field already exists
 
 account      / account.move             / quick_edit_total_amount (float): NEW
 account      / account.move             / statement_line_ids (one2many) : NEW relation: account.bank.statement.line
@@ -236,7 +241,8 @@ account      / account.partial.reconcile / exchange_move_id (many2one)   : NEW r
 # NOTHING TO DO
 
 account      / account.payment          / amount_company_currency_signed (float): is now stored
-# DONE pre-migration: create column
+# DONE pre-migration: Create column and fill easy case by SQL
+# DONE post-migration: Compute with ORM the rest of the cases
 
 account      / account.payment          / auto_post (boolean)           : now required
 account      / account.payment          / auto_post (boolean)           : selection_keys is now 'function' ('False')
@@ -255,8 +261,10 @@ account      / account.payment.term.line / _order                        : _orde
 # NOTHING TO DO
 
 account      / account.payment.term.line / day_of_the_month (integer)    : DEL
+# NOTHING TO DO: Lost feature
+
 account      / account.payment.term.line / days_after (integer)          : NEW
-# DONE pre-migration: rename field
+# NOTHING TO DO: Different feature from day_of_the_month
 
 account      / account.payment.term.line / discount_days (integer)       : NEW
 account      / account.payment.term.line / discount_percentage (float)   : NEW
@@ -338,6 +346,8 @@ account      / account.tax              / real_amount (float)           : NEW is
 # NOTHING TO DO: handle by ORM
 
 account      / account.tax.carryover.line / _order                        : _order is now 'date, id' ('id')
+# NOTHING TO DO
+
 account      / account.tax.carryover.line / amount (float)                : DEL required
 account      / account.tax.carryover.line / tax_report_line_id (many2one) : DEL relation: account.tax.report.line
 # DONE pre-migration: account.tax.carryover.line is renamed to account.report.external.value
