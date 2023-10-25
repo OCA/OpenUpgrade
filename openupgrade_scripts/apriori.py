@@ -68,6 +68,8 @@ merged_modules = {
     "website_sale_stock_available_display": "website_sale_stock",
     # OCA/hr-attendance
     "hr_attendance_user_list": "hr_attendance",
+    # OCA/pos
+    "pos_order_return": "point_of_sale",
     # OCA/product-attribute
     "stock_account_product_cost_security": "product_cost_security",
     # OCA/stock-logistics-reporting
