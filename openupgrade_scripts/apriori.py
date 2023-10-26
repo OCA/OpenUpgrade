@@ -69,6 +69,7 @@ merged_modules = {
     # OCA/hr-attendance
     "hr_attendance_user_list": "hr_attendance",
     # OCA/pos
+    "pos_order_mgmt": "point_of_sale",
     "pos_order_return": "point_of_sale",
     # OCA/product-attribute
     "stock_account_product_cost_security": "product_cost_security",
