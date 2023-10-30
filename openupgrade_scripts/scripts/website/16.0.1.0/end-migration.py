@@ -7,7 +7,7 @@ def boostrap_5_migration(env):
     """Convert customized website views to Bootstrap 5."""
     backup_column = openupgrade.get_legacy_name("arch_db_bs4")
     openupgrade.logged_query(
-        env.cr, f"ALTER TABLE ir_ui_view ADD COLUMN {backup_column} TEST"
+        env.cr, f"ALTER TABLE ir_ui_view ADD COLUMN {backup_column} TEXT"
     )
     # Find views to convert
     env.cr.execute(
