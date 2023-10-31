@@ -12,6 +12,21 @@ from odoo.addons.openupgrade_scripts.apriori import merged_modules, renamed_modu
 _logger = logging.getLogger(__name__)
 
 
+def enable_coupon_sharing_within_entity(cr):
+    """Check before merging `coupon_commercial_partner_applicability` into
+    `loyalty_partner_applicability` if it was installed in v15 to set the parameter
+    to True to keep the same functionality"""
+    if openupgrade.is_module_installed(cr, "coupon_commercial_partner_applicability"):
+        # The value of the configuration parameter is set to True.
+        openupgrade.logged_query(
+            cr,
+            """
+            INSERT INTO ir_config_parameter (key, value)
+            VALUES ('loyalty_partner_applicability.allow_coupon_sharing', 'true')
+            """,
+        )
+
+
 def login_or_registration_required_at_checkout(cr):
     """The website_sale_require_login module is merged into website_sale. Check if the
     it was installed in v15 to set the website.account_on_checkout field as mandatory
@@ -114,6 +129,7 @@ def migrate(cr, version):
             "when migrating your database."
         )
     login_or_registration_required_at_checkout(cr)
+    enable_coupon_sharing_within_entity(cr)
     openupgrade.update_module_names(cr, renamed_modules.items())
     openupgrade.update_module_names(cr, merged_modules.items(), merge_modules=True)
     # restricting inherited views to groups isn't allowed any more
