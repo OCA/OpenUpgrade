@@ -11,23 +11,47 @@ on:
   pull_request:
 
 jobs:
-  test:
+  unreleased-deps:
     runs-on: ubuntu-latest
-    env:
-      DB: "openupgrade"
-      DB_HOST: "localhost"
-      DB_PASSWORD: "odoo"
-      DB_PORT: 5432
-      DB_USERNAME: "odoo"
-      DOWNLOADS: https://github.com/OCA/OpenUpgrade/releases/download/databases
-      ODOO: "./odoo/odoo-bin"
-      PGHOST: "localhost"
-      PGPASSWORD: "odoo"
-      PGUSER: "odoo"
-      OPENUPGRADE_USE_DEMO: "yes"
+    name: Detect unreleased dependencies
     steps:
-      - name: Set up Python
-        uses: actions/setup-python@v4
+      - uses: actions/checkout@v3
+      - run: |
+          for reqfile in requirements.txt test-requirements.txt ; do
+              if [ -f ${reqfile} ] ; then
+                  result=0
+                  # reject non-comment lines that contain a / (i.e. URLs, relative paths)
+                  grep "^[^#].*/" ${reqfile} || result=$?
+                  if [ $result -eq 0 ] ; then
+                      echo "Unreleased dependencies found in ${reqfile}."
+                      exit 1
+                  fi
+              fi
+          done
+  test:
+    runs-on: ubuntu-22.04
+    container: ${{ matrix.container }}
+    name: ${{ matrix.name }}
+    strategy:
+      fail-fast: false
+      matrix:
+        include:
+          - container: ghcr.io/oca/oca-ci/py3.10-odoo16.0:latest
+            name: test with Odoo
+          - container: ghcr.io/oca/oca-ci/py3.10-ocb16.0:latest
+            name: test with OCB
+            makepot: "false"
+    services:
+      postgres:
+        image: postgres:12.0
+        env:
+          POSTGRES_USER: odoo
+          POSTGRES_PASSWORD: odoo
+          POSTGRES_DB: odoo
+        ports:
+          - 5432:5432
+    steps:
+      - uses: actions/checkout@v3
         with:
           python-version: '3.10'
       - name: Configure Postgres
