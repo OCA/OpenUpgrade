@@ -3,7 +3,7 @@
 # Copyright 2023 Tecnativa - Pedro M. Baeza
 # License AGPL-3.0 or later (http://www.gnu.org/licenses/agpl.html).
 
-from openupgradelib import openupgrade
+from openupgradelib import openupgrade, openupgrade_160
 
 _xmlids_renames = [
     (
@@ -326,65 +326,6 @@ def _account_analytic_distribution_model_generate(env):
     )
 
 
-def _fill_analytic_distribution(env, table, m2m_rel, m2m_column1):
-    """Take all the lines, if have an analytic accounting account, it's 100%
-    combined with the analytic distribution of account analytic tag
-    then sum them together by analytic account.
-    Used for both account.move.line and account.reconcile.model.line.
-    """
-    openupgrade.logged_query(
-        env.cr,
-        f"ALTER TABLE {table} ADD COLUMN IF NOT EXISTS analytic_distribution jsonb",
-    )
-    openupgrade.logged_query(
-        env.cr,
-        f"""
-        WITH distribution_data AS (
-            WITH sub AS (
-                SELECT
-                    all_line_data.line_id,
-                    all_line_data.analytic_account_id,
-                    SUM(all_line_data.percentage) AS percentage
-                FROM (
-                    SELECT
-                        line.id AS line_id,
-                        account.id AS analytic_account_id,
-                        100 AS percentage
-                    FROM {table} line
-                    JOIN account_analytic_account account
-                        ON account.id = line.analytic_account_id
-                    WHERE line.analytic_account_id IS NOT NULL
-
-                    UNION ALL
-
-                    SELECT
-                        line.id AS line_id,
-                        dist.account_id AS analytic_account_id,
-                        dist.percentage AS percentage
-                    FROM {table} line
-                    JOIN {m2m_rel} tag_rel
-                        ON tag_rel.{m2m_column1} = line.id
-                    JOIN account_analytic_distribution dist
-                        ON dist.tag_id = tag_rel.account_analytic_tag_id
-                    JOIN account_analytic_tag aat
-                            ON aat.id = tag_rel.account_analytic_tag_id
-                    WHERE aat.active_analytic_distribution = true
-                ) AS all_line_data
-                GROUP BY all_line_data.line_id, all_line_data.analytic_account_id
-            )
-            SELECT sub.line_id,
-            jsonb_object_agg(sub.analytic_account_id::text, sub.percentage)
-                AS analytic_distribution
-            FROM sub
-            GROUP BY sub.line_id
-        )
-        UPDATE {table} line
-        SET analytic_distribution = dist.analytic_distribution
-        FROM distribution_data dist WHERE line.id = dist.line_id
-        """,
-    )
-
-
 def _fast_fill_account_payment_amount_company_currency_signed(env):
     """Avoid the heavy recomputation of this field precreating the column and
     filling it for the simple case. The rest will be done on post-migration.
@@ -429,13 +370,13 @@ def migrate(env, version):
     _account_move_fast_fill_display_type(env)
     _account_move_auto_post_boolean_to_selection(env)
     _account_analytic_distribution_model_generate(env)
-    _fill_analytic_distribution(
+    openupgrade_160.fill_analytic_distribution(
         env,
         "account_move_line",
         "account_analytic_tag_account_move_line_rel",
         "account_move_line_id",
     )
-    _fill_analytic_distribution(
+    openupgrade_160.fill_analytic_distribution(
         env,
         "account_reconcile_model_line",
         "account_reconcile_model_analytic_tag_rel",
