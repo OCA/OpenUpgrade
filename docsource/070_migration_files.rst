@@ -1,24 +1,48 @@
 Migration Files
 ===============
 
-Database analysis files are hosted in `scripts` subdirectory of the
+For each odoo module, a **migration directory** contains the analysis of
+the differences between the previous version and the current version
+and the migration scripts developed to ensure the migration
+of this module runs properly.
+
+For versions 14.0 and higher
+----------------------------
+
+Migration directories are hosted in `scripts` subdirectory of the
 openupgrade_scripts module directory in the https://github.com/OCA/OpenUpgrade
 repository.
 
-You can create a custom set of analysis files on any set of modules between
-any two versions of Odoo using the `upgrade_analysis` module that is hosted
-in https://github.com/oca/server-tools.
+For example, the migration folder for migrating the `account` module
+from version 13.0 to version 14.0 is located here :
 
-Earlier versions
-----------------
+https://github.com/OCA/OpenUpgrade/tree/14.0/openupgrade_scripts/scripts/account/
 
-In editions earlier than 14.0, the analysis files were hosted in the forks of
-Odoo at https://github.com/OCA/OpenUpgrade. The module to create the analysis
-was placed in each branch of the OpenUpgrade repository under
-odoo/addons/openupgrade_records.
+For versions 13.0 and below
+---------------------------
 
-Contents
---------
+Migration directories are hosted in the `migration` folder of each module
+in the forks of Odoo at https://github.com/OCA/OpenUpgrade.
+
+
+For example, the migration folder for migrating the `account` module
+from version 12.0 to version 13.0 is located here :
+
+https://github.com/OCA/OpenUpgrade/tree/13.0/addons/account/migrations
+
+Non official addons
+-------------------
+
+For OCA or custom addons, migration directories are hosted in the `migration`
+folder of each module.
+
+For example, the migration folder for migrating the OCA `account_global_discount` module
+from version 12.0 to version 13.0 is located here :
+
+https://github.com/OCA/account-invoicing/tree/13.0/account_global_discount
+
+Directory contents
+------------------
 
 The contents of the migration directory per module are:
 
@@ -47,3 +71,13 @@ release of Odoo anymore.
 
    analyse
    format
+
+Generate the difference analysis files
+--------------------------------------
+
+You can create a custom set of analysis files on any set of modules between
+any two versions of Odoo using the `upgrade_analysis` module that is hosted
+in https://github.com/oca/server-tools.
+(for versions 13.0 or lower, the module is named `openupgrade_records` and is
+place in each branch of the OpenUpgrade repository under
+`odoo/addons/openupgrade_records` path)
