@@ -10,7 +10,7 @@ Check if there are migration scripts provided for the set of modules that
 are installed in your Odoo database. If there are modules for which no
 migration scripts have been developed yet, your migration may fail or the
 integrity of your database may be lacking.
-Refer to the :doc:`development` documentation to add the missing migration scripts.
+Refer to the :doc:`080_migration_script_development` documentation to add the missing migration scripts.
 
 .. toctree::
    :maxdepth: 1

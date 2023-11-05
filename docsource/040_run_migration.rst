@@ -94,4 +94,4 @@ Write the missing migration scripts
 
 At this stage, if some of your modules don't have yet migration scripts,
 you might need to add them yourself.
-Read more about the development of migrations scripts in :doc:`development`
+Read more about the development of migrations scripts in :doc:`080_migration_script_development`
