@@ -49,7 +49,7 @@ Learn from typical Use cases
 ----------------------------
 
 .. toctree::
-   :maxdepth: 2
+   :maxdepth: 1
 
    use_cases/field_fast_precomputation
    use_cases/field_renaming

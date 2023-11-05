@@ -12,7 +12,7 @@ Welcome to OpenUpgrade's documentation!
 Contents:
 
 .. toctree::
-   :maxdepth: 3
+   :maxdepth: 2
 
    010_introduction.rst
    020_required_knowledge.rst
