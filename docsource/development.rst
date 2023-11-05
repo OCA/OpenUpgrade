@@ -74,7 +74,7 @@ Since version 14, the migration scripts are located in:
 
 During the review for a given module, you can follow this process:
 
-- Review the analysis (read more in :doc:`analysis`). First the file
+- Review the analysis (read more in :doc:`070_migration_files`). First the file
   `openupgrade_analysis.txt` showing some differences between the 2 versions of
   the module. Then, `openupgrade_analysis_work.txt` to see what the developer
   planned to do.

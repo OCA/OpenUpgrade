@@ -1,5 +1,5 @@
-Database analysis
-+++++++++++++++++
+Migration Files
+===============
 
 Database analysis files are hosted in `scripts` subdirectory of the
 openupgrade_scripts module directory in the https://github.com/OCA/OpenUpgrade

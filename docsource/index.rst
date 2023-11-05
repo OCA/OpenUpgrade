@@ -20,8 +20,8 @@ Contents:
    040_run_migration.rst
    050_after_migration.rst
    060_odoo_migration_manager.rst
+   070_migration_files.rst
    community.rst
-   analysis.rst
    development.rst
 
 You should find the latest version of this documentation here: `<https://oca.github.io/OpenUpgrade>`_
