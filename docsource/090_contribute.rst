@@ -1,5 +1,17 @@
+Contribute
+==========
+
+In order to contribute to the OpenUpgrade project, please
+
+* Post your code contributions as pull requests on
+  https://github.com/OCA/OpenUpgrade
+* Donate to the Odoo Community Association (https://github.com/sponsors/OCA)
+* Hire any active contributor to this project to help you migrate your
+  database, and give back any code improvements developed during the project.
+
+
 Community involvement
-=====================
+---------------------
 
 Writing migration scripts for Odoo is a lot of work, that can not be
 accomplished by a single party.  We need your help.
@@ -29,12 +41,3 @@ to upgrade a copy of your database and give us feedback.
 
 Thank you!
 
-Contribute
-----------
-In order to contribute to the OpenUpgrade project, please
-
-* Post your code contributions as pull requests on
-  https://github.com/OCA/OpenUpgrade
-* Donate to the Odoo Community Association (https://github.com/sponsors/OCA)
-* Hire any active contributor to this project to help you migrate your
-  database, and give back any code improvements developed during the project.
