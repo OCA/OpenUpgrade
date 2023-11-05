@@ -69,7 +69,6 @@ release of Odoo anymore.
 .. toctree::
    :maxdepth: 2
 
-   analyse
    format
 
 Generate the difference analysis files
