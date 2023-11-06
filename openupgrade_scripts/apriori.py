@@ -64,6 +64,8 @@ merged_modules = {
     "account_invoice_report_due_list": "account",
     # OCA/e-commerce
     "website_sale_require_login": "website_sale",
+    # OCA/sale-promotion
+    "coupon_commercial_partner_applicability": "loyalty_partner_applicability",
     # OCA/purchase-workflow
     "product_form_purchase_link": "purchase",
     # OCA/stock-logistics-workflow
