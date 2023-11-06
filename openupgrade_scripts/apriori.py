@@ -19,6 +19,8 @@ renamed_modules = {
     # OCA/bank-statement-import
     "account_statement_import": "account_statement_import_file",
     "account_statement_import_txt_xlsx": "account_statement_import_sheet_file",
+    # OCA/crm
+    "crm_project": "crm_lead_to_task",
     # OCA/knowledge
     "knowledge": "document_knowledge",
     # OCA/sale-promotion
