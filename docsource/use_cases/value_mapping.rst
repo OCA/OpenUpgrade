@@ -204,4 +204,4 @@ Notes
   This allows you to check that everything is correct after the migration,
   and to be used by further dependent modules in their migration scripts.
   Once this is done, you can delete this data.
-  (See: :doc:`../after_migration`)
+  (See: :doc:`../050_after_migration`)

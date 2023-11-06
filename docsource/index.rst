@@ -9,19 +9,20 @@ Welcome to OpenUpgrade's documentation!
 +++++++++++++++++++++++++++++++++++++++
 
 
-**If you just want to migrate your database and don't care about the technical details, refer to** :doc:`migration_details`
-
 Contents:
 
 .. toctree::
-   :maxdepth: 3
+   :maxdepth: 2
 
-   intro.rst
-   migrating_database.rst
-   community.rst
-   status.rst
-   analysis.rst
-   development.rst
+   010_introduction.rst
+   020_required_knowledge.rst
+   030_coverage_analysis.rst
+   040_run_migration.rst
+   050_after_migration.rst
+   060_odoo_migration_manager.rst
+   070_migration_files.rst
+   080_migration_script_development.rst
+   090_contribute.rst
 
 You should find the latest version of this documentation here: `<https://oca.github.io/OpenUpgrade>`_
 

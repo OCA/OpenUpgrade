@@ -4,10 +4,8 @@ Migration script development
 Overview
 --------
 
-The execution of the migration scripts is triggered by the "Migration Manager":
-:doc:`migrationmanager`.
-
-As explained with more detail in the page :doc:`migrationmanager`, the migration scripts
+As explained with more detail in the page "Migration Manager"
+(:doc:`060_odoo_migration_manager`), the migration scripts
 of a module are usually the combination of 3 python files (might be less if some
 steps are not necessary):
 
@@ -51,7 +49,7 @@ Learn from typical Use cases
 ----------------------------
 
 .. toctree::
-   :maxdepth: 2
+   :maxdepth: 1
 
    use_cases/field_fast_precomputation
    use_cases/field_renaming
@@ -76,7 +74,7 @@ Since version 14, the migration scripts are located in:
 
 During the review for a given module, you can follow this process:
 
-- Review the analysis (read more in :doc:`analysis`). First the file
+- Review the analysis (read more in :doc:`070_migration_files`). First the file
   `openupgrade_analysis.txt` showing some differences between the 2 versions of
   the module. Then, `openupgrade_analysis_work.txt` to see what the developer
   planned to do.
@@ -97,7 +95,7 @@ The Trial and error process for the development of your scripts
 ---------------------------------------------------------------
 
 Basically, this is the happening during the step when you try to run the upgrade
-described in :doc:`migration_details`:
+described in :doc:`040_run_migration`:
 
 - [A] get the copy of your database in old version as `db-upgrade`, it is
   easy to do through the database manager of your old odoo
@@ -134,12 +132,6 @@ https://github.com/OCA/OpenUpgrade/pulls?q=is%3Apr+%5BFIX%5D+reset+exception
 
 Learning resources
 ------------------
-
-.. toctree::
-   :maxdepth: 2
-
-   migrationmanager
-   devfaq
 
 You can also refer to the following:
 

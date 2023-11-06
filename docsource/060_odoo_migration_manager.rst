@@ -1,5 +1,5 @@
 The Odoo Migration Manager
-++++++++++++++++++++++++++
+==========================
 
 The core mechanism that OpenUpgrade relies on is the migration manager that is
 already built into Odoo itself. It is this mechanism that was used by Odoo to
@@ -26,3 +26,25 @@ Note that you can use this mechanism for your own custom
 module's lifecycle outside of the OpenUpgrade context. For that reason, the
 OpenUpgrade helper methods were collected into the python openupgradelib that
 you can make available in any Odoo instance using the *pip* tool.
+
+FAQ
+---
+
+How are new dependencies treated by the Odoo migration manager?
+   New dependencies (like the *edi* module is a new dependency of the
+   *account* module) will be detected by the upgrade process.  The
+   Odoo server code is slightly modified to loop over this part
+   of the process to install new dependencies and then return to
+   upgrading the modules that depend on them, until no more modules
+   are processed.
+
+Are migration scripts fired when installing new modules?
+   Yes.  That includes any new dependencies that the new version of any
+   module might declare.  You might want to check for a non true value
+   of the *version* argument, or (better) make your script robust to
+   running against a database that it does not apply to, in anticipation
+   of any unknown unknowns.  Also another argument for not running the
+   OpenUpgrade server in production, even though we both know that you
+   would never ever do so anyway. Developers are free to corrupt the regular
+   workings of Odoo if it helps the migration. For instance, from OpenUpgrade
+   9.0 on, the workflow engine is disabled during field recomputation.
