@@ -1,0 +1,287 @@
+<!DOCTYPE html>
+<html class="writer-html5" lang="en" >
+<head>
+  <meta charset="utf-8" /><meta name="generator" content="Docutils 0.18.1: http://docutils.sourceforge.net/" />
+
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Migration Files &mdash; OpenUpgrade 16.0 documentation</title>
+      <link rel="stylesheet" href="_static/pygments.css" type="text/css" />
+      <link rel="stylesheet" href="_static/css/theme.css" type="text/css" />
+  <!--[if lt IE 9]>
+    <script src="_static/js/html5shiv.min.js"></script>
+  <![endif]-->
+  
+        <script src="_static/jquery.js?v=5d32c60e"></script>
+        <script src="_static/_sphinx_javascript_frameworks_compat.js?v=2cd50e6c"></script>
+        <script src="_static/documentation_options.js?v=42b9a8fd"></script>
+        <script src="_static/doctools.js?v=888ff710"></script>
+        <script src="_static/sphinx_highlight.js?v=dc90522c"></script>
+    <script src="_static/js/theme.js"></script>
+    <link rel="index" title="Index" href="genindex.html" />
+    <link rel="search" title="Search" href="search.html" />
+    <link rel="next" title="Migration script development" href="080_migration_script_development.html" />
+    <link rel="prev" title="The Odoo Migration Manager" href="060_odoo_migration_manager.html" /> 
+</head>
+
+<body class="wy-body-for-nav"> 
+  <div class="wy-grid-for-nav">
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search" >
+
+          
+          
+          <a href="index.html" class="icon icon-home">
+            OpenUpgrade
+          </a>
+              <div class="version">
+                16.0
+              </div>
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" aria-label="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+        </div><div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="Navigation menu">
+              <ul class="current">
+<li class="toctree-l1"><a class="reference internal" href="010_introduction.html">Introduction</a></li>
+<li class="toctree-l1"><a class="reference internal" href="020_required_knowledge.html">Required Knowledge</a></li>
+<li class="toctree-l1"><a class="reference internal" href="030_coverage_analysis.html">Coverage Analysis</a></li>
+<li class="toctree-l1"><a class="reference internal" href="040_run_migration.html">Running the migration</a></li>
+<li class="toctree-l1"><a class="reference internal" href="050_after_migration.html">After migration</a></li>
+<li class="toctree-l1"><a class="reference internal" href="060_odoo_migration_manager.html">The Odoo Migration Manager</a></li>
+<li class="toctree-l1 current"><a class="current reference internal" href="#">Migration Files</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="#for-versions-14-0-and-higher">For versions 14.0 and higher</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#for-versions-13-0-and-below">For versions 13.0 and below</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#non-official-addons">Non official addons</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#directory-contents">Directory contents</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#generate-the-difference-analysis-files">Generate the difference analysis files</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#analysis-files-description">Analysis files description</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#xml-ids">XML IDs</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="080_migration_script_development.html">Migration script development</a></li>
+<li class="toctree-l1"><a class="reference internal" href="090_contribute.html">Contribute</a></li>
+</ul>
+
+        </div>
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap"><nav class="wy-nav-top" aria-label="Mobile navigation menu" >
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="index.html">OpenUpgrade</a>
+      </nav>
+
+      <div class="wy-nav-content">
+        <div class="rst-content">
+          <div role="navigation" aria-label="Page navigation">
+  <ul class="wy-breadcrumbs">
+      <li><a href="index.html" class="icon icon-home" aria-label="Home"></a></li>
+      <li class="breadcrumb-item active">Migration Files</li>
+      <li class="wy-breadcrumbs-aside">
+      </li>
+  </ul>
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+             
+  <section id="migration-files">
+<h1>Migration Files<a class="headerlink" href="#migration-files" title="Link to this heading"></a></h1>
+<p>For each odoo module, a <strong>migration directory</strong> contains the analysis of
+the differences between the previous version and the current version
+and the migration scripts developed to ensure the migration
+of this module runs properly.</p>
+<section id="for-versions-14-0-and-higher">
+<h2>For versions 14.0 and higher<a class="headerlink" href="#for-versions-14-0-and-higher" title="Link to this heading"></a></h2>
+<p>Migration directories are hosted in <cite>scripts</cite> subdirectory of the
+openupgrade_scripts module directory in the <a class="reference external" href="https://github.com/OCA/OpenUpgrade">https://github.com/OCA/OpenUpgrade</a>
+repository.</p>
+<p>For example, the migration folder for migrating the <cite>account</cite> module
+from version 13.0 to version 14.0 is located here :</p>
+<p><a class="reference external" href="https://github.com/OCA/OpenUpgrade/tree/14.0/openupgrade_scripts/scripts/account/">https://github.com/OCA/OpenUpgrade/tree/14.0/openupgrade_scripts/scripts/account/</a></p>
+</section>
+<section id="for-versions-13-0-and-below">
+<h2>For versions 13.0 and below<a class="headerlink" href="#for-versions-13-0-and-below" title="Link to this heading"></a></h2>
+<p>Migration directories are hosted in the <cite>migration</cite> folder of each module
+in the forks of Odoo at <a class="reference external" href="https://github.com/OCA/OpenUpgrade">https://github.com/OCA/OpenUpgrade</a>.</p>
+<p>For example, the migration folder for migrating the <cite>account</cite> module
+from version 12.0 to version 13.0 is located here :</p>
+<p><a class="reference external" href="https://github.com/OCA/OpenUpgrade/tree/13.0/addons/account/migrations">https://github.com/OCA/OpenUpgrade/tree/13.0/addons/account/migrations</a></p>
+</section>
+<section id="non-official-addons">
+<h2>Non official addons<a class="headerlink" href="#non-official-addons" title="Link to this heading"></a></h2>
+<p>For OCA or custom addons, migration directories are hosted in the <cite>migration</cite>
+folder of each module.</p>
+<p>For example, the migration folder for migrating the OCA <cite>account_global_discount</cite> module
+from version 12.0 to version 13.0 is located here :</p>
+<p><a class="reference external" href="https://github.com/OCA/account-invoicing/tree/13.0/account_global_discount">https://github.com/OCA/account-invoicing/tree/13.0/account_global_discount</a></p>
+</section>
+<section id="directory-contents">
+<h2>Directory contents<a class="headerlink" href="#directory-contents" title="Link to this heading"></a></h2>
+<p>The contents of the migration directory per module are:</p>
+<ul class="simple">
+<li><p>A file <cite>openupgrade_analysis.txt</cite> that contains data model changes and
+changes in the set of XML records</p></li>
+<li><p>A file <cite>openupgrade_analysis_work.txt</cite> which is a copy of the previous file,
+annotated by the developers of the migration scripts</p></li>
+<li><p>A file <cite>noupdate_changes.xml</cite> containing changes that may need to be loaded
+during module migration (after reviewing the contents of this automatically
+generated file).</p></li>
+<li><p>A file <cite>pre-migration.py</cite> (or any Python file(s) starting with <cite>pre-</cite>) that
+is executed by the Odoo migration manager just before the module is loaded.</p></li>
+<li><p>A file <cite>post-migration.py</cite> (or any Python file(s) starting with <cite>post-</cite>) that
+is executed by the Odoo migration manager right after the module was loaded.</p></li>
+<li><p>A file <cite>end-migration.py</cite> (or any Python file(s) starting with <cite>end-</cite>) that
+is executed by the Odoo migration manager when all modules have been
+processed.</p></li>
+</ul>
+<p>The migration directory of the base module contains an additional file
+<cite>openupgrade_general_log.txt</cite>. This file contains some statistics as well
+as the analysis records of modules that could not be found in the target
+release of Odoo anymore.</p>
+</section>
+<section id="generate-the-difference-analysis-files">
+<h2>Generate the difference analysis files<a class="headerlink" href="#generate-the-difference-analysis-files" title="Link to this heading"></a></h2>
+<p>You can create a custom set of analysis files on any set of modules between
+any two versions of Odoo using the <cite>upgrade_analysis</cite> module that is hosted
+in <a class="reference external" href="https://github.com/oca/server-tools">https://github.com/oca/server-tools</a>.
+(for versions 13.0 or lower, the module is named <cite>openupgrade_records</cite> and is
+place in each branch of the OpenUpgrade repository under
+<cite>odoo/addons/openupgrade_records</cite> path)</p>
+</section>
+<section id="analysis-files-description">
+<h2>Analysis files description<a class="headerlink" href="#analysis-files-description" title="Link to this heading"></a></h2>
+<p>The first section displays models which are added or removed from the database.</p>
+<p>The second section lists the model fields which have been signalled by the
+analysis script. Every line lists the following columns:</p>
+<p>module / model / field (field type) : description of the change</p>
+<p>Multiple changes per field are listed on separate lines.
+If possible, the old situation is added to the change description (in between
+parentheses).</p>
+<p>The change description flags the following types of change:</p>
+<blockquote>
+<div><ul>
+<li><p>The field is now required. The upgrade script might apply the default for
+this field, if it is encoded in the model, or any value that you might see
+fit (see the openupgrade library
+function <code class="xref py py-meth docutils literal notranslate"><span class="pre">set_defaults()</span></code>). If any empty values remain,
+these can be reported by the openupgrade report module (TODO).
+If the field is a function field after the upgrade, this changes the cause
+for action. See below.</p></li>
+<li><p>A field is now a function or a related field. This might or might not call
+for any action of your upgrade script, as the value is now automatically
+determined. At the same time, this might cause data loss. An example is
+the field employee’s manager (hr module), which in Odoo 6 is derived
+from the employee’s department.</p>
+<p>Without any action in the upgrade script, you will lose the manually
+encoded employee hierarchy.</p>
+</li>
+<li><p>A selection field’s hardcoded selection changes. You need to audit the
+function for any change in possible values and may need to map any
+differences you encounter.</p></li>
+<li><p>A selection field’s selection is now being filled by a function or has
+stopped doing so. You need to audit the function for any change in
+possible values and may need to map any differences you encounter.</p>
+<p>(Of course, a selection function could change the set of posible values
+in between functions.)</p>
+</li>
+<li><p>The field changes type. This always calls for action in your upgrade
+script. Rename the database column to a temporary name in the pre script,
+then migrate the values in the post script. A typical instance of this
+change is when the field becomes a many2one lookup table, or the other way
+around. An example of these are the partner’s function which became a char
+field in Odoo 6, and the partner’s title which as a selection (thus
+char type database column) and had to be migrated to a many2one on
+res.partner.title.</p></li>
+<li><p>A relation field’s relation changes. You need to migrate the one target
+model to the other, and update the references to them</p></li>
+<li><p>A field is deleted from the model (marked by ‘DEL’). Also fields from
+deleted models are marked in this way. TODO: mark fields from deleted
+models in a distinct manner. Any distinct features of the field are
+displayed, for easier manual matching.
+You need to audit any new fields
+(see below) to see if they correspond to the deleted field and implement
+this change in your upgrade script. It might also be the case that a
+deleted field is now delegated to a new or existing _inherits table (see below).</p></li>
+<li><p>A field is introduced in the model (marked by ‘NEW’). Also fields from
+introduced models are marked in this way. TODO: mark fields from introduced
+models in a distinct manner? Any distinct features of the field are
+displayed, for easier manual matching. You need to audit any deleted
+fields (see below) to see if they correspond to the new field and
+implement this change in your upgrade script.</p></li>
+<li><p>The _inherits property of a model has changed. It might be the case that
+fields which are removed are actually delegated to this newly
+inherited table.</p></li>
+<li><p>A new model is introduced. Copy all access data from the access csv and
+security rules xml files and load them in your script. Also copy any
+other data that may be introduced in this release of Odoo. This may
+have consequences for other modules’ migration scripts. TODO: create an
+overview of new or renamed modules.</p></li>
+</ul>
+</div></blockquote>
+<p>The final section of the database layout analysis contains a simple report on
+the changes that were detected.</p>
+</section>
+<section id="xml-ids">
+<h2>XML IDs<a class="headerlink" href="#xml-ids" title="Link to this heading"></a></h2>
+<p>The OpenUpgrade analysis files give a representation of the XML IDs that a
+module defines, in comparison with the previous release of the module.</p>
+<p>XML IDs which do not occur in the updated version of all installed modules
+will be removed automatically by the Odoo server, if they do not have
+the noupdate attribute. Therefore, you can ignore most entries here, such as</p>
+<blockquote>
+<div><ul class="simple">
+<li><p>ir.actions.*</p></li>
+<li><p>ir.model.fields</p></li>
+<li><p>ir.model.access</p></li>
+<li><p>ir.model</p></li>
+<li><p>ir.ui.*</p></li>
+<li><p>res.country*</p></li>
+<li><p>res.currency*</p></li>
+</ul>
+</div></blockquote>
+<p>When XML ids of such record types change, the record will be recreated under
+the new id, and the old record will be unlinked.</p>
+<p>To manage changes to data defined with the noupdate flag,
+please refer to the following use case <a class="reference internal" href="use_cases/xml_id_renaming.html"><span class="doc">XML-ID Renaming</span></a>.</p>
+</section>
+</section>
+
+
+           </div>
+          </div>
+          <footer><div class="rst-footer-buttons" role="navigation" aria-label="Footer">
+        <a href="060_odoo_migration_manager.html" class="btn btn-neutral float-left" title="The Odoo Migration Manager" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left" aria-hidden="true"></span> Previous</a>
+        <a href="080_migration_script_development.html" class="btn btn-neutral float-right" title="Migration script development" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right" aria-hidden="true"></span></a>
+    </div>
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>&#169; Copyright 2012-2021, Odoo Community Association (OCA) / The OpenUpgrade developers.
+      <span class="lastupdated">Last updated on Nov 06, 2023.
+      </span></p>
+  </div>
+
+  Built with <a href="https://www.sphinx-doc.org/">Sphinx</a> using a
+    <a href="https://github.com/readthedocs/sphinx_rtd_theme">theme</a>
+    provided by <a href="https://readthedocs.org">Read the Docs</a>.
+   
+
+</footer>
+        </div>
+      </div>
+    </section>
+  </div>
+  <script>
+      jQuery(function () {
+          SphinxRtdTheme.Navigation.enable(true);
+      });
+  </script> 
+
+</body>
+</html>

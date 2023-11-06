@@ -20,7 +20,7 @@
     <link rel="index" title="Index" href="genindex.html" />
     <link rel="search" title="Search" href="search.html" />
     <link rel="next" title="Field Fast Precomputation" href="use_cases/field_fast_precomputation.html" />
-    <link rel="prev" title="Fields analysis format" href="format.html" /> 
+    <link rel="prev" title="Migration Files" href="070_migration_files.html" /> 
 </head>
 
 <body class="wy-body-for-nav"> 
@@ -46,11 +46,13 @@
 </div>
         </div><div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="Navigation menu">
               <ul class="current">
-<li class="toctree-l1"><a class="reference internal" href="intro.html">Introduction</a></li>
-<li class="toctree-l1"><a class="reference internal" href="migrating_database.html">Migrating your database</a></li>
-<li class="toctree-l1"><a class="reference internal" href="community.html">Community involvement</a></li>
-<li class="toctree-l1"><a class="reference internal" href="status.html">Module coverage</a></li>
-<li class="toctree-l1"><a class="reference internal" href="analysis.html">Database analysis</a></li>
+<li class="toctree-l1"><a class="reference internal" href="010_introduction.html">Introduction</a></li>
+<li class="toctree-l1"><a class="reference internal" href="020_required_knowledge.html">Required Knowledge</a></li>
+<li class="toctree-l1"><a class="reference internal" href="030_coverage_analysis.html">Coverage Analysis</a></li>
+<li class="toctree-l1"><a class="reference internal" href="040_run_migration.html">Running the migration</a></li>
+<li class="toctree-l1"><a class="reference internal" href="050_after_migration.html">After migration</a></li>
+<li class="toctree-l1"><a class="reference internal" href="060_odoo_migration_manager.html">The Odoo Migration Manager</a></li>
+<li class="toctree-l1"><a class="reference internal" href="070_migration_files.html">Migration Files</a></li>
 <li class="toctree-l1 current"><a class="current reference internal" href="#">Migration script development</a><ul>
 <li class="toctree-l2"><a class="reference internal" href="#overview">Overview</a></li>
 <li class="toctree-l2"><a class="reference internal" href="#learn-from-typical-use-cases">Learn from typical Use cases</a><ul>
@@ -74,13 +76,10 @@
 <li class="toctree-l3"><a class="reference internal" href="#restart-the-upgrade-of-the-failed-module-instead-of-upgrading-all-systematically">Restart the upgrade of the failed module instead of upgrading all systematically</a></li>
 </ul>
 </li>
-<li class="toctree-l2"><a class="reference internal" href="#learning-resources">Learning resources</a><ul>
-<li class="toctree-l3"><a class="reference internal" href="migrationmanager.html">The Odoo Migration Manager</a></li>
-<li class="toctree-l3"><a class="reference internal" href="devfaq.html">Development FAQ</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#learning-resources">Learning resources</a></li>
 </ul>
 </li>
-</ul>
-</li>
+<li class="toctree-l1"><a class="reference internal" href="090_contribute.html">Contribute</a></li>
 </ul>
 
         </div>
@@ -110,9 +109,8 @@
 <h1>Migration script development<a class="headerlink" href="#migration-script-development" title="Link to this heading"></a></h1>
 <section id="overview">
 <h2>Overview<a class="headerlink" href="#overview" title="Link to this heading"></a></h2>
-<p>The execution of the migration scripts is triggered by the “Migration Manager”:
-<a class="reference internal" href="migrationmanager.html"><span class="doc">The Odoo Migration Manager</span></a>.</p>
-<p>As explained with more detail in the page <a class="reference internal" href="migrationmanager.html"><span class="doc">The Odoo Migration Manager</span></a>, the migration scripts
+<p>As explained with more detail in the page “Migration Manager”
+(<a class="reference internal" href="060_odoo_migration_manager.html"><span class="doc">The Odoo Migration Manager</span></a>), the migration scripts
 of a module are usually the combination of 3 python files (might be less if some
 steps are not necessary):</p>
 <ul class="simple">
@@ -149,91 +147,18 @@ the full power of OpenUpgrade was unleashed to successfully overcome the
 <h2>Learn from typical Use cases<a class="headerlink" href="#learn-from-typical-use-cases" title="Link to this heading"></a></h2>
 <div class="toctree-wrapper compound">
 <ul>
-<li class="toctree-l1"><a class="reference internal" href="use_cases/field_fast_precomputation.html">Field Fast Precomputation</a><ul>
-<li class="toctree-l2"><a class="reference internal" href="use_cases/field_fast_precomputation.html#example">Example</a></li>
-<li class="toctree-l2"><a class="reference internal" href="use_cases/field_fast_precomputation.html#source-code-differences">Source Code Differences</a></li>
-<li class="toctree-l2"><a class="reference internal" href="use_cases/field_fast_precomputation.html#analysis">Analysis</a></li>
-<li class="toctree-l2"><a class="reference internal" href="use_cases/field_fast_precomputation.html#result-without-migration-script-expected-result">Result without migration script / Expected Result</a></li>
-<li class="toctree-l2"><a class="reference internal" href="use_cases/field_fast_precomputation.html#contribution-to-openupgrade">Contribution to OpenUpgrade</a></li>
-<li class="toctree-l2"><a class="reference internal" href="use_cases/field_fast_precomputation.html#notes">Notes</a></li>
-</ul>
-</li>
-<li class="toctree-l1"><a class="reference internal" href="use_cases/field_renaming.html">Field Renaming</a><ul>
-<li class="toctree-l2"><a class="reference internal" href="use_cases/field_renaming.html#analysis">Analysis</a></li>
-<li class="toctree-l2"><a class="reference internal" href="use_cases/field_renaming.html#source-code-differences">Source Code Differences</a></li>
-<li class="toctree-l2"><a class="reference internal" href="use_cases/field_renaming.html#result-without-migration-script-expected-result">Result without migration script / Expected Result</a></li>
-<li class="toctree-l2"><a class="reference internal" href="use_cases/field_renaming.html#contribution-to-openupgrade">Contribution to OpenUpgrade</a></li>
-</ul>
-</li>
-<li class="toctree-l1"><a class="reference internal" href="use_cases/model_renaming.html">Model Renaming</a><ul>
-<li class="toctree-l2"><a class="reference internal" href="use_cases/model_renaming.html#source-code-differences">Source Code Differences</a></li>
-<li class="toctree-l2"><a class="reference internal" href="use_cases/model_renaming.html#result-without-migration-script-expected-result">Result without migration script / Expected Result</a></li>
-<li class="toctree-l2"><a class="reference internal" href="use_cases/model_renaming.html#contribution-to-openupgrade">Contribution to OpenUpgrade</a></li>
-</ul>
-</li>
-<li class="toctree-l1"><a class="reference internal" href="use_cases/table_renaming.html">Table Renaming</a><ul>
-<li class="toctree-l2"><a class="reference internal" href="use_cases/table_renaming.html#analysis">Analysis</a></li>
-<li class="toctree-l2"><a class="reference internal" href="use_cases/table_renaming.html#source-code-differences">Source Code Differences</a></li>
-<li class="toctree-l2"><a class="reference internal" href="use_cases/table_renaming.html#result-without-migration-script-expected-result">Result without migration script / Expected Result</a></li>
-<li class="toctree-l2"><a class="reference internal" href="use_cases/table_renaming.html#contribution-to-openupgrade">Contribution to OpenUpgrade</a></li>
-<li class="toctree-l2"><a class="reference internal" href="use_cases/table_renaming.html#notes">Notes</a></li>
-</ul>
-</li>
-<li class="toctree-l1"><a class="reference internal" href="use_cases/xml_id_renaming.html">XML-ID Renaming</a><ul>
-<li class="toctree-l2"><a class="reference internal" href="use_cases/xml_id_renaming.html#example">Example</a></li>
-<li class="toctree-l2"><a class="reference internal" href="use_cases/xml_id_renaming.html#source-code-differences">Source Code Differences</a></li>
-<li class="toctree-l2"><a class="reference internal" href="use_cases/xml_id_renaming.html#analysis">Analysis</a></li>
-<li class="toctree-l2"><a class="reference internal" href="use_cases/xml_id_renaming.html#result-without-migration-script-expected-result">Result without migration script / Expected Result</a></li>
-<li class="toctree-l2"><a class="reference internal" href="use_cases/xml_id_renaming.html#contribution-to-openupgrade">Contribution to OpenUpgrade</a></li>
-<li class="toctree-l2"><a class="reference internal" href="use_cases/xml_id_renaming.html#notes">Notes</a></li>
-</ul>
-</li>
-<li class="toctree-l1"><a class="reference internal" href="use_cases/module_renaming.html">Module Renaming</a><ul>
-<li class="toctree-l2"><a class="reference internal" href="use_cases/module_renaming.html#example">Example</a></li>
-<li class="toctree-l2"><a class="reference internal" href="use_cases/module_renaming.html#result-without-migration-script-expected-result">Result without migration script / Expected Result</a></li>
-<li class="toctree-l2"><a class="reference internal" href="use_cases/module_renaming.html#contribution-to-openupgrade">Contribution to OpenUpgrade</a></li>
-<li class="toctree-l2"><a class="reference internal" href="use_cases/module_renaming.html#notes">Notes</a></li>
-</ul>
-</li>
-<li class="toctree-l1"><a class="reference internal" href="use_cases/module_merging.html">Module Merging</a><ul>
-<li class="toctree-l2"><a class="reference internal" href="use_cases/module_merging.html#example">Example</a></li>
-<li class="toctree-l2"><a class="reference internal" href="use_cases/module_merging.html#result-without-migration-script-expected-result">Result without migration script / Expected Result</a></li>
-<li class="toctree-l2"><a class="reference internal" href="use_cases/module_merging.html#contribution-to-openupgrade">Contribution to OpenUpgrade</a></li>
-<li class="toctree-l2"><a class="reference internal" href="use_cases/module_merging.html#notes">Notes</a></li>
-</ul>
-</li>
+<li class="toctree-l1"><a class="reference internal" href="use_cases/field_fast_precomputation.html">Field Fast Precomputation</a></li>
+<li class="toctree-l1"><a class="reference internal" href="use_cases/field_renaming.html">Field Renaming</a></li>
+<li class="toctree-l1"><a class="reference internal" href="use_cases/model_renaming.html">Model Renaming</a></li>
+<li class="toctree-l1"><a class="reference internal" href="use_cases/table_renaming.html">Table Renaming</a></li>
+<li class="toctree-l1"><a class="reference internal" href="use_cases/xml_id_renaming.html">XML-ID Renaming</a></li>
+<li class="toctree-l1"><a class="reference internal" href="use_cases/module_renaming.html">Module Renaming</a></li>
+<li class="toctree-l1"><a class="reference internal" href="use_cases/module_merging.html">Module Merging</a></li>
 <li class="toctree-l1"><a class="reference internal" href="use_cases/noupdate_xml_entry_changed.html">Noupdate XML entry Changed</a></li>
-<li class="toctree-l1"><a class="reference internal" href="use_cases/noupdate_xml_entry_changed.html#rationale">Rationale</a><ul>
-<li class="toctree-l2"><a class="reference internal" href="use_cases/noupdate_xml_entry_changed.html#source-code-differences">Source Code Differences</a></li>
-<li class="toctree-l2"><a class="reference internal" href="use_cases/noupdate_xml_entry_changed.html#noupdate-changes-xml-file">noupdate_changes.xml File</a></li>
-<li class="toctree-l2"><a class="reference internal" href="use_cases/noupdate_xml_entry_changed.html#result-without-migration-script-expected-result">Result without migration script / Expected Result</a></li>
-<li class="toctree-l2"><a class="reference internal" href="use_cases/noupdate_xml_entry_changed.html#contribution-to-openupgrade">Contribution to OpenUpgrade</a></li>
-<li class="toctree-l2"><a class="reference internal" href="use_cases/noupdate_xml_entry_changed.html#notes">Notes</a></li>
-</ul>
-</li>
-<li class="toctree-l1"><a class="reference internal" href="use_cases/format_value_changing.html">Format Value Changing</a><ul>
-<li class="toctree-l2"><a class="reference internal" href="use_cases/format_value_changing.html#example">Example</a></li>
-<li class="toctree-l2"><a class="reference internal" href="use_cases/format_value_changing.html#source-code-differences">Source Code Differences</a></li>
-<li class="toctree-l2"><a class="reference internal" href="use_cases/format_value_changing.html#analysis">Analysis</a></li>
-<li class="toctree-l2"><a class="reference internal" href="use_cases/format_value_changing.html#result-without-migration-script-expected-result">Result without migration script / Expected Result</a></li>
-<li class="toctree-l2"><a class="reference internal" href="use_cases/format_value_changing.html#contribution-to-openupgrade">Contribution to OpenUpgrade</a></li>
-<li class="toctree-l2"><a class="reference internal" href="use_cases/format_value_changing.html#notes">Notes</a></li>
-</ul>
-</li>
-<li class="toctree-l1"><a class="reference internal" href="use_cases/value_mapping.html">Value Mapping</a><ul>
-<li class="toctree-l2"><a class="reference internal" href="use_cases/value_mapping.html#source-code-differences">Source Code Differences</a></li>
-<li class="toctree-l2"><a class="reference internal" href="use_cases/value_mapping.html#analysis">Analysis</a></li>
-<li class="toctree-l2"><a class="reference internal" href="use_cases/value_mapping.html#result-without-migration-script-expected-result">Result without migration script / Expected Result</a></li>
-<li class="toctree-l2"><a class="reference internal" href="use_cases/value_mapping.html#contribution-to-openupgrade">Contribution to OpenUpgrade</a></li>
-<li class="toctree-l2"><a class="reference internal" href="use_cases/value_mapping.html#notes">Notes</a></li>
-</ul>
-</li>
-<li class="toctree-l1"><a class="reference internal" href="use_cases/sql_constraint_deleted.html">SQL Constraint Deleted</a><ul>
-<li class="toctree-l2"><a class="reference internal" href="use_cases/sql_constraint_deleted.html#analysis">Analysis</a></li>
-<li class="toctree-l2"><a class="reference internal" href="use_cases/sql_constraint_deleted.html#source-code-differences">Source Code Differences</a></li>
-<li class="toctree-l2"><a class="reference internal" href="use_cases/sql_constraint_deleted.html#contribution-to-openupgrade">Contribution to OpenUpgrade</a></li>
-</ul>
-</li>
+<li class="toctree-l1"><a class="reference internal" href="use_cases/noupdate_xml_entry_changed.html#rationale">Rationale</a></li>
+<li class="toctree-l1"><a class="reference internal" href="use_cases/format_value_changing.html">Format Value Changing</a></li>
+<li class="toctree-l1"><a class="reference internal" href="use_cases/value_mapping.html">Value Mapping</a></li>
+<li class="toctree-l1"><a class="reference internal" href="use_cases/sql_constraint_deleted.html">SQL Constraint Deleted</a></li>
 </ul>
 </div>
 </section>
@@ -243,7 +168,7 @@ the full power of OpenUpgrade was unleashed to successfully overcome the
 <p><code class="docutils literal notranslate"><span class="pre">openupgrade_scripts/scripts/&lt;module-name&gt;</span></code></p>
 <p>During the review for a given module, you can follow this process:</p>
 <ul class="simple">
-<li><p>Review the analysis (read more in <a class="reference internal" href="analysis.html"><span class="doc">Database analysis</span></a>). First the file
+<li><p>Review the analysis (read more in <a class="reference internal" href="070_migration_files.html"><span class="doc">Migration Files</span></a>). First the file
 <cite>openupgrade_analysis.txt</cite> showing some differences between the 2 versions of
 the module. Then, <cite>openupgrade_analysis_work.txt</cite> to see what the developer
 planned to do.</p></li>
@@ -261,7 +186,7 @@ how developers selected one way or another to implement the migration scripts.</
 <section id="the-trial-and-error-process-for-the-development-of-your-scripts">
 <h2>The Trial and error process for the development of your scripts<a class="headerlink" href="#the-trial-and-error-process-for-the-development-of-your-scripts" title="Link to this heading"></a></h2>
 <p>Basically, this is the happening during the step when you try to run the upgrade
-described in <a class="reference internal" href="migration_details.html"><span class="doc">Running the migration</span></a>:</p>
+described in <a class="reference internal" href="040_run_migration.html"><span class="doc">Running the migration</span></a>:</p>
 <ul class="simple">
 <li><p>[A] get the copy of your database in old version as <cite>db-upgrade</cite>, it is
 easy to do through the database manager of your old odoo
@@ -295,12 +220,6 @@ It is available only for 12 and 13:
 </section>
 <section id="learning-resources">
 <h2>Learning resources<a class="headerlink" href="#learning-resources" title="Link to this heading"></a></h2>
-<div class="toctree-wrapper compound">
-<ul>
-<li class="toctree-l1"><a class="reference internal" href="migrationmanager.html">The Odoo Migration Manager</a></li>
-<li class="toctree-l1"><a class="reference internal" href="devfaq.html">Development FAQ</a></li>
-</ul>
-</div>
 <p>You can also refer to the following:</p>
 <ul class="simple">
 <li><p><a class="reference external" href="https://oca.github.io/openupgradelib/API.html">OpenUpgrade API</a></p></li>
@@ -314,7 +233,7 @@ It is available only for 12 and 13:
            </div>
           </div>
           <footer><div class="rst-footer-buttons" role="navigation" aria-label="Footer">
-        <a href="format.html" class="btn btn-neutral float-left" title="Fields analysis format" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left" aria-hidden="true"></span> Previous</a>
+        <a href="070_migration_files.html" class="btn btn-neutral float-left" title="Migration Files" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left" aria-hidden="true"></span> Previous</a>
         <a href="use_cases/field_fast_precomputation.html" class="btn btn-neutral float-right" title="Field Fast Precomputation" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right" aria-hidden="true"></span></a>
     </div>
 
@@ -322,7 +241,7 @@ It is available only for 12 and 13:
 
   <div role="contentinfo">
     <p>&#169; Copyright 2012-2021, Odoo Community Association (OCA) / The OpenUpgrade developers.
-      <span class="lastupdated">Last updated on Oct 31, 2023.
+      <span class="lastupdated">Last updated on Nov 06, 2023.
       </span></p>
   </div>
 

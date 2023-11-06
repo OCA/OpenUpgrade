@@ -4,7 +4,7 @@
   <meta charset="utf-8" /><meta name="generator" content="Docutils 0.18.1: http://docutils.sourceforge.net/" />
 
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Migrating your database &mdash; OpenUpgrade 16.0 documentation</title>
+  <title>After migration &mdash; OpenUpgrade 16.0 documentation</title>
       <link rel="stylesheet" href="_static/pygments.css" type="text/css" />
       <link rel="stylesheet" href="_static/css/theme.css" type="text/css" />
   <!--[if lt IE 9]>
@@ -19,8 +19,8 @@
     <script src="_static/js/theme.js"></script>
     <link rel="index" title="Index" href="genindex.html" />
     <link rel="search" title="Search" href="search.html" />
-    <link rel="next" title="Running the migration" href="migration_details.html" />
-    <link rel="prev" title="Introduction" href="intro.html" /> 
+    <link rel="next" title="The Odoo Migration Manager" href="060_odoo_migration_manager.html" />
+    <link rel="prev" title="Running the migration" href="040_run_migration.html" /> 
 </head>
 
 <body class="wy-body-for-nav"> 
@@ -46,16 +46,15 @@
 </div>
         </div><div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="Navigation menu">
               <ul class="current">
-<li class="toctree-l1"><a class="reference internal" href="intro.html">Introduction</a></li>
-<li class="toctree-l1 current"><a class="current reference internal" href="#">Migrating your database</a><ul>
-<li class="toctree-l2"><a class="reference internal" href="migration_details.html">Running the migration</a></li>
-<li class="toctree-l2"><a class="reference internal" href="after_migration.html">After migration</a></li>
-</ul>
-</li>
-<li class="toctree-l1"><a class="reference internal" href="community.html">Community involvement</a></li>
-<li class="toctree-l1"><a class="reference internal" href="status.html">Module coverage</a></li>
-<li class="toctree-l1"><a class="reference internal" href="analysis.html">Database analysis</a></li>
-<li class="toctree-l1"><a class="reference internal" href="development.html">Migration script development</a></li>
+<li class="toctree-l1"><a class="reference internal" href="010_introduction.html">Introduction</a></li>
+<li class="toctree-l1"><a class="reference internal" href="020_required_knowledge.html">Required Knowledge</a></li>
+<li class="toctree-l1"><a class="reference internal" href="030_coverage_analysis.html">Coverage Analysis</a></li>
+<li class="toctree-l1"><a class="reference internal" href="040_run_migration.html">Running the migration</a></li>
+<li class="toctree-l1 current"><a class="current reference internal" href="#">After migration</a></li>
+<li class="toctree-l1"><a class="reference internal" href="060_odoo_migration_manager.html">The Odoo Migration Manager</a></li>
+<li class="toctree-l1"><a class="reference internal" href="070_migration_files.html">Migration Files</a></li>
+<li class="toctree-l1"><a class="reference internal" href="080_migration_script_development.html">Migration script development</a></li>
+<li class="toctree-l1"><a class="reference internal" href="090_contribute.html">Contribute</a></li>
 </ul>
 
         </div>
@@ -72,7 +71,7 @@
           <div role="navigation" aria-label="Page navigation">
   <ul class="wy-breadcrumbs">
       <li><a href="index.html" class="icon icon-home" aria-label="Home"></a></li>
-      <li class="breadcrumb-item active">Migrating your database</li>
+      <li class="breadcrumb-item active">After migration</li>
       <li class="wy-breadcrumbs-aside">
       </li>
   </ul>
@@ -81,36 +80,38 @@
           <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
            <div itemprop="articleBody">
              
-  <section id="migrating-your-database">
-<h1>Migrating your database<a class="headerlink" href="#migrating-your-database" title="Link to this heading"></a></h1>
-<div class="toctree-wrapper compound">
-<ul>
-<li class="toctree-l1"><a class="reference internal" href="migration_details.html">Running the migration</a><ul>
-<li class="toctree-l2"><a class="reference internal" href="migration_details.html#get-the-code-from-openupgrade-and-dependencies">1. Get the code from OpenUpgrade and dependencies</a></li>
-<li class="toctree-l2"><a class="reference internal" href="migration_details.html#check-coverage-of-the-migration-scripts-for-your-installed-modules">2. Check coverage of the migration scripts for your installed modules</a></li>
-<li class="toctree-l2"><a class="reference internal" href="migration_details.html#make-a-copy-of-the-database-to-migrate">3. Make a copy of the database to migrate</a></li>
-<li class="toctree-l2"><a class="reference internal" href="migration_details.html#adjust-the-configuration-for-odoo-and-openupgrade">4. Adjust the configuration for Odoo and OpenUpgrade</a></li>
-<li class="toctree-l2"><a class="reference internal" href="migration_details.html#run-the-upgrade-fix-data-and-repeat">5. Run the upgrade, fix data and repeat…</a></li>
-</ul>
-</li>
-<li class="toctree-l1"><a class="reference internal" href="after_migration.html">After migration</a></li>
-</ul>
-</div>
+  <section id="after-migration">
+<h1>After migration<a class="headerlink" href="#after-migration" title="Link to this heading"></a></h1>
+<p>OpenUpgrade keeps old model tables and old columns (prefixed with
+<cite>openupgrade_legacy_</cite> word) in PostgreSQL as a conservative strategy because
+they can be used in a later migration script (or to fix an incorrect migration)
+or only for reference.</p>
+<p>After the upgraded database has been running stable for a while, you can
+consider removing the obsolete tables and columns to keep your database clean
+and tidy (i.e. to restore the consistency between the ORM and the database
+layout). The data is orphaned, which means there is no protection from the ORM
+when another module or a future version of Odoo reintroduces any table or
+column (for a new purpose) that happens to still exist in your database.</p>
+<p>There’s a module called _database_cleanup_, hosted on OCA server-tools project
+(<a class="reference external" href="https://github.com/OCA/server-tools">https://github.com/OCA/server-tools</a>), that allows to purge this old data in
+an intuitive way.</p>
+<p>You are also encouraged to have Postgresql run a full vacuum to free up disk
+space (see the documentation of your version of Postgresql).</p>
 </section>
 
 
            </div>
           </div>
           <footer><div class="rst-footer-buttons" role="navigation" aria-label="Footer">
-        <a href="intro.html" class="btn btn-neutral float-left" title="Introduction" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left" aria-hidden="true"></span> Previous</a>
-        <a href="migration_details.html" class="btn btn-neutral float-right" title="Running the migration" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right" aria-hidden="true"></span></a>
+        <a href="040_run_migration.html" class="btn btn-neutral float-left" title="Running the migration" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left" aria-hidden="true"></span> Previous</a>
+        <a href="060_odoo_migration_manager.html" class="btn btn-neutral float-right" title="The Odoo Migration Manager" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right" aria-hidden="true"></span></a>
     </div>
 
   <hr/>
 
   <div role="contentinfo">
     <p>&#169; Copyright 2012-2021, Odoo Community Association (OCA) / The OpenUpgrade developers.
-      <span class="lastupdated">Last updated on Oct 31, 2023.
+      <span class="lastupdated">Last updated on Nov 06, 2023.
       </span></p>
   </div>
 

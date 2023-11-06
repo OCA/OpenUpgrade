@@ -19,7 +19,7 @@
     <script src="_static/js/theme.js"></script>
     <link rel="index" title="Index" href="genindex.html" />
     <link rel="search" title="Search" href="search.html" />
-    <link rel="next" title="Introduction" href="intro.html" /> 
+    <link rel="next" title="Introduction" href="010_introduction.html" /> 
 </head>
 
 <body class="wy-body-for-nav"> 
@@ -45,12 +45,15 @@
 </div>
         </div><div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="Navigation menu">
               <ul>
-<li class="toctree-l1"><a class="reference internal" href="intro.html">Introduction</a></li>
-<li class="toctree-l1"><a class="reference internal" href="migrating_database.html">Migrating your database</a></li>
-<li class="toctree-l1"><a class="reference internal" href="community.html">Community involvement</a></li>
-<li class="toctree-l1"><a class="reference internal" href="status.html">Module coverage</a></li>
-<li class="toctree-l1"><a class="reference internal" href="analysis.html">Database analysis</a></li>
-<li class="toctree-l1"><a class="reference internal" href="development.html">Migration script development</a></li>
+<li class="toctree-l1"><a class="reference internal" href="010_introduction.html">Introduction</a></li>
+<li class="toctree-l1"><a class="reference internal" href="020_required_knowledge.html">Required Knowledge</a></li>
+<li class="toctree-l1"><a class="reference internal" href="030_coverage_analysis.html">Coverage Analysis</a></li>
+<li class="toctree-l1"><a class="reference internal" href="040_run_migration.html">Running the migration</a></li>
+<li class="toctree-l1"><a class="reference internal" href="050_after_migration.html">After migration</a></li>
+<li class="toctree-l1"><a class="reference internal" href="060_odoo_migration_manager.html">The Odoo Migration Manager</a></li>
+<li class="toctree-l1"><a class="reference internal" href="070_migration_files.html">Migration Files</a></li>
+<li class="toctree-l1"><a class="reference internal" href="080_migration_script_development.html">Migration script development</a></li>
+<li class="toctree-l1"><a class="reference internal" href="090_contribute.html">Contribute</a></li>
 </ul>
 
         </div>
@@ -79,88 +82,67 @@
   <img alt="_images/OpenUpgrade.png" src="_images/OpenUpgrade.png" />
 <section id="welcome-to-openupgrade-s-documentation">
 <h1>Welcome to OpenUpgrade’s documentation!<a class="headerlink" href="#welcome-to-openupgrade-s-documentation" title="Link to this heading"></a></h1>
-<p><strong>If you just want to migrate your database and don’t care about the technical details, refer to</strong> <a class="reference internal" href="migration_details.html"><span class="doc">Running the migration</span></a></p>
 <p>Contents:</p>
 <div class="toctree-wrapper compound">
 <ul>
-<li class="toctree-l1"><a class="reference internal" href="intro.html">Introduction</a><ul>
-<li class="toctree-l2"><a class="reference internal" href="intro.html#what-is-openupgrade">What is OpenUpgrade</a></li>
-<li class="toctree-l2"><a class="reference internal" href="intro.html#migration-from-one-version-to-the-next">Migration from one version to the next</a></li>
-<li class="toctree-l2"><a class="reference internal" href="intro.html#migration-of-several-versions">Migration of several versions</a></li>
-<li class="toctree-l2"><a class="reference internal" href="intro.html#openupgrade-design">Openupgrade design</a></li>
-<li class="toctree-l2"><a class="reference internal" href="intro.html#why-migrate-to-a-more-recent-major-version">Why migrate to a more recent major version</a></li>
-<li class="toctree-l2"><a class="reference internal" href="intro.html#alternative-to-openupgrade">Alternative to Openupgrade</a></li>
+<li class="toctree-l1"><a class="reference internal" href="010_introduction.html">Introduction</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="010_introduction.html#what-is-openupgrade">What is OpenUpgrade</a></li>
+<li class="toctree-l2"><a class="reference internal" href="010_introduction.html#migration-from-one-version-to-the-next">Migration from one version to the next</a></li>
+<li class="toctree-l2"><a class="reference internal" href="010_introduction.html#migration-of-several-versions">Migration of several versions</a></li>
+<li class="toctree-l2"><a class="reference internal" href="010_introduction.html#openupgrade-design">Openupgrade design</a></li>
+<li class="toctree-l2"><a class="reference internal" href="010_introduction.html#why-migrate-to-a-more-recent-major-version">Why migrate to a more recent major version</a></li>
+<li class="toctree-l2"><a class="reference internal" href="010_introduction.html#alternative-to-openupgrade">Alternative to Openupgrade</a></li>
 </ul>
 </li>
-<li class="toctree-l1"><a class="reference internal" href="migrating_database.html">Migrating your database</a><ul>
-<li class="toctree-l2"><a class="reference internal" href="migration_details.html">Running the migration</a><ul>
-<li class="toctree-l3"><a class="reference internal" href="migration_details.html#get-the-code-from-openupgrade-and-dependencies">1. Get the code from OpenUpgrade and dependencies</a></li>
-<li class="toctree-l3"><a class="reference internal" href="migration_details.html#check-coverage-of-the-migration-scripts-for-your-installed-modules">2. Check coverage of the migration scripts for your installed modules</a></li>
-<li class="toctree-l3"><a class="reference internal" href="migration_details.html#make-a-copy-of-the-database-to-migrate">3. Make a copy of the database to migrate</a></li>
-<li class="toctree-l3"><a class="reference internal" href="migration_details.html#adjust-the-configuration-for-odoo-and-openupgrade">4. Adjust the configuration for Odoo and OpenUpgrade</a></li>
-<li class="toctree-l3"><a class="reference internal" href="migration_details.html#run-the-upgrade-fix-data-and-repeat">5. Run the upgrade, fix data and repeat…</a></li>
+<li class="toctree-l1"><a class="reference internal" href="020_required_knowledge.html">Required Knowledge</a></li>
+<li class="toctree-l1"><a class="reference internal" href="030_coverage_analysis.html">Coverage Analysis</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="coverage_analysis/modules150-160.html">Module coverage 15.0 -&gt; 16.0</a></li>
+<li class="toctree-l2"><a class="reference internal" href="coverage_analysis/modules140-150.html">Module coverage 14.0 -&gt; 15.0</a></li>
+<li class="toctree-l2"><a class="reference internal" href="coverage_analysis/modules130-140.html">Module coverage 13.0 -&gt; 14.0</a></li>
+<li class="toctree-l2"><a class="reference internal" href="coverage_analysis/modules120-130.html">Module coverage 12.0 -&gt; 13.0</a></li>
+<li class="toctree-l2"><a class="reference internal" href="coverage_analysis/modules110-120.html">Module coverage 11.0 -&gt; 12.0</a></li>
+<li class="toctree-l2"><a class="reference internal" href="coverage_analysis/modules100-110.html">Module coverage 10.0 -&gt; 11.0</a></li>
+<li class="toctree-l2"><a class="reference internal" href="coverage_analysis/modules90-100.html">Module coverage 9.0 -&gt; 10.0</a></li>
+<li class="toctree-l2"><a class="reference internal" href="coverage_analysis/modules80-90.html">Module coverage 8.0 -&gt; 9.0</a></li>
+<li class="toctree-l2"><a class="reference internal" href="coverage_analysis/modules70-80.html">Module coverage 7.0 -&gt; 8.0</a></li>
+<li class="toctree-l2"><a class="reference internal" href="coverage_analysis/modules61-70.html">Module coverage 6.1 -&gt; 7.0</a></li>
+<li class="toctree-l2"><a class="reference internal" href="coverage_analysis/modules60-61.html">Module coverage 6.0 -&gt; 6.1</a></li>
+<li class="toctree-l2"><a class="reference internal" href="coverage_analysis/modules50-60.html">Module coverage 5.0 -&gt; 6.0</a></li>
 </ul>
 </li>
-<li class="toctree-l2"><a class="reference internal" href="after_migration.html">After migration</a></li>
+<li class="toctree-l1"><a class="reference internal" href="040_run_migration.html">Running the migration</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="040_run_migration.html#get-the-code-from-openupgrade-and-dependencies">1. Get the code from OpenUpgrade and dependencies</a></li>
+<li class="toctree-l2"><a class="reference internal" href="040_run_migration.html#make-a-copy-of-the-database-to-migrate">2. Make a copy of the database to migrate</a></li>
+<li class="toctree-l2"><a class="reference internal" href="040_run_migration.html#adjust-the-configuration-for-odoo-and-openupgrade">3. Adjust the configuration for Odoo and OpenUpgrade</a></li>
+<li class="toctree-l2"><a class="reference internal" href="040_run_migration.html#run-the-upgrade-fix-data-and-repeat">4. Run the upgrade, fix data and repeat…</a></li>
 </ul>
 </li>
-<li class="toctree-l1"><a class="reference internal" href="community.html">Community involvement</a><ul>
-<li class="toctree-l2"><a class="reference internal" href="community.html#contribute">Contribute</a></li>
+<li class="toctree-l1"><a class="reference internal" href="050_after_migration.html">After migration</a></li>
+<li class="toctree-l1"><a class="reference internal" href="060_odoo_migration_manager.html">The Odoo Migration Manager</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="060_odoo_migration_manager.html#faq">FAQ</a></li>
 </ul>
 </li>
-<li class="toctree-l1"><a class="reference internal" href="status.html">Module coverage</a><ul>
-<li class="toctree-l2"><a class="reference internal" href="modules150-160.html">Module coverage 15.0 -&gt; 16.0</a></li>
-<li class="toctree-l2"><a class="reference internal" href="modules140-150.html">Module coverage 14.0 -&gt; 15.0</a></li>
-<li class="toctree-l2"><a class="reference internal" href="modules130-140.html">Module coverage 13.0 -&gt; 14.0</a></li>
-<li class="toctree-l2"><a class="reference internal" href="modules120-130.html">Module coverage 12.0 -&gt; 13.0</a></li>
-<li class="toctree-l2"><a class="reference internal" href="modules110-120.html">Module coverage 11.0 -&gt; 12.0</a></li>
-<li class="toctree-l2"><a class="reference internal" href="modules100-110.html">Module coverage 10.0 -&gt; 11.0</a></li>
-<li class="toctree-l2"><a class="reference internal" href="modules90-100.html">Module coverage 9.0 -&gt; 10.0</a></li>
-<li class="toctree-l2"><a class="reference internal" href="modules80-90.html">Module coverage 8.0 -&gt; 9.0</a></li>
-<li class="toctree-l2"><a class="reference internal" href="modules70-80.html">Module coverage 7.0 -&gt; 8.0</a></li>
-<li class="toctree-l2"><a class="reference internal" href="modules61-70.html">Module coverage 6.1 -&gt; 7.0</a></li>
-<li class="toctree-l2"><a class="reference internal" href="modules60-61.html">Module coverage 6.0 -&gt; 6.1</a></li>
-<li class="toctree-l2"><a class="reference internal" href="modules50-60.html">Module coverage 5.0 -&gt; 6.0</a></li>
+<li class="toctree-l1"><a class="reference internal" href="070_migration_files.html">Migration Files</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="070_migration_files.html#for-versions-14-0-and-higher">For versions 14.0 and higher</a></li>
+<li class="toctree-l2"><a class="reference internal" href="070_migration_files.html#for-versions-13-0-and-below">For versions 13.0 and below</a></li>
+<li class="toctree-l2"><a class="reference internal" href="070_migration_files.html#non-official-addons">Non official addons</a></li>
+<li class="toctree-l2"><a class="reference internal" href="070_migration_files.html#directory-contents">Directory contents</a></li>
+<li class="toctree-l2"><a class="reference internal" href="070_migration_files.html#generate-the-difference-analysis-files">Generate the difference analysis files</a></li>
+<li class="toctree-l2"><a class="reference internal" href="070_migration_files.html#analysis-files-description">Analysis files description</a></li>
+<li class="toctree-l2"><a class="reference internal" href="070_migration_files.html#xml-ids">XML IDs</a></li>
 </ul>
 </li>
-<li class="toctree-l1"><a class="reference internal" href="analysis.html">Database analysis</a><ul>
-<li class="toctree-l2"><a class="reference internal" href="analysis.html#earlier-versions">Earlier versions</a></li>
-<li class="toctree-l2"><a class="reference internal" href="analysis.html#contents">Contents</a><ul>
-<li class="toctree-l3"><a class="reference internal" href="analyse.html">How to run your own analysis</a></li>
-<li class="toctree-l3"><a class="reference internal" href="xmlids.html">XML IDs</a></li>
-<li class="toctree-l3"><a class="reference internal" href="format.html">Fields analysis format</a></li>
+<li class="toctree-l1"><a class="reference internal" href="080_migration_script_development.html">Migration script development</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="080_migration_script_development.html#overview">Overview</a></li>
+<li class="toctree-l2"><a class="reference internal" href="080_migration_script_development.html#learn-from-typical-use-cases">Learn from typical Use cases</a></li>
+<li class="toctree-l2"><a class="reference internal" href="080_migration_script_development.html#learn-from-existing-migration-scrips">Learn from existing migration scrips</a></li>
+<li class="toctree-l2"><a class="reference internal" href="080_migration_script_development.html#learn-from-code-review-of-open-prs">Learn from code review of open PRs</a></li>
+<li class="toctree-l2"><a class="reference internal" href="080_migration_script_development.html#the-trial-and-error-process-for-the-development-of-your-scripts">The Trial and error process for the development of your scripts</a></li>
+<li class="toctree-l2"><a class="reference internal" href="080_migration_script_development.html#learning-resources">Learning resources</a></li>
 </ul>
 </li>
-</ul>
-</li>
-<li class="toctree-l1"><a class="reference internal" href="development.html">Migration script development</a><ul>
-<li class="toctree-l2"><a class="reference internal" href="development.html#overview">Overview</a></li>
-<li class="toctree-l2"><a class="reference internal" href="development.html#learn-from-typical-use-cases">Learn from typical Use cases</a><ul>
-<li class="toctree-l3"><a class="reference internal" href="use_cases/field_fast_precomputation.html">Field Fast Precomputation</a></li>
-<li class="toctree-l3"><a class="reference internal" href="use_cases/field_renaming.html">Field Renaming</a></li>
-<li class="toctree-l3"><a class="reference internal" href="use_cases/model_renaming.html">Model Renaming</a></li>
-<li class="toctree-l3"><a class="reference internal" href="use_cases/table_renaming.html">Table Renaming</a></li>
-<li class="toctree-l3"><a class="reference internal" href="use_cases/xml_id_renaming.html">XML-ID Renaming</a></li>
-<li class="toctree-l3"><a class="reference internal" href="use_cases/module_renaming.html">Module Renaming</a></li>
-<li class="toctree-l3"><a class="reference internal" href="use_cases/module_merging.html">Module Merging</a></li>
-<li class="toctree-l3"><a class="reference internal" href="use_cases/noupdate_xml_entry_changed.html">Noupdate XML entry Changed</a></li>
-<li class="toctree-l3"><a class="reference internal" href="use_cases/noupdate_xml_entry_changed.html#rationale">Rationale</a></li>
-<li class="toctree-l3"><a class="reference internal" href="use_cases/format_value_changing.html">Format Value Changing</a></li>
-<li class="toctree-l3"><a class="reference internal" href="use_cases/value_mapping.html">Value Mapping</a></li>
-<li class="toctree-l3"><a class="reference internal" href="use_cases/sql_constraint_deleted.html">SQL Constraint Deleted</a></li>
-</ul>
-</li>
-<li class="toctree-l2"><a class="reference internal" href="development.html#learn-from-existing-migration-scrips">Learn from existing migration scrips</a></li>
-<li class="toctree-l2"><a class="reference internal" href="development.html#learn-from-code-review-of-open-prs">Learn from code review of open PRs</a></li>
-<li class="toctree-l2"><a class="reference internal" href="development.html#the-trial-and-error-process-for-the-development-of-your-scripts">The Trial and error process for the development of your scripts</a><ul>
-<li class="toctree-l3"><a class="reference internal" href="development.html#restart-the-upgrade-of-the-failed-module-instead-of-upgrading-all-systematically">Restart the upgrade of the failed module instead of upgrading all systematically</a></li>
-</ul>
-</li>
-<li class="toctree-l2"><a class="reference internal" href="development.html#learning-resources">Learning resources</a><ul>
-<li class="toctree-l3"><a class="reference internal" href="migrationmanager.html">The Odoo Migration Manager</a></li>
-<li class="toctree-l3"><a class="reference internal" href="devfaq.html">Development FAQ</a></li>
-</ul>
-</li>
+<li class="toctree-l1"><a class="reference internal" href="090_contribute.html">Contribute</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="090_contribute.html#community-involvement">Community involvement</a></li>
 </ul>
 </li>
 </ul>
@@ -180,14 +162,14 @@
            </div>
           </div>
           <footer><div class="rst-footer-buttons" role="navigation" aria-label="Footer">
-        <a href="intro.html" class="btn btn-neutral float-right" title="Introduction" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right" aria-hidden="true"></span></a>
+        <a href="010_introduction.html" class="btn btn-neutral float-right" title="Introduction" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right" aria-hidden="true"></span></a>
     </div>
 
   <hr/>
 
   <div role="contentinfo">
     <p>&#169; Copyright 2012-2021, Odoo Community Association (OCA) / The OpenUpgrade developers.
-      <span class="lastupdated">Last updated on Oct 31, 2023.
+      <span class="lastupdated">Last updated on Nov 06, 2023.
       </span></p>
   </div>
 

@@ -4,7 +4,7 @@
   <meta charset="utf-8" /><meta name="generator" content="Docutils 0.18.1: http://docutils.sourceforge.net/" />
 
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Development FAQ &mdash; OpenUpgrade 16.0 documentation</title>
+  <title>The Odoo Migration Manager &mdash; OpenUpgrade 16.0 documentation</title>
       <link rel="stylesheet" href="_static/pygments.css" type="text/css" />
       <link rel="stylesheet" href="_static/css/theme.css" type="text/css" />
   <!--[if lt IE 9]>
@@ -19,7 +19,8 @@
     <script src="_static/js/theme.js"></script>
     <link rel="index" title="Index" href="genindex.html" />
     <link rel="search" title="Search" href="search.html" />
-    <link rel="prev" title="The Odoo Migration Manager" href="migrationmanager.html" /> 
+    <link rel="next" title="Migration Files" href="070_migration_files.html" />
+    <link rel="prev" title="After migration" href="050_after_migration.html" /> 
 </head>
 
 <body class="wy-body-for-nav"> 
@@ -45,24 +46,18 @@
 </div>
         </div><div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="Navigation menu">
               <ul class="current">
-<li class="toctree-l1"><a class="reference internal" href="intro.html">Introduction</a></li>
-<li class="toctree-l1"><a class="reference internal" href="migrating_database.html">Migrating your database</a></li>
-<li class="toctree-l1"><a class="reference internal" href="community.html">Community involvement</a></li>
-<li class="toctree-l1"><a class="reference internal" href="status.html">Module coverage</a></li>
-<li class="toctree-l1"><a class="reference internal" href="analysis.html">Database analysis</a></li>
-<li class="toctree-l1 current"><a class="reference internal" href="development.html">Migration script development</a><ul class="current">
-<li class="toctree-l2"><a class="reference internal" href="development.html#overview">Overview</a></li>
-<li class="toctree-l2"><a class="reference internal" href="development.html#learn-from-typical-use-cases">Learn from typical Use cases</a></li>
-<li class="toctree-l2"><a class="reference internal" href="development.html#learn-from-existing-migration-scrips">Learn from existing migration scrips</a></li>
-<li class="toctree-l2"><a class="reference internal" href="development.html#learn-from-code-review-of-open-prs">Learn from code review of open PRs</a></li>
-<li class="toctree-l2"><a class="reference internal" href="development.html#the-trial-and-error-process-for-the-development-of-your-scripts">The Trial and error process for the development of your scripts</a></li>
-<li class="toctree-l2 current"><a class="reference internal" href="development.html#learning-resources">Learning resources</a><ul class="current">
-<li class="toctree-l3"><a class="reference internal" href="migrationmanager.html">The Odoo Migration Manager</a></li>
-<li class="toctree-l3 current"><a class="current reference internal" href="#">Development FAQ</a></li>
+<li class="toctree-l1"><a class="reference internal" href="010_introduction.html">Introduction</a></li>
+<li class="toctree-l1"><a class="reference internal" href="020_required_knowledge.html">Required Knowledge</a></li>
+<li class="toctree-l1"><a class="reference internal" href="030_coverage_analysis.html">Coverage Analysis</a></li>
+<li class="toctree-l1"><a class="reference internal" href="040_run_migration.html">Running the migration</a></li>
+<li class="toctree-l1"><a class="reference internal" href="050_after_migration.html">After migration</a></li>
+<li class="toctree-l1 current"><a class="current reference internal" href="#">The Odoo Migration Manager</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="#faq">FAQ</a></li>
 </ul>
 </li>
-</ul>
-</li>
+<li class="toctree-l1"><a class="reference internal" href="070_migration_files.html">Migration Files</a></li>
+<li class="toctree-l1"><a class="reference internal" href="080_migration_script_development.html">Migration script development</a></li>
+<li class="toctree-l1"><a class="reference internal" href="090_contribute.html">Contribute</a></li>
 </ul>
 
         </div>
@@ -79,8 +74,7 @@
           <div role="navigation" aria-label="Page navigation">
   <ul class="wy-breadcrumbs">
       <li><a href="index.html" class="icon icon-home" aria-label="Home"></a></li>
-          <li class="breadcrumb-item"><a href="development.html">Migration script development</a></li>
-      <li class="breadcrumb-item active">Development FAQ</li>
+      <li class="breadcrumb-item active">The Odoo Migration Manager</li>
       <li class="wy-breadcrumbs-aside">
       </li>
   </ul>
@@ -89,8 +83,32 @@
           <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
            <div itemprop="articleBody">
              
-  <section id="development-faq">
-<h1>Development FAQ<a class="headerlink" href="#development-faq" title="Link to this heading"></a></h1>
+  <section id="the-odoo-migration-manager">
+<h1>The Odoo Migration Manager<a class="headerlink" href="#the-odoo-migration-manager" title="Link to this heading"></a></h1>
+<p>The core mechanism that OpenUpgrade relies on is the migration manager that is
+already built into Odoo itself. It is this mechanism that was used by Odoo to
+run migrations back in the days before TinyERP 4.2 when migration scripts where
+still included in the code. The same mechanism is probably still used by Odoo
+internally to run the proprietary migration, and occasionally it is used in
+the code to fix glitches during the Odoo release lifecycle. For an example,
+see  <a class="reference external" href="https://github.com/odoo/odoo/commit/8b02879ff5">https://github.com/odoo/odoo/commit/8b02879ff5</a>.</p>
+<p>Please have a look at the docstring of the Odoo migration manager:
+<a class="reference external" href="https://github.com/odoo/odoo/blob/7c95c14c06d77e5ebbd7aafd9c0c345b47d27d30/odoo/modules/migration.py#L23">https://github.com/odoo/odoo/blob/7c95c14c06d77e5ebbd7aafd9c0c345b47d27d30/odoo/modules/migration.py#L23</a>. You will see that migration scripts are organized in the <em>migrations</em>
+subdirectory in the module itself, in subdirectories per module version. The
+scripts will be executed when the module is upgraded, if the installed version
+of the module is lower than the name of the versioned directories.</p>
+<p>There are three migration stages at which you can have migration scripts
+executed: <em>before</em> the module is loaded (pre stage), <em>after</em> the module is
+loaded into the database (post stage) and when <em>all</em> the modules are loaded
+(end stage). The end stage was introduced into Odoo 9.0. In earlier versions
+of OpenUpgrade, a file <em>odoo/openupgrade/deferred_&lt;VERSION&gt;.py</em> was
+maintained to collect migration steps to be run after a full upgrade.</p>
+<p>Note that you can use this mechanism for your own custom
+module’s lifecycle outside of the OpenUpgrade context. For that reason, the
+OpenUpgrade helper methods were collected into the python openupgradelib that
+you can make available in any Odoo instance using the <em>pip</em> tool.</p>
+<section id="faq">
+<h2>FAQ<a class="headerlink" href="#faq" title="Link to this heading"></a></h2>
 <dl class="simple">
 <dt>How are new dependencies treated by the Odoo migration manager?</dt><dd><p>New dependencies (like the <em>edi</em> module is a new dependency of the
 <em>account</em> module) will be detected by the upgrade process.  The
@@ -111,19 +129,21 @@ workings of Odoo if it helps the migration. For instance, from OpenUpgrade
 </dd>
 </dl>
 </section>
+</section>
 
 
            </div>
           </div>
           <footer><div class="rst-footer-buttons" role="navigation" aria-label="Footer">
-        <a href="migrationmanager.html" class="btn btn-neutral float-left" title="The Odoo Migration Manager" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left" aria-hidden="true"></span> Previous</a>
+        <a href="050_after_migration.html" class="btn btn-neutral float-left" title="After migration" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left" aria-hidden="true"></span> Previous</a>
+        <a href="070_migration_files.html" class="btn btn-neutral float-right" title="Migration Files" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right" aria-hidden="true"></span></a>
     </div>
 
   <hr/>
 
   <div role="contentinfo">
     <p>&#169; Copyright 2012-2021, Odoo Community Association (OCA) / The OpenUpgrade developers.
-      <span class="lastupdated">Last updated on Oct 31, 2023.
+      <span class="lastupdated">Last updated on Nov 06, 2023.
       </span></p>
   </div>
 
