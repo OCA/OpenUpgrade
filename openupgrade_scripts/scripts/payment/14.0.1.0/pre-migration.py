@@ -13,3 +13,7 @@ def migrate(env, version):
         ],
         True,
     )
+    openupgrade.delete_records_safely_by_xml_id(
+        env, ["payment.account_invoice_payment_acquirer_onboarding"]
+    )
+
