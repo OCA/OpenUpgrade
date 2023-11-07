@@ -56,7 +56,28 @@ def convert_field_html_string_bootstrap_4to5(env):
                     )
 
 
+def rename_t_group_website_restricted_editor(env):
+    """Locate group directives in custom views with the former `group_website_publisher`
+    group which is now renamed to `group_website_restricted_editor`. For example, the
+    website_partner.partner_detail template"""
+    views = env["ir.ui.view"].search(
+        [
+            (
+                "arch_db",
+                "ilike",
+                "website.group_website_publisher",
+            ),
+            ("website_id", "!=", False),
+        ]
+    )
+    for view in views:
+        view.arch_db = view.arch_db.replace(
+            "website.group_website_publisher", "website.group_website_restricted_editor"
+        )
+
+
 @openupgrade.migrate()
 def migrate(env, version):
     convert_custom_qweb_templates_bootstrap_4to5(env)
     convert_field_html_string_bootstrap_4to5(env)
+    rename_t_group_website_restricted_editor(env)
