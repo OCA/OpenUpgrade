@@ -6,9 +6,9 @@
 name: Test OpenUpgrade migration
 
 on:
-  push:
-    branches: ["16.0*"]
-  pull_request:
+  # push:
+  #   branches: ["17.0*"]
+  # pull_request:
 
 jobs:
   test:
@@ -44,19 +44,19 @@ jobs:
         run: createdb $DB
       - name: DB Restore
         run: |
-          wget -q -O- $DOWNLOADS/15.0.psql | pg_restore -d $DB --no-owner
+          wget -q -O- $DOWNLOADS/16.0.psql | pg_restore -d $DB --no-owner
       - name: Check out Odoo
         uses: actions/checkout@v2
         with:
           repository: odoo/odoo
-          ref: "16.0"
+          ref: "17.0"
           fetch-depth: 1
           path: odoo
       - name: Check out previous Odoo
         uses: actions/checkout@v2
         with:
           repository: odoo/odoo
-          ref: "15.0"
+          ref: "16.0"
           fetch-depth: 1
           path: odoo-old
       - name: Check out OpenUpgrade
@@ -87,7 +87,7 @@ jobs:
         run: |
           pip install -q -r odoo/requirements.txt
           pip install -r ./openupgrade/requirements.txt
-          # this is for v15 l10n_eg_edi_eta which crashes without it
+          # this is for v16 l10n_eg_edi_eta which crashes without it
           pip install asn1crypto
       - name: Test data
         run: |
@@ -99,7 +99,7 @@ jobs:
           # select modules and perform the upgrade
           MODULES_OLD=$(\
               sed -n '/^+========/,$p' \
-              openupgrade/docsource/modules150-160.rst \
+              openupgrade/docsource/modules160-170.rst \
               | grep "Done\|Partial\|Nothing" \
               | grep -v "theme_" \
               | sed -rn 's/((^\| *\|del\| *)|^\| *)([0-9a-z_]*)[ \|].*/\3/g p' \
@@ -107,7 +107,7 @@ jobs:
               | paste -d, -s)
           MODULES_NEW=$(\
               sed -n '/^+========/,$p' \
-              openupgrade/docsource/modules150-160.rst \
+              openupgrade/docsource/modules160-170.rst \
               | grep "Done\|Partial\|Nothing" \
               | grep -v "theme_" \
               | sed -rn 's/((^\| *\|new\| *)|^\| *)([0-9a-z_]*)[ \|].*/\3/g p' \
