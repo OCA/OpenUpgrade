@@ -1,7 +1,6 @@
-[![Pre-commit Status](https://github.com/OCA/OpenUpgrade/actions/workflows/pre-commit.yml/badge.svg?branch=16.0)](https://github.com/OCA/OpenUpgrade/actions/workflows/pre-commit.yml?query=branch%3A16.0)
-[![Build Status](https://github.com/OCA/OpenUpgrade/actions/workflows/test.yml/badge.svg?branch=16.0)](https://github.com/OCA/OpenUpgrade/actions/workflows/test.yml?query=branch%3A16.0)
-[![codecov](https://codecov.io/gh/OCA/OpenUpgrade/branch/16.0/graph/badge.svg)](https://codecov.io/gh/OCA/openupgrade)
-
+[![Pre-commit Status](https://github.com/OCA/openupgrade/actions/workflows/pre-commit.yml/badge.svg?branch=17.0)](https://github.com/OCA/openupgrade/actions/workflows/pre-commit.yml?query=branch%3A17.0)
+[![Build Status](https://github.com/OCA/openupgrade/actions/workflows/test.yml/badge.svg?branch=17.0)](https://github.com/OCA/openupgrade/actions/workflows/test.yml?query=branch%3A17.0)
+[![codecov](https://codecov.io/gh/OCA/openupgrade/branch/17.0/graph/badge.svg)](https://codecov.io/gh/OCA/openupgrade)
 
 <!-- /!\ do not modify above this line -->
 
