@@ -6,9 +6,8 @@
 name: Test OpenUpgrade migration
 
 on:
-  # push:
-  #   branches: ["17.0*"]
-  # pull_request:
+  push:
+    branches: ["18.0*"]
 
 jobs:
   test:
