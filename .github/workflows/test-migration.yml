@@ -1,0 +1,143 @@
+# This workflow will install Python dependencies, run tests and lint with a
+# single version of Python. For more information see:
+# https://help.github.com/actions/language-and-framework-guides\
+# /using-python-with-github-actions
+
+name: Test OpenUpgrade migration
+
+on:
+  push:
+    branches: ["16.0*"]
+  pull_request:
+
+jobs:
+  test:
+    runs-on: ubuntu-latest
+    env:
+      DB: "openupgrade"
+      DB_HOST: "localhost"
+      DB_PASSWORD: "odoo"
+      DB_PORT: 5432
+      DB_USERNAME: "odoo"
+      DOWNLOADS: https://github.com/OCA/OpenUpgrade/releases/download/databases
+      ODOO: "./odoo/odoo-bin"
+      PGHOST: "localhost"
+      PGPASSWORD: "odoo"
+      PGUSER: "odoo"
+      OPENUPGRADE_USE_DEMO: "yes"
+    steps:
+      - name: Set up Python
+        uses: actions/setup-python@v4
+        with:
+          python-version: '3.10'
+      - name: Configure Postgres
+        uses: harmon758/postgresql-action@v1
+        with:
+          postgresql version: "14"
+          postgresql user: ${DB_USERNAME}
+          postgresql password: ${DB_PASSWORD}
+      - name: Wait / Sleep
+        uses: jakejarvis/wait-action@v0.1.0
+        with:
+          time: "10s"
+      - name: DB Creation
+        run: createdb $DB
+      - name: DB Restore
+        run: |
+          wget -q -O- $DOWNLOADS/15.0.psql | pg_restore -d $DB --no-owner
+      - name: Check out Odoo
+        uses: actions/checkout@v2
+        with:
+          repository: odoo/odoo
+          ref: "16.0"
+          fetch-depth: 1
+          path: odoo
+      - name: Check out previous Odoo
+        uses: actions/checkout@v2
+        with:
+          repository: odoo/odoo
+          ref: "15.0"
+          fetch-depth: 1
+          path: odoo-old
+      - name: Check out OpenUpgrade
+        uses: actions/checkout@v2
+        with:
+          path: openupgrade
+      - name: Configuration
+        run: |
+          sudo apt update
+          sudo apt install \
+              expect \
+              expect-dev \
+              libevent-dev \
+              libldap2-dev \
+              libsasl2-dev \
+              libxml2-dev \
+              libxslt1-dev \
+              nodejs \
+              python3-lxml \
+              python3-passlib \
+              python3-psycopg2 \
+              python3-serial \
+              python3-simplejson \
+              python3-werkzeug \
+              python3-yaml \
+              unixodbc-dev
+      - name: Requirements Installation
+        run: |
+          pip install -q -r odoo/requirements.txt
+          pip install -r ./openupgrade/requirements.txt
+          # this is for v15 l10n_eg_edi_eta which crashes without it
+          pip install asn1crypto
+      - name: Test data
+        run: |
+          for snippet in openupgrade/openupgrade_scripts/scripts/*/*/tests/data*.py; do
+            odoo-old/odoo-bin shell -d $DB < $snippet
+          done
+      - name: OpenUpgrade test
+        run: |
+          # select modules and perform the upgrade
+          MODULES_OLD=$(\
+              sed -n '/^+========/,$p' \
+              openupgrade/docsource/modules150-160.rst \
+              | grep "Done\|Partial\|Nothing" \
+              | grep -v "theme_" \
+              | sed -rn 's/((^\| *\|del\| *)|^\| *)([0-9a-z_]*)[ \|].*/\3/g p' \
+              | sed '/^\s*$/d' \
+              | paste -d, -s)
+          MODULES_NEW=$(\
+              sed -n '/^+========/,$p' \
+              openupgrade/docsource/modules150-160.rst \
+              | grep "Done\|Partial\|Nothing" \
+              | grep -v "theme_" \
+              | sed -rn 's/((^\| *\|new\| *)|^\| *)([0-9a-z_]*)[ \|].*/\3/g p' \
+              | sed '/^\s*$/d' \
+              | paste -d, -s)
+          if [ -z "$MODULES_NEW" ]; then
+             echo "No modules to test yet"
+             exit
+          fi
+          REQUEST="update ir_module_module set state='uninstalled' \
+              where name not in ('$(echo $MODULES_OLD | sed -e "s/,/','/g")')"
+          echo Set the modules as not installable if they are not in the following list : $MODULES_OLD
+          echo Running $REQUEST
+          psql $DB -c "$REQUEST"
+          ADDONS_PATHS="\
+              $GITHUB_WORKSPACE/odoo/addons \
+              $GITHUB_WORKSPACE/odoo/odoo/addons \
+              $GITHUB_WORKSPACE/openupgrade"
+          echo Execution of Openupgrade with the update of the following modules : $MODULES_NEW
+          # Silence redundant logs from unlinking records (1 line is enough)
+          # to prevent log overflow
+          OPENUPGRADE_TESTS=1 $ODOO \
+              --addons-path=`echo $ADDONS_PATHS | awk -v OFS="," '$1=$1'` \
+              --database=$DB \
+              --db_host=$DB_HOST \
+              --db_password=$DB_PASSWORD \
+              --db_port=$DB_PORT \
+              --db_user=$DB_USERNAME \
+              --load=base,web,openupgrade_framework \
+              --log-handler odoo.models.unlink:WARNING \
+              --test-enable \
+              --stop-after-init \
+              --update=$MODULES_NEW
