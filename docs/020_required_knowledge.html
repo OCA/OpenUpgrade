@@ -47,7 +47,11 @@
         </div><div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="Navigation menu">
               <ul class="current">
 <li class="toctree-l1"><a class="reference internal" href="010_introduction.html">Introduction</a></li>
-<li class="toctree-l1 current"><a class="current reference internal" href="#">Required Knowledge</a></li>
+<li class="toctree-l1 current"><a class="current reference internal" href="#">Required Knowledge</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="#to-use-openupgrade">To Use Openupgrade</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#to-develop-openupgrade-scripts">To develop Openupgrade Scripts</a></li>
+</ul>
+</li>
 <li class="toctree-l1"><a class="reference internal" href="030_coverage_analysis.html">Coverage Analysis</a></li>
 <li class="toctree-l1"><a class="reference internal" href="040_run_migration.html">Running the migration</a></li>
 <li class="toctree-l1"><a class="reference internal" href="050_after_migration.html">After migration</a></li>
@@ -82,7 +86,35 @@
              
   <section id="required-knowledge">
 <h1>Required Knowledge<a class="headerlink" href="#required-knowledge" title="Link to this heading"></a></h1>
-<p>TODO : write here prerequisites.</p>
+<section id="to-use-openupgrade">
+<h2>To Use Openupgrade<a class="headerlink" href="#to-use-openupgrade" title="Link to this heading"></a></h2>
+<ul class="simple">
+<li><p>you should be able to launch an instance of Odoo on your local PC,
+or on your server, <strong>for each version of your migration</strong>.</p></li>
+<li><p>You should know how to get <cite>openupgradelib</cite>, obtained from the source repository, installed in your Python environment that is going to run the instance.</p></li>
+<li><p>You should know how to invoke the odoo executable, injecting arguments for loading server wide modules and migrations path.
+For example, if you’re migrating from version 12.0 to 16.0,
+you should be able to launch Odoo versions 13.0, 14.0, 15.0 and 16.0.</p></li>
+<li><p>If you’re migrating to a recent version,
+you’ll certainly have to reference numerous open pull requests on OCA/OpenUpgrade,
+for the modules installed on your instance.
+In this case, using the <a class="reference external" href="https://pypi.org/project/git-aggregator">gitaggregate</a>
+tool greatly facilitates the management of these numerous pull requests.</p></li>
+</ul>
+</section>
+<section id="to-develop-openupgrade-scripts">
+<h2>To develop Openupgrade Scripts<a class="headerlink" href="#to-develop-openupgrade-scripts" title="Link to this heading"></a></h2>
+<ul class="simple">
+<li><p>If you want to develop migration scripts for a given module, you need to have
+complete functional (and technical) knowledge of this module.
+For example, to develop migration scripts for <cite>account</cite> module from version 12.0
+to 13.0, you need to master how account is working in version 12.0 and how
+account is working in version 13.0.</p></li>
+<li><p>Knowledge of SQL is a must if you need to write fast queries on huge amounts of data.</p></li>
+<li><p>you need to have a good understanding of the functions provided
+by the <a class="reference external" href="https://oca.github.io/openupgradelib/">openupgradelib</a> library.</p></li>
+</ul>
+</section>
 </section>
 
 
