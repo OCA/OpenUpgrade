@@ -43,8 +43,10 @@ NEW ir.ui.view: mass_mailing.s_mail_block_header_view
 NEW ir.ui.view: mass_mailing.social_links
 NEW ir.ui.view: mass_mailing.view
 NEW mailing.contact: mass_mailing.mass_mailing_contact_0 (noupdate)
-NEW mailing.list: mass_mailing.mailing_list_data (noupdate)
 # NOTHING TO DO
+
+NEW mailing.list: mass_mailing.mailing_list_data (noupdate)
+# DONE: pre-migration: Assign this XML-ID if there's a list with "Newsletter" name
 
 NEW ir.ui.view: mass_mailing.mailing_contact_view_form
 NEW ir.ui.view: mass_mailing.mailing_contact_view_graph
