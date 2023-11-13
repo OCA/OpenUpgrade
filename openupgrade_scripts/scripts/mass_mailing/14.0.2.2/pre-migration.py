@@ -30,6 +30,30 @@ _xmlid_renames = [
 ]
 
 
+def _assign_newsletter_xml_id(env):
+    """If you come from v12 or before, there was a mailing list called 'Newsletter' as
+    data. This list dissapeared in v13, so on OpenUpgrade v13, we removed the associated
+    XML-ID for preserving it.
+    As now in v14 it's being introduced again (although with other XML-ID), the unique
+    name contraint makes the migration to crash, so we need to detect if a mailing list
+    with such name exists, and give it in advance the required XML-ID for avoiding the
+    duplicity.
+    """
+    env.cr.execute("SELECT id FROM mailing_list WHERE name='Newsletter'")
+    row = env.cr.fetchone()
+    if row:
+        openupgrade.logged_query(
+            env.cr,
+            """INSERT INTO ir_model_data
+            (module, name, res_id, model, noupdate)
+            VALUES
+            ('mass_mailing', 'mailing_list_data', %s, 'mailing.list', True)
+            """,
+            (row[0],),
+        )
+
+
 @openupgrade.migrate()
 def migrate(env, version):
     openupgrade.rename_xmlids(env.cr, _xmlid_renames)
+    _assign_newsletter_xml_id(env)
