@@ -1,3 +1,7 @@
+# Copyright 2023 Viindoo - tranngocson1996
+# Copyright 2023 ForgeFlow - Miquel Raich
+# Copyright 2023 Tecnativa - Pedro M. Baeza
+# License AGPL-3.0 or later (http://www.gnu.org/licenses/agpl.html).
 from openupgradelib import openupgrade
 
 _columns_copy = {
@@ -29,33 +33,40 @@ def _map_hr_leave_allocation_approver_id(env):
     )
 
 
-def _convert_datetime_to_date_hr_leave_allocation_date_from(env):
-    openupgrade.rename_columns(env.cr, {"hr_leave_allocation": [("date_from", None)]})
-    openupgrade.logged_query(
-        env.cr,
-        """ALTER TABLE hr_leave_allocation ADD COLUMN date_from date""",
-    )
-    openupgrade.logged_query(
-        env.cr,
-        f"""
-        UPDATE hr_leave_allocation
-        SET date_from = COALESCE({
-        openupgrade.get_legacy_name("date_from")}, create_date)::date""",
-    )
+def _assign_allocation_dates(env):
+    """On v14, date_from and date_to fields on hr.leave.allocation were used for
+    assignation accruals.
 
-
-def _convert_datetime_to_date_hr_leave_allocation_date_to(env):
-    openupgrade.rename_columns(env.cr, {"hr_leave_allocation": [("date_to", None)]})
+    Now, these fields are used for the allocation validity interval, transferred from
+    the leave type.
+    """
+    openupgrade.rename_columns(
+        env.cr, {"hr_leave_allocation": [("date_from", None), ("date_to", None)]}
+    )
+    openupgrade.logged_query(
+        env.cr, "ALTER TABLE hr_leave_allocation ADD COLUMN date_from date"
+    )
+    # date_from is required, so we should provide a fallback value
     openupgrade.logged_query(
         env.cr,
-        """ALTER TABLE hr_leave_allocation ADD COLUMN date_to date""",
+        """
+        UPDATE hr_leave_allocation hla
+        SET date_from = COALESCE(hlt.validity_start, hlt.create_date::date)
+        FROM hr_leave_type hlt
+        WHERE hlt.id = hla.holiday_status_id
+        """,
+    )
+    openupgrade.logged_query(
+        env.cr, "ALTER TABLE hr_leave_allocation ADD COLUMN date_to date"
     )
     openupgrade.logged_query(
         env.cr,
-        f"""
-        UPDATE hr_leave_allocation
-        SET date_to = {openupgrade.get_legacy_name("date_to")}::date
-        WHERE {openupgrade.get_legacy_name("date_to")} IS NOT NULL""",
+        """
+        UPDATE hr_leave_allocation hla
+        SET date_to = hlt.validity_stop
+        FROM hr_leave_type hlt
+        WHERE hlt.id = hla.holiday_status_id
+        """,
     )
 
 
@@ -194,8 +205,7 @@ def delete_sql_constraints(env):
 def migrate(env, version):
     openupgrade.copy_columns(env.cr, _columns_copy)
     _map_hr_leave_allocation_approver_id(env)
-    _convert_datetime_to_date_hr_leave_allocation_date_from(env)
-    _convert_datetime_to_date_hr_leave_allocation_date_to(env)
+    _assign_allocation_dates(env)
     _fast_fill_hr_leave_allocation_accrual_plan_id(env)
     refill_hr_leave_type_allocation_validation_type(env)
     _fast_fill_hr_leave_type_employee_requests(env)
