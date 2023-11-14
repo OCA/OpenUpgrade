@@ -72,7 +72,9 @@ hr_holidays  / hr.leave.allocation      / date_from (datetime)          : now re
 hr_holidays  / hr.leave.allocation      / date_from (datetime)          : type is now 'date' ('datetime')
 hr_holidays  / hr.leave.allocation      / date_to (datetime)            : not a function anymore
 hr_holidays  / hr.leave.allocation      / date_to (datetime)            : type is now 'date' ('datetime')
-# DONE: pre-migration: convert datetime to date
+hr_holidays  / hr.leave.type            / validity_start (date)         : DEL
+hr_holidays  / hr.leave.type            / validity_stop (date)          : DEL
+# DONE: pre-migration: rename old columns for being used in accruals, and use leave type data to fill this new one
 
 hr_holidays  / hr.leave.allocation      / employee_company_id (many2one): NEW relation: res.company, isrelated: related, stored
 # NOTHING TO DO: odoo already fills it using queries
@@ -116,8 +118,6 @@ hr_holidays  / hr.leave.type            / code (char)                   : DEL
 hr_holidays  / hr.leave.type            / color (integer)               : NEW
 hr_holidays  / hr.leave.type            / icon_id (many2one)            : NEW relation: ir.attachment
 hr_holidays  / hr.leave.type            / support_document (boolean)    : NEW
-hr_holidays  / hr.leave.type            / validity_start (date)         : DEL
-hr_holidays  / hr.leave.type            / validity_stop (date)          : DEL
 # NOTHING TO DO
 
 ---XML records in module 'hr_holidays'---
