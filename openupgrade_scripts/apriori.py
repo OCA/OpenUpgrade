@@ -75,6 +75,7 @@ merged_modules = {
     "stock_picking_backorder_strategy": "stock",
     # OCA/web
     "web_drop_target": "web",
+    "web_ir_actions_act_view_reload": "web",
 }
 
 # only used here for upgrade_analysis
