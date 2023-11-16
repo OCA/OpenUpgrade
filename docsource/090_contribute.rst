@@ -20,7 +20,7 @@ module from version 15.0 to version 16.0:
 
   * Always ensure that there is no work already in progress by a community member.
     For that purpose, go the issue named "Migration to version NN.0" on GitHub, where NN is the version for which you want to propose the script.
-    `here <https://github.com/OCA/OpenUpgrade/issues/3681/>`_.
+    `here <https://github.com/OCA/OpenUpgrade/issues?q=is%3Aopen++is%3Aissue+%22Migration+to+version%22+/>`_.
     
     Sometimes, the pull request is not yet registered in the issue, so it's not bad to do a search on the opened pull requests with the name of the module to look for.
 
@@ -32,24 +32,56 @@ module from version 15.0 to version 16.0:
 
   * As other OCA contribution, create a new branch, from an up to date OCA branch:
 
-    ``git checkout -b 16.0-mig-account``
+  .. code-block:: shell
+
+     git checkout -b 16.0-mig-account
 
   * Make a copy of the analysis file with the suffix ``_work``.
 
-    ``cd ./openupgrade_scripts/scripts/account/16.0.1.2/``
-    ``cp upgrade_analysis.txt upgrade_analysis_work.txt``
+  .. code-block:: shell
+
+     cd ./openupgrade_scripts/scripts/account/16.0.1.2/
+     cp upgrade_analysis.txt upgrade_analysis_work.txt
+
 
   * Explain the changes to do in the ``upgrade_analysis_work.txt``.
-    Write ``pre-migration.py`` and / or ``post-migration.py`` scripts in the same folder.
-    Comment / uncomment lines in ``noupdate_changes.xml``.
-    (Read more in :doc:`080_migration_script_development`)
+    For each line, add a prefix, and explain your analysis:
 
-  * Finally, commit your changes.
-    ``git add . && git commit -am "[OU-ADD] account"``
-    (For a fix, use ``[OU-FIX]`` prefix)
+    * ``NOTHING TO DO``, and why it's nothing to do
+    * ``DONE``: pre-migration/post-migration: indicating the what and maybe the why.
+    * ``TODO``: This shouldn't be usually done.
 
-  * Propose your changes to the community for review.
-    ``git push MY_REMOTE 16.0-mig-account``
+**Note:**
+You can reorder lines and group them together for including all of them in a "logical" block for putting only one comment.
+Examples: all the noupdate=0 new and del ir* records, or the NEW and DEL lines for a field that is renamed.
+
+  * Write ``pre-migration.py`` and / or ``post-migration.py`` scripts in the same folder.
+
+  * Comment / uncomment lines in ``noupdate_changes.xml``.
+
+(Read more in :doc:`080_migration_script_development`)
+
+  * Finally, update the coverage file in ``docsource/modulesXX-YY.rst``, and mark the
+    module as ``done``, ``Nothing to do``, etc.
+
+(Read more in :doc:`coverage legend detail.<coverage_analysis/coverage_legend>`)
+
+  * Finally, commit and push your changes.
+
+  .. code-block:: shell
+
+      git add .
+      git commit -am "[OU-ADD] account"
+      git push MY_REMOTE 16.0-mig-account
+
+
+  **Note:**
+
+    * For a fix of an existing migration scripts, use ``[OU-FIX]``
+
+    * For an improvement of an existing migration scripts, use ``[OU-IMP]``
+
+  * Propose your changes to the community for review, opening a Pull Request on github.
 
 Community involvement
 ---------------------
@@ -81,4 +113,3 @@ project covers the modules that you have in use, try and use the software
 to upgrade a copy of your database and give us feedback.
 
 Thank you!
-
