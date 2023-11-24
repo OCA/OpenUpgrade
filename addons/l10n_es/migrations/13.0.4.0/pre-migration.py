@@ -47,7 +47,7 @@ def set_account_move_number_to_invoice_number(env):
     )
 
 
-def rename_food_taxes_xmlids(env):
+def rename_food_taxes_and_fiscal_positions_xmlids(env):
     renames = [
         ("account_tax_template_p_iva0_a", "account_tax_template_p_iva0_s_bc"),
         ("account_tax_template_p_iva5_a", "account_tax_template_p_iva5_bc"),
@@ -59,6 +59,18 @@ def rename_food_taxes_xmlids(env):
         ("account_tax_template_s_iva0_a", "account_tax_template_s_iva0b"),
         ("account_tax_template_s_iva5_a", "account_tax_template_s_iva5b"),
         ("account_tax_template_s_req0625", "account_tax_template_s_req062"),
+        ("fptt_extra_0a", "fptt_extra_0b"),
+        ("fptt_extra_5a", "fptt_extra_5b"),
+        ("fptt_intra_0a", "fptt_intra_0b"),
+        ("fptt_intra_5a", "fptt_intra_5b"),
+        ("fptt_recargo_0a", "fptt_recargo_0b"),
+        ("fptt_recargo_0a_2", "fptt_recargo_0b_2"),
+        ("fptt_recargo_5a", "fptt_recargo_5b"),
+        ("fptt_recargo_5a_2", "fptt_recargo_5b_2"),
+        ("fptt_recargo_buy_0a", "fptt_recargo_buy_0b"),
+        ("fptt_recargo_buy_0a_2", "fptt_recargo_buy_0b_2"),
+        ("fptt_recargo_buy_5a", "fptt_recargo_buy_5b"),
+        ("fptt_recargo_buy_5a_2", "fptt_recargo_buy_5b_2"),
     ]
     companies = env["res.company"].with_context(active_test=False).search([])
     for old, new in renames:
@@ -80,4 +92,4 @@ def migrate(env, version):
     if openupgrade.column_exists(
             env.cr, "account_invoice", "invoice_number"):
         set_account_move_number_to_invoice_number(env)
-    rename_food_taxes_xmlids(env)
+    rename_food_taxes_and_fiscal_positions_xmlids(env)
