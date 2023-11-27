@@ -8,10 +8,12 @@ def map_account_payment_check_number(env):
     openupgrade.logged_query(
         env.cr, """
         UPDATE account_payment
-        SET check_number = '' || %s
+        SET check_number = %s::VARCHAR
         WHERE %s IS NOT NULL
-        """, (openupgrade.get_legacy_name('check_number'),
-              openupgrade.get_legacy_name('check_number'))
+        """ % (
+            openupgrade.get_legacy_name('check_number'),
+            openupgrade.get_legacy_name('check_number')
+        )
     )
 
 
