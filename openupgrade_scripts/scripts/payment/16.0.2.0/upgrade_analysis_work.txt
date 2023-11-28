@@ -59,9 +59,11 @@ payment      / payment.icon             / acquirer_ids (many2many)      : DEL re
 payment      / payment.icon             / provider_ids (many2many)      : NEW relation: payment.provider
 # DONE: pre-migration: Renamed from acquirer_ids to provider_ids. Renamed relation table payment_acquirer_payment_icon_rel -> payment_provider_payment_icon_rel
 
+payment      / payment.provider         / code (selection)              : NEW required, selection_keys: ['none'], hasdefault: default
+# DONE: pre-migration: copy the column provider to code
+
 payment      / payment.provider         / allow_express_checkout (boolean): NEW
 payment      / payment.provider         / available_country_ids (many2many): NEW relation: res.country
-payment      / payment.provider         / code (selection)              : NEW required, selection_keys: ['none'], hasdefault: default
 payment      / payment.provider         / express_checkout_form_view_id (many2one): NEW relation: ir.ui.view
 payment      / payment.provider         / is_published (boolean)        : NEW
 payment      / payment.provider         / maximum_amount (float)        : NEW
