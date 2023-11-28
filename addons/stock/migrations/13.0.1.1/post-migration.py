@@ -185,6 +185,62 @@ def map_stock_location_usage(env):
     )
 
 
+def map_stock_picking_responsible_responsible_id_to_user_id(env):
+    """
+    responsible_id (partner_id) field in stock_picking_responsible is replaced by user_id (res.users)
+    We create a deactivated user for partners without user and then
+    map the partner to their user in the stock picking.
+    """
+    if not openupgrade.column_exists(env.cr, "stock_picking", "responsible_id"):
+        return
+
+    env.cr.execute(
+        f"""
+        SELECT distinct rp.id,
+                        rp.name,
+                        rp.company_id,
+                        rp.email
+        FROM stock_picking sp
+                 JOIN res_partner rp ON rp.id = sp.responsible_id
+                 LEFT JOIN res_users ru ON rp.id = ru.partner_id
+        WHERE ru.id IS NULL
+    """
+    )
+    partners_wo_user = env.cr.fetchall()
+
+    user_vals_list = []
+    for partner_id, name, company_id, email in partners_wo_user:
+        login = email if email else name
+        login = openupgrade.get_legacy_name(login).replace(" ", "_")
+        user_vals_list.append({
+            "login": login,
+            "partner_id": partner_id,
+            "company_id": company_id,
+            "active": False,
+        })
+
+    if user_vals_list:
+        env["res.users"].create(user_vals_list)
+
+    # map responsible_id to user_id
+    openupgrade.logged_query(
+        env.cr,
+        f"""
+        WITH partner_user AS (
+            SELECT sp.id AS picking_id,
+                   rp.id AS partner_id,
+                   ru.id AS user_id
+            FROM stock_picking sp
+                JOIN res_partner rp ON rp.id = sp.responsible_id
+                LEFT join res_users ru ON rp.id = ru.partner_id)
+        UPDATE stock_picking
+        SET user_id = partner_user.user_id
+        FROM partner_user
+        WHERE stock_picking.id = partner_user.picking_id;
+    """
+    )
+
+
 def fill_stock_picking_type_sequence_code(env):
     """Deduce sequence code from current sequence pattern """
     picking_types = env["stock.picking.type"].with_context(active_text=False).search([])
@@ -411,6 +467,7 @@ def migrate(env, version):
     fill_propagate_date_minimum_delta(env)
     fill_stock_inventory_start_empty(env)
     map_stock_location_usage(env)
+    map_stock_picking_responsible_responsible_id_to_user_id(env)
     fill_stock_picking_type_sequence_code(env)
     handle_stock_scrap_sequence(env, main_company)
     map_stock_locations(env, main_company)
