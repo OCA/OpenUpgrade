@@ -1,5 +1,6 @@
 import re
 
+from markupsafe import Markup
 from openupgradelib import openupgrade
 
 
@@ -48,6 +49,62 @@ def update_website_form_call(env):
         view.write({"arch_db": new_arch_db})
 
 
+def update_contact_form_company_description(env):
+    """This script updates the Contact Us form on the website with information from the
+    company model. It retrieves the necessary data such as company name, address, phone,
+    email, and Google Maps link. It then updates the HTML structure of the Contact Us
+    form to display this information."""
+    common_html_block = """
+            <ul class="list-unstyled mb-0 pl-2">
+                <li>%s</li>
+                <li>
+                    <i class="fa fa-map-marker fa-fw mr-2"/>
+                    <span class="o_force_ltr">%s<br/>
+                    &amp;nbsp; &amp;nbsp; &amp;nbsp; &amp;nbsp; %s %s<br/>
+                    &amp;nbsp; &amp;nbsp; &amp;nbsp; &amp;nbsp; %s</span>
+                </li>
+                <li>
+                    <i class="fa fa-phone fa-fw mr-2"/><span class="o_force_ltr">%s </span>
+                </li>
+                <li><i class="fa fa-1x fa-fw fa-envelope mr-2"/><span>%s</span></li>
+                %s
+            </ul>
+        """
+    for website in env["website"].search([]):
+        website_contactus_view = website.with_context(website_id=website.id).viewref(
+            "website.contactus"
+        )
+        company = website.company_id
+        google_maps_link = (
+            (
+                f'<li><i class="fa fa-1x fa-fw fa-map-marker mr-2"/>'
+                f'<a href="{Markup.escape(company.google_map_link())}" target="_BLANK">'
+                f" Google Maps</a></li>"
+            )
+            if company.google_map_link()
+            else ""
+        )
+        company_info_html = common_html_block % (
+            company.name,
+            company.street,
+            company.city,
+            company.zip,
+            company.country_id.name,
+            company.phone,
+            company.email,
+            google_maps_link,
+        )
+        company_description_pattern = r'<div class="col-lg-4 mt-4 mt-lg-0">(.*?)<\/div>'
+        website_contactus_arch = website_contactus_view.arch_db
+        new_arch = re.sub(
+            company_description_pattern,
+            lambda match: company_info_html,
+            website_contactus_arch,
+            flags=re.DOTALL,
+        )
+        website_contactus_view.with_context(website_id=website.id).arch = new_arch
+
+
 @openupgrade.migrate()
 def migrate(env, version):
     openupgrade.logged_query(env.cr, "UPDATE website SET configurator_done = True")
@@ -55,3 +112,4 @@ def migrate(env, version):
     openupgrade.delete_records_safely_by_xml_id(env, ["website.action_website_edit"])
     update_website_form_call(env)
     extract_footer_copyright_company_name(env)
+    update_contact_form_company_description(env)
