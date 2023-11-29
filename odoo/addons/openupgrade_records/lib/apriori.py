@@ -30,6 +30,8 @@ renamed_modules = {
     'sale_product_classification': 'product_abc_classification_sale',
     # OCA/stock-logistics-warehouse
     'stock_putaway_product_form': 'stock_putaway_product_template',
+    # OCA/stock-logistics-workflow
+    'stock_picking_responsible': 'stock',
     # OCA/l10n-netherlands -> OCA/account-financial-reporting
     'l10n_nl_mis_reports': 'mis_template_financial_report',
 }
