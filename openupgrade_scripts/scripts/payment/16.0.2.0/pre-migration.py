@@ -69,6 +69,10 @@ _field_renames = [
     ),
 ]
 
+_columns_copies = {
+    "payment_provider": [("provider", "code", "varchar")],
+}
+
 _xmlid_renames = [
     (
         "payment.action_invoice_order_generate_link",
@@ -210,4 +214,5 @@ def migrate(env, version):
     openupgrade.rename_models(env.cr, _model_renames)
     openupgrade.rename_tables(env.cr, _table_renames)
     openupgrade.rename_fields(env, _field_renames)
+    openupgrade.copy_columns(env.cr, _columns_copies)
     openupgrade.rename_xmlids(env.cr, _xmlid_renames)
