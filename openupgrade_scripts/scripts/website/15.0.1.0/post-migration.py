@@ -3,6 +3,14 @@ import re
 from openupgradelib import openupgrade
 
 
+def _delete_views_recursively(env, view):
+    views = env["ir.ui.view"].with_context(active_test=False).browse(view.id).exists()
+    views |= views.mapped("inherit_children_ids")
+    while views.mapped("inherit_children_ids") - views:
+        views |= views.mapped("inherit_children_ids")
+    views.unlink()
+
+
 def extract_footer_copyright_company_name(env):
     """Replace Copyright content in the new v15 template so as not to lose
     content from previous versions if it has been customised, or directly put
@@ -36,6 +44,7 @@ def extract_footer_copyright_company_name(env):
             or f"Copyright © {website.company_id.name}",
         )
         main_copyright_view.with_context(website_id=website.id).arch_db = new_arch
+        _delete_views_recursively(view)
 
 
 def update_website_form_call(env):
