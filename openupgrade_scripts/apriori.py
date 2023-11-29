@@ -29,6 +29,7 @@ renamed_modules = {
     "coupon_mass_mailing": "loyalty_mass_mailing",
     "coupon_multi_gift": "loyalty_multi_gift",
     "coupon_criteria_multi_product": "loyalty_criteria_multi_product",
+    "sale_coupon_criteria_multi_product": "sale_loyalty_criteria_multi_product",
     "sale_coupon_incompatibility": "sale_loyalty_incompatibility",
     "sale_coupon_limit": "sale_loyalty_limit",
     "sale_coupon_order_line_link": "sale_loyalty_order_line_link",
