@@ -9,34 +9,39 @@ def extract_footer_copyright_company_name(env):
     content from previous versions if it has been customised, or directly put
     the company name if not customized (which is the previous value).
     """
-    main_copyright_view = env.ref("website.footer_copyright_company_name")
-    if not main_copyright_view:
-        return
-    main_copyright_arch = main_copyright_view.arch_db
-    main_copyright_pattern = r'<span class="o_footer_copyright_name mr-2">(.*?)<\/span>'
-    main_copyright_matches = re.findall(
-        main_copyright_pattern,
-        main_copyright_arch,
-        re.DOTALL,
-    )
     for website in env["website"].search([]):
-        view = env["ir.ui.view"].search(
-            [("key", "=", "website.layout"), ("website_id", "=", website.id)]
+        main_copyright_view = website.with_context(website_id=website.id).viewref(
+            "website.footer_copyright_company_name"
         )
-        website_layout_arch = view.arch_db or ""
-        website_layout_pattern = (
+        main_copyright_arch = main_copyright_view.arch_db
+        main_copyright_pattern = (
             r'<span class="o_footer_copyright_name mr-2">(.*?)<\/span>'
         )
-        website_layout_matches = re.findall(
-            website_layout_pattern, website_layout_arch, re.DOTALL
+        main_copyright_matches = re.findall(
+            main_copyright_pattern,
+            main_copyright_arch,
+            re.DOTALL,
         )
-        new_arch = main_copyright_arch.replace(
-            main_copyright_matches[0],
-            website_layout_matches
-            and website_layout_matches[0]
-            or f"Copyright © {website.company_id.name}",
-        )
-        main_copyright_view.with_context(website_id=website.id).arch_db = new_arch
+        if main_copyright_matches:
+            website_layout_view = website.with_context(website_id=website.id).viewref(
+                "website.layout"
+            )
+            website_layout_arch = website_layout_view.arch_db or ""
+            website_layout_pattern = (
+                r'<span class="o_footer_copyright_name mr-2">(.*?)<\/span>'
+            )
+            website_layout_matches = re.findall(
+                website_layout_pattern, website_layout_arch, re.DOTALL
+            )
+            new_arch = re.sub(
+                main_copyright_pattern,
+                website_layout_matches[0]
+                if website_layout_matches
+                else f'<span class="o_footer_copyright_name mr-2">'
+                f"Copyright © {website.company_id.name}</span>",
+                main_copyright_arch,
+            )
+            main_copyright_view.with_context(website_id=website.id).arch = new_arch
 
 
 def update_website_form_call(env):
