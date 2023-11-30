@@ -30,8 +30,6 @@ renamed_modules = {
     'sale_product_classification': 'product_abc_classification_sale',
     # OCA/stock-logistics-warehouse
     'stock_putaway_product_form': 'stock_putaway_product_template',
-    # OCA/stock-logistics-workflow
-    'stock_picking_responsible': 'stock',
     # OCA/l10n-netherlands -> OCA/account-financial-reporting
     'l10n_nl_mis_reports': 'mis_template_financial_report',
 }
@@ -114,6 +112,8 @@ merged_modules = {
     'stock_picking_report_custom_description': 'stock',
     # OCA/stock-logistics-warehouse
     'sale_stock_info_popup': 'sale_stock',
+    # OCA/stock-logistics-workflow
+    'stock_picking_responsible': 'stock',
     # OCA/timesheet
     'sale_timesheet_existing_project': 'sale_timesheet',
     # OCA/web
