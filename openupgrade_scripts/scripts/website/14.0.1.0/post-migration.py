@@ -28,17 +28,20 @@ def extract_footer_copyright_company_name(env):
         else:
             copyright_content = f"Copyright © {website.company_id.name}"
         # Set new copyright
-        website_layout_view = env.ref("website.layout")
+        website_layout_view = website.with_context(website_id=website.id).viewref(
+            "website.layout"
+        )
         website_layout_pattern = (
             r'<span class="o_footer_copyright_name mr-2">(.*?)<\/span>'
         )
-        website_layout_matches, *_ = re.findall(
-            website_layout_pattern, website_layout_view.arch_db, re.DOTALL
+
+        new_arch = re.sub(
+            website_layout_pattern,
+            lambda match: copyright_content,
+            website_layout_view.arch_db,
+            flags=re.DOTALL,
         )
-        new_arch = website_layout_view.arch_db.replace(
-            website_layout_matches, copyright_content
-        )
-        website_layout_view.with_context(website_id=website.id).arch_db = new_arch
+        website_layout_view.with_context(website_id=website.id).arch = new_arch
 
 
 def website_cookie_notice_post_migration(env):
