@@ -63,6 +63,7 @@ def rename_food_taxes_and_fiscal_positions_xmlids(env):
         ("fptt_extra_5a", "fptt_extra_5b"),
         ("fptt_intra_0a", "fptt_intra_0b"),
         ("fptt_intra_5a", "fptt_intra_5b"),
+        ("fptt_reagyp_a_0a_2", "fptt_reagyp_a_4b_4"),
         ("fptt_recargo_0a", "fptt_recargo_0b"),
         ("fptt_recargo_0a_2", "fptt_recargo_0b_2"),
         ("fptt_recargo_5a", "fptt_recargo_5b"),
