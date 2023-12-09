@@ -67,6 +67,7 @@ merged_modules = {
     # OCA/account-reconcile
     'account_set_reconcilable': 'account',
     'bank_statement_foreign_currency': 'account',
+    'account_reconciliation_widget_partial': 'account',
     # OCA/e-commerce
     'website_sale_category_description': 'website_sale',
     # OCA/event
