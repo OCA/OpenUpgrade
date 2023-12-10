@@ -201,7 +201,7 @@ def migration_invoice_moves(env):
         vendor_display_name, cash_rounding_id, id, create_uid, create_date,
         write_uid, write_date
         FROM account_invoice ai
-        WHERE ai.state in ('draft', 'cancel')""",
+        WHERE ai.state in ('draft', 'cancel') AND ai.move_id IS NULL""",
     )
     openupgrade.merge_models(env.cr, 'account.invoice', 'account.move', 'old_invoice_id')
     # Not Draft or Cancel Invoice Lines
