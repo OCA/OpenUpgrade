@@ -10,6 +10,23 @@ def _fill_payment_state(env):
         WHERE account_move_id IS NULL
         """,
     )
+    # Starting from v15, credit journal items linked to expenses will be marked
+    # as excluded from invoice tab. Existing journal entries will be recomputed
+    # below, and this information should be properly set, otherwise amounts
+    # will be unset
+    openupgrade.logged_query(
+        env.cr,
+        """
+        UPDATE account_move_line
+        SET exclude_from_invoice_tab=(
+            CASE WHEN credit > 0.0 THEN true
+            WHEN debit > 0.0 THEN false
+            ELSE exclude_from_invoice_tab
+            END
+        )
+        WHERE expense_id IS NOT NULL
+        """,
+    )
     # Recompute payment_state for the moves associated to the expenses, as on
     # v14 these ones were not computed being of type `entry`, which changes now
     # on v15 if the method `_payment_state_matters` returns True, which is the
