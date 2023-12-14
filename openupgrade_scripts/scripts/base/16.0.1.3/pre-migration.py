@@ -59,7 +59,7 @@ def update_translatable_fields(cr):
         "ir.actions.act_window": ["name", "help"],
         "ir.actions.act_url": ["name"],
         "ir.actions.server": ["name"],
-        "ir.actions.client": ["name"],
+        "ir.actions.client": ["name", "help"],
         "ir.actions.report": ["name"],
     }
     cr.execute(
