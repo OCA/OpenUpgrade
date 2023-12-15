@@ -20,6 +20,7 @@ renamed_modules = {
     # OCA/project
     "project_category": "project_type",
     "project_stage_state": "project_task_stage_state",
+    "sale_project_service_tracking_copy_tasks": "sale_project_copy_tasks",
     # OCA/sale-promotion
     "sale_coupon_chatter": "coupon_chatter",
     "sale_coupon_commercial_partner_applicability": "coupon_commercial_partner_applicability",
