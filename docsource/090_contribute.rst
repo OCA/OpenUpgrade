@@ -30,6 +30,12 @@ module from version 15.0 to version 16.0:
     In our example, check the ``depends`` key of the `manifest <https://github.com/odoo/odoo/blob/16.0/addons/account/__manifest__.py#L18>`_ of the ``account`` module 
     If some dependencies are missing, you should start by migrating these modules.
 
+**Note**
+
+It's not strictly necessary to make contributions in the order of dependency,
+but you may face errors that are not related to your contribution, if you don't follow this order.
+For example, the sale_stock migration script may fail, if the stock migration script has not been run upstream.
+
   * As other OCA contribution, create a new branch, from an up to date OCA branch:
 
   .. code-block:: shell
