@@ -18,6 +18,7 @@ renamed_modules = {
     # OCA/e-commerce
     "website_sale_attribute_filter_order": "website_sale_product_attribute_filter_order",
     # OCA/project
+    "project_category": "project_type",
     "project_stage_state": "project_task_stage_state",
     # OCA/sale-promotion
     "sale_coupon_chatter": "coupon_chatter",
