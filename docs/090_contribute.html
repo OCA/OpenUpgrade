@@ -56,6 +56,7 @@
 <li class="toctree-l1"><a class="reference internal" href="070_migration_files.html">Migration Files</a></li>
 <li class="toctree-l1"><a class="reference internal" href="080_migration_script_development.html">Migration script development</a></li>
 <li class="toctree-l1 current"><a class="current reference internal" href="#">Contribute</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="#how-to-contribute-new-migration-scripts">How to contribute new migration scripts</a></li>
 <li class="toctree-l2"><a class="reference internal" href="#community-involvement">Community involvement</a></li>
 </ul>
 </li>
@@ -94,6 +95,92 @@
 <li><p>Hire any active contributor to this project to help you migrate your
 database, and give back any code improvements developed during the project.</p></li>
 </ul>
+<section id="how-to-contribute-new-migration-scripts">
+<h2>How to contribute new migration scripts<a class="headerlink" href="#how-to-contribute-new-migration-scripts" title="Link to this heading"></a></h2>
+<p>To Contribute to OpenUpgrade you must make one pull request per module.</p>
+<p>For example, if you want to propose the migration script of the <code class="docutils literal notranslate"><span class="pre">account</span></code>
+module from version 15.0 to version 16.0:</p>
+<blockquote>
+<div><ul>
+<li><p>Always ensure that there is no work already in progress by a community member.
+For that purpose, go the issue named “Migration to version NN.0” on GitHub, where NN is the version for which you want to propose the script.
+<a class="reference external" href="https://github.com/OCA/OpenUpgrade/issues?q=is%3Aopen++is%3Aissue+%22Migration+to+version%22+/">here</a>.</p>
+<p>Sometimes, the pull request is not yet registered in the issue, so it’s not bad to do a search on the opened pull requests with the name of the module to look for.</p>
+</li>
+<li><p>Then, ensure that all the dependencies of the module are mark as <code class="docutils literal notranslate"><span class="pre">done</span></code> or
+<code class="docutils literal notranslate"><span class="pre">Nothing</span> <span class="pre">to</span> <span class="pre">do</span></code> in OpenUpgrade for that version.
+For that purpose, refer to <a class="reference internal" href="030_coverage_analysis.html"><span class="doc">Coverage Analysis</span></a>.
+In our example, check the <code class="docutils literal notranslate"><span class="pre">depends</span></code> key of the <a class="reference external" href="https://github.com/odoo/odoo/blob/16.0/addons/account/__manifest__.py#L18">manifest</a> of the <code class="docutils literal notranslate"><span class="pre">account</span></code> module
+If some dependencies are missing, you should start by migrating these modules.</p></li>
+</ul>
+</div></blockquote>
+<p><strong>Note</strong></p>
+<p>It’s not strictly necessary to make contributions in the order of dependency,
+but you may face errors that are not related to your contribution, if you don’t follow this order.
+For example, the sale_stock migration script may fail, if the stock migration script has not been run upstream.</p>
+<blockquote>
+<div><ul class="simple">
+<li><p>As other OCA contribution, create a new branch, from an up to date OCA branch:</p></li>
+</ul>
+<div class="highlight-shell notranslate"><div class="highlight"><pre><span></span>git<span class="w"> </span>checkout<span class="w"> </span>-b<span class="w"> </span><span class="m">16</span>.0-mig-account
+</pre></div>
+</div>
+<ul class="simple">
+<li><p>Make a copy of the analysis file with the suffix <code class="docutils literal notranslate"><span class="pre">_work</span></code>.</p></li>
+</ul>
+<div class="highlight-shell notranslate"><div class="highlight"><pre><span></span><span class="nb">cd</span><span class="w"> </span>./openupgrade_scripts/scripts/account/16.0.1.2/
+cp<span class="w"> </span>upgrade_analysis.txt<span class="w"> </span>upgrade_analysis_work.txt
+</pre></div>
+</div>
+<ul class="simple">
+<li><p>Explain the changes to do in the <code class="docutils literal notranslate"><span class="pre">upgrade_analysis_work.txt</span></code>.
+For each line, add a prefix, and explain your analysis:</p>
+<ul>
+<li><p><code class="docutils literal notranslate"><span class="pre">NOTHING</span> <span class="pre">TO</span> <span class="pre">DO</span></code>, and why it’s nothing to do</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">DONE</span></code>: pre-migration/post-migration: indicating the what and maybe the why.</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">TODO</span></code>: This shouldn’t be usually done.</p></li>
+</ul>
+</li>
+</ul>
+</div></blockquote>
+<p><strong>Note:</strong>
+You can reorder lines and group them together for including all of them in a “logical” block for putting only one comment.
+Examples: all the noupdate=0 new and del ir* records, or the NEW and DEL lines for a field that is renamed.</p>
+<blockquote>
+<div><ul class="simple">
+<li><p>Write <code class="docutils literal notranslate"><span class="pre">pre-migration.py</span></code> and / or <code class="docutils literal notranslate"><span class="pre">post-migration.py</span></code> scripts in the same folder.</p></li>
+<li><p>Comment / uncomment lines in <code class="docutils literal notranslate"><span class="pre">noupdate_changes.xml</span></code>.</p></li>
+</ul>
+</div></blockquote>
+<p>(Read more in <a class="reference internal" href="080_migration_script_development.html"><span class="doc">Migration script development</span></a>)</p>
+<blockquote>
+<div><ul class="simple">
+<li><p>Finally, update the coverage file in <code class="docutils literal notranslate"><span class="pre">docsource/modulesXX-YY.rst</span></code>, and mark the
+module as <code class="docutils literal notranslate"><span class="pre">done</span></code>, <code class="docutils literal notranslate"><span class="pre">Nothing</span> <span class="pre">to</span> <span class="pre">do</span></code>, etc.</p></li>
+</ul>
+</div></blockquote>
+<p>(Read more in <a class="reference internal" href="coverage_analysis/coverage_legend.html"><span class="doc">coverage legend detail.</span></a>)</p>
+<blockquote>
+<div><ul class="simple">
+<li><p>Finally, commit and push your changes.</p></li>
+</ul>
+<div class="highlight-shell notranslate"><div class="highlight"><pre><span></span>git<span class="w"> </span>add<span class="w"> </span>.
+git<span class="w"> </span>commit<span class="w"> </span>-am<span class="w"> </span><span class="s2">&quot;[OU-ADD] account&quot;</span>
+git<span class="w"> </span>push<span class="w"> </span>MY_REMOTE<span class="w"> </span><span class="m">16</span>.0-mig-account
+</pre></div>
+</div>
+<p><strong>Note:</strong></p>
+<blockquote>
+<div><ul class="simple">
+<li><p>For a fix of an existing migration scripts, use <code class="docutils literal notranslate"><span class="pre">[OU-FIX]</span></code></p></li>
+<li><p>For an improvement of an existing migration scripts, use <code class="docutils literal notranslate"><span class="pre">[OU-IMP]</span></code></p></li>
+</ul>
+</div></blockquote>
+<ul class="simple">
+<li><p>Propose your changes to the community for review, opening a Pull Request on github.</p></li>
+</ul>
+</div></blockquote>
+</section>
 <section id="community-involvement">
 <h2>Community involvement<a class="headerlink" href="#community-involvement" title="Link to this heading"></a></h2>
 <p>Writing migration scripts for Odoo is a lot of work, that can not be
@@ -131,7 +218,7 @@ to upgrade a copy of your database and give us feedback.</p>
 
   <div role="contentinfo">
     <p>&#169; Copyright 2012-2021, Odoo Community Association (OCA) / The OpenUpgrade developers.
-      <span class="lastupdated">Last updated on Nov 28, 2023.
+      <span class="lastupdated">Last updated on Dec 18, 2023.
       </span></p>
   </div>
 
