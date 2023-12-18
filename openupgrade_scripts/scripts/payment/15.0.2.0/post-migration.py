@@ -44,31 +44,12 @@ def fill_payment_transaction_partner_state_id(env):
     )
 
 
-def create_account_payment_method_line(env):
-    # Create account payment method lines from account payment methods
-    openupgrade.logged_query(
-        env.cr,
-        """
-        INSERT INTO account_payment_method_line (name, sequence,
-            payment_method_id, journal_id, create_uid, write_uid,
-            create_date, write_date)
-        SELECT DISTINCT ON (apm.id, aj.id) apm.name, 10, apm.id, aj.id,
-            apm.create_uid, apm.write_uid, apm.create_date, apm.write_date
-        FROM account_payment_method apm
-        JOIN payment_acquirer pa ON pa.provider = apm.code
-        JOIN account_journal aj ON aj.type = 'bank' AND aj.id = pa.journal_id
-        WHERE apm.code NOT IN ('manual', 'check_printing')
-        """,
-    )
-
-
 @openupgrade.migrate()
 def migrate(env, version):
     fill_payment_adquirer_allow_tokenization(env)
     fill_payment_transaction_tokenize(env)
     fill_payment_transaction_partner_state_id(env)
     fill_payment_transaction_last_state_change(env)
-    create_account_payment_method_line(env)
     openupgrade.load_data(env.cr, "payment", "15.0.2.0/noupdate_changes.xml")
     openupgrade.delete_record_translations(
         env.cr,
