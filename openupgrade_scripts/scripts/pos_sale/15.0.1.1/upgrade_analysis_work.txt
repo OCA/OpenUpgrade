@@ -1,0 +1,23 @@
+---Models in module 'pos_sale'---
+---Fields in module 'pos_sale'---
+pos_sale     / pos.config               / down_payment_product_id (many2one): NEW relation: product.product
+pos_sale     / pos.order.line           / down_payment_details (text)   : NEW
+# Nothing to do: New fields related to the new down payment features
+
+pos_sale     / pos.order.line           / sale_order_line_id (many2one) : NEW relation: sale.order.line
+pos_sale     / pos.order.line           / sale_order_origin_id (many2one): NEW relation: sale.order
+pos_sale     / sale.order               / pos_order_line_ids (one2many) : NEW relation: pos.order.line
+pos_sale     / sale.order.line          / pos_order_line_ids (one2many) : NEW relation: pos.order.line
+# Nothing to do: New fields related to new feature that allows to load sale.order in the Point of Sale
+
+---XML records in module 'pos_sale'---
+NEW ir.ui.view: pos_sale.crm_team_view_kanban_dashboard
+NEW ir.ui.view: pos_sale.message_body
+NEW ir.ui.view: pos_sale.report_invoice_document
+NEW ir.ui.view: pos_sale.view_order_form_inherit_pos_sale
+NEW ir.ui.view: pos_sale.view_pos_order_form_inherit_pos_sale
+DEL ir.ui.view: pos_sale.crm_team_salesteams_view_kanban_inherit_pos_sale
+# Nothing to do: New views.
+
+NEW product.product: pos_sale.default_downpayment_product (noupdate)
+# Load new data in post-migration.py
