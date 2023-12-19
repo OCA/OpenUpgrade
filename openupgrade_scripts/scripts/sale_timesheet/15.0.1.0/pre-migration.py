@@ -74,6 +74,14 @@ def _re_fill_account_analytic_line_timesheet_invoice_type(env):
         FROM aal_tmp WHERE aal_tmp.aal_id = aal.id
         """,
     )
+    openupgrade.logged_query(
+        env.cr,
+        """
+        UPDATE account_analytic_line
+        SET timesheet_invoice_type = 'non_billable'
+        WHERE timesheet_invoice_type IN ('non_billable_timesheet', 'non_billable_project')
+        """,
+    )
 
 
 @openupgrade.migrate()
