@@ -313,7 +313,9 @@ def create_account_tax_report_lines(env):
             break
 
 
-def post_statements_with_unreconciled_lines(env):
+def post_statements(env):
+    """These 2 inconsistent use cases require to put the statement as posted."""
+    # Confirmed statements that have unreconciled items
     openupgrade.logged_query(
         env.cr,
         """
@@ -324,6 +326,16 @@ def post_statements_with_unreconciled_lines(env):
             AND bstl.is_reconciled IS DISTINCT FROM TRUE
         """,
     )
+    # New statements with reconciled items
+    openupgrade.logged_query(
+        env.cr,
+        """SELECT bst.id FROM account_bank_statement bst
+        JOIN account_bank_statement_line bstl ON bstl.statement_id = bst.id
+        WHERE bst.state = 'open' AND bstl.is_reconciled IS TRUE
+        """,
+    )
+    stmt_ids = list({x[0] for x in env.cr.fetchall()})
+    env["account.bank.statement"].browse(stmt_ids).button_post()
 
 
 def pass_bank_statement_line_note_to_journal_entry_narration(env):
@@ -848,7 +860,7 @@ def migrate(env, version):
     fill_account_payment_reconciliation(env)
     fill_account_payment_with_no_move(env)
     fill_account_bank_statement_line_reconciliation(env)
-    post_statements_with_unreconciled_lines(env)
+    post_statements(env)
     _delete_hooks(env)
     update_payment_state_partial(env)
     openupgrade.delete_record_translations(
