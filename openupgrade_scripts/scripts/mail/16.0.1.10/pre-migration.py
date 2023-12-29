@@ -75,6 +75,47 @@ def mail_channel_channel_type_required(env):
     )
 
 
+def mail_channel_unset_wrong_group_public_id(env):
+    """
+    - On 15.0, group_public_id was set to 'base.group_user' by default for all records.
+    ```
+    group_public_id = fields.Many2one(
+        'res.groups',
+        string='Authorized Group',
+        default=lambda self: self.env.ref('base.group_user')
+    )
+    ```
+    - On 16.0, group_public_id become a computed field, and a sql constraint was added
+    to check group_public_id need to be NULL if channel_type is not 'channel'.
+    ```
+    group_public_id = fields.Many2one(
+        'res.groups',
+        string='Authorized Group',
+        compute='_compute_group_public_id',
+        readonly=False,
+        store=True
+    )
+    _sql_constraints = [
+        (
+        'group_public_id_check',
+        "CHECK (channel_type = 'channel' OR group_public_id IS NULL)",
+        'Group authorization and group auto-subscription are only supported on channels.'
+        )
+    ]
+    ```
+    - So that constraint will fail on 16.0 if group_public_id is still set to
+    'base.group_user'.
+    """
+    openupgrade.logged_query(
+        env.cr,
+        """
+        UPDATE mail_channel
+        SET group_public_id = NULL
+        WHERE channel_type != 'channel';
+        """,
+    )
+
+
 def scheduled_date_set_empty_strings_to_null(env):
     openupgrade.logged_query(
         env.cr,
