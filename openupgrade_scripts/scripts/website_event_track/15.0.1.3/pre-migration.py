@@ -33,7 +33,7 @@ def migrate(env, version):
         SET contact_email = rp.email, contact_phone = rp.phone
         FROM res_partner rp
         WHERE rp.id = et.partner_id
-            AND rp.email IS NOT NULL OR rp.phone IS NOT NULL""",
+            AND (rp.email IS NOT NULL OR rp.phone IS NOT NULL)""",
     )
     openupgrade.rename_fields(
         env,
