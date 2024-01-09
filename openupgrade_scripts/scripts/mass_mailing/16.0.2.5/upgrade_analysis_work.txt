@@ -1,0 +1,113 @@
+---Models in module 'mass_mailing'---
+new model mailing.contact.import [transient]
+new model mailing.filter
+# NOTHING TO DO: new model
+
+---Fields in module 'mass_mailing'---
+mass_mailing / ir.mail_server           / active_mailing_ids (one2many) : NEW relation: mailing.mailing
+mass_mailing / mailing.contact.subscription / _order                        : _order is now 'list_id DESC, contact_id DESC' ('id')
+mass_mailing / mailing.filter           / mailing_domain (char)         : NEW required
+mass_mailing / mailing.filter           / mailing_model_id (many2one)   : NEW relation: ir.model, required
+mass_mailing / mailing.filter           / name (char)                   : NEW required
+mass_mailing / mailing.list             / _order                        : _order is now 'create_date DESC' ('name')
+mass_mailing / mailing.mailing          / _inherits                     : DEL _inherits: {'utm.source': 'source_id'}
+mass_mailing / mailing.mailing          / _order                        : _order is now 'calendar_date DESC' ('sent_date DESC')
+mass_mailing / mailing.mailing          / copyvalue (char)              : DEL
+mass_mailing / mailing.mailing          / favorite (boolean)            : NEW
+mass_mailing / mailing.mailing          / favorite_date (datetime)      : NEW isfunction: function, stored
+mass_mailing / mailing.mailing          / mailing_filter_id (many2one)  : NEW relation: mailing.filter, hasdefault: compute
+mass_mailing / mailing.mailing          / model_object_field (many2one) : DEL relation: ir.model.fields
+mass_mailing / mailing.mailing          / null_value (char)             : DEL
+mass_mailing / mailing.mailing          / sub_model_object_field (many2one): DEL relation: ir.model.fields
+mass_mailing / mailing.mailing          / sub_object (many2one)         : DEL relation: ir.model
+# NOTHING TO DO
+
+---XML records in module 'mass_mailing'---
+NEW ir.actions.act_window: mass_mailing.mailing_contact_import_action
+NEW ir.actions.act_window: mass_mailing.mailing_filter_action
+DEL ir.actions.act_window: mass_mailing.open_create_mass_mailing_list
+# NOTHING TO DO
+
+ir.attachment: mass_mailing.s_blockquote_default_image (noupdate switched)
+# DONE: switch noupdate=0
+
+NEW ir.attachment: mass_mailing.s_company_team_default_image_1
+NEW ir.attachment: mass_mailing.s_company_team_default_image_2
+NEW ir.attachment: mass_mailing.s_company_team_default_image_3
+NEW ir.attachment: mass_mailing.s_company_team_default_image_4
+NEW ir.attachment: mass_mailing.s_cover_default_image
+NEW ir.attachment: mass_mailing.s_event_default_image_1
+NEW ir.attachment: mass_mailing.s_event_default_image_2
+NEW ir.attachment: mass_mailing.s_image_text_default_image
+# NOTHING TO DO
+
+ir.attachment: mass_mailing.s_masonry_block_default_image_1 (noupdate switched)
+ir.attachment: mass_mailing.s_masonry_block_default_image_2 (noupdate switched)
+ir.attachment: mass_mailing.s_media_list_default_image_1 (noupdate switched)
+ir.attachment: mass_mailing.s_media_list_default_image_2 (noupdate switched)
+ir.attachment: mass_mailing.s_media_list_default_image_3 (noupdate switched)
+ir.attachment: mass_mailing.s_product_list_default_image_1 (noupdate switched)
+ir.attachment: mass_mailing.s_product_list_default_image_2 (noupdate switched)
+ir.attachment: mass_mailing.s_product_list_default_image_3 (noupdate switched)
+# DONE pre-migration _noupdate_switch
+
+NEW ir.attachment: mass_mailing.s_picture_default_image
+NEW ir.attachment: mass_mailing.s_reference_default_image_1
+NEW ir.attachment: mass_mailing.s_reference_default_image_2
+NEW ir.attachment: mass_mailing.s_reference_default_image_3
+NEW ir.attachment: mass_mailing.s_reference_default_image_4
+NEW ir.attachment: mass_mailing.s_text_image_default_image
+NEW ir.attachment: mass_mailing.s_three_columns_default_image_1
+NEW ir.attachment: mass_mailing.s_three_columns_default_image_2
+NEW ir.attachment: mass_mailing.s_three_columns_default_image_3
+# NOTHING TO DO
+
+DEL ir.attachment: mass_mailing.s_blockquote_cover_default_image (noupdate)
+DEL ir.attachment: mass_mailing.s_company_team_image_1 (noupdate)
+DEL ir.attachment: mass_mailing.s_company_team_image_2 (noupdate)
+DEL ir.attachment: mass_mailing.s_company_team_image_3 (noupdate)
+DEL ir.attachment: mass_mailing.s_company_team_image_4 (noupdate)
+DEL ir.attachment: mass_mailing.s_product_list_default_image_4 (noupdate)
+DEL ir.attachment: mass_mailing.s_product_list_default_image_5 (noupdate)
+DEL ir.attachment: mass_mailing.s_product_list_default_image_6 (noupdate)
+DEL ir.attachment: mass_mailing.s_reference_default_image_6 (noupdate)
+DEL ir.attachment: mass_mailing.s_reference_demo_image_1 (noupdate)
+DEL ir.attachment: mass_mailing.s_reference_demo_image_2 (noupdate)
+DEL ir.attachment: mass_mailing.s_reference_demo_image_3 (noupdate)
+DEL ir.attachment: mass_mailing.s_reference_demo_image_4 (noupdate)
+DEL ir.attachment: mass_mailing.s_reference_demo_image_5 (noupdate)
+# DONE post-migration: safely deleted xmlid
+
+NEW ir.model.access: mass_mailing.access_mailing_contact_import_mailing_user
+NEW ir.model.access: mass_mailing.access_mailing_filter_mailing_user
+NEW ir.model.access: mass_mailing.access_utm_medium
+NEW ir.model.constraint: mass_mailing.constraint_mailing_trace_check_res_id_is_set
+NEW ir.ui.menu: mass_mailing.mailing_filter_menu_action
+NEW ir.ui.view: mass_mailing.digest_mail_main
+NEW ir.ui.view: mass_mailing.mailing_contact_import_view_form
+NEW ir.ui.view: mass_mailing.mailing_filter_view_form
+NEW ir.ui.view: mass_mailing.mailing_filter_view_search
+NEW ir.ui.view: mass_mailing.mailing_filter_view_tree
+NEW ir.ui.view: mass_mailing.mailing_report_deactivated
+ir.ui.view: mass_mailing.mass_mailing_mail_style (noupdate) (noupdate switched)
+NEW ir.ui.view: mass_mailing.s_event
+NEW ir.ui.view: mass_mailing.snippet_options_background_options
+NEW ir.ui.view: mass_mailing.snippet_options_extra_shapes
+NEW ir.ui.view: mass_mailing.snippet_options_image_styles
+DEL ir.ui.view: mass_mailing.mailing_list_view_form_simplified_footer
+DEL ir.ui.view: mass_mailing.s_mail_block_banner
+DEL ir.ui.view: mass_mailing.s_mail_block_comparison_table
+DEL ir.ui.view: mass_mailing.s_mail_block_discount2
+DEL ir.ui.view: mass_mailing.s_mail_block_event
+DEL ir.ui.view: mass_mailing.s_mail_block_footer_separator
+DEL ir.ui.view: mass_mailing.s_mail_block_footer_tag_line
+DEL ir.ui.view: mass_mailing.s_mail_block_image
+DEL ir.ui.view: mass_mailing.s_mail_block_image_text
+DEL ir.ui.view: mass_mailing.s_mail_block_paragraph
+DEL ir.ui.view: mass_mailing.s_mail_block_steps
+DEL ir.ui.view: mass_mailing.s_mail_block_text_image
+DEL ir.ui.view: mass_mailing.s_mail_block_three_cols
+DEL ir.ui.view: mass_mailing.s_mail_block_title_sub
+DEL ir.ui.view: mass_mailing.s_mail_block_title_text
+DEL ir.ui.view: mass_mailing.s_mail_block_two_cols
+# NOTHING TO DO

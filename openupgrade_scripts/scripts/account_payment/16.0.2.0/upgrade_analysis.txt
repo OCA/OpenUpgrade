@@ -18,6 +18,7 @@ account_payment / account.payment          / suitable_payment_token_ids (many2ma
 account_payment / account.payment          / transaction_ids (many2many)   : previously in module payment
 account_payment / account.payment          / use_electronic_payment_method (boolean): previously in module payment
 account_payment / account.payment.method.line / payment_provider_id (many2one): NEW relation: payment.provider, isfunction: function, stored
+account_payment / payment.acquirer         / journal_id (many2one)         : previously in module payment
 account_payment / payment.transaction      / invoice_ids (many2many)       : previously in module payment
 account_payment / payment.transaction      / invoices_count (integer)      : previously in module payment
 account_payment / payment.transaction      / payment_id (many2one)         : previously in module payment

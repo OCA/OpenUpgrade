@@ -1,0 +1,26 @@
+---Models in module 'payment_stripe'---
+---Fields in module 'payment_stripe'---
+payment_stripe / payment.acquirer         / provider (False)              : DEL selection_keys: ['adyen', 'alipay', 'authorize', 'buckaroo', 'mollie', 'none', 'ogone', 'paypal', 'payulatam', 'payumoney', 'sips', 'stripe'], mode: modify
+payment_stripe / payment.acquirer         / stripe_publishable_key (char) : DEL
+payment_stripe / payment.acquirer         / stripe_secret_key (char)      : DEL
+payment_stripe / payment.acquirer         / stripe_webhook_secret (char)  : DEL
+payment_stripe / payment.provider         / code (False)                  : NEW selection_keys: ['adyen', 'alipay', 'aps', 'asiapay', 'authorize', 'buckaroo', 'custom', 'demo', 'flutterwave', 'mercado_pago', 'mollie', 'none', 'ogone', 'paypal', 'payulatam', 'payumoney', 'razorpay', 'sips', 'stripe'], mode: modify
+payment_stripe / payment.provider         / stripe_publishable_key (char) : NEW
+payment_stripe / payment.provider         / stripe_secret_key (char)      : NEW
+payment_stripe / payment.provider         / stripe_webhook_secret (char)  : NEW
+# NOTHING TO DO: `payment.acquirer` renamed to `payment.provider` in payment module
+
+---XML records in module 'payment_stripe'---
+DEL account.payment.method: payment_stripe.payment_method_stripe (noupdate)
+# DONE: post-migration (delete record)
+
+NEW ir.actions.act_window: payment_stripe.action_payment_provider_onboarding
+DEL ir.actions.act_window: payment_stripe.action_payment_acquirer_onboarding
+# DONE: pre-migration (renamed)
+
+NEW ir.ui.view: payment_stripe.express_checkout
+NEW ir.ui.view: payment_stripe.express_checkout_form
+NEW ir.ui.view: payment_stripe.payment_provider_form
+NEW ir.ui.view: payment_stripe.sdk_assets
+DEL ir.ui.view: payment_stripe.payment_acquirer_form
+# DONE: pre-migration (renamed)

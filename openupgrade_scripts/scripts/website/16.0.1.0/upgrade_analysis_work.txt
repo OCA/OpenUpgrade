@@ -1,0 +1,109 @@
+---Models in module 'website'---
+---Fields in module 'website'---
+website      / theme.website.menu       / mega_menu_classes (char)      : NEW
+website      / theme.website.menu       / mega_menu_content (html)      : NEW
+website      / theme.website.menu       / use_main_menu_as_parent (boolean): NEW hasdefault: default
+website      / theme.website.page       / footer_visible (boolean)      : NEW hasdefault: default
+website      / theme.website.page       / header_color (char)           : NEW
+website      / theme.website.page       / header_overlay (boolean)      : NEW
+website      / theme.website.page       / header_visible (boolean)      : NEW hasdefault: default
+website      / theme.website.page       / is_published (boolean)        : NEW
+# NOTHING TO DO
+
+website      / website                  / country_group_ids (many2many) : DEL relation: res.country.group
+website      / website                  / google_management_client_id (char): DEL
+website      / website                  / google_management_client_secret (char): DEL
+# NOTHING TO DO: Lost features
+
+website      / website                  / homepage_id (many2one)        : DEL relation: website.page
+website      / website                  / homepage_url (char)           : NEW
+# DONE: pre-migration: Fill the URL
+
+website      / website                  / language_ids (many2many)      : now required
+# DONE: pre-migration: Fill language_ids if null
+
+website      / website                  / plausible_shared_key (char)   : NEW
+website      / website                  / plausible_site (char)         : NEW
+website      / website.menu             / group_ids (many2many)         : DEL relation: res.groups
+website      / website.page             / cache_key_expr (char)         : DEL
+website      / website.page             / cache_time (integer)          : DEL
+website      / website.visitor          / _order                        : _order is now 'id DESC' ('last_connection_datetime DESC')
+website      / website.visitor          / active (boolean)              : DEL
+website      / website.visitor          / name (char)                   : not stored anymore
+website      / website.visitor          / name (char)                   : now related
+# NOTHING TO DO: New features
+
+website      / website.visitor          / partner_id (many2one)         : now a function
+# DONE: pre-migration: Fill partner id if null
+
+---XML records in module 'website'---
+DEL ir.actions.act_url: website.start_configurator_act_url
+NEW ir.actions.client: website.action_open_website_configurator
+NEW ir.actions.client: website.website_configurator
+NEW ir.actions.client: website.website_preview
+NEW ir.actions.server: website.ir_actions_server_website_analytics
+DEL ir.actions.server: website.ir_actions_server_website_google_analytics
+NEW ir.asset: website.s_countdown_000_xml
+NEW ir.asset: website.s_dynamic_snippet_000_xml
+NEW ir.asset: website.s_dynamic_snippet_carousel_000_xml
+NEW ir.asset: website.s_image_gallery_000_xml
+NEW ir.asset: website.s_map_000_js
+NEW ir.asset: website.s_process_steps_001_scss
+NEW ir.asset: website.s_searchbar_000_xml
+NEW ir.asset: website.s_social_media_000_scss
+NEW ir.asset: website.s_website_form_xml
+NEW ir.model.access: website.access_website_ir_ui_view_restricted_editor
+DEL ir.model.access: website.access_website_ir_ui_view_publisher
+# NOTHING TO DO
+
+NEW ir.model.constraint: website.constraint_website_domain_unique
+# NOTHING TO DO
+
+DEL ir.model.constraint: website.constraint_website_visitor_partner_uniq
+# DONE: pre-migration: drop constraint
+
+DEL ir.rule: website.website_menu (noupdate)
+# DONE: pre-migration: safely delete
+
+NEW ir.ui.menu: website.custom_menu_edit_menu
+NEW ir.ui.menu: website.menu_ace_editor
+NEW ir.ui.menu: website.menu_content
+NEW ir.ui.menu: website.menu_current_page
+NEW ir.ui.menu: website.menu_edit_menu
+NEW ir.ui.menu: website.menu_optimize_seo
+NEW ir.ui.menu: website.menu_page_properties
+# NOTHING TO DO
+
+NEW ir.ui.menu: website.menu_reporting [renamed from website_sale module]
+# DONE: pre-migration: renamed
+
+NEW ir.ui.menu: website.menu_site
+NEW ir.ui.menu: website.menu_website_analytics
+NEW ir.ui.menu: website.menu_website_preview
+DEL ir.ui.menu: website.menu_dashboard
+DEL ir.ui.menu: website.menu_visitor_sub_menu
+DEL ir.ui.menu: website.menu_website_google_analytics
+NEW ir.ui.view: website.404_plausible
+NEW ir.ui.view: website.iframefallback
+NEW ir.ui.view: website.neutralize_ribbon
+NEW ir.ui.view: website.res_config_settings_view_form_inherit_auth_signup
+NEW ir.ui.view: website.s_process_steps_options
+NEW ir.ui.view: website.s_social_media
+NEW ir.ui.view: website.s_social_media_options
+NEW ir.ui.view: website.website_page_properties_view_form
+NEW ir.ui.view: website.website_pages_kanban_view
+DEL ir.ui.view: website.compiled_assets_wysiwyg
+DEL ir.ui.view: website.index_management
+DEL ir.ui.view: website.list_website_pages
+DEL ir.ui.view: website.one_page_line
+DEL ir.ui.view: website.publish_short
+DEL ir.ui.view: website.s_share_options
+DEL ir.ui.view: website.snippet_options_header_brand
+DEL ir.ui.view: website.user_navbar
+DEL ir.ui.view: website.website_configurator
+DEL ir.ui.view: website.website_publisher
+# NOTHING TO DO
+
+NEW res.groups: website.group_website_restricted_editor
+DEL res.groups: website.group_website_publisher
+# DONE: pre-migration: rename group

@@ -1,0 +1,241 @@
+---Models in module 'payment'---
+obsolete model payment.acquirer
+new model payment.provider
+# DONE: pre-migration: Renamed payment.acquirer > payment.provider
+
+obsolete model payment.acquirer.onboarding.wizard [transient]
+# NOTHING TO DO: Transient model renamed to payment.provider.onboarding.wizard
+
+model payment.refund.wizard (moved to account_payment) [transient]
+# NOTHING TO DO: it's transient, it will be deleted from this module and added to the other one.
+
+new model payment.provider.onboarding.wizard [transient]
+# NOTHING TO DO: renamed transient modele (see above)
+
+---Fields in module 'payment'---
+payment      / account.bank.statement.line / amount_paid (float)           : module is now 'account_payment' ('payment')
+payment      / account.bank.statement.line / authorized_transaction_ids (many2many): module is now 'account_payment' ('payment')
+payment      / account.bank.statement.line / transaction_ids (many2many)   : module is now 'account_payment' ('payment')
+payment      / account.move             / amount_paid (float)           : module is now 'account_payment' ('payment')
+payment      / account.move             / authorized_transaction_ids (many2many): module is now 'account_payment' ('payment')
+payment      / account.move             / transaction_ids (many2many)   : module is now 'account_payment' ('payment')
+payment      / account.payment          / amount_available_for_refund (float): module is now 'account_payment' ('payment')
+payment      / account.payment          / amount_paid (float)           : module is now 'account_payment' ('payment')
+payment      / account.payment          / authorized_transaction_ids (many2many): module is now 'account_payment' ('payment')
+payment      / account.payment          / payment_token_id (many2one)   : module is now 'account_payment' ('payment')
+payment      / account.payment          / payment_transaction_id (many2one): module is now 'account_payment' ('payment')
+payment      / account.payment          / refunds_count (integer)       : module is now 'account_payment' ('payment')
+payment      / account.payment          / source_payment_id (many2one)  : module is now 'account_payment' ('payment')
+payment      / account.payment          / suitable_payment_token_ids (many2many): module is now 'account_payment' ('payment')
+payment      / account.payment          / transaction_ids (many2many)   : module is now 'account_payment' ('payment')
+payment      / account.payment          / use_electronic_payment_method (boolean): module is now 'account_payment' ('payment')
+# NOTHING TO DO: Handled by ORM
+
+payment      / account.payment.method.line / payment_acquirer_id (many2one): DEL relation: payment.acquirer
+# DONE: pre-migration: Renamed to payment_provider_id
+# DONE: pre-migration: field account.payment.method.line.payment_acquirer_state is also renamed to account.payment.method.line.payment_provider_state and moved to account_payment
+
+payment      / payment.acquirer         / country_ids (many2many)       : DEL relation: res.country
+
+payment      / payment.acquirer         / description (html)            : DEL
+# NOTHING TO DO: feature lost.
+
+payment      / payment.acquirer         / journal_id (many2one)         : module is now 'account_payment' ('payment')
+payment      / payment.acquirer         / payment_icon_ids (many2many)  : column1 is now 'payment_provider_id' ('payment_acquirer_id') [payment_acquirer_payment_icon_rel]
+payment      / payment.acquirer         / payment_icon_ids (many2many)  : table is now 'payment_icon_payment_provider_rel' ('payment_acquirer_payment_icon_rel')
+
+payment      / payment.acquirer         / provider (selection)          : DEL required, selection_keys: ['none']
+# NOTHING TO DO: Not needed anymore.
+
+payment      / payment.acquirer         / support_authorization (boolean): DEL
+payment      / payment.acquirer         / support_fees_computation (boolean): DEL
+payment      / payment.acquirer         / support_refund (selection)    : not stored anymore
+payment      / payment.acquirer         / support_refund (selection)    : now a function
+payment      / payment.acquirer         / support_tokenization (boolean): not stored anymore
+payment      / payment.acquirer         / support_tokenization (boolean): now a function
+# NOTHING TO DO: Not needed anymore or lost feature
+
+payment      / payment.icon             / acquirer_ids (many2many)      : DEL relation: payment.acquirer
+payment      / payment.icon             / provider_ids (many2many)      : NEW relation: payment.provider
+# DONE: pre-migration: Renamed from acquirer_ids to provider_ids. Renamed relation table payment_acquirer_payment_icon_rel -> payment_provider_payment_icon_rel
+
+payment      / payment.provider         / code (selection)              : NEW required, selection_keys: ['none'], hasdefault: default
+# DONE: pre-migration: copy the column provider to code
+
+payment      / payment.provider         / allow_express_checkout (boolean): NEW
+payment      / payment.provider         / available_country_ids (many2many): NEW relation: res.country
+payment      / payment.provider         / express_checkout_form_view_id (many2one): NEW relation: ir.ui.view
+payment      / payment.provider         / is_published (boolean)        : NEW
+payment      / payment.provider         / maximum_amount (float)        : NEW
+payment      / payment.provider         / token_inline_form_view_id (many2one): NEW relation: ir.ui.view
+# NOTHING TO DO: new features
+
+payment      / payment.token            / acquirer_id (many2one)        : DEL relation: payment.acquirer, required
+# DONE: pre-migration: renamed to provider_id
+
+payment      / payment.token            / acquirer_ref (char)           : DEL required
+# DONE: pre-migration: renamed to provider_ref
+
+payment      / payment.token            / name (char)                   : DEL required
+# DONE: pre-migration: renamed to payment_details
+
+payment      / payment.token            / payment_details (char)        : NEW
+payment      / payment.token            / provider_id (many2one)        : NEW relation: payment.provider, required
+payment      / payment.token            / provider_ref (char)           : NEW required
+# NOTHING TO DO: already done, see comment above.
+
+payment      / payment.transaction      / acquirer_id (many2one)        : DEL relation: payment.acquirer, required
+# DONE: pre-migration: renamed to provider_id
+
+payment      / payment.transaction      / acquirer_reference (char)     : DEL
+# DONE: pre-migration: renamed to provider_reference
+
+payment      / payment.transaction      / child_transaction_ids (one2many): NEW relation: payment.transaction
+# NOTHING TO DO: new feature
+
+payment      / payment.transaction      / invoice_ids (many2many)       : module is now 'account_payment' ('payment')
+payment      / payment.transaction      / invoices_count (integer)      : module is now 'account_payment' ('payment')
+payment      / payment.transaction      / payment_id (many2one)         : module is now 'account_payment' ('payment')
+# DONE: pre-migration: moved to account_payment
+
+payment      / payment.transaction      / provider_id (many2one)        : NEW relation: payment.provider, required
+payment      / payment.transaction      / provider_reference (char)     : NEW
+# NOTHING TO DO: already done, see comment above.
+
+## res.company
+
+payment      / res.company              / payment_acquirer_onboarding_state (selection): DEL selection_keys: ['done', 'just_done', 'not_done']
+payment      / res.company              / payment_provider_onboarding_state (selection): NEW selection_keys: ['done', 'just_done', 'not_done'], hasdefault: default
+# DONE: pre-migration: Renamed from payment_acquirer_onboarding_state to payment_provider_onboarding_state
+
+---XML records in module 'payment'---
+NEW ir.actions.act_window: payment.action_payment_provider
+# NOTHING TO DO: already done see comment below
+
+DEL ir.actions.act_window: payment.action_invoice_order_generate_link [renamed to account_payment module]
+# DONE: pre-migration: moved to account_payment
+
+DEL ir.actions.act_window: payment.action_open_payment_onboarding_payment_acquirer_wizard
+# NOTHING TO DO: not used anymore
+
+DEL ir.actions.act_window: payment.action_payment_acquirer
+# DONE: pre-migration: renamed to payment.action_payment_provider
+
+NEW ir.model.access: payment.access_payment_link_wizard
+NEW ir.model.access: payment.payment_provider_onboarding_wizard
+NEW ir.model.access: payment.payment_provider_system
+# NOTHING TO DO
+
+DEL ir.model.access: payment.payment_acquirer_onboarding_wizard
+# DONE: pre-migration: renamed to payment.payment_provider_onboarding_wizard
+
+DEL ir.model.access: payment.payment_acquirer_system
+# DONE: pre-migration: renamed to payment.payment_provider_system
+
+DEL ir.model.access: payment.payment_link_wizard [renamed to account_payment module]
+DEL ir.model.access: payment.payment_refund_wizard [renamed to account_payment module]
+# DONE: pre-migration: moved to account_payment
+
+NEW ir.rule: payment.payment_provider_company_rule (noupdate)
+DEL ir.rule: payment.payment_acquirer_company_rule (noupdate)
+# DONE: pre-migration: renamed payment_acquirer_company_rule -> payment_provider_company_rule
+
+DEL ir.rule: payment.payment_token_billing_rule [renamed to account_payment module] (noupdate)
+DEL ir.rule: payment.payment_transaction_billing_rule [renamed to account_payment module] (noupdate)
+# DONE: pre-migration: moved to account_payment
+
+DEL ir.ui.menu: payment.payment_acquirer_menu
+# DONE: pre-migration: moved and renamed payment.payment_acquirer_menu -> account_payment.payment_provider_menu
+
+DEL ir.ui.menu: payment.payment_icon_menu [renamed to account_payment module]
+DEL ir.ui.menu: payment.payment_token_menu [renamed to account_payment module]
+DEL ir.ui.menu: payment.payment_transaction_menu [renamed to account_payment module]
+# DONE: pre-migration: moved to account_payment
+
+NEW ir.ui.view: payment.express_checkout
+NEW ir.ui.view: payment.payment_provider_form
+NEW ir.ui.view: payment.payment_provider_kanban
+NEW ir.ui.view: payment.payment_provider_list
+NEW ir.ui.view: payment.payment_provider_onboarding_wizard_form
+NEW ir.ui.view: payment.payment_provider_search
+# NOTHING TO DO
+
+DEL ir.ui.view: payment.account_invoice_view_form_inherit_payment
+# DONE: pre-migration: moved to account_payment
+
+DEL ir.ui.view: payment.onboarding_payment_acquirer_step
+# NOTHING TO DO: it seams that the feature has been moved to other modules
+
+DEL ir.ui.view: payment.payment_acquirer_form
+# DONE: pre-migration: renamed payment_acquirer_form -> payment_provider_form
+
+DEL ir.ui.view: payment.payment_acquirer_kanban
+# DONE: pre-migration: renamed payment_acquirer_kanban -> payment_provider_kanban
+
+DEL ir.ui.view: payment.payment_acquirer_list
+# DONE: pre-migration: renamed payment_acquirer_list -> payment_provider_list
+
+DEL ir.ui.view: payment.payment_acquirer_onboarding_wizard_form
+# DONE: pre-migration: renamed payment_acquirer_onboarding_wizard_form -> payment_provider_onboarding_wizard_form
+
+DEL ir.ui.view: payment.payment_acquirer_search
+# DONE: pre-migration: renamed payment_acquirer_search -> payment_provider_search
+
+DEL ir.ui.view: payment.payment_refund_wizard_view_form
+# DONE: pre-migration: moved to account_payment
+
+DEL ir.ui.view: payment.view_account_journal_form
+# DONE: pre-migration: moved to account_payment
+
+DEL ir.ui.view: payment.view_account_payment_form_inherit_payment
+# DONE: pre-migration: moved to account_payment
+
+DEL ir.ui.view: payment.view_account_payment_register_form_inherit_payment
+# DONE: pre-migration: moved to account_payment
+
+DEL payment.acquirer: payment.payment_acquirer_adyen (noupdate)
+NEW payment.provider: payment.payment_provider_adyen (noupdate)
+DEL payment.acquirer: payment.payment_acquirer_authorize (noupdate)
+NEW payment.provider: payment.payment_provider_authorize (noupdate)
+DEL payment.acquirer: payment.payment_acquirer_buckaroo (noupdate)
+NEW payment.provider: payment.payment_provider_buckaroo (noupdate)
+DEL payment.acquirer: payment.payment_acquirer_mollie (noupdate)
+NEW payment.provider: payment.payment_provider_mollie (noupdate)
+DEL payment.acquirer: payment.payment_acquirer_paypal (noupdate)
+NEW payment.provider: payment.payment_provider_paypal (noupdate)
+DEL payment.acquirer: payment.payment_acquirer_sips (noupdate)
+NEW payment.provider: payment.payment_provider_sips (noupdate)
+DEL payment.acquirer: payment.payment_acquirer_stripe (noupdate)
+NEW payment.provider: payment.payment_provider_stripe (noupdate)
+DEL payment.acquirer: payment.payment_acquirer_sepa_direct_debit (noupdate)
+NEW payment.provider: payment.payment_provider_sepa_direct_debit (noupdate)
+DEL payment.acquirer: payment.payment_acquirer_transfer (noupdate)
+NEW payment.provider: payment.payment_provider_transfer (noupdate)
+# DONE: pre-migration: renamed XML-IDs
+# DONE: post-migration: Load remaining noupdate data
+
+DEL payment.acquirer: payment.payment_acquirer_alipay (noupdate)
+DEL payment.acquirer: payment.payment_acquirer_ogone (noupdate)
+DEL payment.acquirer: payment.payment_acquirer_payulatam (noupdate)
+DEL payment.acquirer: payment.payment_acquirer_payumoney (noupdate)
+DEL payment.acquirer: payment.payment_acquirer_test (noupdate)
+# DONE: post-migration: Remove safely records
+
+NEW payment.provider: payment.payment_provider_aps (noupdate)
+NEW payment.provider: payment.payment_provider_asiapay (noupdate)
+NEW payment.provider: payment.payment_provider_demo (noupdate)
+NEW payment.provider: payment.payment_provider_flutterwave (noupdate)
+NEW payment.provider: payment.payment_provider_mercado_pago (noupdate)
+NEW payment.provider: payment.payment_provider_razorpay (noupdate)
+# NOTHING TO DO: New records
+
+NEW payment.icon: payment.payment_icon_airtel_money
+NEW payment.icon: payment.payment_icon_barter_by_flutterwave
+NEW payment.icon: payment.payment_icon_bbva_bancomer
+NEW payment.icon: payment.payment_icon_cc_rupay
+NEW payment.icon: payment.payment_icon_citibanamex
+NEW payment.icon: payment.payment_icon_mada
+NEW payment.icon: payment.payment_icon_mpesa
+NEW payment.icon: payment.payment_icon_mtn_mobile_money
+NEW payment.icon: payment.payment_icon_sadad
+# NOTHING TO DO: new feature

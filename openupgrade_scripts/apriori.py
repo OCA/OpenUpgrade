@@ -18,10 +18,28 @@ renamed_modules = {
     "sale_coupon_taxcloud_delivery": "sale_loyalty_taxcloud_delivery",
     # OCA/bank-statement-import
     "account_statement_import": "account_statement_import_file",
+    "account_statement_import_txt_xlsx": "account_statement_import_sheet_file",
+    # OCA/crm
+    "crm_project": "crm_lead_to_task",
     # OCA/knowledge
     "knowledge": "document_knowledge",
+    # OCA/sale-promotion
+    "coupon_incompatibility": "loyalty_incompatibility",
+    "coupon_limit": "loyalty_limit",
+    "coupon_mass_mailing": "loyalty_mass_mailing",
+    "coupon_multi_gift": "loyalty_multi_gift",
+    "coupon_criteria_multi_product": "loyalty_criteria_multi_product",
+    "sale_coupon_criteria_multi_product": "sale_loyalty_criteria_multi_product",
+    "sale_coupon_incompatibility": "sale_loyalty_incompatibility",
+    "sale_coupon_limit": "sale_loyalty_limit",
+    "sale_coupon_multi_gift": "sale_loyalty_multi_gift",
+    "sale_coupon_order_line_link": "sale_loyalty_order_line_link",
+    "sale_coupon_partner": "sale_loyalty_partner",
+    "website_sale_coupon_page": "website_sale_loyalty_page",
     # OCA/server-ux
     "mass_editing": "server_action_mass_edit",
+    # OCA/l10n-italy
+    "l10n_it_ricevute_bancarie": "l10n_it_riba",
     # OCA/...
 }
 
@@ -55,8 +73,19 @@ merged_modules = {
     "account_move_force_removal": "account",
     # OCA/account-invoice-reporting
     "account_invoice_report_due_list": "account",
+    # OCA/e-commerce
+    "website_sale_require_login": "website_sale",
+    # OCA/sale-promotion
+    "coupon_commercial_partner_applicability": "loyalty_partner_applicability",
+    # OCA/sales-workflow
+    "sale_product_set_layout": "sale_product_set",
     # OCA/purchase-workflow
     "product_form_purchase_link": "purchase",
+    # OCA/stock-logistics-workflow
+    "stock_picking_backorder_strategy": "stock",
+    # OCA/web
+    "web_drop_target": "web",
+    "web_ir_actions_act_view_reload": "web",
 }
 
 # only used here for upgrade_analysis

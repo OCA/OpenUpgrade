@@ -1,5 +1,6 @@
 <?xml version='1.0' encoding='utf-8'?>
 <odoo>
+  <!-- Don't recreate this, as they are usually touched by users and in fact the changes are only to use Command syntax
   <record id="account_payment_term_15days" model="account.payment.term">
     <field name="line_ids" eval="[Command.clear(), Command.create({'value': 'balance', 'value_amount': 0.0, 'days': 15})]"/>
   </record>
@@ -18,11 +19,12 @@
   <record id="account_payment_term_advance_60days" model="account.payment.term">
     <field name="line_ids" eval="[                 Command.clear(),                 Command.create({'value': 'percent', 'value_amount': 30.0, 'days': 0}),                 Command.create({'value': 'balance', 'value_amount': 0.0, 'days': 60})]"/>
   </record>
-  <record id="account_payment_term_end_following_month" model="account.payment.term">
-    <field name="line_ids" eval="[Command.clear(), Command.create({'value': 'balance', 'value_amount': 0.0, 'months': 1, 'end_month': True})]"/>
-  </record>
   <record id="account_payment_term_immediate" model="account.payment.term">
     <field name="line_ids" eval="[Command.clear(), Command.create({'value': 'balance', 'value_amount': 0.0})]"/>
+  </record> -->
+  <!-- We distinguish this one, as it requires new fields to be filled -->
+  <record id="account_payment_term_end_following_month" model="account.payment.term">
+    <field name="line_ids" eval="[Command.clear(), Command.create({'value': 'balance', 'value_amount': 0.0, 'months': 1, 'end_month': True})]"/>
   </record>
   <record id="account_send_payment_receipt_by_email_action" model="ir.actions.act_window">
     <field name="context" eval="{                 'mail_post_autofollow': True,                 'default_composition_mode': 'comment',                 'default_use_template': True,                 'default_template_id': ref('account.mail_template_data_payment_receipt'),                 'default_email_layout_xmlid': 'mail.mail_notification_light',             }"/>
@@ -58,6 +60,7 @@
     </p>
       </div>
     </field>
+    <field name="email_from">{{ (object.invoice_user_id.email_formatted or object.company_id.email_formatted or user.email_formatted) }}</field>
     <field name="name">Credit Note: Sending</field>
     <field name="description">Sent to customers with the credit note in attachment</field>
   </record>
@@ -98,6 +101,7 @@
     </p>
       </div>
     </field>
+    <field name="email_from">{{ (object.invoice_user_id.email_formatted or object.company_id.email_formatted or user.email_formatted) }}</field>
     <field name="name">Invoice: Sending</field>
     <field name="description">Sent to customers with their invoices in attachment</field>
   </record>

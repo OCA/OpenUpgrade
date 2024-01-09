@@ -4,7 +4,6 @@
 import logging
 
 from openupgradelib import openupgrade
-from psycopg2.extensions import AsIs
 
 from odoo import tools
 
@@ -13,25 +12,54 @@ from odoo.addons.openupgrade_scripts.apriori import merged_modules, renamed_modu
 _logger = logging.getLogger(__name__)
 
 
+def enable_coupon_sharing_within_entity(cr):
+    """Check before merging `coupon_commercial_partner_applicability` into
+    `loyalty_partner_applicability` if it was installed in v15 to set the parameter
+    to True to keep the same functionality"""
+    if openupgrade.is_module_installed(cr, "coupon_commercial_partner_applicability"):
+        # The value of the configuration parameter is set to True.
+        openupgrade.logged_query(
+            cr,
+            """
+            INSERT INTO ir_config_parameter (key, value)
+            VALUES ('loyalty_partner_applicability.allow_coupon_sharing', 'true')
+            """,
+        )
+
+
+def login_or_registration_required_at_checkout(cr):
+    """The website_sale_require_login module is merged into website_sale. Check if the
+    it was installed in v15 to set the website.account_on_checkout field as mandatory
+    so that the functionality remains the same, login/registration required for
+    checkout."""
+    # Check if the module is installed and its status is "installed".
+    if openupgrade.is_module_installed(cr, "website_sale_require_login"):
+        # Add the field 'account_on_checkout' to the 'website' table if it doesn't exist yet.
+        openupgrade.logged_query(
+            cr,
+            """
+            ALTER TABLE website
+            ADD COLUMN IF NOT EXISTS account_on_checkout VARCHAR
+            """,
+        )
+        # Set the value 'mandatory' in the field for all records in the table 'website'.
+        openupgrade.logged_query(
+            cr,
+            """
+            UPDATE website
+            SET account_on_checkout = 'mandatory'
+            """,
+        )
+
+
 def update_translatable_fields(cr):
-    # map of nonstandard table names
-    model2table = {
-        "ir.actions.actions": "ir_actions",
-        "ir.actions.act_window": "ir_act_window",
-        "ir.actions.act_window.view": "ir_act_window_view",
-        "ir.actions.act_window_close": "ir_actions",
-        "ir.actions.act_url": "ir_act_url",
-        "ir.actions.server": "ir_act_server",
-        "ir.actions.client": "ir_act_client",
-        "ir.actions.report": "ir_act_report_xml",
-    }
     # exclude fields from translation update
     exclusions = {
         # ir.actions.* inherits the name column from ir.actions.actions
         "ir.actions.act_window": ["name", "help"],
         "ir.actions.act_url": ["name"],
         "ir.actions.server": ["name"],
-        "ir.actions.client": ["name"],
+        "ir.actions.client": ["name", "help"],
         "ir.actions.report": ["name"],
     }
     cr.execute(
@@ -41,7 +69,7 @@ def update_translatable_fields(cr):
     for field, model in cr.fetchall():
         if field in exclusions.get(model, []):
             continue
-        table = model2table.get(model, model.replace(".", "_"))
+        table = openupgrade.get_model2table(model)
         if not openupgrade.table_exists(cr, table):
             _logger.warning(
                 "Couldn't find table for model %s - not updating translations", model
@@ -60,7 +88,7 @@ def update_translatable_fields(cr):
         translation_name = "%s,%s" % (model, field)
         openupgrade.logged_query(
             cr,
-            """
+            f"""
             WITH t AS (
                 SELECT it.res_id as res_id, jsonb_object_agg(it.lang, it.value) AS value,
                     bool_or(imd.noupdate) AS noupdate
@@ -69,17 +97,15 @@ def update_translatable_fields(cr):
                 WHERE it.type = 'model' AND it.name = %(name)s AND it.state = 'translated'
                 GROUP BY it.res_id
             )
-            UPDATE "%(table)s" m
-            SET "%(field_name)s" = CASE WHEN t.noupdate THEN m.%(field_name)s || t.value
-                                    ELSE t.value || m.%(field_name)s END
+            UPDATE {table} m
+            SET "{field}" = CASE WHEN t.noupdate IS FALSE THEN t.value || m."{field}"
+                                 ELSE m."{field}" || t.value END
             FROM t
             WHERE t.res_id = m.id
             """,
             {
-                "table": AsIs(table),
                 "model": model,
                 "name": translation_name,
-                "field_name": AsIs(field),
             },
         )
         openupgrade.logged_query(
@@ -102,6 +128,8 @@ def migrate(cr, version):
             "recommended to run the Odoo with --load=openupgrade_framework "
             "when migrating your database."
         )
+    login_or_registration_required_at_checkout(cr)
+    enable_coupon_sharing_within_entity(cr)
     openupgrade.update_module_names(cr, renamed_modules.items())
     openupgrade.update_module_names(cr, merged_modules.items(), merge_modules=True)
     # restricting inherited views to groups isn't allowed any more

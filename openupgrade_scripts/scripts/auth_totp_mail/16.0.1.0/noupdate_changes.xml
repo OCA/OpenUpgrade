@@ -2,5 +2,6 @@
 <odoo>
   <record id="mail_template_totp_invite" model="mail.template">
     <field name="name">Settings: 2Fa Invitation</field>
+    <field name="email_from">{{ (object.company_id.email_formatted or user.email_formatted) }}</field>
   </record>
 </odoo>

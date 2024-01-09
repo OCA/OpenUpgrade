@@ -1,0 +1,10 @@
+---Models in module 'l10n_it_edi_pa'---
+---Fields in module 'l10n_it_edi_pa'---
+l10n_it_edi_pa / account.move             / l10n_it_cig (char)            : NEW
+l10n_it_edi_pa / account.move             / l10n_it_cup (char)            : NEW
+l10n_it_edi_pa / account.move             / l10n_it_origin_document_date (date): NEW
+l10n_it_edi_pa / account.move             / l10n_it_origin_document_name (char): NEW
+l10n_it_edi_pa / account.move             / l10n_it_origin_document_type (selection): NEW selection_keys: ['agreement', 'contract', 'purchase_order']
+---XML records in module 'l10n_it_edi_pa'---
+NEW ir.ui.view: l10n_it_edi_pa.account_invoice_form_l10n_it_pa
+NEW ir.ui.view: l10n_it_edi_pa.report_invoice_document

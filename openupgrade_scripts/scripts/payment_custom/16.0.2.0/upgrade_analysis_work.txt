@@ -1,0 +1,27 @@
+# A global note: This module was renamed from payment_transfer.
+
+---Models in module 'payment_custom'---
+---Fields in module 'payment_custom'---
+payment_custom / payment.provider         / code (False)                  : NEW selection_keys: ['adyen', 'alipay', 'aps', 'asiapay', 'authorize', 'buckaroo', 'custom', 'none'], mode: modify
+# DONE: post-migration: moved from payment.acquirer 'provider' field.
+
+payment_custom / payment.provider         / custom_mode (selection)       : NEW selection_keys: ['wire_transfer']
+# DONE: post-migration: moved from payment.acquirer 'provider' field.
+
+payment_custom / payment.provider         / qr_code (boolean)             : NEW
+# NOTHING TO DO: Model is renamed in payment migration. Field name is identical.
+
+---XML records in module 'payment_custom'---
+NEW ir.model.constraint: payment_custom.constraint_payment_provider_custom_providers_setup
+# NOTHING TO DO: New.
+
+NEW ir.ui.view: payment_custom.custom_transaction_status
+# NOTHING TO DO: Renamed from payment_transfer.transfer_transaction_status
+# with minimal changes.
+
+NEW ir.ui.view: payment_custom.payment_provider_form
+# NOTHING TO DO: Renamed from payment_transfer.payment_acquirer_form with
+# minimal changes.
+
+NEW ir.ui.view: payment_custom.redirect_form
+# NOTHING TO DO: Renamed from payment_transfer with no changes.
