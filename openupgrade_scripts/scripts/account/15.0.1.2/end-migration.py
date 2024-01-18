@@ -33,6 +33,22 @@ def _fast_fill_account_payment_outstanding_account_id(env):
     )
 
 
+def _fast_fill_account_payment_payment_method_line_id(env):
+    """Done on end-migration for waiting until all the payment method lines are created,
+    like for example those for checks (account_check_printing).
+    """
+    openupgrade.logged_query(
+        env.cr,
+        """
+        UPDATE account_payment ap
+        SET payment_method_line_id = apml.id
+        FROM account_move am
+        JOIN account_payment_method_line apml ON apml.journal_id = am.journal_id
+        WHERE ap.move_id = am.id AND ap.payment_method_id = apml.payment_method_id
+        """,
+    )
+
+
 @openupgrade.migrate()
 def migrate(env, version):
     _fast_fill_account_payment_outstanding_account_id(env)

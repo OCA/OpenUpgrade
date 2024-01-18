@@ -296,16 +296,6 @@ def _fast_fill_account_payment_payment_method_line_id(env):
         ALTER TABLE account_payment
         ADD COLUMN IF NOT EXISTS payment_method_line_id INTEGER""",
     )
-    openupgrade.logged_query(
-        env.cr,
-        """
-        UPDATE account_payment ap
-        SET payment_method_line_id = apml.id
-        FROM account_move am
-        JOIN account_payment_method_line apml ON apml.journal_id = am.journal_id
-        WHERE ap.move_id = am.id AND ap.payment_method_id = apml.payment_method_id
-        """,
-    )
 
 
 def _fill_account_tax_country_id(env):
