@@ -77,6 +77,7 @@ merged_modules = {
     "website_sale_require_login": "website_sale",
     # OCA/pos
     "pos_order_line_no_unlink": "point_of_sale",
+    "pos_product_sort": "point_of_sale",
     # OCA/purchase-workflow
     "product_form_purchase_link": "purchase",
     # OCA/sale-promotion
