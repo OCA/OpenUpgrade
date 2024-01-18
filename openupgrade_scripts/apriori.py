@@ -75,14 +75,14 @@ merged_modules = {
     "account_invoice_report_due_list": "account",
     # OCA/e-commerce
     "website_sale_require_login": "website_sale",
-    # OCA/sale-promotion
-    "coupon_commercial_partner_applicability": "loyalty_partner_applicability",
-    # OCA/sales-workflow
-    "sale_product_set_layout": "sale_product_set",
     # OCA/pos
     "pos_order_line_no_unlink": "point_of_sale",
     # OCA/purchase-workflow
     "product_form_purchase_link": "purchase",
+    # OCA/sale-promotion
+    "coupon_commercial_partner_applicability": "loyalty_partner_applicability",
+    # OCA/sales-workflow
+    "sale_product_set_layout": "sale_product_set",
     # OCA/stock-logistics-workflow
     "stock_picking_backorder_strategy": "stock",
     # OCA/web
