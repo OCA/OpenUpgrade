@@ -79,6 +79,8 @@ merged_modules = {
     "coupon_commercial_partner_applicability": "loyalty_partner_applicability",
     # OCA/sales-workflow
     "sale_product_set_layout": "sale_product_set",
+    # OCA/pos
+    "pos_order_line_no_unlink": "point_of_sale",
     # OCA/purchase-workflow
     "product_form_purchase_link": "purchase",
     # OCA/stock-logistics-workflow
