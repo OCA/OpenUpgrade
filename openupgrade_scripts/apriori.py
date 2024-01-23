@@ -34,6 +34,7 @@ renamed_modules = {
     "sale_coupon_limit": "sale_loyalty_limit",
     "sale_coupon_multi_gift": "sale_loyalty_multi_gift",
     "sale_coupon_order_line_link": "sale_loyalty_order_line_link",
+    "sale_coupon_order_suggestion": "sale_loyalty_order_suggestion",
     "sale_coupon_partner": "sale_loyalty_partner",
     "website_sale_coupon_page": "website_sale_loyalty_page",
     # OCA/server-ux
