@@ -23,6 +23,8 @@ renamed_modules = {
     "crm_project": "crm_lead_to_task",
     # OCA/knowledge
     "knowledge": "document_knowledge",
+    # OCA/pos
+    "pos_journal_image": "pos_payment_method_image",
     # OCA/sale-promotion
     "coupon_incompatibility": "loyalty_incompatibility",
     "coupon_limit": "loyalty_limit",
