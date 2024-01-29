@@ -83,6 +83,7 @@ merged_modules = {
     "product_form_purchase_link": "purchase",
     # OCA/sale-promotion
     "coupon_commercial_partner_applicability": "loyalty_partner_applicability",
+    "sale_coupon_selection_wizard": "sale_loyalty_order_suggestion",
     # OCA/sale-workflow
     "sale_product_set_layout": "sale_product_set",
     # OCA/stock-logistics-workflow
