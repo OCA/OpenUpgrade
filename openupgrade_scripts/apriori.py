@@ -72,6 +72,8 @@ merged_modules = {
     # OCA/account-financial-tools
     "account_balance_line": "account",
     "account_move_force_removal": "account",
+    # OCA/account-invoicing
+    "account_invoice_search_by_reference": "account",
     # OCA/account-invoice-reporting
     "account_invoice_report_due_list": "account",
     # OCA/e-commerce
