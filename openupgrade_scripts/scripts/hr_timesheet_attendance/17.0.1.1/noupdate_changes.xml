@@ -1,0 +1,6 @@
+<?xml version='1.0' encoding='utf-8'?>
+<odoo>
+  <record id="hr_timesheet_attendance_report_rule_user" model="ir.rule">
+    <field name="domain_force">[('employee_id', '=', user.employee_id.id)]</field>
+  </record>
+</odoo>

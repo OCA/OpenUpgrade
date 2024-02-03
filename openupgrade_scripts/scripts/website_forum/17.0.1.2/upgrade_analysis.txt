@@ -1,0 +1,71 @@
+---Models in module 'website_forum'---
+---Fields in module 'website_forum'---
+website_forum / forum.forum              / _order                        : _order is now 'sequence, id' ('sequence')
+website_forum / forum.forum              / allow_bump (boolean)          : DEL
+website_forum / forum.forum              / default_order (selection)     : selection_keys is now '['child_count desc', 'create_date desc', 'last_activity_date desc', 'relevancy desc', 'vote_count desc']' ('['child_count desc', 'create_date desc', 'relevancy desc', 'vote_count desc', 'write_date desc']')
+website_forum / forum.forum              / message_main_attachment_id (many2one): DEL relation: ir.attachment
+website_forum / forum.forum              / rating_ids (one2many)         : NEW relation: rating.rating
+website_forum / forum.forum              / tag_ids (one2many)            : NEW relation: forum.tag
+website_forum / forum.post               / _order                        : _order is now 'is_correct DESC, vote_count DESC, last_activity_date DESC' ('is_correct DESC, vote_count DESC, write_date DESC')
+website_forum / forum.post               / bump_date (datetime)          : DEL
+website_forum / forum.post               / last_activity_date (datetime) : NEW required
+website_forum / forum.post               / message_main_attachment_id (many2one): DEL relation: ir.attachment
+website_forum / forum.post               / rating_ids (one2many)         : NEW relation: rating.rating
+website_forum / forum.tag                / message_main_attachment_id (many2one): DEL relation: ir.attachment
+website_forum / forum.tag                / rating_ids (one2many)         : NEW relation: rating.rating
+website_forum / website                  / forum_count (integer)         : NEW
+website_forum / website                  / forums_count (integer)        : DEL
+---XML records in module 'website_forum'---
+ir.actions.act_url: website_forum.action_open_forum (noupdate) (noupdate switched)
+NEW ir.actions.act_window: website_forum.forum_forum_action
+NEW ir.actions.act_window: website_forum.forum_post_action (noupdate)
+NEW ir.actions.act_window: website_forum.forum_post_action_favorites (noupdate)
+NEW ir.actions.act_window: website_forum.forum_post_action_forum_main (noupdate)
+NEW ir.actions.act_window: website_forum.forum_post_reason_action
+DEL ir.actions.act_window: website_forum.action_forum_favorites
+DEL ir.actions.act_window: website_forum.action_forum_forum
+DEL ir.actions.act_window: website_forum.action_forum_post
+DEL ir.actions.act_window: website_forum.action_forum_posts
+DEL ir.actions.act_window: website_forum.forum_post_reasons_action
+NEW ir.model.access: website_forum.access_forum_forum_employee
+NEW ir.model.access: website_forum.access_forum_forum_portal
+NEW ir.model.access: website_forum.access_forum_forum_public
+DEL ir.model.access: website_forum.access_forum_forum
+DEL ir.model.constraint: website_forum.constraint_forum_post_vote_vote_uniq
+DEL ir.model.constraint: website_forum.constraint_forum_tag_name_uniq
+NEW ir.ui.view: website_forum.follow
+NEW ir.ui.view: website_forum.forum_forum_view_form
+NEW ir.ui.view: website_forum.forum_forum_view_search
+NEW ir.ui.view: website_forum.forum_forum_view_tree
+NEW ir.ui.view: website_forum.forum_index_tags
+NEW ir.ui.view: website_forum.forum_model_nav
+NEW ir.ui.view: website_forum.forum_post_view_form (noupdate)
+NEW ir.ui.view: website_forum.forum_post_view_graph (noupdate)
+ir.ui.view: website_forum.forum_post_view_kanban (noupdate) (noupdate switched)
+NEW ir.ui.view: website_forum.forum_post_view_search (noupdate)
+NEW ir.ui.view: website_forum.forum_post_view_tree (noupdate)
+NEW ir.ui.view: website_forum.gamification_karma_tracking_view_search
+NEW ir.ui.view: website_forum.header_welcome_message
+NEW ir.ui.view: website_forum.no_results_message
+NEW ir.ui.view: website_forum.post_display
+NEW ir.ui.view: website_forum.post_dropdown
+NEW ir.ui.view: website_forum.post_stats
+NEW ir.ui.view: website_forum.profile_access_denied
+NEW ir.ui.view: website_forum.user_sidebar_body
+NEW ir.ui.view: website_forum.user_sidebar_header
+NEW ir.ui.view: website_forum.user_sidebar_mobile
+DEL ir.ui.view: website_forum.forum_nav_header
+DEL ir.ui.view: website_forum.forum_post_options
+DEL ir.ui.view: website_forum.forum_view_search
+DEL ir.ui.view: website_forum.moderation_display_post_answer
+DEL ir.ui.view: website_forum.post_answers
+DEL ir.ui.view: website_forum.post_reply
+DEL ir.ui.view: website_forum.private_profile
+DEL ir.ui.view: website_forum.question_dropdown
+DEL ir.ui.view: website_forum.tag
+DEL ir.ui.view: website_forum.view_forum_forum_form
+DEL ir.ui.view: website_forum.view_forum_forum_list
+DEL ir.ui.view: website_forum.view_forum_post_form
+DEL ir.ui.view: website_forum.view_forum_post_graph
+DEL ir.ui.view: website_forum.view_forum_post_list
+DEL ir.ui.view: website_forum.view_forum_post_search

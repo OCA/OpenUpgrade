@@ -1,0 +1,19 @@
+---Models in module 'hr_contract'---
+---Fields in module 'hr_contract'---
+hr_contract  / hr.contract              / activity_user_id (many2one)   : not related anymore
+hr_contract  / hr.contract              / activity_user_id (many2one)   : now a function
+hr_contract  / hr.contract              / message_has_sms_error (boolean): previously in module sms
+hr_contract  / hr.contract              / message_main_attachment_id (many2one): DEL relation: ir.attachment
+hr_contract  / hr.contract              / rating_ids (one2many)         : NEW relation: rating.rating
+hr_contract  / hr.contract              / website_message_ids (one2many): previously in module portal
+hr_contract  / res.company              / contract_expiration_notice_period (integer): NEW hasdefault: default
+hr_contract  / res.company              / work_permit_expiration_notice_period (integer): NEW hasdefault: default
+---XML records in module 'hr_contract'---
+NEW ir.ui.menu: hr_contract.hr_menu_contract
+DEL ir.ui.menu: hr_contract.hr_menu_contract_history
+NEW ir.ui.view: hr_contract.hr_employee_view_graph_inherit_hr_contract
+NEW ir.ui.view: hr_contract.hr_employee_view_pivot_inherit_hr_contract
+NEW ir.ui.view: hr_contract.hr_hr_employee_view_form3
+NEW ir.ui.view: hr_contract.res_config_settings_view_form
+NEW ir.ui.view: hr_contract.view_employee_public_form
+DEL ir.ui.view: hr_contract.hr_employee_public_view_form

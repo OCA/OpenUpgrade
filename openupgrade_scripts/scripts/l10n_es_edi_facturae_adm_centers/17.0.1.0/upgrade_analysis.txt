@@ -1,0 +1,26 @@
+---Models in module 'l10n_es_edi_facturae_adm_centers'---
+new model l10n_es_edi_facturae_adm_centers.ac_role_type
+---Fields in module 'l10n_es_edi_facturae_adm_centers'---
+l10n_es_edi_facturae_adm_centers / l10n_es_edi_facturae_adm_centers.ac_role_type / code (char)                   : NEW required
+l10n_es_edi_facturae_adm_centers / l10n_es_edi_facturae_adm_centers.ac_role_type / name (char)                   : NEW required
+l10n_es_edi_facturae_adm_centers / res.partner              / l10n_es_edi_facturae_ac_center_code (char): NEW
+l10n_es_edi_facturae_adm_centers / res.partner              / l10n_es_edi_facturae_ac_logical_operational_point (char): NEW
+l10n_es_edi_facturae_adm_centers / res.partner              / l10n_es_edi_facturae_ac_physical_gln (char): NEW
+l10n_es_edi_facturae_adm_centers / res.partner              / l10n_es_edi_facturae_ac_role_type_ids (many2many): NEW relation: l10n_es_edi_facturae_adm_centers.ac_role_type
+l10n_es_edi_facturae_adm_centers / res.partner              / type (False)                  : NEW selection_keys: ['contact', 'delivery', 'facturae_ac', 'invoice', 'other'], mode: modify
+---XML records in module 'l10n_es_edi_facturae_adm_centers'---
+NEW ir.model.access: l10n_es_edi_facturae_adm_centers.access_l10n_es_edi_facturae_ac_role_type_invoice
+NEW ir.model.access: l10n_es_edi_facturae_adm_centers.access_l10n_es_edi_facturae_ac_role_type_readonly
+NEW ir.ui.view: l10n_es_edi_facturae_adm_centers.account_invoice_facturae_export
+NEW ir.ui.view: l10n_es_edi_facturae_adm_centers.administrative_centers_type
+NEW ir.ui.view: l10n_es_edi_facturae_adm_centers.business_type
+NEW ir.ui.view: l10n_es_edi_facturae_adm_centers.view_partner_form_inherit_l10n_es_edi_facturae
+NEW l10n_es_edi_facturae_adm_centers.ac_role_type: l10n_es_edi_facturae_adm_centers.ac_role_type_01
+NEW l10n_es_edi_facturae_adm_centers.ac_role_type: l10n_es_edi_facturae_adm_centers.ac_role_type_02
+NEW l10n_es_edi_facturae_adm_centers.ac_role_type: l10n_es_edi_facturae_adm_centers.ac_role_type_03
+NEW l10n_es_edi_facturae_adm_centers.ac_role_type: l10n_es_edi_facturae_adm_centers.ac_role_type_04
+NEW l10n_es_edi_facturae_adm_centers.ac_role_type: l10n_es_edi_facturae_adm_centers.ac_role_type_05
+NEW l10n_es_edi_facturae_adm_centers.ac_role_type: l10n_es_edi_facturae_adm_centers.ac_role_type_06
+NEW l10n_es_edi_facturae_adm_centers.ac_role_type: l10n_es_edi_facturae_adm_centers.ac_role_type_07
+NEW l10n_es_edi_facturae_adm_centers.ac_role_type: l10n_es_edi_facturae_adm_centers.ac_role_type_08
+NEW l10n_es_edi_facturae_adm_centers.ac_role_type: l10n_es_edi_facturae_adm_centers.ac_role_type_09

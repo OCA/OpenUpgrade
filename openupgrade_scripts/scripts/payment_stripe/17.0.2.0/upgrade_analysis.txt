@@ -1,0 +1,9 @@
+---Models in module 'payment_stripe'---
+---Fields in module 'payment_stripe'---
+payment_stripe / payment.token            / stripe_mandate (char)         : NEW
+payment_stripe / payment.transaction      / stripe_payment_intent (char)  : DEL
+---XML records in module 'payment_stripe'---
+NEW ir.ui.view: payment_stripe.inline_form
+NEW ir.ui.view: payment_stripe.payment_form
+DEL ir.ui.view: payment_stripe.checkout
+DEL ir.ui.view: payment_stripe.manage

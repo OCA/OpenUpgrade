@@ -1,0 +1,8 @@
+---Models in module 'payment_xendit'---
+---Fields in module 'payment_xendit'---
+payment_xendit / payment.provider         / code (False)                  : NEW selection_keys: ['adyen', 'aps', 'asiapay', 'authorize', 'buckaroo', 'custom', 'demo', 'flutterwave', 'mercado_pago', 'mollie', 'none', 'paypal', 'razorpay', 'sips', 'stripe', 'xendit'], mode: modify
+payment_xendit / payment.provider         / xendit_secret_key (char)      : NEW
+payment_xendit / payment.provider         / xendit_webhook_token (char)   : NEW
+---XML records in module 'payment_xendit'---
+NEW ir.ui.view: payment_xendit.payment_provider_form_xendit
+NEW ir.ui.view: payment_xendit.redirect_form

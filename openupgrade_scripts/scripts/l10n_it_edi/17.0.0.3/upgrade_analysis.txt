@@ -1,0 +1,41 @@
+---Models in module 'l10n_it_edi'---
+---Fields in module 'l10n_it_edi'---
+l10n_it_edi  / account.bank.statement.line / l10n_it_cig (char)            : previously in module l10n_it_edi_pa
+l10n_it_edi  / account.bank.statement.line / l10n_it_cup (char)            : previously in module l10n_it_edi_pa
+l10n_it_edi  / account.bank.statement.line / l10n_it_origin_document_date (date): previously in module l10n_it_edi_pa
+l10n_it_edi  / account.bank.statement.line / l10n_it_origin_document_name (char): previously in module l10n_it_edi_pa
+l10n_it_edi  / account.bank.statement.line / l10n_it_origin_document_type (selection): previously in module l10n_it_edi_pa
+l10n_it_edi  / account.bank.statement.line / l10n_it_partner_pa (boolean)  : previously in module l10n_it_edi_pa
+l10n_it_edi  / account.move             / l10n_it_cig (char)            : previously in module l10n_it_edi_pa
+l10n_it_edi  / account.move             / l10n_it_cup (char)            : previously in module l10n_it_edi_pa
+l10n_it_edi  / account.move             / l10n_it_edi_attachment_file (binary): NEW attachment: True
+l10n_it_edi  / account.move             / l10n_it_edi_attachment_id (many2one): not stored anymore
+l10n_it_edi  / account.move             / l10n_it_edi_attachment_id (many2one): now a function
+l10n_it_edi  / account.move             / l10n_it_edi_header (html)     : NEW
+l10n_it_edi  / account.move             / l10n_it_edi_state (selection) : NEW selection_keys: ['accepted_by_pa_partner', 'accepted_by_pa_partner_after_expiry', 'being_sent', 'forward_attempt', 'forward_failed', 'forwarded', 'processing', 'rejected', 'rejected_by_pa_partner', 'requires_user_signature']
+l10n_it_edi  / account.move             / l10n_it_origin_document_date (date): previously in module l10n_it_edi_pa
+l10n_it_edi  / account.move             / l10n_it_origin_document_name (char): previously in module l10n_it_edi_pa
+l10n_it_edi  / account.move             / l10n_it_origin_document_type (selection): previously in module l10n_it_edi_pa
+l10n_it_edi  / account.move             / l10n_it_partner_pa (boolean)  : previously in module l10n_it_edi_pa
+l10n_it_edi  / account.payment          / l10n_it_cig (char)            : previously in module l10n_it_edi_pa
+l10n_it_edi  / account.payment          / l10n_it_cup (char)            : previously in module l10n_it_edi_pa
+l10n_it_edi  / account.payment          / l10n_it_origin_document_date (date): previously in module l10n_it_edi_pa
+l10n_it_edi  / account.payment          / l10n_it_origin_document_name (char): previously in module l10n_it_edi_pa
+l10n_it_edi  / account.payment          / l10n_it_origin_document_type (selection): previously in module l10n_it_edi_pa
+l10n_it_edi  / account.payment          / l10n_it_partner_pa (boolean)  : previously in module l10n_it_edi_pa
+l10n_it_edi  / account.tax              / l10n_it_has_exoneration (boolean): DEL
+l10n_it_edi  / account.tax              / l10n_it_kind_exoneration (selection): DEL selection_keys: ['N1', 'N2', 'N2.1', 'N2.2', 'N3', 'N3.1', 'N3.2', 'N3.3', 'N3.4', 'N3.5', 'N3.6', 'N4', 'N5', 'N6', 'N6.1', 'N6.2', 'N6.3', 'N6.4', 'N6.5', 'N6.6', 'N6.7', 'N6.8', 'N6.9', 'N7']
+l10n_it_edi  / account.tax              / l10n_it_law_reference (char)  : module is now 'l10n_it' ('l10n_it_edi')
+l10n_it_edi  / account.tax              / l10n_it_vat_due_date (selection): DEL selection_keys: ['D', 'I', 'S']
+l10n_it_edi  / account_edi_proxy_client.user / proxy_type (False)            : NEW selection_keys: ['l10n_it_edi', 'peppol'], mode: modify
+---XML records in module 'l10n_it_edi'---
+DEL account.edi.format: l10n_it_edi.edi_fatturaPA
+NEW ir.cron: l10n_it_edi.ir_cron_l10n_it_edi_download_and_update
+DEL ir.cron: l10n_it_edi.ir_cron_receive_fattura_pa_invoice
+DEL ir.model.constraint: l10n_it_edi.constraint_res_partner_l10n_it_codice_fiscale
+DEL ir.model.constraint: l10n_it_edi.constraint_res_partner_l10n_it_pa_index
+NEW ir.ui.view: l10n_it_edi.account_move_send_inherit_l10n_it_edi
+NEW ir.ui.view: l10n_it_edi.report_invoice_document
+DEL ir.ui.view: l10n_it_edi.account_tax_form_l10n_it
+DEL ir.ui.view: l10n_it_edi.view_in_bill_tree_inherit
+DEL ir.ui.view: l10n_it_edi.view_out_invoice_tree_inherit

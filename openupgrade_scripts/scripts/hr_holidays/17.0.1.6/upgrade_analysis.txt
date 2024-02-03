@@ -1,0 +1,108 @@
+---Models in module 'hr_holidays'---
+obsolete model hr.leave.stress.day
+new model hr.leave.mandatory.day
+---Fields in module 'hr_holidays'---
+hr_holidays  / hr.leave                 / activity_user_id (many2one)   : not related anymore
+hr_holidays  / hr.leave                 / activity_user_id (many2one)   : now a function
+hr_holidays  / hr.leave                 / category_id (many2one)        : not a function anymore
+hr_holidays  / hr.leave                 / company_id (many2one)         : NEW relation: res.company, isfunction: function, stored
+hr_holidays  / hr.leave                 / date_from (datetime)          : now a function
+hr_holidays  / hr.leave                 / date_to (datetime)            : now a function
+hr_holidays  / hr.leave                 / employee_ids (many2many)      : now a function
+hr_holidays  / hr.leave                 / holiday_allocation_id (many2one): DEL relation: hr.leave.allocation
+hr_holidays  / hr.leave                 / message_has_sms_error (boolean): previously in module sms
+hr_holidays  / hr.leave                 / mode_company_id (many2one)    : not a function anymore
+hr_holidays  / hr.leave                 / number_of_days (float)        : now a function
+hr_holidays  / hr.leave                 / number_of_hours (float)       : NEW isfunction: function, stored
+hr_holidays  / hr.leave                 / rating_ids (one2many)         : NEW relation: rating.rating
+hr_holidays  / hr.leave                 / resource_calendar_id (many2one): NEW relation: resource.calendar, hasdefault: compute
+hr_holidays  / hr.leave                 / website_message_ids (one2many): previously in module portal
+hr_holidays  / hr.leave.accrual.level   / action_with_unused_accruals (selection): selection_keys is now '['all', 'lost', 'maximum']' ('['lost', 'postponed']')
+hr_holidays  / hr.leave.accrual.level   / added_value_type (selection)  : now a function
+hr_holidays  / hr.leave.accrual.level   / added_value_type (selection)  : selection_keys is now '['day', 'hour']' ('['days', 'hours']')
+hr_holidays  / hr.leave.accrual.level   / cap_accrued_time (boolean)    : NEW hasdefault: default
+hr_holidays  / hr.leave.accrual.level   / frequency (selection)         : selection_keys is now '['bimonthly', 'biyearly', 'daily', 'hourly', 'monthly', 'weekly', 'yearly']' ('['bimonthly', 'biyearly', 'daily', 'monthly', 'weekly', 'yearly']')
+hr_holidays  / hr.leave.accrual.level   / is_based_on_worked_time (boolean): DEL
+hr_holidays  / hr.leave.accrual.level   / parent_id (many2one)          : DEL relation: hr.leave.accrual.level
+hr_holidays  / hr.leave.accrual.plan    / accrued_gain_time (selection) : NEW required, selection_keys: ['end', 'start'], hasdefault: default
+hr_holidays  / hr.leave.accrual.plan    / active (boolean)              : NEW hasdefault: default
+hr_holidays  / hr.leave.accrual.plan    / added_value_type (selection)  : NEW selection_keys: ['day', 'hour'], isfunction: function, stored
+hr_holidays  / hr.leave.accrual.plan    / carryover_date (selection)    : NEW required, selection_keys: ['allocation', 'other', 'year_start'], hasdefault: default
+hr_holidays  / hr.leave.accrual.plan    / carryover_day (integer)       : NEW hasdefault: default
+hr_holidays  / hr.leave.accrual.plan    / carryover_month (selection)   : NEW selection_keys: ['apr', 'aug', 'dec', 'feb', 'jan', 'jul', 'jun', 'mar', 'may', 'nov', 'oct', 'sep'], hasdefault: default
+hr_holidays  / hr.leave.accrual.plan    / company_id (many2one)         : NEW relation: res.company, hasdefault: compute
+hr_holidays  / hr.leave.accrual.plan    / is_based_on_worked_time (boolean): NEW hasdefault: compute
+hr_holidays  / hr.leave.allocation      / activity_user_id (many2one)   : not related anymore
+hr_holidays  / hr.leave.allocation      / activity_user_id (many2one)   : now a function
+hr_holidays  / hr.leave.allocation      / already_accrued (boolean)     : NEW
+hr_holidays  / hr.leave.allocation      / department_id (many2one)      : not a function anymore
+hr_holidays  / hr.leave.allocation      / message_has_sms_error (boolean): previously in module sms
+hr_holidays  / hr.leave.allocation      / message_main_attachment_id (many2one): DEL relation: ir.attachment
+hr_holidays  / hr.leave.allocation      / rating_ids (one2many)         : NEW relation: rating.rating
+hr_holidays  / hr.leave.allocation      / state (selection)             : selection_keys is now '['confirm', 'refuse', 'validate']' ('['cancel', 'confirm', 'draft', 'refuse', 'validate']')
+hr_holidays  / hr.leave.allocation      / taken_leave_ids (one2many)    : DEL relation: hr.leave
+hr_holidays  / hr.leave.allocation      / type_request_unit (selection) : not related anymore
+hr_holidays  / hr.leave.allocation      / type_request_unit (selection) : now a function
+hr_holidays  / hr.leave.allocation      / type_request_unit (selection) : selection_keys is now '['day', 'half_day', 'hour']' ('function')
+hr_holidays  / hr.leave.allocation      / website_message_ids (one2many): previously in module portal
+hr_holidays  / hr.leave.mandatory.day   / color (integer)               : NEW hasdefault: default
+hr_holidays  / hr.leave.mandatory.day   / company_id (many2one)         : NEW relation: res.company, required, hasdefault: default
+hr_holidays  / hr.leave.mandatory.day   / department_ids (many2many)    : NEW relation: hr.department
+hr_holidays  / hr.leave.mandatory.day   / end_date (date)               : NEW required
+hr_holidays  / hr.leave.mandatory.day   / name (char)                   : NEW required
+hr_holidays  / hr.leave.mandatory.day   / resource_calendar_id (many2one): NEW relation: resource.calendar
+hr_holidays  / hr.leave.mandatory.day   / start_date (date)             : NEW required
+hr_holidays  / hr.leave.stress.day      / color (integer)               : DEL
+hr_holidays  / hr.leave.stress.day      / company_id (many2one)         : DEL relation: res.company, required
+hr_holidays  / hr.leave.stress.day      / department_ids (many2many)    : DEL relation: hr.department
+hr_holidays  / hr.leave.stress.day      / end_date (date)               : DEL required
+hr_holidays  / hr.leave.stress.day      / name (char)                   : DEL required
+hr_holidays  / hr.leave.stress.day      / resource_calendar_id (many2one): DEL relation: resource.calendar
+hr_holidays  / hr.leave.stress.day      / start_date (date)             : DEL required
+hr_holidays  / hr.leave.type            / allows_negative (boolean)     : NEW
+hr_holidays  / hr.leave.type            / color_name (selection)        : DEL required, selection_keys: ['black', 'blue', 'brown', 'ivory', 'lavender', 'lightblue', 'lightcoral', 'lightcyan', 'lightgreen', 'lightpink', 'lightsalmon', 'lightyellow', 'magenta', 'red', 'violet', 'wheat']
+hr_holidays  / hr.leave.type            / max_allowed_negative (integer): NEW
+hr_holidays  / hr.leave.type            / responsible_id (many2one)     : DEL relation: res.users
+hr_holidays  / hr.leave.type            / responsible_ids (many2many)   : NEW relation: res.users
+---XML records in module 'hr_holidays'---
+NEW ir.actions.act_window: hr_holidays.act_hr_employee_holiday_type
+ir.actions.act_window: hr_holidays.hr_leave_action_holiday_allocation_id (deleted domain)
+NEW ir.actions.act_window: hr_holidays.hr_leave_mandatory_day_action
+DEL ir.actions.act_window: hr_holidays.hr_leave_stress_day_action
+NEW ir.actions.act_window.view: hr_holidays.action_window_leave_list
+DEL ir.actions.report: hr_holidays.action_report_holidayssummary2
+DEL ir.actions.server: hr_holidays.act_hr_employee_holiday_request
+NEW ir.cron: hr_holidays.hr_leave_cron_cancel_invalid
+NEW ir.model.access: hr_holidays.access_hr_leave_mandatory_day_manager
+NEW ir.model.access: hr_holidays.access_hr_leave_mandatory_day_user
+DEL ir.model.access: hr_holidays.access_hr_leave_stress_day_manager
+DEL ir.model.access: hr_holidays.access_hr_leave_stress_day_user
+DEL ir.model.constraint: hr_holidays.constraint_hr_leave_accrual_level_added_value_greater_than_zero
+DEL ir.model.constraint: hr_holidays.constraint_hr_leave_accrual_level_check_dates
+DEL ir.model.constraint: hr_holidays.constraint_hr_leave_accrual_level_start_count_check
+DEL ir.model.constraint: hr_holidays.constraint_hr_leave_allocation_duration_check
+DEL ir.model.constraint: hr_holidays.constraint_hr_leave_allocation_type_value
+DEL ir.model.constraint: hr_holidays.constraint_hr_leave_date_check2
+DEL ir.model.constraint: hr_holidays.constraint_hr_leave_duration_check
+DEL ir.model.constraint: hr_holidays.constraint_hr_leave_stress_day_date_from_after_day_to
+DEL ir.model.constraint: hr_holidays.constraint_hr_leave_type_value
+NEW ir.rule: hr_holidays.hr_leave_accrual_plan_rule_multi_company (noupdate)
+NEW ir.rule: hr_holidays.hr_leave_mandatory_day_rule_multi_company (noupdate)
+DEL ir.rule: hr_holidays.hr_leave_stress_day_rule_multi_company (noupdate)
+NEW ir.ui.menu: hr_holidays.hr_holidays_mandatory_day_menu_configuration
+NEW ir.ui.menu: hr_holidays.menu_hr_holidays_management
+DEL ir.ui.menu: hr_holidays.hr_holidays_stress_day_menu_configuration
+DEL ir.ui.menu: hr_holidays.menu_hr_holidays_approvals
+NEW ir.ui.view: hr_holidays.hr_accrual_plan_view_search
+NEW ir.ui.view: hr_holidays.hr_leave_mandatory_day_view_form
+NEW ir.ui.view: hr_holidays.hr_leave_mandatory_day_view_list
+NEW ir.ui.view: hr_holidays.hr_leave_mandatory_day_view_search
+NEW ir.ui.view: hr_holidays.hr_leave_report_graph
+NEW ir.ui.view: hr_holidays.hr_leave_report_search_view
+NEW ir.ui.view: hr_holidays.hr_leave_view_kanban_my
+NEW ir.ui.view: hr_holidays.view_holiday_list
+DEL ir.ui.view: hr_holidays.hr_leave_report_view_form
+DEL ir.ui.view: hr_holidays.hr_leave_stress_day_view_form
+DEL ir.ui.view: hr_holidays.hr_leave_stress_day_view_list
+DEL ir.ui.view: hr_holidays.hr_leave_stress_day_view_search
+DEL mail.activity.type: hr_holidays.mail_act_leave_allocation_second_approval (noupdate)

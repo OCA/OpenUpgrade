@@ -1,0 +1,72 @@
+---Models in module 'hr_attendance'---
+obsolete model hr.attendance.report [sql_view]
+---Fields in module 'hr_attendance'---
+hr_attendance / hr.attendance            / in_browser (char)             : NEW
+hr_attendance / hr.attendance            / in_city (char)                : NEW
+hr_attendance / hr.attendance            / in_country_name (char)        : NEW
+hr_attendance / hr.attendance            / in_ip_address (char)          : NEW
+hr_attendance / hr.attendance            / in_latitude (float)           : NEW
+hr_attendance / hr.attendance            / in_longitude (float)          : NEW
+hr_attendance / hr.attendance            / in_mode (selection)           : NEW selection_keys: ['kiosk', 'manual', 'systray']
+hr_attendance / hr.attendance            / message_follower_ids (one2many): NEW relation: mail.followers
+hr_attendance / hr.attendance            / message_ids (one2many)        : NEW relation: mail.message
+hr_attendance / hr.attendance            / out_browser (char)            : NEW
+hr_attendance / hr.attendance            / out_city (char)               : NEW
+hr_attendance / hr.attendance            / out_country_name (char)       : NEW
+hr_attendance / hr.attendance            / out_ip_address (char)         : NEW
+hr_attendance / hr.attendance            / out_latitude (float)          : NEW
+hr_attendance / hr.attendance            / out_longitude (float)         : NEW
+hr_attendance / hr.attendance            / out_mode (selection)          : NEW selection_keys: ['kiosk', 'manual', 'systray']
+hr_attendance / hr.attendance            / overtime_hours (float)        : NEW isfunction: function, stored
+hr_attendance / hr.attendance            / rating_ids (one2many)         : NEW relation: rating.rating
+hr_attendance / hr.attendance            / website_message_ids (one2many): NEW relation: mail.message
+hr_attendance / hr.employee              / attendance_manager_id (many2one): NEW relation: res.users
+hr_attendance / res.company              / attendance_from_systray (boolean): NEW hasdefault: default
+hr_attendance / res.company              / attendance_kiosk_key (char)   : NEW hasdefault: default
+hr_attendance / res.company              / attendance_kiosk_use_pin (boolean): NEW
+hr_attendance / res.company              / hr_attendance_display_overtime (boolean): NEW
+---XML records in module 'hr_attendance'---
+NEW ir.actions.act_window: hr_attendance.hr_attendance_reporting
+DEL ir.actions.act_window: hr_attendance.hr_attendance_action_employee
+DEL ir.actions.act_window: hr_attendance.hr_attendance_action_overview
+DEL ir.actions.act_window: hr_attendance.hr_attendance_report_action
+DEL ir.actions.act_window: hr_attendance.hr_attendance_report_action_filtered
+DEL ir.actions.client: hr_attendance.hr_attendance_action_kiosk_mode
+DEL ir.actions.client: hr_attendance.hr_attendance_action_my_attendances
+NEW ir.actions.server: hr_attendance.open_kiosk_url
+NEW ir.model.access: hr_attendance.access_hr_attendance_admin
+NEW ir.model.access: hr_attendance.access_hr_attendance_admin_overtime
+NEW ir.model.access: hr_attendance.access_hr_attendance_officer_overtime
+DEL ir.model.access: hr_attendance.access_hr_attendance_overtime_system_user
+DEL ir.model.access: hr_attendance.access_hr_attendance_report_user
+DEL ir.model.access: hr_attendance.access_hr_attendance_system_user
+NEW ir.rule: hr_attendance.hr_attendance_rule_attendance_admin (noupdate)
+NEW ir.rule: hr_attendance.hr_attendance_rule_attendance_manager_restrict (noupdate)
+NEW ir.rule: hr_attendance.hr_attendance_rule_attendance_officer_overtime_restrict (noupdate)
+NEW ir.rule: hr_attendance.hr_attendance_rule_attendance_overtime_admin (noupdate)
+NEW ir.rule: hr_attendance.hr_attendance_rule_attendance_overtime_simple_user (noupdate)
+NEW ir.rule: hr_attendance.hr_attendance_rule_attendance_simple_user (noupdate)
+DEL ir.rule: hr_attendance.hr_attendance_report_rule_multi_company (noupdate)
+DEL ir.rule: hr_attendance.hr_attendance_rule_attendance_employee (noupdate)
+DEL ir.rule: hr_attendance.hr_attendance_rule_attendance_manager (noupdate)
+DEL ir.rule: hr_attendance.hr_attendance_rule_attendance_manual (noupdate)
+DEL ir.rule: hr_attendance.hr_attendance_rule_attendance_overtime_employee (noupdate)
+DEL ir.rule: hr_attendance.hr_attendance_rule_attendance_overtime_manager (noupdate)
+NEW ir.ui.menu: hr_attendance.menu_hr_attendance_reporting
+DEL ir.ui.menu: hr_attendance.menu_hr_attendance_attendances_overview
+DEL ir.ui.menu: hr_attendance.menu_hr_attendance_my_attendances
+DEL ir.ui.menu: hr_attendance.menu_hr_attendance_report
+NEW ir.ui.view: hr_attendance.hr_attendance_employee_simple_tree_view
+NEW ir.ui.view: hr_attendance.hr_attendance_view_graph
+NEW ir.ui.view: hr_attendance.hr_attendance_view_pivot
+NEW ir.ui.view: hr_attendance.public_kiosk_mode
+NEW ir.ui.view: hr_attendance.view_employee_tree_inherit_leave
+DEL ir.ui.view: hr_attendance.hr_attendance_report_view_graph
+DEL ir.ui.view: hr_attendance.hr_attendance_report_view_pivot
+DEL ir.ui.view: hr_attendance.hr_attendance_report_view_search
+NEW res.groups: hr_attendance.group_hr_attendance_officer
+NEW res.groups: hr_attendance.group_hr_attendance_own_reader
+DEL res.groups: hr_attendance.group_hr_attendance
+DEL res.groups: hr_attendance.group_hr_attendance_kiosk
+DEL res.groups: hr_attendance.group_hr_attendance_use_pin
+DEL res.groups: hr_attendance.group_hr_attendance_user

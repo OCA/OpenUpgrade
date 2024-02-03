@@ -1,0 +1,8 @@
+---Models in module 'event_booth'---
+---Fields in module 'event_booth'---
+event_booth  / event.booth              / activity_user_id (many2one)   : not related anymore
+event_booth  / event.booth              / activity_user_id (many2one)   : now a function
+event_booth  / event.booth              / contact_mobile (char)         : DEL
+event_booth  / event.booth              / message_main_attachment_id (many2one): DEL relation: ir.attachment
+event_booth  / event.booth              / rating_ids (one2many)         : NEW relation: rating.rating
+---XML records in module 'event_booth'---

@@ -1,0 +1,731 @@
+---Models in module 'general'---
+obsolete model account.account.template [module module_map(column['module'])]
+obsolete model account.fiscal.position.account.template [module module_map(column['module'])]
+obsolete model account.fiscal.position.tax.template [module module_map(column['module'])]
+obsolete model account.fiscal.position.template [module module_map(column['module'])]
+obsolete model account.group.template [module module_map(column['module'])]
+obsolete model account.invoice.send [module module_map(column['module'])]
+obsolete model account.reconcile.model.line.template [module module_map(column['module'])]
+obsolete model account.reconcile.model.template [module module_map(column['module'])]
+obsolete model account.tax.repartition.line.template [module module_map(column['module'])]
+obsolete model account.tax.template [module module_map(column['module'])]
+obsolete model base_import.tests.models.char [module module_map(column['module'])]
+obsolete model base_import.tests.models.char.noreadonly [module module_map(column['module'])]
+obsolete model base_import.tests.models.char.readonly [module module_map(column['module'])]
+obsolete model base_import.tests.models.char.required [module module_map(column['module'])]
+obsolete model base_import.tests.models.char.states [module module_map(column['module'])]
+obsolete model base_import.tests.models.char.stillreadonly [module module_map(column['module'])]
+obsolete model base_import.tests.models.complex [module module_map(column['module'])]
+obsolete model base_import.tests.models.float [module module_map(column['module'])]
+obsolete model base_import.tests.models.m2o [module module_map(column['module'])]
+obsolete model base_import.tests.models.m2o.related [module module_map(column['module'])]
+obsolete model base_import.tests.models.m2o.required [module module_map(column['module'])]
+obsolete model base_import.tests.models.m2o.required.related [module module_map(column['module'])]
+obsolete model base_import.tests.models.o2m [module module_map(column['module'])]
+obsolete model base_import.tests.models.o2m.child [module module_map(column['module'])]
+obsolete model base_import.tests.models.preview [module module_map(column['module'])]
+obsolete model hr.attendance.report [module module_map(column['module'])]
+obsolete model hr.leave.stress.day [module module_map(column['module'])]
+obsolete model hr.plan [module module_map(column['module'])]
+obsolete model hr.plan.activity.type [module module_map(column['module'])]
+obsolete model hr.plan.wizard [module module_map(column['module'])]
+obsolete model ir.server.object.lines [module module_map(column['module'])]
+obsolete model l10n_eg.eta.account.tax.mixin [module module_map(column['module'])]
+obsolete model l10n_es.sii.account.tax.mixin [module module_map(column['module'])]
+obsolete model l10n_pl_tax_office [module module_map(column['module'])]
+obsolete model mail.channel [module module_map(column['module'])]
+obsolete model mail.channel.member [module module_map(column['module'])]
+obsolete model mail.channel.rtc.session [module module_map(column['module'])]
+obsolete model mailing.contact.subscription [module module_map(column['module'])]
+obsolete model mrp.immediate.production [module module_map(column['module'])]
+obsolete model mrp.immediate.production.line [module module_map(column['module'])]
+obsolete model note.note [module module_map(column['module'])]
+obsolete model note.stage [module module_map(column['module'])]
+obsolete model note.tag [module module_map(column['module'])]
+obsolete model payment.icon [module module_map(column['module'])]
+obsolete model pos.cache [module module_map(column['module'])]
+obsolete model pos.session.check_product_wizard [module module_map(column['module'])]
+obsolete model repair.fee [module module_map(column['module'])]
+obsolete model repair.line [module module_map(column['module'])]
+obsolete model repair.order.make_invoice [module module_map(column['module'])]
+obsolete model report.product.report_producttemplatelabel [module module_map(column['module'])]
+obsolete model report.stock.report_product_product_replenishment [module module_map(column['module'])]
+obsolete model report.stock.report_product_template_replenishment [module module_map(column['module'])]
+obsolete model restaurant.printer [module module_map(column['module'])]
+obsolete model sms.api [module module_map(column['module'])]
+obsolete model snailmail.confirm [module module_map(column['module'])]
+obsolete model snailmail.confirm.invoice [module module_map(column['module'])]
+obsolete model stock.immediate.transfer [module module_map(column['module'])]
+obsolete model stock.immediate.transfer.line [module module_map(column['module'])]
+new model account.edi.xml.oioubl_201 [module l10n_dk_oioubl]
+new model account.edi.xml.pint_jp [module l10n_jp_ubl_pint]
+new model account.edi.xml.ubl_ro [module l10n_ro_edi]
+new model account.move.send [module account]
+new model calendar.popover.delete.wizard [module calendar]
+new model discuss.channel [module mail]
+new model discuss.channel.member [module mail]
+new model discuss.channel.rtc.session [module mail]
+new model discuss.gif.favorite [module mail]
+new model discuss.voice.metadata [module mail]
+new model homework.location.wizard [module hr_homeworking]
+new model hr.employee.cv.wizard [module hr_skills]
+new model hr.employee.delete.wizard [module hr_timesheet]
+new model hr.employee.location [module hr_homeworking]
+new model hr.leave.mandatory.day [module hr_holidays]
+new model html.field.history.mixin [module web_editor]
+new model iap.account.info [module iap]
+new model ir.model.inherit [module base]
+new model l10n_ar.payment.register.withholding [module l10n_ar_withholding]
+new model l10n_es_edi_facturae_adm_centers.ac_role_type [module l10n_es_edi_facturae_adm_centers]
+new model l10n_es_edi_facturae.certificate [module l10n_es_edi_facturae]
+new model l10n_ke.item.code [module l10n_ke]
+new model l10n_pl.l10n_pl_tax_office [module l10n_pl]
+new model mail.activity.plan [module mail]
+new model mail.activity.plan.template [module mail]
+new model mail.activity.schedule [module mail]
+new model mail.activity.todo.create [module project_todo]
+new model mail.alias.domain [module mail]
+new model mail.alias.mixin.optional [module mail]
+new model mail.message.translation [module mail]
+new model mail.notification.web.push [module mail]
+new model mail.partner.device [module mail]
+new model mail.thread.main.attachment [module mail]
+new model mail.tracking.duration.mixin [module mail]
+new model mailing.subscription [module mass_mailing]
+new model mailing.subscription.optout [module mass_mailing]
+new model maintenance.mixin [module maintenance]
+new model microsoft.calendar.credentials [module microsoft_calendar]
+new model payment.capture.wizard [module payment]
+new model payment.method [module payment]
+new model pos.combo [module point_of_sale]
+new model pos.combo.line [module point_of_sale]
+new model pos.printer [module point_of_sale]
+new model pos_self_order.custom_link [module pos_self_order]
+new model product.catalog.mixin [module product]
+new model product.document [module product]
+new model project.project.stage.delete.wizard [module project]
+new model repair.warn.uncomplete.move [module repair]
+new model report.hr_skills.report_employee_cv [module hr_skills]
+new model report.mrp.report_mo_overview [module mrp]
+new model report.product.report_producttemplatelabel2x7 [module product]
+new model report.product.report_producttemplatelabel4x12 [module product]
+new model report.product.report_producttemplatelabel4x12noprice [module product]
+new model report.product.report_producttemplatelabel4x7 [module product]
+new model sale.mass.cancel.orders [module sale]
+new model sale.order.discount [module sale]
+new model sms.tracker [module sms]
+new model spreadsheet.dashboard.share [module spreadsheet_dashboard]
+new model spreadsheet.mixin [module spreadsheet]
+new model stock.forecasted_product_product [module stock]
+new model stock.forecasted_product_template [module stock]
+new model stock.quant.relocate [module stock]
+new model website.controller.page [module website]
+---Fields in module 'general'---
+# 11977 fields matched,
+# Direct match: 11861
+# Found in other module: 116
+# Found with different type: 0
+# In obsolete models: 529
+# New columns: 1521
+# Not matched: 1547
+---XML records in module 'general'---
+ERROR: module not in list of installed modules:
+---Models in module 'l10n_generic_coa'---
+---Fields in module 'l10n_generic_coa'---
+---XML records in module 'l10n_generic_coa'---
+DEL account.account.template: l10n_generic_coa.capital
+DEL account.account.template: l10n_generic_coa.cash_diff_expense
+DEL account.account.template: l10n_generic_coa.cash_diff_income
+DEL account.account.template: l10n_generic_coa.cash_discount_gain
+DEL account.account.template: l10n_generic_coa.cash_discount_loss
+DEL account.account.template: l10n_generic_coa.cost_of_goods_sold
+DEL account.account.template: l10n_generic_coa.current_assets
+DEL account.account.template: l10n_generic_coa.current_liabilities
+DEL account.account.template: l10n_generic_coa.dividends
+DEL account.account.template: l10n_generic_coa.expense
+DEL account.account.template: l10n_generic_coa.expense_currency_exchange
+DEL account.account.template: l10n_generic_coa.expense_finance
+DEL account.account.template: l10n_generic_coa.expense_invest
+DEL account.account.template: l10n_generic_coa.expense_rd
+DEL account.account.template: l10n_generic_coa.expense_rent
+DEL account.account.template: l10n_generic_coa.expense_salary
+DEL account.account.template: l10n_generic_coa.expense_sales
+DEL account.account.template: l10n_generic_coa.fixed_assets
+DEL account.account.template: l10n_generic_coa.income
+DEL account.account.template: l10n_generic_coa.income_currency_exchange
+DEL account.account.template: l10n_generic_coa.non_current_assets
+DEL account.account.template: l10n_generic_coa.non_current_liabilities
+DEL account.account.template: l10n_generic_coa.other_income
+DEL account.account.template: l10n_generic_coa.payable
+DEL account.account.template: l10n_generic_coa.pos_receivable
+DEL account.account.template: l10n_generic_coa.prepayments
+DEL account.account.template: l10n_generic_coa.receivable
+DEL account.account.template: l10n_generic_coa.stock_in
+DEL account.account.template: l10n_generic_coa.stock_out
+DEL account.account.template: l10n_generic_coa.stock_valuation
+DEL account.account.template: l10n_generic_coa.tax_paid
+DEL account.account.template: l10n_generic_coa.tax_payable
+DEL account.account.template: l10n_generic_coa.tax_receivable
+DEL account.account.template: l10n_generic_coa.tax_received
+DEL account.account.template: l10n_generic_coa.to_receive_pay
+DEL account.account.template: l10n_generic_coa.to_receive_rec
+DEL account.chart.template: l10n_generic_coa.configurable_chart_template
+DEL account.tax.group: l10n_generic_coa.tax_group_15 (noupdate)
+DEL account.tax.template: l10n_generic_coa.purchase_tax_template
+DEL account.tax.template: l10n_generic_coa.sale_tax_template
+ERROR: module not in list of installed modules:
+---Models in module 'l10n_it_edi_pa'---
+---Fields in module 'l10n_it_edi_pa'---
+l10n_it_edi_pa / account.bank.statement.line / l10n_it_cig (char)            : module is now 'l10n_it_edi' ('l10n_it_edi_pa')
+l10n_it_edi_pa / account.bank.statement.line / l10n_it_cup (char)            : module is now 'l10n_it_edi' ('l10n_it_edi_pa')
+l10n_it_edi_pa / account.bank.statement.line / l10n_it_origin_document_date (date): module is now 'l10n_it_edi' ('l10n_it_edi_pa')
+l10n_it_edi_pa / account.bank.statement.line / l10n_it_origin_document_name (char): module is now 'l10n_it_edi' ('l10n_it_edi_pa')
+l10n_it_edi_pa / account.bank.statement.line / l10n_it_origin_document_type (selection): module is now 'l10n_it_edi' ('l10n_it_edi_pa')
+l10n_it_edi_pa / account.bank.statement.line / l10n_it_partner_pa (boolean)  : module is now 'l10n_it_edi' ('l10n_it_edi_pa')
+l10n_it_edi_pa / account.move             / l10n_it_cig (char)            : module is now 'l10n_it_edi' ('l10n_it_edi_pa')
+l10n_it_edi_pa / account.move             / l10n_it_cup (char)            : module is now 'l10n_it_edi' ('l10n_it_edi_pa')
+l10n_it_edi_pa / account.move             / l10n_it_origin_document_date (date): module is now 'l10n_it_edi' ('l10n_it_edi_pa')
+l10n_it_edi_pa / account.move             / l10n_it_origin_document_name (char): module is now 'l10n_it_edi' ('l10n_it_edi_pa')
+l10n_it_edi_pa / account.move             / l10n_it_origin_document_type (selection): module is now 'l10n_it_edi' ('l10n_it_edi_pa')
+l10n_it_edi_pa / account.move             / l10n_it_partner_pa (boolean)  : module is now 'l10n_it_edi' ('l10n_it_edi_pa')
+l10n_it_edi_pa / account.payment          / l10n_it_cig (char)            : module is now 'l10n_it_edi' ('l10n_it_edi_pa')
+l10n_it_edi_pa / account.payment          / l10n_it_cup (char)            : module is now 'l10n_it_edi' ('l10n_it_edi_pa')
+l10n_it_edi_pa / account.payment          / l10n_it_origin_document_date (date): module is now 'l10n_it_edi' ('l10n_it_edi_pa')
+l10n_it_edi_pa / account.payment          / l10n_it_origin_document_name (char): module is now 'l10n_it_edi' ('l10n_it_edi_pa')
+l10n_it_edi_pa / account.payment          / l10n_it_origin_document_type (selection): module is now 'l10n_it_edi' ('l10n_it_edi_pa')
+l10n_it_edi_pa / account.payment          / l10n_it_partner_pa (boolean)  : module is now 'l10n_it_edi' ('l10n_it_edi_pa')
+---XML records in module 'l10n_it_edi_pa'---
+DEL ir.ui.view: l10n_it_edi_pa.account_invoice_form_l10n_it_pa
+DEL ir.ui.view: l10n_it_edi_pa.report_invoice_document
+ERROR: module not in list of installed modules:
+---Models in module 'l10n_lu_peppol_id'---
+---Fields in module 'l10n_lu_peppol_id'---
+l10n_lu_peppol_id / res.partner              / l10n_lu_peppol_identifier (char): DEL
+---XML records in module 'l10n_lu_peppol_id'---
+DEL ir.ui.view: l10n_lu_peppol_id.res_partner_form_inherit_l10n_lu_peppol_id
+ERROR: module not in list of installed modules:
+---Models in module 'l10n_multilang'---
+---Fields in module 'l10n_multilang'---
+l10n_multilang / account.chart.template   / spoken_languages (char)       : DEL
+---XML records in module 'l10n_multilang'---
+ERROR: module not in list of installed modules:
+---Models in module 'l10n_pl_jpk'---
+obsolete model l10n_pl_tax_office
+---Fields in module 'l10n_pl_jpk'---
+l10n_pl_jpk  / account.bank.statement.line / l10n_pl_vat_b_mpv_prowizja (boolean): module is now 'l10n_pl' ('l10n_pl_jpk')
+l10n_pl_jpk  / account.bank.statement.line / l10n_pl_vat_b_spv (boolean)   : module is now 'l10n_pl' ('l10n_pl_jpk')
+l10n_pl_jpk  / account.bank.statement.line / l10n_pl_vat_b_spv_dostawa (boolean): module is now 'l10n_pl' ('l10n_pl_jpk')
+l10n_pl_jpk  / account.move             / l10n_pl_delivery_date (date)  : DEL
+l10n_pl_jpk  / account.move             / l10n_pl_vat_b_mpv_prowizja (boolean): module is now 'l10n_pl' ('l10n_pl_jpk')
+l10n_pl_jpk  / account.move             / l10n_pl_vat_b_spv (boolean)   : module is now 'l10n_pl' ('l10n_pl_jpk')
+l10n_pl_jpk  / account.move             / l10n_pl_vat_b_spv_dostawa (boolean): module is now 'l10n_pl' ('l10n_pl_jpk')
+l10n_pl_jpk  / account.payment          / l10n_pl_vat_b_mpv_prowizja (boolean): module is now 'l10n_pl' ('l10n_pl_jpk')
+l10n_pl_jpk  / account.payment          / l10n_pl_vat_b_spv (boolean)   : module is now 'l10n_pl' ('l10n_pl_jpk')
+l10n_pl_jpk  / account.payment          / l10n_pl_vat_b_spv_dostawa (boolean): module is now 'l10n_pl' ('l10n_pl_jpk')
+l10n_pl_jpk  / l10n_pl_tax_office       / code (char)                   : DEL required
+l10n_pl_jpk  / l10n_pl_tax_office       / name (char)                   : DEL required
+l10n_pl_jpk  / product.product          / l10n_pl_vat_gtu (selection)   : module is now 'l10n_pl' ('l10n_pl_jpk')
+l10n_pl_jpk  / product.template         / l10n_pl_vat_gtu (selection)   : module is now 'l10n_pl' ('l10n_pl_jpk')
+l10n_pl_jpk  / res.company              / l10n_pl_reports_tax_office_id (many2one): module is now 'l10n_pl' ('l10n_pl_jpk')
+l10n_pl_jpk  / res.company              / l10n_pl_reports_tax_office_id (many2one): relation is now 'l10n_pl.l10n_pl_tax_office' ('l10n_pl_tax_office') [nothing to do]
+l10n_pl_jpk  / res.partner              / l10n_pl_links_with_customer (boolean): module is now 'l10n_pl' ('l10n_pl_jpk')
+l10n_pl_jpk  / res.users                / l10n_pl_links_with_customer (boolean): module is now 'l10n_pl' ('l10n_pl_jpk')
+---XML records in module 'l10n_pl_jpk'---
+DEL ir.model.access: l10n_pl_jpk.access_l10n_pl_tax_office [renamed to l10n_pl module]
+DEL ir.model.constraint: l10n_pl_jpk.constraint_l10n_pl_tax_office_code_company_uniq
+DEL ir.ui.view: l10n_pl_jpk.product_template_form
+DEL ir.ui.view: l10n_pl_jpk.report_invoice_document
+DEL ir.ui.view: l10n_pl_jpk.res_config_settings_view_form
+DEL ir.ui.view: l10n_pl_jpk.res_partner_account_pl_jpk_form
+DEL ir.ui.view: l10n_pl_jpk.view_move_form_l10n_pl
+DEL l10n_pl_tax_office: l10n_pl_jpk.pl_tax_office_0202
+DEL l10n_pl_tax_office: l10n_pl_jpk.pl_tax_office_0203
+DEL l10n_pl_tax_office: l10n_pl_jpk.pl_tax_office_0204
+DEL l10n_pl_tax_office: l10n_pl_jpk.pl_tax_office_0205
+DEL l10n_pl_tax_office: l10n_pl_jpk.pl_tax_office_0206
+DEL l10n_pl_tax_office: l10n_pl_jpk.pl_tax_office_0207
+DEL l10n_pl_tax_office: l10n_pl_jpk.pl_tax_office_0208
+DEL l10n_pl_tax_office: l10n_pl_jpk.pl_tax_office_0209
+DEL l10n_pl_tax_office: l10n_pl_jpk.pl_tax_office_0210
+DEL l10n_pl_tax_office: l10n_pl_jpk.pl_tax_office_0211
+DEL l10n_pl_tax_office: l10n_pl_jpk.pl_tax_office_0212
+DEL l10n_pl_tax_office: l10n_pl_jpk.pl_tax_office_0213
+DEL l10n_pl_tax_office: l10n_pl_jpk.pl_tax_office_0214
+DEL l10n_pl_tax_office: l10n_pl_jpk.pl_tax_office_0215
+DEL l10n_pl_tax_office: l10n_pl_jpk.pl_tax_office_0216
+DEL l10n_pl_tax_office: l10n_pl_jpk.pl_tax_office_0217
+DEL l10n_pl_tax_office: l10n_pl_jpk.pl_tax_office_0218
+DEL l10n_pl_tax_office: l10n_pl_jpk.pl_tax_office_0219
+DEL l10n_pl_tax_office: l10n_pl_jpk.pl_tax_office_0220
+DEL l10n_pl_tax_office: l10n_pl_jpk.pl_tax_office_0221
+DEL l10n_pl_tax_office: l10n_pl_jpk.pl_tax_office_0222
+DEL l10n_pl_tax_office: l10n_pl_jpk.pl_tax_office_0223
+DEL l10n_pl_tax_office: l10n_pl_jpk.pl_tax_office_0224
+DEL l10n_pl_tax_office: l10n_pl_jpk.pl_tax_office_0225
+DEL l10n_pl_tax_office: l10n_pl_jpk.pl_tax_office_0226
+DEL l10n_pl_tax_office: l10n_pl_jpk.pl_tax_office_0227
+DEL l10n_pl_tax_office: l10n_pl_jpk.pl_tax_office_0228
+DEL l10n_pl_tax_office: l10n_pl_jpk.pl_tax_office_0229
+DEL l10n_pl_tax_office: l10n_pl_jpk.pl_tax_office_0230
+DEL l10n_pl_tax_office: l10n_pl_jpk.pl_tax_office_0231
+DEL l10n_pl_tax_office: l10n_pl_jpk.pl_tax_office_0232
+DEL l10n_pl_tax_office: l10n_pl_jpk.pl_tax_office_0233
+DEL l10n_pl_tax_office: l10n_pl_jpk.pl_tax_office_0234
+DEL l10n_pl_tax_office: l10n_pl_jpk.pl_tax_office_0271
+DEL l10n_pl_tax_office: l10n_pl_jpk.pl_tax_office_0402
+DEL l10n_pl_tax_office: l10n_pl_jpk.pl_tax_office_0403
+DEL l10n_pl_tax_office: l10n_pl_jpk.pl_tax_office_0404
+DEL l10n_pl_tax_office: l10n_pl_jpk.pl_tax_office_0405
+DEL l10n_pl_tax_office: l10n_pl_jpk.pl_tax_office_0406
+DEL l10n_pl_tax_office: l10n_pl_jpk.pl_tax_office_0407
+DEL l10n_pl_tax_office: l10n_pl_jpk.pl_tax_office_0408
+DEL l10n_pl_tax_office: l10n_pl_jpk.pl_tax_office_0409
+DEL l10n_pl_tax_office: l10n_pl_jpk.pl_tax_office_0410
+DEL l10n_pl_tax_office: l10n_pl_jpk.pl_tax_office_0411
+DEL l10n_pl_tax_office: l10n_pl_jpk.pl_tax_office_0412
+DEL l10n_pl_tax_office: l10n_pl_jpk.pl_tax_office_0413
+DEL l10n_pl_tax_office: l10n_pl_jpk.pl_tax_office_0414
+DEL l10n_pl_tax_office: l10n_pl_jpk.pl_tax_office_0415
+DEL l10n_pl_tax_office: l10n_pl_jpk.pl_tax_office_0416
+DEL l10n_pl_tax_office: l10n_pl_jpk.pl_tax_office_0417
+DEL l10n_pl_tax_office: l10n_pl_jpk.pl_tax_office_0418
+DEL l10n_pl_tax_office: l10n_pl_jpk.pl_tax_office_0419
+DEL l10n_pl_tax_office: l10n_pl_jpk.pl_tax_office_0420
+DEL l10n_pl_tax_office: l10n_pl_jpk.pl_tax_office_0421
+DEL l10n_pl_tax_office: l10n_pl_jpk.pl_tax_office_0422
+DEL l10n_pl_tax_office: l10n_pl_jpk.pl_tax_office_0423
+DEL l10n_pl_tax_office: l10n_pl_jpk.pl_tax_office_0471
+DEL l10n_pl_tax_office: l10n_pl_jpk.pl_tax_office_0602
+DEL l10n_pl_tax_office: l10n_pl_jpk.pl_tax_office_0603
+DEL l10n_pl_tax_office: l10n_pl_jpk.pl_tax_office_0604
+DEL l10n_pl_tax_office: l10n_pl_jpk.pl_tax_office_0605
+DEL l10n_pl_tax_office: l10n_pl_jpk.pl_tax_office_0606
+DEL l10n_pl_tax_office: l10n_pl_jpk.pl_tax_office_0607
+DEL l10n_pl_tax_office: l10n_pl_jpk.pl_tax_office_0608
+DEL l10n_pl_tax_office: l10n_pl_jpk.pl_tax_office_0609
+DEL l10n_pl_tax_office: l10n_pl_jpk.pl_tax_office_0610
+DEL l10n_pl_tax_office: l10n_pl_jpk.pl_tax_office_0611
+DEL l10n_pl_tax_office: l10n_pl_jpk.pl_tax_office_0612
+DEL l10n_pl_tax_office: l10n_pl_jpk.pl_tax_office_0613
+DEL l10n_pl_tax_office: l10n_pl_jpk.pl_tax_office_0614
+DEL l10n_pl_tax_office: l10n_pl_jpk.pl_tax_office_0615
+DEL l10n_pl_tax_office: l10n_pl_jpk.pl_tax_office_0616
+DEL l10n_pl_tax_office: l10n_pl_jpk.pl_tax_office_0617
+DEL l10n_pl_tax_office: l10n_pl_jpk.pl_tax_office_0618
+DEL l10n_pl_tax_office: l10n_pl_jpk.pl_tax_office_0619
+DEL l10n_pl_tax_office: l10n_pl_jpk.pl_tax_office_0620
+DEL l10n_pl_tax_office: l10n_pl_jpk.pl_tax_office_0621
+DEL l10n_pl_tax_office: l10n_pl_jpk.pl_tax_office_0622
+DEL l10n_pl_tax_office: l10n_pl_jpk.pl_tax_office_0671
+DEL l10n_pl_tax_office: l10n_pl_jpk.pl_tax_office_0802
+DEL l10n_pl_tax_office: l10n_pl_jpk.pl_tax_office_0803
+DEL l10n_pl_tax_office: l10n_pl_jpk.pl_tax_office_0804
+DEL l10n_pl_tax_office: l10n_pl_jpk.pl_tax_office_0805
+DEL l10n_pl_tax_office: l10n_pl_jpk.pl_tax_office_0806
+DEL l10n_pl_tax_office: l10n_pl_jpk.pl_tax_office_0807
+DEL l10n_pl_tax_office: l10n_pl_jpk.pl_tax_office_0808
+DEL l10n_pl_tax_office: l10n_pl_jpk.pl_tax_office_0809
+DEL l10n_pl_tax_office: l10n_pl_jpk.pl_tax_office_0810
+DEL l10n_pl_tax_office: l10n_pl_jpk.pl_tax_office_0811
+DEL l10n_pl_tax_office: l10n_pl_jpk.pl_tax_office_0812
+DEL l10n_pl_tax_office: l10n_pl_jpk.pl_tax_office_0813
+DEL l10n_pl_tax_office: l10n_pl_jpk.pl_tax_office_0814
+DEL l10n_pl_tax_office: l10n_pl_jpk.pl_tax_office_0871
+DEL l10n_pl_tax_office: l10n_pl_jpk.pl_tax_office_1002
+DEL l10n_pl_tax_office: l10n_pl_jpk.pl_tax_office_1003
+DEL l10n_pl_tax_office: l10n_pl_jpk.pl_tax_office_1004
+DEL l10n_pl_tax_office: l10n_pl_jpk.pl_tax_office_1005
+DEL l10n_pl_tax_office: l10n_pl_jpk.pl_tax_office_1006
+DEL l10n_pl_tax_office: l10n_pl_jpk.pl_tax_office_1007
+DEL l10n_pl_tax_office: l10n_pl_jpk.pl_tax_office_1008
+DEL l10n_pl_tax_office: l10n_pl_jpk.pl_tax_office_1009
+DEL l10n_pl_tax_office: l10n_pl_jpk.pl_tax_office_1010
+DEL l10n_pl_tax_office: l10n_pl_jpk.pl_tax_office_1011
+DEL l10n_pl_tax_office: l10n_pl_jpk.pl_tax_office_1012
+DEL l10n_pl_tax_office: l10n_pl_jpk.pl_tax_office_1013
+DEL l10n_pl_tax_office: l10n_pl_jpk.pl_tax_office_1014
+DEL l10n_pl_tax_office: l10n_pl_jpk.pl_tax_office_1015
+DEL l10n_pl_tax_office: l10n_pl_jpk.pl_tax_office_1016
+DEL l10n_pl_tax_office: l10n_pl_jpk.pl_tax_office_1017
+DEL l10n_pl_tax_office: l10n_pl_jpk.pl_tax_office_1018
+DEL l10n_pl_tax_office: l10n_pl_jpk.pl_tax_office_1019
+DEL l10n_pl_tax_office: l10n_pl_jpk.pl_tax_office_1020
+DEL l10n_pl_tax_office: l10n_pl_jpk.pl_tax_office_1021
+DEL l10n_pl_tax_office: l10n_pl_jpk.pl_tax_office_1022
+DEL l10n_pl_tax_office: l10n_pl_jpk.pl_tax_office_1023
+DEL l10n_pl_tax_office: l10n_pl_jpk.pl_tax_office_1024
+DEL l10n_pl_tax_office: l10n_pl_jpk.pl_tax_office_1025
+DEL l10n_pl_tax_office: l10n_pl_jpk.pl_tax_office_1026
+DEL l10n_pl_tax_office: l10n_pl_jpk.pl_tax_office_1027
+DEL l10n_pl_tax_office: l10n_pl_jpk.pl_tax_office_1028
+DEL l10n_pl_tax_office: l10n_pl_jpk.pl_tax_office_1029
+DEL l10n_pl_tax_office: l10n_pl_jpk.pl_tax_office_1071
+DEL l10n_pl_tax_office: l10n_pl_jpk.pl_tax_office_1202
+DEL l10n_pl_tax_office: l10n_pl_jpk.pl_tax_office_1203
+DEL l10n_pl_tax_office: l10n_pl_jpk.pl_tax_office_1204
+DEL l10n_pl_tax_office: l10n_pl_jpk.pl_tax_office_1205
+DEL l10n_pl_tax_office: l10n_pl_jpk.pl_tax_office_1206
+DEL l10n_pl_tax_office: l10n_pl_jpk.pl_tax_office_1207
+DEL l10n_pl_tax_office: l10n_pl_jpk.pl_tax_office_1208
+DEL l10n_pl_tax_office: l10n_pl_jpk.pl_tax_office_1209
+DEL l10n_pl_tax_office: l10n_pl_jpk.pl_tax_office_1210
+DEL l10n_pl_tax_office: l10n_pl_jpk.pl_tax_office_1211
+DEL l10n_pl_tax_office: l10n_pl_jpk.pl_tax_office_1212
+DEL l10n_pl_tax_office: l10n_pl_jpk.pl_tax_office_1213
+DEL l10n_pl_tax_office: l10n_pl_jpk.pl_tax_office_1214
+DEL l10n_pl_tax_office: l10n_pl_jpk.pl_tax_office_1215
+DEL l10n_pl_tax_office: l10n_pl_jpk.pl_tax_office_1216
+DEL l10n_pl_tax_office: l10n_pl_jpk.pl_tax_office_1217
+DEL l10n_pl_tax_office: l10n_pl_jpk.pl_tax_office_1218
+DEL l10n_pl_tax_office: l10n_pl_jpk.pl_tax_office_1219
+DEL l10n_pl_tax_office: l10n_pl_jpk.pl_tax_office_1220
+DEL l10n_pl_tax_office: l10n_pl_jpk.pl_tax_office_1221
+DEL l10n_pl_tax_office: l10n_pl_jpk.pl_tax_office_1222
+DEL l10n_pl_tax_office: l10n_pl_jpk.pl_tax_office_1223
+DEL l10n_pl_tax_office: l10n_pl_jpk.pl_tax_office_1224
+DEL l10n_pl_tax_office: l10n_pl_jpk.pl_tax_office_1225
+DEL l10n_pl_tax_office: l10n_pl_jpk.pl_tax_office_1226
+DEL l10n_pl_tax_office: l10n_pl_jpk.pl_tax_office_1227
+DEL l10n_pl_tax_office: l10n_pl_jpk.pl_tax_office_1228
+DEL l10n_pl_tax_office: l10n_pl_jpk.pl_tax_office_1271
+DEL l10n_pl_tax_office: l10n_pl_jpk.pl_tax_office_1402
+DEL l10n_pl_tax_office: l10n_pl_jpk.pl_tax_office_1403
+DEL l10n_pl_tax_office: l10n_pl_jpk.pl_tax_office_1404
+DEL l10n_pl_tax_office: l10n_pl_jpk.pl_tax_office_1405
+DEL l10n_pl_tax_office: l10n_pl_jpk.pl_tax_office_1406
+DEL l10n_pl_tax_office: l10n_pl_jpk.pl_tax_office_1407
+DEL l10n_pl_tax_office: l10n_pl_jpk.pl_tax_office_1408
+DEL l10n_pl_tax_office: l10n_pl_jpk.pl_tax_office_1409
+DEL l10n_pl_tax_office: l10n_pl_jpk.pl_tax_office_1410
+DEL l10n_pl_tax_office: l10n_pl_jpk.pl_tax_office_1411
+DEL l10n_pl_tax_office: l10n_pl_jpk.pl_tax_office_1412
+DEL l10n_pl_tax_office: l10n_pl_jpk.pl_tax_office_1413
+DEL l10n_pl_tax_office: l10n_pl_jpk.pl_tax_office_1414
+DEL l10n_pl_tax_office: l10n_pl_jpk.pl_tax_office_1415
+DEL l10n_pl_tax_office: l10n_pl_jpk.pl_tax_office_1416
+DEL l10n_pl_tax_office: l10n_pl_jpk.pl_tax_office_1417
+DEL l10n_pl_tax_office: l10n_pl_jpk.pl_tax_office_1418
+DEL l10n_pl_tax_office: l10n_pl_jpk.pl_tax_office_1419
+DEL l10n_pl_tax_office: l10n_pl_jpk.pl_tax_office_1420
+DEL l10n_pl_tax_office: l10n_pl_jpk.pl_tax_office_1421
+DEL l10n_pl_tax_office: l10n_pl_jpk.pl_tax_office_1422
+DEL l10n_pl_tax_office: l10n_pl_jpk.pl_tax_office_1423
+DEL l10n_pl_tax_office: l10n_pl_jpk.pl_tax_office_1424
+DEL l10n_pl_tax_office: l10n_pl_jpk.pl_tax_office_1425
+DEL l10n_pl_tax_office: l10n_pl_jpk.pl_tax_office_1426
+DEL l10n_pl_tax_office: l10n_pl_jpk.pl_tax_office_1427
+DEL l10n_pl_tax_office: l10n_pl_jpk.pl_tax_office_1428
+DEL l10n_pl_tax_office: l10n_pl_jpk.pl_tax_office_1429
+DEL l10n_pl_tax_office: l10n_pl_jpk.pl_tax_office_1430
+DEL l10n_pl_tax_office: l10n_pl_jpk.pl_tax_office_1431
+DEL l10n_pl_tax_office: l10n_pl_jpk.pl_tax_office_1432
+DEL l10n_pl_tax_office: l10n_pl_jpk.pl_tax_office_1433
+DEL l10n_pl_tax_office: l10n_pl_jpk.pl_tax_office_1434
+DEL l10n_pl_tax_office: l10n_pl_jpk.pl_tax_office_1435
+DEL l10n_pl_tax_office: l10n_pl_jpk.pl_tax_office_1436
+DEL l10n_pl_tax_office: l10n_pl_jpk.pl_tax_office_1437
+DEL l10n_pl_tax_office: l10n_pl_jpk.pl_tax_office_1438
+DEL l10n_pl_tax_office: l10n_pl_jpk.pl_tax_office_1439
+DEL l10n_pl_tax_office: l10n_pl_jpk.pl_tax_office_1440
+DEL l10n_pl_tax_office: l10n_pl_jpk.pl_tax_office_1441
+DEL l10n_pl_tax_office: l10n_pl_jpk.pl_tax_office_1442
+DEL l10n_pl_tax_office: l10n_pl_jpk.pl_tax_office_1443
+DEL l10n_pl_tax_office: l10n_pl_jpk.pl_tax_office_1444
+DEL l10n_pl_tax_office: l10n_pl_jpk.pl_tax_office_1445
+DEL l10n_pl_tax_office: l10n_pl_jpk.pl_tax_office_1446
+DEL l10n_pl_tax_office: l10n_pl_jpk.pl_tax_office_1447
+DEL l10n_pl_tax_office: l10n_pl_jpk.pl_tax_office_1448
+DEL l10n_pl_tax_office: l10n_pl_jpk.pl_tax_office_1449
+DEL l10n_pl_tax_office: l10n_pl_jpk.pl_tax_office_1471
+DEL l10n_pl_tax_office: l10n_pl_jpk.pl_tax_office_1472
+DEL l10n_pl_tax_office: l10n_pl_jpk.pl_tax_office_1473
+DEL l10n_pl_tax_office: l10n_pl_jpk.pl_tax_office_1602
+DEL l10n_pl_tax_office: l10n_pl_jpk.pl_tax_office_1603
+DEL l10n_pl_tax_office: l10n_pl_jpk.pl_tax_office_1604
+DEL l10n_pl_tax_office: l10n_pl_jpk.pl_tax_office_1605
+DEL l10n_pl_tax_office: l10n_pl_jpk.pl_tax_office_1606
+DEL l10n_pl_tax_office: l10n_pl_jpk.pl_tax_office_1607
+DEL l10n_pl_tax_office: l10n_pl_jpk.pl_tax_office_1608
+DEL l10n_pl_tax_office: l10n_pl_jpk.pl_tax_office_1609
+DEL l10n_pl_tax_office: l10n_pl_jpk.pl_tax_office_1610
+DEL l10n_pl_tax_office: l10n_pl_jpk.pl_tax_office_1611
+DEL l10n_pl_tax_office: l10n_pl_jpk.pl_tax_office_1612
+DEL l10n_pl_tax_office: l10n_pl_jpk.pl_tax_office_1613
+DEL l10n_pl_tax_office: l10n_pl_jpk.pl_tax_office_1671
+DEL l10n_pl_tax_office: l10n_pl_jpk.pl_tax_office_1802
+DEL l10n_pl_tax_office: l10n_pl_jpk.pl_tax_office_1803
+DEL l10n_pl_tax_office: l10n_pl_jpk.pl_tax_office_1804
+DEL l10n_pl_tax_office: l10n_pl_jpk.pl_tax_office_1805
+DEL l10n_pl_tax_office: l10n_pl_jpk.pl_tax_office_1806
+DEL l10n_pl_tax_office: l10n_pl_jpk.pl_tax_office_1807
+DEL l10n_pl_tax_office: l10n_pl_jpk.pl_tax_office_1808
+DEL l10n_pl_tax_office: l10n_pl_jpk.pl_tax_office_1809
+DEL l10n_pl_tax_office: l10n_pl_jpk.pl_tax_office_1810
+DEL l10n_pl_tax_office: l10n_pl_jpk.pl_tax_office_1811
+DEL l10n_pl_tax_office: l10n_pl_jpk.pl_tax_office_1812
+DEL l10n_pl_tax_office: l10n_pl_jpk.pl_tax_office_1813
+DEL l10n_pl_tax_office: l10n_pl_jpk.pl_tax_office_1814
+DEL l10n_pl_tax_office: l10n_pl_jpk.pl_tax_office_1815
+DEL l10n_pl_tax_office: l10n_pl_jpk.pl_tax_office_1816
+DEL l10n_pl_tax_office: l10n_pl_jpk.pl_tax_office_1817
+DEL l10n_pl_tax_office: l10n_pl_jpk.pl_tax_office_1818
+DEL l10n_pl_tax_office: l10n_pl_jpk.pl_tax_office_1819
+DEL l10n_pl_tax_office: l10n_pl_jpk.pl_tax_office_1820
+DEL l10n_pl_tax_office: l10n_pl_jpk.pl_tax_office_1821
+DEL l10n_pl_tax_office: l10n_pl_jpk.pl_tax_office_1822
+DEL l10n_pl_tax_office: l10n_pl_jpk.pl_tax_office_1823
+DEL l10n_pl_tax_office: l10n_pl_jpk.pl_tax_office_1871
+DEL l10n_pl_tax_office: l10n_pl_jpk.pl_tax_office_2002
+DEL l10n_pl_tax_office: l10n_pl_jpk.pl_tax_office_2003
+DEL l10n_pl_tax_office: l10n_pl_jpk.pl_tax_office_2004
+DEL l10n_pl_tax_office: l10n_pl_jpk.pl_tax_office_2005
+DEL l10n_pl_tax_office: l10n_pl_jpk.pl_tax_office_2006
+DEL l10n_pl_tax_office: l10n_pl_jpk.pl_tax_office_2007
+DEL l10n_pl_tax_office: l10n_pl_jpk.pl_tax_office_2008
+DEL l10n_pl_tax_office: l10n_pl_jpk.pl_tax_office_2009
+DEL l10n_pl_tax_office: l10n_pl_jpk.pl_tax_office_2010
+DEL l10n_pl_tax_office: l10n_pl_jpk.pl_tax_office_2011
+DEL l10n_pl_tax_office: l10n_pl_jpk.pl_tax_office_2012
+DEL l10n_pl_tax_office: l10n_pl_jpk.pl_tax_office_2013
+DEL l10n_pl_tax_office: l10n_pl_jpk.pl_tax_office_2014
+DEL l10n_pl_tax_office: l10n_pl_jpk.pl_tax_office_2015
+DEL l10n_pl_tax_office: l10n_pl_jpk.pl_tax_office_2071
+DEL l10n_pl_tax_office: l10n_pl_jpk.pl_tax_office_2202
+DEL l10n_pl_tax_office: l10n_pl_jpk.pl_tax_office_2203
+DEL l10n_pl_tax_office: l10n_pl_jpk.pl_tax_office_2204
+DEL l10n_pl_tax_office: l10n_pl_jpk.pl_tax_office_2205
+DEL l10n_pl_tax_office: l10n_pl_jpk.pl_tax_office_2206
+DEL l10n_pl_tax_office: l10n_pl_jpk.pl_tax_office_2207
+DEL l10n_pl_tax_office: l10n_pl_jpk.pl_tax_office_2208
+DEL l10n_pl_tax_office: l10n_pl_jpk.pl_tax_office_2209
+DEL l10n_pl_tax_office: l10n_pl_jpk.pl_tax_office_2210
+DEL l10n_pl_tax_office: l10n_pl_jpk.pl_tax_office_2211
+DEL l10n_pl_tax_office: l10n_pl_jpk.pl_tax_office_2212
+DEL l10n_pl_tax_office: l10n_pl_jpk.pl_tax_office_2213
+DEL l10n_pl_tax_office: l10n_pl_jpk.pl_tax_office_2214
+DEL l10n_pl_tax_office: l10n_pl_jpk.pl_tax_office_2215
+DEL l10n_pl_tax_office: l10n_pl_jpk.pl_tax_office_2216
+DEL l10n_pl_tax_office: l10n_pl_jpk.pl_tax_office_2217
+DEL l10n_pl_tax_office: l10n_pl_jpk.pl_tax_office_2218
+DEL l10n_pl_tax_office: l10n_pl_jpk.pl_tax_office_2219
+DEL l10n_pl_tax_office: l10n_pl_jpk.pl_tax_office_2220
+DEL l10n_pl_tax_office: l10n_pl_jpk.pl_tax_office_2221
+DEL l10n_pl_tax_office: l10n_pl_jpk.pl_tax_office_2271
+DEL l10n_pl_tax_office: l10n_pl_jpk.pl_tax_office_2402
+DEL l10n_pl_tax_office: l10n_pl_jpk.pl_tax_office_2403
+DEL l10n_pl_tax_office: l10n_pl_jpk.pl_tax_office_2404
+DEL l10n_pl_tax_office: l10n_pl_jpk.pl_tax_office_2405
+DEL l10n_pl_tax_office: l10n_pl_jpk.pl_tax_office_2406
+DEL l10n_pl_tax_office: l10n_pl_jpk.pl_tax_office_2407
+DEL l10n_pl_tax_office: l10n_pl_jpk.pl_tax_office_2408
+DEL l10n_pl_tax_office: l10n_pl_jpk.pl_tax_office_2409
+DEL l10n_pl_tax_office: l10n_pl_jpk.pl_tax_office_2410
+DEL l10n_pl_tax_office: l10n_pl_jpk.pl_tax_office_2411
+DEL l10n_pl_tax_office: l10n_pl_jpk.pl_tax_office_2412
+DEL l10n_pl_tax_office: l10n_pl_jpk.pl_tax_office_2413
+DEL l10n_pl_tax_office: l10n_pl_jpk.pl_tax_office_2414
+DEL l10n_pl_tax_office: l10n_pl_jpk.pl_tax_office_2415
+DEL l10n_pl_tax_office: l10n_pl_jpk.pl_tax_office_2416
+DEL l10n_pl_tax_office: l10n_pl_jpk.pl_tax_office_2417
+DEL l10n_pl_tax_office: l10n_pl_jpk.pl_tax_office_2418
+DEL l10n_pl_tax_office: l10n_pl_jpk.pl_tax_office_2419
+DEL l10n_pl_tax_office: l10n_pl_jpk.pl_tax_office_2420
+DEL l10n_pl_tax_office: l10n_pl_jpk.pl_tax_office_2421
+DEL l10n_pl_tax_office: l10n_pl_jpk.pl_tax_office_2422
+DEL l10n_pl_tax_office: l10n_pl_jpk.pl_tax_office_2423
+DEL l10n_pl_tax_office: l10n_pl_jpk.pl_tax_office_2424
+DEL l10n_pl_tax_office: l10n_pl_jpk.pl_tax_office_2425
+DEL l10n_pl_tax_office: l10n_pl_jpk.pl_tax_office_2426
+DEL l10n_pl_tax_office: l10n_pl_jpk.pl_tax_office_2427
+DEL l10n_pl_tax_office: l10n_pl_jpk.pl_tax_office_2428
+DEL l10n_pl_tax_office: l10n_pl_jpk.pl_tax_office_2429
+DEL l10n_pl_tax_office: l10n_pl_jpk.pl_tax_office_2430
+DEL l10n_pl_tax_office: l10n_pl_jpk.pl_tax_office_2431
+DEL l10n_pl_tax_office: l10n_pl_jpk.pl_tax_office_2432
+DEL l10n_pl_tax_office: l10n_pl_jpk.pl_tax_office_2433
+DEL l10n_pl_tax_office: l10n_pl_jpk.pl_tax_office_2434
+DEL l10n_pl_tax_office: l10n_pl_jpk.pl_tax_office_2435
+DEL l10n_pl_tax_office: l10n_pl_jpk.pl_tax_office_2436
+DEL l10n_pl_tax_office: l10n_pl_jpk.pl_tax_office_2471
+DEL l10n_pl_tax_office: l10n_pl_jpk.pl_tax_office_2472
+DEL l10n_pl_tax_office: l10n_pl_jpk.pl_tax_office_2602
+DEL l10n_pl_tax_office: l10n_pl_jpk.pl_tax_office_2603
+DEL l10n_pl_tax_office: l10n_pl_jpk.pl_tax_office_2604
+DEL l10n_pl_tax_office: l10n_pl_jpk.pl_tax_office_2605
+DEL l10n_pl_tax_office: l10n_pl_jpk.pl_tax_office_2606
+DEL l10n_pl_tax_office: l10n_pl_jpk.pl_tax_office_2607
+DEL l10n_pl_tax_office: l10n_pl_jpk.pl_tax_office_2608
+DEL l10n_pl_tax_office: l10n_pl_jpk.pl_tax_office_2609
+DEL l10n_pl_tax_office: l10n_pl_jpk.pl_tax_office_2610
+DEL l10n_pl_tax_office: l10n_pl_jpk.pl_tax_office_2611
+DEL l10n_pl_tax_office: l10n_pl_jpk.pl_tax_office_2612
+DEL l10n_pl_tax_office: l10n_pl_jpk.pl_tax_office_2613
+DEL l10n_pl_tax_office: l10n_pl_jpk.pl_tax_office_2614
+DEL l10n_pl_tax_office: l10n_pl_jpk.pl_tax_office_2615
+DEL l10n_pl_tax_office: l10n_pl_jpk.pl_tax_office_2671
+DEL l10n_pl_tax_office: l10n_pl_jpk.pl_tax_office_2802
+DEL l10n_pl_tax_office: l10n_pl_jpk.pl_tax_office_2803
+DEL l10n_pl_tax_office: l10n_pl_jpk.pl_tax_office_2804
+DEL l10n_pl_tax_office: l10n_pl_jpk.pl_tax_office_2805
+DEL l10n_pl_tax_office: l10n_pl_jpk.pl_tax_office_2806
+DEL l10n_pl_tax_office: l10n_pl_jpk.pl_tax_office_2807
+DEL l10n_pl_tax_office: l10n_pl_jpk.pl_tax_office_2808
+DEL l10n_pl_tax_office: l10n_pl_jpk.pl_tax_office_2809
+DEL l10n_pl_tax_office: l10n_pl_jpk.pl_tax_office_2810
+DEL l10n_pl_tax_office: l10n_pl_jpk.pl_tax_office_2811
+DEL l10n_pl_tax_office: l10n_pl_jpk.pl_tax_office_2812
+DEL l10n_pl_tax_office: l10n_pl_jpk.pl_tax_office_2813
+DEL l10n_pl_tax_office: l10n_pl_jpk.pl_tax_office_2814
+DEL l10n_pl_tax_office: l10n_pl_jpk.pl_tax_office_2815
+DEL l10n_pl_tax_office: l10n_pl_jpk.pl_tax_office_2816
+DEL l10n_pl_tax_office: l10n_pl_jpk.pl_tax_office_2871
+DEL l10n_pl_tax_office: l10n_pl_jpk.pl_tax_office_3002
+DEL l10n_pl_tax_office: l10n_pl_jpk.pl_tax_office_3003
+DEL l10n_pl_tax_office: l10n_pl_jpk.pl_tax_office_3004
+DEL l10n_pl_tax_office: l10n_pl_jpk.pl_tax_office_3005
+DEL l10n_pl_tax_office: l10n_pl_jpk.pl_tax_office_3006
+DEL l10n_pl_tax_office: l10n_pl_jpk.pl_tax_office_3007
+DEL l10n_pl_tax_office: l10n_pl_jpk.pl_tax_office_3008
+DEL l10n_pl_tax_office: l10n_pl_jpk.pl_tax_office_3009
+DEL l10n_pl_tax_office: l10n_pl_jpk.pl_tax_office_3010
+DEL l10n_pl_tax_office: l10n_pl_jpk.pl_tax_office_3011
+DEL l10n_pl_tax_office: l10n_pl_jpk.pl_tax_office_3012
+DEL l10n_pl_tax_office: l10n_pl_jpk.pl_tax_office_3013
+DEL l10n_pl_tax_office: l10n_pl_jpk.pl_tax_office_3014
+DEL l10n_pl_tax_office: l10n_pl_jpk.pl_tax_office_3015
+DEL l10n_pl_tax_office: l10n_pl_jpk.pl_tax_office_3016
+DEL l10n_pl_tax_office: l10n_pl_jpk.pl_tax_office_3017
+DEL l10n_pl_tax_office: l10n_pl_jpk.pl_tax_office_3018
+DEL l10n_pl_tax_office: l10n_pl_jpk.pl_tax_office_3019
+DEL l10n_pl_tax_office: l10n_pl_jpk.pl_tax_office_3020
+DEL l10n_pl_tax_office: l10n_pl_jpk.pl_tax_office_3021
+DEL l10n_pl_tax_office: l10n_pl_jpk.pl_tax_office_3022
+DEL l10n_pl_tax_office: l10n_pl_jpk.pl_tax_office_3023
+DEL l10n_pl_tax_office: l10n_pl_jpk.pl_tax_office_3025
+DEL l10n_pl_tax_office: l10n_pl_jpk.pl_tax_office_3026
+DEL l10n_pl_tax_office: l10n_pl_jpk.pl_tax_office_3027
+DEL l10n_pl_tax_office: l10n_pl_jpk.pl_tax_office_3028
+DEL l10n_pl_tax_office: l10n_pl_jpk.pl_tax_office_3029
+DEL l10n_pl_tax_office: l10n_pl_jpk.pl_tax_office_3030
+DEL l10n_pl_tax_office: l10n_pl_jpk.pl_tax_office_3031
+DEL l10n_pl_tax_office: l10n_pl_jpk.pl_tax_office_3032
+DEL l10n_pl_tax_office: l10n_pl_jpk.pl_tax_office_3033
+DEL l10n_pl_tax_office: l10n_pl_jpk.pl_tax_office_3034
+DEL l10n_pl_tax_office: l10n_pl_jpk.pl_tax_office_3035
+DEL l10n_pl_tax_office: l10n_pl_jpk.pl_tax_office_3036
+DEL l10n_pl_tax_office: l10n_pl_jpk.pl_tax_office_3037
+DEL l10n_pl_tax_office: l10n_pl_jpk.pl_tax_office_3038
+DEL l10n_pl_tax_office: l10n_pl_jpk.pl_tax_office_3039
+DEL l10n_pl_tax_office: l10n_pl_jpk.pl_tax_office_3071
+DEL l10n_pl_tax_office: l10n_pl_jpk.pl_tax_office_3072
+DEL l10n_pl_tax_office: l10n_pl_jpk.pl_tax_office_3202
+DEL l10n_pl_tax_office: l10n_pl_jpk.pl_tax_office_3203
+DEL l10n_pl_tax_office: l10n_pl_jpk.pl_tax_office_3204
+DEL l10n_pl_tax_office: l10n_pl_jpk.pl_tax_office_3205
+DEL l10n_pl_tax_office: l10n_pl_jpk.pl_tax_office_3206
+DEL l10n_pl_tax_office: l10n_pl_jpk.pl_tax_office_3207
+DEL l10n_pl_tax_office: l10n_pl_jpk.pl_tax_office_3208
+DEL l10n_pl_tax_office: l10n_pl_jpk.pl_tax_office_3209
+DEL l10n_pl_tax_office: l10n_pl_jpk.pl_tax_office_3210
+DEL l10n_pl_tax_office: l10n_pl_jpk.pl_tax_office_3211
+DEL l10n_pl_tax_office: l10n_pl_jpk.pl_tax_office_3212
+DEL l10n_pl_tax_office: l10n_pl_jpk.pl_tax_office_3213
+DEL l10n_pl_tax_office: l10n_pl_jpk.pl_tax_office_3214
+DEL l10n_pl_tax_office: l10n_pl_jpk.pl_tax_office_3215
+DEL l10n_pl_tax_office: l10n_pl_jpk.pl_tax_office_3216
+DEL l10n_pl_tax_office: l10n_pl_jpk.pl_tax_office_3217
+DEL l10n_pl_tax_office: l10n_pl_jpk.pl_tax_office_3218
+DEL l10n_pl_tax_office: l10n_pl_jpk.pl_tax_office_3219
+DEL l10n_pl_tax_office: l10n_pl_jpk.pl_tax_office_3220
+DEL l10n_pl_tax_office: l10n_pl_jpk.pl_tax_office_3271
+ERROR: module not in list of installed modules:
+---Models in module 'l10n_pl_sale_stock'---
+---Fields in module 'l10n_pl_sale_stock'---
+---XML records in module 'l10n_pl_sale_stock'---
+---nothing has changed in this module--
+ERROR: module not in list of installed modules:
+---Models in module 'sale_quotation_builder'---
+---Fields in module 'sale_quotation_builder'---
+sale_quotation_builder / product.template         / quotation_only_description (html): DEL
+sale_quotation_builder / sale.order               / website_description (html)    : DEL
+sale_quotation_builder / sale.order.line          / website_description (html)    : DEL
+sale_quotation_builder / sale.order.option        / website_description (html)    : DEL
+sale_quotation_builder / sale.order.template      / website_description (html)    : DEL
+sale_quotation_builder / sale.order.template.line / website_description (html)    : DEL
+sale_quotation_builder / sale.order.template.option / website_description (html)    : DEL
+---XML records in module 'sale_quotation_builder'---
+DEL ir.ui.view: sale_quotation_builder.brand_promotion
+DEL ir.ui.view: sale_quotation_builder.res_config_settings_view_form_inherit
+DEL ir.ui.view: sale_quotation_builder.sale_order_form_quote_design
+DEL ir.ui.view: sale_quotation_builder.sale_order_portal_content_inherit_sale_quotation_builder
+DEL ir.ui.view: sale_quotation_builder.sale_order_template_view_form_inherit_sale_quotation_builder
+DEL ir.ui.view: sale_quotation_builder.so_template
+DEL sale.order.template: sale_quotation_builder.sale_order_template_default (noupdate)
+ERROR: module not in list of installed modules:
+---Models in module 'website_event_questions'---
+model event.question (moved to website_event)
+model event.question.answer (moved to website_event)
+model event.registration.answer (moved to website_event)
+---Fields in module 'website_event_questions'---
+website_event_questions / event.event              / general_question_ids (one2many): module is now 'website_event' ('website_event_questions')
+website_event_questions / event.event              / question_ids (one2many)       : module is now 'website_event' ('website_event_questions')
+website_event_questions / event.event              / specific_question_ids (one2many): module is now 'website_event' ('website_event_questions')
+website_event_questions / event.question           / _order                        : module is now 'website_event' ('website_event_questions')
+website_event_questions / event.question           / answer_ids (one2many)         : module is now 'website_event' ('website_event_questions')
+website_event_questions / event.question           / display_name (char)           : module is now 'website_event' ('website_event_questions')
+website_event_questions / event.question           / event_id (many2one)           : module is now 'website_event' ('website_event_questions')
+website_event_questions / event.question           / event_type_id (many2one)      : module is now 'website_event' ('website_event_questions')
+website_event_questions / event.question           / is_mandatory_answer (boolean) : module is now 'website_event' ('website_event_questions')
+website_event_questions / event.question           / once_per_order (boolean)      : module is now 'website_event' ('website_event_questions')
+website_event_questions / event.question           / question_type (selection)     : module is now 'website_event' ('website_event_questions')
+website_event_questions / event.question           / question_type (selection)     : selection_keys is now '['company_name', 'email', 'name', 'phone', 'simple_choice', 'text_box']' ('['simple_choice', 'text_box']')
+website_event_questions / event.question           / sequence (integer)            : module is now 'website_event' ('website_event_questions')
+website_event_questions / event.question           / title (char)                  : module is now 'website_event' ('website_event_questions')
+website_event_questions / event.question.answer    / _order                        : module is now 'website_event' ('website_event_questions')
+website_event_questions / event.question.answer    / display_name (char)           : module is now 'website_event' ('website_event_questions')
+website_event_questions / event.question.answer    / name (char)                   : module is now 'website_event' ('website_event_questions')
+website_event_questions / event.question.answer    / question_id (many2one)        : module is now 'website_event' ('website_event_questions')
+website_event_questions / event.question.answer    / sequence (integer)            : module is now 'website_event' ('website_event_questions')
+website_event_questions / event.registration       / registration_answer_ids (one2many): module is now 'website_event' ('website_event_questions')
+website_event_questions / event.registration.answer / _order                        : module is now 'website_event' ('website_event_questions')
+website_event_questions / event.registration.answer / display_name (char)           : module is now 'website_event' ('website_event_questions')
+website_event_questions / event.registration.answer / event_id (many2one)           : module is now 'website_event' ('website_event_questions')
+website_event_questions / event.registration.answer / partner_id (many2one)         : module is now 'website_event' ('website_event_questions')
+website_event_questions / event.registration.answer / question_id (many2one)        : module is now 'website_event' ('website_event_questions')
+website_event_questions / event.registration.answer / question_type (selection)     : module is now 'website_event' ('website_event_questions')
+website_event_questions / event.registration.answer / registration_id (many2one)    : module is now 'website_event' ('website_event_questions')
+website_event_questions / event.registration.answer / value_answer_id (many2one)    : module is now 'website_event' ('website_event_questions')
+website_event_questions / event.registration.answer / value_text_box (text)         : module is now 'website_event' ('website_event_questions')
+website_event_questions / event.type               / question_ids (one2many)       : module is now 'website_event' ('website_event_questions')
+---XML records in module 'website_event_questions'---
+DEL ir.actions.act_window: website_event_questions.action_event_registration_report [renamed to website_event module]
+DEL ir.model.access: website_event_questions.access_event_question
+DEL ir.model.access: website_event_questions.access_event_question_answer
+DEL ir.model.access: website_event_questions.access_event_question_answer_registration [renamed to website_event module]
+DEL ir.model.access: website_event_questions.access_event_question_answer_user [renamed to website_event module]
+DEL ir.model.access: website_event_questions.access_event_question_user [renamed to website_event module]
+DEL ir.model.access: website_event_questions.access_event_registration_answer_registration
+DEL ir.model.constraint: website_event_questions.constraint_event_registration_answer_value_check
+DEL ir.rule: website_event_questions.ir_rule_event_question_answer_event_user [renamed to website_event module] (noupdate)
+DEL ir.rule: website_event_questions.ir_rule_event_question_answer_published [renamed to website_event module] (noupdate)
+DEL ir.rule: website_event_questions.ir_rule_event_question_event_user [renamed to website_event module] (noupdate)
+DEL ir.rule: website_event_questions.ir_rule_event_question_published [renamed to website_event module] (noupdate)
+DEL ir.ui.view: website_event_questions.event_event_view_form
+DEL ir.ui.view: website_event_questions.event_question_view_form
+DEL ir.ui.view: website_event_questions.event_registration_answer_view_graph
+DEL ir.ui.view: website_event_questions.event_registration_answer_view_pivot
+DEL ir.ui.view: website_event_questions.event_registration_answer_view_search
+DEL ir.ui.view: website_event_questions.event_registration_answer_view_tree
+DEL ir.ui.view: website_event_questions.event_registration_view_form_inherit_question
+DEL ir.ui.view: website_event_questions.event_registration_view_tree
+DEL ir.ui.view: website_event_questions.event_type_view_form_inherit_question
+DEL ir.ui.view: website_event_questions.registration_attendee_details_questions
+DEL ir.ui.view: website_event_questions.registration_event_question
+ERROR: module not in list of installed modules:
+---Models in module 'website_sale_digital'---
+---Fields in module 'website_sale_digital'---
+website_sale_digital / ir.attachment            / product_downloadable (boolean): DEL
+---XML records in module 'website_sale_digital'---
+DEL ir.ui.view: website_sale_digital.product_product_view_form_inherit_digital
+DEL ir.ui.view: website_sale_digital.product_template_view_form_inherit_digital
+DEL ir.ui.view: website_sale_digital.sale_order_portal_content_inherit_website_sale_digital

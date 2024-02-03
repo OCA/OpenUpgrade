@@ -1,0 +1,30 @@
+---Models in module 'hr_homeworking'---
+new model homework.location.wizard [transient]
+new model hr.employee.location
+---Fields in module 'hr_homeworking'---
+hr_homeworking / hr.employee              / friday_location_id (many2one) : NEW relation: hr.work.location
+hr_homeworking / hr.employee              / hr_icon_display (False)       : NEW selection_keys: ['presence_absent', 'presence_absent_active', 'presence_holiday_absent', 'presence_holiday_present', 'presence_home', 'presence_office', 'presence_other', 'presence_present', 'presence_to_define', 'presence_undetermined'], mode: modify
+hr_homeworking / hr.employee              / monday_location_id (many2one) : NEW relation: hr.work.location
+hr_homeworking / hr.employee              / saturday_location_id (many2one): NEW relation: hr.work.location
+hr_homeworking / hr.employee              / sunday_location_id (many2one) : NEW relation: hr.work.location
+hr_homeworking / hr.employee              / thursday_location_id (many2one): NEW relation: hr.work.location
+hr_homeworking / hr.employee              / today_location_name (char)    : NEW
+hr_homeworking / hr.employee              / tuesday_location_id (many2one): NEW relation: hr.work.location
+hr_homeworking / hr.employee              / wednesday_location_id (many2one): NEW relation: hr.work.location
+hr_homeworking / hr.employee.location     / date (date)                   : NEW
+hr_homeworking / hr.employee.location     / employee_id (many2one)        : NEW relation: hr.employee, required, hasdefault: default
+hr_homeworking / hr.employee.location     / work_location_id (many2one)   : NEW relation: hr.work.location, required
+---XML records in module 'hr_homeworking'---
+NEW ir.actions.act_window: hr_homeworking.set_location_wizard_action
+NEW ir.model.access: hr_homeworking.access_homework_location_wizard
+NEW ir.model.access: hr_homeworking.access_hr_employee_location
+NEW ir.model.access: hr_homeworking.access_user_employee_location
+NEW ir.rule: hr_homeworking.homeworking_admin_rule (noupdate)
+NEW ir.rule: hr_homeworking.homeworking_location_wizard_admin_rule (noupdate)
+NEW ir.rule: hr_homeworking.homeworking_location_wizard_own_rule (noupdate)
+NEW ir.rule: hr_homeworking.homeworking_own_rule (noupdate)
+NEW ir.ui.view: hr_homeworking.homework_location_wizard_view_form
+NEW ir.ui.view: hr_homeworking.res_useurs_view_form_profile
+NEW ir.ui.view: hr_homeworking.view_employee_filter
+NEW ir.ui.view: hr_homeworking.view_employee_form
+NEW ir.ui.view: hr_homeworking.view_employee_tree

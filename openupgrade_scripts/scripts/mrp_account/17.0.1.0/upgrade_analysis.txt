@@ -1,0 +1,33 @@
+---Models in module 'mrp_account'---
+---Fields in module 'mrp_account'---
+mrp_account  / account.analytic.account / bom_ids (one2many)            : table is now 'account_analytic_account_mrp_bom_rel' ('False')
+mrp_account  / account.analytic.account / bom_ids (one2many)            : type is now 'many2many' ('one2many')
+mrp_account  / account.analytic.account / production_ids (one2many)     : table is now 'account_analytic_account_mrp_production_rel' ('False')
+mrp_account  / account.analytic.account / production_ids (one2many)     : type is now 'many2many' ('one2many')
+mrp_account  / account.analytic.account / workcenter_ids (one2many)     : table is now 'account_analytic_account_mrp_workcenter_rel' ('False')
+mrp_account  / account.analytic.account / workcenter_ids (one2many)     : type is now 'many2many' ('one2many')
+mrp_account  / account.analytic.applicability / business_domain (False)       : NEW selection_keys: ['bill', 'expense', 'general', 'invoice', 'manufacturing_order', 'purchase_order'], mode: modify
+mrp_account  / mrp.bom                  / analytic_account_id (many2one): DEL relation: account.analytic.account
+mrp_account  / mrp.bom                  / analytic_distribution_search (json): NEW
+mrp_account  / mrp.bom                  / analytic_distribution_text (text): NEW
+mrp_account  / mrp.bom                  / analytic_precision (integer)  : NEW hasdefault: default
+mrp_account  / mrp.production           / analytic_account_id (many2one): DEL relation: account.analytic.account
+mrp_account  / mrp.production           / analytic_account_ids (many2many): NEW relation: account.analytic.account, isfunction: function, stored
+mrp_account  / mrp.production           / analytic_distribution (json)  : NEW hasdefault: compute
+mrp_account  / mrp.production           / analytic_distribution_search (json): NEW
+mrp_account  / mrp.production           / analytic_precision (integer)  : NEW hasdefault: default
+mrp_account  / mrp.workcenter           / analytic_distribution (json)  : NEW hasdefault: compute
+mrp_account  / mrp.workcenter           / analytic_distribution_search (json): NEW
+mrp_account  / mrp.workcenter           / analytic_precision (integer)  : NEW hasdefault: default
+mrp_account  / mrp.workcenter           / costs_hour_account_id (many2one): DEL relation: account.analytic.account
+mrp_account  / mrp.workcenter           / costs_hour_account_ids (many2many): NEW relation: account.analytic.account, isfunction: function, stored
+mrp_account  / mrp.workcenter.productivity / cost_already_recorded (boolean): DEL
+mrp_account  / mrp.workorder            / mo_analytic_account_line_id (many2one): DEL relation: account.analytic.line
+mrp_account  / mrp.workorder            / mo_analytic_account_line_ids (many2many): NEW relation: account.analytic.line
+mrp_account  / mrp.workorder            / wc_analytic_account_line_id (many2one): DEL relation: account.analytic.line
+mrp_account  / mrp.workorder            / wc_analytic_account_line_ids (many2many): NEW relation: account.analytic.line
+mrp_account  / product.category         / property_stock_account_production_cost_id (many2one): NEW relation: account.account
+---XML records in module 'mrp_account'---
+NEW ir.actions.report: mrp_account.wip_report
+NEW ir.ui.view: mrp_account.report_wip
+NEW ir.ui.view: mrp_account.view_category_property_form

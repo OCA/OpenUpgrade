@@ -1,0 +1,9 @@
+---Models in module 'account_audit_trail'---
+---Fields in module 'account_audit_trail'---
+account_audit_trail / res.company              / check_account_audit_trail (boolean): NEW
+---XML records in module 'account_audit_trail'---
+NEW ir.actions.act_window: account_audit_trail.action_account_audit_trail_report
+NEW ir.ui.menu: account_audit_trail.account_audit_trail_menu
+NEW ir.ui.view: account_audit_trail.res_config_settings_view_form_inherit_account_audit_trail
+NEW ir.ui.view: account_audit_trail.view_message_tree_audit_log
+NEW ir.ui.view: account_audit_trail.view_message_tree_audit_log_search

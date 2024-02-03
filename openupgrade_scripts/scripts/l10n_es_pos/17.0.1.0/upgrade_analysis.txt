@@ -1,0 +1,9 @@
+---Models in module 'l10n_es_pos'---
+---Fields in module 'l10n_es_pos'---
+l10n_es_pos  / pos.config               / l10n_es_simplified_invoice_journal_id (many2one): NEW relation: account.journal, hasdefault: default
+l10n_es_pos  / pos.config               / l10n_es_simplified_invoice_limit (float): NEW hasdefault: default
+l10n_es_pos  / pos.order                / is_l10n_es_simplified_invoice (boolean): NEW
+---XML records in module 'l10n_es_pos'---
+NEW ir.ui.view: l10n_es_pos.res_config_settings_view_form
+NEW ir.ui.view: l10n_es_pos.view_pos_order_tree
+NEW ir.ui.view: l10n_es_pos.view_pos_pos_form_simplified_invoice

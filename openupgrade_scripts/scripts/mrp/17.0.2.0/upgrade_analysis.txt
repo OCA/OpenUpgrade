@@ -1,0 +1,74 @@
+---Models in module 'mrp'---
+obsolete model mrp.immediate.production [transient]
+obsolete model mrp.immediate.production.line [transient]
+new model report.mrp.report_mo_overview [abstract]
+---Fields in module 'mrp'---
+mrp          / mrp.bom                  / days_to_prepare_mo (integer)  : NEW hasdefault: default
+mrp          / mrp.bom                  / message_main_attachment_id (many2one): DEL relation: ir.attachment
+mrp          / mrp.bom                  / produce_delay (integer)       : NEW hasdefault: default
+mrp          / mrp.bom                  / rating_ids (one2many)         : NEW relation: rating.rating
+mrp          / mrp.production           / _order                        : _order is now 'priority desc, date_start asc,id' ('priority desc, date_planned_start asc,id')
+mrp          / mrp.production           / activity_user_id (many2one)   : not related anymore
+mrp          / mrp.production           / activity_user_id (many2one)   : now a function
+mrp          / mrp.production           / components_availability_state (selection): selection_keys is now '['available', 'expected', 'late', 'unavailable']' ('['available', 'expected', 'late']')
+mrp          / mrp.production           / date_finished (datetime)      : now a function
+mrp          / mrp.production           / date_planned_finished (datetime): DEL
+mrp          / mrp.production           / date_planned_start (datetime) : DEL required
+mrp          / mrp.production           / date_start (datetime)         : now required
+mrp          / mrp.production           / is_outdated_bom (boolean)     : NEW
+mrp          / mrp.production           / message_main_attachment_id (many2one): DEL relation: ir.attachment
+mrp          / mrp.production           / product_id (many2one)         : not a function anymore
+mrp          / mrp.production           / rating_ids (one2many)         : NEW relation: rating.rating
+mrp          / mrp.production           / workcenter_id (many2one)      : NEW relation: mrp.workcenter
+mrp          / mrp.unbuild              / activity_user_id (many2one)   : not related anymore
+mrp          / mrp.unbuild              / activity_user_id (many2one)   : now a function
+mrp          / mrp.unbuild              / message_main_attachment_id (many2one): DEL relation: ir.attachment
+mrp          / mrp.unbuild              / rating_ids (one2many)         : NEW relation: rating.rating
+mrp          / mrp.workorder            / _order                        : _order is now 'leave_id, date_start, id' ('id')
+mrp          / mrp.workorder            / barcode (char)                : NEW isfunction: function, stored
+mrp          / mrp.workorder            / date_finished (datetime)      : now a function
+mrp          / mrp.workorder            / date_planned_finished (datetime): DEL
+mrp          / mrp.workorder            / date_planned_start (datetime) : DEL
+mrp          / mrp.workorder            / date_start (datetime)         : now a function
+mrp          / mrp.workorder            / finished_lot_id (many2one)    : not a function anymore
+mrp          / mrp.workorder            / finished_lot_id (many2one)    : now related
+mrp          / product.template         / days_to_prepare_mo (float)    : DEL
+mrp          / product.template         / produce_delay (float)         : DEL
+mrp          / stock.picking.type       / auto_print_done_mrp_lot (boolean): NEW
+mrp          / stock.picking.type       / auto_print_done_mrp_product_labels (boolean): NEW
+mrp          / stock.picking.type       / auto_print_done_production_order (boolean): NEW
+mrp          / stock.picking.type       / auto_print_generated_mrp_lot (boolean): NEW
+mrp          / stock.picking.type       / auto_print_mrp_reception_report (boolean): NEW
+mrp          / stock.picking.type       / auto_print_mrp_reception_report_labels (boolean): NEW
+mrp          / stock.picking.type       / done_mrp_lot_label_to_print (selection): NEW selection_keys: ['pdf', 'zpl'], hasdefault: default
+mrp          / stock.picking.type       / generated_mrp_lot_label_to_print (selection): NEW selection_keys: ['pdf', 'zpl'], hasdefault: default
+mrp          / stock.picking.type       / mrp_product_label_to_print (selection): NEW selection_keys: ['pdf', 'zpl'], hasdefault: default
+mrp          / stock.scrap              / bom_id (many2one)             : NEW relation: mrp.bom
+---XML records in module 'mrp'---
+NEW ir.actions.act_window: mrp.action_picking_tree_mrp_operation
+DEL ir.actions.act_window: mrp.mrp_production_report
+NEW ir.actions.client: mrp.action_mrp_display
+NEW ir.actions.client: mrp.action_mrp_display_fullscreen
+NEW ir.actions.client: mrp.action_report_mo_overview
+NEW ir.actions.report: mrp.action_report_mrp_mo_overview
+NEW ir.actions.server: mrp.action_plan_with_components_availability
+DEL ir.model.access: mrp.access_mrp_immediate_production
+DEL ir.model.access: mrp.access_mrp_immediate_production_line
+DEL ir.model.constraint: mrp.constraint_mrp_bom_line_bom_qty_zero
+DEL ir.model.constraint: mrp.constraint_mrp_bom_qty_positive
+DEL ir.model.constraint: mrp.constraint_mrp_production_name_uniq
+DEL ir.model.constraint: mrp.constraint_mrp_production_qty_positive
+DEL ir.model.constraint: mrp.constraint_mrp_workcenter_capacity_positive_capacity
+DEL ir.model.constraint: mrp.constraint_mrp_workcenter_capacity_unique_product
+DEL ir.model.constraint: mrp.constraint_mrp_workcenter_tag_tag_name_unique
+NEW ir.ui.menu: mrp.mrp_operation_picking
+DEL ir.ui.menu: mrp.menu_mrp_production_report
+NEW ir.ui.view: mrp.mo_overview_byproducts
+NEW ir.ui.view: mrp.mo_overview_components
+NEW ir.ui.view: mrp.mo_overview_content
+NEW ir.ui.view: mrp.mo_overview_line
+NEW ir.ui.view: mrp.mo_overview_operations
+NEW ir.ui.view: mrp.mrp_production_view_activity
+NEW ir.ui.view: mrp.report_mo_overview
+DEL ir.ui.view: mrp.mrp_report_product_product_replenishment
+DEL ir.ui.view: mrp.view_immediate_production

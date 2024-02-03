@@ -1,0 +1,12 @@
+---Models in module 'payment_adyen'---
+---Fields in module 'payment_adyen'---
+payment_adyen / payment.provider         / adyen_api_url_prefix (char)   : NEW
+payment_adyen / payment.provider         / adyen_checkout_api_url (char) : DEL
+payment_adyen / payment.provider         / adyen_recurring_api_url (char): DEL
+---XML records in module 'payment_adyen'---
+NEW ir.ui.view: payment_adyen.form
+NEW ir.ui.view: payment_adyen.method_form
+NEW ir.ui.view: payment_adyen.payment_capture_wizard_view_form
+DEL ir.ui.view: payment_adyen.checkout
+DEL ir.ui.view: payment_adyen.manage
+DEL ir.ui.view: payment_adyen.sdk_assets

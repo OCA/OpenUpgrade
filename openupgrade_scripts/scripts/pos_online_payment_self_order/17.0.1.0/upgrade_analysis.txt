@@ -1,0 +1,6 @@
+---Models in module 'pos_online_payment_self_order'---
+---Fields in module 'pos_online_payment_self_order'---
+pos_online_payment_self_order / pos.config               / self_order_online_payment_method_id (many2one): NEW relation: pos.payment.method
+pos_online_payment_self_order / pos.order                / use_self_order_online_payment (boolean): NEW isfunction: function, stored
+---XML records in module 'pos_online_payment_self_order'---
+NEW ir.ui.view: pos_online_payment_self_order.res_config_settings_view_form_menu

@@ -1,0 +1,25 @@
+---Models in module 'website_blog'---
+---Fields in module 'website_blog'---
+website_blog / blog.blog                / message_main_attachment_id (many2one): DEL relation: ir.attachment
+website_blog / blog.blog                / rating_ids (one2many)         : NEW relation: rating.rating
+website_blog / blog.post                / message_main_attachment_id (many2one): DEL relation: ir.attachment
+website_blog / blog.post                / rating_ids (one2many)         : NEW relation: rating.rating
+---XML records in module 'website_blog'---
+NEW ir.model.access: website_blog.blog_blog_employee
+NEW ir.model.access: website_blog.blog_blog_portal
+NEW ir.model.access: website_blog.blog_blog_public
+NEW ir.model.access: website_blog.blog_post_employee
+NEW ir.model.access: website_blog.blog_post_portal
+NEW ir.model.access: website_blog.blog_post_public
+NEW ir.model.access: website_blog.blog_tag_category_employee
+NEW ir.model.access: website_blog.blog_tag_category_portal
+NEW ir.model.access: website_blog.blog_tag_category_public
+NEW ir.model.access: website_blog.blog_tag_employee
+NEW ir.model.access: website_blog.blog_tag_portal
+NEW ir.model.access: website_blog.blog_tag_public
+DEL ir.model.access: website_blog.blog_blog_all
+DEL ir.model.access: website_blog.blog_post_all
+DEL ir.model.access: website_blog.blog_tag
+DEL ir.model.access: website_blog.blog_tag_category_all
+DEL ir.model.constraint: website_blog.constraint_blog_tag_category_name_uniq
+DEL ir.model.constraint: website_blog.constraint_blog_tag_name_uniq

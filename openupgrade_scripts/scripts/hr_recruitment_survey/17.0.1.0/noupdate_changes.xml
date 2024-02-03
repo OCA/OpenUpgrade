@@ -1,0 +1,11 @@
+<?xml version='1.0' encoding='utf-8'?>
+<odoo>
+  <record id="hr_recruitment.group_hr_recruitment_interviewer" model="res.groups">
+    <field name="comment">It will also allow to send surveys and see the resume.</field>
+    <field name="implied_ids" eval="[Command.link(ref('survey.group_survey_user'))]"/>
+  </record>
+  <record id="survey.survey_user_input_rule_survey_user_read" model="ir.rule">
+    <field name="domain_force">[('applicant_id', '=', False)]</field>
+    <field name="name">Survey user input: officer: read all non private survey answers</field>
+  </record>
+</odoo>

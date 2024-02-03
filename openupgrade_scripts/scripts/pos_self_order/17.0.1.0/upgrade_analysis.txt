@@ -1,0 +1,47 @@
+---Models in module 'pos_self_order'---
+new model pos_self_order.custom_link
+---Fields in module 'pos_self_order'---
+pos_self_order / pos.config               / access_token (char)           : NEW required
+pos_self_order / pos.config               / self_ordering_alternative_fp_id (many2one): NEW relation: account.fiscal.position
+pos_self_order / pos.config               / self_ordering_available_language_ids (many2many): NEW relation: res.lang, hasdefault: default
+pos_self_order / pos.config               / self_ordering_default_language_id (many2one): NEW relation: res.lang, hasdefault: default
+pos_self_order / pos.config               / self_ordering_default_user_id (many2one): NEW relation: res.users, hasdefault: default
+pos_self_order / pos.config               / self_ordering_image_brand (binary): NEW attachment: True
+pos_self_order / pos.config               / self_ordering_image_brand_name (char): NEW
+pos_self_order / pos.config               / self_ordering_image_home_ids (many2many): NEW relation: ir.attachment
+pos_self_order / pos.config               / self_ordering_mode (selection): NEW required, selection_keys: ['consultation', 'kiosk', 'mobile', 'nothing'], hasdefault: default
+pos_self_order / pos.config               / self_ordering_pay_after (selection): NEW required, selection_keys: function, hasdefault: default
+pos_self_order / pos.config               / self_ordering_service_mode (selection): NEW required, selection_keys: ['counter', 'table'], hasdefault: default
+pos_self_order / pos.config               / self_ordering_takeaway (boolean): NEW
+pos_self_order / pos.order                / table_stand_number (char)     : NEW
+pos_self_order / pos.order                / take_away (boolean)           : NEW hasdefault: default
+pos_self_order / pos.order.line           / combo_id (many2one)           : NEW relation: pos.combo
+pos_self_order / pos_self_order.custom_link / link_html (html)              : NEW isfunction: function, stored
+pos_self_order / pos_self_order.custom_link / name (char)                   : NEW required
+pos_self_order / pos_self_order.custom_link / pos_config_ids (many2many)    : NEW relation: pos.config
+pos_self_order / pos_self_order.custom_link / sequence (integer)            : NEW hasdefault: default
+pos_self_order / pos_self_order.custom_link / style (selection)             : NEW required, selection_keys: ['danger', 'dark', 'info', 'light', 'primary', 'secondary', 'success', 'warning'], hasdefault: default
+pos_self_order / pos_self_order.custom_link / url (char)                    : NEW required
+pos_self_order / product.template         / description_self_order (html) : NEW
+pos_self_order / product.template         / self_order_available (boolean): NEW hasdefault: default
+pos_self_order / restaurant.table         / identifier (char)             : NEW required, hasdefault: default
+---XML records in module 'pos_self_order'---
+NEW ir.actions.act_window: pos_self_order.action_pos_self_order_search_view
+NEW ir.actions.report: pos_self_order.report_self_order_qr_codes_page
+NEW ir.model.access: pos_self_order.access_pos_self_order_custom_link_manager
+NEW ir.model.access: pos_self_order.access_pos_self_order_custom_link_user
+NEW ir.ui.view: pos_self_order.custom_link_tree
+NEW ir.ui.view: pos_self_order.index
+NEW ir.ui.view: pos_self_order.pos_self_order_kiosk_read_only_form_dialog
+NEW ir.ui.view: pos_self_order.pos_self_order_menu_item
+NEW ir.ui.view: pos_self_order.pos_self_order_search_view
+NEW ir.ui.view: pos_self_order.pos_self_order_table_form_view
+NEW ir.ui.view: pos_self_order.pos_self_view_pos_config_tree
+NEW ir.ui.view: pos_self_order.pos_self_view_pos_session_form
+NEW ir.ui.view: pos_self_order.product_template_form_view
+NEW ir.ui.view: pos_self_order.product_template_search_view_pos
+NEW ir.ui.view: pos_self_order.product_template_tree_view
+NEW ir.ui.view: pos_self_order.qr_codes_page
+NEW ir.ui.view: pos_self_order.res_config_settings_view_form_menu
+NEW pos_self_order.custom_link: pos_self_order.default_custom_link (noupdate)
+NEW report.paperformat: pos_self_order.paperformat_qrcodes

@@ -1,0 +1,13 @@
+---Models in module 'stock_account'---
+---Fields in module 'stock_account'---
+stock_account / account.move.line        / cogs_origin_id (many2one)     : NEW relation: account.move.line
+stock_account / stock.move               / analytic_account_line_id (many2one): DEL relation: account.analytic.line
+stock_account / stock.move               / analytic_account_line_ids (many2many): NEW relation: account.analytic.line
+stock_account / stock.valuation.layer    / categ_id (many2one)           : is now stored
+---XML records in module 'stock_account'---
+NEW ir.actions.act_window: stock_account.inventory_aging_action
+NEW ir.ui.menu: stock_account.menu_inventory_aging
+NEW ir.ui.view: stock_account.stock_valuation_layer_graph
+NEW ir.ui.view: stock_account.stock_valuation_layer_valuation_at_date_tree_inherited
+DEL ir.ui.view: stock_account.stock_account_report_product_product_replenishment
+NEW res.groups: stock_account.group_stock_accounting_automatic (noupdate)

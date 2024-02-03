@@ -1,0 +1,59 @@
+---Models in module 'base_import'---
+obsolete model base_import.tests.models.char
+obsolete model base_import.tests.models.char.noreadonly
+obsolete model base_import.tests.models.char.readonly
+obsolete model base_import.tests.models.char.required
+obsolete model base_import.tests.models.char.states
+obsolete model base_import.tests.models.char.stillreadonly
+obsolete model base_import.tests.models.complex
+obsolete model base_import.tests.models.float
+obsolete model base_import.tests.models.m2o
+obsolete model base_import.tests.models.m2o.related
+obsolete model base_import.tests.models.m2o.required
+obsolete model base_import.tests.models.m2o.required.related
+obsolete model base_import.tests.models.o2m
+obsolete model base_import.tests.models.o2m.child
+obsolete model base_import.tests.models.preview
+---Fields in module 'base_import'---
+base_import  / base_import.tests.models.char / value (char)                  : DEL
+base_import  / base_import.tests.models.char.noreadonly / value (char)                  : DEL
+base_import  / base_import.tests.models.char.readonly / value (char)                  : DEL
+base_import  / base_import.tests.models.char.required / value (char)                  : DEL required
+base_import  / base_import.tests.models.char.states / value (char)                  : DEL
+base_import  / base_import.tests.models.char.stillreadonly / value (char)                  : DEL
+base_import  / base_import.tests.models.complex / c (char)                      : DEL
+base_import  / base_import.tests.models.complex / currency_id (many2one)        : DEL relation: res.currency
+base_import  / base_import.tests.models.complex / d (date)                      : DEL
+base_import  / base_import.tests.models.complex / dt (datetime)                 : DEL
+base_import  / base_import.tests.models.complex / f (float)                     : DEL
+base_import  / base_import.tests.models.complex / m (float)                     : DEL
+base_import  / base_import.tests.models.float / currency_id (many2one)        : DEL relation: res.currency
+base_import  / base_import.tests.models.float / value (float)                 : DEL
+base_import  / base_import.tests.models.float / value2 (float)                : DEL
+base_import  / base_import.tests.models.m2o / value (many2one)              : DEL relation: base_import.tests.models.m2o.related
+base_import  / base_import.tests.models.m2o.related / value (integer)               : DEL
+base_import  / base_import.tests.models.m2o.required / value (many2one)              : DEL relation: base_import.tests.models.m2o.required.related, required
+base_import  / base_import.tests.models.m2o.required.related / value (integer)               : DEL
+base_import  / base_import.tests.models.o2m / name (char)                   : DEL
+base_import  / base_import.tests.models.o2m / value (one2many)              : DEL relation: base_import.tests.models.o2m.child
+base_import  / base_import.tests.models.o2m.child / parent_id (many2one)          : DEL relation: base_import.tests.models.o2m
+base_import  / base_import.tests.models.o2m.child / value (integer)               : DEL
+base_import  / base_import.tests.models.preview / name (char)                   : DEL
+base_import  / base_import.tests.models.preview / othervalue (integer)          : DEL
+base_import  / base_import.tests.models.preview / somevalue (integer)           : DEL required
+---XML records in module 'base_import'---
+DEL ir.model.access: base_import.access_base_import_tests_models_char
+DEL ir.model.access: base_import.access_base_import_tests_models_char_noreadonly
+DEL ir.model.access: base_import.access_base_import_tests_models_char_readonly
+DEL ir.model.access: base_import.access_base_import_tests_models_char_required
+DEL ir.model.access: base_import.access_base_import_tests_models_char_states
+DEL ir.model.access: base_import.access_base_import_tests_models_char_stillreadonly
+DEL ir.model.access: base_import.access_base_import_tests_models_complex
+DEL ir.model.access: base_import.access_base_import_tests_models_float
+DEL ir.model.access: base_import.access_base_import_tests_models_m2o
+DEL ir.model.access: base_import.access_base_import_tests_models_m2o_related
+DEL ir.model.access: base_import.access_base_import_tests_models_m2o_required
+DEL ir.model.access: base_import.access_base_import_tests_models_m2o_required_related
+DEL ir.model.access: base_import.access_base_import_tests_models_o2m
+DEL ir.model.access: base_import.access_base_import_tests_models_o2m_child
+DEL ir.model.access: base_import.access_base_import_tests_models_preview

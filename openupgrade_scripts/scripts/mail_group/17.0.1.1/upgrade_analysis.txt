@@ -1,0 +1,11 @@
+---Models in module 'mail_group'---
+---Fields in module 'mail_group'---
+---XML records in module 'mail_group'---
+NEW ir.model.access: mail_group.access_mail_group_all_portal
+NEW ir.model.access: mail_group.access_mail_group_all_public
+NEW ir.model.access: mail_group.access_mail_group_message_all_portal
+NEW ir.model.access: mail_group.access_mail_group_message_all_public
+DEL ir.model.access: mail_group.access_mail_group_all
+DEL ir.model.access: mail_group.access_mail_group_message_all
+DEL ir.model.constraint: mail_group.constraint_mail_group_member_unique_partner
+DEL ir.model.constraint: mail_group.constraint_mail_group_moderation_mail_group_email_uniq

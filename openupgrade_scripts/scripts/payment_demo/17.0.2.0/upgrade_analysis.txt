@@ -1,0 +1,10 @@
+---Models in module 'payment_demo'---
+---Fields in module 'payment_demo'---
+---XML records in module 'payment_demo'---
+NEW ir.ui.view: payment_demo.express_checkout_form
+NEW ir.ui.view: payment_demo.express_inline_form
+NEW ir.ui.view: payment_demo.payment_details
+NEW ir.ui.view: payment_demo.payment_method_form
+NEW ir.ui.view: payment_demo.token_form
+DEL ir.ui.view: payment_demo.verified_token_checkmark
+NEW payment.method: payment_demo.payment_method_demo (noupdate)

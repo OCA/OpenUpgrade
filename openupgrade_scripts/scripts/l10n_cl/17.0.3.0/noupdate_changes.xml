@@ -1,0 +1,23 @@
+<?xml version='1.0' encoding='utf-8'?>
+<odoo>
+  <record id="UF" model="res.currency">
+    <field name="currency_unit_label">Development Unit</field>
+    <field name="l10n_cl_short_name">Development Unit</field>
+  </record>
+  <record id="UTM" model="res.currency">
+    <field name="currency_unit_label">Monthly Tax Unit</field>
+    <field name="l10n_cl_short_name">Monthly Tax Unit</field>
+  </record>
+  <record id="par_sii" model="res.partner">
+    <field name="name">Internal Revenue Service</field>
+  </record>
+  <record id="product_product_ad_valorem" model="product.product">
+    <field name="description">Charge for Ad-Valorem calculation in DIN</field>
+  </record>
+  <record id="uom_categ_energy" model="uom.category">
+    <field name="name">Energy</field>
+  </record>
+  <record id="uom_categ_others" model="uom.category">
+    <field name="name">Others</field>
+  </record>
+</odoo>

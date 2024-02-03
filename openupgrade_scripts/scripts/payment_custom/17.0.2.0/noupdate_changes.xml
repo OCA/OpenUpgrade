@@ -1,0 +1,6 @@
+<?xml version='1.0' encoding='utf-8'?>
+<odoo>
+  <record id="payment.payment_provider_transfer" model="payment.provider">
+    <field name="payment_method_ids" eval="[Command.set([                          ref('payment_custom.payment_method_wire_transfer'),                      ])]"/>
+  </record>
+</odoo>

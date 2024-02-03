@@ -1,0 +1,43 @@
+---Models in module 'l10n_es_edi_facturae'---
+new model l10n_es_edi_facturae.certificate
+---Fields in module 'l10n_es_edi_facturae'---
+l10n_es_edi_facturae / account.move             / l10n_es_edi_facturae_reason_code (selection): NEW selection_keys: ['01', '02', '03', '04', '05', '06', '07', '08', '09', '10', '11', '12', '13', '14', '15', '16', '80', '81', '82', '83', '84', '85'], hasdefault: default
+l10n_es_edi_facturae / account.move             / l10n_es_edi_facturae_xml_file (binary): NEW attachment: True
+l10n_es_edi_facturae / account.tax              / l10n_es_edi_facturae_tax_type (selection): NEW selection_keys: ['01', '02', '03', '04', '05', '06', '07', '08', '09', '10', '11', '12', '13', '14', '15', '16', '17', '18', '19', '20', '21', '22', '23', '24', '25', '26', '27', '28', '29'], hasdefault: default
+l10n_es_edi_facturae / l10n_es_edi_facturae.certificate / company_id (many2one)         : NEW relation: res.company, required
+l10n_es_edi_facturae / l10n_es_edi_facturae.certificate / content (binary)              : NEW required, attachment: True
+l10n_es_edi_facturae / l10n_es_edi_facturae.certificate / date_end (datetime)           : NEW
+l10n_es_edi_facturae / l10n_es_edi_facturae.certificate / date_start (datetime)         : NEW
+l10n_es_edi_facturae / l10n_es_edi_facturae.certificate / password (char)               : NEW
+l10n_es_edi_facturae / l10n_es_edi_facturae.certificate / serial_number (char)          : NEW
+l10n_es_edi_facturae / res.company              / l10n_es_edi_facturae_certificate_id (one2many): NEW relation: l10n_es_edi_facturae.certificate
+l10n_es_edi_facturae / uom.uom                  / l10n_es_edi_facturae_uom_code (selection): NEW required, selection_keys: ['01', '02', '03', '04', '05', '06', '07', '08', '09', '10', '11', '12', '13', '14', '15', '16', '17', '18', '19', '20', '21', '22', '23', '24', '25', '26', '27', '28', '29', '30', '31', '32', '33', '34', '35', '36'], hasdefault: default
+---XML records in module 'l10n_es_edi_facturae'---
+NEW ir.actions.act_window: l10n_es_edi_facturae.l10n_es_edi_facturae_certificate_action
+NEW ir.model.access: l10n_es_edi_facturae.access_l10n_es_edi_facturae_certificate_manager
+NEW ir.model.access: l10n_es_edi_facturae.access_l10n_es_edi_facturae_certificate_system
+NEW ir.rule: l10n_es_edi_facturae.facturae_digital_certificate (noupdate)
+NEW ir.ui.menu: l10n_es_edi_facturae.menu_l10n_es_edi_facturae_root
+NEW ir.ui.menu: l10n_es_edi_facturae.menu_l10n_es_edi_facturae_root_certificates
+NEW ir.ui.view: l10n_es_edi_facturae.account_invoice_facturae_export
+NEW ir.ui.view: l10n_es_edi_facturae.account_move_send_form
+NEW ir.ui.view: l10n_es_edi_facturae.address_type
+NEW ir.ui.view: l10n_es_edi_facturae.business_type
+NEW ir.ui.view: l10n_es_edi_facturae.contact_details_type
+NEW ir.ui.view: l10n_es_edi_facturae.corrective_type
+NEW ir.ui.view: l10n_es_edi_facturae.individual_type
+NEW ir.ui.view: l10n_es_edi_facturae.invoice_line_type
+NEW ir.ui.view: l10n_es_edi_facturae.invoice_type
+NEW ir.ui.view: l10n_es_edi_facturae.l10n_es_edi_facturae_certificate_form
+NEW ir.ui.view: l10n_es_edi_facturae.l10n_es_edi_facturae_certificate_tree
+NEW ir.ui.view: l10n_es_edi_facturae.legal_entity_type
+NEW ir.ui.view: l10n_es_edi_facturae.product_uom_categ_form_view_inherit_l10n_es_edi_facturae
+NEW ir.ui.view: l10n_es_edi_facturae.product_uom_form_view_inherit_l10n_es_edi_facturae
+NEW ir.ui.view: l10n_es_edi_facturae.product_uom_tree_view_inherit_l10n_es_edi_facturae
+NEW ir.ui.view: l10n_es_edi_facturae.tax_identification_type
+NEW ir.ui.view: l10n_es_edi_facturae.tax_type
+NEW ir.ui.view: l10n_es_edi_facturae.template_xades_signature
+NEW ir.ui.view: l10n_es_edi_facturae.view_account_move_reversal_inherit_l10n_es_edi_facturae
+NEW ir.ui.view: l10n_es_edi_facturae.view_company_form_inherit_l10n_es_edi_facturae
+NEW ir.ui.view: l10n_es_edi_facturae.view_tax_form_inherit_l10n_es_edi_facturae
+NEW ir.ui.view: l10n_es_edi_facturae.view_tax_tree_inherit_l10n_es_edi_facturae

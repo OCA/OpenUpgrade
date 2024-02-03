@@ -1,0 +1,10 @@
+---Models in module 'product_expiry'---
+---Fields in module 'product_expiry'---
+product_expiry / stock.quant              / expiration_date (datetime)    : NEW isrelated: related, stored
+---XML records in module 'product_expiry'---
+NEW ir.ui.view: product_expiry.view_production_lot_view_kanban
+NEW ir.ui.view: product_expiry.view_stock_quant_tree
+NEW ir.ui.view: product_expiry.view_stock_quant_tree_editable
+NEW ir.ui.view: product_expiry.view_stock_quant_tree_inventory_editable
+DEL ir.ui.view: product_expiry.view_stock_quant_tree_editable_expiry
+DEL ir.ui.view: product_expiry.view_stock_quant_tree_expiry

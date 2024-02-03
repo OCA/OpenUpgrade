@@ -1,0 +1,16 @@
+---Models in module 'account_payment'---
+---Fields in module 'account_payment'---
+---XML records in module 'account_payment'---
+NEW ir.config_parameter: account_payment.enable_portal_payment [renamed from account_payment_invoice_online_payment_patch module] (noupdate)
+DEL ir.config_parameter: account_payment_invoice_online_payment_patch.enable_portal_payment [renamed to account_payment module] (noupdate)
+NEW ir.model.access: account_payment.payment_transaction_user [renamed from payment module]
+DEL ir.rule: account_payment.payment_transaction_billing_rule (noupdate)
+NEW ir.ui.menu: account_payment.payment_method_menu
+DEL ir.ui.menu: account_payment.payment_icon_menu
+NEW ir.ui.view: account_payment.res_config_settings_view_form
+DEL ir.ui.view: account_payment.payment_checkout_inherit
+DEL ir.ui.view: account_payment.payment_manage_inherit
+DEL ir.ui.view: account_payment_invoice_online_payment_patch.portal_invoice_page_inherit_payment
+DEL ir.ui.view: account_payment_invoice_online_payment_patch.portal_my_invoices_payment
+DEL ir.ui.view: account_payment_invoice_online_payment_patch.res_config_settings_view_form
+NEW onboarding.onboarding.step: account_payment.onboarding_onboarding_step_payment_provider (noupdate)

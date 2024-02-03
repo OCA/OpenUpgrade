@@ -1,0 +1,70 @@
+---Models in module 'stock_delivery'---
+model choose.delivery.package (moved from delivery) [transient]
+---Fields in module 'stock_delivery'---
+stock_delivery / delivery.carrier         / invoice_policy (False)        : NEW selection_keys: ['estimated', 'real'], mode: modify
+stock_delivery / delivery.carrier         / route_ids (many2many)         : NEW relation: stock.route
+stock_delivery / product.product          / country_of_origin (many2one)  : previously in module delivery
+stock_delivery / product.product          / hs_code (char)                : previously in module delivery
+stock_delivery / product.template         / country_of_origin (many2one)  : previously in module delivery
+stock_delivery / product.template         / hs_code (char)                : previously in module delivery
+stock_delivery / stock.move               / weight (float)                : previously in module delivery
+stock_delivery / stock.move.line          / carrier_id (many2one)         : previously in module delivery
+stock_delivery / stock.move.line          / destination_country_code (char): previously in module delivery
+stock_delivery / stock.move.line          / sale_price (float)            : previously in module delivery
+stock_delivery / stock.package.type       / package_carrier_type (selection): previously in module delivery
+stock_delivery / stock.package.type       / shipper_package_code (char)   : previously in module delivery
+stock_delivery / stock.picking            / carrier_id (many2one)         : previously in module delivery
+stock_delivery / stock.picking            / carrier_price (float)         : previously in module delivery
+stock_delivery / stock.picking            / carrier_tracking_ref (char)   : previously in module delivery
+stock_delivery / stock.picking            / carrier_tracking_url (char)   : previously in module delivery
+stock_delivery / stock.picking            / delivery_type (selection)     : previously in module delivery
+stock_delivery / stock.picking            / destination_country_code (char): previously in module delivery
+stock_delivery / stock.picking            / is_return_picking (boolean)   : previously in module delivery
+stock_delivery / stock.picking            / package_ids (many2many)       : previously in module delivery
+stock_delivery / stock.picking            / return_label_ids (one2many)   : previously in module delivery
+stock_delivery / stock.picking            / shipping_weight (float)       : previously in module delivery
+stock_delivery / stock.picking            / weight (float)                : previously in module delivery
+stock_delivery / stock.picking            / weight_bulk (float)           : previously in module delivery
+stock_delivery / stock.picking            / weight_uom_name (char)        : previously in module delivery
+stock_delivery / stock.quant.package      / shipping_weight (float)       : previously in module delivery
+stock_delivery / stock.quant.package      / weight (float)                : previously in module delivery
+stock_delivery / stock.quant.package      / weight_is_kg (boolean)        : previously in module delivery
+stock_delivery / stock.quant.package      / weight_uom_name (char)        : previously in module delivery
+stock_delivery / stock.quant.package      / weight_uom_rounding (float)   : previously in module delivery
+stock_delivery / stock.route              / shipping_selectable (boolean) : NEW
+---XML records in module 'stock_delivery'---
+NEW ir.actions.act_window: stock_delivery.act_delivery_trackers_url [renamed from delivery module]
+NEW ir.model.access: stock_delivery.access_choose_delivery_carrier_stock_user
+NEW ir.model.access: stock_delivery.access_choose_delivery_package [renamed from delivery module]
+NEW ir.model.access: stock_delivery.access_delivery_carrier_stock_manager [renamed from delivery module]
+NEW ir.model.access: stock_delivery.access_delivery_carrier_stock_user [renamed from delivery module]
+NEW ir.model.access: stock_delivery.access_delivery_price_rule_stock_manager [renamed from delivery module]
+NEW ir.model.access: stock_delivery.access_delivery_zip_prefix_stock_manager [renamed from delivery module]
+NEW ir.ui.menu: stock_delivery.menu_action_delivery_carrier_form [renamed from delivery module]
+NEW ir.ui.menu: stock_delivery.menu_delivery_zip_prefix [renamed from delivery module]
+NEW ir.ui.view: stock_delivery.choose_delivery_carrier_view_form
+NEW ir.ui.view: stock_delivery.choose_delivery_package_view_form
+NEW ir.ui.view: stock_delivery.delivery_stock_report_delivery_no_package_section_line
+NEW ir.ui.view: stock_delivery.delivery_tracking_url_warning_form
+NEW ir.ui.view: stock_delivery.label_package_template_view_delivery
+NEW ir.ui.view: stock_delivery.product_template_hs_code
+NEW ir.ui.view: stock_delivery.report_delivery_document2
+NEW ir.ui.view: stock_delivery.report_package_barcode_delivery
+NEW ir.ui.view: stock_delivery.report_package_barcode_small_delivery
+NEW ir.ui.view: stock_delivery.report_shipping2
+NEW ir.ui.view: stock_delivery.sale_order_portal_content_inherit_sale_stock_inherit_website_sale
+NEW ir.ui.view: stock_delivery.stock_location_route_view_form_inherit_stock_delivery
+NEW ir.ui.view: stock_delivery.stock_move_line_view_search_delivery
+NEW ir.ui.view: stock_delivery.stock_package_type_form_delivery
+NEW ir.ui.view: stock_delivery.stock_package_type_tree_delivery
+NEW ir.ui.view: stock_delivery.stock_report_delivery_aggregated_move_lines_inherit_delivery
+NEW ir.ui.view: stock_delivery.stock_report_delivery_has_serial_move_line_inherit_delivery
+NEW ir.ui.view: stock_delivery.stock_report_delivery_package_section_line_inherit_delivery
+NEW ir.ui.view: stock_delivery.view_delivery_carrier_form_inherit_stock_delivery
+NEW ir.ui.view: stock_delivery.view_move_line_tree_detailed_delivery
+NEW ir.ui.view: stock_delivery.view_picking_type_form_delivery
+NEW ir.ui.view: stock_delivery.view_picking_withcarrier_out_form
+NEW ir.ui.view: stock_delivery.view_picking_withweight_internal_move_form
+NEW ir.ui.view: stock_delivery.view_quant_package_weight_form
+NEW ir.ui.view: stock_delivery.view_stock_rule_form_delivery
+NEW ir.ui.view: stock_delivery.vpicktree_view_tree

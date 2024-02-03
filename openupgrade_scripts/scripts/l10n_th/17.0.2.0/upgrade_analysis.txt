@@ -1,0 +1,56 @@
+---Models in module 'l10n_th'---
+---Fields in module 'l10n_th'---
+l10n_th      / res.partner.bank         / proxy_type (False)            : NEW selection_keys: ['email', 'ewallet_id', 'id', 'merchant_tax_id', 'mobile', 'none', 'uen'], mode: modify
+---XML records in module 'l10n_th'---
+DEL account.account.template: l10n_th.a_accr_exp
+DEL account.account.template: l10n_th.a_building_depr
+DEL account.account.template: l10n_th.a_cheque
+DEL account.account.template: l10n_th.a_common_stock
+DEL account.account.template: l10n_th.a_dividends
+DEL account.account.template: l10n_th.a_equipment_dept
+DEL account.account.template: l10n_th.a_exp_cogs
+DEL account.account.template: l10n_th.a_exp_income_tax
+DEL account.account.template: l10n_th.a_exp_interest
+DEL account.account.template: l10n_th.a_exp_loss
+DEL account.account.template: l10n_th.a_exp_office
+DEL account.account.template: l10n_th.a_exp_rent
+DEL account.account.template: l10n_th.a_exp_salary
+DEL account.account.template: l10n_th.a_income_gain
+DEL account.account.template: l10n_th.a_income_summary
+DEL account.account.template: l10n_th.a_input_vat
+DEL account.account.template: l10n_th.a_invent
+DEL account.account.template: l10n_th.a_loan
+DEL account.account.template: l10n_th.a_output_vat
+DEL account.account.template: l10n_th.a_pay
+DEL account.account.template: l10n_th.a_recv
+DEL account.account.template: l10n_th.a_recv_pos
+DEL account.account.template: l10n_th.a_retained_earnings
+DEL account.account.template: l10n_th.a_sales
+DEL account.account.template: l10n_th.a_uninvoiced_receipts
+DEL account.account.template: l10n_th.a_wht
+DEL account.account.template: l10n_th.a_wht_income
+DEL account.chart.template: l10n_th.chart
+DEL account.tax.group: l10n_th.tax_group_1 (noupdate)
+DEL account.tax.group: l10n_th.tax_group_2 (noupdate)
+DEL account.tax.group: l10n_th.tax_group_3 (noupdate)
+DEL account.tax.group: l10n_th.tax_group_5 (noupdate)
+DEL account.tax.group: l10n_th.tax_group_vat_7 (noupdate)
+DEL account.tax.template: l10n_th.tax_input_vat
+DEL account.tax.template: l10n_th.tax_input_vat_0
+DEL account.tax.template: l10n_th.tax_input_vat_exempted
+DEL account.tax.template: l10n_th.tax_output_vat
+DEL account.tax.template: l10n_th.tax_output_vat_0
+DEL account.tax.template: l10n_th.tax_output_vat_exempted
+DEL account.tax.template: l10n_th.tax_wht_co_1
+DEL account.tax.template: l10n_th.tax_wht_co_2
+DEL account.tax.template: l10n_th.tax_wht_co_3
+DEL account.tax.template: l10n_th.tax_wht_co_5
+DEL account.tax.template: l10n_th.tax_wht_income_1
+DEL account.tax.template: l10n_th.tax_wht_income_2
+DEL account.tax.template: l10n_th.tax_wht_income_3
+DEL account.tax.template: l10n_th.tax_wht_income_5
+DEL account.tax.template: l10n_th.tax_wht_pers_1
+DEL account.tax.template: l10n_th.tax_wht_pers_2
+DEL account.tax.template: l10n_th.tax_wht_pers_3
+DEL account.tax.template: l10n_th.tax_wht_pers_5
+DEL ir.ui.view: l10n_th.report_invoice_with_payments

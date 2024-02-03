@@ -1,0 +1,5 @@
+---Models in module 'payment_asiapay'---
+---Fields in module 'payment_asiapay'---
+payment_asiapay / payment.provider         / asiapay_brand (selection)     : NEW selection_keys: ['bimopay', 'paydollar', 'pesopay', 'siampay'], hasdefault: default
+payment_asiapay / payment.provider         / asiapay_currency_id (many2one): DEL relation: res.currency
+---XML records in module 'payment_asiapay'---

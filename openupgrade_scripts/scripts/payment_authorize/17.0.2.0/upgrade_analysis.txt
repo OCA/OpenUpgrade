@@ -1,0 +1,6 @@
+---Models in module 'payment_authorize'---
+---Fields in module 'payment_authorize'---
+payment_authorize / payment.provider         / authorize_currency_id (many2one): DEL relation: res.currency
+payment_authorize / payment.provider         / authorize_payment_method_type (selection): DEL selection_keys: ['bank_account', 'credit_card']
+payment_authorize / payment.token            / authorize_payment_method_type (selection): DEL selection_keys: ['bank_account', 'credit_card']
+---XML records in module 'payment_authorize'---

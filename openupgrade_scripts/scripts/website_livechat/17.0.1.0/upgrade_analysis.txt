@@ -1,0 +1,11 @@
+---Models in module 'website_livechat'---
+---Fields in module 'website_livechat'---
+website_livechat / discuss.channel          / livechat_visitor_id (many2one): NEW relation: website.visitor
+website_livechat / mail.channel             / livechat_visitor_id (many2one): DEL relation: website.visitor
+website_livechat / website.visitor          / discuss_channel_ids (one2many): NEW relation: discuss.channel
+website_livechat / website.visitor          / mail_channel_ids (one2many)   : DEL relation: mail.channel
+---XML records in module 'website_livechat'---
+NEW ir.model.access: website_livechat.access_im_livechat_channel_public_employee
+NEW ir.model.access: website_livechat.access_im_livechat_channel_public_portal
+NEW ir.model.access: website_livechat.access_im_livechat_channel_public_public
+DEL ir.model.access: website_livechat.access_im_livechat_channel_public

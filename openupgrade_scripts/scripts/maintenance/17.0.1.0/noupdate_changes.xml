@@ -1,0 +1,9 @@
+<?xml version='1.0' encoding='utf-8'?>
+<odoo>
+  <record id="equipment_rule_admin_user" model="ir.rule">
+    <field name="name">Equipment administrator</field>
+  </record>
+  <record id="equipment_rule_user" model="ir.rule">
+    <field name="name">Users are allowed to access equipment they follow</field>
+  </record>
+</odoo>

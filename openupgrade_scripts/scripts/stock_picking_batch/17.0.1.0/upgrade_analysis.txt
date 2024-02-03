@@ -1,0 +1,9 @@
+---Models in module 'stock_picking_batch'---
+---Fields in module 'stock_picking_batch'---
+stock_picking_batch / stock.picking.batch      / activity_user_id (many2one)   : not related anymore
+stock_picking_batch / stock.picking.batch      / activity_user_id (many2one)   : now a function
+stock_picking_batch / stock.picking.batch      / message_main_attachment_id (many2one): DEL relation: ir.attachment
+stock_picking_batch / stock.picking.batch      / rating_ids (one2many)         : NEW relation: rating.rating
+---XML records in module 'stock_picking_batch'---
+NEW ir.actions.server: stock_picking_batch.action_unreserve_batch_picking
+DEL ir.ui.view: stock_picking_batch.view_picking_tree_batch

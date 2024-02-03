@@ -1,0 +1,9 @@
+---Models in module 'iap'---
+new model iap.account.info [transient]
+---Fields in module 'iap'---
+iap          / iap.account              / account_info_ids (one2many)   : NEW relation: iap.account.info
+iap          / iap.account              / name (char)                   : NEW
+iap          / iap.account              / show_token (boolean)          : NEW
+---XML records in module 'iap'---
+DEL ir.actions.server: iap.open_iap_account
+NEW ir.model.access: iap.access_iap_account_info

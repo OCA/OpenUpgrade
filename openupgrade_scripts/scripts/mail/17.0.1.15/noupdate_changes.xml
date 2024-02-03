@@ -1,0 +1,9 @@
+<?xml version='1.0' encoding='utf-8'?>
+<odoo>
+  <record id="mail_activity_data_todo" model="mail.activity.type">
+    <field name="name">To-Do</field>
+  </record>
+  <record id="module_install_notification" model="mail.message">
+    <field name="model">discuss.channel</field>
+  </record>
+</odoo>
