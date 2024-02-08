@@ -15,13 +15,7 @@ major Odoo version to the next one.
 
 It is hosted at <a href="https://github.com/oca/openupgrade">GitHub</a>.
 
-For documentation, see <a href="https://oca.github.io/OpenUpgrade">here</a> including:
-
-- [introduction](https://oca.github.io/OpenUpgrade/intro.html)
-- [migration process](https://oca.github.io/OpenUpgrade/migration_details.html)
-- [module coverage](https://oca.github.io/OpenUpgrade/status.html)
-- [development](https://oca.github.io/OpenUpgrade/development.html)
-- and much more ...
+For documentation, see <a href="https://oca.github.io/OpenUpgrade">here</a>.
 
 <!-- /!\ do not modify below this line -->
 
