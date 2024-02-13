@@ -1,3 +1,6 @@
+# Copyright 2023 Viindoo - Nguyễn Đại Dương
+# Copyright 2024 Tecnativa - Pedro M. Baeza
+# License AGPL-3.0 or later (http://www.gnu.org/licenses/agpl.html).
 from openupgradelib import openupgrade
 
 _models_renames = [
@@ -30,7 +33,7 @@ def _noupdate_switch(env):
 
 def _remove_table_constraints(env):
     openupgrade.delete_sql_constraint_safely(
-        env, "sale", "sale_order", "date_order_conditional_required"
+        env, "sale", "sale_order", "sale_order_date_order_conditional_required"
     )
 
 
@@ -56,17 +59,13 @@ def _fast_fill_analytic_distribution_on_sale_order_line(env):
     analytic.account.id and it has 1 analytic.tag also have that analytic.account then
     the value will sum together
     """
-    if not openupgrade.column_exists(
-        env.cr, "sale_order_line", "analytic_distribution"
-    ):
-        openupgrade.logged_query(
-            env.cr,
-            """
-            ALTER TABLE sale_order_line
-            ADD COLUMN IF NOT EXISTS analytic_distribution jsonb;
-            """,
-        )
-
+    openupgrade.logged_query(
+        env.cr,
+        """
+        ALTER TABLE sale_order_line
+        ADD COLUMN IF NOT EXISTS analytic_distribution jsonb;
+        """,
+    )
     openupgrade.logged_query(
         env.cr,
         """
@@ -107,6 +106,7 @@ def _fast_fill_analytic_distribution_on_sale_order_line(env):
 
 
 def _create_ir_model_data_sale_default_invoice_email_template(env):
+    """Insert the XML-ID for possible existing system parameter without it."""
     openupgrade.logged_query(
         env.cr,
         """
