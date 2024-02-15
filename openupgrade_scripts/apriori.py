@@ -95,6 +95,8 @@ merged_modules = {
     "theme_graphene_blog": "theme_graphene",
     # odoo/enterprise
     "hr_holidays_gantt_calendar": "hr_holidays_gantt",
+    # OCA/delivery-carrier
+    "delivery_roulier_laposte": "delivery_roulier_laposte_fr",
     # OCA/intrastat-extrastat
     "hs_code_link": "product_harmonized_system_delivery",
     # OCA/event
