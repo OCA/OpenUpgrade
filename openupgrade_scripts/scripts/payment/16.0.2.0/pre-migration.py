@@ -209,6 +209,23 @@ _xmlid_renames = [
 ]
 
 
+def _module_account_payment_to_install(env):
+    """
+    This function force installation of account_payment in case it is not yet installed
+    In v16, account_payment is auto_install = ["account"] (it was not in v15)
+    Since migration of payment module moves fields to account_payment, if the latter
+    is not installed you will get a JS error when trying to access account moves
+    """
+    openupgrade.logged_query(
+        env.cr,
+        """
+        UPDATE ir_module_module
+        SET state = 'to install'
+        WHERE name = 'account_payment' AND state = 'uninstalled'
+        """,
+    )
+
+
 @openupgrade.migrate()
 def migrate(env, version):
     openupgrade.rename_models(env.cr, _model_renames)
@@ -216,3 +233,4 @@ def migrate(env, version):
     openupgrade.rename_fields(env, _field_renames)
     openupgrade.copy_columns(env.cr, _columns_copies)
     openupgrade.rename_xmlids(env.cr, _xmlid_renames)
+    _module_account_payment_to_install(env)
