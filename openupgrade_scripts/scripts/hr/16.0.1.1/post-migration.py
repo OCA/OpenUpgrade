@@ -147,7 +147,7 @@ def create_work_contact(env):
                     "Arbitrarily, the res.partner(%s) (the first one) "
                     "is used for work_contact_id of the hr.employee(%s).",
                     employee.id,
-                    ", ".joins(matching_partner.ids),
+                    ", ".join(matching_partner.ids),
                     partner.id,
                     employee.id,
                 )
