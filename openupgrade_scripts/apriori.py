@@ -12,6 +12,8 @@ renamed_modules = {
     "account_consolidation": "account_consolidation_oca",
     # OCA/account-invoice-reporting
     "account_invoice_comment_template": "account_comment_template",
+    # OCA/account-invoicing
+    "account_invoice_tier_validation": "account_move_tier_validation",
     # OCA/bank-statement-import
     "account_bank_statement_import": "account_statement_import",  # from odoo
     "account_bank_statement_import_bypass_check": "account_statement_import_bypass_check",  # noqa: B950
