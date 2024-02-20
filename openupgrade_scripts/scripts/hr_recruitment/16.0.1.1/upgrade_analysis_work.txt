@@ -1,0 +1,57 @@
+---Models in module 'hr_recruitment'---
+new model applicant.send.mail [transient]
+# NOTHING TO DO: new transient model
+
+---Fields in module 'hr_recruitment'---
+hr_recruitment / hr.applicant             / interviewer_ids (many2many)   : NEW relation: res.users
+hr_recruitment / hr.applicant             / linkedin_profile (char)       : NEW
+hr_recruitment / hr.job                   / _order                        : _order is now 'sequence, name asc' ('sequence, state desc, name asc')
+hr_recruitment / hr.job                   / extended_interviewer_ids (many2many): NEW relation: res.users, isfunction: function, stored
+hr_recruitment / hr.job                   / interviewer_ids (many2many)   : NEW relation: res.users
+# NOTHING TO DO: new fields
+
+hr_recruitment / hr.recruitment.source    / _inherits                     : DEL _inherits: {'utm.source': 'source_id'}
+# NOTHING TO DO: Now the inheritance is over `utm.source.mixin`, which in fact adds the same `source_id` required field + related name
+
+hr_recruitment / hr.recruitment.source    / medium_id (many2one)          : NEW relation: utm.medium, hasdefault: default
+# NOTHING TO DO: new field
+
+---XML records in module 'hr_recruitment'---
+NEW ir.actions.act_window: hr_recruitment.action_hr_applicant_new
+NEW ir.actions.act_window: hr_recruitment.action_hr_job_interviewer
+DEL ir.actions.act_window: hr_recruitment.hr_recruitment_source_action
+NEW ir.actions.server: hr_recruitment.action_applicant_send_mail
+DEL ir.actions.server: hr_recruitment.hr_applicant_resumes_server
+# NOTHING TO DO
+
+NEW ir.model.access: hr_recruitment.access_applicant_get_refuse_reason_interviewer
+NEW ir.model.access: hr_recruitment.access_applicant_send_mail
+NEW ir.model.access: hr_recruitment.access_applicant_send_mail_interviewer
+NEW ir.model.access: hr_recruitment.access_hr_applicant_interviewer
+NEW ir.model.access: hr_recruitment.access_hr_job_interviewer
+NEW ir.model.access: hr_recruitment.access_hr_recruitment_refuse_reason_interviewer
+NEW ir.model.access: hr_recruitment.access_hr_recruitment_stage_interviewer
+NEW ir.rule: hr_recruitment.hr_applicant_interviewer_rule (noupdate)
+NEW ir.rule: hr_recruitment.mail_message_interviewer_rule (noupdate)
+NEW ir.ui.menu: hr_recruitment.menu_hr_job_position_interviewer
+NEW ir.ui.menu: hr_recruitment.menu_hr_recruitment_config_activities
+NEW ir.ui.menu: hr_recruitment.menu_hr_recruitment_config_applications
+NEW ir.ui.menu: hr_recruitment.menu_hr_recruitment_config_employees
+NEW ir.ui.menu: hr_recruitment.menu_hr_recruitment_config_jobs
+NEW ir.ui.menu: hr_recruitment.menu_hr_recruitment_contract_type
+NEW ir.ui.menu: hr_recruitment.menu_hr_recruitment_utm
+# NOTHING TO DO
+
+NEW ir.ui.menu: hr_recruitment.menu_hr_recruitment_utm_mediums
+NEW ir.ui.menu: hr_recruitment.menu_hr_recruitment_utm_sources
+DEL ir.ui.menu: hr_recruitment.menu_hr_job_position_config
+DEL ir.ui.menu: hr_recruitment.menu_hr_recruitment_source
+# NOTHING TO DO
+
+NEW ir.ui.view: hr_recruitment.applicant_send_mail_view_form
+NEW ir.ui.view: hr_recruitment.hr_applicant_view_form_interviewer
+NEW ir.ui.view: hr_recruitment.hr_job_view_tree_inherit
+NEW ir.ui.view: hr_recruitment.ir_attachment_hr_recruitment_list_view
+NEW res.groups: hr_recruitment.group_applicant_cv_display (noupdate)
+NEW res.groups: hr_recruitment.group_hr_recruitment_interviewer (noupdate)
+# NOTHING TO DO
