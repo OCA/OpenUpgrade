@@ -133,3 +133,9 @@ def migrate(env, version):
     _remove_table_constraints(env)
     _fast_fill_analytic_distribution_on_sale_order_line(env)
     _create_ir_model_data_sale_default_invoice_email_template(env)
+    # Remove SQL view report_all_channels_sales not used anymore in Odoo v16.0
+    openupgrade.logged_query(
+        env.cr, "DROP VIEW IF EXISTS report_all_channels_sales CASCADE"
+    )
+    # Remove SQL view sale_report not used anymore in Odoo v16.0
+    openupgrade.logged_query(env.cr, "DROP VIEW IF EXISTS sale_report CASCADE")
