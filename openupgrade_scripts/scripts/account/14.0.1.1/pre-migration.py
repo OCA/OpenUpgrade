@@ -727,3 +727,7 @@ def migrate(env, version):
     )
     # Do this at the end for not having to use all time the get_legacy_name method
     openupgrade.rename_columns(env.cr, {"account_payment": [("journal_id", None)]})
+    # Remove SQL view account_invoice_report not used anymore in Odoo v14.0
+    openupgrade.logged_query(
+        env.cr, "DROP VIEW IF EXISTS account_invoice_report CASCADE"
+    )

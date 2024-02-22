@@ -67,3 +67,7 @@ def migrate(env, version):
     openupgrade.delete_records_safely_by_xml_id(
         env, ["stock.constraint_stock_production_lot_name_ref_uniq"]
     )
+    # Remove SQL view report_stock_forecast not used anymore in Odoo v14.0
+    openupgrade.logged_query(
+        env.cr, "DROP VIEW IF EXISTS report_stock_forecast CASCADE"
+    )
