@@ -27,3 +27,7 @@ def migrate(env, version):
             ),
         ],
     )
+    # Remove SQL view event_question_report not used anymore in Odoo v14.0
+    openupgrade.logged_query(
+        env.cr, "DROP VIEW IF EXISTS event_question_report CASCADE"
+    )

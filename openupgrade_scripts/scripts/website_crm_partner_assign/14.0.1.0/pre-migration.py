@@ -17,3 +17,7 @@ def migrate(env, version):
         ],
         True,
     )
+    # Remove SQL view crm_partner_report_assign not used anymore in Odoo v14.0
+    openupgrade.logged_query(
+        env.cr, "DROP VIEW IF EXISTS crm_partner_report_assign CASCADE"
+    )

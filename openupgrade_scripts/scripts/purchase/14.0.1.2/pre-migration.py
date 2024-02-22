@@ -30,3 +30,5 @@ def fill_purchase_order_line_qty_to_invoice(env):
 @openupgrade.migrate()
 def migrate(env, version):
     fill_purchase_order_line_qty_to_invoice(env)
+    # Remove SQL view purchase_report not used anymore in Odoo v14.0
+    openupgrade.logged_query(env.cr, "DROP VIEW IF EXISTS purchase_report CASCADE")
