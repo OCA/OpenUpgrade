@@ -90,6 +90,9 @@ merged_modules = {
     "sale_coupon_selection_wizard": "sale_loyalty_order_suggestion",
     # OCA/sale-workflow
     "sale_product_set_layout": "sale_product_set",
+    # OCA/social
+    "mail_preview_audio": "mail",
+    "mail_preview_base": "mail",
     # OCA/stock-logistics-workflow
     "stock_picking_backorder_strategy": "stock",
     # OCA/web
