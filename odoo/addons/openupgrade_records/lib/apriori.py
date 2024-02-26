@@ -23,6 +23,7 @@ renamed_modules = {
     'quality_control': 'quality_control_oca',
     'quality_control_mrp': 'quality_control_mrp_oca',
     'quality_control_stock': 'quality_control_stock_oca',
+    'quality_control_team': 'quality_control_team_oca',
     # OCA/margin-analysis
     'product_pricelist_margin': 'product_pricelist_simulation',
     # OCA/product-attribute
