@@ -70,6 +70,8 @@ merged_modules = {
     "website_sale_stock_available_display": "website_sale_stock",
     # OCA/hr-attendance
     "hr_attendance_user_list": "hr_attendance",
+    # OCA/manufacture
+    "mrp_subcontracting_resupply_link": "mrp_subcontracting_purchase",
     # OCA/pos
     "pos_order_mgmt": "point_of_sale",
     "pos_order_return": "point_of_sale",
