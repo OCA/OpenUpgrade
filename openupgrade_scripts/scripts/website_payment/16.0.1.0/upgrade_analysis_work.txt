@@ -1,0 +1,9 @@
+---Models in module 'website_payment'---
+---Fields in module 'website_payment'---
+---XML records in module 'website_payment'---
+NEW ir.actions.server: website_payment.action_stripe_connect_account
+ir.ui.view: website_payment.donation_mail_body (noupdate) (noupdate switched)
+NEW ir.ui.view: website_payment.payment_provider_form
+NEW ir.ui.view: website_payment.res_config_settings_view_form
+DEL ir.ui.view: website_payment.acquirer_form_website
+# NOTHING TO DO
