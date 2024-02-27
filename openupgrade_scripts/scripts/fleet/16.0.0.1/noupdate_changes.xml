@@ -1,5 +1,6 @@
 <?xml version='1.0' encoding='utf-8'?>
 <odoo>
+  <!-- No need of this, as there's only a change of syntax from (4, ) to Command.link()
   <record id="fleet_rule_contract_visibility_manager" model="ir.rule">
     <field name="groups" eval="[Command.link(ref('fleet_group_manager'))]"/>
   </record>
@@ -12,4 +13,5 @@
   <record id="fleet_rule_vehicle_visibility_manager" model="ir.rule">
     <field name="groups" eval="[Command.link(ref('fleet_group_manager'))]"/>
   </record>
+  -->
 </odoo>
