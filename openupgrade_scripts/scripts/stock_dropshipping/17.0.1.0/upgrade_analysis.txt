@@ -1,0 +1,7 @@
+---Models in module 'stock_dropshipping'---
+---Fields in module 'stock_dropshipping'---
+stock_dropshipping / stock.picking.type       / code (False)                  : NEW selection_keys: ['dropship', 'incoming', 'internal', 'mrp_operation', 'outgoing', 'repair_operation'], mode: modify
+---XML records in module 'stock_dropshipping'---
+NEW ir.actions.act_window: stock_dropshipping.action_picking_tree_dropship
+NEW ir.ui.menu: stock_dropshipping.dropship_picking
+NEW ir.ui.view: stock_dropshipping.view_picking_internal_search_inherit_stock_dropshipping

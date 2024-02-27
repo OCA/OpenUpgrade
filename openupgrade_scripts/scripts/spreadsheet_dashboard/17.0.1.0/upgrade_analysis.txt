@@ -1,0 +1,16 @@
+---Models in module 'spreadsheet_dashboard'---
+new model spreadsheet.dashboard.share
+---Fields in module 'spreadsheet_dashboard'---
+spreadsheet_dashboard / spreadsheet.dashboard    / data (binary)                 : DEL required, attachment: True
+spreadsheet_dashboard / spreadsheet.dashboard    / spreadsheet_binary_data (binary): NEW required, attachment: True, hasdefault: default
+spreadsheet_dashboard / spreadsheet.dashboard.share / access_token (char)           : NEW required, hasdefault: default
+spreadsheet_dashboard / spreadsheet.dashboard.share / dashboard_id (many2one)       : NEW relation: spreadsheet.dashboard, required
+spreadsheet_dashboard / spreadsheet.dashboard.share / excel_export (binary)         : NEW attachment: True
+spreadsheet_dashboard / spreadsheet.dashboard.share / spreadsheet_binary_data (binary): NEW required, attachment: True, hasdefault: default
+spreadsheet_dashboard / spreadsheet.dashboard.share / thumbnail (binary)            : NEW attachment: True
+---XML records in module 'spreadsheet_dashboard'---
+NEW ir.model.access: spreadsheet_dashboard.access_spreadsheet_dashboard_share
+NEW ir.module.category: spreadsheet_dashboard.dashboard_management
+NEW ir.rule: spreadsheet_dashboard.spreadsheet_dashboard_share_create_uid_rule
+NEW ir.ui.view: spreadsheet_dashboard.spreadsheet_dashboard_view_form
+NEW res.groups: spreadsheet_dashboard.group_dashboard_manager

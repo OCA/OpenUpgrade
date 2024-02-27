@@ -1,0 +1,30 @@
+<?xml version='1.0' encoding='utf-8'?>
+<odoo>
+  <record id="holiday_status_cl" model="hr.leave.type">
+    <field name="responsible_ids" eval="[(4, ref('base.user_admin'))]"/>
+  </record>
+  <record id="holiday_status_comp" model="hr.leave.type">
+    <field name="responsible_ids" eval="[(4, ref('base.user_admin'))]"/>
+  </record>
+  <record id="holiday_status_sl" model="hr.leave.type">
+    <field name="responsible_ids" eval="[(4, ref('base.user_admin'))]"/>
+  </record>
+  <record id="holiday_status_unpaid" model="hr.leave.type">
+    <field name="responsible_ids" eval="[(4, ref('base.user_admin'))]"/>
+  </record>
+  <record id="hr_leave_allocation_rule_multicompany" model="ir.rule">
+    <field name="name">Time Off: multi company global rule</field>
+  </record>
+  <record id="hr_leave_allocation_rule_officer_update" model="ir.rule">
+    <field name="name">Allocations: holiday user: create/write</field>
+  </record>
+  <record id="hr_leave_rule_employee_unlink" model="ir.rule">
+    <field name="domain_force">[('employee_id.user_id', '=', user.id), ('state', 'in', ['draft', 'confirm', 'validate1'])]</field>
+  </record>
+  <record id="hr_leave_rule_multicompany" model="ir.rule">
+    <field name="domain_force">[('company_id', 'in', company_ids)]</field>
+  </record>
+  <record id="mail_act_leave_approval" model="mail.activity.type">
+    <field name="delay_count">15</field>
+  </record>
+</odoo>

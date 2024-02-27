@@ -1,0 +1,74 @@
+---Models in module 'delivery'---
+model choose.delivery.package (moved to stock_delivery) [column['model_type']]
+---Fields in module 'delivery'---
+delivery     / delivery.carrier         / fixed_margin (float)          : NEW
+delivery     / delivery.carrier         / invoice_policy (selection)    : selection_keys is now '['estimated']' ('['estimated', 'real']')
+delivery     / product.product          / country_of_origin (many2one)  : module is now 'stock_delivery' ('delivery')
+delivery     / product.product          / hs_code (char)                : module is now 'stock_delivery' ('delivery')
+delivery     / product.template         / country_of_origin (many2one)  : module is now 'stock_delivery' ('delivery')
+delivery     / product.template         / hs_code (char)                : module is now 'stock_delivery' ('delivery')
+delivery     / sale.order               / shipping_weight (float)       : NEW hasdefault: compute
+delivery     / stock.move               / weight (float)                : module is now 'stock_delivery' ('delivery')
+delivery     / stock.move.line          / carrier_id (many2one)         : is now stored
+delivery     / stock.move.line          / carrier_id (many2one)         : module is now 'stock_delivery' ('delivery')
+delivery     / stock.move.line          / carrier_name (char)           : DEL
+delivery     / stock.move.line          / destination_country_code (char): module is now 'stock_delivery' ('delivery')
+delivery     / stock.move.line          / sale_price (float)            : module is now 'stock_delivery' ('delivery')
+delivery     / stock.package.type       / package_carrier_type (selection): module is now 'stock_delivery' ('delivery')
+delivery     / stock.package.type       / shipper_package_code (char)   : module is now 'stock_delivery' ('delivery')
+delivery     / stock.picking            / carrier_id (many2one)         : module is now 'stock_delivery' ('delivery')
+delivery     / stock.picking            / carrier_price (float)         : module is now 'stock_delivery' ('delivery')
+delivery     / stock.picking            / carrier_tracking_ref (char)   : module is now 'stock_delivery' ('delivery')
+delivery     / stock.picking            / carrier_tracking_url (char)   : module is now 'stock_delivery' ('delivery')
+delivery     / stock.picking            / delivery_type (selection)     : module is now 'stock_delivery' ('delivery')
+delivery     / stock.picking            / destination_country_code (char): module is now 'stock_delivery' ('delivery')
+delivery     / stock.picking            / is_return_picking (boolean)   : module is now 'stock_delivery' ('delivery')
+delivery     / stock.picking            / package_ids (many2many)       : module is now 'stock_delivery' ('delivery')
+delivery     / stock.picking            / return_label_ids (one2many)   : module is now 'stock_delivery' ('delivery')
+delivery     / stock.picking            / shipping_weight (float)       : module is now 'stock_delivery' ('delivery')
+delivery     / stock.picking            / weight (float)                : module is now 'stock_delivery' ('delivery')
+delivery     / stock.picking            / weight_bulk (float)           : module is now 'stock_delivery' ('delivery')
+delivery     / stock.picking            / weight_uom_name (char)        : module is now 'stock_delivery' ('delivery')
+delivery     / stock.quant.package      / shipping_weight (float)       : module is now 'stock_delivery' ('delivery')
+delivery     / stock.quant.package      / weight (float)                : module is now 'stock_delivery' ('delivery')
+delivery     / stock.quant.package      / weight_is_kg (boolean)        : module is now 'stock_delivery' ('delivery')
+delivery     / stock.quant.package      / weight_uom_name (char)        : module is now 'stock_delivery' ('delivery')
+delivery     / stock.quant.package      / weight_uom_rounding (float)   : module is now 'stock_delivery' ('delivery')
+---XML records in module 'delivery'---
+DEL ir.actions.act_window: delivery.act_delivery_trackers_url [renamed to stock_delivery module]
+NEW ir.model.access: delivery.access_delivery_price_rule_sale_manager
+NEW ir.model.access: delivery.access_delivery_zip_prefix_sale_manager
+DEL ir.model.access: delivery.access_choose_delivery_carrier_salesman
+DEL ir.model.access: delivery.access_choose_delivery_package [renamed to stock_delivery module]
+DEL ir.model.access: delivery.access_delivery_carrier_stock_manager [renamed to stock_delivery module]
+DEL ir.model.access: delivery.access_delivery_carrier_stock_user [renamed to stock_delivery module]
+DEL ir.model.access: delivery.access_delivery_price_rule_stock_manager [renamed to stock_delivery module]
+DEL ir.model.access: delivery.access_delivery_zip_prefix_stock_manager [renamed to stock_delivery module]
+DEL ir.model.constraint: delivery.constraint_delivery_carrier_margin_not_under_100_percent
+DEL ir.model.constraint: delivery.constraint_delivery_carrier_shipping_insurance_is_percentage
+DEL ir.model.constraint: delivery.constraint_delivery_zip_prefix_name_uniq
+DEL ir.ui.menu: delivery.menu_action_delivery_carrier_form [renamed to stock_delivery module]
+DEL ir.ui.menu: delivery.menu_delivery_zip_prefix [renamed to stock_delivery module]
+DEL ir.ui.view: delivery.choose_delivery_package_view_form
+DEL ir.ui.view: delivery.delivery_stock_report_delivery_no_package_section_line
+DEL ir.ui.view: delivery.delivery_tracking_url_warning_form
+DEL ir.ui.view: delivery.label_package_template_view_delivery
+DEL ir.ui.view: delivery.product_template_hs_code
+DEL ir.ui.view: delivery.report_delivery_document2
+DEL ir.ui.view: delivery.report_package_barcode_delivery
+DEL ir.ui.view: delivery.report_package_barcode_small_delivery
+DEL ir.ui.view: delivery.report_shipping2
+DEL ir.ui.view: delivery.sale_order_portal_content_inherit_sale_stock_inherit_website_sale_delivery
+DEL ir.ui.view: delivery.stock_move_line_view_search_delivery
+DEL ir.ui.view: delivery.stock_package_type_form_delivery
+DEL ir.ui.view: delivery.stock_package_type_tree_delivery
+DEL ir.ui.view: delivery.stock_report_delivery_aggregated_move_lines_inherit_delivery
+DEL ir.ui.view: delivery.stock_report_delivery_has_serial_move_line_inherit_delivery
+DEL ir.ui.view: delivery.stock_report_delivery_package_section_line_inherit_delivery
+DEL ir.ui.view: delivery.view_move_line_tree_detailed_delivery
+DEL ir.ui.view: delivery.view_picking_type_form_delivery
+DEL ir.ui.view: delivery.view_picking_withcarrier_out_form
+DEL ir.ui.view: delivery.view_picking_withweight_internal_move_form
+DEL ir.ui.view: delivery.view_quant_package_weight_form
+DEL ir.ui.view: delivery.view_stock_rule_form_delivery
+DEL ir.ui.view: delivery.vpicktree_view_tree

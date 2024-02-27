@@ -1,0 +1,6 @@
+<?xml version='1.0' encoding='utf-8'?>
+<odoo>
+  <record id="sale_order_line_rule_project_manager" model="ir.rule">
+    <field name="domain_force">[('state', '=', 'sale'), ('is_service', '=', True), '|', ('project_id','!=', False), ('task_id','!=', False)]</field>
+  </record>
+</odoo>

@@ -1,0 +1,13 @@
+---Models in module 'website_event_exhibitor'---
+---Fields in module 'website_event_exhibitor'---
+website_event_exhibitor / event.sponsor            / activity_user_id (many2one)   : not related anymore
+website_event_exhibitor / event.sponsor            / activity_user_id (many2one)   : now a function
+website_event_exhibitor / event.sponsor            / message_main_attachment_id (many2one): DEL relation: ir.attachment
+website_event_exhibitor / event.sponsor            / rating_ids (one2many)         : NEW relation: rating.rating
+---XML records in module 'website_event_exhibitor'---
+NEW ir.model.access: website_event_exhibitor.access_event_sponsor_public_employee
+NEW ir.model.access: website_event_exhibitor.access_event_sponsor_public_portal
+NEW ir.model.access: website_event_exhibitor.access_event_sponsor_public_public
+DEL ir.model.access: website_event_exhibitor.access_event_sponsor_public
+DEL ir.model.access: website_event_exhibitor.access_event_sponsor_type_public
+NEW ir.ui.view: website_event_exhibitor.event_report_template_full_page_ticket_inherit_exhibitor

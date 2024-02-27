@@ -1,0 +1,23 @@
+---Models in module 'crm'---
+---Fields in module 'crm'---
+crm          / crm.lead                 / activity_user_id (many2one)   : not related anymore
+crm          / crm.lead                 / activity_user_id (many2one)   : now a function
+crm          / crm.lead                 / date_action_last (datetime)   : DEL
+crm          / crm.lead                 / date_automation_last (datetime): NEW
+crm          / crm.lead                 / email_domain_criterion (char) : NEW isfunction: function, stored
+crm          / crm.lead                 / message_main_attachment_id (many2one): DEL relation: ir.attachment
+crm          / crm.lead                 / rating_ids (one2many)         : NEW relation: rating.rating
+crm          / crm.lead                 / recurring_revenue_prorated (float): NEW isfunction: function, stored
+---XML records in module 'crm'---
+NEW ir.actions.act_window: crm.mail_activity_plan_action_lead
+DEL ir.actions.server: crm.action_mark_as_lost
+NEW ir.model.access: crm.access_crm_activity_report_salesman
+NEW ir.model.access: crm.access_mail_activity_plan_sale_manager
+NEW ir.model.access: crm.access_mail_activity_plan_template_sale_manager
+DEL ir.model.constraint: crm.constraint_crm_lead_check_probability
+DEL ir.model.constraint: crm.constraint_crm_recurring_plan_check_number_of_months
+NEW ir.rule: crm.mail_plan_rule_group_sale_manager_lead (noupdate)
+NEW ir.rule: crm.mail_plan_templates_rule_group_sale_manager_lead (noupdate)
+NEW ir.ui.menu: crm.mail_activity_plan_menu_config_lead
+NEW ir.ui.view: crm.crm_lead_view_tree_opportunity_reporting
+NEW ir.ui.view: crm.res_partner_view_form_simple_form

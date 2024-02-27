@@ -1,0 +1,8 @@
+---Models in module 'hr_recruitment_survey'---
+---Fields in module 'hr_recruitment_survey'---
+hr_recruitment_survey / hr.applicant             / response_id (many2one)        : DEL relation: survey.user_input
+hr_recruitment_survey / hr.applicant             / response_ids (one2many)       : NEW relation: survey.user_input
+hr_recruitment_survey / survey.user_input        / applicant_id (one2many)       : type is now 'many2one' ('one2many')
+---XML records in module 'hr_recruitment_survey'---
+NEW ir.rule: hr_recruitment_survey.survey_user_input_rule_recruitment_interviewer (noupdate)
+NEW mail.template: hr_recruitment_survey.mail_template_applicant_interview_invite (noupdate)

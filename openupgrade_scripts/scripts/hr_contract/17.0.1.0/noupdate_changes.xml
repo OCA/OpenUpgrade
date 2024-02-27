@@ -1,0 +1,12 @@
+<?xml version='1.0' encoding='utf-8'?>
+<odoo>
+  <record id="ir_cron_data_contract_update_state" model="ir.cron">
+    <field name="type"/>
+  </record>
+  <record id="structure_type_employee_cp200" model="hr.payroll.structure.type">
+    <field name="default_resource_calendar_id" ref="resource.resource_calendar_std"/>
+  </record>
+  <record id="structure_type_employee_cp200_pfi" model="hr.payroll.structure.type">
+    <field name="default_resource_calendar_id" ref="resource.resource_calendar_std"/>
+  </record>
+</odoo>

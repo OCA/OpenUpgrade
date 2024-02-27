@@ -1,0 +1,22 @@
+---Models in module 'website_event_track'---
+---Fields in module 'website_event_track'---
+website_event_track / event.track              / activity_user_id (many2one)   : not related anymore
+website_event_track / event.track              / activity_user_id (many2one)   : now a function
+website_event_track / event.track              / message_main_attachment_id (many2one): DEL relation: ir.attachment
+website_event_track / event.track              / rating_ids (one2many)         : NEW relation: rating.rating
+---XML records in module 'website_event_track'---
+NEW ir.model.access: website_event_track.access_event_track_employee
+NEW ir.model.access: website_event_track.access_event_track_portal
+NEW ir.model.access: website_event_track.access_event_track_public
+NEW ir.model.access: website_event_track.access_event_track_stage_employee
+NEW ir.model.access: website_event_track.access_event_track_stage_portal
+NEW ir.model.access: website_event_track.access_event_track_stage_public
+NEW ir.model.access: website_event_track.access_event_track_tag_employee
+NEW ir.model.access: website_event_track.access_event_track_tag_portal
+NEW ir.model.access: website_event_track.access_event_track_tag_public
+DEL ir.model.access: website_event_track.access_event_track
+DEL ir.model.access: website_event_track.access_event_track_location
+DEL ir.model.access: website_event_track.access_event_track_stage
+DEL ir.model.access: website_event_track.access_event_track_tag
+DEL ir.model.access: website_event_track.access_event_track_tag_category
+DEL ir.model.constraint: website_event_track.constraint_event_track_tag_name_uniq

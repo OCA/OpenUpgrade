@@ -1,0 +1,15 @@
+---Models in module 'analytic'---
+---Fields in module 'analytic'---
+analytic     / account.analytic.account / message_main_attachment_id (many2one): DEL relation: ir.attachment
+analytic     / account.analytic.account / root_plan_id (many2one)       : not a function anymore
+analytic     / account.analytic.account / root_plan_id (many2one)       : now related
+analytic     / account.analytic.applicability / company_id (many2one)         : NEW relation: res.company, hasdefault: default
+analytic     / account.analytic.line    / plan_id (many2one)            : DEL relation: account.analytic.plan
+analytic     / account.analytic.plan    / _order                        : _order is now 'sequence asc, id' ('complete_name asc')
+analytic     / account.analytic.plan    / company_id (many2one)         : DEL relation: res.company
+analytic     / account.analytic.plan    / default_applicability (selection): not stored anymore
+analytic     / account.analytic.plan    / sequence (integer)            : NEW hasdefault: default
+---XML records in module 'analytic'---
+NEW account.analytic.plan: analytic.analytic_plan_projects (noupdate)
+NEW ir.rule: analytic.analytic_applicability_comp_rule (noupdate)
+DEL ir.rule: analytic.analytic_plan_comp_rule (noupdate)

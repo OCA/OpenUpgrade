@@ -1,0 +1,13 @@
+---Models in module 'l10n_ar_withholding'---
+new model l10n_ar.payment.register.withholding [transient]
+---Fields in module 'l10n_ar_withholding'---
+l10n_ar_withholding / account.tax              / l10n_ar_withholding_payment_type (selection): NEW selection_keys: ['customer', 'supplier']
+l10n_ar_withholding / account.tax              / l10n_ar_withholding_sequence_id (many2one): NEW relation: ir.sequence
+l10n_ar_withholding / res.company              / l10n_ar_tax_base_account_id (many2one): NEW relation: account.account
+---XML records in module 'l10n_ar_withholding'---
+NEW ir.model.access: l10n_ar_withholding.access_l10n_ar_payment_register_withholding
+NEW ir.ui.view: l10n_ar_withholding.report_payment_receipt_document
+NEW ir.ui.view: l10n_ar_withholding.res_config_settings_view_form
+NEW ir.ui.view: l10n_ar_withholding.view_account_payment_form
+NEW ir.ui.view: l10n_ar_withholding.view_account_payment_register_form
+NEW ir.ui.view: l10n_ar_withholding.view_tax_form

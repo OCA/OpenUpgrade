@@ -1,0 +1,27 @@
+---Models in module 'pos_restaurant'---
+obsolete model restaurant.printer
+---Fields in module 'pos_restaurant'---
+pos_restaurant / pos.config               / floor_ids (one2many)          : table is now 'pos_config_restaurant_floor_rel' ('False')
+pos_restaurant / pos.config               / floor_ids (one2many)          : type is now 'many2many' ('one2many')
+pos_restaurant / pos.config               / is_order_printer (boolean)    : module is now 'point_of_sale' ('pos_restaurant')
+pos_restaurant / pos.config               / is_table_management (boolean) : DEL
+pos_restaurant / pos.config               / module_pos_restaurant_appointment (boolean): NEW
+pos_restaurant / pos.config               / printer_ids (many2many)       : module is now 'point_of_sale' ('pos_restaurant')
+pos_restaurant / pos.config               / printer_ids (many2many)       : relation is now 'pos.printer' ('restaurant.printer') [nothing to do]
+pos_restaurant / pos.order                / multiprint_resume (char)      : DEL
+pos_restaurant / pos.order.line           / mp_skip (boolean)             : DEL
+pos_restaurant / pos.order.line           / uuid (char)                   : module is now 'point_of_sale' ('pos_restaurant')
+pos_restaurant / restaurant.floor         / pos_config_id (many2one)      : DEL relation: pos.config
+pos_restaurant / restaurant.floor         / pos_config_ids (many2many)    : NEW relation: pos.config
+pos_restaurant / restaurant.printer       / name (char)                   : DEL required
+pos_restaurant / restaurant.printer       / printer_type (selection)      : DEL selection_keys: ['iot']
+pos_restaurant / restaurant.printer       / product_categories_ids (many2many): DEL relation: pos.category
+pos_restaurant / restaurant.printer       / proxy_ip (char)               : DEL
+---XML records in module 'pos_restaurant'---
+DEL ir.actions.act_window: pos_restaurant.action_restaurant_printer_form
+DEL ir.model.access: pos_restaurant.access_restaurant_printer
+DEL ir.model.access: pos_restaurant.access_restaurant_printer_manager
+DEL ir.ui.menu: pos_restaurant.menu_restaurant_printer_all
+DEL ir.ui.view: pos_restaurant.view_restaurant_printer
+DEL ir.ui.view: pos_restaurant.view_restaurant_printer_form
+NEW pos.config: pos_restaurant.pos_config_main_restaurant (noupdate)

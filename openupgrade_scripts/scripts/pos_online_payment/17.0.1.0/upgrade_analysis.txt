@@ -1,0 +1,18 @@
+---Models in module 'pos_online_payment'---
+---Fields in module 'pos_online_payment'---
+pos_online_payment / account.payment          / pos_order_id (many2one)       : NEW relation: pos.order
+pos_online_payment / payment.transaction      / pos_order_id (many2one)       : NEW relation: pos.order
+pos_online_payment / pos.order                / next_online_payment_amount (float): NEW
+pos_online_payment / pos.payment              / online_account_payment_id (many2one): NEW relation: account.payment
+pos_online_payment / pos.payment.method       / is_online_payment (boolean)   : NEW hasdefault: default
+pos_online_payment / pos.payment.method       / online_payment_provider_ids (many2many): NEW relation: payment.provider
+pos_online_payment / pos.payment.method       / type (False)                  : NEW selection_keys: ['bank', 'cash', 'online', 'pay_later'], mode: modify
+---XML records in module 'pos_online_payment'---
+NEW ir.ui.view: pos_online_payment.pay
+NEW ir.ui.view: pos_online_payment.pay_confirmation
+NEW ir.ui.view: pos_online_payment.pay_summary
+NEW ir.ui.view: pos_online_payment.payment_transaction_form
+NEW ir.ui.view: pos_online_payment.pos_payment_method_view_form_inherit_pos_online_payment
+NEW ir.ui.view: pos_online_payment.pos_payment_method_view_tree_inherit_pos_online_payment
+NEW ir.ui.view: pos_online_payment.view_account_payment_form_inherit_pos_online_payment
+NEW ir.ui.view: pos_online_payment.view_pos_payment_form

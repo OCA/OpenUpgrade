@@ -1,0 +1,9 @@
+<?xml version='1.0' encoding='utf-8'?>
+<odoo>
+  <record id="mail_template_data_delivery_confirmation" model="mail.template">
+    <field name="report_template_ids" eval="[(4, ref('stock.action_report_delivery'))]"/>
+  </record>
+  <record id="stock_location_suppliers" model="stock.location">
+    <field name="return_location">True</field>
+  </record>
+</odoo>

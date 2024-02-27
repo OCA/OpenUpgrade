@@ -1,0 +1,7 @@
+---Models in module 'account_qr_code_emv'---
+---Fields in module 'account_qr_code_emv'---
+account_qr_code_emv / res.partner.bank         / include_reference (boolean)   : NEW
+account_qr_code_emv / res.partner.bank         / proxy_type (selection)        : NEW selection_keys: ['none'], hasdefault: default
+account_qr_code_emv / res.partner.bank         / proxy_value (char)            : NEW
+---XML records in module 'account_qr_code_emv'---
+NEW ir.ui.view: account_qr_code_emv.view_partner_bank_form_inherit_account

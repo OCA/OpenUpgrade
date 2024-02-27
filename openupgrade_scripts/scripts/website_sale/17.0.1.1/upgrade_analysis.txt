@@ -1,0 +1,144 @@
+---Models in module 'website_sale'---
+---Fields in module 'website_sale'---
+website_sale / product.document         / shown_on_product_page (boolean): NEW
+website_sale / product.product          / rating_ids (one2many)         : is now stored
+website_sale / product.product          / rating_ids (one2many)         : module is now 'rating' ('website_sale')
+website_sale / product.product          / rating_ids (one2many)         : not related anymore
+website_sale / product.product          / ribbon_id (many2one)          : NEW relation: product.ribbon
+website_sale / product.ribbon           / product_tag_ids (one2many)    : DEL relation: product.tag
+website_sale / product.tag              / image (binary)                : NEW attachment: True
+website_sale / product.tag              / ribbon_id (many2one)          : DEL relation: product.ribbon
+website_sale / product.tag              / visible_on_ecommerce (boolean): NEW hasdefault: default
+website_sale / product.template         / description_ecommerce (html)  : NEW
+website_sale / product.template         / rating_ids (one2many)         : module is now 'rating' ('website_sale')
+website_sale / res.company              / website_sale_onboarding_payment_provider_state (selection): DEL selection_keys: ['done', 'just_done', 'not_done']
+website_sale / sale.order               / access_point_address (json)   : NEW
+website_sale / website                  / currency_id (many2one)        : not related anymore
+website_sale / website                  / currency_id (many2one)        : now a function
+website_sale / website                  / show_line_subtotals_tax_selection (selection): NEW required, selection_keys: ['tax_excluded', 'tax_included'], hasdefault: default
+website_sale_delivery / sale.order               / amount_delivery (float)       : not stored anymore
+---XML records in module 'website_sale'---
+DEL ir.actions.act_window: website_sale.action_invoices_ecommerce
+DEL ir.actions.act_window: website_sale.product_public_tags_action
+DEL ir.actions.act_window: website_sale.website_product_pricelist3
+NEW ir.asset: website_sale.s_popup_000_js
+NEW ir.model.access: website_sale.access_ecom_extra_fields_public_employee
+NEW ir.model.access: website_sale.access_ecom_extra_fields_public_portal
+NEW ir.model.access: website_sale.access_ecom_extra_fields_public_public
+NEW ir.model.access: website_sale.access_product_attribute_public_employee
+NEW ir.model.access: website_sale.access_product_attribute_public_portal
+NEW ir.model.access: website_sale.access_product_attribute_public_public
+NEW ir.model.access: website_sale.access_product_attribute_value_public_employee
+NEW ir.model.access: website_sale.access_product_attribute_value_public_portal
+NEW ir.model.access: website_sale.access_product_attribute_value_public_public
+NEW ir.model.access: website_sale.access_product_category_public_employee
+NEW ir.model.access: website_sale.access_product_category_public_portal
+NEW ir.model.access: website_sale.access_product_category_public_public
+NEW ir.model.access: website_sale.access_product_image_public_employee
+NEW ir.model.access: website_sale.access_product_image_public_portal
+NEW ir.model.access: website_sale.access_product_image_public_public
+NEW ir.model.access: website_sale.access_product_pricelist_item_public_employee
+NEW ir.model.access: website_sale.access_product_pricelist_item_public_portal
+NEW ir.model.access: website_sale.access_product_pricelist_item_public_public
+NEW ir.model.access: website_sale.access_product_pricelist_public_employee
+NEW ir.model.access: website_sale.access_product_pricelist_public_portal
+NEW ir.model.access: website_sale.access_product_pricelist_public_public
+NEW ir.model.access: website_sale.access_product_product_attribute_custom_value_employee
+NEW ir.model.access: website_sale.access_product_product_attribute_custom_value_portal
+NEW ir.model.access: website_sale.access_product_product_attribute_custom_value_public
+NEW ir.model.access: website_sale.access_product_product_attribute_employee
+NEW ir.model.access: website_sale.access_product_product_attribute_portal
+NEW ir.model.access: website_sale.access_product_product_attribute_public
+NEW ir.model.access: website_sale.access_product_product_public_employee
+NEW ir.model.access: website_sale.access_product_product_public_portal
+NEW ir.model.access: website_sale.access_product_product_public_public
+NEW ir.model.access: website_sale.access_product_public_category_public_employee
+NEW ir.model.access: website_sale.access_product_public_category_public_portal
+NEW ir.model.access: website_sale.access_product_public_category_public_public
+NEW ir.model.access: website_sale.access_product_tag_public_employee
+NEW ir.model.access: website_sale.access_product_tag_public_portal
+NEW ir.model.access: website_sale.access_product_tag_public_public
+NEW ir.model.access: website_sale.access_product_template_attribute_exclusion_employee
+NEW ir.model.access: website_sale.access_product_template_attribute_exclusion_portal
+NEW ir.model.access: website_sale.access_product_template_attribute_exclusion_public
+NEW ir.model.access: website_sale.access_product_template_attribute_line_public_employee
+NEW ir.model.access: website_sale.access_product_template_attribute_line_public_portal
+NEW ir.model.access: website_sale.access_product_template_attribute_line_public_public
+NEW ir.model.access: website_sale.access_product_template_public_employee
+NEW ir.model.access: website_sale.access_product_template_public_portal
+NEW ir.model.access: website_sale.access_product_template_public_public
+NEW ir.model.access: website_sale.access_website_base_unit_public_employee
+NEW ir.model.access: website_sale.access_website_base_unit_public_portal
+NEW ir.model.access: website_sale.access_website_base_unit_public_public
+DEL ir.model.access: website_sale.access_ecom_extra_fields_public
+DEL ir.model.access: website_sale.access_product_attribute_public
+DEL ir.model.access: website_sale.access_product_attribute_value_public
+DEL ir.model.access: website_sale.access_product_category_public
+DEL ir.model.access: website_sale.access_product_image_public
+DEL ir.model.access: website_sale.access_product_pricelist_item_public
+DEL ir.model.access: website_sale.access_product_pricelist_public
+DEL ir.model.access: website_sale.access_product_product_attribute
+DEL ir.model.access: website_sale.access_product_product_attribute_custom_value
+DEL ir.model.access: website_sale.access_product_product_public
+DEL ir.model.access: website_sale.access_product_public_category_public
+DEL ir.model.access: website_sale.access_product_tag_public
+DEL ir.model.access: website_sale.access_product_template_attribute_exclusion
+DEL ir.model.access: website_sale.access_product_template_attribute_line_public
+DEL ir.model.access: website_sale.access_product_template_public
+DEL ir.model.access: website_sale.access_website_base_unit_public
+NEW ir.ui.menu: website_sale.menu_delivery_zip_prefix
+NEW ir.ui.menu: website_sale.menu_ecommerce_delivery [renamed from website_sale_delivery module]
+NEW ir.ui.menu: website_sale.menu_ecommerce_payment_methods
+DEL ir.ui.menu: website_sale.menu_ecommerce_payment_icons
+DEL ir.ui.menu: website_sale_delivery.menu_ecommerce_delivery [renamed to website_sale module]
+NEW ir.ui.view: website_sale.accept_terms_and_conditions
+NEW ir.ui.view: website_sale.badge_extra_price
+NEW ir.ui.view: website_sale.cart_delivery
+NEW ir.ui.view: website_sale.checkout_layout
+NEW ir.ui.view: website_sale.filter_products_tags
+NEW ir.ui.view: website_sale.filter_products_tags_list
+NEW ir.ui.view: website_sale.navigation_buttons
+NEW ir.ui.view: website_sale.o_wsale_offcanvas_color_attribute
+NEW ir.ui.view: website_sale.payment_delivery
+NEW ir.ui.view: website_sale.payment_delivery_methods
+NEW ir.ui.view: website_sale.product_document_form
+NEW ir.ui.view: website_sale.product_document_kanban
+NEW ir.ui.view: website_sale.product_document_list
+NEW ir.ui.view: website_sale.product_document_search
+NEW ir.ui.view: website_sale.product_tags
+NEW ir.ui.view: website_sale.row_addresses
+NEW ir.ui.view: website_sale.sale_order_tree
+NEW ir.ui.view: website_sale.template_header_mobile
+NEW ir.ui.view: website_sale.template_header_sales_four
+NEW ir.ui.view: website_sale.template_header_sales_one
+NEW ir.ui.view: website_sale.template_header_sales_three
+NEW ir.ui.view: website_sale.template_header_sales_two
+NEW ir.ui.view: website_sale.template_header_search
+NEW ir.ui.view: website_sale.template_header_stretch
+NEW ir.ui.view: website_sale.variants
+NEW ir.ui.view: website_sale.view_delivery_carrier_form_website_delivery
+NEW ir.ui.view: website_sale.view_delivery_carrier_search
+NEW ir.ui.view: website_sale.view_delivery_carrier_tree
+DEL ir.ui.view: website_sale.cart_popover
+DEL ir.ui.view: website_sale.cart_summary
+DEL ir.ui.view: website_sale.extra_info_option
+DEL ir.ui.view: website_sale.payment_footer
+DEL ir.ui.view: website_sale.payment_sale_note
+DEL ir.ui.view: website_sale.res_config_settings_view_form_web_terms
+DEL ir.ui.view: website_sale.short_cart_summary
+DEL ir.ui.view: website_sale.template_header_centered_logo
+DEL ir.ui.view: website_sale.template_header_contact
+DEL ir.ui.view: website_sale.template_header_hamburger_full
+DEL ir.ui.view: website_sale.template_header_image
+DEL ir.ui.view: website_sale.template_header_magazine
+DEL ir.ui.view: website_sale.template_header_slogan
+DEL ir.ui.view: website_sale.view_order_tree
+DEL ir.ui.view: website_sale.view_quotation_tree
+DEL ir.ui.view: website_sale_delivery.cart_delivery
+DEL ir.ui.view: website_sale_delivery.payment_delivery
+DEL ir.ui.view: website_sale_delivery.payment_delivery_methods
+DEL ir.ui.view: website_sale_delivery.payment_delivery_shipping_method
+DEL ir.ui.view: website_sale_delivery.res_config_settings_view_form
+DEL ir.ui.view: website_sale_delivery.view_delivery_carrier_form_website_delivery
+DEL ir.ui.view: website_sale_delivery.view_delivery_carrier_search_inherit_website_sale_delivery
+DEL ir.ui.view: website_sale_delivery.view_delivery_carrier_tree_inherit_website_sale_delivery

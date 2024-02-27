@@ -1,0 +1,9 @@
+---Models in module 'hr_skills_survey'---
+---Fields in module 'hr_skills_survey'---
+hr_skills_survey / hr.resume.line           / department_id (many2one)      : NEW relation: hr.department, isrelated: related, stored
+hr_skills_survey / hr.resume.line           / expiration_status (selection) : NEW selection_keys: ['expired', 'expiring', 'valid'], isfunction: function, stored
+---XML records in module 'hr_skills_survey'---
+NEW ir.actions.act_window: hr_skills_survey.hr_employee_certification_report_action
+NEW ir.ui.menu: hr_skills_survey.hr_employee_certication_report_menu
+NEW ir.ui.view: hr_skills_survey.hr_employee_certification_report_view_list
+NEW ir.ui.view: hr_skills_survey.hr_resume_line_view_search

@@ -1,0 +1,7 @@
+---Models in module 'account_edi'---
+---Fields in module 'account_edi'---
+---XML records in module 'account_edi'---
+DEL ir.actions.act_window: account_edi.action_open_payment_edi_documents
+DEL ir.model.constraint: account_edi.constraint_account_edi_document_unique_edi_document_by_move_by_format
+DEL ir.model.constraint: account_edi.constraint_account_edi_format_unique_code
+DEL ir.ui.view: account_edi.view_payment_form_inherit

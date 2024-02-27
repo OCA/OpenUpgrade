@@ -1,0 +1,7 @@
+---Models in module 'payment_custom'---
+---Fields in module 'payment_custom'---
+---XML records in module 'payment_custom'---
+DEL ir.model.constraint: payment_custom.constraint_payment_provider_custom_providers_setup
+NEW ir.ui.view: payment_custom.payment_method_form
+NEW ir.ui.view: payment_custom.token_form
+NEW payment.method: payment_custom.payment_method_wire_transfer (noupdate)

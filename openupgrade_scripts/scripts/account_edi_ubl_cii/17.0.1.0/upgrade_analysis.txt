@@ -1,0 +1,39 @@
+---Models in module 'account_edi_ubl_cii'---
+---Fields in module 'account_edi_ubl_cii'---
+account_edi_ubl_cii / account.move             / ubl_cii_xml_file (binary)     : NEW attachment: True
+account_edi_ubl_cii / res.company              / invoice_is_ubl_cii (boolean)  : NEW hasdefault: default
+account_edi_ubl_cii / res.partner              / peppol_eas (selection)        : NEW selection_keys: ['0002', '0007', '0009', '0037', '0060', '0088', '0096', '0097', '0106', '0130', '0135', '0142', '0151', '0183', '0184', '0188', '0190', '0191', '0192', '0193', '0195', '0196', '0198', '0199', '0200', '0201', '0202', '0204', '0208', '0209', '0210', '0211', '0212', '0213', '0215', '0216', '0221', '0230', '9901', '9910', '9913', '9914', '9915', '9918', '9919', '9920', '9922', '9923', '9924', '9925', '9926', '9927', '9928', '9929', '9930', '9931', '9932', '9933', '9934', '9935', '9936', '9937', '9938', '9939', '9940', '9941', '9942', '9943', '9944', '9945', '9946', '9947', '9948', '9949', '9950', '9951', '9952', '9953', '9955', '9957', '9959'], hasdefault: compute
+account_edi_ubl_cii / res.partner              / peppol_endpoint (char)        : NEW hasdefault: compute
+account_edi_ubl_cii / res.partner              / ubl_cii_format (selection)    : NEW selection_keys: ['facturx', 'nlcius', 'ubl_a_nz', 'ubl_bis3', 'ubl_sg', 'xrechnung'], hasdefault: compute
+---XML records in module 'account_edi_ubl_cii'---
+DEL account.edi.format: account_edi_ubl_cii.edi_efff_1
+DEL account.edi.format: account_edi_ubl_cii.edi_facturx_1_0_05
+DEL account.edi.format: account_edi_ubl_cii.edi_nlcius_1
+DEL account.edi.format: account_edi_ubl_cii.edi_ubl_2_1
+DEL account.edi.format: account_edi_ubl_cii.ubl_a_nz
+DEL account.edi.format: account_edi_ubl_cii.ubl_bis3
+DEL account.edi.format: account_edi_ubl_cii.ubl_de
+DEL account.edi.format: account_edi_ubl_cii.ubl_sg
+NEW ir.ui.view: account_edi_ubl_cii.account_move_send_form
+NEW ir.ui.view: account_edi_ubl_cii.res_config_settings_view_form
+NEW ir.ui.view: account_edi_ubl_cii.res_partner_view_search
+NEW ir.ui.view: account_edi_ubl_cii.res_partner_view_tree
+NEW ir.ui.view: account_edi_ubl_cii.ubl_20_CommonLineType
+NEW ir.ui.view: account_edi_ubl_cii.ubl_20_CommonType
+NEW ir.ui.view: account_edi_ubl_cii.ubl_20_CreditNoteLineType
+NEW ir.ui.view: account_edi_ubl_cii.ubl_20_CreditNoteType
+NEW ir.ui.view: account_edi_ubl_cii.ubl_20_DebitNote
+NEW ir.ui.view: account_edi_ubl_cii.ubl_20_DebitNoteLineType
+NEW ir.ui.view: account_edi_ubl_cii.ubl_20_DebitNoteType
+NEW ir.ui.view: account_edi_ubl_cii.ubl_20_DeliveryType
+NEW ir.ui.view: account_edi_ubl_cii.ubl_20_MonetaryTotalType
+NEW ir.ui.view: account_edi_ubl_cii.ubl_20_PaymentTermsType
+NEW ir.ui.view: account_edi_ubl_cii.ubl_20_ResponseType
+NEW ir.ui.view: account_edi_ubl_cii.ubl_20_SignatureType
+NEW ir.ui.view: account_edi_ubl_cii.ubl_21_CreditNoteLineType
+NEW ir.ui.view: account_edi_ubl_cii.ubl_21_CreditNoteType
+NEW ir.ui.view: account_edi_ubl_cii.ubl_21_DebitNoteLineType
+NEW ir.ui.view: account_edi_ubl_cii.ubl_21_DebitNoteType
+NEW ir.ui.view: account_edi_ubl_cii.ubl_21_PaymentTermsType
+NEW ir.ui.view: account_edi_ubl_cii.view_partner_property_form
+DEL ir.ui.view: account_edi_ubl_cii.ubl_21_InvoiceLineType

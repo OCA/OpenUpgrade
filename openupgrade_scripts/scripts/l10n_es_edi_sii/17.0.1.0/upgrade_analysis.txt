@@ -1,0 +1,13 @@
+---Models in module 'l10n_es_edi_sii'---
+obsolete model l10n_es.sii.account.tax.mixin [abstract]
+---Fields in module 'l10n_es_edi_sii'---
+l10n_es_edi_sii / account.tax              / l10n_es_bien_inversion (boolean): module is now 'l10n_es' ('l10n_es_edi_sii')
+l10n_es_edi_sii / account.tax              / l10n_es_exempt_reason (selection): module is now 'l10n_es' ('l10n_es_edi_sii')
+l10n_es_edi_sii / account.tax              / l10n_es_type (selection)      : module is now 'l10n_es' ('l10n_es_edi_sii')
+l10n_es_edi_sii / account.tax              / l10n_es_type (selection)      : selection_keys is now '['dua', 'exento', 'ignore', 'no_deducible', 'no_sujeto', 'no_sujeto_loc', 'recargo', 'retencion', 'sujeto', 'sujeto_agricultura', 'sujeto_isp']' ('['exento', 'ignore', 'no_deducible', 'no_sujeto', 'no_sujeto_loc', 'recargo', 'retencion', 'sujeto', 'sujeto_agricultura', 'sujeto_isp']')
+l10n_es_edi_sii / account.tax.template     / l10n_es_bien_inversion (boolean): DEL
+l10n_es_edi_sii / account.tax.template     / l10n_es_exempt_reason (selection): DEL selection_keys: ['E1', 'E2', 'E3', 'E4', 'E5', 'E6']
+l10n_es_edi_sii / account.tax.template     / l10n_es_type (selection)      : DEL selection_keys: ['exento', 'ignore', 'no_deducible', 'no_sujeto', 'no_sujeto_loc', 'recargo', 'retencion', 'sujeto', 'sujeto_agricultura', 'sujeto_isp']
+---XML records in module 'l10n_es_edi_sii'---
+DEL ir.ui.view: l10n_es_edi_sii.account_tax_form_inherit_l10n_es_edi
+DEL res.partner: l10n_es_edi_sii.partner_simplified [renamed to l10n_es module]

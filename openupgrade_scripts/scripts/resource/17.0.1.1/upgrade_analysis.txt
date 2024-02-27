@@ -1,0 +1,11 @@
+---Models in module 'resource'---
+---Fields in module 'resource'---
+resource     / resource.calendar        / hours_per_day (float)         : now a function
+resource     / resource.calendar.attendance / _order                        : _order is now 'sequence, week_type, dayofweek, hour_from' ('week_type, dayofweek, hour_from')
+resource     / resource.calendar.attendance / day_period (selection)        : selection_keys is now '['afternoon', 'lunch', 'morning']' ('['afternoon', 'morning']')
+resource     / resource.calendar.attendance / duration_days (float)         : NEW hasdefault: compute
+---XML records in module 'resource'---
+DEL ir.model.constraint: resource.constraint_resource_resource_check_time_efficiency
+resource.calendar: resource.resource_calendar_std (noupdate) (noupdate switched)
+DEL resource.calendar: resource.resource_calendar_std_35h (noupdate)
+DEL resource.calendar: resource.resource_calendar_std_38h (noupdate)

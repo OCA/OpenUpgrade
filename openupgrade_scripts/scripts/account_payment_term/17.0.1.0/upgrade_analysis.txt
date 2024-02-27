@@ -1,0 +1,6 @@
+---Models in module 'account_payment_term'---
+---Fields in module 'account_payment_term'---
+account_payment_term / account.payment.term.line / days_next_month (char)        : NEW hasdefault: default
+account_payment_term / account.payment.term.line / delay_type (False)            : NEW selection_keys: ['days_after', 'days_after_end_of_month', 'days_after_end_of_next_month', 'days_end_of_month_on_the'], mode: modify
+---XML records in module 'account_payment_term'---
+NEW ir.ui.view: account_payment_term.account_payment_term_form

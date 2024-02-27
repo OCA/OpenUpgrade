@@ -1,0 +1,22 @@
+---Models in module 'base_automation'---
+---Fields in module 'base_automation'---
+base_automation / base.automation          / _inherits                     : DEL _inherits: {'ir.actions.server': 'action_server_id'}
+base_automation / base.automation          / _order                        : _order is now 'id' ('sequence')
+base_automation / base.automation          / action_server_id (many2one)   : DEL relation: ir.actions.server, required
+base_automation / base.automation          / action_server_ids (one2many)  : NEW relation: ir.actions.server, hasdefault: compute
+base_automation / base.automation          / description (html)            : NEW
+base_automation / base.automation          / log_webhook_calls (boolean)   : NEW hasdefault: default
+base_automation / base.automation          / model_id (many2one)           : is now stored
+base_automation / base.automation          / model_id (many2one)           : not related anymore
+base_automation / base.automation          / name (char)                   : is now stored
+base_automation / base.automation          / name (char)                   : not related anymore
+base_automation / base.automation          / record_getter (char)          : NEW hasdefault: default
+base_automation / base.automation          / trg_field_ref (many2one_reference): NEW relation: trg_field_ref_model_name, hasdefault: compute
+base_automation / base.automation          / trg_selection_field_id (many2one): NEW relation: ir.model.fields.selection, hasdefault: compute
+base_automation / base.automation          / trigger (selection)           : selection_keys is now '['on_archive', 'on_change', 'on_create', 'on_create_or_write', 'on_message_received', 'on_message_sent', 'on_priority_set', 'on_stage_set', 'on_state_set', 'on_tag_set', 'on_time', 'on_time_created', 'on_time_updated', 'on_unarchive', 'on_unlink', 'on_user_set', 'on_webhook', 'on_write']' ('['on_change', 'on_create', 'on_create_or_write', 'on_time', 'on_unlink', 'on_write']')
+base_automation / base.automation          / webhook_uuid (char)           : NEW
+base_automation / ir.actions.server        / base_automation_id (many2one) : NEW relation: base.automation
+base_automation / ir.actions.server        / name (False)                  : NEW mode: modify, hasdefault: compute
+---XML records in module 'base_automation'---
+NEW ir.ui.view: base_automation.ir_actions_server_view_form_automation
+NEW ir.ui.view: base_automation.view_base_automation_kanban

@@ -1,0 +1,16 @@
+---Models in module 'purchase'---
+---Fields in module 'purchase'---
+purchase     / purchase.order           / activity_user_id (many2one)   : not related anymore
+purchase     / purchase.order           / activity_user_id (many2one)   : now a function
+purchase     / purchase.order           / message_main_attachment_id (many2one): DEL relation: ir.attachment
+purchase     / purchase.order           / rating_ids (one2many)         : NEW relation: rating.rating
+purchase     / purchase.order.line      / discount (float)              : NEW hasdefault: compute
+purchase     / res.partner              / buyer_id (many2one)           : NEW relation: res.users
+---XML records in module 'purchase'---
+DEL ir.model.constraint: purchase.constraint_purchase_order_line_accountable_required_fields
+DEL ir.model.constraint: purchase.constraint_purchase_order_line_non_accountable_null_fields
+NEW ir.ui.view: purchase.document_tax_totals
+NEW ir.ui.view: purchase.product_template_search_view_purchase
+NEW ir.ui.view: purchase.product_view_kanban_catalog_purchase_only
+NEW ir.ui.view: purchase.product_view_search_catalog
+NEW ir.ui.view: purchase.view_product_product_supplier_inherit

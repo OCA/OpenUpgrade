@@ -1,0 +1,92 @@
+---Models in module 'website_event'---
+model event.question (moved from website_event_questions)
+model event.question.answer (moved from website_event_questions)
+model event.registration.answer (moved from website_event_questions)
+---Fields in module 'website_event'---
+website_event / event.event              / general_question_ids (one2many): previously in module website_event_questions
+website_event / event.event              / question_ids (one2many)       : previously in module website_event_questions
+website_event / event.event              / specific_question_ids (one2many): previously in module website_event_questions
+website_event / event.question           / _order                        : previously in module website_event_questions
+website_event / event.question           / answer_ids (one2many)         : previously in module website_event_questions
+website_event / event.question           / display_name (char)           : previously in module website_event_questions
+website_event / event.question           / event_id (many2one)           : previously in module website_event_questions
+website_event / event.question           / event_type_id (many2one)      : previously in module website_event_questions
+website_event / event.question           / is_mandatory_answer (boolean) : previously in module website_event_questions
+website_event / event.question           / once_per_order (boolean)      : previously in module website_event_questions
+website_event / event.question           / question_type (selection)     : previously in module website_event_questions
+website_event / event.question           / sequence (integer)            : previously in module website_event_questions
+website_event / event.question           / title (char)                  : previously in module website_event_questions
+website_event / event.question.answer    / _order                        : previously in module website_event_questions
+website_event / event.question.answer    / display_name (char)           : previously in module website_event_questions
+website_event / event.question.answer    / name (char)                   : previously in module website_event_questions
+website_event / event.question.answer    / question_id (many2one)        : previously in module website_event_questions
+website_event / event.question.answer    / sequence (integer)            : previously in module website_event_questions
+website_event / event.registration       / registration_answer_choice_ids (one2many): NEW relation: event.registration.answer
+website_event / event.registration       / registration_answer_ids (one2many): previously in module website_event_questions
+website_event / event.registration.answer / _order                        : previously in module website_event_questions
+website_event / event.registration.answer / display_name (char)           : previously in module website_event_questions
+website_event / event.registration.answer / event_id (many2one)           : previously in module website_event_questions
+website_event / event.registration.answer / partner_id (many2one)         : previously in module website_event_questions
+website_event / event.registration.answer / question_id (many2one)        : previously in module website_event_questions
+website_event / event.registration.answer / question_type (selection)     : previously in module website_event_questions
+website_event / event.registration.answer / registration_id (many2one)    : previously in module website_event_questions
+website_event / event.registration.answer / value_answer_id (many2one)    : previously in module website_event_questions
+website_event / event.registration.answer / value_text_box (text)         : previously in module website_event_questions
+website_event / event.tag                / is_published (boolean)        : NEW hasdefault: default
+website_event / event.tag                / website_id (many2one)         : NEW relation: website
+website_event / event.tag.category       / website_id (many2one)         : NEW relation: website
+website_event / event.tag.category       / website_published (boolean)   : not related anymore
+website_event / event.tag.category       / website_published (boolean)   : now a function
+website_event / event.type               / question_ids (one2many)       : previously in module website_event_questions
+---XML records in module 'website_event'---
+NEW ir.actions.act_window: website_event.action_event_registration_report [renamed from website_event_questions module]
+NEW ir.asset: website_event.s_searchbar_000_js
+NEW ir.asset: website_event.s_searchbar_000_xml
+NEW ir.model.access: website_event.access_event_event_employee
+NEW ir.model.access: website_event.access_event_event_portal
+NEW ir.model.access: website_event.access_event_event_public
+NEW ir.model.access: website_event.access_event_event_ticket_employee
+NEW ir.model.access: website_event.access_event_event_ticket_portal
+NEW ir.model.access: website_event.access_event_event_ticket_public
+NEW ir.model.access: website_event.access_event_question_answer_employee
+NEW ir.model.access: website_event.access_event_question_answer_portal
+NEW ir.model.access: website_event.access_event_question_answer_public
+NEW ir.model.access: website_event.access_event_question_answer_registration [renamed from website_event_questions module]
+NEW ir.model.access: website_event.access_event_question_answer_user [renamed from website_event_questions module]
+NEW ir.model.access: website_event.access_event_question_employee
+NEW ir.model.access: website_event.access_event_question_portal
+NEW ir.model.access: website_event.access_event_question_public
+NEW ir.model.access: website_event.access_event_question_user [renamed from website_event_questions module]
+NEW ir.model.access: website_event.access_event_registration_answer
+NEW ir.model.access: website_event.access_event_tag_category_employee
+NEW ir.model.access: website_event.access_event_tag_category_portal
+NEW ir.model.access: website_event.access_event_tag_category_public
+NEW ir.model.access: website_event.access_event_tag_employee
+NEW ir.model.access: website_event.access_event_tag_portal
+NEW ir.model.access: website_event.access_event_tag_public
+NEW ir.model.access: website_event.access_website_event_menu_employee
+NEW ir.model.access: website_event.access_website_event_menu_portal
+NEW ir.model.access: website_event.access_website_event_menu_public
+DEL ir.model.access: website_event.access_event_event
+DEL ir.model.access: website_event.access_event_event_ticket
+DEL ir.model.access: website_event.access_event_tag
+DEL ir.model.access: website_event.access_event_tag_category
+DEL ir.model.access: website_event.access_website_event_menu
+NEW ir.rule: website_event.ir_rule_event_question_answer_event_user [renamed from website_event_questions module] (noupdate)
+NEW ir.rule: website_event.ir_rule_event_question_answer_published [renamed from website_event_questions module] (noupdate)
+NEW ir.rule: website_event.ir_rule_event_question_event_user [renamed from website_event_questions module] (noupdate)
+NEW ir.rule: website_event.ir_rule_event_question_published [renamed from website_event_questions module] (noupdate)
+NEW ir.ui.view: website_event.event_empty_events_svg
+NEW ir.ui.view: website_event.event_question_view_form
+NEW ir.ui.view: website_event.event_registration_answer_view_graph
+NEW ir.ui.view: website_event.event_registration_answer_view_pivot
+NEW ir.ui.view: website_event.event_registration_answer_view_search
+NEW ir.ui.view: website_event.event_registration_answer_view_tree
+NEW ir.ui.view: website_event.event_registration_view_kanban
+NEW ir.ui.view: website_event.event_registration_view_search
+NEW ir.ui.view: website_event.event_tag_view_form_inherit
+NEW ir.ui.view: website_event.modal_ticket_registration
+NEW ir.ui.view: website_event.navbar
+NEW ir.ui.view: website_event.registration_event_question
+DEL ir.ui.view: website_event.fold_register_details
+DEL ir.ui.view: website_event.res_config_settings_view_form

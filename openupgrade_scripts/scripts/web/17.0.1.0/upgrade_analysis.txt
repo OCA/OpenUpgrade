@@ -1,0 +1,9 @@
+---Models in module 'web'---
+---Fields in module 'web'---
+web          / ir.actions.act_window.view / view_mode (False)             : module is now 'web_hierarchy' ('web')
+web          / ir.actions.act_window.view / view_mode (False)             : selection_keys is now '['calendar', 'form', 'gantt', 'graph', 'hierarchy', 'kanban', 'pivot', 'tree']' ('['calendar', 'form', 'gantt', 'graph', 'kanban', 'pivot', 'qweb', 'tree']')
+---XML records in module 'web'---
+NEW ir.actions.server: web.download_contact
+NEW ir.ui.view: web.webclient_offline
+DEL ir.ui.view: web.assets_backend_legacy_lazy
+DEL ir.ui.view: web.benchmark_suite

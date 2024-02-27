@@ -1,0 +1,6 @@
+---Models in module 'pos_epson_printer'---
+---Fields in module 'pos_epson_printer'---
+pos_epson_printer / pos.printer              / epson_printer_ip (char)       : NEW hasdefault: default
+pos_epson_printer / pos.printer              / printer_type (False)          : NEW selection_keys: ['epson_epos', 'iot'], mode: modify
+---XML records in module 'pos_epson_printer'---
+NEW ir.ui.view: pos_epson_printer.view_pos_printer_form

@@ -1,0 +1,18 @@
+---Models in module 'pos_paytm'---
+---Fields in module 'pos_paytm'---
+pos_paytm    / pos.payment              / paytm_authcode (char)         : NEW
+pos_paytm    / pos.payment              / paytm_card_scheme (char)      : NEW
+pos_paytm    / pos.payment              / paytm_issuer_bank (char)      : NEW
+pos_paytm    / pos.payment              / paytm_issuer_card_no (char)   : NEW
+pos_paytm    / pos.payment              / paytm_payment_method (char)   : NEW
+pos_paytm    / pos.payment              / paytm_reference_no (char)     : NEW
+pos_paytm    / pos.payment.method       / accept_payment (selection)    : NEW selection_keys: ['auto', 'manual'], hasdefault: default
+pos_paytm    / pos.payment.method       / allowed_payment_modes (selection): NEW selection_keys: ['all', 'card', 'qr'], hasdefault: default
+pos_paytm    / pos.payment.method       / channel_id (char)             : NEW hasdefault: default
+pos_paytm    / pos.payment.method       / paytm_merchant_key (char)     : NEW
+pos_paytm    / pos.payment.method       / paytm_mid (char)              : NEW
+pos_paytm    / pos.payment.method       / paytm_test_mode (boolean)     : NEW hasdefault: default
+pos_paytm    / pos.payment.method       / paytm_tid (char)              : NEW
+---XML records in module 'pos_paytm'---
+NEW ir.ui.view: pos_paytm.pos_payment_method_view_form_inherit_pos_paytm
+NEW ir.ui.view: pos_paytm.view_pos_payment_form

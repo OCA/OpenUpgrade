@@ -1,0 +1,8 @@
+---Models in module 'stock_landed_costs'---
+---Fields in module 'stock_landed_costs'---
+stock_landed_costs / stock.landed.cost        / _order                        : _order is now 'date desc, id desc' ('id')
+stock_landed_costs / stock.landed.cost        / activity_user_id (many2one)   : not related anymore
+stock_landed_costs / stock.landed.cost        / activity_user_id (many2one)   : now a function
+stock_landed_costs / stock.landed.cost        / message_main_attachment_id (many2one): DEL relation: ir.attachment
+stock_landed_costs / stock.landed.cost        / rating_ids (one2many)         : NEW relation: rating.rating
+---XML records in module 'stock_landed_costs'---

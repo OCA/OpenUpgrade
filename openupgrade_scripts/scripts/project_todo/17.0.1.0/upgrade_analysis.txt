@@ -1,0 +1,82 @@
+---Models in module 'project_todo'---
+obsolete model note.note
+obsolete model note.stage
+obsolete model note.tag
+new model mail.activity.todo.create [transient]
+---Fields in module 'project_todo'---
+note         / mail.activity            / note_id (many2one)            : DEL relation: note.note
+note         / note.note                / activity_ids (one2many)       : DEL relation: mail.activity
+note         / note.note                / color (integer)               : DEL
+note         / note.note                / company_id (many2one)         : DEL relation: res.company
+note         / note.note                / date_done (date)              : DEL
+note         / note.note                / memo (html)                   : DEL
+note         / note.note                / message_follower_ids (one2many): DEL relation: mail.followers
+note         / note.note                / message_ids (one2many)        : DEL relation: mail.message
+note         / note.note                / message_main_attachment_id (many2one): DEL relation: ir.attachment
+note         / note.note                / name (text)                   : DEL
+note         / note.note                / open (boolean)                : DEL
+note         / note.note                / sequence (integer)            : DEL
+note         / note.note                / stage_ids (many2many)         : DEL relation: note.stage
+note         / note.note                / tag_ids (many2many)           : DEL relation: note.tag
+note         / note.note                / user_id (many2one)            : DEL relation: res.users
+note         / note.stage               / fold (boolean)                : DEL
+note         / note.stage               / name (char)                   : DEL required
+note         / note.stage               / sequence (integer)            : DEL
+note         / note.stage               / user_id (many2one)            : DEL relation: res.users, required
+note         / note.tag                 / color (integer)               : DEL
+note         / note.tag                 / name (char)                   : DEL required
+---XML records in module 'project_todo'---
+NEW ir.actions.act_window: project_todo.project_task_action_convert_todo_to_task
+NEW ir.actions.act_window: project_todo.project_task_action_todo
+DEL ir.actions.act_window: note.action_note_note
+DEL ir.actions.act_window: note.action_note_stage
+DEL ir.actions.act_window: note.note_tag_action
+NEW ir.actions.act_window.view: project_todo.project_task_action_convert_todo_to_task_form_view
+NEW ir.actions.act_window.view: project_todo.project_task_action_todo_activity_view
+NEW ir.actions.act_window.view: project_todo.project_task_action_todo_form_view
+NEW ir.actions.act_window.view: project_todo.project_task_action_todo_kanban_view
+NEW ir.actions.act_window.view: project_todo.project_task_action_todo_tree_view
+NEW ir.actions.server: project_todo.project_task_preload_action_todo
+NEW ir.model.access: project_todo.access_mail_activity_todo_create
+NEW ir.model.access: project_todo.access_project_tags_user
+NEW ir.model.access: project_todo.access_project_task_type_user
+NEW ir.model.access: project_todo.access_task_on_partner
+DEL ir.model.access: note.access_note_note
+DEL ir.model.access: note.access_note_stage
+DEL ir.model.access: note.access_note_tag
+DEL ir.model.constraint: note.constraint_note_tag_name_uniq
+NEW ir.rule: project_todo.task_edition_rule_internal (noupdate)
+NEW ir.rule: project_todo.task_visibility_rule_project_user (noupdate)
+DEL ir.rule: note.ir_rule_note_note_multi_company (noupdate)
+DEL ir.rule: note.note_note_create_unlink_global (noupdate)
+DEL ir.rule: note.note_note_rule_global (noupdate)
+DEL ir.rule: note.note_stage_rule_global (noupdate)
+NEW ir.ui.menu: project_todo.menu_todo_todos
+DEL ir.ui.menu: note.menu_note_configuration
+DEL ir.ui.menu: note.menu_note_notes
+DEL ir.ui.menu: note.menu_notes_stage
+DEL ir.ui.menu: note.notes_tag_menu
+NEW ir.ui.view: project_todo.mail_activity_todo_create_popup
+NEW ir.ui.view: project_todo.project_task_view_todo_activity
+NEW ir.ui.view: project_todo.project_task_view_todo_conversion_form
+NEW ir.ui.view: project_todo.project_task_view_todo_form
+NEW ir.ui.view: project_todo.project_task_view_todo_kanban
+NEW ir.ui.view: project_todo.project_task_view_todo_quick_create_form
+NEW ir.ui.view: project_todo.project_task_view_todo_search
+NEW ir.ui.view: project_todo.project_task_view_todo_tree
+NEW ir.ui.view: project_todo.todo_user_onboarding (noupdate)
+DEL ir.ui.view: note.note_tag_view_form
+DEL ir.ui.view: note.note_tag_view_tree
+DEL ir.ui.view: note.view_note_note_filter
+DEL ir.ui.view: note.view_note_note_form
+DEL ir.ui.view: note.view_note_note_kanban
+DEL ir.ui.view: note.view_note_note_tree
+DEL ir.ui.view: note.view_note_stage_form
+DEL ir.ui.view: note.view_note_stage_tree
+NEW mail.activity.type: project_todo.mail_activity_data_reminder [renamed from note module] (noupdate)
+DEL mail.activity.type: note.mail_activity_data_reminder [renamed to project_todo module] (noupdate)
+DEL note.stage: note.note_stage_00
+DEL note.stage: note.note_stage_01
+DEL note.stage: note.note_stage_02
+DEL note.stage: note.note_stage_03
+NEW res.groups: project_todo.group_onboarding_todo

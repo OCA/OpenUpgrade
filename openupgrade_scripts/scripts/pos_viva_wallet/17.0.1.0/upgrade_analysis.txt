@@ -1,0 +1,13 @@
+---Models in module 'pos_viva_wallet'---
+---Fields in module 'pos_viva_wallet'---
+pos_viva_wallet / pos.payment.method       / viva_wallet_api_key (char)    : NEW
+pos_viva_wallet / pos.payment.method       / viva_wallet_bearer_token (char): NEW hasdefault: default
+pos_viva_wallet / pos.payment.method       / viva_wallet_client_id (char)  : NEW
+pos_viva_wallet / pos.payment.method       / viva_wallet_client_secret (char): NEW
+pos_viva_wallet / pos.payment.method       / viva_wallet_latest_response (json): NEW
+pos_viva_wallet / pos.payment.method       / viva_wallet_merchant_id (char): NEW
+pos_viva_wallet / pos.payment.method       / viva_wallet_terminal_id (char): NEW
+pos_viva_wallet / pos.payment.method       / viva_wallet_test_mode (boolean): NEW
+pos_viva_wallet / pos.payment.method       / viva_wallet_webhook_verification_key (char): NEW
+---XML records in module 'pos_viva_wallet'---
+NEW ir.ui.view: pos_viva_wallet.pos_payment_method_view_form_inherit_pos_viva_wallet

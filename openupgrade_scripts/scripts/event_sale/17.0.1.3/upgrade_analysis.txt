@@ -1,0 +1,12 @@
+---Models in module 'event_sale'---
+---Fields in module 'event_sale'---
+event_sale   / event.event.ticket       / _order                        : _order is now 'event_id, sequence, price, name, id' ('event_id, price')
+event_sale   / event.event.ticket       / price_incl (float)            : NEW hasdefault: compute
+event_sale   / event.registration       / is_paid (boolean)             : DEL
+event_sale   / event.registration       / sale_status (selection)       : NEW selection_keys: ['free', 'sold', 'to_pay'], isfunction: function, stored
+event_sale   / event.registration       / state (False)                 : NEW mode: modify, hasdefault: compute
+event_sale   / product.template         / detailed_type (False)         : selection_keys is now '['combo', 'consu', 'event', 'product', 'service']' ('['consu', 'event', 'product', 'service']')
+event_sale   / sale.order.line          / registration_ids (one2many)   : NEW relation: event.registration
+---XML records in module 'event_sale'---
+NEW ir.ui.view: event_sale.event_registration_view_graph
+DEL ir.ui.view: event_sale.event_report_template_full_page_ticket_inherit_sale

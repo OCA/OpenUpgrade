@@ -1,0 +1,106 @@
+---Models in module 'repair'---
+obsolete model repair.fee
+obsolete model repair.line
+obsolete model repair.order.make_invoice [transient]
+new model repair.warn.uncomplete.move [transient]
+---Fields in module 'repair'---
+repair       / account.move             / repair_ids (one2many)         : DEL relation: repair.order
+repair       / account.move.line        / repair_fee_ids (one2many)     : DEL relation: repair.fee
+repair       / account.move.line        / repair_line_ids (one2many)    : DEL relation: repair.line
+repair       / product.template         / create_repair (boolean)       : NEW
+repair       / repair.fee               / company_id (many2one)         : DEL relation: res.company
+repair       / repair.fee               / invoice_line_id (many2one)    : DEL relation: account.move.line
+repair       / repair.fee               / invoiced (boolean)            : DEL
+repair       / repair.fee               / name (text)                   : DEL required
+repair       / repair.fee               / price_subtotal (float)        : DEL
+repair       / repair.fee               / price_total (float)           : DEL
+repair       / repair.fee               / price_unit (float)            : DEL required
+repair       / repair.fee               / product_id (many2one)         : DEL relation: product.product
+repair       / repair.fee               / product_uom (many2one)        : DEL relation: uom.uom, required
+repair       / repair.fee               / product_uom_qty (float)       : DEL required
+repair       / repair.fee               / repair_id (many2one)          : DEL relation: repair.order, required
+repair       / repair.fee               / tax_id (many2many)            : DEL relation: account.tax
+repair       / repair.line              / company_id (many2one)         : DEL relation: res.company
+repair       / repair.line              / invoice_line_id (many2one)    : DEL relation: account.move.line
+repair       / repair.line              / invoiced (boolean)            : DEL
+repair       / repair.line              / location_dest_id (many2one)   : DEL relation: stock.location, required
+repair       / repair.line              / location_id (many2one)        : DEL relation: stock.location, required
+repair       / repair.line              / lot_id (many2one)             : DEL relation: stock.lot
+repair       / repair.line              / move_id (many2one)            : DEL relation: stock.move
+repair       / repair.line              / name (text)                   : DEL required
+repair       / repair.line              / price_subtotal (float)        : DEL
+repair       / repair.line              / price_total (float)           : DEL
+repair       / repair.line              / price_unit (float)            : DEL required
+repair       / repair.line              / product_id (many2one)         : DEL relation: product.product, required
+repair       / repair.line              / product_uom (many2one)        : DEL relation: uom.uom, required
+repair       / repair.line              / product_uom_qty (float)       : DEL required
+repair       / repair.line              / repair_id (many2one)          : DEL relation: repair.order, required
+repair       / repair.line              / state (selection)             : DEL required, selection_keys: ['cancel', 'confirmed', 'done', 'draft']
+repair       / repair.line              / tax_id (many2many)            : DEL relation: account.tax
+repair       / repair.line              / type (selection)              : DEL required, selection_keys: ['add', 'remove']
+repair       / repair.order             / activity_user_id (many2one)   : not related anymore
+repair       / repair.order             / activity_user_id (many2one)   : now a function
+repair       / repair.order             / address_id (many2one)         : DEL relation: res.partner
+repair       / repair.order             / amount_tax (float)            : DEL
+repair       / repair.order             / amount_total (float)          : DEL
+repair       / repair.order             / amount_untaxed (float)        : DEL
+repair       / repair.order             / description (char)            : DEL
+repair       / repair.order             / fees_lines (one2many)         : DEL relation: repair.fee
+repair       / repair.order             / guarantee_limit (date)        : DEL
+repair       / repair.order             / invoice_id (many2one)         : DEL relation: account.move
+repair       / repair.order             / invoice_method (selection)    : DEL required, selection_keys: ['after_repair', 'b4repair', 'none']
+repair       / repair.order             / invoiced (boolean)            : DEL
+repair       / repair.order             / is_parts_available (boolean)  : NEW isfunction: function, stored
+repair       / repair.order             / is_parts_late (boolean)       : NEW isfunction: function, stored
+repair       / repair.order             / location_dest_id (many2one)   : NEW relation: stock.location, required, isrelated: related, stored
+repair       / repair.order             / location_id (many2one)        : not a function anymore
+repair       / repair.order             / lot_id (many2one)             : now a function
+repair       / repair.order             / message_main_attachment_id (many2one): DEL relation: ir.attachment
+repair       / repair.order             / move_ids (one2many)           : NEW relation: stock.move
+repair       / repair.order             / operations (one2many)         : DEL relation: repair.line
+repair       / repair.order             / partner_invoice_id (many2one) : DEL relation: res.partner
+repair       / repair.order             / parts_location_id (many2one)  : NEW relation: stock.location, required, isrelated: related, stored
+repair       / repair.order             / picking_type_id (many2one)    : NEW relation: stock.picking.type, required, hasdefault: default
+repair       / repair.order             / pricelist_id (many2one)       : DEL relation: product.pricelist
+repair       / repair.order             / procurement_group_id (many2one): NEW relation: procurement.group
+repair       / repair.order             / quotation_notes (html)        : DEL
+repair       / repair.order             / rating_ids (one2many)         : NEW relation: rating.rating
+repair       / repair.order             / recycle_location_id (many2one): NEW relation: stock.location, required, hasdefault: compute
+repair       / repair.order             / repaired (boolean)            : DEL
+repair       / repair.order             / sale_order_line_id (many2one) : NEW relation: sale.order.line
+repair       / repair.order             / schedule_date (date)          : now required
+repair       / repair.order             / schedule_date (date)          : type is now 'datetime' ('date')
+repair       / repair.order             / state (selection)             : selection_keys is now '['cancel', 'confirmed', 'done', 'draft', 'under_repair']' ('['2binvoiced', 'cancel', 'confirmed', 'done', 'draft', 'ready', 'under_repair']')
+repair       / repair.order             / under_warranty (boolean)      : NEW
+repair       / sale.order               / repair_order_ids (one2many)   : NEW relation: repair.order
+repair       / stock.move               / repair_line_type (selection)  : NEW selection_keys: ['add', 'recycle', 'remove']
+repair       / stock.picking            / is_repairable (boolean)       : not related anymore
+repair       / stock.picking            / is_repairable (boolean)       : now a function
+repair       / stock.picking.type       / code (False)                  : NEW selection_keys: ['incoming', 'internal', 'mrp_operation', 'outgoing', 'repair_operation'], mode: modify
+repair       / stock.picking.type       / default_recycle_location_dest_id (many2one): NEW relation: stock.location, hasdefault: compute
+repair       / stock.picking.type       / default_remove_location_dest_id (many2one): NEW relation: stock.location, hasdefault: compute
+repair       / stock.warehouse          / repair_type_id (many2one)     : NEW relation: stock.picking.type
+---XML records in module 'repair'---
+NEW ir.actions.act_window: repair.action_picking_repair
+NEW ir.actions.act_window: repair.action_repair_order_form
+DEL ir.actions.act_window: repair.act_repair_invoice
+NEW ir.model.access: repair.access_repair_warn_uncomplete_move
+DEL ir.model.access: repair.access_account_tax_user
+DEL ir.model.access: repair.access_repair_fee_user
+DEL ir.model.access: repair.access_repair_line_user
+DEL ir.model.access: repair.access_repair_order_make_invoice
+DEL ir.model.constraint: repair.constraint_repair_order_name
+DEL ir.model.constraint: repair.constraint_repair_tags_name_uniq
+DEL ir.rule: repair.repair_fee_rule (noupdate)
+DEL ir.rule: repair.repair_line_rule (noupdate)
+DEL ir.sequence: repair.seq_repair (noupdate)
+NEW ir.ui.menu: repair.repair_order_menu
+NEW ir.ui.view: repair.repair_order_view_activity
+NEW ir.ui.view: repair.stock_repair_type_kanban
+NEW ir.ui.view: repair.view_product_template_form_inherit_repair
+NEW ir.ui.view: repair.view_repair_warn_uncomplete_move
+NEW ir.ui.view: repair.view_sale_order_form_inherit_repair
+NEW ir.ui.view: repair.view_warehouse_inherit_repair
+DEL ir.ui.view: repair.view_make_invoice
+DEL mail.template: repair.mail_template_repair_quotation (noupdate)
+NEW stock.picking.type: repair.picking_type_warehouse0_repair (noupdate)

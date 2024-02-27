@@ -1,0 +1,10 @@
+---Models in module 'mass_mailing_sms'---
+---Fields in module 'mass_mailing_sms'---
+mass_mailing_sms / mailing.trace            / failure_type (False)          : selection_keys is now '['mail_bl', 'mail_bounce', 'mail_dup', 'mail_email_invalid', 'mail_email_missing', 'mail_from_invalid', 'mail_from_missing', 'mail_optout', 'mail_smtp', 'sms_acc', 'sms_blacklist', 'sms_country_not_supported', 'sms_credit', 'sms_duplicate', 'sms_expired', 'sms_invalid_destination', 'sms_not_allowed', 'sms_not_delivered', 'sms_number_format', 'sms_number_missing', 'sms_optout', 'sms_registration_needed', 'sms_rejected', 'sms_server', 'unknown']' ('['mail_bl', 'mail_dup', 'mail_email_invalid', 'mail_email_missing', 'mail_optout', 'mail_smtp', 'sms_acc', 'sms_blacklist', 'sms_credit', 'sms_duplicate', 'sms_number_format', 'sms_number_missing', 'sms_optout', 'sms_server', 'unknown']')
+mass_mailing_sms / mailing.trace            / sms_id_int (integer)          : NEW
+mass_mailing_sms / mailing.trace            / sms_sms_id (many2one)         : DEL relation: sms.sms
+mass_mailing_sms / mailing.trace            / sms_sms_id_int (integer)      : DEL
+mass_mailing_sms / mailing.trace            / sms_tracker_ids (one2many)    : NEW relation: sms.tracker
+mass_mailing_sms / sms.tracker              / mailing_trace_id (many2one)   : NEW relation: mailing.trace
+---XML records in module 'mass_mailing_sms'---
+NEW ir.ui.view: mass_mailing_sms.mailing_list_view_form
