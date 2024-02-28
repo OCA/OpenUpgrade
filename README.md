@@ -1,6 +1,7 @@
-[![Pre-commit Status](https://github.com/OCA/openupgrade/actions/workflows/pre-commit.yml/badge.svg?branch=17.0)](https://github.com/OCA/openupgrade/actions/workflows/pre-commit.yml?query=branch%3A17.0)
-[![Build Status](https://github.com/OCA/openupgrade/actions/workflows/test.yml/badge.svg?branch=17.0)](https://github.com/OCA/openupgrade/actions/workflows/test.yml?query=branch%3A17.0)
-[![codecov](https://codecov.io/gh/OCA/openupgrade/branch/17.0/graph/badge.svg)](https://codecov.io/gh/OCA/openupgrade)
+
+[![Pre-commit Status](https://github.com/OCA/OpenUpgrade/actions/workflows/pre-commit.yml/badge.svg?branch=17.0)](https://github.com/OCA/OpenUpgrade/actions/workflows/pre-commit.yml?query=branch%3A17.0)
+[![Build Status](https://github.com/OCA/OpenUpgrade/actions/workflows/test.yml/badge.svg?branch=17.0)](https://github.com/OCA/OpenUpgrade/actions/workflows/test.yml?query=branch%3A17.0)
+[![codecov](https://codecov.io/gh/OCA/OpenUpgrade/branch/17.0/graph/badge.svg)](https://codecov.io/gh/OCA/OpenUpgrade)
 
 <!-- /!\ do not modify above this line -->
 
@@ -8,19 +9,9 @@
 
 # Tools to upgrade Odoo instances from a major version to another
 
-This <a href="https://odoo-community.org">OCA</a> project aims to provide an
-Open Source upgrade path for <a href="https://github.com/odoo/odoo">Odoo</a> from one
-major Odoo version to the next one.
-
+This <a href="https://odoo-community.org">OCA</a> project aims to provide an Open Source upgrade path for <a href="https://github.com/odoo/odoo">Odoo</a> from one major Odoo version to the next one.
 It is hosted at <a href="https://github.com/oca/openupgrade">GitHub</a>.
-
-For documentation, see <a href="https://oca.github.io/OpenUpgrade">here</a> including:
-
-- [introduction](https://oca.github.io/OpenUpgrade/intro.html)
-- [migration process](https://oca.github.io/OpenUpgrade/migration_details.html)
-- [module coverage](https://oca.github.io/OpenUpgrade/status.html)
-- [development](https://oca.github.io/OpenUpgrade/development.html)
-- and much more ...
+For documentation, see <a href="https://oca.github.io/OpenUpgrade">here</a>.
 
 <!-- /!\ do not modify below this line -->
 
