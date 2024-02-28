@@ -1,0 +1,34 @@
+---Models in module 'purchase'---
+---Fields in module 'purchase'---
+purchase     / account.analytic.applicability / business_domain (False)       : NEW selection_keys: ['bill', 'expense', 'general', 'invoice', 'purchase_order'], mode: modify
+# NOTHING TO DO: extra selection will be added by ORM
+
+purchase     / product.category         / property_account_creditor_price_difference_categ (many2one): module is now 'purchase_price_diff' ('purchase')
+purchase     / product.product          / property_account_creditor_price_difference (many2one): module is now 'purchase_price_diff' ('purchase')
+purchase     / product.template         / property_account_creditor_price_difference (many2one): module is now 'purchase_price_diff' ('purchase')
+# NOTHING TO DO: will be handled by ORM
+
+purchase     / purchase.order.line      / account_analytic_id (many2one): DEL relation: account.analytic.account
+purchase     / purchase.order.line      / analytic_distribution (json)  : NEW hasdefault: compute
+purchase     / purchase.order.line      / analytic_distribution_search (json): NEW
+purchase     / purchase.order.line      / analytic_precision (integer)  : NEW hasdefault: default
+purchase     / purchase.order.line      / analytic_tag_ids (many2many)  : DEL relation: account.analytic.tag
+# DONE: fast fill analytic_distribution in pre-migration
+
+---XML records in module 'purchase'---
+DEL ir.ui.view: purchase.mail_notification_confirm (noupdate)
+# DONE: post-migration: remove noupdate view
+
+DEL ir.actions.act_window: purchase.purchase_action_dashboard_kanban
+DEL ir.actions.act_window: purchase.purchase_action_dashboard_list
+DEL ir.model.access: purchase.access_account_type
+DEL ir.ui.view: purchase.product_template_form_view
+DEL ir.ui.view: purchase.view_category_property_form
+# NOTHING TO DO : will be deleted by ORM
+
+NEW ir.actions.act_window: purchase.action_purchase_history
+NEW ir.model.access: purchase.access_product_tag_purchase_manager
+NEW ir.ui.view: purchase.purchase_history_tree
+NEW ir.ui.view: purchase.purchase_order_view_kanban_without_dashboard
+NEW mail.message.subtype: purchase.mt_rfq_sent (noupdate)
+# NOTHING TO DO : will be created by ORM
