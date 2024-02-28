@@ -32,7 +32,7 @@ Available addons
 ----------------
 addon | version | maintainers | summary
 --- | --- | --- | ---
-[openupgrade_scripts](openupgrade_scripts/) | 17.0.1.0.0 |  | Module that contains all the migrations analysis and scripts for migrate Odoo SA modules.
+[openupgrade_scripts](openupgrade_scripts/) | 17.0.1.0.1 |  | Module that contains all the migrations analysis and scripts for migrate Odoo SA modules.
 
 [//]: # (end addons)
 
