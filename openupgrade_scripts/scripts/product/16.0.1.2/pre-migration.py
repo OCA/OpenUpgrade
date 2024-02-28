@@ -11,3 +11,9 @@ _field_renames = [
 @openupgrade.migrate()
 def migrate(env, version):
     openupgrade.rename_fields(env, _field_renames)
+    # restricting inherited views to groups isn't allowed any more
+    env.cr.execute(
+        "DELETE FROM ir_ui_view_group_rel r "
+        "USING ir_ui_view v "
+        "WHERE r.view_id=v.id AND v.inherit_id IS NOT NULL AND v.mode != 'primary'"
+    )
