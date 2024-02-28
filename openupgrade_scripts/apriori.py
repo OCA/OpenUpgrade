@@ -101,6 +101,7 @@ merged_modules = {
     # OCA/purchase-workflow
     "product_form_purchase_link": "purchase",
     "purchase_order_line_price_history": "purchase",
+    "purchase_picking_state": "purchase_stock",
     # OCA/sale-promotion
     "coupon_commercial_partner_applicability": "loyalty_partner_applicability",
     "sale_coupon_selection_wizard": "sale_loyalty_order_suggestion",
