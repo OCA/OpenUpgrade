@@ -1,0 +1,28 @@
+---Models in module 'fleet'---
+---Fields in module 'fleet'---
+fleet        / fleet.service.type       / _order                        : _order is now 'name' ('id')
+# NOTHING TO DO
+
+fleet        / fleet.vehicle            / category_id (many2one)        : NEW relation: fleet.vehicle.model.category, hasdefault: compute
+# DONE: pre-migration: Pre-create the column and fast-fill it for avoiding both low performance and rewrite a lot of fields, as the compute method is general for a lot of them.
+
+fleet        / fleet.vehicle            / fuel_type (selection)         : selection_keys is now '['cng', 'diesel', 'electric', 'full_hybrid', 'gasoline', 'hydrogen', 'lpg', 'plug_in_hybrid_diesel', 'plug_in_hybrid_gasoline']' ('['cng', 'diesel', 'electric', 'full_hybrid_gasoline', 'gasoline', 'hybrid', 'hydrogen', 'lpg', 'plug_in_hybrid_diesel', 'plug_in_hybrid_gasoline']')
+fleet        / fleet.vehicle.model      / default_fuel_type (selection) : selection_keys is now '['cng', 'diesel', 'electric', 'full_hybrid', 'gasoline', 'hydrogen', 'lpg', 'plug_in_hybrid_diesel', 'plug_in_hybrid_gasoline']' ('['cng', 'diesel', 'electric', 'full_hybrid_gasoline', 'gasoline', 'hybrid', 'hydrogen', 'lpg', 'plug_in_hybrid_diesel', 'plug_in_hybrid_gasoline']')
+# DONE: pre-migration: full_hybrid_gasoline and hybrid is combined into full_hybrid
+
+fleet        / fleet.vehicle            / write_off_date (date)         : NEW
+# NOTHING TO DO: New field
+
+fleet        / fleet.vehicle.log.contract / name (char)                   : not a function anymore
+# NOTHING TO DO: Converted to computed writable
+
+fleet        / fleet.vehicle.log.services / manager_id (many2one)         : NEW relation: res.users, isrelated: related, stored
+# NOTHING TO DO: Computed efficiently by ORM
+
+---XML records in module 'fleet'---
+NEW ir.ui.menu: fleet.fleet_models_configuration
+NEW ir.ui.menu: fleet.fleet_services_configuration
+NEW ir.ui.menu: fleet.fleet_vehicles_configuration
+NEW ir.ui.view: fleet.fleet_vehicle_log_services_view_activity
+NEW ir.ui.view: fleet.fleet_vehicle_service_types_view_search
+# NOTHING TO DO
