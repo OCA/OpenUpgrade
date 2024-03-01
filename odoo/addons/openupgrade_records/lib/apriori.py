@@ -26,6 +26,8 @@ renamed_modules = {
     'quality_control_team': 'quality_control_team_oca',
     # OCA/margin-analysis
     'product_pricelist_margin': 'product_pricelist_simulation',
+    # OCA/pos
+    'pos_journal_image': 'pos_payment_method_image',
     # OCA/product-attribute
     'product_pricelist_print_website_sale': 'product_pricelist_direct_print_website_sale',
     'sale_product_classification': 'product_abc_classification_sale',
