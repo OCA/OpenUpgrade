@@ -1,0 +1,64 @@
+---Models in module 'website_sale_loyalty'---
+---Fields in module 'website_sale_loyalty'---
+website_sale_gift_card / gift.card                / website_id (many2one)         : DEL relation: website
+website_sale_loyalty / loyalty.program          / ecommerce_ok (boolean)        : NEW hasdefault: default
+website_sale_loyalty / loyalty.rule             / website_id (many2one)         : NEW relation: website, isrelated: related, stored
+# DONE pre-migration: fill in field data
+
+website_sale_loyalty / sale.order               / disabled_auto_rewards (many2many): NEW relation: loyalty.reward
+# NOTHING TO DO
+
+---XML records in module 'website_sale_loyalty'---
+NEW ir.model.access: website_sale_loyalty.access_coupon_share_manager
+DEL ir.model.access: website_sale_coupon.access_coupon_share
+# NOTHING TO DO
+
+NEW ir.ui.menu: website_sale_loyalty.menu_discount_loyalty_type_config
+DEL ir.ui.menu: website_sale_coupon.menu_promotion_type_config
+NEW ir.ui.menu: website_sale_loyalty.menu_gift_ewallet_type_config
+DEL ir.ui.menu: website_sale_coupon.menu_coupon_type_config
+# DONE pre-migration: rename xmlids
+
+NEW ir.ui.menu: website_sale_loyalty.menu_loyalty
+DEL ir.ui.menu: website_sale_gift_card.website_product_gift_card_menu
+# NOTHING TO DO
+
+NEW ir.ui.view: website_sale_loyalty.cart_discount
+NEW ir.ui.view: website_sale_loyalty.cart_summary
+NEW ir.ui.view: website_sale_loyalty.layout
+NEW ir.ui.view: website_sale_loyalty.modify_code_form
+NEW ir.ui.view: website_sale_loyalty.website_sale_coupon_cart_hide_qty
+NEW ir.ui.view: website_sale_loyalty.reduction_coupon_code
+NEW ir.ui.view: website_sale_loyalty.cart_line_product_no_link
+NEW ir.ui.view: website_sale_loyalty.cart_summary_inherit_website_gift_card_sale
+NEW ir.ui.view: website_sale_loyalty.website_sale_purchased_gift_card
+DEL ir.ui.view: website_sale_coupon.cart_discount
+DEL ir.ui.view: website_sale_coupon.cart_summary
+DEL ir.ui.view: website_sale_coupon.layout
+DEL ir.ui.view: website_sale_coupon.reduction_coupon_code
+DEL ir.ui.view: website_sale_coupon.sale_coupon_result
+DEL ir.ui.view: website_sale_coupon.website_sale_coupon_cart_hide_qty
+DEL ir.ui.view: website_sale_gift_card.cart_line_product_no_link
+DEL ir.ui.view: website_sale_gift_card.cart_summary_inherit_website_gift_card_sale
+DEL ir.ui.view: website_sale_gift_card.website_sale_purchased_gift_card
+# DONE pre-migration: update template keys
+
+NEW ir.ui.view: website_sale_loyalty.loyalty_card_view_tree_inherit_website_sale_loyalty
+NEW ir.ui.view: website_sale_loyalty.res_config_settings_view_form_inherit_website_sale_loyalty
+DEL ir.ui.view: website_sale_coupon.coupon_view_tree
+DEL ir.ui.view: website_sale_coupon.res_config_settings_view_form
+# DONE pre-migration: rename xmlids
+
+NEW ir.ui.view: website_sale_loyalty.coupon_share_view_form
+NEW ir.ui.view: website_sale_loyalty.loyalty_program_view_form_inherit_website_sale_loyalty
+NEW ir.ui.view: website_sale_loyalty.loyalty_program_view_tree_inherit_website_sale_loyalty
+NEW ir.ui.view: website_sale_loyalty.sale_coupon_result
+NEW ir.ui.view: website_sale_loyalty.snippet_options
+DEL ir.ui.view: website_sale_coupon.coupon_share_view_form
+DEL ir.ui.view: website_sale_coupon.sale_coupon_program_view_form_common_website
+DEL ir.ui.view: website_sale_coupon.sale_coupon_program_view_tree_website
+DEL ir.ui.view: website_sale_gift_card.add_gift_card
+DEL ir.ui.view: website_sale_gift_card.gift_card_view_form
+DEL ir.ui.view: website_sale_gift_card.gift_card_view_search
+DEL ir.ui.view: website_sale_gift_card.pay_with_gift_card_form
+# NOTHING TO DO
