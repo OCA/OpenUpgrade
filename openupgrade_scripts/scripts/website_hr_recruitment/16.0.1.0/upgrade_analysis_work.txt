@@ -1,8 +1,7 @@
 ---Models in module 'website_hr_recruitment'---
 ---Fields in module 'website_hr_recruitment'---
 website_hr_recruitment / hr.job                   / job_details (html)            : NEW hasdefault: default
-
-# NOTHING TO DO: execute by ORM
+# DONE: pre-migration: Pre-create column for avoiding the default
 
 ---XML records in module 'website_hr_recruitment'---
 NEW ir.actions.act_window: website_hr_recruitment.action_job_pages_list
@@ -15,5 +14,4 @@ NEW ir.ui.view: website_hr_recruitment.job_pages_tree_view
 NEW ir.ui.view: website_hr_recruitment.snippet_options
 DEL ir.ui.view: website_hr_recruitment.job_edit_options
 DEL ir.ui.view: website_hr_recruitment.user_navbar_inherit_website_hr_recruitment
-
 # NOTHING TO DO
