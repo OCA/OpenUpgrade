@@ -1,0 +1,48 @@
+---Models in module 'survey'---
+---Fields in module 'survey'---
+survey       / survey.question          / allow_value_image (boolean)   : DEL
+# DONE: post-migration: Empty value_image on answers that had this check unmarked on the question. Now images are displayed always if they are present.
+
+survey       / survey.question          / background_image (binary)     : NEW attachment: True, hasdefault: compute
+# NOTHING TO DO: New feature. The first computation on the existing records is not perfomance-drainer.
+
+survey       / survey.question          / column_nb (selection)         : DEL selection_keys: ['12', '2', '3', '4', '6']
+# NOTHING TO DO: Feature already hidden in previous version
+
+survey       / survey.question          / question_placeholder (char)   : NEW hasdefault: compute
+# NOTHING TO DO: New feature. The first computation on the existing records is not perfomance-drainer.
+
+survey       / survey.question.answer   / value_image_filename (char)   : NEW
+# NOTHING TO DO: New helper field for storing the image filename (only as reference, no other reflection). Existing uploaded images won't have that name, but that was the case in v15.
+
+survey       / survey.survey            / _order                        : _order is now 'create_date DESC' ('id')
+# NOTHING TO DO: New model sorting criteria
+
+survey       / survey.user_input        / activity_ids (one2many)       : NEW relation: mail.activity
+survey       / survey.user_input        / message_follower_ids (one2many): NEW relation: mail.followers
+survey       / survey.user_input        / message_ids (one2many)        : NEW relation: mail.message
+survey       / survey.user_input        / message_main_attachment_id (many2one): NEW relation: ir.attachment
+survey       / survey.user_input        / website_message_ids (one2many): NEW relation: mail.message
+# NOTHING TO DO: New feature in the answers to have its own chatter.
+
+---XML records in module 'survey'---
+DEL ir.actions.server: survey.survey_action_server_clean_test_answers (noupdate)
+# DONE: Try to delete the record.
+
+DEL ir.ui.menu: survey.survey_menu_user_inputs
+NEW ir.ui.view: survey.question_result_number_or_date_or_datetime
+NEW ir.ui.view: survey.survey_question_answer_view_form
+NEW ir.ui.view: survey.survey_remove_unnecessary_decimals
+NEW ir.ui.view: survey.survey_results_filters
+NEW ir.ui.view: survey.survey_survey_view_graph
+NEW ir.ui.view: survey.survey_survey_view_pivot
+DEL ir.ui.view: survey.question_result_number_or_date
+# NOTHING TO DO: noupdate=0 records hanlded by ORM.
+
+DEL ir.ui.view: survey.survey_form
+NEW ir.ui.view: survey.survey_survey_view_form
+DEL ir.ui.view: survey.survey_kanban
+NEW ir.ui.view: survey.survey_survey_view_kanban
+DEL ir.ui.view: survey.survey_tree
+NEW ir.ui.view: survey.survey_survey_view_tree
+# DONE: Just for completion and double safety, rename XML-IDs
