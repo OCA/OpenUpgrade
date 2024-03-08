@@ -23,7 +23,7 @@ hr_holidays  / hr.leave.stress.day      / start_date (date)             : NEW re
 # NOTHING TO DO: new feature
 
 hr_holidays  / hr.leave.type            / allocation_validation_type (selection): selection_keys is now '['no', 'officer']' ('['no', 'officer', 'set']')
-# DONE: post-migration: compute new value for allocation_validation_type
+# DONE: post-migration: convert previous `set` values to `officer`. They acted the same except the responsible_id is not set. In that case, the user was selected as approver, which was incorrect.
 
 ---XML records in module 'hr_holidays'---
 NEW ir.actions.act_window: hr_holidays.hr_leave_stress_day_action
