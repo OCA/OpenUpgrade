@@ -1,0 +1,71 @@
+---Models in module 'hr_expense'---
+new model hr.expense.split [transient]
+new model hr.expense.split.wizard [transient]
+# NOTHING TO DO
+
+---Fields in module 'hr_expense'---
+
+hr_expense   / hr.expense               / amount_tax (float)            : NEW isfunction: function, stored
+# DONE: pre-migration: set value
+
+hr_expense   / hr.expense               / amount_tax_company (float)    : NEW isfunction: function, stored
+# DONE: pre-migration: pre-create column for same currency
+# DONE: post-migration: set value by ORM for different currency
+
+hr_expense   / hr.expense               / analytic_account_id (many2one): DEL relation: account.analytic.account
+hr_expense   / hr.expense               / analytic_distribution_stored_char (char): NEW isfunction: function, stored
+# DONE: pre-migration: fast fill analytic_distribution
+
+hr_expense   / hr.expense               / analytic_tag_ids (many2many)  : DEL relation: account.analytic.tag
+# DONE: post-migration: if there are tags with no distribution, we plan OCA module hr_expense_analytic_tag to be installed
+
+hr_expense   / hr.expense.sheet         / total_amount_taxes (float)    : NEW isfunction: function, stored
+hr_expense   / hr.expense.sheet         / untaxed_amount (float)        : NEW isfunction: function, stored
+# DONE: pre-migration: pre-create columns
+# DONE: post-migration: set values by SQL
+
+hr_expense   / account.analytic.applicability / business_domain (False)       : NEW selection_keys: ['bill', 'expense', 'general', 'invoice'], mode: modify
+hr_expense   / account.move             / expense_sheet_id (one2many)   : NEW relation: hr.expense.sheet
+hr_expense   / hr.expense               / name (char)                   : not a function anymore
+hr_expense   / hr.expense               / unit_amount (float)           : not a function anymore
+hr_expense   / hr.expense.sheet         / payment_state (selection)     : selection_keys is now 'function' ('['in_payment', 'invoicing_legacy', 'not_paid', 'paid', 'partial', 'reversed']')
+# NOTHING TO DO
+
+hr_expense   / res.company              / company_expense_journal_id (many2one): NEW relation: account.journal
+hr_expense   / res.company              / expense_journal_id (many2one) : NEW relation: account.journal
+# NOTHING TO DO: Preference values for being set by company, but if none selected, the previous default ones are used.
+
+---XML records in module 'hr_expense'---
+DEL ir.actions.act_window: hr_expense.action_hr_expense_sheet_all_to_approve
+DEL ir.actions.act_window: hr_expense.action_hr_expense_sheet_all_to_pay
+DEL ir.actions.act_window: hr_expense.action_hr_expense_sheet_all_to_post
+DEL ir.actions.act_window: hr_expense.hr_expense_actions_my_unsubmitted
+DEL ir.actions.act_window.view: hr_expense.hr_expense_actions_all_kanban
+DEL ir.actions.act_window.view: hr_expense.hr_expense_actions_my_unsubmitted_kanban
+DEL ir.actions.act_window.view: hr_expense.hr_expense_actions_my_unsubmitted_tree
+NEW ir.model.access: hr_expense.access_hr_expense_split_manager
+NEW ir.model.access: hr_expense.access_hr_expense_split_wizard_manager
+NEW ir.rule: hr_expense.ir_rule_hr_expense_sheet_employee_not_draft (noupdate)
+DEL ir.ui.menu: hr_expense.menu_hr_expense_my_expenses_to_submit
+DEL ir.ui.menu: hr_expense.menu_hr_expense_sheet_all
+DEL ir.ui.menu: hr_expense.menu_hr_expense_sheet_all_to_approve
+DEL ir.ui.menu: hr_expense.menu_hr_expense_sheet_all_to_pay
+DEL ir.ui.menu: hr_expense.menu_hr_expense_sheet_all_to_post
+NEW ir.ui.view: hr_expense.hr_expense_sheet_view_search_with_panel
+NEW ir.ui.view: hr_expense.hr_expense_split
+NEW ir.ui.view: hr_expense.product_product_expense_categories_tree_view
+NEW ir.ui.view: hr_expense.view_move_form_inherit_expense
+NEW ir.ui.view: hr_expense.view_product_hr_expense_form
+DEL ir.ui.view: hr_expense.view_hr_expense_sheet_dashboard_tree
+NEW product.product: hr_expense.expense_product_communication (noupdate)
+NEW product.product: hr_expense.expense_product_gift (noupdate)
+NEW product.product: hr_expense.expense_product_meal (noupdate)
+NEW product.product: hr_expense.expense_product_mileage (noupdate)
+NEW product.product: hr_expense.expense_product_travel_accommodation (noupdate)
+DEL product.product: hr_expense.product_product_fixed_cost (noupdate)
+# NOTHING TO DO
+
+DEL product.product: hr_expense.product_product_zero_cost
+NEW product.product: hr_expense.product_product_no_cost (noupdate)
+# DONE: pre-migration: renamed product_product_zero_cost -> product_product_no_cost
+# DONE: post-migration: switch noupdate after updating new data
