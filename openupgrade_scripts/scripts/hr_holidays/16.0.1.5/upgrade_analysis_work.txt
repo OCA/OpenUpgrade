@@ -1,0 +1,44 @@
+---Models in module 'hr_holidays'---
+new model hr.holidays.cancel.leave [transient]
+# NOTHING TO DO: transient model
+
+new model hr.leave.stress.day
+# NOTHING TO DO: new feature
+
+---Fields in module 'hr_holidays'---
+hr_holidays  / hr.leave                 / active (boolean)              : NEW
+# NOTHING TO DO: default value is True.
+
+hr_holidays  / hr.leave                 / request_unit_custom (boolean) : DEL
+# NOTHING TO DO: not needed anymore. See : https://github.com/odoo/odoo/commit/81c8a0564d54c981e65a6ed3b2c70dd792d59a46
+
+hr_holidays  / hr.leave.accrual.level   / postpone_max_days (integer)   : NEW
+hr_holidays  / hr.leave.stress.day      / color (integer)               : NEW hasdefault: default
+hr_holidays  / hr.leave.stress.day      / company_id (many2one)         : NEW relation: res.company, required, hasdefault: default
+hr_holidays  / hr.leave.stress.day      / department_ids (many2many)    : NEW relation: hr.department
+hr_holidays  / hr.leave.stress.day      / end_date (date)               : NEW required
+hr_holidays  / hr.leave.stress.day      / name (char)                   : NEW required
+hr_holidays  / hr.leave.stress.day      / resource_calendar_id (many2one): NEW relation: resource.calendar
+hr_holidays  / hr.leave.stress.day      / start_date (date)             : NEW required
+# NOTHING TO DO: new feature
+
+hr_holidays  / hr.leave.type            / allocation_validation_type (selection): selection_keys is now '['no', 'officer']' ('['no', 'officer', 'set']')
+# DONE: post-migration: convert previous `set` values to `officer`. They acted the same except the responsible_id is not set. In that case, the user was selected as approver, which was incorrect.
+
+---XML records in module 'hr_holidays'---
+NEW ir.actions.act_window: hr_holidays.hr_leave_stress_day_action
+DEL ir.actions.act_window.view: hr_holidays.hr_leave_action_my_view_form
+DEL ir.actions.act_window.view: hr_holidays.hr_leave_action_my_view_tree
+NEW ir.model.access: hr_holidays.access_hr_holidays_cancel_leave
+NEW ir.model.access: hr_holidays.access_hr_leave_stress_day_manager
+NEW ir.model.access: hr_holidays.access_hr_leave_stress_day_user
+NEW ir.model.constraint: hr_holidays.constraint_hr_leave_stress_day_date_from_after_day_to
+NEW ir.rule: hr_holidays.hr_leave_stress_day_rule_multi_company (noupdate)
+NEW ir.ui.menu: hr_holidays.hr_holidays_stress_day_menu_configuration
+NEW ir.ui.view: hr_holidays.hr_holidays_cancel_leave_form
+NEW ir.ui.view: hr_holidays.hr_leave_report_view_form
+NEW ir.ui.view: hr_holidays.hr_leave_stress_day_view_form
+NEW ir.ui.view: hr_holidays.hr_leave_stress_day_view_list
+NEW ir.ui.view: hr_holidays.hr_leave_stress_day_view_search
+NEW ir.ui.view: hr_holidays.hr_leave_view_kanban_approve_department
+# NOTHING TO DO: managed by the ORM
