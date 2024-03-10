@@ -1,0 +1,15 @@
+---Models in module 'hr_hourly_cost'---
+---Fields in module 'hr_hourly_cost'---
+hr_hourly_cost / hr.employee              / currency_id (many2one)        : previously in module hr_timesheet
+
+# NOTHING TO DO
+
+hr_hourly_cost / hr.employee              / hourly_cost (float)           : NEW hasdefault: default
+
+# NOTHING TO DO: This field renamed from timesheet_cost and it handled in hr_timsheet (because this module is split from hr_timsheet
+to a new module so that can't put migration script in itself).
+
+---XML records in module 'hr_hourly_cost'---
+NEW ir.ui.view: hr_hourly_cost.view_employee_form
+
+#NOTHING TO DO
