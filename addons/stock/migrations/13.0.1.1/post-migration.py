@@ -478,6 +478,15 @@ def migrate(env, version):
     if openupgrade.table_exists(env.cr, 'delivery_carrier'):
         openupgrade.load_data(
             env.cr, "stock", "migrations/13.0.1.1/noupdate_changes2.xml")
+        # This mail.template came from the module delivery to stock, so the translated
+        # terms will have the old module set. We need to change it so we can delete
+        # the translations properly
+        template = env.ref("stock.mail_template_data_delivery_confirmation")
+        env["ir.translation"].search(
+            [
+                ("name", "ilike", "mail.template,"), ("res_id", "=", template.id)
+            ]
+        ).module = "stock"
         openupgrade.delete_record_translations(
             env.cr, 'stock', [
                 'mail_template_data_delivery_confirmation',
