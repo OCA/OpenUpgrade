@@ -17,7 +17,7 @@ renamed_modules = {
     "sale_coupon_taxcloud": "sale_loyalty_taxcloud",
     "sale_coupon_taxcloud_delivery": "sale_loyalty_taxcloud_delivery",
     # OCA/account-reconcile
-    "account_reconciliation_widget": "account_reconcile",
+    "account_reconciliation_widget": "account_reconcile_oca",
     # OCA/bank-statement-import
     "account_statement_import": "account_statement_import_file",
     "account_statement_import_txt_xlsx": "account_statement_import_sheet_file",
