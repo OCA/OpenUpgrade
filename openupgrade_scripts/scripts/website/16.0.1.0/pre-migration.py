@@ -133,3 +133,11 @@ def migrate(env, version):
     delete_constraint_website_visitor_partner_uniq(env)
     _fill_homepage_url(env)
     _mig_s_progress_steps_contents(env)
+
+    # XMLID website_configurator will be re-used for something else
+    openupgrade.logged_query(
+        env.cr,
+        """
+        DELETE FROM ir_model_data WHERE module = 'website' AND name = 'website_configurator'
+        """,
+    )
