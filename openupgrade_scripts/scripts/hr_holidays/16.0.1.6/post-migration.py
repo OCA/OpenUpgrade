@@ -22,4 +22,4 @@ def _set_allocation_validation_type(env):
 @openupgrade.migrate()
 def migrate(env, version):
     _set_allocation_validation_type(env)
-    openupgrade.load_data(env.cr, "hr_holidays", "16.0.1.5/noupdate_changes.xml")
+    openupgrade.load_data(env.cr, "hr_holidays", "16.0.1.6/noupdate_changes.xml")

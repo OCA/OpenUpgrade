@@ -1,5 +1,11 @@
 <?xml version='1.0' encoding='utf-8'?>
 <odoo>
+  <record id="account_bank_statement_comp_rule" model="ir.rule">
+    <field name="domain_force">[('company_id', 'in', company_ids + [False])]</field>
+  </record>
+  <record id="account_bank_statement_line_comp_rule" model="ir.rule">
+    <field name="domain_force">[('company_id', 'in', company_ids + [False])]</field>
+  </record>
   <!-- Don't recreate this, as they are usually touched by users and in fact the changes are only to use Command syntax
   <record id="account_payment_term_15days" model="account.payment.term">
     <field name="line_ids" eval="[Command.clear(), Command.create({'value': 'balance', 'value_amount': 0.0, 'days': 15})]"/>
