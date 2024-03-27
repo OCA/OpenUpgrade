@@ -19,7 +19,7 @@
     <field name="sequence" eval="108"/>
   </record>
   <record id="project_comp_rule" model="ir.rule">
-    <field name="domain_force">['|', ('company_id', 'in', company_ids), ('company_id', '=', False)]</field>
+    <field name="domain_force">[('company_id', 'in', company_ids + [False])]</field>
   </record>
   <template id="project_message_user_assigned">
     <div>
@@ -119,10 +119,10 @@
     <field name="active" eval="False"/>
   </record>
   <record id="report_project_task_user_report_comp_rule" model="ir.rule">
-    <field name="domain_force">['|', ('company_id', 'in', company_ids), ('company_id', '=', False)]</field>
+    <field name="domain_force">[('company_id', 'in', company_ids + [False])]</field>
   </record>
   <record id="task_comp_rule" model="ir.rule">
-    <field name="domain_force">['|', ('company_id', 'in', company_ids), ('company_id', '=', False)]</field>
+    <field name="domain_force">[('company_id', 'in', company_ids + [False])]</field>
   </record>
   <record id="update_comp_rule" model="ir.rule">
     <field name="domain_force">['|', ('project_id.company_id', 'in', company_ids), ('project_id.company_id', '=', False)]</field>
