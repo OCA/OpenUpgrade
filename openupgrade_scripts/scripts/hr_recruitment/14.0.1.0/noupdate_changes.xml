@@ -149,6 +149,9 @@
       </table>
     </field>
   </record>
+  <record id="hr_applicant_comp_rule" model="ir.rule">
+    <field name="domain_force">[('company_id', 'in', company_ids + [False])]</field>
+  </record>
   <record id="mt_department_new" model="mail.message.subtype">
     <field name="parent_id" ref="mt_job_new"/>
   </record>

@@ -19,9 +19,10 @@
     <field name="allocation_validation_type">both</field>
     <field name="leave_validation_type">both</field>
   </record> -->
-  <!-- <record id="hr_holidays_status_rule_multi_company" model="ir.rule">
-    <field name="global"/>
-  </record> -->
+  <record id="hr_holidays_status_rule_multi_company" model="ir.rule">
+    <field name="domain_force">[('company_id', 'in', company_ids + [False])]</field>
+    <!-- <field name="global"/> -->
+  </record>
   <record id="hr_leave_allocation_rule_employee" model="ir.rule">
     <field name="domain_force">[
             '|',
@@ -44,6 +45,9 @@
     <field name="name">Allocations: base.group_user create/write</field>
     <field name="perm_unlink" eval="False"/>
   </record>
+  <record id="hr_leave_allocation_rule_multicompany" model="ir.rule">
+    <field name="domain_force">[('holiday_status_id.company_id', 'in', company_ids + [False])]</field>
+  </record>
   <record id="hr_leave_allocation_rule_officer_update" model="ir.rule">
     <field name="domain_force">[
             ('holiday_type', '=', 'employee'),
@@ -57,9 +61,10 @@
         ]</field>
     <field name="name">Allocations: holiday user : create/write</field>
   </record>
-  <!--<record id="hr_leave_rule_multicompany" model="ir.rule">
-     <field name="global"/>
-  </record>-->
+  <record id="hr_leave_rule_multicompany" model="ir.rule">
+    <field name="domain_force">[('holiday_status_id.company_id', 'in', company_ids + [False])]</field>
+    <!-- <field name="global"/> -->
+  </record>
   <record id="hr_leave_rule_user_read" model="ir.rule">
     <field name="perm_create" eval="True"/>
     <field name="perm_unlink" eval="True"/>

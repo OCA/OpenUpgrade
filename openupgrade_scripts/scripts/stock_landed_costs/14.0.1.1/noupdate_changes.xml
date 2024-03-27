@@ -1,6 +1,7 @@
 <?xml version='1.0' encoding='utf-8'?>
 <odoo>
   <record id="stock_landed_cost_rule" model="ir.rule">
+    <field name="domain_force">[('company_id', 'in', company_ids)]</field>
     <!-- <field name="global"/> -->
   </record>
 </odoo>

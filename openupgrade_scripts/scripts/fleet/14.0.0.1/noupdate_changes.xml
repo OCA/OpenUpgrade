@@ -9,7 +9,17 @@
   <record id="fleet_vehicle_state_new_request" model="fleet.vehicle.state">
     <field name="sequence">4</field>
   </record>
-  <!-- <record id="ir_rule_fleet_vehicle" model="ir.rule">
-    <field name="global"/>
-  </record> -->
+  <record id="ir_rule_fleet_log_contract" model="ir.rule">
+    <field name="domain_force">[('company_id', 'in', company_ids + [False])]</field>
+  </record>
+  <record id="ir_rule_fleet_log_services" model="ir.rule">
+    <field name="domain_force">[('company_id', 'in', company_ids + [False])]</field>
+  </record>
+  <record id="ir_rule_fleet_odometer" model="ir.rule">
+    <field name="domain_force">[('vehicle_id.company_id', 'in', company_ids + [False])]</field>
+  </record>
+  <record id="ir_rule_fleet_vehicle" model="ir.rule">
+    <field name="domain_force">[('company_id', 'in', company_ids + [False])]</field>
+    <!-- <field name="global"/> -->
+  </record>
 </odoo>

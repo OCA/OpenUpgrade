@@ -12,9 +12,6 @@
 <!--  <record id="rule_pos_multi_company" model="ir.rule">
       <field name="global"/>
   </record>-->
-<!--  <record id="rule_pos_order_report_multi_company" model="ir.rule">
-      <field name="global"/>
-  </record>-->
 <!--  <record id="rule_pos_payment_method_multi_company" model="ir.rule">
       <field name="global"/>
   </record>-->
@@ -24,4 +21,8 @@
 <!--  <record id="rule_pos_session_multi_company" model="ir.rule">
       <field name="global"/>
   </record>-->
+  <record id="rule_pos_order_report_multi_company" model="ir.rule">
+    <field name="domain_force">[('company_id', 'in', company_ids)]</field>
+    <!-- <field name="global"/> -->
+  </record>
 </odoo>

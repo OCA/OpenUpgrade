@@ -3,9 +3,10 @@
   <record id="ir_cron_data_contract_update_state" model="ir.cron">
     <field name="code">model.with_context(from_cron=True).update_state()</field>
   </record>
-  <!--<record id="ir_rule_hr_contract_multi_company" model="ir.rule">
-     <field name="global"/>
-  </record>-->
+  <record id="ir_rule_hr_contract_multi_company" model="ir.rule">
+    <field name="domain_force">[('company_id', 'in', company_ids)]</field>
+    <!-- <field name="global"/> -->
+  </record>
   <record id="mt_department_contract_pending" model="mail.message.subtype">
     <field name="parent_id" ref="mt_contract_pending"/>
   </record>

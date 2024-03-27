@@ -66,8 +66,15 @@
   <record id="paperformat_us" model="report.paperformat">
     <field name="margin_bottom">30</field>
   </record>
+  <record id="res_currency_rate_rule" model="ir.rule">
+    <field name="domain_force">[('company_id', 'in', company_ids + [False])]</field>
+  </record>
   <record id="res_partner_bank_rule" model="ir.rule">
+    <field name="domain_force">[('company_id', 'in', company_ids + [False])]</field>
     <field name="global"/>
+  </record>
+  <record id="res_partner_rule" model="ir.rule">
+    <field name="domain_force">['|', ('partner_share', '=', False), ('company_id', 'in', company_ids + [False])]</field>
   </record>
   <record id="res_partner_rule_private_employee" model="ir.rule">
     <field name="perm_create" eval="True"/>
