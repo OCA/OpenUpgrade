@@ -1,12 +1,12 @@
 <?xml version='1.0' encoding='utf-8'?>
 <odoo>
   <record id="event_event_company_rule" model="ir.rule">
-    <field name="domain_force">['|', ('company_id', '=', False), ('company_id', 'in', company_ids)]</field>
 <!--    <field name="global"/>-->
+    <field name="domain_force">[('company_id', 'in', company_ids + [False])]</field>
   </record>
   <record id="event_registration_company_rule" model="ir.rule">
-    <field name="domain_force">['|', ('company_id', '=', False), ('company_id', 'in', company_ids)]</field>
 <!--    <field name="global"/>-->
+    <field name="domain_force">[('company_id', 'in', company_ids + [False])]</field>
   </record>
   <record id="event_registration_mail_template_badge" model="mail.template">
     <field name="body_html" type="html">

@@ -12,3 +12,4 @@ def migrate(env, version):
         except Exception:
             # this means default_code is required
             product.default_code = "EXP_GEN/1"
+    openupgrade.load_data(env.cr, "hr_expense", "14.0.2.0/noupdate_changes.xml")

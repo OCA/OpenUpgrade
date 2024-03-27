@@ -8,15 +8,19 @@
   </record>
   <record id="account_bank_statement_comp_rule" model="ir.rule">
 <!--    <field name="global"/>-->
+    <field name="domain_force">[('company_id', 'in', company_ids)]</field>
   </record>
   <record id="account_bank_statement_line_comp_rule" model="ir.rule">
 <!--    <field name="global"/>-->
+    <field name="domain_force">[('company_id', 'in', company_ids)]</field>
   </record>
   <record id="account_comp_rule" model="ir.rule">
 <!--    <field name="global"/>-->
+    <field name="domain_force">[('company_id', 'in', company_ids)]</field>
   </record>
   <record id="account_fiscal_position_comp_rule" model="ir.rule">
 <!--    <field name="global"/>-->
+    <field name="domain_force">[('company_id', 'in', company_ids)]</field>
   </record>
   <record id="account_invoice_line_rule_portal" model="ir.rule">
     <field name="domain_force">[('parent_state', 'not in', ('cancel', 'draft')), ('move_id.move_type', 'in', ('out_invoice', 'out_refund', 'in_invoice', 'in_refund')), ('move_id.message_partner_ids','child_of',[user.commercial_partner_id.id])]</field>
@@ -26,18 +30,26 @@
   </record>
   <record id="account_move_comp_rule" model="ir.rule">
 <!--    <field name="global"/>-->
+    <field name="domain_force">[('company_id', 'in', company_ids + [False])]</field>
   </record>
   <record id="account_move_line_comp_rule" model="ir.rule">
 <!--    <field name="global"/>-->
+    <field name="domain_force">[('company_id', 'in', company_ids + [False])]</field>
   </record>
   <record id="account_payment_comp_rule" model="ir.rule">
 <!--    <field name="global"/>-->
+    <field name="domain_force">[('company_id', 'in', company_ids)]</field>
+  </record>
+  <record id="account_payment_term_comp_rule" model="ir.rule">
+    <field name="domain_force">[('company_id', 'in', company_ids + [False])]</field>
   </record>
   <record id="account_reconcile_model_template_comp_rule" model="ir.rule">
 <!--    <field name="global"/>-->
+    <field name="domain_force">[('company_id', 'in', company_ids)]</field>
   </record>
   <record id="account_root_comp_rule" model="ir.rule">
 <!--    <field name="global"/>-->
+    <field name="domain_force">[('company_id', 'in', company_ids + [False])]</field>
   </record>
   <record id="email_template_edi_invoice" model="mail.template">
     <field name="body_html" type="html">
@@ -82,12 +94,15 @@
   </record>
   <record id="invoice_analysis_comp_rule" model="ir.rule">
 <!--    <field name="global"/>-->
+    <field name="domain_force">[('company_id', 'in', company_ids + [False])]</field>
   </record>
   <record id="journal_comp_rule" model="ir.rule">
 <!--    <field name="global"/>-->
+    <field name="domain_force">[('company_id', 'in', company_ids)]</field>
   </record>
   <record id="journal_group_comp_rule" model="ir.rule">
 <!--    <field name="global"/>-->
+    <field name="domain_force">[('company_id', 'in', company_ids)]</field>
   </record>
   <record id="mail_template_data_payment_receipt" model="mail.template">
     <field name="body_html" type="xml">
@@ -111,5 +126,6 @@
   </record>
   <record id="tax_comp_rule" model="ir.rule">
 <!--    <field name="global"/>-->
+    <field name="domain_force">[('company_id', 'in', company_ids)]</field>
   </record>
 </odoo>

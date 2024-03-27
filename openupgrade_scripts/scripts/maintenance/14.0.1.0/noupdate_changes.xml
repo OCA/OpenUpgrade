@@ -1,25 +1,28 @@
 <?xml version='1.0' encoding='utf-8'?>
 <odoo>
-  <!-- No real changes, so no need to write the records -->
-  <!-- <record id="maintenance_equipment_category_comp_rule" model="ir.rule">
-    <field name="global"/>
+  <record id="equipment_request_rule_user" model="ir.rule">
+    <field name="domain_force">['|', '|', ('owner_user_id', '=', user.id), ('message_partner_ids', 'in', [user.partner_id.id]), ('user_id.id', '=', user.id)]</field>
+  </record>
+  <record id="maintenance_equipment_category_comp_rule" model="ir.rule">
+    <field name="domain_force">[('company_id', 'in', company_ids + [False])]</field>
+    <!-- <field name="global"/> -->
   </record>
   <record id="maintenance_equipment_comp_rule" model="ir.rule">
-    <field name="global"/>
+    <field name="domain_force">[('company_id', 'in', company_ids + [False])]</field>
+    <!-- <field name="global"/> -->
   </record>
   <record id="maintenance_request_comp_rule" model="ir.rule">
-    <field name="global"/>
+    <field name="domain_force">[('company_id', 'in', company_ids + [False])]</field>
+    <!-- <field name="global"/> -->
   </record>
   <record id="maintenance_team_comp_rule" model="ir.rule">
-    <field name="global"/>
-  </record> -->
+    <field name="domain_force">[('company_id', 'in', company_ids + [False])]</field>
+    <!-- <field name="global"/> -->
+  </record>
   <record id="mt_cat_mat_assign" model="mail.message.subtype">
     <field name="parent_id" ref="mt_mat_assign"/>
   </record>
   <record id="mt_cat_req_created" model="mail.message.subtype">
     <field name="parent_id" ref="mt_req_created"/>
-  </record>
-  <record id="equipment_request_rule_user" model="ir.rule">
-    <field name="domain_force">['|', '|', ('owner_user_id', '=', user.id), ('message_partner_ids', 'in', [user.partner_id.id]), ('user_id.id', '=', user.id)]</field>
   </record>
 </odoo>

@@ -132,12 +132,14 @@
 <!--  <record id="sale_order_comp_rule" model="ir.rule">
     <field name="global"/>
   </record> -->
-<!--  <record id="sale_order_line_comp_rule" model="ir.rule">
-    <field name="global"/>
-  </record> -->
-<!--  <record id="sale_order_report_comp_rule" model="ir.rule">
-    <field name="global"/>
-  </record> -->
+  <record id="sale_order_line_comp_rule" model="ir.rule">
+    <field name="domain_force">[('company_id', 'in', company_ids)]</field>
+    <!-- <field name="global"/> -->
+  </record>
+  <record id="sale_order_report_comp_rule" model="ir.rule">
+    <field name="domain_force">[('company_id', 'in', company_ids)]</field>
+    <!-- <field name="global"/> -->
+  </record>
   <!-- Added due to the renaming of the XML-IDs -->
   <record id="account_invoice_rule_see_all" model="ir.rule">
     <field name="domain_force">[('move_type', 'in', ('out_invoice', 'out_refund'))]</field>
