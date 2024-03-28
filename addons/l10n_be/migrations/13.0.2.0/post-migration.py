@@ -230,7 +230,11 @@ def update_tags_on_move_line(env):
             elif tax_repartition_ids:
                 tax_repartition_id = tax_repartition_ids
             if not repartition_id:
-                raise ValueError()
+                _logger.error(
+                    "No account.tax.repartition.line found for "
+                    "account.move.line(%s)."
+                    % move_line_id.id
+                )
             new_tag_ids = tax_repartition_id.tag_ids
 
         # If tax_ids exists and the tax_base_amount is 0 or null
