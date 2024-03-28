@@ -180,6 +180,29 @@ def update_custom_account_tax(env):
                     keep_tags.remove("+82")
                 if "-82" in keep_tags:
                     keep_tags.remove("-82")
+            # fix special tax
+            if account_tax.name == "VAT-IN-V81-21-EU-C1":
+                if reptype == "invoice":
+                    if repartition.repartition_type == "base":
+                        keep_tags = ["+81", "+86"]
+                    elif repartition.repartition_type == "tax":
+                        keep_tags = ["+59"]
+                elif reptype == "refund":
+                    if repartition.repartition_type == "base":
+                        keep_tags = ["-81", "-86", "+84"]
+                    elif repartition.repartition_type == "tax":
+                        keep_tags = []
+            if account_tax.name == "VAT-IN-V81-21-EU-C2":
+                if reptype == "invoice":
+                    if repartition.repartition_type == "base":
+                        keep_tags = ["+81", "+86"]
+                    elif repartition.repartition_type == "tax":
+                        keep_tags = ["-55"]
+                elif reptype == "refund":
+                    if repartition.repartition_type == "base":
+                        keep_tags = ["-81", "-86", "+84"]
+                    elif repartition.repartition_type == "tax":
+                        keep_tags = []
             # convert tags
             new_tags = env["account.account.tag"]
             for new_name in keep_tags:
