@@ -113,44 +113,6 @@ tax_unclassified_tag_xmlids = [
 ]
 
 
-def get_account_tax_templates_iterator(env):
-    """
-    Return account.tax.template with their xmlid
-    """
-    module = "l10n_be"
-    data = env['ir.model.data'].search([
-        ('model', '=', 'account.tax.template'),
-        ('module', 'like', module)
-    ])
-    for elem in data:
-        account_tax_template = env["account.tax.template"].browse(elem.res_id)
-        yield elem.name, account_tax_template
-
-
-# FIXME: maybe this is not useful anymore.
-def get_custom_account_tax_with_tags(env):
-    """Get custom account.tax based on the fact that their name does not
-    exist in account.tax.template.
-    """
-    account_tax_template_ids = env["account.tax.template"]
-    for _xmlid, account_tax_template in get_account_tax_templates_iterator(env):
-        account_tax_template_ids |= account_tax_template
-
-    account_tax_ids = env["account.tax"].search(
-        [("name", "not in", account_tax_template_ids.mapped("name"))],
-    )
-    custom_account_tax_ids = env["account.tax"]
-    for account_tax_id in account_tax_ids:
-        for repartition in (
-            account_tax_id.invoice_repartition_line_ids
-            + account_tax_id.refund_repartition_line_ids
-        ):
-            if repartition.tag_ids:
-                custom_account_tax_ids |= account_tax_id
-                continue
-    return custom_account_tax_ids
-
-
 def update_custom_account_tax(env):
     """This function tries to update custom account.tax that does not
     match a account.tax.template.
@@ -197,7 +159,6 @@ def update_custom_account_tax(env):
         for repartition in account_tax.refund_repartition_line_ids:
             yield ("refund", repartition)
 
-    #custom_account_tax_ids = get_custom_account_tax_with_tags(env)
     custom_account_tax_ids = (
         env["account.tax"]
         .with_context(active_test=False)
@@ -296,60 +257,6 @@ def update_tags_on_move_line(env):
         move_line_id.tag_ids = new_tag_ids
 
 
-def replace_not_deductible_tag(env):
-    """The not deductible tags does not exists in 16.0 anymore:
-    - l10n_be.tax_tag_81_not_deductible
-    - l10n_be.tax_tag_82_not_deductible
-    - l10n_be.tax_tag_83_not_deductible
-    - l10n_be.tax_tag_85_not_deductible
-    In default configuration in 16.0 (see Car tax), the default +8x and
-    -8x are used instead of the 8x_not_deductible version.
-
-    As a last resort, this function replace these tags by their standard
-    version. This is not correct, but covers all specific cases with
-    theses tags.
-
-    Custom taxes should be managed by a custom script.
-    """
-    tags_correspondance = [
-        (
-            env.ref("l10n_be.tax_tag_81_not_deductible"),
-            env["account.account.tag"].search([("name", "=", "+81")], limit=1),
-        ),
-        (
-            env.ref("l10n_be.tax_tag_82_not_deductible"),
-            env["account.account.tag"].search([("name", "=", "+82")], limit=1),
-        ),
-        (
-            env.ref("l10n_be.tax_tag_83_not_deductible"),
-            env["account.account.tag"].search([("name", "=", "+83")], limit=1),
-        ),
-        (
-            env.ref("l10n_be.tax_tag_85_not_deductible"),
-            env["account.account.tag"].search([("name", "=", "+85")], limit=1),
-        ),
-    ]
-    for old_tag, new_tag in tags_correspondance:
-        openupgrade.logged_query(
-            env.cr,
-            """
-            UPDATE account_account_tag_account_tax_repartition_line_rel
-            SET account_account_tag_id = %s
-            WHERE account_account_tag_id = %s
-            """,
-            (new_tag.id, old_tag.id),
-        )
-        openupgrade.logged_query(
-            env.cr,
-            """
-            UPDATE account_account_tag_account_move_line_rel
-            SET account_account_tag_id = %s
-            WHERE account_account_tag_id = %s
-            """,
-            (new_tag.id, old_tag.id),
-        )
-
-
 def remove_wrong_tag(env):
     """
     Remove tags on account.move.line that are not linked to an
@@ -405,7 +312,6 @@ def migrate(env, version):
     remove_wrong_tag(env)
     update_custom_account_tax(env)
     update_tags_on_move_line(env)
-    #replace_not_deductible_tag(env)
     unlink_tags_from_move_line(
         env, base_tag_xmlids + tax_tag_xmlids + not_deductible_tag_xmlids
     )
