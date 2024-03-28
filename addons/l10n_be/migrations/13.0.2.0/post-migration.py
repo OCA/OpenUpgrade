@@ -254,7 +254,27 @@ def update_tags_on_move_line(env):
         else:
             new_tag_ids = env["account.account.tag"]
 
-        move_line_id.tag_ids = new_tag_ids
+        # Write new tags
+        openupgrade.logged_query(
+            env.cr,
+            """
+            DELETE FROM account_account_tag_account_move_line_rel
+            WHERE account_move_line_id = %s
+            """,
+            (move_line_id.id,),
+        )
+        for new_tag_id in new_tag_ids:
+            openupgrade.logged_query(
+                env.cr,
+                """
+                INSERT INTO account_account_tag_account_move_line_rel (
+                    account_move_line_id,
+                    account_account_tag_id
+                )
+                VALUES (%s, %s)
+                """,
+                (move_line_id.id, new_tag_id.id),
+            )
 
 
 def remove_wrong_tag(env):
