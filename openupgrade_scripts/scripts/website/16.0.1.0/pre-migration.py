@@ -124,6 +124,21 @@ def _mig_s_progress_steps_contents(env):
         view.arch_db = env["ir.ui.view"]._pretty_arch(arch)
 
 
+def _sync_website_visitor_access_token(env):
+    """
+    Following pr https://github.com/odoo/odoo/pull/110870
+    this is needed
+    """
+    openupgrade.logged_query(
+        env.cr,
+        """
+        UPDATE website_visitor
+            SET access_token = partner_id::text
+        WHERE partner_id IS NOT NULL
+        """,
+    )
+
+
 @openupgrade.migrate()
 def migrate(env, version):
     _fill_partner_id_if_null(env)
@@ -133,3 +148,4 @@ def migrate(env, version):
     delete_constraint_website_visitor_partner_uniq(env)
     _fill_homepage_url(env)
     _mig_s_progress_steps_contents(env)
+    _sync_website_visitor_access_token(env)
