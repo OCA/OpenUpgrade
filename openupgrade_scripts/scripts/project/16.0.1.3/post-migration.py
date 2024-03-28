@@ -14,5 +14,5 @@ _translations_to_delete = [
 
 @openupgrade.migrate()
 def migrate(env, version):
-    openupgrade.load_data(env.cr, "project", "16.0.1.2/noupdate_changes.xml")
+    openupgrade.load_data(env.cr, "project", "16.0.1.3/noupdate_changes.xml")
     openupgrade.delete_record_translations(env.cr, "project", _translations_to_delete)
