@@ -144,3 +144,8 @@ def update_custom_account_tax(env):
                 )
                 new_tags |= new_tag
             repartition.tag_ids = new_tags
+
+
+@openupgrade.migrate()
+def migrate(env, version):
+    update_custom_account_tax(env)

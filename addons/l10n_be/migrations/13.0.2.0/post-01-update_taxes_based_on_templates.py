@@ -809,3 +809,8 @@ def update_account_tax_based_on_templates(env):
 
             # Rename account_tax
             account_tax.name = account_tax_template.name
+
+
+@openupgrade.migrate()
+def migrate(env, version):
+    update_account_tax_based_on_templates(env)

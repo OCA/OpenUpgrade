@@ -1,9 +1,6 @@
 from openupgradelib import openupgrade
 import logging
 
-from tax_template import update_account_tax_based_on_templates
-from custom_taxes import update_custom_account_tax
-
 _logger = logging.getLogger(__name__)
 
 # Based on file l10n_be/data/account_tax_template_data.xml
@@ -196,8 +193,6 @@ def disable_troublesome_tags(env):
 @openupgrade.migrate()
 def migrate(env, version):
     remove_wrong_tag(env)
-    update_custom_account_tax(env)
-    update_account_tax_based_on_templates(env)
     update_tags_on_move_line(env)
     unlink_tags_from_move_line(
         env, base_tag_xmlids + tax_tag_xmlids + not_deductible_tag_xmlids
