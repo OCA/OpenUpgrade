@@ -38,6 +38,7 @@
     <field name="name">Ecommerce: Cart Recovery</field>
     <field name="description">If the setting is set, sent to authenticated visitors who abandoned their cart</field>
   </record>
+  <!-- Keep the ribbons as they were customized in v15
   <record id="new_ribbon" model="product.ribbon">
     <field name="html_class">text-bg-primary o_ribbon_left</field>
   </record>
@@ -52,5 +53,5 @@
   </record>
   <record id="sold_out_ribbon" model="product.ribbon">
     <field name="html_class">text-bg-danger o_ribbon_left</field>
-  </record>
+  </record> -->
 </odoo>
