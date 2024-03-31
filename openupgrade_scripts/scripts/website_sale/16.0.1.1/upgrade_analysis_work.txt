@@ -1,0 +1,143 @@
+---Models in module 'website_sale'---
+obsolete model website.sale.payment.acquirer.onboarding.wizard [transient]
+# NOTHING TO DO: transient model
+
+---Fields in module 'website_sale'---
+website_sale / product.ribbon           / product_tag_ids (one2many)    : NEW relation: product.tag
+website_sale / product.tag              / ribbon_id (many2one)          : NEW relation: product.ribbon
+# NOTHING TO DO: New feature for linking a ribbon with a product tag
+
+website_sale / product.tag              / website_id (many2one)         : NEW relation: website
+# NOTHING TO DO: New feature of tags now being website specific
+
+website_sale / product.template         / compare_list_price (float)    : NEW
+# NOTHING TO DO: New feature for showing a strike-through price in the e-commerce comparison
+
+website_sale / res.company              / website_sale_onboarding_payment_acquirer_state (selection): DEL selection_keys: ['done', 'just_done', 'not_done']
+website_sale / res.company              / website_sale_onboarding_payment_provider_state (selection): NEW selection_keys: ['done', 'just_done', 'not_done'], hasdefault: default
+# DONE: pre-migration: Field renamed
+
+website_sale / sale.order               / shop_warning (char)           : NEW
+website_sale / sale.order.line          / shop_warning (char)           : NEW
+# NOTHING TO DO: New feature for showing alerts on the e-commerce cart
+
+website_sale / website                  / account_on_checkout (selection): NEW selection_keys: ['disabled', 'mandatory', 'optional'], hasdefault: default
+# NOTHING TO DO: New feature for requiring to sign-in to checkout. Default value `optional` preserves v15 behavior.
+
+website_sale / website                  / add_to_cart_action (selection): NEW selection_keys: ['go_to_cart', 'stay'], hasdefault: default
+website_sale / website                  / cart_add_on_page (boolean)    : DEL
+# DONE: post-migration: Convert `cart_add_on_page` to `add_to_cart_action`
+
+website_sale / website                  / contact_us_button_url (char)  : NEW hasdefault: default
+# NOTHING TO DO: New feature for "Contact Us" target URL on product page with the default the same as in v15.
+
+website_sale / website                  / enabled_portal_reorder_button (boolean): NEW
+# NOTHING TO DO: New feature for ordering again a sales order from the portal. Default False is preserving v15 behavior.
+
+website_sale / website                  / prevent_zero_price_sale (boolean): NEW
+website_sale / website                  / prevent_zero_price_sale_text (char): NEW hasdefault: default
+# NOTHING TO DO: New feature for preventing to add products to cart with the default False preserving previous behavior.
+
+website_sale / website                  / product_page_grid_columns (integer): NEW hasdefault: default
+website_sale / website                  / product_page_image_layout (selection): NEW required, selection_keys: ['carousel', 'grid'], hasdefault: default
+website_sale / website                  / product_page_image_spacing (selection): NEW required, selection_keys: ['big', 'medium', 'none', 'small'], hasdefault: default
+website_sale / website                  / product_page_image_width (selection): NEW required, selection_keys: ['100_pc', '50_pc', '66_pc', 'none'], hasdefault: default
+# NOTHING TO DO: New features for adjusting product images in the e-commerce product page with sane defaults preserving behavior.
+
+website_sale / website                  / send_abandoned_cart_email (boolean): NEW
+# NOTHING TO DO: New feature for sending automatically the lost cart mail. Default value `False` is preserving v15 behavior.
+
+website_sale / website                  / shop_default_sort (selection) : NEW required, selection_keys: function, hasdefault: default
+# NOTHING TO DO: New feature for default sorting of the products in the e-commerce. The default seems to be the same as in v15.
+
+website_sale / website.sale.extra.field / field_id (many2one)           : now required
+# DONE: pre-migration: Delete offending records
+
+---XML records in module 'website_sale'---
+NEW ir.actions.act_window: website_sale.action_product_pages_list
+NEW ir.actions.act_window: website_sale.product_product_action_add
+NEW ir.actions.act_window: website_sale.product_public_tags_action
+DEL ir.actions.act_window: website_sale.action_open_website_sale_onboarding_payment_acquirer_wizard
+NEW ir.actions.server: website_sale.dynamic_snippet_alternative_products
+NEW ir.asset: website_sale.s_add_to_cart_000_js
+NEW ir.model.access: website_sale.access_ecom_extra_fields_restricted_editor
+NEW ir.model.access: website_sale.access_product_image_restricted_editor
+NEW ir.model.access: website_sale.access_product_tag_public
+DEL ir.model.access: website_sale.access_ecom_extra_fields_publisher
+DEL ir.model.access: website_sale.access_product_image_publisher
+DEL ir.model.access: website_sale.access_website_sale_payment_acquirer_onboarding_wizard
+NEW ir.ui.menu: website_sale.menu_ecommerce
+NEW ir.ui.menu: website_sale.menu_ecommerce_payment_providers
+NEW ir.ui.menu: website_sale.menu_product_pages
+NEW ir.ui.menu: website_sale.product_catalog_product_tags
+DEL ir.ui.menu: website_sale.menu_ecommerce_payment_acquirers
+DEL ir.ui.menu: website_sale.menu_product_settings
+DEL ir.ui.menu: website_sale.product_catalog_variants
+DEL ir.ui.menu: website_sale.website_base_unit_menu
+NEW ir.ui.view: website_sale.alternative_products
+NEW ir.ui.view: website_sale.dynamic_filter_template_product_product_card_group
+NEW ir.ui.view: website_sale.dynamic_filter_template_product_product_horizontal_card_2
+NEW ir.ui.view: website_sale.filmstrip_categories
+NEW ir.ui.view: website_sale.o_wsale_offcanvas
+NEW ir.ui.view: website_sale.product_category_extra_link
+NEW ir.ui.view: website_sale.product_pages_kanban_view
+NEW ir.ui.view: website_sale.product_pages_tree_view
+NEW ir.ui.view: website_sale.product_picture_magnify_both
+NEW ir.ui.view: website_sale.product_picture_magnify_click
+NEW ir.ui.view: website_sale.product_picture_magnify_hover
+NEW ir.ui.view: website_sale.product_product_view_form_add
+NEW ir.ui.view: website_sale.product_tag_form_view_inherit_website_sale
+NEW ir.ui.view: website_sale.product_tag_tree_view_inherit_website_sale
+NEW ir.ui.view: website_sale.products_attributes_top
+NEW ir.ui.view: website_sale.products_categories_list
+NEW ir.ui.view: website_sale.products_categories_top
+NEW ir.ui.view: website_sale.products_design_card
+NEW ir.ui.view: website_sale.products_design_grid
+NEW ir.ui.view: website_sale.products_design_thumbs
+NEW ir.ui.view: website_sale.products_fiscal_position
+NEW ir.ui.view: website_sale.products_thumb_2_3
+NEW ir.ui.view: website_sale.products_thumb_4_3
+NEW ir.ui.view: website_sale.products_thumb_4_5
+NEW ir.ui.view: website_sale.products_thumb_cover
+NEW ir.ui.view: website_sale.res_config_settings_view_form_inherit_sale
+NEW ir.ui.view: website_sale.s_add_to_cart
+NEW ir.ui.view: website_sale.s_add_to_cart_options
+NEW ir.ui.view: website_sale.sale_order_re_order_btn
+NEW ir.ui.view: website_sale.shop_product_grid
+NEW ir.ui.view: website_sale.shop_product_image
+NEW ir.ui.view: website_sale.shop_product_images
+NEW ir.ui.view: website_sale.snippets_options_web_editor
+NEW ir.ui.view: website_sale.tax_indication
+DEL ir.ui.view: website_sale.product_edit_options
+DEL ir.ui.view: website_sale.product_picture_magnify
+DEL ir.ui.view: website_sale.product_picture_magnify_auto
+DEL ir.ui.view: website_sale.products_images_full
+DEL ir.ui.view: website_sale.recommended_products
+DEL ir.ui.view: website_sale.search_count_box
+DEL ir.ui.view: website_sale.user_navbar_inherit_website_sale
+DEL ir.ui.view: website_sale.website_sale_onboarding_payment_acquirer_step
+NEW website.snippet.filter: website_sale.dynamic_filter_cross_selling_alternative_products
+# NOTHING TO DO: noupdate=0 records
+
+NEW ir.cron: website_sale.ir_cron_send_availability_email [renamed from website_sale_stock_wishlist module]
+# DONE: pre-migration: XML-ID renamed
+
+DEL ir.ui.menu: website_sale.menu_reporting [renamed to website module]
+# NOTHING TO DO: Already renamed in website scripts
+
+ir.asset: website_sale.s_dynamic_snippet_products_000_scss (noupdate switched)
+ir.ui.view: website_sale.dynamic_filter_template_product_product_add_to_cart (noupdate switched)
+ir.ui.view: website_sale.dynamic_filter_template_product_product_banner (noupdate switched)
+ir.ui.view: website_sale.dynamic_filter_template_product_product_borderless_1 (noupdate switched)
+ir.ui.view: website_sale.dynamic_filter_template_product_product_borderless_2 (noupdate switched)
+ir.ui.view: website_sale.dynamic_filter_template_product_product_centered (noupdate switched)
+ir.ui.view: website_sale.dynamic_filter_template_product_product_horizontal_card (noupdate switched)
+ir.ui.view: website_sale.dynamic_filter_template_product_product_mini_image (noupdate switched)
+ir.ui.view: website_sale.dynamic_filter_template_product_product_mini_name (noupdate switched)
+ir.ui.view: website_sale.dynamic_filter_template_product_product_mini_price (noupdate switched)
+ir.ui.view: website_sale.dynamic_filter_template_product_product_view_detail (noupdate switched)
+ir.ui.view: website_sale.price_dynamic_filter_template_product_product (noupdate switched)
+# DONE: pre-migration: noupdate switched
+
+NEW res.groups: website_sale.group_product_price_comparison (noupdate)
+# NOTHING TO DO: New record
