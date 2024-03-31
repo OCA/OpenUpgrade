@@ -73,6 +73,7 @@ merged_modules = {
     # OCA/manufacture
     "mrp_subcontracting_resupply_link": "mrp_subcontracting_purchase",
     # OCA/pos
+    "pos_invoicing": "point_of_sale",
     "pos_order_mgmt": "point_of_sale",
     "pos_order_return": "point_of_sale",
     # OCA/product-attribute
