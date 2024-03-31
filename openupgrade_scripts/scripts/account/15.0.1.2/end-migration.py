@@ -52,3 +52,4 @@ def _fast_fill_account_payment_payment_method_line_id(env):
 @openupgrade.migrate()
 def migrate(env, version):
     _fast_fill_account_payment_outstanding_account_id(env)
+    _fast_fill_account_payment_payment_method_line_id(env)
