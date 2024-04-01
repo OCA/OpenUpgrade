@@ -1,10 +1,9 @@
 # SPDX-FileCopyrightText: 2023 Coop IT Easy SC
-#
+# SPDX-FileCopyrightText: 2024 Tecnativa - Pedro M. Baeza
 # SPDX-License-Identifier: AGPL-3.0-or-later
 
 import logging
 import string
-from inspect import cleandoc
 
 from openupgradelib import openupgrade
 
@@ -80,7 +79,6 @@ def range_to_prefixes(start, end):
             f"{start!r} and {end!r} do not have spaces or dashes in identical"
             f" locations"
         )
-
     prefixes = set()
     not_prefixes = set()
     alphanum = start
@@ -101,36 +99,81 @@ def range_to_prefixes(start, end):
     return prefixes
 
 
+def numerical_range_to_prefixes(min_, max_):
+    """Adapted from https://github.com/voronind/range-regex."""
+
+    def fill_by_nines(integer, nines_count):
+        return int(str(integer)[:-nines_count] + "9" * nines_count)
+
+    def fill_by_zeros(integer, zeros_count):
+        return integer - integer % 10**zeros_count
+
+    def split_to_ranges(min_, max_):
+        stops = {max_}
+        nines_count = 1
+        stop = fill_by_nines(min_, nines_count)
+        while min_ <= stop < max_:
+            stops.add(stop)
+            nines_count += 1
+            stop = fill_by_nines(min_, nines_count)
+        zeros_count = 1
+        stop = fill_by_zeros(max_ + 1, zeros_count) - 1
+        while min_ < stop <= max_:
+            stops.add(stop)
+            zeros_count += 1
+            stop = fill_by_zeros(max_ + 1, zeros_count) - 1
+        stops = list(stops)
+        stops.sort()
+        return stops
+
+    subpatterns = []
+    start = min_
+    for stop in split_to_ranges(min_, max_):
+        pattern = ""
+        any_digit_count = 0
+        for start_digit, stop_digit in zip(str(start), str(stop)):
+            if start_digit == stop_digit:
+                pattern += start_digit
+            elif start_digit != "0" or stop_digit != "9":
+                pattern += "[{}-{}]".format(start_digit, stop_digit)
+            else:
+                any_digit_count += 1
+        if any_digit_count:
+            pattern += r"\d"
+        if any_digit_count > 1:
+            pattern += "{{{}}}".format(any_digit_count)
+        subpatterns.append(pattern)
+        start = stop + 1
+    return subpatterns
+
+
+def _convert_carrier_zip_ranges(env):
+    """Transform the previous zip_from and zip_to fields to the new prefixes system."""
+    env.cr.execute(
+        "SELECT id, zip_from, zip_to FROM delivery_carrier "
+        "WHERE zip_from IS NOT NULL AND zip_to IS NOT NULL"
+    )
+    for carrier_id, zip_from, zip_to in env.cr.fetchall():
+        if zip_from.isnumeric() and zip_to.isnumeric():
+            prefixes = numerical_range_to_prefixes(int(zip_from), int(zip_to))
+        else:
+            try:
+                prefixes = range_to_prefixes(zip_from, zip_to)
+            except Exception as error:
+                _logger.error(
+                    f"Failed to convert the zip range '{zip_from} --"
+                    f" {zip_to}'of delivery method {carrier_id} to a set of"
+                    f" prefixes. Got error:\n\n{error}"
+                )
+                continue
+        carrier = env["delivery.carrier"].browse(carrier_id)
+        for prefix in prefixes:
+            prefix_record = env["delivery.zip.prefix"].search([("name", "=", prefix)])
+            if not prefix_record:
+                prefix_record = env["delivery.zip.prefix"].create({"name": prefix})
+            carrier.zip_prefix_ids |= prefix_record
+
+
 @openupgrade.migrate()
 def migrate(env, version):
-    delivery_methods = env["delivery.carrier"].search([])
-    if not delivery_methods:
-        return
-    _logger.warning(
-        cleandoc(
-            """
-            TODO: warn that this creates weird results that are technically
-            correct.
-            """
-        )
-    )
-    for method in delivery_methods:
-        try:
-            prefixes = range_to_prefixes(method.zip_from, method.zip_to)
-        except Exception as error:
-            _logger.error(
-                f"Failed to convert the zip range '{method.zip_from} --"
-                f" {method.zip_to}'of delivery method {method!r} to a set of"
-                f" prefixes. Got error:\n\n{error}"
-            )
-            continue
-
-        for prefix in prefixes:
-            try:
-                prefix_record = env["delivery.zip.prefix"].create({"name": prefix})
-            # TODO: which exception?
-            except Exception:
-                prefix_record = env["delivery.zip.prefix"].search(
-                    [("name", "=", prefix)]
-                )
-            method.zip_prefix_ids |= prefix_record
+    _convert_carrier_zip_ranges(env)

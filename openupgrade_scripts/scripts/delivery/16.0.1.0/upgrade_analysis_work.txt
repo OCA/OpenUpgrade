@@ -2,16 +2,23 @@
 new model delivery.zip.prefix
 ---Fields in module 'delivery'---
 delivery     / delivery.carrier         / carrier_description (text)    : NEW
+# NOTHING TO DO: New feature for showing in the sales order a description for the delivery method.
+
 delivery     / delivery.carrier         / shipping_insurance (integer)  : NEW hasdefault: default
-# NOTHING TO DO
+# NOTHING TO DO: New feature for indicating to the providers the insurance percentage covered.
+
 delivery     / delivery.carrier         / zip_from (char)               : DEL
-delivery     / delivery.carrier         / zip_prefix_ids (many2many)    : NEW relation: delivery.zip.prefix
 delivery     / delivery.carrier         / zip_to (char)                 : DEL
+delivery     / delivery.carrier         / zip_prefix_ids (many2many)    : NEW relation: delivery.zip.prefix
 delivery     / delivery.zip.prefix      / name (char)                   : NEW required
-# TODO
+# DONE: post-migration: Extract prefixes as regexp.
+
 delivery     / product.template         / country_of_origin (many2one)  : NEW relation: res.country
+# NOTHING TO DO: New field for Intrastat. May should be filled from OCA Intrastat modules
+
 delivery     / stock.move.line          / carrier_name (char)           : NEW isrelated: related, stored
-# NOTHING TO DO
+# NOTHING TO DO: Related stored already handled in a fast way by ORM.
+
 ---XML records in module 'delivery'---
 NEW ir.actions.act_window: delivery.action_delivery_zip_prefix_list
 NEW ir.model.access: delivery.access_delivery_carrier_system
@@ -25,4 +32,4 @@ NEW ir.ui.view: delivery.label_package_template_view_delivery
 NEW ir.ui.view: delivery.stock_move_line_view_search_delivery
 NEW ir.ui.view: delivery.view_picking_type_form_delivery
 NEW ir.ui.view: delivery.view_stock_rule_form_delivery
-# NOTHING TO DO
+# NOTHING TO DO: noupdate=0 records handled by ORM.
