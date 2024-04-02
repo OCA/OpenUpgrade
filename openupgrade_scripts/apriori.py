@@ -20,12 +20,14 @@ renamed_modules = {
     "account_reconciliation_widget": "account_reconcile_oca",
     # OCA/bank-statement-import
     "account_statement_import": "account_statement_import_file",
+    "account_statement_import_file_reconciliation_widget": (
+        "account_statement_import_file_reconcile_oca"
+    ),
     "account_statement_import_txt_xlsx": "account_statement_import_sheet_file",
     # OCA/crm
     "crm_project": "crm_lead_to_task",
     # OCA/knowledge
     "knowledge": "document_knowledge",
-    # OCA/pos
     # OCA/sale-promotion
     "coupon_incompatibility": "loyalty_incompatibility",
     "coupon_limit": "loyalty_limit",
