@@ -86,9 +86,9 @@ def create_recurrent_events(env):
         duration = recurrence.base_event_id.stop - recurrence.base_event_id.start
         ranges = set(recurrence._get_ranges(recurrence.base_event_id.start, duration))
         # Remove range that contains start < event's start to avoid create past events
-        for range in list(ranges):
-            if range[0] <= recurrence.base_event_id.start:
-                ranges.remove(range)
+        for event_range in list(ranges):
+            if event_range[0] <= recurrence.base_event_id.start:
+                ranges.remove(event_range)
             else:
                 break
         # Remove range that contains detach events
