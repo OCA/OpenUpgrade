@@ -19,6 +19,7 @@ renamed_modules = {
     # OCA/account-reconcile
     "account_reconciliation_widget": "account_reconcile_oca",
     # OCA/bank-statement-import
+    "account_bank_statement_import_qif": "account_statement_import_qif",
     "account_statement_import": "account_statement_import_file",
     "account_statement_import_txt_xlsx": "account_statement_import_sheet_file",
     # OCA/crm
