@@ -799,6 +799,7 @@ def migrate(env, version):
         env.cr, apriori.renamed_modules.items())
     openupgrade.update_module_names(
         env.cr, apriori.merged_modules.items(), merge_modules=True)
+    openupgrade.clean_transient_models(env.cr)
     openupgrade.copy_columns(env.cr, column_copies)
     openupgrade.rename_columns(env.cr, column_renames)
     openupgrade.rename_fields(env, field_renames, no_deep=True)
