@@ -145,6 +145,7 @@ def migrate(env, version):
     )
     openupgrade.update_module_names(
         env.cr, apriori.merged_modules.items(), merge_modules=True)
+    openupgrade.clean_transient_models(env.cr)
     openupgrade.rename_columns(env.cr, column_renames)
     openupgrade.rename_models(env.cr, model_renames_ir_actions_report)
     handle_partner_sector(env)
