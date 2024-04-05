@@ -222,6 +222,7 @@ def migrate(env, version):
         env.cr, apriori.renamed_modules.items())
     openupgrade.update_module_names(
         env.cr, apriori.merged_modules.items(), merge_modules=True)
+    openupgrade.clean_transient_models(env.cr)
     if openupgrade.table_exists(env.cr, 'product_uom'):
         openupgrade.rename_models(env.cr, model_renames_product)
         openupgrade.rename_tables(env.cr, table_renames_product)
