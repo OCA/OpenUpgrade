@@ -139,6 +139,7 @@ def migrate(cr, version):
     # Perform module renames and merges
     openupgrade.update_module_names(cr, renamed_modules.items())
     openupgrade.update_module_names(cr, merged_modules.items(), merge_modules=True)
+    openupgrade.clean_transient_models(cr)
     uninstall_conflicting_it_edi(cr)
     # Migrate partners from Fil to Tagalog
     # See https://github.com/odoo/odoo/commit/194ed76c5cc9
