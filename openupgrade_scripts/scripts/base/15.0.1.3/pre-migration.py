@@ -72,7 +72,7 @@ def migrate(cr, version):
 
     openupgrade.update_module_names(cr, renamed_modules.items())
     openupgrade.update_module_names(cr, merged_modules.items(), merge_modules=True)
-
+    openupgrade.clean_transient_models(cr)
     openupgrade.convert_field_to_html(
         cr, "res_company", "report_footer", "report_footer"
     )
