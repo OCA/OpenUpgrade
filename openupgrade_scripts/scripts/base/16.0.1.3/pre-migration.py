@@ -132,7 +132,8 @@ def migrate(cr, version):
     enable_coupon_sharing_within_entity(cr)
     openupgrade.update_module_names(cr, renamed_modules.items())
     openupgrade.update_module_names(cr, merged_modules.items(), merge_modules=True)
-    # restricting inherited views to groups isn't allowed any more
+    openupgrade.clean_transient_models(cr)
+    # restricting inherited views to groups isn't allowed anymore
     cr.execute(
         "DELETE FROM ir_ui_view_group_rel r "
         "USING ir_ui_view v "
