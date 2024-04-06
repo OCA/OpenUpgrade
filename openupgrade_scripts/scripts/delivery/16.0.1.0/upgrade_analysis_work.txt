@@ -17,7 +17,7 @@ delivery     / product.template         / country_of_origin (many2one)  : NEW re
 # NOTHING TO DO: New field for Intrastat. May should be filled from OCA Intrastat modules
 
 delivery     / stock.move.line          / carrier_name (char)           : NEW isrelated: related, stored
-# NOTHING TO DO: Related stored already handled in a fast way by ORM.
+# DONE: pre-migration: Pre-create it and fast fill it, as ORM seems to not handle related fields with more than 1 path.
 
 ---XML records in module 'delivery'---
 NEW ir.actions.act_window: delivery.action_delivery_zip_prefix_list
