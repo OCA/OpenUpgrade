@@ -137,6 +137,14 @@ def migrate(cr, version):
     """
     )
     # Perform module renames and merges
+
+    # edi_oca has been merged into oca/edi 12.0, so move the rename of edi
+    # to merged in case it already exists at this point (we still need the
+    # rename when migrating just a v13 db
+    cr.execute("SELECT 1 FROM ir_module_module WHERE name='edi_oca'")
+    if cr.fetchall():
+        merged_modules["edi"] = renamed_modules.pop("edi")
+
     openupgrade.update_module_names(cr, renamed_modules.items())
     openupgrade.update_module_names(cr, merged_modules.items(), merge_modules=True)
     openupgrade.clean_transient_models(cr)
