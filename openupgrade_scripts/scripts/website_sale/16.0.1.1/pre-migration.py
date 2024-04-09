@@ -42,8 +42,13 @@ def _remove_view_inheritance(env):
     """
     openupgrade.logged_query(
         env.cr,
-        "UPDATE ir_ui_view SET inherit_id=NULL, mode='primary' "
-        "WHERE key IN ('website_sale.sort', 'website_sale.add_grid_or_list_option')",
+        """UPDATE ir_ui_view SET inherit_id=NULL, mode='primary'
+        WHERE key IN (
+            'website_sale.sort',
+            'website_sale.add_grid_or_list_option',
+            'website_sale.products_categories',
+            'website_sale.filter_products_price'
+        )""",
     )
 
 
