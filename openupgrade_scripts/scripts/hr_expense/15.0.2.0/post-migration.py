@@ -10,6 +10,15 @@ def _fill_payment_state(env):
         WHERE account_move_id IS NULL
         """,
     )
+    # set exclude_from_invoice_tab the way v15 does it
+    openupgrade.logged_query(
+        env.cr,
+        """
+        UPDATE account_move_line
+        SET exclude_from_invoice_tab=(coalesce(quantity, 0) = 0)
+        WHERE expense_id IS NOT NULL
+        """,
+    )
     # Recompute payment_state for the moves associated to the expenses, as on
     # v14 these ones were not computed being of type `entry`, which changes now
     # on v15 if the method `_payment_state_matters` returns True, which is the
