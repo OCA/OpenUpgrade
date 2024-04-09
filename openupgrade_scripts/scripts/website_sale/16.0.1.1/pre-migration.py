@@ -32,6 +32,21 @@ _not_noupdate_xml_ids = [
 ]
 
 
+def _remove_view_inheritance(env):
+    """On v15, some views were inherited ones, but this it not anymore in v16. As Odoo
+    only touches the fields that are present in the definition, and now the `inherit_id`
+    field is missing, the inheritance keeps there, provoking a crash.
+
+    Let's empty them manually by SQL (for avoiding view validation) and using the key,
+    for any possible website specific view.
+    """
+    openupgrade.logged_query(
+        env.cr,
+        "UPDATE ir_ui_view SET inherit_id=NULL, mode='primary' "
+        "WHERE key IN ('website_sale.sort', 'website_sale.add_grid_or_list_option')",
+    )
+
+
 def _remove_incorrect_website_sale_extra_field_records(env):
     openupgrade.logged_query(
         env.cr,
@@ -46,4 +61,5 @@ def migrate(env, version):
     openupgrade.set_xml_ids_noupdate_value(
         env, "website_sale", _not_noupdate_xml_ids, False
     )
+    _remove_view_inheritance(env)
     _remove_incorrect_website_sale_extra_field_records(env)
