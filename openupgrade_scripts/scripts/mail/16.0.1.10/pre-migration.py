@@ -37,6 +37,27 @@ _columns_copies = {
 }
 
 
+def _avoid_mail_notification_new_constraint(env):
+    """Prior to Odoo 16, there is no unique constraint on the mail_notification table,
+    so if there's any duplicate, the upgrade will fail.
+
+    Let's preventively delete the duplicated entries, as at the end, they are not
+    needed.
+    """
+    openupgrade.logged_query(
+        env.cr,
+        """DELETE FROM mail_notification
+        WHERE id IN (
+            SELECT id FROM (
+                SELECT id, row_number()
+                OVER (
+                    partition BY res_partner_id, mail_message_id ORDER BY id
+                ) AS rnum FROM mail_notification
+            ) t WHERE t.rnum > 1
+        )""",
+    )
+
+
 def delete_obsolete_constraints(env):
     openupgrade.delete_sql_constraint_safely(
         env, "mail", "mail_channel_partner", "partner_or_guest_exists"
@@ -129,6 +150,7 @@ def scheduled_date_set_empty_strings_to_null(env):
 
 @openupgrade.migrate()
 def migrate(env, version):
+    _avoid_mail_notification_new_constraint(env)
     delete_obsolete_constraints(env)
     openupgrade.rename_fields(env, _fields_renames)
     openupgrade.rename_models(env.cr, _models_renames)
