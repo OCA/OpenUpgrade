@@ -124,6 +124,21 @@ def _mig_s_progress_steps_contents(env):
         view.arch_db = env["ir.ui.view"]._pretty_arch(arch)
 
 
+def _reset_customize_show_in_website_views(env):
+    """New Odoo website engine doesn't use customize_show=True system to show options
+    in the Customize tab, so we preventively reset all of them containing a website* key
+    for avoiding showing extra options where they shouldn't (it already happens for
+    example in website_sale with "Category Collapsible List" view).
+    """
+    openupgrade.logged_query(
+        env.cr,
+        """UPDATE ir_ui_view
+        SET customize_show=False
+        WHERE key like 'website%' AND customize_show
+        """,
+    )
+
+
 @openupgrade.migrate()
 def migrate(env, version):
     _fill_partner_id_if_null(env)
@@ -133,3 +148,4 @@ def migrate(env, version):
     delete_constraint_website_visitor_partner_uniq(env)
     _fill_homepage_url(env)
     _mig_s_progress_steps_contents(env)
+    _reset_customize_show_in_website_views(env)
