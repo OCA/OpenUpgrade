@@ -296,7 +296,11 @@ def migration_invoice_moves(env):
         env.cr, """
         UPDATE account_move_line
         SET exclude_from_invoice_tab = TRUE
-        WHERE old_invoice_line_id IS NULL""",
+        FROM account_move
+        WHERE old_invoice_line_id IS NULL
+        AND account_move_line.move_id=account_move.id
+        AND account_move.type <> 'entry'
+        """,
     )
     # 4th. Adding all the missing lines
     openupgrade.logged_query(
