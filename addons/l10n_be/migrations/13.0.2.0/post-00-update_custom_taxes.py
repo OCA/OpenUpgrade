@@ -70,13 +70,7 @@ tax_unclassified_tag_xmlids = [
 
 
 def update_custom_account_tax(env):
-    """This function tries to update custom account.tax that does not
-    match a account.tax.template.
-
-    This function should be run after update_account_tax which will
-    adapt existing taxes based on account.tax.template, and rename it
-    accordingly.
-    """
+    """This function tries to update custom account.tax"""
     # get old tags and extract their code names
     correspondance = {
         ("invoice", "base"): [
@@ -96,6 +90,30 @@ def update_custom_account_tax(env):
             for xmlid, new_name in tax_refund_tag_xmlids
         ],
     }
+
+    def get_parent_tax_tags(account_tax):
+        """Return old tags that were linked on the parent tax if any"""
+        parent_tax_id = (
+            env["account.tax"]
+            .with_context(active_test=False)
+            .search([("children_tax_ids", "in", account_tax.id)], limit=1)
+        )
+        if not parent_tax_id:
+            return None
+        env.cr.execute(
+            """SELECT account_account_tag_id
+            FROM account_tax_account_tag
+            WHERE account_tax_id = %s
+            """,
+            (parent_tax_id.id,),
+        )
+        parent_tax_tags = [int(res[0]) for res in env.cr.fetchall()]
+        parent_tax_tag_ids = (
+            env["account.account.tag"]
+            .with_context(active_test=False)
+            .search([("id", "in", parent_tax_tags)])
+        )
+        return parent_tax_tag_ids
 
     def get_new_tag_names(tag_ids, old_tags):
         """Return list of code and old_tags for tag_ids that exists in
@@ -121,13 +139,24 @@ def update_custom_account_tax(env):
         .search([])
     )
     for account_tax in custom_account_tax_ids:
+        parent_tax_tag_ids = get_parent_tax_tags(account_tax)
         for reptype, repartition in repartition_lines_iter(account_tax):
             key = (reptype, repartition.repartition_type)
             # keep right tags
-            keep_tags = get_new_tag_names(
-                repartition.tag_ids, correspondance[key]
-            )
+            if (
+                repartition.repartition_type == "base"
+                and parent_tax_tag_ids is not None
+            ):
+                keep_tags = get_new_tag_names(
+                    parent_tax_tag_ids, correspondance[key]
+                )
+            else:
+                keep_tags = get_new_tag_names(
+                    repartition.tag_ids, correspondance[key]
+                )
             # fix special cases
+            # tag "82" can not be set on tax lines if other tags are
+            # assigned to these tax lines
             if (
                 repartition.repartition_type == "tax"
                 and len(keep_tags) > 1
