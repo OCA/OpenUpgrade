@@ -53,6 +53,7 @@ def update_tags_on_move_line(env):
     """Based on new account.tax, this function check that
     account.account.tag on account.move.line are correct.
     """
+    _logger.info("Begin updating tags on account.move.line")
     account_move_line_ids = (
         env["account.move.line"]
         .with_context(active_test=False)
@@ -64,17 +65,30 @@ def update_tags_on_move_line(env):
         tax_line_id = move_line_id.tax_line_id
         tax_ids = move_line_id.tax_ids
         tax_base_amount = move_line_id.tax_base_amount
+        _logger.info("Processing %s", move_line_id)
 
         # If a repartition line exists then apply tags form this
         # repartition line
         if repartition_id:
             new_tag_ids = repartition_id.tag_ids
+            _logger.info(
+                "Found %s on %s, using tags from it: %s",
+                repartition_id,
+                move_line_id,
+                new_tag_ids,
+            )
 
-        # If tax_lin_id exists, then find the right repartition line and
+        # If tax_line_id exists, then find the right repartition line and
         # apply tags from this repartition line
         elif tax_line_id:
+            _logger.info(
+                "Found tax_line_id (%s) on %s."
+                " Searching for repartition_line.",
+                tax_line_id,
+                move_line_id
+            )
             repartition_line_ids = env["account.tax.repartition.line"]
-            if "invoice" in move_id.type:
+            if "invoice" in move_id.type or "entry" in move_id.type:
                 repartition_line_ids = tax_line_id.invoice_repartition_line_ids
             elif "refund" in move_id.type:
                 repartition_line_ids = tax_line_id.refund_repartition_line_ids
@@ -90,32 +104,53 @@ def update_tags_on_move_line(env):
                 tax_repartition_id = tax_repartition_ids
             if not repartition_id:
                 _logger.error(
-                    "No account.tax.repartition.line found for "
-                    "account.move.line(%s).",
-                    move_line_id.id
+                    "No account.tax.repartition.line found for %s",
+                    move_line_id,
                 )
             new_tag_ids = tax_repartition_id.tag_ids
+            _logger.info(
+                "Found %s to apply on %s, using tags from it: %s.",
+                tax_repartition_id,
+                move_line_id,
+                new_tag_ids,
+            )
 
         # If tax_ids exists and the tax_base_amount is 0 or null
         # then it's a base line, so apply base repartition line from
         # taxes.
         elif tax_ids and not tax_base_amount:
-            repartition_line_ids = env["account.tax.repartition.line"]
-            if "invoice" in move_id.type:
-                repartition_line_ids = tax_ids.mapped(
+            taxes = tax_ids | tax_ids.mapped("children_tax_ids")
+            _logger.info(
+                "Found taxes %s to apply on %s linked to %s with type %s",
+                taxes,
+                move_line_id,
+                move_id,
+                move_id.type,
+            )
+            if "invoice" in move_id.type or "entry" in move_id.type:
+                repartition_line_ids = taxes.mapped(
                     "invoice_repartition_line_ids"
                 )
             elif "refund" in move_id.type:
-                repartition_line_ids = tax_ids.mapped(
+                repartition_line_ids = taxes.mapped(
                     "refund_repartition_line_ids"
                 )
+            else:
+                repartition_line_ids = env["account.tax.repartition.line"]
             base_repartition_ids = repartition_line_ids.filtered(
                 lambda r: r.repartition_type == "base"
             )
             new_tag_ids = base_repartition_ids.mapped("tag_ids")
+            _logger.info(
+                "Found %s to apply on %s, using tags from it: %s.",
+                base_repartition_ids,
+                move_line_id,
+                new_tag_ids,
+            )
 
         else:
             new_tag_ids = env["account.account.tag"]
+            _logger.info("No tag to apply on %s", move_line_id)
 
         # Write new tags
         openupgrade.logged_query(
@@ -138,6 +173,7 @@ def update_tags_on_move_line(env):
                 """,
                 (move_line_id.id, new_tag_id.id),
             )
+    _logger.info("Finish updating tags on account.move.line")
 
 
 def remove_wrong_tag(env):
