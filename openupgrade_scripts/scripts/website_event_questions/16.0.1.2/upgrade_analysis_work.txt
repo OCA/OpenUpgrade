@@ -1,0 +1,8 @@
+---Models in module 'website_event_questions'---
+---Fields in module 'website_event_questions'---
+website_event_questions / event.question           / is_mandatory_answer (boolean) : NEW
+# DONE: pre-migration: Pre-create column with default=True, which preserves v15 behavior
+
+---XML records in module 'website_event_questions'---
+NEW ir.ui.view: website_event_questions.event_registration_view_tree
+# NOTHING TO DO: ir stuff with noupdate=0
