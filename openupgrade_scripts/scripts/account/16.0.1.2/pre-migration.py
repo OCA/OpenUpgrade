@@ -355,6 +355,26 @@ def _fast_fill_account_payment_amount_company_currency_signed(env):
     )
 
 
+def _account_journal_payment_sequence(env):
+    """Add manually this field with False value to avoid different behavior from v15,
+    where there's only one number sequence for whole journal.
+    """
+    openupgrade.add_fields(
+        env,
+        [
+            (
+                "payment_sequence",
+                "account.journal",
+                "account_journal",
+                "boolean",
+                False,
+                "account",
+                False,
+            )
+        ],
+    )
+
+
 @openupgrade.migrate()
 def migrate(env, version):
     openupgrade.rename_xmlids(env.cr, _xmlids_renames)
@@ -383,3 +403,4 @@ def migrate(env, version):
         "account_reconcile_model_line_id",
     )
     _fast_fill_account_payment_amount_company_currency_signed(env)
+    _account_journal_payment_sequence(env)
