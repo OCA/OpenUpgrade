@@ -164,9 +164,11 @@ account      / account.chart.template   / use_storno_accounting (boolean): NEW h
 
 account      / account.journal          / default_account_type (many2one): relation is now 'False' ('account.account.type') [nothing to do]
 account      / account.journal          / default_account_type (many2one): type is now 'char' ('many2one')
-account      / account.journal          / payment_sequence (boolean)    : NEW hasdefault: compute
 account      / account.journal          / type_control_ids (many2many)  : DEL relation: account.account.type
 # NOTHING TO DO
+
+account      / account.journal          / payment_sequence (boolean)    : NEW hasdefault: compute
+# DONE: pre-migration: initialize to False to preserve v15 behavior and avoid errors when giving numbers
 
 account      / account.move             / attachment_ids (one2many)     : NEW relation: ir.attachment
 # NOTHING TO DO
