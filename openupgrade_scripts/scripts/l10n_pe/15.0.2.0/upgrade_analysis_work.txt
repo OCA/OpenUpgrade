@@ -1,0 +1,23 @@
+---Models in module 'l10n_pe'---
+---Fields in module 'l10n_pe'---
+---XML records in module 'l10n_pe'---
+account.tax.group: l10n_pe.tax_group_det (noupdate) (noupdate switched)
+account.tax.group: l10n_pe.tax_group_exo (noupdate) (noupdate switched)
+account.tax.group: l10n_pe.tax_group_exp (noupdate) (noupdate switched)
+account.tax.group: l10n_pe.tax_group_gra (noupdate) (noupdate switched)
+account.tax.group: l10n_pe.tax_group_igv (noupdate) (noupdate switched)
+account.tax.group: l10n_pe.tax_group_ina (noupdate) (noupdate switched)
+account.tax.group: l10n_pe.tax_group_isc (noupdate) (noupdate switched)
+account.tax.group: l10n_pe.tax_group_ivap (noupdate) (noupdate switched)
+account.tax.group: l10n_pe.tax_group_other (noupdate) (noupdate switched)
+# DONE: post-migration: Switch noupdate condition after upgrade for loading latest data
+
+NEW l10n_latam.document.type: l10n_pe.document_type01
+NEW l10n_latam.document.type: l10n_pe.document_type02
+NEW l10n_latam.document.type: l10n_pe.document_type07
+NEW l10n_latam.document.type: l10n_pe.document_type07b
+NEW l10n_latam.document.type: l10n_pe.document_type08
+NEW l10n_latam.document.type: l10n_pe.document_type08b
+NEW l10n_latam.document.type: l10n_pe.document_type20
+NEW l10n_latam.document.type: l10n_pe.document_type40
+# NOTHING TO DO: New records
