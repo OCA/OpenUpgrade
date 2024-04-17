@@ -88,6 +88,8 @@ merged_modules = {
     # OCA/pos
     "pos_order_line_no_unlink": "point_of_sale",
     "pos_product_sort": "point_of_sale",
+    # OCA/project
+    "project_task_milestone": "project",
     # OCA/purchase-workflow
     "product_form_purchase_link": "purchase",
     # OCA/sale-promotion
