@@ -19,6 +19,7 @@ renamed_modules = {
     "website_sale_attribute_filter_order": "website_sale_product_attribute_filter_order",
     # OCA/project
     "project_category": "project_type",
+    "project_milestone": "project_task_milestone",
     "project_stage_state": "project_task_stage_state",
     "sale_project_service_tracking_copy_tasks": "sale_project_copy_tasks",
     # OCA/sale-promotion
