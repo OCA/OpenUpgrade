@@ -6,6 +6,8 @@ l10n_mx      / account.account.tag      / nature (selection)            : DEL se
 ---XML records in module 'l10n_mx'---
 NEW account.account.tag: l10n_mx.tag_credit_balance_account
 NEW account.account.tag: l10n_mx.tag_debit_balance_account
+# NOTHING TO DO: New data
+
 DEL account.account.tag: l10n_mx.account_tag_100_01
 DEL account.account.tag: l10n_mx.account_tag_100_02
 DEL account.account.tag: l10n_mx.account_tag_101
@@ -1077,7 +1079,7 @@ DEL account.account.tag: l10n_mx.account_tag_816_02
 DEL account.account.tag: l10n_mx.account_tag_899
 DEL account.account.tag: l10n_mx.account_tag_899_01
 DEL account.account.tag: l10n_mx.account_tag_899_02
-# NOTHING TO DO: Account tags are not used anymore.
+# DONE: post-migration: Delete safely for avoiding crashes if they are used
 
 NEW account.account.template: l10n_mx.cuenta9993
 NEW account.account.template: l10n_mx.cuenta9994
