@@ -1182,7 +1182,7 @@ NEW_ACCOUNT_TAX_CONFIG = {
     "attn_VAT-IN-V81-21-EU-C2": {
         "invoice": {
             "base": ["+81", "+86"],
-            "tax": ["+55"],
+            "tax": ["-55"],
         },
         "refund": {
             "base": ["+84", "-81", "-86"],
@@ -1207,7 +1207,7 @@ NEW_ACCOUNT_TAX_CONFIG = {
     "attn_VAT-IN-V81-12-EU-C2": {
         "invoice": {
             "base": ["+81", "+86"],
-            "tax": ["+55"],
+            "tax": ["-55"],
         },
         "refund": {
             "base": ["+84", "-81", "-86"],
@@ -1233,7 +1233,7 @@ NEW_ACCOUNT_TAX_CONFIG = {
     "attn_VAT-IN-V81-06-EU-C2": {
         "invoice": {
             "base": ["+81", "+86"],
-            "tax": ["+55"],
+            "tax": ["-55"],
         },
         "refund": {
             "base": ["+84", "-81", "-86"],
@@ -1269,7 +1269,7 @@ NEW_ACCOUNT_TAX_CONFIG = {
     "attn_VAT-IN-V82-21-EU-S-C2": {
         "invoice": {
             "base": ["+82", "+88"],
-            "tax": ["+55"],
+            "tax": ["-55"],
         },
         "refund": {
             "base": ["+84", "-82", "-88"],
@@ -1294,7 +1294,7 @@ NEW_ACCOUNT_TAX_CONFIG = {
     "attn_VAT-IN-V82-21-EU-G-C2": {
         "invoice": {
             "base": ["+82", "+86"],
-            "tax": ["+55"],
+            "tax": ["-55"],
         },
         "refund": {
             "base": ["+84", "-82", "-86"],
@@ -1319,7 +1319,7 @@ NEW_ACCOUNT_TAX_CONFIG = {
     "attn_VAT-IN-V82-12-EU-S-C2": {
         "invoice": {
             "base": ["+82", "+88"],
-            "tax": ["+55"],
+            "tax": ["-55"],
         },
         "refund": {
             "base": ["+84", "-82", "-88"],
@@ -1344,7 +1344,7 @@ NEW_ACCOUNT_TAX_CONFIG = {
     "attn_VAT-IN-V82-12-EU-G-C2": {
         "invoice": {
             "base": ["+82", "+86"],
-            "tax": ["+55"],
+            "tax": ["-55"],
         },
         "refund": {
             "base": ["+84", "-82", "-86"],
@@ -1369,7 +1369,7 @@ NEW_ACCOUNT_TAX_CONFIG = {
     "attn_VAT-IN-V82-06-EU-S-C2": {
         "invoice": {
             "base": ["+82", "+88"],
-            "tax": ["+55"],
+            "tax": ["-55"],
         },
         "refund": {
             "base": ["+84", "-82", "-88"],
@@ -1394,7 +1394,7 @@ NEW_ACCOUNT_TAX_CONFIG = {
     "attn_VAT-IN-V82-06-EU-G-C2": {
         "invoice": {
             "base": ["+82", "+86"],
-            "tax": ["+55"],
+            "tax": ["-55"],
         },
         "refund": {
             "base": ["+84", "-82", "-86"],
@@ -1430,7 +1430,7 @@ NEW_ACCOUNT_TAX_CONFIG = {
     "attn_VAT-IN-V83-21-EU-C2": {
         "invoice": {
             "base": ["+83", "+86"],
-            "tax": ["+55"],
+            "tax": ["-55"],
         },
         "refund": {
             "base": ["+84", "-83", "-86"],
@@ -1466,7 +1466,7 @@ NEW_ACCOUNT_TAX_CONFIG = {
     "attn_VAT-IN-V83-12-EU-C2": {
         "invoice": {
             "base": ["+83", "+86"],
-            "tax": ["+55"],
+            "tax": ["-55"],
         },
         "refund": {
             "base": ["+84", "-83", "-86"],
@@ -1491,7 +1491,7 @@ NEW_ACCOUNT_TAX_CONFIG = {
     "attn_VAT-IN-V83-06-EU-C2": {
         "invoice": {
             "base": ["+83", "+86"],
-            "tax": ["+55"],
+            "tax": ["-55"],
         },
         "refund": {
             "base": ["+84", "-83", "-86"],
