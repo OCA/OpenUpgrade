@@ -1,0 +1,12 @@
+---Models in module 'sale_expense'---
+---Fields in module 'sale_expense'---
+sale_expense / hr.expense               / analytic_account_id (False)   : DEL mode: modify
+# NOTHING TO DO
+
+---XML records in module 'sale_expense'---
+NEW ir.ui.view: sale_expense.hr_expense_sheet_view_form
+NEW ir.ui.view: sale_expense.hr_expense_split_view_inherit_sale_expense
+NEW ir.ui.view: sale_expense.product_product_view_list_inherit_sale_expense
+DEL ir.ui.view: sale_expense.hr_expense_form_view_inherit_account_manager
+DEL ir.ui.view: sale_expense.hr_expense_form_view_inherit_saleman
+# NOTHING TO DO
