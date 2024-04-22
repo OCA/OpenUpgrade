@@ -55,12 +55,12 @@ def login_or_registration_required_at_checkout(cr):
 def update_translatable_fields(cr):
     # exclude fields from translation update
     exclusions = {
-        # ir.actions.* inherits the name column from ir.actions.actions
+        # ir.actions.* inherits the name and help columns from ir.actions.actions
         "ir.actions.act_window": ["name", "help"],
-        "ir.actions.act_url": ["name"],
-        "ir.actions.server": ["name"],
+        "ir.actions.act_url": ["name", "help"],
+        "ir.actions.server": ["name", "help"],
         "ir.actions.client": ["name", "help"],
-        "ir.actions.report": ["name"],
+        "ir.actions.report": ["name", "help"],
     }
     cr.execute(
         "SELECT f.name, m.model FROM ir_model_fields f "
