@@ -1,5 +1,5 @@
 # SPDX-FileCopyrightText: 2024 Coop IT Easy SC
-#
+# SPDX-FileCopyrightText: 2024 Tecnativa - Pedro M. Baeza
 # SPDX-License-Identifier: AGPL-3.0-or-later
 
 from openupgradelib import openupgrade
@@ -40,3 +40,11 @@ def copy_register_balance(cr):
 def migrate(env, version):
     copy_session_id_to_line(env.cr)
     copy_register_balance(env.cr)
+    openupgrade.delete_records_safely_by_xml_id(
+        env,
+        [
+            "point_of_sale.rule_pos_cashbox_line_accountant",
+            "point_of_sale.500_00",
+        ],
+    )
+    openupgrade.load_data(env.cr, "point_of_sale", "16.0.1.1/noupdate_changes.xml")
