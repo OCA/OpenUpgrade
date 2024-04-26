@@ -47,4 +47,4 @@ def migrate(env, version):
             "point_of_sale.500_00",
         ],
     )
-    openupgrade.load_data(env.cr, "point_of_sale", "16.0.1.1/noupdate_changes.xml")
+    openupgrade.load_data(env.cr, "point_of_sale", "16.0.1.0.1/noupdate_changes.xml")
