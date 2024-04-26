@@ -10,10 +10,10 @@ def _assign_pos_order_token(env):
         env,
         [("access_token", "pos.order", "pos_order", "char", False, "point_of_sale")],
     )
-    env.cr.execute("SELECT id FROM survey_survey")
+    env.cr.execute("SELECT id FROM pos_order")
     for row in env.cr.fetchall():
         env.cr.execute(
-            "UPDATE survey_survey SET access_token = %s WHERE id = %s",
+            "UPDATE pos_order SET access_token = %s WHERE id = %s",
             (str(uuid.uuid4()), row[0]),
         )
 
