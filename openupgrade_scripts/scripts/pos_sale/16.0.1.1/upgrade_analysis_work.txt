@@ -1,0 +1,9 @@
+---Models in module 'pos_sale'---
+---Fields in module 'pos_sale'---
+pos_sale     / sale.order               / amount_unpaid (float)         : NEW isfunction: function, stored
+# Fast Computation in pre-migration
+
+---XML records in module 'pos_sale'---
+NEW ir.ui.view: pos_sale.res_config_settings_view_form
+DEL ir.ui.view: pos_sale.pos_config_view_form_pos_sale
+# Nothing to do.
