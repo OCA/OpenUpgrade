@@ -215,6 +215,18 @@ def _account_move_fast_fill_display_type(env):
         WHERE aml.id = sub.id;
         """,
     )
+    # Extra actions: set quantity = 0 for lines of type tax or payment_term according
+    # https://github.com/odoo/odoo/blob/666229a0046e2d0e8331115e0247ad41734fb6e3/
+    # addons/account/tests/test_account_move_out_invoice.py#L69
+    # and
+    # https://github.com/odoo/odoo/blob/666229a0046e2d0e8331115e0247ad41734fb6e3/
+    # addons/account/tests/test_account_move_out_invoice.py#L107
+    openupgrade.logged_query(
+        env.cr,
+        "UPDATE account_move_line SET quantity = 0.00 "
+        "WHERE display_type IN ('tax', 'payment_term') "
+        "AND quantity IS DISTINCT FROM 0",
+    )
 
 
 def _account_move_auto_post_boolean_to_selection(env):
