@@ -76,11 +76,6 @@ def convert_service_to_purchase_to_company_dependent(env):
 @openupgrade.migrate()
 def migrate(env, version):
     convert_service_to_purchase_to_company_dependent(env)
-    constraint = env.ref(
-        "sale_purchase.constraint_product_template_service_to_purchase", False
-    )
-    if constraint:
-        constraint._module_data_uninstall()
     openupgrade.delete_records_safely_by_xml_id(
         env, ["sale_purchase.constraint_product_template_service_to_purchase"]
     )

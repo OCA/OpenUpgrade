@@ -5,7 +5,7 @@ sale_purchase / product.template         / service_to_purchase (boolean) : not s
 
 ---XML records in module 'sale_purchase'---
 DEL ir.model.constraint: sale_purchase.constraint_product_template_service_to_purchase
-# DONE: post-migration, delete constraint
+# NOTHING TO DO: Handled in ORM since https://github.com/odoo/odoo/commit/3fd308981d077bd9b93394d45defaa990d9c7acd
 
 NEW ir.ui.view: sale_purchase.sale_order_cancel_view_form
 # NOTHING TO DO
