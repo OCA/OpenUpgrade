@@ -387,6 +387,26 @@ def _account_journal_payment_sequence(env):
     )
 
 
+def _fill_repartition_line_use_in_tax_closing(env):
+    """This field was introduced in v14, but it was not impacting in anything noticeable
+    till this version, where not having this marked in the taxes lines makes that the
+    tax lines take the analytic dimensions no matter if the analytic field is marked or
+    not.
+
+    As a compromise solution, let's assign this as True for those that have no value,
+    which are those coming from old versions.
+    """
+    openupgrade.logged_query(
+        env.cr,
+        """
+        UPDATE account_tax_repartition_line
+        SET use_in_tax_closing = True
+        WHERE repartition_type = 'tax'
+        AND use_in_tax_closing IS NULL;
+        """,
+    )
+
+
 @openupgrade.migrate()
 def migrate(env, version):
     openupgrade.rename_xmlids(env.cr, _xmlids_renames)
@@ -416,3 +436,4 @@ def migrate(env, version):
     )
     _fast_fill_account_payment_amount_company_currency_signed(env)
     _account_journal_payment_sequence(env)
+    _fill_repartition_line_use_in_tax_closing(env)
