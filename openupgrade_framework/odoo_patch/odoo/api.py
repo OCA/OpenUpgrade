@@ -16,7 +16,7 @@ class FakeRecord:
     def __init__(self):
         self._name = "ir.model.data"
         self.ids = []
-        self.browse = lambda l: None
+        self.browse = lambda x: None
 
     def __isub__(self, other):
         return None
