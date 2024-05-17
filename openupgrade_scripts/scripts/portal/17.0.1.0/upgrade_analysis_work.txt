@@ -1,0 +1,16 @@
+---Models in module 'portal'---
+---Fields in module 'portal'---
+portal       / discuss.channel          / website_message_ids (one2many): NEW relation: mail.message
+portal       / hr.contract              / website_message_ids (one2many): module is now 'hr_contract' ('portal')
+portal       / hr.leave                 / website_message_ids (one2many): module is now 'hr_holidays' ('portal')
+portal       / hr.leave.allocation      / website_message_ids (one2many): module is now 'hr_holidays' ('portal')
+portal       / mail.channel             / website_message_ids (one2many): DEL relation: mail.message
+portal       / note.note                / website_message_ids (one2many): DEL relation: mail.message
+portal       / product.pricelist        / website_message_ids (one2many): NEW relation: mail.message
+# NOTHING TO DO
+
+---XML records in module 'portal'---
+NEW ir.ui.view: portal.message_document_unfollowed
+NEW ir.ui.view: portal.side_content
+NEW ir.ui.view: portal.user_sign_in_redirect
+# NOTHING TO DO
