@@ -5,8 +5,6 @@ sale_timesheet / project.project          / billing_type (selection)      : NEW 
 sale_timesheet / project.project          / partner_id (False)            : module is now 'sale_project' ('sale_timesheet')
 sale_timesheet / project.task             / allow_billable (boolean)      : module is now 'sale_project' ('sale_timesheet')
 ---XML records in module 'sale_timesheet'---
-DEL ir.model.constraint: sale_timesheet.constraint_project_create_sale_order_line_unique_employee_per_wizard
-DEL ir.model.constraint: sale_timesheet.constraint_project_sale_line_employee_map_uniqueness_employee
 NEW ir.ui.view: sale_timesheet.project_task_view_search_inherit_sale_timesheet
 NEW ir.ui.view: sale_timesheet.view_hr_timesheet_line_graph_invoice_employee
 NEW ir.ui.view: sale_timesheet.view_hr_timesheet_line_pivot_inherited

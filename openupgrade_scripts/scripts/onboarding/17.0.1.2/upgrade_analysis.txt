@@ -19,7 +19,6 @@ onboarding   / onboarding.progress.step / company_id (many2one)         : NEW re
 onboarding   / onboarding.progress.step / progress_id (many2one)        : DEL relation: onboarding.progress, required
 onboarding   / onboarding.progress.step / progress_ids (many2many)      : NEW relation: onboarding.progress
 ---XML records in module 'onboarding'---
-DEL ir.model.constraint: onboarding.constraint_onboarding_onboarding_route_name_uniq
 DEL ir.model.constraint: onboarding.constraint_onboarding_progress_onboarding_company_uniq
 DEL ir.model.constraint: onboarding.constraint_onboarding_progress_step_progress_step_uniq
 NEW ir.ui.view: onboarding.onboarding_step

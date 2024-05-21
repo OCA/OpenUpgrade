@@ -116,6 +116,7 @@
         </table>
       </div>
     </field>
+    <field name="subject">{{ object.project_id.company_id.name or user.env.company.name }}: Satisfaction Survey</field>
     <field name="active" eval="False"/>
   </record>
   <record id="report_project_task_user_report_comp_rule" model="ir.rule">

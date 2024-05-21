@@ -1,7 +1,7 @@
 ---Models in module 'l10n_ar_withholding'---
 new model l10n_ar.payment.register.withholding [transient]
 ---Fields in module 'l10n_ar_withholding'---
-l10n_ar_withholding / account.tax              / l10n_ar_withholding_payment_type (selection): NEW selection_keys: ['customer', 'supplier']
+l10n_ar_withholding / account.tax              / l10n_ar_withholding_payment_type (selection): NEW selection_keys: ['customer', 'supplier'], hasdefault: compute
 l10n_ar_withholding / account.tax              / l10n_ar_withholding_sequence_id (many2one): NEW relation: ir.sequence
 l10n_ar_withholding / res.company              / l10n_ar_tax_base_account_id (many2one): NEW relation: account.account
 ---XML records in module 'l10n_ar_withholding'---

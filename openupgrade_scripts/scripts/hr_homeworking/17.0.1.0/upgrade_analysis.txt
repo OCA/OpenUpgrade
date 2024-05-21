@@ -19,6 +19,7 @@ NEW ir.actions.act_window: hr_homeworking.set_location_wizard_action
 NEW ir.model.access: hr_homeworking.access_homework_location_wizard
 NEW ir.model.access: hr_homeworking.access_hr_employee_location
 NEW ir.model.access: hr_homeworking.access_user_employee_location
+NEW ir.model.constraint: hr_homeworking.constraint_hr_employee_location_uniq_exceptional_per_day
 NEW ir.rule: hr_homeworking.homeworking_admin_rule (noupdate)
 NEW ir.rule: hr_homeworking.homeworking_location_wizard_admin_rule (noupdate)
 NEW ir.rule: hr_homeworking.homeworking_location_wizard_own_rule (noupdate)

@@ -2,6 +2,9 @@
 ---Fields in module 'l10n_in'---
 l10n_in      / account.journal          / l10n_in_gstin_partner_id (many2one): DEL relation: res.partner
 l10n_in      / account.tax.template     / l10n_in_reverse_charge (boolean): DEL
+l10n_in      / res.company              / l10n_in_upi_id (char)         : previously in module l10n_in_upi
+l10n_in      / res.partner              / l10n_in_pan (char)            : previously in module l10n_in_tcs_tds
+l10n_in      / res.users                / l10n_in_pan (char)            : previously in module l10n_in_tcs_tds
 ---XML records in module 'l10n_in'---
 DEL account.account.template: l10n_in.2012
 DEL account.account.template: l10n_in.p10031
@@ -75,8 +78,6 @@ DEL account.account.template: l10n_in.p2122
 DEL account.account.template: l10n_in.p2123
 DEL account.account.template: l10n_in.p2131
 DEL account.account.template: l10n_in.p2132
-DEL account.account.template: l10n_in_tcs_tds.p11244
-DEL account.account.template: l10n_in_tcs_tds.p11245
 DEL account.chart.template: l10n_in.indian_chart_template_standard
 DEL account.fiscal.position.tax.template: l10n_in.account_fiscal_position_tax_in_purchase_12_exp
 DEL account.fiscal.position.tax.template: l10n_in.account_fiscal_position_tax_in_purchase_12_inter
@@ -120,12 +121,8 @@ DEL account.fiscal.position.template: l10n_in.fiscal_position_in_reverse_charge_
 DEL account.fiscal.position.template: l10n_in.fiscal_position_in_reverse_charge_intra
 NEW account.report: l10n_in.tcs_report [renamed from l10n_in_tcs_tds module]
 NEW account.report: l10n_in.tds_report [renamed from l10n_in_tcs_tds module]
-DEL account.report: l10n_in_tcs_tds.tcs_report [renamed to l10n_in module]
-DEL account.report: l10n_in_tcs_tds.tds_report [renamed to l10n_in module]
 NEW account.report.column: l10n_in.tcs_report_balance [renamed from l10n_in_tcs_tds module]
 NEW account.report.column: l10n_in.tds_report_balance [renamed from l10n_in_tcs_tds module]
-DEL account.report.column: l10n_in_tcs_tds.tcs_report_balance [renamed to l10n_in module]
-DEL account.report.column: l10n_in_tcs_tds.tds_report_balance [renamed to l10n_in module]
 NEW account.report.expression: l10n_in.tcs_report_line_section_206c_1_alfhc_tag [renamed from l10n_in_tcs_tds module]
 NEW account.report.expression: l10n_in.tcs_report_line_section_206c_1_aofpnbtotl_tag [renamed from l10n_in_tcs_tds module]
 NEW account.report.expression: l10n_in.tcs_report_line_section_206c_1_mbcoloio_tag [renamed from l10n_in_tcs_tds module]
@@ -171,51 +168,6 @@ NEW account.report.expression: l10n_in.tds_report_line_section_194n_tag [renamed
 NEW account.report.expression: l10n_in.tds_report_line_section_194o_tag [renamed from l10n_in_tcs_tds module]
 NEW account.report.expression: l10n_in.tds_report_line_section_194q_tag [renamed from l10n_in_tcs_tds module]
 NEW account.report.expression: l10n_in.tds_report_line_section_195_tag [renamed from l10n_in_tcs_tds module]
-DEL account.report.expression: l10n_in_tcs_tds.tcs_report_line_section_206c_1_alfhc_tag [renamed to l10n_in module]
-DEL account.report.expression: l10n_in_tcs_tds.tcs_report_line_section_206c_1_aofpnbtotl_tag [renamed to l10n_in module]
-DEL account.report.expression: l10n_in_tcs_tds.tcs_report_line_section_206c_1_mbcoloio_tag [renamed to l10n_in module]
-DEL account.report.expression: l10n_in_tcs_tds.tcs_report_line_section_206c_1_s_tag [renamed to l10n_in module]
-DEL account.report.expression: l10n_in_tcs_tds.tcs_report_line_section_206c_1_tl_tag [renamed to l10n_in module]
-DEL account.report.expression: l10n_in_tcs_tds.tcs_report_line_section_206c_1_tobaotuafl_tag [renamed to l10n_in module]
-DEL account.report.expression: l10n_in_tcs_tds.tcs_report_line_section_206c_1_touafl_tag [renamed to l10n_in module]
-DEL account.report.expression: l10n_in_tcs_tds.tcs_report_line_section_206c_1c_maq_tag [renamed to l10n_in module]
-DEL account.report.expression: l10n_in_tcs_tds.tcs_report_line_section_206c_1c_pl_tag [renamed to l10n_in module]
-DEL account.report.expression: l10n_in_tcs_tds.tcs_report_line_section_206c_1c_tp_tag [renamed to l10n_in module]
-DEL account.report.expression: l10n_in_tcs_tds.tcs_report_line_section_206c_1f_mv_tag [renamed to l10n_in module]
-DEL account.report.expression: l10n_in_tcs_tds.tcs_report_line_section_206c_1g_soaotpp_tag [renamed to l10n_in module]
-DEL account.report.expression: l10n_in_tcs_tds.tcs_report_line_section_206c_1g_som_tag [renamed to l10n_in module]
-DEL account.report.expression: l10n_in_tcs_tds.tcs_report_line_section_206c_1h_sog_tag [renamed to l10n_in module]
-DEL account.report.expression: l10n_in_tcs_tds.tds_report_line_section_192_tag [renamed to l10n_in module]
-DEL account.report.expression: l10n_in_tcs_tds.tds_report_line_section_192a_tag [renamed to l10n_in module]
-DEL account.report.expression: l10n_in_tcs_tds.tds_report_line_section_193_tag [renamed to l10n_in module]
-DEL account.report.expression: l10n_in_tcs_tds.tds_report_line_section_194_tag [renamed to l10n_in module]
-DEL account.report.expression: l10n_in_tcs_tds.tds_report_line_section_194a_tag [renamed to l10n_in module]
-DEL account.report.expression: l10n_in_tcs_tds.tds_report_line_section_194b_tag [renamed to l10n_in module]
-DEL account.report.expression: l10n_in_tcs_tds.tds_report_line_section_194bb_tag [renamed to l10n_in module]
-DEL account.report.expression: l10n_in_tcs_tds.tds_report_line_section_194c_tag [renamed to l10n_in module]
-DEL account.report.expression: l10n_in_tcs_tds.tds_report_line_section_194d_tag [renamed to l10n_in module]
-DEL account.report.expression: l10n_in_tcs_tds.tds_report_line_section_194da_tag [renamed to l10n_in module]
-DEL account.report.expression: l10n_in_tcs_tds.tds_report_line_section_194e_tag [renamed to l10n_in module]
-DEL account.report.expression: l10n_in_tcs_tds.tds_report_line_section_194ee_tag [renamed to l10n_in module]
-DEL account.report.expression: l10n_in_tcs_tds.tds_report_line_section_194f_tag [renamed to l10n_in module]
-DEL account.report.expression: l10n_in_tcs_tds.tds_report_line_section_194g_tag [renamed to l10n_in module]
-DEL account.report.expression: l10n_in_tcs_tds.tds_report_line_section_194h_tag [renamed to l10n_in module]
-DEL account.report.expression: l10n_in_tcs_tds.tds_report_line_section_194i_tag [renamed to l10n_in module]
-DEL account.report.expression: l10n_in_tcs_tds.tds_report_line_section_194ia_tag [renamed to l10n_in module]
-DEL account.report.expression: l10n_in_tcs_tds.tds_report_line_section_194ib_tag [renamed to l10n_in module]
-DEL account.report.expression: l10n_in_tcs_tds.tds_report_line_section_194ic_tag [renamed to l10n_in module]
-DEL account.report.expression: l10n_in_tcs_tds.tds_report_line_section_194j_tag [renamed to l10n_in module]
-DEL account.report.expression: l10n_in_tcs_tds.tds_report_line_section_194k_tag [renamed to l10n_in module]
-DEL account.report.expression: l10n_in_tcs_tds.tds_report_line_section_194la_tag [renamed to l10n_in module]
-DEL account.report.expression: l10n_in_tcs_tds.tds_report_line_section_194lb_tag [renamed to l10n_in module]
-DEL account.report.expression: l10n_in_tcs_tds.tds_report_line_section_194lba_tag [renamed to l10n_in module]
-DEL account.report.expression: l10n_in_tcs_tds.tds_report_line_section_194lbb_tag [renamed to l10n_in module]
-DEL account.report.expression: l10n_in_tcs_tds.tds_report_line_section_194lbc_tag [renamed to l10n_in module]
-DEL account.report.expression: l10n_in_tcs_tds.tds_report_line_section_194m_tag [renamed to l10n_in module]
-DEL account.report.expression: l10n_in_tcs_tds.tds_report_line_section_194n_tag [renamed to l10n_in module]
-DEL account.report.expression: l10n_in_tcs_tds.tds_report_line_section_194o_tag [renamed to l10n_in module]
-DEL account.report.expression: l10n_in_tcs_tds.tds_report_line_section_194q_tag [renamed to l10n_in module]
-DEL account.report.expression: l10n_in_tcs_tds.tds_report_line_section_195_tag [renamed to l10n_in module]
 NEW account.report.line: l10n_in.tcs_report_line_section_206c_1_alfhc [renamed from l10n_in_tcs_tds module]
 NEW account.report.line: l10n_in.tcs_report_line_section_206c_1_aofpnbtotl [renamed from l10n_in_tcs_tds module]
 NEW account.report.line: l10n_in.tcs_report_line_section_206c_1_mbcoloio [renamed from l10n_in_tcs_tds module]
@@ -261,51 +213,6 @@ NEW account.report.line: l10n_in.tds_report_line_section_194n [renamed from l10n
 NEW account.report.line: l10n_in.tds_report_line_section_194o [renamed from l10n_in_tcs_tds module]
 NEW account.report.line: l10n_in.tds_report_line_section_194q [renamed from l10n_in_tcs_tds module]
 NEW account.report.line: l10n_in.tds_report_line_section_195 [renamed from l10n_in_tcs_tds module]
-DEL account.report.line: l10n_in_tcs_tds.tcs_report_line_section_206c_1_alfhc [renamed to l10n_in module]
-DEL account.report.line: l10n_in_tcs_tds.tcs_report_line_section_206c_1_aofpnbtotl [renamed to l10n_in module]
-DEL account.report.line: l10n_in_tcs_tds.tcs_report_line_section_206c_1_mbcoloio [renamed to l10n_in module]
-DEL account.report.line: l10n_in_tcs_tds.tcs_report_line_section_206c_1_s [renamed to l10n_in module]
-DEL account.report.line: l10n_in_tcs_tds.tcs_report_line_section_206c_1_tl [renamed to l10n_in module]
-DEL account.report.line: l10n_in_tcs_tds.tcs_report_line_section_206c_1_tobaotuafl [renamed to l10n_in module]
-DEL account.report.line: l10n_in_tcs_tds.tcs_report_line_section_206c_1_touafl [renamed to l10n_in module]
-DEL account.report.line: l10n_in_tcs_tds.tcs_report_line_section_206c_1c_maq [renamed to l10n_in module]
-DEL account.report.line: l10n_in_tcs_tds.tcs_report_line_section_206c_1c_pl [renamed to l10n_in module]
-DEL account.report.line: l10n_in_tcs_tds.tcs_report_line_section_206c_1c_tp [renamed to l10n_in module]
-DEL account.report.line: l10n_in_tcs_tds.tcs_report_line_section_206c_1f_mv [renamed to l10n_in module]
-DEL account.report.line: l10n_in_tcs_tds.tcs_report_line_section_206c_1g_soaotpp [renamed to l10n_in module]
-DEL account.report.line: l10n_in_tcs_tds.tcs_report_line_section_206c_1g_som [renamed to l10n_in module]
-DEL account.report.line: l10n_in_tcs_tds.tcs_report_line_section_206c_1h_sog [renamed to l10n_in module]
-DEL account.report.line: l10n_in_tcs_tds.tds_report_line_section_192 [renamed to l10n_in module]
-DEL account.report.line: l10n_in_tcs_tds.tds_report_line_section_192a [renamed to l10n_in module]
-DEL account.report.line: l10n_in_tcs_tds.tds_report_line_section_193 [renamed to l10n_in module]
-DEL account.report.line: l10n_in_tcs_tds.tds_report_line_section_194 [renamed to l10n_in module]
-DEL account.report.line: l10n_in_tcs_tds.tds_report_line_section_194a [renamed to l10n_in module]
-DEL account.report.line: l10n_in_tcs_tds.tds_report_line_section_194b [renamed to l10n_in module]
-DEL account.report.line: l10n_in_tcs_tds.tds_report_line_section_194bb [renamed to l10n_in module]
-DEL account.report.line: l10n_in_tcs_tds.tds_report_line_section_194c [renamed to l10n_in module]
-DEL account.report.line: l10n_in_tcs_tds.tds_report_line_section_194d [renamed to l10n_in module]
-DEL account.report.line: l10n_in_tcs_tds.tds_report_line_section_194da [renamed to l10n_in module]
-DEL account.report.line: l10n_in_tcs_tds.tds_report_line_section_194e [renamed to l10n_in module]
-DEL account.report.line: l10n_in_tcs_tds.tds_report_line_section_194ee [renamed to l10n_in module]
-DEL account.report.line: l10n_in_tcs_tds.tds_report_line_section_194f [renamed to l10n_in module]
-DEL account.report.line: l10n_in_tcs_tds.tds_report_line_section_194g [renamed to l10n_in module]
-DEL account.report.line: l10n_in_tcs_tds.tds_report_line_section_194h [renamed to l10n_in module]
-DEL account.report.line: l10n_in_tcs_tds.tds_report_line_section_194i [renamed to l10n_in module]
-DEL account.report.line: l10n_in_tcs_tds.tds_report_line_section_194ia [renamed to l10n_in module]
-DEL account.report.line: l10n_in_tcs_tds.tds_report_line_section_194ib [renamed to l10n_in module]
-DEL account.report.line: l10n_in_tcs_tds.tds_report_line_section_194ic [renamed to l10n_in module]
-DEL account.report.line: l10n_in_tcs_tds.tds_report_line_section_194j [renamed to l10n_in module]
-DEL account.report.line: l10n_in_tcs_tds.tds_report_line_section_194k [renamed to l10n_in module]
-DEL account.report.line: l10n_in_tcs_tds.tds_report_line_section_194la [renamed to l10n_in module]
-DEL account.report.line: l10n_in_tcs_tds.tds_report_line_section_194lb [renamed to l10n_in module]
-DEL account.report.line: l10n_in_tcs_tds.tds_report_line_section_194lba [renamed to l10n_in module]
-DEL account.report.line: l10n_in_tcs_tds.tds_report_line_section_194lbb [renamed to l10n_in module]
-DEL account.report.line: l10n_in_tcs_tds.tds_report_line_section_194lbc [renamed to l10n_in module]
-DEL account.report.line: l10n_in_tcs_tds.tds_report_line_section_194m [renamed to l10n_in module]
-DEL account.report.line: l10n_in_tcs_tds.tds_report_line_section_194n [renamed to l10n_in module]
-DEL account.report.line: l10n_in_tcs_tds.tds_report_line_section_194o [renamed to l10n_in module]
-DEL account.report.line: l10n_in_tcs_tds.tds_report_line_section_194q [renamed to l10n_in module]
-DEL account.report.line: l10n_in_tcs_tds.tds_report_line_section_195 [renamed to l10n_in module]
 DEL account.tax.group: l10n_in.cess_group (noupdate)
 DEL account.tax.group: l10n_in.cgst_group (noupdate)
 DEL account.tax.group: l10n_in.exempt_group (noupdate)
@@ -314,8 +221,6 @@ DEL account.tax.group: l10n_in.igst_group (noupdate)
 DEL account.tax.group: l10n_in.nil_rated_group (noupdate)
 DEL account.tax.group: l10n_in.non_gst_supplies_group (noupdate)
 DEL account.tax.group: l10n_in.sgst_group (noupdate)
-DEL account.tax.group: l10n_in_tcs_tds.tcs_group (noupdate)
-DEL account.tax.group: l10n_in_tcs_tds.tds_group (noupdate)
 DEL account.tax.template: l10n_in.cess_21_4170_higer_purchase
 DEL account.tax.template: l10n_in.cess_21_4170_higer_purchase_rc
 DEL account.tax.template: l10n_in.cess_21_4170_higer_sale
@@ -407,96 +312,6 @@ DEL account.tax.template: l10n_in.sgst_sale_2_5
 DEL account.tax.template: l10n_in.sgst_sale_5
 DEL account.tax.template: l10n_in.sgst_sale_6
 DEL account.tax.template: l10n_in.sgst_sale_9
-DEL account.tax.template: l10n_in_tcs_tds.tcs_0_1_us_206c_1h_sog
-DEL account.tax.template: l10n_in_tcs_tds.tcs_1_us_206c_1_alfhc
-DEL account.tax.template: l10n_in_tcs_tds.tcs_1_us_206c_1_mbcoloio
-DEL account.tax.template: l10n_in_tcs_tds.tcs_1_us_206c_1_s
-DEL account.tax.template: l10n_in_tcs_tds.tcs_1_us_206c_1f_mv
-DEL account.tax.template: l10n_in_tcs_tds.tcs_1_us_206c_1h_sog
-DEL account.tax.template: l10n_in_tcs_tds.tcs_2_5_us_206c_1_aofpnbtotl
-DEL account.tax.template: l10n_in_tcs_tds.tcs_2_5_us_206c_1_tobamotuafl
-DEL account.tax.template: l10n_in_tcs_tds.tcs_2_5_us_206c_1_touafl
-DEL account.tax.template: l10n_in_tcs_tds.tcs_2_us_206c_1c_maq
-DEL account.tax.template: l10n_in_tcs_tds.tcs_2_us_206c_1c_pl
-DEL account.tax.template: l10n_in_tcs_tds.tcs_2_us_206c_1c_tp
-DEL account.tax.template: l10n_in_tcs_tds.tcs_5_us_206c_1_alfhc
-DEL account.tax.template: l10n_in_tcs_tds.tcs_5_us_206c_1_aofpnbtotl
-DEL account.tax.template: l10n_in_tcs_tds.tcs_5_us_206c_1_mbcoloio
-DEL account.tax.template: l10n_in_tcs_tds.tcs_5_us_206c_1_s
-DEL account.tax.template: l10n_in_tcs_tds.tcs_5_us_206c_1_tl
-DEL account.tax.template: l10n_in_tcs_tds.tcs_5_us_206c_1_tobamotuafl
-DEL account.tax.template: l10n_in_tcs_tds.tcs_5_us_206c_1_touafl
-DEL account.tax.template: l10n_in_tcs_tds.tcs_5_us_206c_1c_maq
-DEL account.tax.template: l10n_in_tcs_tds.tcs_5_us_206c_1c_pl
-DEL account.tax.template: l10n_in_tcs_tds.tcs_5_us_206c_1c_tp
-DEL account.tax.template: l10n_in_tcs_tds.tcs_5_us_206c_1f_mv
-DEL account.tax.template: l10n_in_tcs_tds.tcs_5_us_206c_1g_soaotpp
-DEL account.tax.template: l10n_in_tcs_tds.tcs_5_us_206c_1g_som
-DEL account.tax.template: l10n_in_tcs_tds.tds_01_us_194q
-DEL account.tax.template: l10n_in_tcs_tds.tds_10_4_us_195
-DEL account.tax.template: l10n_in_tcs_tds.tds_10_us_192a
-DEL account.tax.template: l10n_in_tcs_tds.tds_10_us_193
-DEL account.tax.template: l10n_in_tcs_tds.tds_10_us_194
-DEL account.tax.template: l10n_in_tcs_tds.tds_10_us_194a
-DEL account.tax.template: l10n_in_tcs_tds.tds_10_us_194d
-DEL account.tax.template: l10n_in_tcs_tds.tds_10_us_194ee
-DEL account.tax.template: l10n_in_tcs_tds.tds_10_us_194i
-DEL account.tax.template: l10n_in_tcs_tds.tds_10_us_194ic
-DEL account.tax.template: l10n_in_tcs_tds.tds_10_us_194j
-DEL account.tax.template: l10n_in_tcs_tds.tds_10_us_194k
-DEL account.tax.template: l10n_in_tcs_tds.tds_10_us_194la
-DEL account.tax.template: l10n_in_tcs_tds.tds_10_us_194lba
-DEL account.tax.template: l10n_in_tcs_tds.tds_10_us_194lbb
-DEL account.tax.template: l10n_in_tcs_tds.tds_10_us_194lbc
-DEL account.tax.template: l10n_in_tcs_tds.tds_15_6_us_195
-DEL account.tax.template: l10n_in_tcs_tds.tds_1_us_194c
-DEL account.tax.template: l10n_in_tcs_tds.tds_1_us_194ia
-DEL account.tax.template: l10n_in_tcs_tds.tds_1_us_194o
-DEL account.tax.template: l10n_in_tcs_tds.tds_20_8_us_195
-DEL account.tax.template: l10n_in_tcs_tds.tds_20_us_192a
-DEL account.tax.template: l10n_in_tcs_tds.tds_20_us_193
-DEL account.tax.template: l10n_in_tcs_tds.tds_20_us_194
-DEL account.tax.template: l10n_in_tcs_tds.tds_20_us_194a
-DEL account.tax.template: l10n_in_tcs_tds.tds_20_us_194c
-DEL account.tax.template: l10n_in_tcs_tds.tds_20_us_194d
-DEL account.tax.template: l10n_in_tcs_tds.tds_20_us_194da
-DEL account.tax.template: l10n_in_tcs_tds.tds_20_us_194e
-DEL account.tax.template: l10n_in_tcs_tds.tds_20_us_194ee
-DEL account.tax.template: l10n_in_tcs_tds.tds_20_us_194f
-DEL account.tax.template: l10n_in_tcs_tds.tds_20_us_194g
-DEL account.tax.template: l10n_in_tcs_tds.tds_20_us_194h
-DEL account.tax.template: l10n_in_tcs_tds.tds_20_us_194i
-DEL account.tax.template: l10n_in_tcs_tds.tds_20_us_194ia
-DEL account.tax.template: l10n_in_tcs_tds.tds_20_us_194ib
-DEL account.tax.template: l10n_in_tcs_tds.tds_20_us_194ic
-DEL account.tax.template: l10n_in_tcs_tds.tds_20_us_194j
-DEL account.tax.template: l10n_in_tcs_tds.tds_20_us_194k
-DEL account.tax.template: l10n_in_tcs_tds.tds_20_us_194la
-DEL account.tax.template: l10n_in_tcs_tds.tds_20_us_194lb
-DEL account.tax.template: l10n_in_tcs_tds.tds_20_us_194lba
-DEL account.tax.template: l10n_in_tcs_tds.tds_20_us_194lbb
-DEL account.tax.template: l10n_in_tcs_tds.tds_20_us_194m
-DEL account.tax.template: l10n_in_tcs_tds.tds_20_us_194n
-DEL account.tax.template: l10n_in_tcs_tds.tds_20_us_194o
-DEL account.tax.template: l10n_in_tcs_tds.tds_25_us_194lbc
-DEL account.tax.template: l10n_in_tcs_tds.tds_2_us_194c
-DEL account.tax.template: l10n_in_tcs_tds.tds_2_us_194i
-DEL account.tax.template: l10n_in_tcs_tds.tds_2_us_194j
-DEL account.tax.template: l10n_in_tcs_tds.tds_2_us_194n
-DEL account.tax.template: l10n_in_tcs_tds.tds_30_us_194b
-DEL account.tax.template: l10n_in_tcs_tds.tds_30_us_194bb
-DEL account.tax.template: l10n_in_tcs_tds.tds_30_us_194lbc
-DEL account.tax.template: l10n_in_tcs_tds.tds_31_2_us_195
-DEL account.tax.template: l10n_in_tcs_tds.tds_5_us_194d
-DEL account.tax.template: l10n_in_tcs_tds.tds_5_us_194da
-DEL account.tax.template: l10n_in_tcs_tds.tds_5_us_194g
-DEL account.tax.template: l10n_in_tcs_tds.tds_5_us_194h
-DEL account.tax.template: l10n_in_tcs_tds.tds_5_us_194ib
-DEL account.tax.template: l10n_in_tcs_tds.tds_5_us_194lb
-DEL account.tax.template: l10n_in_tcs_tds.tds_5_us_194m
-DEL account.tax.template: l10n_in_tcs_tds.tds_5_us_194n
-DEL ir.model.constraint: l10n_in.constraint_l10n_in_port_code_code_uniq
 NEW ir.ui.view: l10n_in.view_company_form
 DEL ir.ui.view: l10n_in.l10n_in_external_layout
-DEL ir.ui.view: l10n_in_tcs_tds.l10n_in_tcs_tds_view_partner_form
-DEL ir.ui.view: l10n_in_upi.view_company_form
+DEL ir.ui.view: l10n_in.report_invoice_with_payments

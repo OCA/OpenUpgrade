@@ -1,0 +1,64 @@
+---Models in module 'l10n_hu_edi'---
+new model l10n_hu_edi.cancellation [transient]
+new model l10n_hu_edi.tax_audit_export [transient]
+---Fields in module 'l10n_hu_edi'---
+l10n_hu_edi  / account.move             / l10n_hu_edi_attachment (binary): NEW attachment: True
+l10n_hu_edi  / account.move             / l10n_hu_edi_batch_upload_index (integer): NEW
+l10n_hu_edi  / account.move             / l10n_hu_edi_messages (json)   : NEW
+l10n_hu_edi  / account.move             / l10n_hu_edi_send_time (datetime): NEW
+l10n_hu_edi  / account.move             / l10n_hu_edi_state (selection) : NEW selection_keys: ['cancel_pending', 'cancel_sent', 'cancel_timeout', 'cancelled', 'confirmed', 'confirmed_warning', 'rejected', 'send_timeout', 'sent']
+l10n_hu_edi  / account.move             / l10n_hu_edi_transaction_code (char): NEW
+l10n_hu_edi  / account.move             / l10n_hu_invoice_chain_index (integer): NEW
+l10n_hu_edi  / account.move             / l10n_hu_payment_mode (selection): NEW selection_keys: ['CARD', 'CASH', 'OTHER', 'TRANSFER', 'VOUCHER']
+l10n_hu_edi  / account.tax              / l10n_hu_tax_reason (char)     : NEW hasdefault: compute
+l10n_hu_edi  / account.tax              / l10n_hu_tax_type (selection)  : NEW selection_keys: ['AAM', 'ANTIQUES', 'ARTWORK', 'ATK', 'DOMESTIC_REVERSE', 'EAM', 'EUE', 'EUFAD37', 'EUFADE', 'HO', 'KBAET', 'KBAUK', 'NAM', 'NONREFUNDABLE_VAT', 'NO_VAT', 'REFUNDABLE_VAT', 'SECOND_HAND', 'TAM', 'TRAVEL_AGENCY', 'VAT']
+l10n_hu_edi  / product.template         / l10n_hu_product_code (char)   : NEW
+l10n_hu_edi  / product.template         / l10n_hu_product_code_type (selection): NEW selection_keys: ['AHK', 'CSK', 'EJ', 'KN', 'KT', 'OTHER', 'TESZOR', 'VTSZ']
+l10n_hu_edi  / res.company              / l10n_hu_edi_last_transaction_recovery (datetime): NEW hasdefault: default
+l10n_hu_edi  / res.company              / l10n_hu_edi_password (char)   : NEW
+l10n_hu_edi  / res.company              / l10n_hu_edi_replacement_key (char): NEW
+l10n_hu_edi  / res.company              / l10n_hu_edi_server_mode (selection): NEW selection_keys: ['demo', 'production', 'test']
+l10n_hu_edi  / res.company              / l10n_hu_edi_signature_key (char): NEW
+l10n_hu_edi  / res.company              / l10n_hu_edi_username (char)   : NEW
+l10n_hu_edi  / res.company              / l10n_hu_tax_regime (selection): NEW selection_keys: ['ca', 'ie', 'sb']
+l10n_hu_edi  / res.partner              / l10n_hu_group_vat (char)      : NEW
+l10n_hu_edi  / uom.uom                  / l10n_hu_edi_code (selection)  : NEW selection_keys: ['CARTON', 'CUBIC_METER', 'DAY', 'HOUR', 'KILOGRAM', 'KILOMETER', 'KWH', 'LINEAR_METER', 'LITRE', 'METER', 'MINUTE', 'MONTH', 'PACK', 'PIECE', 'TON']
+---XML records in module 'l10n_hu_edi'---
+NEW account.cash.rounding: l10n_hu_edi.cash_rounding_1_huf
+NEW ir.actions.act_window: l10n_hu_edi.action_l10n_hu_edi_tax_audit_export_form
+NEW ir.cron: l10n_hu_edi.ir_cron_update_status
+NEW ir.model.access: l10n_hu_edi.l10n_hu_edi_cancellation_user
+NEW ir.model.access: l10n_hu_edi.l10n_hu_edi_tax_audit_export_user
+NEW ir.ui.menu: l10n_hu_edi.menu_finance_reports_hu
+NEW ir.ui.menu: l10n_hu_edi.menu_hu_tax_audit_export
+NEW ir.ui.view: l10n_hu_edi.account_move_send_form
+NEW ir.ui.view: l10n_hu_edi.custom_header
+NEW ir.ui.view: l10n_hu_edi.document_tax_totals
+NEW ir.ui.view: l10n_hu_edi.external_layout_bold
+NEW ir.ui.view: l10n_hu_edi.external_layout_boxed
+NEW ir.ui.view: l10n_hu_edi.external_layout_standard
+NEW ir.ui.view: l10n_hu_edi.external_layout_striped
+NEW ir.ui.view: l10n_hu_edi.invoice_annulment
+NEW ir.ui.view: l10n_hu_edi.l10n_hu_edi_cancellation_form
+NEW ir.ui.view: l10n_hu_edi.l10n_hu_edi_tax_audit_export_form
+NEW ir.ui.view: l10n_hu_edi.manage_annulment_request
+NEW ir.ui.view: l10n_hu_edi.manage_invoice_request
+NEW ir.ui.view: l10n_hu_edi.nav_online_invoice_xml_3_0
+NEW ir.ui.view: l10n_hu_edi.nav_online_invoice_xml_3_0_line
+NEW ir.ui.view: l10n_hu_edi.nav_online_invoice_xml_3_0_simple_address
+NEW ir.ui.view: l10n_hu_edi.nav_online_invoice_xml_3_0_tax_number
+NEW ir.ui.view: l10n_hu_edi.nav_online_invoice_xml_3_0_vat_rate
+NEW ir.ui.view: l10n_hu_edi.product_template_form_view_l10n_hu_edi
+NEW ir.ui.view: l10n_hu_edi.query_transaction_list_request
+NEW ir.ui.view: l10n_hu_edi.query_transaction_status_request
+NEW ir.ui.view: l10n_hu_edi.report_invoice
+NEW ir.ui.view: l10n_hu_edi.report_invoice_document
+NEW ir.ui.view: l10n_hu_edi.request_header
+NEW ir.ui.view: l10n_hu_edi.res_config_settings_form_inherit_l10n_hu_edi
+NEW ir.ui.view: l10n_hu_edi.token_exchange_request
+NEW ir.ui.view: l10n_hu_edi.uom_uom_form_inherit_l10n_hu_edi
+NEW ir.ui.view: l10n_hu_edi.view_account_tax_form_l10n_hu_edi
+NEW ir.ui.view: l10n_hu_edi.view_company_form_l10n_hu_edi
+NEW ir.ui.view: l10n_hu_edi.view_invoice_tree_inherit_l10n_hu_edi
+NEW ir.ui.view: l10n_hu_edi.view_move_form_inherit_l10n_hu_edi
+NEW ir.ui.view: l10n_hu_edi.view_partner_form_l10n_hu_edi

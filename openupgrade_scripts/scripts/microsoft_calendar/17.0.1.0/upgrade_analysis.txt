@@ -13,6 +13,7 @@ microsoft_calendar / res.users                / microsoft_synchronization_stoppe
 ---XML records in module 'microsoft_calendar'---
 NEW ir.model.access: microsoft_calendar.access_microsoft_calendar_credentials
 NEW ir.model.access: microsoft_calendar.microsoft_calendar_manager
+NEW ir.model.constraint: microsoft_calendar.constraint_res_users_microsoft_token_uniq
 NEW ir.rule: microsoft_calendar.microsoft_calendar_not_own_token_rule (noupdate)
 NEW ir.rule: microsoft_calendar.microsoft_calendar_own_token_rule (noupdate)
 NEW ir.rule: microsoft_calendar.microsoft_calendar_token_system_access (noupdate)

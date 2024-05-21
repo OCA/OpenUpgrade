@@ -8,6 +8,4 @@ digest.tip: sale_management.digest_tip_sale_management_1 (noupdate switched)
 NEW ir.model.access: sale_management.access_sale_order_option_invoice
 NEW ir.model.access: sale_management.access_sale_order_option_readonly
 DEL ir.model.access: sale_management.access_sale_order_option_all
-DEL ir.model.constraint: sale_management.constraint_sale_order_template_line_accountable_product_id_required
-DEL ir.model.constraint: sale_management.constraint_sale_order_template_line_non_accountable_fields_null
 DEL ir.ui.view: sale_management.res_config_settings_view_form_inherit_sale_management

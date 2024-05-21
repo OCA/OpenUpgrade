@@ -135,7 +135,7 @@ mail         / mail.link.preview        / og_site_name (char)           : NEW
 mail         / mail.mail                / failure_type (selection)      : selection_keys is now '['mail_bl', 'mail_dup', 'mail_email_invalid', 'mail_email_missing', 'mail_from_invalid', 'mail_from_missing', 'mail_optout', 'mail_smtp', 'unknown']' ('['mail_bl', 'mail_dup', 'mail_email_invalid', 'mail_email_missing', 'mail_optout', 'mail_smtp', 'unknown']')
 mail         / mail.mail                / to_delete (boolean)           : DEL
 mail         / mail.message             / canned_response_ids (one2many): DEL relation: mail.shortcode
-mail         / mail.message             / message_type (selection)      : selection_keys is now '['auto_comment', 'comment', 'email', 'email_outgoing', 'notification', 'user_notification']' ('['comment', 'email', 'notification', 'user_notification']')
+mail         / mail.message             / message_type (selection)      : selection_keys is now '['auto_comment', 'comment', 'email', 'email_outgoing', 'notification', 'user_notification']' ('['auto_comment', 'comment', 'email', 'notification', 'user_notification']')
 mail         / mail.message             / pinned_at (datetime)          : NEW
 mail         / mail.message             / record_alias_domain_id (many2one): NEW relation: mail.alias.domain
 mail         / mail.message             / record_company_id (many2one)  : NEW relation: res.company
@@ -256,21 +256,22 @@ DEL ir.model.access: mail.access_mail_tracking_value_user
 DEL ir.model.access: mail.access_res_users_settings_all [renamed to base module]
 DEL ir.model.access: mail.access_res_users_settings_user [renamed to base module]
 DEL ir.model.access: mail.access_res_users_settings_volumes_all
-DEL ir.model.constraint: mail.constraint_bus_presence_partner_or_guest_exists
-DEL ir.model.constraint: mail.constraint_mail_activity_check_res_id_is_set
+NEW ir.model.constraint: mail.constraint_discuss_channel_channel_type_not_null
+NEW ir.model.constraint: mail.constraint_discuss_channel_group_public_id_check
+NEW ir.model.constraint: mail.constraint_discuss_channel_member_partner_or_guest_exists
+NEW ir.model.constraint: mail.constraint_discuss_channel_rtc_session_channel_member_unique
+NEW ir.model.constraint: mail.constraint_discuss_channel_uuid_unique
+NEW ir.model.constraint: mail.constraint_discuss_gif_favorite_user_gif_favorite
+NEW ir.model.constraint: mail.constraint_mail_alias_domain_bounce_email_uniques
+NEW ir.model.constraint: mail.constraint_mail_alias_domain_catchall_email_uniques
+NEW ir.model.constraint: mail.constraint_mail_partner_device_endpoint_unique
 DEL ir.model.constraint: mail.constraint_mail_alias_alias_unique
-DEL ir.model.constraint: mail.constraint_mail_blacklist_unique_email
 DEL ir.model.constraint: mail.constraint_mail_channel_channel_type_not_null
 DEL ir.model.constraint: mail.constraint_mail_channel_group_public_id_check
 DEL ir.model.constraint: mail.constraint_mail_channel_member_partner_or_guest_exists
 DEL ir.model.constraint: mail.constraint_mail_channel_rtc_session_channel_member_unique
 DEL ir.model.constraint: mail.constraint_mail_channel_uuid_unique
-DEL ir.model.constraint: mail.constraint_mail_followers_mail_followers_res_partner_res_model_id_uniq
-DEL ir.model.constraint: mail.constraint_mail_message_reaction_partner_or_guest_exists
-DEL ir.model.constraint: mail.constraint_mail_notification_notification_partner_required
-DEL ir.model.constraint: mail.constraint_res_users_notification_type
 DEL ir.model.constraint: mail.constraint_res_users_settings_unique_user_id [renamed to base module]
-DEL ir.model.constraint: mail.constraint_res_users_settings_volumes_partner_or_guest_exists
 NEW ir.rule: mail.discuss_gif_favorite_admin_rule (noupdate)
 NEW ir.rule: mail.discuss_gif_favorite_user_rule (noupdate)
 NEW ir.rule: mail.ir_rule_discuss_channel_all (noupdate)

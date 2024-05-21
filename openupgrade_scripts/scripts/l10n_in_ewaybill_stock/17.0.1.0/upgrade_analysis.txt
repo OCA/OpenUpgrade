@@ -1,0 +1,56 @@
+---Models in module 'l10n_in_ewaybill_stock'---
+new model l10n.in.ewaybill
+new model l10n.in.ewaybill.cancel [transient]
+---Fields in module 'l10n_in_ewaybill_stock'---
+l10n_in_ewaybill_stock / l10n.in.ewaybill         / access_token (char)           : NEW
+l10n_in_ewaybill_stock / l10n.in.ewaybill         / activity_ids (one2many)       : NEW relation: mail.activity
+l10n_in_ewaybill_stock / l10n.in.ewaybill         / blocking_level (selection)    : NEW selection_keys: ['error', 'warning']
+l10n_in_ewaybill_stock / l10n.in.ewaybill         / cancel_reason (selection)     : NEW selection_keys: ['1', '2', '3', '4']
+l10n_in_ewaybill_stock / l10n.in.ewaybill         / cancel_remarks (char)         : NEW
+l10n_in_ewaybill_stock / l10n.in.ewaybill         / distance (integer)            : NEW
+l10n_in_ewaybill_stock / l10n.in.ewaybill         / error_message (html)          : NEW
+l10n_in_ewaybill_stock / l10n.in.ewaybill         / ewaybill_date (date)          : NEW
+l10n_in_ewaybill_stock / l10n.in.ewaybill         / ewaybill_expiry_date (date)   : NEW
+l10n_in_ewaybill_stock / l10n.in.ewaybill         / fiscal_position_id (many2one) : NEW relation: account.fiscal.position, hasdefault: compute
+l10n_in_ewaybill_stock / l10n.in.ewaybill         / message_follower_ids (one2many): NEW relation: mail.followers
+l10n_in_ewaybill_stock / l10n.in.ewaybill         / message_ids (one2many)        : NEW relation: mail.message
+l10n_in_ewaybill_stock / l10n.in.ewaybill         / mode (selection)              : NEW selection_keys: ['1', '2', '3', '4'], hasdefault: default
+l10n_in_ewaybill_stock / l10n.in.ewaybill         / name (char)                   : NEW
+l10n_in_ewaybill_stock / l10n.in.ewaybill         / partner_bill_from_id (many2one): NEW relation: res.partner, hasdefault: compute
+l10n_in_ewaybill_stock / l10n.in.ewaybill         / partner_bill_to_id (many2one) : NEW relation: res.partner, hasdefault: compute
+l10n_in_ewaybill_stock / l10n.in.ewaybill         / partner_ship_from_id (many2one): NEW relation: res.partner, hasdefault: compute
+l10n_in_ewaybill_stock / l10n.in.ewaybill         / partner_ship_to_id (many2one) : NEW relation: res.partner, hasdefault: compute
+l10n_in_ewaybill_stock / l10n.in.ewaybill         / picking_id (many2one)         : NEW relation: stock.picking
+l10n_in_ewaybill_stock / l10n.in.ewaybill         / rating_ids (one2many)         : NEW relation: rating.rating
+l10n_in_ewaybill_stock / l10n.in.ewaybill         / state (selection)             : NEW required, selection_keys: ['cancel', 'generated', 'pending']
+l10n_in_ewaybill_stock / l10n.in.ewaybill         / transportation_doc_date (date): NEW
+l10n_in_ewaybill_stock / l10n.in.ewaybill         / transportation_doc_no (char)  : NEW
+l10n_in_ewaybill_stock / l10n.in.ewaybill         / transporter_id (many2one)     : NEW relation: res.partner
+l10n_in_ewaybill_stock / l10n.in.ewaybill         / type_description (char)       : NEW
+l10n_in_ewaybill_stock / l10n.in.ewaybill         / type_id (many2one)            : NEW relation: l10n.in.ewaybill.type, required
+l10n_in_ewaybill_stock / l10n.in.ewaybill         / vehicle_no (char)             : NEW
+l10n_in_ewaybill_stock / l10n.in.ewaybill         / vehicle_type (selection)      : NEW selection_keys: ['O', 'R'], hasdefault: compute
+l10n_in_ewaybill_stock / l10n.in.ewaybill         / website_message_ids (one2many): NEW relation: mail.message
+l10n_in_ewaybill_stock / stock.move               / ewaybill_price_unit (float)   : NEW isfunction: function, stored
+l10n_in_ewaybill_stock / stock.move               / ewaybill_tax_ids (many2many)  : NEW relation: account.tax, isfunction: function, stored
+l10n_in_ewaybill_stock / stock.picking            / l10n_in_ewaybill_id (one2many): NEW relation: l10n.in.ewaybill
+---XML records in module 'l10n_in_ewaybill_stock'---
+NEW ir.actions.act_window: l10n_in_ewaybill_stock.l10n_in_ewaybill_form_action
+NEW ir.actions.report: l10n_in_ewaybill_stock.action_report_ewaybill
+NEW ir.model.access: l10n_in_ewaybill_stock.access_l10n_in_ewaybill
+NEW ir.model.access: l10n_in_ewaybill_stock.access_l10n_in_ewaybill_cancel
+NEW ir.rule: l10n_in_ewaybill_stock.l10n_in_ewaybill_comp_rule (noupdate)
+NEW ir.ui.view: l10n_in_ewaybill_stock.l10n_in_ewaybill_form_view
+NEW ir.ui.view: l10n_in_ewaybill_stock.report_ewaybill
+NEW ir.ui.view: l10n_in_ewaybill_stock.view_ewaybill_cancel_form
+NEW ir.ui.view: l10n_in_ewaybill_stock.view_picking_form_inherit_ewaybill
+NEW l10n.in.ewaybill.type: l10n_in_ewaybill_stock.type_delivery_challan_sub_exhibition_or_fairs
+NEW l10n.in.ewaybill.type: l10n_in_ewaybill_stock.type_delivery_challan_sub_for_own_use
+NEW l10n.in.ewaybill.type: l10n_in_ewaybill_stock.type_delivery_challan_sub_job_work
+NEW l10n.in.ewaybill.type: l10n_in_ewaybill_stock.type_delivery_challan_sub_job_work_returns
+NEW l10n.in.ewaybill.type: l10n_in_ewaybill_stock.type_delivery_challan_sub_line_sales
+NEW l10n.in.ewaybill.type: l10n_in_ewaybill_stock.type_delivery_challan_sub_others
+NEW l10n.in.ewaybill.type: l10n_in_ewaybill_stock.type_delivery_challan_sub_recipient_not_known
+NEW l10n.in.ewaybill.type: l10n_in_ewaybill_stock.type_delivery_challan_sub_sales_return
+NEW l10n.in.ewaybill.type: l10n_in_ewaybill_stock.type_delivery_challan_sub_skd_ckd_work
+NEW report.paperformat: l10n_in_ewaybill_stock.paperformat_ewaybill

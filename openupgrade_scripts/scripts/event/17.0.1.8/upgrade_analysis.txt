@@ -35,6 +35,7 @@ NEW ir.actions.report: event.action_report_event_registration_badge
 NEW ir.actions.report: event.action_report_event_registration_responsive_html_ticket
 DEL ir.actions.report: event.action_report_event_event_foldable_badge
 DEL ir.actions.report: event.action_report_event_registration_foldable_badge
+NEW ir.model.constraint: event.constraint_event_registration_barcode_event_uniq
 NEW ir.ui.menu: event.menu_event_registration_desk
 NEW ir.ui.view: event.attendee_list
 NEW ir.ui.view: event.event_event_attendee_list

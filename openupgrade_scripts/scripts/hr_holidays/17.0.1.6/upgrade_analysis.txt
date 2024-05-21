@@ -18,7 +18,6 @@ hr_holidays  / hr.leave                 / rating_ids (one2many)         : NEW re
 hr_holidays  / hr.leave                 / resource_calendar_id (many2one): NEW relation: resource.calendar, hasdefault: compute
 hr_holidays  / hr.leave                 / website_message_ids (one2many): previously in module portal
 hr_holidays  / hr.leave.accrual.level   / action_with_unused_accruals (selection): selection_keys is now '['all', 'lost', 'maximum']' ('['lost', 'postponed']')
-hr_holidays  / hr.leave.accrual.level   / added_value_type (selection)  : now a function
 hr_holidays  / hr.leave.accrual.level   / added_value_type (selection)  : selection_keys is now '['day', 'hour']' ('['days', 'hours']')
 hr_holidays  / hr.leave.accrual.level   / cap_accrued_time (boolean)    : NEW hasdefault: default
 hr_holidays  / hr.leave.accrual.level   / frequency (selection)         : selection_keys is now '['bimonthly', 'biyearly', 'daily', 'hourly', 'monthly', 'weekly', 'yearly']' ('['bimonthly', 'biyearly', 'daily', 'monthly', 'weekly', 'yearly']')
@@ -77,15 +76,11 @@ NEW ir.model.access: hr_holidays.access_hr_leave_mandatory_day_manager
 NEW ir.model.access: hr_holidays.access_hr_leave_mandatory_day_user
 DEL ir.model.access: hr_holidays.access_hr_leave_stress_day_manager
 DEL ir.model.access: hr_holidays.access_hr_leave_stress_day_user
-DEL ir.model.constraint: hr_holidays.constraint_hr_leave_accrual_level_added_value_greater_than_zero
-DEL ir.model.constraint: hr_holidays.constraint_hr_leave_accrual_level_check_dates
-DEL ir.model.constraint: hr_holidays.constraint_hr_leave_accrual_level_start_count_check
-DEL ir.model.constraint: hr_holidays.constraint_hr_leave_allocation_duration_check
-DEL ir.model.constraint: hr_holidays.constraint_hr_leave_allocation_type_value
-DEL ir.model.constraint: hr_holidays.constraint_hr_leave_date_check2
-DEL ir.model.constraint: hr_holidays.constraint_hr_leave_duration_check
+ir.model.constraint: hr_holidays.constraint_hr_leave_accrual_level_check_dates (changed definition: is now 'check((frequency in('daily','hourly')) or(week_day is not null and frequency = 'weekly') or(first_day > 0 and second_day > first_day and first_day <= 31 and second_day <= 31 and frequency = 'bimonthly') or(first_day > 0 and first_day <= 31 and frequency = 'monthly')or(first_month_day > 0 and first_month_day <= 31 and second_month_day > 0 and second_month_day <= 31 and frequency = 'biyearly') or(yearly_day > 0 and yearly_day <= 31 and frequency = 'yearly'))' ('check((frequency = 'daily') or(week_day is not null and frequency = 'weekly') or(first_day > 0 and second_day > first_day and first_day <= 31 and second_day <= 31 and frequency = 'bimonthly') or(first_day > 0 and first_day <= 31 and frequency = 'monthly')or(first_month_day > 0 and first_month_day <= 31 and second_month_day > 0 and second_month_day <= 31 and frequency = 'biyearly') or(yearly_day > 0 and yearly_day <= 31 and frequency = 'yearly'))'))
+NEW ir.model.constraint: hr_holidays.constraint_hr_leave_date_check3
+NEW ir.model.constraint: hr_holidays.constraint_hr_leave_mandatory_day_date_from_after_day_to
+NEW ir.model.constraint: hr_holidays.constraint_hr_leave_type_check_negative
 DEL ir.model.constraint: hr_holidays.constraint_hr_leave_stress_day_date_from_after_day_to
-DEL ir.model.constraint: hr_holidays.constraint_hr_leave_type_value
 NEW ir.rule: hr_holidays.hr_leave_accrual_plan_rule_multi_company (noupdate)
 NEW ir.rule: hr_holidays.hr_leave_mandatory_day_rule_multi_company (noupdate)
 DEL ir.rule: hr_holidays.hr_leave_stress_day_rule_multi_company (noupdate)

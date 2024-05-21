@@ -36,11 +36,8 @@ NEW ir.model.access: sale.access_mail_activity_plan_template_sale_manager
 NEW ir.model.access: sale.access_sale_mass_cancel_orders
 NEW ir.model.access: sale.access_sale_order_discount
 DEL ir.model.access: sale.access_account_invoice_send_salesman
-DEL ir.model.constraint: sale.constraint_product_attribute_custom_value_sol_custom_value_unique
-DEL ir.model.constraint: sale.constraint_res_company_check_quotation_validity_days
-DEL ir.model.constraint: sale.constraint_sale_order_date_order_conditional_required
-DEL ir.model.constraint: sale.constraint_sale_order_line_accountable_required_fields
-DEL ir.model.constraint: sale.constraint_sale_order_line_non_accountable_null_fields
+ir.model.constraint: sale.constraint_res_company_check_quotation_validity_days (changed definition: is now 'check(quotation_validity_days >= 0)' ('check(quotation_validity_days > 0)'))
+ir.model.constraint: sale.constraint_sale_order_date_order_conditional_required (changed definition: is now 'check((state = 'sale' and date_order is not null) or state != 'sale')' ('check((state in('sale','done') and date_order is not null) or state not in('sale','done'))'))
 NEW ir.rule: sale.mail_plan_rule_group_sale_manager (noupdate)
 NEW ir.rule: sale.mail_plan_template_rule_group_sale_manager (noupdate)
 NEW ir.rule: sale.sale_mass_cancel_orders_rule (noupdate)

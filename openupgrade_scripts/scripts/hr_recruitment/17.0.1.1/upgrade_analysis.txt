@@ -6,9 +6,7 @@ hr_recruitment / hr.applicant             / applicant_properties (properties): N
 hr_recruitment / hr.applicant             / application_status (selection): selection_keys is now '['archived', 'hired', 'ongoing', 'refused']' ('['hired', 'ongoing', 'refused']')
 hr_recruitment / hr.applicant             / email_normalized (char)       : NEW isfunction: function, stored
 hr_recruitment / hr.applicant             / message_bounce (integer)      : NEW hasdefault: default
-hr_recruitment / hr.applicant             / partner_mobile (char)         : not a function anymore
 hr_recruitment / hr.applicant             / partner_mobile_sanitized (char): NEW isfunction: function, stored
-hr_recruitment / hr.applicant             / partner_phone (char)          : not a function anymore
 hr_recruitment / hr.applicant             / partner_phone_sanitized (char): NEW isfunction: function, stored
 hr_recruitment / hr.applicant             / phone_mobile_search (char)    : NEW
 hr_recruitment / hr.applicant             / phone_sanitized (char)        : NEW isfunction: function, stored
@@ -23,8 +21,6 @@ NEW ir.actions.act_window: hr_recruitment.action_hr_applicant_mass_sms
 DEL ir.actions.act_window: hr_recruitment.hr_employee_action_from_department
 NEW ir.actions.server: hr_recruitment.ir_actions_server_refuse_applicant
 NEW ir.config_parameter: hr_recruitment.hr_recruitment_blacklisted_emails (noupdate)
-DEL ir.model.constraint: hr_recruitment.constraint_hr_applicant_category_name_uniq
-DEL ir.model.constraint: hr_recruitment.constraint_hr_recruitment_degree_name_uniq
 NEW ir.rule: hr_recruitment.hr_applicant_user_rule (noupdate)
 NEW ir.rule: hr_recruitment.hr_job_user_rule (noupdate)
 NEW ir.rule: hr_recruitment.mail_message_user_rule (noupdate)

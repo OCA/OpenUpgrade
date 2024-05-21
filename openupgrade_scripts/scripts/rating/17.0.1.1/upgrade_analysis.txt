@@ -19,4 +19,3 @@ rating       / product.product          / rating_ids (one2many)         : previo
 rating       / product.template         / rating_ids (one2many)         : previously in module website_sale
 rating       / res.partner              / rating_ids (one2many)         : NEW relation: rating.rating
 ---XML records in module 'rating'---
-DEL ir.model.constraint: rating.constraint_rating_rating_rating_range

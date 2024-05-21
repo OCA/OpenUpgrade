@@ -51,9 +51,8 @@ NEW ir.actions.act_window: mass_mailing.mailing_subscription_optout_action
 NEW ir.model.access: mass_mailing.access_mailing_subscription_mm_user
 NEW ir.model.access: mass_mailing.access_mailing_subscription_optout_mm_user
 DEL ir.model.access: mass_mailing.access_mailing_contact_subscription_mm_user
+NEW ir.model.constraint: mass_mailing.constraint_mailing_subscription_unique_contact_list
 DEL ir.model.constraint: mass_mailing.constraint_mailing_contact_list_rel_unique_contact_list
-DEL ir.model.constraint: mass_mailing.constraint_mailing_mailing_percentage_valid
-DEL ir.model.constraint: mass_mailing.constraint_mailing_trace_check_res_id_is_set
 NEW ir.ui.menu: mass_mailing.mailing_menu_report_mailing
 NEW ir.ui.menu: mass_mailing.mailing_menu_report_subscribe_reason
 NEW ir.ui.menu: mass_mailing.mailing_subscription_optout_menu

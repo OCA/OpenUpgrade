@@ -143,11 +143,43 @@
       </div>
     </field>
   </record>
+  <record id="rank_bachelor" model="gamification.karma.rank">
+    <field name="description_motivational" type="html">
+      <div class="d-flex align-items-center">
+        <div class="flex-grow-1">Reach the next rank to improve your status!</div>
+        <img class="ms-3 img img-fluid" style="max-height: 72px;" src="/gamification/static/img/rank_bachelor_badge.svg" alt=""/>
+      </div>
+    </field>
+  </record>
+  <record id="rank_doctor" model="gamification.karma.rank">
+    <field name="description_motivational" type="html">
+      <div class="d-flex align-items-center">
+        <div class="flex-grow-1">Reach the next rank and become a powerful user!</div>
+        <img class="ms-3 img img-fluid" style="max-height: 72px;" src="/gamification/static/img/rank_doctor_badge.svg" alt=""/>
+      </div>
+    </field>
+  </record>
+  <record id="rank_master" model="gamification.karma.rank">
+    <field name="description_motivational" type="html">
+      <div class="d-flex align-items-center">
+        <div class="flex-grow-1">Reach the next rank and become a Master!</div>
+        <img class="ms-3 img img-fluid" style="max-height: 72px;" src="/gamification/static/img/rank_master_badge.svg" alt=""/>
+      </div>
+    </field>
+  </record>
   <record id="rank_newbie" model="gamification.karma.rank">
     <field name="description_motivational" type="html">
       <div class="d-flex align-items-center">
         <div class="flex-grow-1">Earn your first points and join the adventure!</div>
-        <img class="ms-3 img img-fluid" style="max-height: 72px;" src="/gamification/static/img/rank_newbie_badge.svg"/>
+        <img class="ms-3 img img-fluid" style="max-height: 72px;" src="/gamification/static/img/rank_newbie_badge.svg" alt=""/>
+      </div>
+    </field>
+  </record>
+  <record id="rank_student" model="gamification.karma.rank">
+    <field name="description_motivational" type="html">
+      <div class="d-flex align-items-center">
+        <div class="flex-grow-1">Reach the next rank to show the rest of the world you exist.</div>
+        <img class="ms-3 img img-fluid" style="max-height: 72px;" src="/gamification/static/img/rank_student_badge.svg" alt=""/>
       </div>
     </field>
   </record>

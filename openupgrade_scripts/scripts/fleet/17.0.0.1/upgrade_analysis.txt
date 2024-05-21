@@ -26,7 +26,4 @@ fleet        / fleet.vehicle.model.brand / active (boolean)              : NEW h
 ---XML records in module 'fleet'---
 NEW fleet.service.type: fleet.type_contract_leasing (noupdate)
 NEW fleet.service.type: fleet.type_contract_omnium (noupdate)
-DEL ir.model.constraint: fleet.constraint_fleet_vehicle_model_category_name_uniq
-DEL ir.model.constraint: fleet.constraint_fleet_vehicle_state_fleet_state_name_unique
-DEL ir.model.constraint: fleet.constraint_fleet_vehicle_tag_name_uniq
 NEW ir.ui.view: fleet.fleet_vechicle_costs_report_view_form

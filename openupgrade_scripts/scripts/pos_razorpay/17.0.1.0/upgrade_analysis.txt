@@ -1,0 +1,18 @@
+---Models in module 'pos_razorpay'---
+---Fields in module 'pos_razorpay'---
+pos_razorpay / pos.payment              / razorpay_authcode (char)      : NEW
+pos_razorpay / pos.payment              / razorpay_card_owner_name (char): NEW
+pos_razorpay / pos.payment              / razorpay_card_scheme (char)   : NEW
+pos_razorpay / pos.payment              / razorpay_issuer_bank (char)   : NEW
+pos_razorpay / pos.payment              / razorpay_issuer_card_no (char): NEW
+pos_razorpay / pos.payment              / razorpay_payment_method (char): NEW
+pos_razorpay / pos.payment              / razorpay_reference_no (char)  : NEW
+pos_razorpay / pos.payment              / razorpay_reverse_ref_no (char): NEW
+pos_razorpay / pos.payment.method       / razorpay_allowed_payment_modes (selection): NEW selection_keys: ['all', 'bharatqr', 'card', 'upi'], hasdefault: default
+pos_razorpay / pos.payment.method       / razorpay_api_key (char)       : NEW
+pos_razorpay / pos.payment.method       / razorpay_test_mode (boolean)  : NEW hasdefault: default
+pos_razorpay / pos.payment.method       / razorpay_tid (char)           : NEW
+pos_razorpay / pos.payment.method       / razorpay_username (char)      : NEW
+---XML records in module 'pos_razorpay'---
+NEW ir.ui.view: pos_razorpay.pos_payment_method_view_form_inherit_pos_razorpay
+NEW ir.ui.view: pos_razorpay.view_pos_payment_form

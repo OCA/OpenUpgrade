@@ -1,0 +1,8 @@
+---Models in module 'pos_mercado_pago'---
+---Fields in module 'pos_mercado_pago'---
+pos_mercado_pago / pos.payment.method       / mp_bearer_token (char)        : NEW
+pos_mercado_pago / pos.payment.method       / mp_id_point_smart (char)      : NEW
+pos_mercado_pago / pos.payment.method       / mp_id_point_smart_complet (char): NEW
+pos_mercado_pago / pos.payment.method       / mp_webhook_secret_key (char)  : NEW
+---XML records in module 'pos_mercado_pago'---
+NEW ir.ui.view: pos_mercado_pago.pos_payment_method_view_form_inherit_pos_mercado_pago

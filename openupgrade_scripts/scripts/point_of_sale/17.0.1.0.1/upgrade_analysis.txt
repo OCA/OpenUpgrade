@@ -1,8 +1,8 @@
 ---Models in module 'point_of_sale'---
-obsolete model pos.cache
 obsolete model pos.session.check_product_wizard [transient]
 new model pos.combo
 new model pos.combo.line
+model pos.daily.sales.reports.wizard (moved from pos_daily_sales_reports) [transient]
 new model pos.printer
 ---Fields in module 'point_of_sale'---
 point_of_sale / account.move             / pos_refunded_invoice_ids (many2many): NEW relation: account.move
@@ -44,6 +44,7 @@ point_of_sale / pos.printer              / proxy_ip (char)               : NEW
 point_of_sale / pos.session              / access_token (char)           : NEW
 point_of_sale / pos.session              / activity_user_id (many2one)   : not related anymore
 point_of_sale / pos.session              / activity_user_id (many2one)   : now a function
+point_of_sale / pos.session              / closing_notes (text)          : previously in module pos_daily_sales_reports
 point_of_sale / pos.session              / message_main_attachment_id (many2one): DEL relation: ir.attachment
 point_of_sale / pos.session              / rating_ids (one2many)         : NEW relation: rating.rating
 point_of_sale / product.attribute.custom.value / pos_order_line_id (many2one)  : NEW relation: pos.order.line
@@ -53,22 +54,13 @@ point_of_sale / product.template         / pos_categ_id (many2one)       : DEL r
 point_of_sale / product.template         / pos_categ_ids (many2many)     : NEW relation: pos.category
 point_of_sale / product.template         / type (False)                  : NEW selection_keys: ['combo', 'consu', 'product', 'service'], mode: modify
 point_of_sale / res.company              / point_of_sale_ticket_unique_code (boolean): NEW
-pos_cache    / pos.cache                / cache (binary)                : DEL attachment: True
-pos_cache    / pos.cache                / compute_user_id (many2one)    : DEL relation: res.users, required
-pos_cache    / pos.cache                / config_id (many2one)          : DEL relation: pos.config, required
-pos_cache    / pos.cache                / product_domain (text)         : DEL required
-pos_cache    / pos.cache                / product_fields (text)         : DEL required
-pos_cache    / pos.config               / cache_ids (one2many)          : DEL relation: pos.cache
-pos_epson_printer_restaurant / restaurant.printer       / epson_printer_ip (char)       : DEL
-pos_epson_printer_restaurant / restaurant.printer       / printer_type (False)          : DEL selection_keys: ['epson_epos', 'iot'], mode: modify
 ---XML records in module 'point_of_sale'---
 NEW ir.actions.act_window: point_of_sale.action_pos_combo
 NEW ir.actions.act_window: point_of_sale.action_pos_config_tree
 NEW ir.actions.act_window: point_of_sale.action_pos_printer_form
 NEW ir.actions.act_window: point_of_sale.action_report_pos_daily_sales_reports [renamed from pos_daily_sales_reports module]
-DEL ir.actions.act_window: pos_daily_sales_reports.action_report_pos_daily_sales_reports [renamed to point_of_sale module]
 NEW ir.actions.client: point_of_sale.action_client_product_menu (noupdate)
-DEL ir.cron: pos_cache.refresh_pos_cache_cron
+NEW ir.model.access: point_of_sale.access_account_journal_entry
 NEW ir.model.access: point_of_sale.access_pos_combo_line_manager
 NEW ir.model.access: point_of_sale.access_pos_combo_line_user
 NEW ir.model.access: point_of_sale.access_pos_combo_manager
@@ -81,16 +73,13 @@ DEL ir.model.access: point_of_sale.access_account_bank_statement_manager
 DEL ir.model.access: point_of_sale.access_account_move
 DEL ir.model.access: point_of_sale.access_account_move_line
 DEL ir.model.access: point_of_sale.access_pos_session_check_product_wizard
-DEL ir.model.access: pos_cache.access_pos_cache
-DEL ir.model.access: pos_daily_sales_reports.access_pos_daily_sales_reports_wizard [renamed to point_of_sale module]
-DEL ir.model.constraint: point_of_sale.constraint_pos_session_uniq_name
+NEW ir.rule: point_of_sale.rule_invoice_pos_user (noupdate)
 DEL ir.rule: point_of_sale.rule_pos_account_move (noupdate)
 DEL ir.rule: point_of_sale.rule_pos_account_move_line (noupdate)
 NEW ir.ui.menu: point_of_sale.menu_point_of_sale_list
 NEW ir.ui.menu: point_of_sale.menu_pos_combo
 NEW ir.ui.menu: point_of_sale.menu_pos_preparation_printer
 NEW ir.ui.menu: point_of_sale.menu_report_daily_details [renamed from pos_daily_sales_reports module]
-DEL ir.ui.menu: pos_daily_sales_reports.menu_report_daily_details [renamed to point_of_sale module]
 NEW ir.ui.view: point_of_sale.account_product_template_form_view
 NEW ir.ui.view: point_of_sale.ticket_request_with_code
 NEW ir.ui.view: point_of_sale.view_pos_combo_form
@@ -101,7 +90,3 @@ NEW ir.ui.view: point_of_sale.view_pos_printer_form
 DEL ir.ui.view: point_of_sale.assets_common
 DEL ir.ui.view: point_of_sale.qunit_suite_assets
 DEL ir.ui.view: point_of_sale.view_pos_session_check_product_wizard
-DEL ir.ui.view: pos_cache.view_pos_config_kanban
-DEL ir.ui.view: pos_daily_sales_reports.pos_daily_report
-DEL ir.ui.view: pos_daily_sales_reports.view_pos_daily_sales_reports_wizard
-DEL ir.ui.view: pos_epson_printer_restaurant.view_restaurant_printer_iot_form

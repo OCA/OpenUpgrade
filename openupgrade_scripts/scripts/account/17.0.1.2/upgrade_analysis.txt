@@ -107,6 +107,7 @@ account      / account.move             / activity_user_id (many2one)   : now a 
 account      / account.move             / amount_total_words (char)     : previously in module l10n_dz
 account      / account.move             / delivery_date (date)          : NEW isfunction: function, stored
 account      / account.move             / incoterm_location (char)      : NEW hasdefault: compute
+account      / account.move             / invoice_payment_term_id (many2one): now a function
 account      / account.move             / invoice_pdf_report_file (binary): NEW attachment: True
 account      / account.move             / rating_ids (one2many)         : NEW relation: rating.rating
 account      / account.move             / send_and_print_values (json)  : NEW
@@ -121,7 +122,6 @@ account      / account.payment          / activity_user_id (many2one)   : now a 
 account      / account.payment          / amount_total_words (char)     : previously in module l10n_dz
 account      / account.payment          / qr_code (char)                : type is now 'html' ('char')
 account      / account.payment          / rating_ids (one2many)         : NEW relation: rating.rating
-account      / account.payment.term     / currency_id (many2one)        : NEW relation: res.currency, hasdefault: default
 account      / account.payment.term     / discount_days (integer)       : NEW hasdefault: default
 account      / account.payment.term     / discount_percentage (float)   : NEW hasdefault: default
 account      / account.payment.term     / early_discount (boolean)      : NEW
@@ -193,7 +193,7 @@ account      / account.report.column    / figure_type (selection)       : select
 account      / account.report.expression / figure_type (selection)       : selection_keys is now '['boolean', 'date', 'datetime', 'float', 'integer', 'monetary', 'percentage', 'string']' ('['date', 'datetime', 'float', 'integer', 'monetary', 'none', 'percentage']')
 account      / account.report.external.value / text_value (char)             : NEW
 account      / account.report.line      / external_formula (char)       : NEW
-account      / account.report.line      / user_groupby (char)           : NEW
+account      / account.report.line      / user_groupby (char)           : NEW hasdefault: compute
 account      / account.tax              / invoice_label (char)          : NEW
 account      / account.tax              / message_follower_ids (one2many): NEW relation: mail.followers
 account      / account.tax              / message_ids (one2many)        : NEW relation: mail.message
@@ -291,6 +291,7 @@ NEW ir.actions.server: account.action_automatic_entry_change_account
 NEW ir.actions.server: account.action_automatic_entry_change_period
 NEW ir.actions.server: account.action_move_switch_move_type
 DEL ir.actions.server: account.action_automatic_entry
+DEL ir.actions.server: account.action_duplicate_account
 DEL ir.actions.server: account.action_move_switch_invoice_to_credit_note
 NEW ir.cron: account.ir_cron_account_move_send
 NEW ir.model.access: account.access_account_journal_group_invoice
@@ -310,23 +311,14 @@ DEL ir.model.access: account.access_account_tag_internal_user
 DEL ir.model.access: account.access_account_tax_repartition_line_template_manager
 DEL ir.model.access: account.access_account_tax_template
 DEL ir.model.access: account.access_product_template_account_manager
+NEW ir.model.constraint: account.constraint_account_account_tag_name_uniq
+NEW ir.model.constraint: account.constraint_account_move_unique_name [renamed from account_sequence module]
+NEW ir.model.constraint: account.constraint_account_report_expression_domain_engine_subformula_required
+NEW ir.model.constraint: account.constraint_account_report_expression_line_label_uniq
+ir.model.constraint: account.constraint_account_report_line_code_uniq (changed definition: is now 'unique(report_id,code)' ('unique(code)'))
 DEL ir.model.constraint: account.constraint_account_account_code_company_uniq
-DEL ir.model.constraint: account.constraint_account_fiscal_position_account_account_src_dest_uniq
-DEL ir.model.constraint: account.constraint_account_fiscal_position_tax_tax_src_dest_uniq
-DEL ir.model.constraint: account.constraint_account_group_check_length_prefix
-DEL ir.model.constraint: account.constraint_account_journal_code_company_uniq
-DEL ir.model.constraint: account.constraint_account_journal_group_uniq_name
-DEL ir.model.constraint: account.constraint_account_move_line_check_accountable_required_fields
-DEL ir.model.constraint: account.constraint_account_move_line_check_amount_currency_balance_sign
-DEL ir.model.constraint: account.constraint_account_move_line_check_credit_debit
-DEL ir.model.constraint: account.constraint_account_move_line_check_non_accountable_fields_null
-DEL ir.model.constraint: account.constraint_account_payment_check_amount_not_negative
-DEL ir.model.constraint: account.constraint_account_payment_method_name_code_unique
-DEL ir.model.constraint: account.constraint_account_reconcile_model_name_unique
-DEL ir.model.constraint: account.constraint_account_report_line_code_uniq
 DEL ir.model.constraint: account.constraint_account_tax_name_company_uniq
 DEL ir.model.constraint: account.constraint_account_tax_template_name_company_uniq
-DEL ir.model.constraint: account_sequence.constraint_account_move_unique_name
 NEW ir.module.category: account.module_category_accounting_bank
 NEW ir.rule: account.account_move_send_rule_group_invoice (noupdate)
 NEW ir.rule: account.ir_rule_res_partner_bank_billing_officers (noupdate)
@@ -335,8 +327,6 @@ DEL ir.rule: account.account_invoice_send_rule_group_invoice (noupdate)
 DEL ir.sequence: account.sequence_reconcile_seq (noupdate)
 NEW ir.ui.menu: account.menu_account_supplier_accounts
 NEW ir.ui.menu: account.menu_action_analytic_reporting
-NEW ir.ui.menu: account.menu_action_open_payment_items
-NEW ir.ui.menu: account.menu_action_open_sale_payment_items
 NEW ir.ui.view: account.account_move_send_form
 NEW ir.ui.view: account.account_move_view_activity
 NEW ir.ui.view: account.document_tax_totals_company_currency_template

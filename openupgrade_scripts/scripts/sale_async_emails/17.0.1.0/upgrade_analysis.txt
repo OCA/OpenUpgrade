@@ -1,0 +1,6 @@
+---Models in module 'sale_async_emails'---
+---Fields in module 'sale_async_emails'---
+sale_async_emails / sale.order               / pending_email_template_id (many2one): NEW relation: mail.template
+---XML records in module 'sale_async_emails'---
+NEW ir.config_parameter: sale_async_emails.async_emails (noupdate)
+NEW ir.cron: sale_async_emails.cron (noupdate)

@@ -72,6 +72,7 @@ DEL ir.model.access: website_event.access_event_event_ticket
 DEL ir.model.access: website_event.access_event_tag
 DEL ir.model.access: website_event.access_event_tag_category
 DEL ir.model.access: website_event.access_website_event_menu
+NEW ir.model.constraint: website_event.constraint_event_registration_answer_value_check [renamed from website_event_questions module]
 NEW ir.rule: website_event.ir_rule_event_question_answer_event_user [renamed from website_event_questions module] (noupdate)
 NEW ir.rule: website_event.ir_rule_event_question_answer_published [renamed from website_event_questions module] (noupdate)
 NEW ir.rule: website_event.ir_rule_event_question_event_user [renamed from website_event_questions module] (noupdate)

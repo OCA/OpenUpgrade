@@ -17,23 +17,6 @@ survey       / survey.user_input        / message_main_attachment_id (many2one):
 survey       / survey.user_input        / rating_ids (one2many)         : NEW relation: rating.rating
 survey       / survey.user_input        / survey_first_submitted (boolean): NEW
 ---XML records in module 'survey'---
-DEL ir.model.constraint: survey.constraint_survey_question_positive_answer_score
-DEL ir.model.constraint: survey.constraint_survey_question_positive_len_max
-DEL ir.model.constraint: survey.constraint_survey_question_positive_len_min
-DEL ir.model.constraint: survey.constraint_survey_question_scored_date_have_answers
-DEL ir.model.constraint: survey.constraint_survey_question_scored_datetime_have_answers
-DEL ir.model.constraint: survey.constraint_survey_question_validation_date
-DEL ir.model.constraint: survey.constraint_survey_question_validation_datetime
-DEL ir.model.constraint: survey.constraint_survey_question_validation_float
-DEL ir.model.constraint: survey.constraint_survey_question_validation_length
-DEL ir.model.constraint: survey.constraint_survey_survey_access_token_unique
-DEL ir.model.constraint: survey.constraint_survey_survey_attempts_limit_check
-DEL ir.model.constraint: survey.constraint_survey_survey_badge_uniq
-DEL ir.model.constraint: survey.constraint_survey_survey_certification_check
-DEL ir.model.constraint: survey.constraint_survey_survey_scoring_success_min_check
-DEL ir.model.constraint: survey.constraint_survey_survey_session_code_unique
-DEL ir.model.constraint: survey.constraint_survey_survey_time_limit_check
-DEL ir.model.constraint: survey.constraint_survey_user_input_unique_token
 NEW ir.ui.view: survey.certification_report_view_general
 NEW ir.ui.view: survey.survey_access_error
 NEW ir.ui.view: survey.survey_survey_view_activity

@@ -3,6 +3,10 @@
   <record id="mail_activity_data_todo" model="mail.activity.type">
     <field name="name">To-Do</field>
   </record>
+  <record id="mail_template_employee_rule" model="ir.rule">
+    <field name="domain_force">['|', ('create_uid', '=', user.id), ('user_id', '=', user.id)]</field>
+    <field name="name">Employees can only modify templates they have created or been assigned</field>
+  </record>
   <record id="module_install_notification" model="mail.message">
     <field name="model">discuss.channel</field>
   </record>

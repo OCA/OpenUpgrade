@@ -5,5 +5,4 @@ sales_team   / crm.team                 / rating_ids (one2many)         : NEW re
 sales_team   / crm.team.member          / message_main_attachment_id (many2one): DEL relation: ir.attachment
 sales_team   / crm.team.member          / rating_ids (one2many)         : NEW relation: rating.rating
 ---XML records in module 'sales_team'---
-DEL ir.model.constraint: sales_team.constraint_crm_tag_name_uniq
 DEL ir.ui.menu: sales_team.menu_sale_config

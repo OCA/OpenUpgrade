@@ -4,7 +4,7 @@
 Employee created: <a href="#" t-att-data-oe-id="applicant.emp_id.id" data-oe-model="hr.employee"><t t-esc="applicant.emp_id.name"/></a>
     </template>
   <record id="base.module_category_human_resources_recruitment" model="ir.module.category">
-    <field name="description">Interviewer right will give access to all job position/applications where the employee is defined. It will allow to refuse, plan meetings. Chatter content will not be available.</field>
+    <field name="description">Interviewer right will give access to all job position/applications where the employee is defined. It will allow to refuse, plan meetings.</field>
   </record>
   <record id="group_hr_recruitment_interviewer" model="res.groups">
     <field name="category_id" ref="base.module_category_human_resources_recruitment"/>

@@ -4,4 +4,3 @@ event_booth_sale / event.booth.category     / price_incl (float)            : NE
 event_booth_sale / event.booth.registration / contact_mobile (char)         : DEL
 event_booth_sale / product.template         / detailed_type (False)         : selection_keys is now '['combo', 'consu', 'event', 'event_booth', 'product', 'service']' ('['consu', 'course', 'event', 'event_booth', 'product', 'service']')
 ---XML records in module 'event_booth_sale'---
-DEL ir.model.constraint: event_booth_sale.constraint_event_booth_registration_unique_registration

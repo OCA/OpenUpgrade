@@ -80,25 +80,13 @@ NEW ir.actions.report: stock.return_label_report
 NEW ir.actions.server: stock.action_scrap
 NEW ir.actions.server: stock.action_toggle_is_locked
 NEW ir.actions.server: stock.action_view_set_to_zero_quants_tree
+DEL ir.actions.server: stock.stock_quant_stock_move_line_desynchronization
 NEW ir.model.access: stock.access_stock_quant_relocate
 DEL ir.model.access: stock.access_stock_immediate_transfer
 DEL ir.model.access: stock.access_stock_immediate_transfer_line
-DEL ir.model.constraint: stock.constraint_stock_location_barcode_company_uniq
-DEL ir.model.constraint: stock.constraint_stock_location_inventory_freq_nonneg
-DEL ir.model.constraint: stock.constraint_stock_package_type_barcode_uniq
-DEL ir.model.constraint: stock.constraint_stock_package_type_positive_height
-DEL ir.model.constraint: stock.constraint_stock_package_type_positive_length
-DEL ir.model.constraint: stock.constraint_stock_package_type_positive_max_weight
-DEL ir.model.constraint: stock.constraint_stock_package_type_positive_width
-DEL ir.model.constraint: stock.constraint_stock_picking_name_uniq
-DEL ir.model.constraint: stock.constraint_stock_storage_category_capacity_positive_quantity
-DEL ir.model.constraint: stock.constraint_stock_storage_category_capacity_unique_package_type
-DEL ir.model.constraint: stock.constraint_stock_storage_category_capacity_unique_product
-DEL ir.model.constraint: stock.constraint_stock_storage_category_positive_max_weight
-DEL ir.model.constraint: stock.constraint_stock_warehouse_orderpoint_product_location_check
-DEL ir.model.constraint: stock.constraint_stock_warehouse_orderpoint_qty_multiple_check
-DEL ir.model.constraint: stock.constraint_stock_warehouse_warehouse_code_uniq
-DEL ir.model.constraint: stock.constraint_stock_warehouse_warehouse_name_uniq
+ir.model.constraint: stock.constraint_stock_package_type_positive_height (changed definition: is now 'check(height>=0.0)' ('check(height>=0)'))
+ir.model.constraint: stock.constraint_stock_package_type_positive_length (changed definition: is now 'check(packaging_length>=0.0)' ('check(packaging_length>=0)'))
+ir.model.constraint: stock.constraint_stock_package_type_positive_width (changed definition: is now 'check(width>=0.0)' ('check(width>=0)'))
 NEW ir.ui.menu: stock.in_picking
 NEW ir.ui.menu: stock.int_picking
 NEW ir.ui.menu: stock.menu_stock_adjustments

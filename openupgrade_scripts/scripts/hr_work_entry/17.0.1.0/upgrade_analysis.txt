@@ -3,8 +3,3 @@
 hr_work_entry / hr.work.entry.type       / external_code (char)          : NEW
 ---XML records in module 'hr_work_entry'---
 NEW hr.work.entry.type: hr_work_entry.overtime_work_entry_type
-DEL ir.model.constraint: hr_work_entry.constraint_hr_user_work_entry_employee_user_id_employee_id_unique
-DEL ir.model.constraint: hr_work_entry.constraint_hr_work_entry__work_entries_no_validated_conflict
-DEL ir.model.constraint: hr_work_entry.constraint_hr_work_entry__work_entry_has_end
-DEL ir.model.constraint: hr_work_entry.constraint_hr_work_entry__work_entry_start_before_end
-DEL ir.model.constraint: hr_work_entry.constraint_hr_work_entry_type_unique_work_entry_code
