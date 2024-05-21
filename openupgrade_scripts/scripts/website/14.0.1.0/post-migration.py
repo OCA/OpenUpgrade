@@ -1,6 +1,7 @@
 # Copyright 2021 ForgeFlow S.L.  <https://www.forgeflow.com>
 # Copyright 2023 Tecnativa - Pilar Vargas
 # License AGPL-3.0 or later (http://www.gnu.org/licenses/agpl.html).
+import os
 import re
 
 from openupgradelib import openupgrade
@@ -9,7 +10,15 @@ from openupgradelib.openupgrade_140 import convert_html_string_13to14
 
 def extract_footer_copyright_company_name(env):
     """Replace Copyright content in the footer so as not to lose
-    content from previous versions if the copyright has been customised."""
+    content from previous versions if the copyright has been customised.
+
+    Don't do anything if the target version is not 14.0, as if not, we have a website
+    view tree copy of the main website.layout, provoking in later versions inheritance
+    problems.
+    """
+    target_version = os.environ.get("OPENUPGRADE_TARGET_VERSION", "14.0")
+    if target_version != "14.0":
+        return
     for website in env["website"].search([]):
         # Search for old copyright and if it does not exist set the default company name
         web_frontend_layout_view = env["ir.ui.view"].search(
