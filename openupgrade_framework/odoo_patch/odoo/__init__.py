@@ -1,1 +1,1 @@
-from . import addons, api, models, modules, tests
+from . import addons, api, models, modules
