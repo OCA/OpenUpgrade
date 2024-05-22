@@ -1,0 +1,40 @@
+---Models in module 'project_todo'---
+new model mail.activity.todo.create [transient]
+# NOTHING TO DO
+
+---Fields in module 'project_todo'---
+project_todo / mail.activity.type       / category (False)              : previously in module note
+NOTHING TO DO
+
+---XML records in module 'project_todo'---
+NEW ir.actions.act_window: project_todo.project_task_action_convert_todo_to_task
+NEW ir.actions.act_window: project_todo.project_task_action_todo
+NEW ir.actions.act_window.view: project_todo.project_task_action_convert_todo_to_task_form_view
+NEW ir.actions.act_window.view: project_todo.project_task_action_todo_activity_view
+NEW ir.actions.act_window.view: project_todo.project_task_action_todo_form_view
+NEW ir.actions.act_window.view: project_todo.project_task_action_todo_kanban_view
+NEW ir.actions.act_window.view: project_todo.project_task_action_todo_tree_view
+NEW ir.actions.server: project_todo.project_task_preload_action_todo
+NEW ir.model.access: project_todo.access_mail_activity_todo_create
+NEW ir.model.access: project_todo.access_project_tags_user
+NEW ir.model.access: project_todo.access_project_task_type_user
+NEW ir.model.access: project_todo.access_task_on_partner
+NEW ir.rule: project_todo.task_edition_rule_internal (noupdate)
+NEW ir.rule: project_todo.task_visibility_rule_project_user (noupdate)
+NEW ir.ui.menu: project_todo.menu_todo_todos
+NEW ir.ui.view: project_todo.mail_activity_todo_create_popup
+NEW ir.ui.view: project_todo.project_task_view_todo_activity
+NEW ir.ui.view: project_todo.project_task_view_todo_conversion_form
+NEW ir.ui.view: project_todo.project_task_view_todo_form
+NEW ir.ui.view: project_todo.project_task_view_todo_kanban
+NEW ir.ui.view: project_todo.project_task_view_todo_quick_create_form
+NEW ir.ui.view: project_todo.project_task_view_todo_search
+NEW ir.ui.view: project_todo.project_task_view_todo_tree
+NEW ir.ui.view: project_todo.todo_user_onboarding (noupdate)
+# NOTHING TO DO: new feature
+
+NEW mail.activity.type: project_todo.mail_activity_data_reminder [renamed from note module] (noupdate)
+# DONE: rename in pre-migration
+
+NEW res.groups: project_todo.group_onboarding_todo
+# NOTHING TO DO: new feature
