@@ -1797,6 +1797,7 @@ def _get_tags(env, names):
         tags |= tag
     return tags
 
+
 def _repartition_lines_iter(account_tax):
     """Special loop over repartition lines in an account.tax"""
     for repartition in account_tax.invoice_repartition_line_ids:
