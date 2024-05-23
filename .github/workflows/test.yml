@@ -7,7 +7,8 @@ name: Test OpenUpgrade migration
 
 on:
   push:
-    branches: ["18.0*"]
+    branches: ["17.0*"]
+  pull_request:
 
 jobs:
   test:
@@ -90,9 +91,11 @@ jobs:
           pip install asn1crypto
       - name: Test data
         run: |
-          for snippet in openupgrade/openupgrade_scripts/scripts/*/*/tests/data*.py; do
-            odoo-old/odoo-bin shell -d $DB < $snippet
-          done
+          if test -n "$(ls openupgrade/openupgrade_scripts/scripts/*/*/tests/data*.py 2> /dev/null)"; then
+             for snippet in openupgrade/openupgrade_scripts/scripts/*/*/tests/data*.py; do
+               odoo-old/odoo-bin shell -d $DB < $snippet
+             done
+          fi
       - name: OpenUpgrade test
         run: |
           # select modules and perform the upgrade
