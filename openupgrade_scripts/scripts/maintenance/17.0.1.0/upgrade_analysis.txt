@@ -25,7 +25,6 @@ maintenance  / maintenance.request      / repeat_until (date)           : NEW
 ---XML records in module 'maintenance'---
 NEW ir.actions.act_window: maintenance.action_maintenance_configuration
 DEL ir.cron: maintenance.maintenance_requests_cron
-DEL ir.model.constraint: maintenance.constraint_maintenance_equipment_serial_no
 NEW ir.ui.menu: maintenance.menu_maintenance_config
 NEW ir.ui.view: maintenance.maintenance_request_view_activity
 NEW ir.ui.view: maintenance.res_config_settings_view_form

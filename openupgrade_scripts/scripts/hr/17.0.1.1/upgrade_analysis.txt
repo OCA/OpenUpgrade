@@ -76,11 +76,6 @@ DEL ir.model.access: hr.access_hr_plan_activity_type_hr_user
 DEL ir.model.access: hr.access_hr_plan_employee
 DEL ir.model.access: hr.access_hr_plan_hr_user
 DEL ir.model.access: hr.access_hr_plan_wizard
-DEL ir.model.constraint: hr.constraint_hr_employee_barcode_uniq
-DEL ir.model.constraint: hr.constraint_hr_employee_category_name_uniq
-DEL ir.model.constraint: hr.constraint_hr_employee_user_uniq
-DEL ir.model.constraint: hr.constraint_hr_job_name_company_uniq
-DEL ir.model.constraint: hr.constraint_hr_job_no_of_recruitment_positive
 NEW ir.rule: hr.ir_rule_hr_contract_type_multi_company (noupdate)
 NEW ir.rule: hr.ir_rule_res_partner_bank_employees (noupdate)
 NEW ir.rule: hr.ir_rule_res_partner_bank_internal_users (noupdate)

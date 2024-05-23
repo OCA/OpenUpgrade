@@ -49,14 +49,7 @@ DEL ir.model.access: website_slides.access_slide_embed_all
 DEL ir.model.access: website_slides.access_slide_question_all
 DEL ir.model.access: website_slides.access_slide_slide_all
 DEL ir.model.access: website_slides.access_slide_tag_all
-DEL ir.model.constraint: website_slides.constraint_slide_channel_partner_channel_partner_uniq
-DEL ir.model.constraint: website_slides.constraint_slide_channel_partner_check_completion
-DEL ir.model.constraint: website_slides.constraint_slide_slide_exclusion_html_content_and_url
-DEL ir.model.constraint: website_slides.constraint_slide_slide_partner_check_vote
-DEL ir.model.constraint: website_slides.constraint_slide_slide_partner_slide_partner_uniq
-DEL ir.model.constraint: website_slides.constraint_slide_slide_resource_check_file_type
-DEL ir.model.constraint: website_slides.constraint_slide_slide_resource_check_url
-DEL ir.model.constraint: website_slides.constraint_slide_tag_slide_tag_unique
+NEW ir.model.constraint: website_slides.constraint_slide_channel_check_enroll
 NEW ir.rule: website_slides.rule_slide_channel_visibility_public_user (noupdate)
 NEW ir.rule: website_slides.rule_slide_channel_visibility_signed_in_user (noupdate)
 NEW ir.rule: website_slides.rule_slide_slide_public_user (noupdate)

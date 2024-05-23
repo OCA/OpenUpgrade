@@ -54,13 +54,7 @@ NEW ir.actions.report: mrp.action_report_mrp_mo_overview
 NEW ir.actions.server: mrp.action_plan_with_components_availability
 DEL ir.model.access: mrp.access_mrp_immediate_production
 DEL ir.model.access: mrp.access_mrp_immediate_production_line
-DEL ir.model.constraint: mrp.constraint_mrp_bom_line_bom_qty_zero
-DEL ir.model.constraint: mrp.constraint_mrp_bom_qty_positive
-DEL ir.model.constraint: mrp.constraint_mrp_production_name_uniq
-DEL ir.model.constraint: mrp.constraint_mrp_production_qty_positive
-DEL ir.model.constraint: mrp.constraint_mrp_workcenter_capacity_positive_capacity
-DEL ir.model.constraint: mrp.constraint_mrp_workcenter_capacity_unique_product
-DEL ir.model.constraint: mrp.constraint_mrp_workcenter_tag_tag_name_unique
+NEW ir.model.constraint: mrp.constraint_mrp_unbuild_qty_positive
 NEW ir.ui.menu: mrp.mrp_operation_picking
 DEL ir.ui.menu: mrp.menu_mrp_production_report
 NEW ir.ui.view: mrp.mo_overview_byproducts

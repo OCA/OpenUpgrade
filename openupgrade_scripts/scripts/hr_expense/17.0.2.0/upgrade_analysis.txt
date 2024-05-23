@@ -44,7 +44,6 @@ hr_expense   / res.company              / expense_product_id (many2one) : NEW re
 ---XML records in module 'hr_expense'---
 ir.actions.act_window: hr_expense.action_hr_expense_sheet_my_all (deleted domain)
 NEW ir.actions.report: hr_expense.action_report_expense_sheet_img
-DEL ir.model.constraint: hr_expense.constraint_hr_expense_sheet_journal_id_required_posted
 NEW ir.ui.view: hr_expense.product_product_expense_kanban_view
 NEW ir.ui.view: hr_expense.report_expense_sheet_img
 NEW mail.message.subtype: hr_expense.mt_expense_entry_delete (noupdate)

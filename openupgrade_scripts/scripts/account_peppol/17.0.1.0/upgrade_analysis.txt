@@ -12,7 +12,7 @@ account_peppol / res.company              / account_peppol_proxy_state (selectio
 account_peppol / res.company              / is_account_peppol_participant (boolean): NEW
 account_peppol / res.company              / peppol_purchase_journal_id (many2one): NEW relation: account.journal, isfunction: function, stored
 account_peppol / res.partner              / account_peppol_is_endpoint_valid (boolean): NEW isfunction: function, stored
-account_peppol / res.partner              / account_peppol_validity_last_check (date): NEW
+account_peppol / res.partner              / account_peppol_validity_last_check (date): NEW isfunction: function, stored
 ---XML records in module 'account_peppol'---
 NEW ir.actions.server: account_peppol.partner_action_verify_peppol
 NEW ir.cron: account_peppol.ir_cron_peppol_get_message_status

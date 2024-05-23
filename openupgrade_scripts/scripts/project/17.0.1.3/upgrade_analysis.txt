@@ -104,10 +104,8 @@ DEL ir.cron: project.ir_cron_recurring_tasks (noupdate)
 NEW ir.model.access: project.access_mail_activity_plan_project_manager
 NEW ir.model.access: project.access_mail_activity_plan_template_project_manager
 NEW ir.model.access: project.access_project_project_stage_delete_wizard
-DEL ir.model.constraint: project.constraint_project_collaborator_unique_collaborator
-DEL ir.model.constraint: project.constraint_project_project_project_date_greater
-DEL ir.model.constraint: project.constraint_project_tags_name_uniq
-DEL ir.model.constraint: project.constraint_project_task_user_rel_project_personal_stage_unique
+NEW ir.model.constraint: project.constraint_project_task_private_task_has_no_parent
+NEW ir.model.constraint: project.constraint_project_task_recurring_task_has_no_parent
 NEW ir.rule: project.mail_plan_rule_group_project_manager_task (noupdate)
 NEW ir.rule: project.mail_plan_templates_rule_group_project_manager_task (noupdate)
 NEW ir.rule: project.project_project_stage_rule (noupdate)

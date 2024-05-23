@@ -5,5 +5,3 @@ lunch        / lunch.supplier           / activity_user_id (many2one)   : not re
 lunch        / lunch.supplier           / activity_user_id (many2one)   : now a function
 lunch        / lunch.supplier           / message_main_attachment_id (many2one): DEL relation: ir.attachment
 ---XML records in module 'lunch'---
-DEL ir.model.constraint: lunch.constraint_lunch_alert_notification_time_range
-DEL ir.model.constraint: lunch.constraint_lunch_supplier_automatic_email_time_range

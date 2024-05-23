@@ -7,8 +7,6 @@ purchase     / purchase.order           / rating_ids (one2many)         : NEW re
 purchase     / purchase.order.line      / discount (float)              : NEW hasdefault: compute
 purchase     / res.partner              / buyer_id (many2one)           : NEW relation: res.users
 ---XML records in module 'purchase'---
-DEL ir.model.constraint: purchase.constraint_purchase_order_line_accountable_required_fields
-DEL ir.model.constraint: purchase.constraint_purchase_order_line_non_accountable_null_fields
 NEW ir.ui.view: purchase.document_tax_totals
 NEW ir.ui.view: purchase.product_template_search_view_purchase
 NEW ir.ui.view: purchase.product_view_kanban_catalog_purchase_only

@@ -1,5 +1,11 @@
 ---Models in module 'website_sale'---
 ---Fields in module 'website_sale'---
+website_sale / delivery.carrier         / can_publish (boolean)         : previously in module website_sale_delivery
+website_sale / delivery.carrier         / is_published (boolean)        : previously in module website_sale_delivery
+website_sale / delivery.carrier         / website_description (text)    : previously in module website_sale_delivery
+website_sale / delivery.carrier         / website_id (many2one)         : previously in module website_sale_delivery
+website_sale / delivery.carrier         / website_published (boolean)   : previously in module website_sale_delivery
+website_sale / delivery.carrier         / website_url (char)            : previously in module website_sale_delivery
 website_sale / product.document         / shown_on_product_page (boolean): NEW
 website_sale / product.product          / rating_ids (one2many)         : is now stored
 website_sale / product.product          / rating_ids (one2many)         : module is now 'rating' ('website_sale')
@@ -13,10 +19,10 @@ website_sale / product.template         / description_ecommerce (html)  : NEW
 website_sale / product.template         / rating_ids (one2many)         : module is now 'rating' ('website_sale')
 website_sale / res.company              / website_sale_onboarding_payment_provider_state (selection): DEL selection_keys: ['done', 'just_done', 'not_done']
 website_sale / sale.order               / access_point_address (json)   : NEW
+website_sale / sale.order               / amount_delivery (float)       : previously in module website_sale_delivery
 website_sale / website                  / currency_id (many2one)        : not related anymore
 website_sale / website                  / currency_id (many2one)        : now a function
 website_sale / website                  / show_line_subtotals_tax_selection (selection): NEW required, selection_keys: ['tax_excluded', 'tax_included'], hasdefault: default
-website_sale_delivery / sale.order               / amount_delivery (float)       : not stored anymore
 ---XML records in module 'website_sale'---
 DEL ir.actions.act_window: website_sale.action_invoices_ecommerce
 DEL ir.actions.act_window: website_sale.product_public_tags_action
@@ -90,7 +96,6 @@ NEW ir.ui.menu: website_sale.menu_delivery_zip_prefix
 NEW ir.ui.menu: website_sale.menu_ecommerce_delivery [renamed from website_sale_delivery module]
 NEW ir.ui.menu: website_sale.menu_ecommerce_payment_methods
 DEL ir.ui.menu: website_sale.menu_ecommerce_payment_icons
-DEL ir.ui.menu: website_sale_delivery.menu_ecommerce_delivery [renamed to website_sale module]
 NEW ir.ui.view: website_sale.accept_terms_and_conditions
 NEW ir.ui.view: website_sale.badge_extra_price
 NEW ir.ui.view: website_sale.cart_delivery
@@ -134,11 +139,3 @@ DEL ir.ui.view: website_sale.template_header_magazine
 DEL ir.ui.view: website_sale.template_header_slogan
 DEL ir.ui.view: website_sale.view_order_tree
 DEL ir.ui.view: website_sale.view_quotation_tree
-DEL ir.ui.view: website_sale_delivery.cart_delivery
-DEL ir.ui.view: website_sale_delivery.payment_delivery
-DEL ir.ui.view: website_sale_delivery.payment_delivery_methods
-DEL ir.ui.view: website_sale_delivery.payment_delivery_shipping_method
-DEL ir.ui.view: website_sale_delivery.res_config_settings_view_form
-DEL ir.ui.view: website_sale_delivery.view_delivery_carrier_form_website_delivery
-DEL ir.ui.view: website_sale_delivery.view_delivery_carrier_search_inherit_website_sale_delivery
-DEL ir.ui.view: website_sale_delivery.view_delivery_carrier_tree_inherit_website_sale_delivery

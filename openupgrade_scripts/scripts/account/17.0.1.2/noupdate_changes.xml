@@ -18,9 +18,6 @@
   <record id="account_move_line_comp_rule" model="ir.rule">
     <field name="domain_force">[('company_id', 'in', company_ids)]</field>
   </record>
-  <record id="account_payment_comp_rule" model="ir.rule">
-    <field name="domain_force">[('company_id', 'in', company_ids)]</field>
-  </record>
   <record id="account_payment_term_15days" model="account.payment.term">
     <field name="line_ids" eval="[Command.clear(), Command.create({'value': 'percent', 'value_amount': 100.0, 'nb_days': 15})]"/>
   </record>
@@ -46,6 +43,9 @@
   </record>
   <record id="account_payment_term_advance_60days" model="account.payment.term">
     <field name="line_ids" eval="[                 Command.clear(),                 Command.create({'value': 'percent', 'value_amount': 30.0, 'nb_days': 0}),                 Command.create({'value': 'percent', 'value_amount': 70.0, 'nb_days': 60})]"/>
+  </record>
+  <record id="account_payment_term_comp_rule" model="ir.rule">
+    <field name="domain_force">['|', ('company_id', '=', False), ('company_id', 'parent_of', company_ids)]</field>
   </record>
   <record id="account_payment_term_end_following_month" model="account.payment.term">
     <field name="line_ids" eval="[Command.clear(), Command.create({'value': 'percent', 'value_amount': 100.0, 'delay_type':'days_after_end_of_next_month', 'nb_days': 0})]"/>

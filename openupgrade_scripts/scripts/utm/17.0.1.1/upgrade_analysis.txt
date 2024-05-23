@@ -2,8 +2,4 @@
 ---Fields in module 'utm'---
 utm          / utm.campaign             / active (boolean)              : NEW hasdefault: default
 ---XML records in module 'utm'---
-DEL ir.model.constraint: utm.constraint_utm_campaign_unique_name
-DEL ir.model.constraint: utm.constraint_utm_medium_unique_name
-DEL ir.model.constraint: utm.constraint_utm_source_unique_name
-DEL ir.model.constraint: utm.constraint_utm_tag_name_uniq
 NEW ir.ui.view: utm.utm_stage_view_form

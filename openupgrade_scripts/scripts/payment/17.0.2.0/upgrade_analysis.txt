@@ -54,7 +54,6 @@ DEL ir.model.access: payment.payment_token_all
 DEL ir.model.access: payment.payment_token_user
 DEL ir.model.access: payment.payment_transaction_all
 DEL ir.model.access: payment.payment_transaction_user [renamed to account_payment module]
-DEL ir.model.constraint: payment.constraint_payment_transaction_reference_uniq
 NEW ir.rule: payment.payment_capture_wizard_rule (noupdate)
 DEL ir.rule: payment.payment_transaction_user_rule (noupdate)
 NEW ir.ui.view: payment.company_mismatch_warning

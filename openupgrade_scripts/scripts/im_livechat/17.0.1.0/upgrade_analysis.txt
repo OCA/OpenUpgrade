@@ -52,7 +52,7 @@ DEL ir.model.access: im_livechat.access_chatbot_script
 DEL ir.model.access: im_livechat.access_chatbot_script_step
 DEL ir.model.access: im_livechat.access_livechat_channel
 DEL ir.model.access: im_livechat.access_livechat_channel_rule
-DEL ir.model.constraint: im_livechat.constraint_chatbot_message__unique_mail_message_id
+NEW ir.model.constraint: im_livechat.constraint_discuss_channel_livechat_operator_id
 DEL ir.model.constraint: im_livechat.constraint_mail_channel_livechat_operator_id
 NEW ir.rule: im_livechat.ir_rule_discuss_channel_group_im_livechat_group_manager (noupdate)
 NEW ir.rule: im_livechat.ir_rule_discuss_channel_member_group_im_livechat_group_manager (noupdate)

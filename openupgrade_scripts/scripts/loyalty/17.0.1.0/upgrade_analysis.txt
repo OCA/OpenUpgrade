@@ -5,12 +5,6 @@ loyalty      / loyalty.card             / rating_ids (one2many)         : NEW re
 loyalty      / loyalty.program          / date_from (date)              : NEW
 loyalty      / loyalty.program          / pricelist_ids (many2many)     : NEW relation: product.pricelist
 ---XML records in module 'loyalty'---
-DEL ir.model.constraint: loyalty.constraint_loyalty_card_card_code_unique
-DEL ir.model.constraint: loyalty.constraint_loyalty_program_check_max_usage
-DEL ir.model.constraint: loyalty.constraint_loyalty_reward_discount_positive
-DEL ir.model.constraint: loyalty.constraint_loyalty_reward_product_qty_positive
-DEL ir.model.constraint: loyalty.constraint_loyalty_reward_required_points_positive
-DEL ir.model.constraint: loyalty.constraint_loyalty_rule_reward_point_amount_positive
 NEW ir.ui.view: loyalty.res_partner_form
 NEW loyalty.program: loyalty.gift_card_program
 NEW loyalty.reward: loyalty.gift_card_program_reward

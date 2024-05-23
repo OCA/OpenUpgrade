@@ -5,5 +5,5 @@ l10n_latam_invoice_document / l10n_latam.document.type / internal_type (selectio
 NEW ir.model.access: l10n_latam_invoice_document.access_l10n_latam_document_type_invoice
 NEW ir.model.access: l10n_latam_invoice_document.access_l10n_latam_document_type_readonly
 DEL ir.model.access: l10n_latam_invoice_document.access_l10n_latam_document_type_all
-DEL ir.model.constraint: l10n_latam_account_sequence.constraint_account_move_unique_name
-DEL ir.model.constraint: l10n_latam_account_sequence.constraint_account_move_unique_name_latam
+NEW ir.model.constraint: l10n_latam_invoice_document.constraint_account_move_unique_name [renamed from l10n_latam_account_sequence module]
+NEW ir.model.constraint: l10n_latam_invoice_document.constraint_account_move_unique_name_latam [renamed from l10n_latam_account_sequence module]

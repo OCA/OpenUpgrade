@@ -14,9 +14,12 @@ NEW ir.actions.server: hr_timesheet.unlink_employee_action
 NEW ir.model.access: hr_timesheet.access_hr_employee_delete_wizard
 DEL ir.model.access: hr_timesheet.access_project_task
 NEW ir.ui.view: hr_timesheet.hr_employee_delete_wizard_form
+NEW ir.ui.view: hr_timesheet.hr_timesheet_line_portal_tree
 NEW ir.ui.view: hr_timesheet.portal_my_task_allocated_hours_template
 NEW ir.ui.view: hr_timesheet.project_update_view_kanban_inherit
+NEW ir.ui.view: hr_timesheet.timesheet_view_form_portal_user
 NEW ir.ui.view: hr_timesheet.view_employee_tree_inherit_timesheet
+NEW ir.ui.view: hr_timesheet.view_kanban_account_analytic_line_portal_user
 DEL ir.ui.view: hr_timesheet.portal_my_task_planned_hours_template
 DEL ir.ui.view: hr_timesheet.project_sharing_inherit_project_task_view_tree
 DEL ir.ui.view: hr_timesheet.project_sharing_project_task_view_search_inherit_timesheet

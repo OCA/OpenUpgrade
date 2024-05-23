@@ -6,7 +6,7 @@ sms          / hr.contract              / message_has_sms_error (boolean): modul
 sms          / hr.leave                 / message_has_sms_error (boolean): module is now 'hr_holidays' ('sms')
 sms          / hr.leave.allocation      / message_has_sms_error (boolean): module is now 'hr_holidays' ('sms')
 sms          / ir.actions.server        / state (False)                 : selection_keys is now '['code', 'followers', 'mail_post', 'multi', 'next_activity', 'object_create', 'object_write', 'remove_followers', 'sms', 'webhook']' ('['code', 'followers', 'mail_post', 'multi', 'next_activity', 'object_create', 'object_write', 'sms']')
-sms          / mail.message             / message_type (False)          : selection_keys is now '['auto_comment', 'comment', 'email', 'email_outgoing', 'notification', 'sms', 'user_notification']' ('['comment', 'email', 'notification', 'sms', 'user_notification']')
+sms          / mail.message             / message_type (False)          : selection_keys is now '['auto_comment', 'comment', 'email', 'email_outgoing', 'notification', 'sms', 'user_notification']' ('['auto_comment', 'comment', 'email', 'notification', 'sms', 'user_notification']')
 sms          / mail.notification        / failure_type (False)          : selection_keys is now '['mail_bounce', 'mail_email_invalid', 'mail_email_missing', 'mail_from_invalid', 'mail_from_missing', 'mail_smtp', 'sms_acc', 'sms_country_not_supported', 'sms_credit', 'sms_expired', 'sms_invalid_destination', 'sms_not_allowed', 'sms_not_delivered', 'sms_number_format', 'sms_number_missing', 'sms_registration_needed', 'sms_rejected', 'sms_server', 'unknown']' ('['mail_email_invalid', 'mail_email_missing', 'mail_smtp', 'sms_acc', 'sms_credit', 'sms_number_format', 'sms_number_missing', 'sms_server', 'unknown']')
 sms          / mail.notification        / sms_id (many2one)             : not stored anymore
 sms          / mail.notification        / sms_id (many2one)             : now a function
@@ -21,3 +21,5 @@ sms          / sms.tracker              / sms_uuid (char)               : NEW re
 ---XML records in module 'sms'---
 NEW ir.model.access: sms.access_sms_tracker_all
 NEW ir.model.access: sms.access_sms_tracker_system
+NEW ir.model.constraint: sms.constraint_sms_sms_uuid_unique
+NEW ir.model.constraint: sms.constraint_sms_tracker_sms_uuid_unique

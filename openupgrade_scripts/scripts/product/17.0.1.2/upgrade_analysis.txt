@@ -40,11 +40,7 @@ NEW ir.actions.report: product.report_product_template_label_4x12_noprice
 NEW ir.actions.report: product.report_product_template_label_4x7
 DEL ir.actions.report: product.report_product_template_label
 NEW ir.model.access: product.access_product_document_user
-DEL ir.model.constraint: product.constraint_product_attribute_value_value_company_uniq
-DEL ir.model.constraint: product.constraint_product_packaging_barcode_uniq
-DEL ir.model.constraint: product.constraint_product_packaging_positive_qty
-DEL ir.model.constraint: product.constraint_product_tag_name_uniq
-DEL ir.model.constraint: product.constraint_product_template_attribute_value_attribute_value_unique
+NEW ir.model.constraint: product.constraint_product_attribute_check_multi_checkbox_no_variant
 NEW ir.rule: product.product_document_comp_rule (noupdate)
 NEW ir.ui.view: product.product_attribute_value_list
 NEW ir.ui.view: product.product_document_form

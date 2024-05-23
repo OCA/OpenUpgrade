@@ -9,10 +9,6 @@ NEW ir.actions.report: hr_skills.action_report_employee_cv
 NEW ir.actions.server: hr_skills.action_print_employees_cv
 DEL ir.actions.server: hr_skills.action_open_skills_log_employee
 NEW ir.model.access: hr_skills.access_hr_employee_cv_wizard
-DEL ir.model.constraint: hr_skills.constraint_hr_employee_skill__unique_skill
-DEL ir.model.constraint: hr_skills.constraint_hr_employee_skill_log__unique_skill_log
-DEL ir.model.constraint: hr_skills.constraint_hr_resume_line_date_check
-DEL ir.model.constraint: hr_skills.constraint_hr_skill_level_check_level_progress
 NEW ir.ui.view: hr_skills.hr_employee_cv_wizard_view_form
 NEW ir.ui.view: hr_skills.report_employee_cv
 NEW ir.ui.view: hr_skills.report_employee_cv_company

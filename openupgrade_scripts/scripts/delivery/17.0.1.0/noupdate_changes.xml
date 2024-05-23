@@ -1,7 +1,7 @@
 <?xml version='1.0' encoding='utf-8'?>
 <odoo>
   <record id="delivery_carrier_comp_rule" model="ir.rule">
-    <field name="domain_force">['|', ('company_id', 'in', company_ids), ('company_id', '=', False)]</field>
+    <field name="domain_force">[('company_id', 'in', company_ids + [False])]</field>
   </record>
   <record id="free_delivery_carrier" model="delivery.carrier">
     <field name="amount"/>

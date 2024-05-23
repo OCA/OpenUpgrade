@@ -44,9 +44,7 @@ DEL ir.model.access: delivery.access_delivery_carrier_stock_manager [renamed to 
 DEL ir.model.access: delivery.access_delivery_carrier_stock_user [renamed to stock_delivery module]
 DEL ir.model.access: delivery.access_delivery_price_rule_stock_manager [renamed to stock_delivery module]
 DEL ir.model.access: delivery.access_delivery_zip_prefix_stock_manager [renamed to stock_delivery module]
-DEL ir.model.constraint: delivery.constraint_delivery_carrier_margin_not_under_100_percent
-DEL ir.model.constraint: delivery.constraint_delivery_carrier_shipping_insurance_is_percentage
-DEL ir.model.constraint: delivery.constraint_delivery_zip_prefix_name_uniq
+ir.model.constraint: delivery.constraint_delivery_carrier_margin_not_under_100_percent (changed definition: is now 'check(margin >= -1)' ('check(margin >= -100)'))
 DEL ir.ui.menu: delivery.menu_action_delivery_carrier_form [renamed to stock_delivery module]
 DEL ir.ui.menu: delivery.menu_delivery_zip_prefix [renamed to stock_delivery module]
 DEL ir.ui.view: delivery.choose_delivery_package_view_form

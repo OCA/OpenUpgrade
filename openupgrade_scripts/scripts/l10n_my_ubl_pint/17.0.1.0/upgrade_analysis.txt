@@ -1,0 +1,14 @@
+---Models in module 'l10n_my_ubl_pint'---
+new model account.edi.xml.pint_my [abstract]
+---Fields in module 'l10n_my_ubl_pint'---
+l10n_my_ubl_pint / res.partner              / sst_registration_number (char): NEW
+l10n_my_ubl_pint / res.partner              / ttx_registration_number (char): NEW
+l10n_my_ubl_pint / res.partner              / ubl_cii_format (False)        : NEW selection_keys: ['facturx', 'nlcius', 'pint_jp', 'pint_my', 'ubl_a_nz', 'ubl_bis3', 'ubl_sg', 'xrechnung'], mode: modify
+---XML records in module 'l10n_my_ubl_pint'---
+NEW ir.ui.view: l10n_my_ubl_pint.l10n_my_report_invoice_document
+NEW ir.ui.view: l10n_my_ubl_pint.l10n_my_ubl_pint_external_layout_bold
+NEW ir.ui.view: l10n_my_ubl_pint.l10n_my_ubl_pint_external_layout_boxed
+NEW ir.ui.view: l10n_my_ubl_pint.l10n_my_ubl_pint_external_layout_standard
+NEW ir.ui.view: l10n_my_ubl_pint.l10n_my_ubl_pint_external_layout_striped
+NEW ir.ui.view: l10n_my_ubl_pint.view_company_form_inherit_l10n_my_ubl_pint
+NEW ir.ui.view: l10n_my_ubl_pint.view_partner_form_inherit_l10n_my_ubl_pint
