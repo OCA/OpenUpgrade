@@ -1,0 +1,57 @@
+---Models in module 'hr_skills'---
+new model hr.employee.skill.report [abstract]
+# NOTHING TO DO: Abstract model
+
+---Fields in module 'hr_skills'---
+hr_skills    / hr.employee              / skill_ids (many2many)         : NEW relation: hr.skill, isfunction: function, stored
+# DONE: pre-migration: Create dummy table for avoiding the compute
+# DONE: post-migration: Populate the real data
+
+hr_skills    / hr.employee.skill        / _order                        : _order is now 'skill_type_id, skill_level_id' ('skill_level_id')
+# NOTHING TO DO: The new order is OK
+
+new model hr.employee.skill.log
+hr_skills    / hr.employee.skill.log    / date (date)                   : NEW hasdefault: default
+hr_skills    / hr.employee.skill.log    / department_id (many2one)      : NEW relation: hr.department
+hr_skills    / hr.employee.skill.log    / employee_id (many2one)        : NEW relation: hr.employee, required
+hr_skills    / hr.employee.skill.log    / level_progress (integer)      : NEW isrelated: related, stored
+hr_skills    / hr.employee.skill.log    / skill_id (many2one)           : NEW relation: hr.skill, required, hasdefault: compute
+hr_skills    / hr.employee.skill.log    / skill_level_id (many2one)     : NEW relation: hr.skill.level, required, hasdefault: compute
+hr_skills    / hr.employee.skill.log    / skill_type_id (many2one)      : NEW relation: hr.skill.type, required
+# NOTHING TO DO: New feature for registering previous skill levels. On v15, there's no trace of this that we can get for reconstructing the table.
+
+hr_skills    / hr.skill                 / _order                        : _order is now 'sequence, name' ('id')
+hr_skills    / hr.skill                 / sequence (integer)            : NEW hasdefault: default
+# NOTHING TO DO: New order by sequence and then by name. The sequence gets 10 for all the records, so effectively is by name, which seems OK, but no choice here.
+
+hr_skills    / hr.skill                 / skill_type_id (many2one)      : now required
+# NOTHING TO DO: By UI it was already required, so all the records should have it filled.
+
+hr_skills    / hr.skill.level           / default_level (boolean)       : NEW
+# NOTHING TO DO: New feature for auto-selecting a level when adding a skill, but it starts with everything to False, so no behavior change on migration
+
+hr_skills    / hr.skill.type            / _order                        : _order is now 'name' ('id')
+# NOTHING TO DO: New order by alphabetical order. You may want it or not, but that's it how it goes now.
+
+---XML records in module 'hr_skills'---
+NEW ir.actions.act_window: hr_skills.action_hr_employee_skill_log_department
+NEW ir.actions.act_window: hr_skills.action_hr_employee_skill_log_employee
+NEW ir.actions.act_window: hr_skills.hr_employee_skill_report_action
+NEW ir.actions.server: hr_skills.action_open_skills_log_department
+NEW ir.actions.server: hr_skills.action_open_skills_log_employee
+NEW ir.model.access: hr_skills.access_hr_employee_skill_log
+NEW ir.model.access: hr_skills.access_hr_employee_skill_report
+NEW ir.model.constraint: hr_skills.constraint_hr_employee_skill_log__unique_skill_log
+NEW ir.model.constraint: hr_skills.constraint_hr_skill_level_check_level_progress
+NEW ir.rule: hr_skills.hr_employee_skill_report_multicompany (noupdate)
+NEW ir.ui.menu: hr_skills.hr_employee_skill_report_menu
+NEW ir.ui.view: hr_skills.hr_department_view_kanban
+NEW ir.ui.view: hr_skills.hr_employee_skill_log_view_graph_department
+NEW ir.ui.view: hr_skills.hr_employee_skill_log_view_graph_employee
+NEW ir.ui.view: hr_skills.hr_employee_skill_log_view_search
+NEW ir.ui.view: hr_skills.hr_employee_skill_log_view_tree
+NEW ir.ui.view: hr_skills.hr_employee_skill_report_view_list
+NEW ir.ui.view: hr_skills.hr_employee_skill_report_view_pivot
+NEW ir.ui.view: hr_skills.hr_employee_skill_report_view_search
+NEW ir.ui.view: hr_skills.hr_skill_view_search
+# NOTHING TO DO: New ir records
