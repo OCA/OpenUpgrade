@@ -396,7 +396,6 @@ account      / res.company              / message_ids (one2many)        : NEW re
 account      / res.company              / message_main_attachment_id (many2one): NEW relation: ir.attachment
 account      / res.company              / quick_edit_mode (selection)   : NEW selection_keys: ['in_invoices', 'out_and_in_invoices', 'out_invoices']
 account      / res.company              / website_message_ids (one2many): NEW relation: mail.message
-account      / res.partner              / credit_limit (float)          : previously in module base
 account      / res.partner.bank         / activity_ids (one2many)       : NEW relation: mail.activity
 account      / res.partner.bank         / message_follower_ids (one2many): NEW relation: mail.followers
 account      / res.partner.bank         / message_ids (one2many)        : NEW relation: mail.message
@@ -404,6 +403,10 @@ account      / res.partner.bank         / message_main_attachment_id (many2one):
 account      / res.partner.bank         / website_message_ids (one2many): NEW relation: mail.message
 account      / res.users                / credit_limit (float)          : previously in module base
 # NOTHING TO DO
+
+account      / res.partner              / credit_limit (float)          : previously in module base
+# DONE: pre-migration: Rename column for avoiding confusions when looking DB schema
+# DONE: post-migration: Convert the value to property dependent
 
 ---XML records in module 'account'---
 DEL account.account.type: account.data_account_off_sheet (noupdate)

@@ -1,5 +1,5 @@
 # Copyright 2023 Viindoo - Trịnh Ngọc Hưng
-# Copyright 2023 Tecnativa - Pedro M. Baeza
+# Copyright 2023-2024 Tecnativa - Pedro M. Baeza
 # License AGPL-3.0 or later (http://www.gnu.org/licenses/agpl.html).
 from openupgradelib import openupgrade
 
@@ -51,3 +51,8 @@ def migrate(env, version):
         _deleted_xml_records,
     )
     _compute_remaining_account_payment_amount_company_currency_signed(env)
+    # credit_limit converted to company dependent
+    old_column = openupgrade.get_legacy_name("credit_limit")
+    openupgrade.convert_to_company_dependent(
+        env, "res.partner", old_column, "credit_limit"
+    )
