@@ -104,7 +104,9 @@ def _migrate_placeholder_html(string):
     """
     Replace dynamic placeholders in HTML fields:
     Example: 'Your name is ${object.name}' -> 'Your name is <t t-out="object.name"></t>'
+    Example:'${object.html_content | safe}' -> '<t t-out="object.html_content"></t>'
     """
+    string = re.sub(r"\|\s*safe\s*(?=\W|$)", "", string)
     pattern = r"\$\{([^}]*)\}"
     string = re.sub(pattern, repl_placeholder, string)
     return string
