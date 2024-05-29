@@ -59,6 +59,7 @@ renamed_modules = {
     # OCA/l10n-spain
     "l10n_es_account_bank_statement_import_n43": "l10n_es_account_statement_import_n43",
     # OCA/server-tools
+    "base_jsonify": "jsonifier",
     "openupgrade_records": "upgrade_analysis",
     # OCA/web
     "web_confirm_duplicate": "web_copy_confirm",
