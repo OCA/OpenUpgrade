@@ -86,8 +86,10 @@ mail         / mail.template            / model_object_field (many2one) : DEL re
 mail         / mail.template            / null_value (char)             : DEL
 mail         / mail.template            / sub_model_object_field (many2one): DEL relation: ir.model.fields
 mail         / mail.template            / sub_object (many2one)         : DEL relation: ir.model
-mail         / mail.template            / template_fs (char)            : NEW
 # NOTHING TO DO
+
+mail         / mail.template            / template_fs (char)            : NEW
+# DONE (end-migration): fill the new field
 
 
 mail         / res.partner              / channel_ids (many2many)       : table is now 'mail_channel_member' ('mail_channel_partner')
