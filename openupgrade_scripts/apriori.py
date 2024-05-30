@@ -30,6 +30,8 @@ renamed_modules = {
     "sale_coupon_portal_commercial_partner_applicability": "coupon_portal_commercial_partner_applicability",  # noqa: B950
     # OCA/stock-logistics-worehouse
     "stock_inventory_cost_info": "stock_quant_cost_info",
+    # OCA/timesheet:
+    "hr_timesheet_activity_begin_end": "hr_timesheet_begin_end",
     # OCA/...
 }
 
