@@ -73,6 +73,8 @@ merged_modules = {
     "website_sale_stock_available_display": "website_sale_stock",
     # OCA/hr-attendance
     "hr_attendance_user_list": "hr_attendance",
+    # OCA/l10n-germany
+    "l10n_de_steuernummer": "base_vat",
     # OCA/manufacture
     "mrp_subcontracting_resupply_link": "mrp_subcontracting_purchase",
     # OCA/pos
