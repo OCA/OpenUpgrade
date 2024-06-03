@@ -21,4 +21,8 @@ DEL crm.team: pos_sale.pos_sales_team [renamed to sales_team module] (noupdate)
 # NOTHING TO DO: renamed xmlids in sales_team
 
 DEL pos.config: point_of_sale.pos_config_main (noupdate)
-# DONE: post-migration: Try to delete record
+# NOTHING TO DO: point_of_sale.pos_config_main still exists in module
+    point_of_sale. Now the module pos_sale does not add a value for
+    crm_team_id in the xml file, it only rely on the default value
+    defined with a function in the model pos.config. The value set in
+    previous version should no be modified.

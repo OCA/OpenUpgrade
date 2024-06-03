@@ -26,9 +26,4 @@ def _map_crm_team_id(env):
 def migrate(env, version):
     openupgrade.load_data(
         env.cr, "pos_sale", "migrations/13.0.1.0/noupdate_changes.xml")
-    openupgrade.delete_records_safely_by_xml_id(
-        env, [
-            "point_of_sale.pos_config_main",
-        ]
-    )
     _map_crm_team_id(env)
