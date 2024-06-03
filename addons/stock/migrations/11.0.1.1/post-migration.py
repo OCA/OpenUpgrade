@@ -4,7 +4,6 @@
 from odoo.exceptions import UserError
 from odoo.tools import float_compare
 from openupgradelib import openupgrade
-from psycopg2.extensions import AsIs
 
 
 @openupgrade.logging()
@@ -102,10 +101,11 @@ def set_partially_available_state(env):
 
 
 @openupgrade.logging()
-def create_stock_move_line(env):
+def create_stock_move_line_done_untracked(env):
     """This method creates stock.move.line recreated from old
-    stock.pack.operation records. These records are created only for done
-    moves, as for those not done, it's handled later:
+    stock.pack.operation records for products without tracking by lot/serial.
+    These records are created only for done moves,
+    as for those not done, it's handled later:
 
     * For outgoing or internal transfers without reserved quantity, clicking on
       "Check availability" will work.
@@ -115,24 +115,99 @@ def create_stock_move_line(env):
     * For incoming transfers not yet validated, they are created later.
 
     Information is taken from stock.move.operation.link instead of
-    stock.pack.operation/stock.operation.lot as v10 grouped together several
+    stock.pack.operation/stock.pack.operation.lot as v10 grouped together several
     stock.move lines with the same product in the same operation record, making
     impossible to split the lot quantity across each move.
     """
-    # If coming from v8, chances of having stock_move_operation_link (smol)
-    # `reserved_quant_id` filled are low, so `lot_id` will remain empty on
-    # created sml on lot of cases. As in v8 there's no stock.pack.operation
-    # (spo)>stock.pack.operation.lot structure, we can use lot informed in spo
-    lot_column = 'openupgrade_legacy_9_0_lot_id'
-    if openupgrade.column_exists(env.cr, 'stock_pack_operation', lot_column):
-        lot_expr = "COALESCE(sq.lot_id, %s)" % lot_column
-    else:
-        lot_expr = 'sq.lot_id'
     openupgrade.logged_query(
         env.cr, """
         ALTER TABLE stock_move_line
         ADD COLUMN old_pack_id integer""",
     )
+    openupgrade.logged_query(
+        env.cr, """
+        INSERT INTO stock_move_line (
+            create_date,
+            create_uid,
+            date,
+            location_dest_id,
+            location_id,
+            move_id,
+            ordered_qty,
+            owner_id,
+            package_id,
+            picking_id,
+            product_id,
+            product_qty,
+            product_uom_id,
+            product_uom_qty,
+            qty_done,
+            reference,
+            state,
+            result_package_id,
+            write_date,
+            write_uid,
+            old_pack_id
+        )
+        SELECT
+            spo.create_date,
+            spo.create_uid,
+            spo.date,
+            spo.location_dest_id,
+            spo.location_id,
+            sm.id,
+            smol.qty,
+            spo.owner_id,
+            spo.package_id,
+            spo.picking_id,
+            spo.product_id,
+            smol.qty,
+            spo.product_uom_id,
+            smol.qty,
+            smol.qty,
+            COALESCE(sp.name, sm.name),
+            'done',
+            spo.result_package_id,
+            spo.write_date,
+            spo.write_uid,
+            spo.id
+        FROM stock_pack_operation spo
+            INNER JOIN stock_move_operation_link smol
+                ON smol.operation_id = spo.id
+            INNER JOIN stock_move sm ON sm.id = smol.move_id
+            INNER JOIN product_product pp ON spo.product_id = pp.id
+            LEFT JOIN product_template pt ON pt.id = pp.product_tmpl_id
+            LEFT JOIN stock_picking sp ON sp.id = spo.picking_id
+        WHERE
+            sm.state = 'done' AND
+            sm.scrapped IS NOT true AND
+            pt.tracking NOT IN ('serial', 'lot') AND
+            smol.qty > 0
+        """,
+    )
+
+
+@openupgrade.logging()
+def create_stock_move_line_done_tracked(env):
+    """This method creates stock.move.line recreated from old done
+    stock.pack.operation.lot records for products with tracking by lot/serial.
+
+    Lot information cannot be taken from stock.move.operation.link using the field
+    'reserved_quand_id' because it is a dead field.
+    stock.pack.operation/stock.operation.lot as v10 grouped together several
+    stock.move lines with the same product in the same operation record, making
+    it very difficult/time consuming to split the stock.pack.operation.lot across
+    each move.
+    So this method has a known limitation: if, on a picking, there are several
+    stock.move with the same product (not so common...), the
+    stock.move.line created by the migration will all be attached to the same
+    stock.move. Therefore, in this particular case, the sum of the qty of the
+    stock.move.line will be superior to the qty of the stock.move.
+    It would be possible to do another implementation where the stock.move.line
+    generated are spread across the different stock.move of the same product,
+    but it would required an implementation in Python which would increase
+    execution time a lot.
+    """
     openupgrade.logged_query(
         env.cr, """
         INSERT INTO stock_move_line (
@@ -166,34 +241,99 @@ def create_stock_move_line(env):
             spo.date,
             spo.location_dest_id,
             spo.location_id,
-            %s,
-            spl.name,
-            sm.id,
-            smol.qty,
+            spol.lot_id,
+            spol.lot_name,
+            smol.move_id,
+            spol.qty,
             spo.owner_id,
             spo.package_id,
             spo.picking_id,
             spo.product_id,
-            smol.qty,
+            spol.qty,
             spo.product_uom_id,
-            smol.qty,
-            smol.qty,
-            COALESCE(sp.name, sm.name),
+            spol.qty,
+            spol.qty,
+            COALESCE(sp.name, pp.default_code, pt.name),
             'done',
             spo.result_package_id,
             spo.write_date,
             spo.write_uid,
             spo.id
-        FROM stock_pack_operation spo
-            INNER JOIN stock_move_operation_link smol
-                ON smol.operation_id = spo.id
-            INNER JOIN stock_move sm ON sm.id = smol.move_id
-            INNER JOIN product_product pp ON spo.product_id = pp.id
+        FROM stock_pack_operation_lot spol
+            LEFT JOIN stock_pack_operation spo ON spo.id = spol.operation_id
+            LEFT JOIN (
+                SELECT DISTINCT ON (operation_id) * FROM stock_move_operation_link
+                ) AS smol ON smol.operation_id = spo.id
+            LEFT JOIN stock_move sm ON sm.id = smol.move_id
+            LEFT JOIN product_product pp ON spo.product_id = pp.id
+            LEFT JOIN product_template pt ON pt.id = pp.product_tmpl_id
             LEFT JOIN stock_picking sp ON sp.id = spo.picking_id
-            LEFT JOIN stock_quant sq ON sq.id = smol.reserved_quant_id
-            LEFT JOIN stock_production_lot spl ON spl.id = sq.lot_id
-        WHERE sm.state = 'done'
-        """, (AsIs(lot_expr), ),
+        WHERE
+            sp.state = 'done' AND
+            sm.scrapped IS NOT true AND
+            pt.tracking IN ('serial', 'lot') AND
+            spol.qty > 0
+        """,
+    )
+
+
+@openupgrade.logging()
+def create_stock_move_line_scrapped(env):
+    """This method creates stock.move.line for scrap operations
+    in done state. Scrap operations need a special treatment.
+    Draft stock.scrap don't have stock.move.line.
+    """
+    openupgrade.logged_query(
+        env.cr, """
+        INSERT INTO stock_move_line (
+            create_date,
+            create_uid,
+            write_date,
+            write_uid,
+            date,
+            location_dest_id,
+            location_id,
+            lot_id,
+            move_id,
+            ordered_qty,
+            owner_id,
+            package_id,
+            product_id,
+            product_qty,
+            product_uom_id,
+            product_uom_qty,
+            qty_done,
+            reference,
+            state
+        )
+        SELECT
+            sm.create_date,
+            sm.create_uid,
+            sm.write_date,
+            sm.write_uid,
+            sm.date,
+            sm.location_dest_id,
+            sm.location_id,
+            ss.lot_id,
+            ss.move_id,
+            ss.scrap_qty,
+            ss.owner_id,
+            ss.package_id,
+            ss.product_id,
+            ss.scrap_qty,
+            ss.product_uom_id,
+            ss.scrap_qty,
+            ss.scrap_qty,
+            ss.name,
+            'done'
+        FROM stock_scrap ss
+            LEFT JOIN stock_move sm ON sm.id = ss.move_id
+        WHERE
+            ss.state = 'done' AND
+            sm.state = 'done' AND
+            sm.scrapped IS true AND
+            ss.scrap_qty > 0
+        """,
     )
 
 
@@ -390,7 +530,6 @@ def create_stock_move_line_from_inventory_moves(env):
             location_dest_id,
             location_id,
             lot_id,
-            lot_name,
             move_id,
             ordered_qty,
             owner_id,
@@ -411,8 +550,7 @@ def create_stock_move_line_from_inventory_moves(env):
             sm.date,
             sm.location_dest_id,
             sm.location_id,
-            spl.id,
-            spl.name,
+            move_lot_rel.lot_id,
             sm.id,
             0,
             sm.restrict_partner_id,
@@ -434,7 +572,6 @@ def create_stock_move_line_from_inventory_moves(env):
                    WHERE sq.lot_id IS NOT NULL
                    GROUP BY move_id
         ) AS move_lot_rel ON move_lot_rel.move_id = sm.id
-        LEFT JOIN stock_production_lot spl ON move_lot_rel.lot_id = spl.id
         WHERE si.state = 'done' AND sm.state = 'done'
         """,
     )
@@ -485,7 +622,9 @@ def migrate(env, version):
     )
     # TODO: Get is_initial_demand_editable, is_locked values in stock.move
     set_partially_available_state(env)
-    create_stock_move_line(env)
+    create_stock_move_line_done_untracked(env)
+    create_stock_move_line_done_tracked(env)
+    create_stock_move_line_scrapped(env)
     fill_missing_lots_for_sml(env)
     create_stock_move_line_incoming(env)
     create_stock_move_line_reserved(env)

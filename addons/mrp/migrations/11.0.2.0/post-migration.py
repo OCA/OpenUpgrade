@@ -42,13 +42,18 @@ def create_stock_move_lines_from_stock_move_lots(env):
     """In mrp module, stock.move.lots model was renamed to
     stock.pack.operations before becoming stock.move.lines.
     So we need to create also stock move lines from stock move lots."""
+    # Remove parasite data which make the next sql query generate bad data
+    openupgrade.logged_query(
+        env.cr, """
+        DELETE FROM stock_move_lots WHERE done_move IS true AND quantity_done = 0"""
+    )
+    # 1st request : for raw materials
     insert_into = """create_date,
             create_uid,
             date,
             location_dest_id,
             location_id,
             lot_id,
-            lot_name,
             move_id,
             ordered_qty,
             owner_id,
@@ -74,7 +79,6 @@ def create_stock_move_lines_from_stock_move_lots(env):
             sm.location_dest_id,
             sm.location_id,
             sml.lot_id,
-            spl.name,
             sm.id,
             sm.%s,
             sm.restrict_partner_id,
@@ -105,7 +109,7 @@ def create_stock_move_lines_from_stock_move_lots(env):
         INNER JOIN mrp_production mp ON sm.raw_material_production_id = mp.id
         LEFT JOIN stock_move_lots sml ON (sml.move_id = sm.id
             AND sml.production_id = mp.id)
-        LEFT JOIN stock_production_lot spl ON sml.lot_id = spl.id"""
+        """
     openupgrade.logged_query(
         env.cr, """
         INSERT INTO stock_move_line (%(insert_into)s
@@ -113,6 +117,7 @@ def create_stock_move_lines_from_stock_move_lots(env):
         SELECT %(select)s
         FROM %(from)s
         WHERE sm.state NOT IN ('cancel', 'confirmed', 'waiting')
+            AND sm.scrapped IS NOT true
             AND sm.id NOT IN (SELECT sq.reservation_id
                               FROM stock_quant sq
                               WHERE sq.reservation_id IS NOT NULL)
@@ -122,13 +127,13 @@ def create_stock_move_lines_from_stock_move_lots(env):
             'from': from_,
         },
     )
+    # 2nd request : for finished products
     select = """current_timestamp,
             sm.write_uid,
             sm.date::date,
             sm.location_dest_id,
             sm.location_id,
             sml.lot_id,
-            spl.name,
             sm.id,
             0,
             sm.restrict_partner_id,
@@ -170,6 +175,7 @@ def create_stock_move_lines_from_stock_move_lots(env):
         FROM %(from)s
         WHERE sm.state NOT IN ('cancel') AND (sml.lot_id IS NOT NULL OR
             sm.state = 'done')
+            AND sm.scrapped IS NOT true
             AND sm.id NOT IN (SELECT sq.reservation_id
                               FROM stock_quant sq
                               WHERE sq.reservation_id IS NOT NULL)
