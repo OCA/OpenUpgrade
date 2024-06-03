@@ -1,8 +1,12 @@
+import logging
+
 from openupgradelib import openupgrade
 from openupgradelib.openupgrade_160 import (
     _convert_field_bootstrap_4to5_sql,
     convert_field_bootstrap_4to5,
 )
+
+logger = logging.getLogger(__name__)
 
 
 def convert_custom_qweb_templates_bootstrap_4to5(env):
@@ -46,6 +50,7 @@ def convert_field_html_string_bootstrap_4to5(env):
         model = field.model_id.model
         if model in exclusions:
             continue
+        logger.info(f"Converting from BS4 to BS5 field {field} in model {model}")
         if env.get(model, False) is not False and env[model]._auto:
             if openupgrade.table_exists(env.cr, env[model]._table):
                 if field.name in env[model]._fields and openupgrade.column_exists(
