@@ -23,28 +23,27 @@ def _fill_payment_state(env):
     # v14 these ones were not computed being of type `entry`, which changes now
     # on v15 if the method `_payment_state_matters` returns True, which is the
     # case for the expense moves
-    # Disable the reconciliation check to be able to update reconciled moves
-    _check_reconciliation = env["account.move.line"].__class__._check_reconciliation
-    _check_fiscalyear_lock_date = env[
-        "account.move"
-    ].__class__._check_fiscalyear_lock_date
-    env["account.move.line"].__class__._check_reconciliation = lambda self: None
-    env["account.move"].__class__._check_fiscalyear_lock_date = lambda self: None
-    env["hr.expense.sheet"].search([]).account_move_id._compute_amount()
-    env["account.move.line"].__class__._check_reconciliation = _check_reconciliation
-    env[
-        "account.move"
-    ].__class__._check_fiscalyear_lock_date = _check_fiscalyear_lock_date
-    # Now perform the SQL to transfer the payment_state
-    openupgrade.logged_query(
-        env.cr,
-        """
-        UPDATE hr_expense_sheet hes
-        SET payment_state = am.payment_state
-        FROM account_move am
-        WHERE am.id = hes.account_move_id
-        """,
-    )
+    for move in env["hr.expense.sheet"].search([]).account_move_id:
+        # Extracted and adapted from _compute_amount() in account.move
+        new_pmt_state = "not_paid" if move.move_type != "entry" else False
+        total_to_pay = total_residual = 0.0
+        for line in move.line_ids:
+            if line.account_id.user_type_id.type in ("receivable", "payable"):
+                total_to_pay += line.balance
+                total_residual += line.amount_residual
+        currencies = move._get_lines_onchange_currency().currency_id
+        currency = currencies if len(currencies) == 1 else move.company_id.currency_id
+        if currency.is_zero(move.amount_residual):
+            reconciled_payments = move._get_reconciled_payments()
+            if not reconciled_payments or all(
+                payment.is_matched for payment in reconciled_payments
+            ):
+                new_pmt_state = "paid"
+            else:
+                new_pmt_state = move._get_invoice_in_payment_state()
+        elif currency.compare_amounts(total_to_pay, total_residual) != 0:
+            new_pmt_state = "partial"
+        move.payment_state = new_pmt_state
 
 
 @openupgrade.migrate()
