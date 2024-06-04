@@ -88,6 +88,7 @@ merged_modules = {
     # OCA/e-commerce
     "website_sale_require_login": "website_sale",
     # OCA/pos
+    "pos_margin_account_invoice_margin": "point_of_sale",
     "pos_order_line_no_unlink": "point_of_sale",
     "pos_product_sort": "point_of_sale",
     # OCA/project
