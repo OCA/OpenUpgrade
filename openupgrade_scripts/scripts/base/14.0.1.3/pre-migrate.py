@@ -155,3 +155,25 @@ def migrate(cr, version):
         cr, "UPDATE res_partner SET lang = 'tl_PH' WHERE lang = 'fil_PH'"
     )
     deduplicate_ir_properties(cr)
+    # Now Odoo supports disabling data exports, which is the main feature that
+    # the module web_disable_export_group provided. Although the module isn't completly
+    # merged into core as it allows to differentiate which type of export users can use.
+    # This might be unnecessary for some module users that would drop the module while
+    # others might want to keep it. To make the transition transparent for both cases,
+    # we put this migration script here.
+    cr.execute(
+        """
+            SELECT id FROM ir_model_data
+            WHERE module='web_disable_export_group' AND name='group_export_data'
+        """
+    )
+    if cr.fetchone():
+        openupgrade.rename_xmlids(
+            cr,
+            [
+                (
+                    "web_disable_export_group.group_export_data",
+                    "base.group_allow_export",
+                )
+            ],
+        )
