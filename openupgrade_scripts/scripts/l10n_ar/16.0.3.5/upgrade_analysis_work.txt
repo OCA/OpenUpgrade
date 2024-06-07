@@ -1,0 +1,9 @@
+---Models in module 'l10n_ar'---
+---Fields in module 'l10n_ar'---
+l10n_ar      / account.journal          / l10n_ar_share_sequences (boolean): DEL
+# NOTHING TO DO: The control is done now directly checking if the company country is AR
+
+---XML records in module 'l10n_ar'---
+NEW account.account.template: l10n_ar.base_default_vat
+NEW ir.ui.view: l10n_ar.document_tax_totals
+# NOTHING TO DO: new ir stuff
