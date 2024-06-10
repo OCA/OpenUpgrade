@@ -9,6 +9,8 @@ renamed_modules = {
     'payment_ogone': 'payment_ingenico',
     # OCA/delivery-carrier
     'delivery_carrier_label_ups': 'delivery_ups_oca',
+    # OCA/edi
+    'edi_oca': 'edi',
     # OCA/event
     'website_event_filter_selector': 'website_event_filter_city',
     # OCA/hr
