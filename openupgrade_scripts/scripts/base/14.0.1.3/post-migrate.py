@@ -143,3 +143,10 @@ def migrate(env, version):
     binary_conversion_for_db_attachments(env)
     # Load noupdate changes
     openupgrade.load_data(env.cr, "base", "14.0.1.3/noupdate_changes.xml")
+    # By default Odoo grants new users export access. If we had web_disable_export_group
+    # installed is very likely that this isn't the desired behavior and that we want
+    # to keep the access to that feature restricted by default.
+    if not openupgrade.is_module_installed(env.cr, "web_disable_export_group"):
+        openupgrade.load_data(
+            env.cr, "base", "14.0.1.3/group_allow_export_noupdate_changes.xml"
+        )
