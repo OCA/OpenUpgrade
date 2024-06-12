@@ -158,7 +158,15 @@ def _account_bank_statement_line_fast_fill_internal_index(env):
                     "char",
                     False,
                     "account",
-                )
+                ),
+                (
+                    "first_line_index",
+                    "account.bank.statement",
+                    "account_bank_statement",
+                    "char",
+                    False,
+                    "account",
+                ),
             ],
         )
     openupgrade.logged_query(
@@ -172,6 +180,29 @@ def _account_bank_statement_line_fast_fill_internal_index(env):
         )
         FROM account_move am
         WHERE stmt.move_id = am.id;
+        """,
+    )
+    # Now let's prefill account_bank_statement first_line_index
+    openupgrade.logged_query(
+        env.cr,
+        """
+        WITH first_lines AS (
+            SELECT
+                statement_id,
+                MIN(internal_index) AS first_line_index
+            FROM
+                account_bank_statement_line
+            GROUP BY
+                statement_id
+        )
+        UPDATE
+            account_bank_statement AS abs
+        SET
+            first_line_index = fl.first_line_index
+        FROM
+            first_lines AS fl
+        WHERE
+            abs.id = fl.statement_id;
         """,
     )
 
@@ -408,6 +439,89 @@ def _fill_repartition_line_use_in_tax_closing(env):
     )
 
 
+def _fill_account_bank_statement_is_complete(env):
+    """Speedup this column computation"""
+    # TODO: Consider instances with currencies which rounding is different to 2 digits
+    env.cr.execute(
+        "SELECT * FROM res_currency WHERE rounding != 0.01 AND active = true"
+    )
+    if env.cr.fetchone():
+        return
+    if not openupgrade.column_exists(env.cr, "account_bank_statement", "is_complete"):
+        openupgrade.add_fields(
+            env,
+            [
+                (
+                    "is_complete",
+                    "account.bank.statement",
+                    "account_bank_statement",
+                    "boolean",
+                    False,
+                    "account",
+                )
+            ],
+        )
+    openupgrade.logged_query(
+        env.cr,
+        """
+        WITH filtered_lines AS (
+            SELECT DISTINCT statement_id
+            FROM account_bank_statement_line absl
+            INNER JOIN account_move am ON am.id = absl.move_id
+            WHERE am.state = 'posted'
+            GROUP BY statement_id
+        )
+        UPDATE account_bank_statement acbs
+        SET is_complete = true
+        WHERE
+            acbs.id in (SELECT statement_id from filtered_lines)
+        AND
+            (
+                ROUND(acbs.balance_end, 2) =
+                ROUND(COALESCE(acbs.balance_end_real, 0), 2)
+            )
+    """,
+    )
+
+
+def _precreate_account_move_auto_post_until(env):
+    """This new account.move field is ment to be filled manually. Its compute acts
+    merely as an onchange. We don't need to pre-fill it"""
+    if not openupgrade.column_exists(env.cr, "account_move", "auto_post_until"):
+        openupgrade.add_fields(
+            env,
+            [
+                (
+                    "auto_post_until",
+                    "account.move",
+                    "account_move",
+                    "date",
+                    False,
+                    "account",
+                )
+            ],
+        )
+
+
+def _precreate_account_move_is_storno(env):
+    """There can't be storno moves as this is a new feature that needs to be set on the
+    company settings"""
+    if not openupgrade.column_exists(env.cr, "account_move", "is_storno"):
+        openupgrade.add_fields(
+            env,
+            [
+                (
+                    "is_storno",
+                    "account.move",
+                    "account_move",
+                    "boolean",
+                    False,
+                    "account",
+                )
+            ],
+        )
+
+
 @openupgrade.migrate()
 def migrate(env, version):
     openupgrade.rename_xmlids(env.cr, _xmlids_renames)
@@ -438,3 +552,6 @@ def migrate(env, version):
     _fast_fill_account_payment_amount_company_currency_signed(env)
     _account_journal_payment_sequence(env)
     _fill_repartition_line_use_in_tax_closing(env)
+    _precreate_account_move_auto_post_until(env)
+    _precreate_account_move_is_storno(env)
+    _fill_account_bank_statement_is_complete(env)
