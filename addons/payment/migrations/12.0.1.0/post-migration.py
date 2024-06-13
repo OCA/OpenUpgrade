@@ -45,6 +45,7 @@ def fill_invoice_ids(env):
             account_invoice_payment_rel ai_rel
         WHERE ap.payment_transaction_id = pt.id
             AND ai_rel.payment_id = ap.id
+        GROUP BY pt.id, ai_rel.invoice_id
         """,
     )
     env['payment.transaction'].search([])._compute_invoice_ids_nbr()
