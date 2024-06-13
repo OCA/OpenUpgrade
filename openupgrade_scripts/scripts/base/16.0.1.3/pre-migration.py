@@ -86,6 +86,7 @@ def update_translatable_fields(cr):
             continue
         # borrowed from odoo/tools/translate.py#_get_translation_upgrade_queries
         translation_name = "%s,%s" % (model, field)
+        emtpy_src = """'{"en_US": ""}'::jsonb"""
         openupgrade.logged_query(
             cr,
             f"""
@@ -98,8 +99,10 @@ def update_translatable_fields(cr):
                 GROUP BY it.res_id
             )
             UPDATE {table} m
-            SET "{field}" = CASE WHEN t.noupdate IS FALSE THEN t.value || m."{field}"
-                                 ELSE m."{field}" || t.value END
+            SET "{field}" = CASE
+                WHEN m."{field}" IS NULL THEN {emtpy_src} || t.value
+                WHEN t.noupdate IS FALSE THEN t.value || m."{field}"
+                ELSE m."{field}" || t.value END
             FROM t
             WHERE t.res_id = m.id
             """,
@@ -107,11 +110,6 @@ def update_translatable_fields(cr):
                 "model": model,
                 "name": translation_name,
             },
-        )
-        openupgrade.logged_query(
-            cr,
-            "DELETE FROM ir_translation WHERE type = 'model' AND name = %s",
-            [translation_name],
         )
 
 
