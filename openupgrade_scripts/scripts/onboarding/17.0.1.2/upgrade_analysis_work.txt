@@ -1,0 +1,41 @@
+---Models in module 'onboarding'---
+---Fields in module 'onboarding'---
+onboarding   / onboarding.onboarding    / is_per_company (boolean)      : not stored anymore
+onboarding   / onboarding.onboarding    / is_per_company (boolean)      : now a function
+onboarding   / onboarding.onboarding.step / is_per_company (boolean)      : NEW hasdefault: default
+# DONE pre-migration: update is_per_company for each steps
+
+onboarding   / onboarding.onboarding    / panel_background_color (selection): DEL selection_keys: ['blue', 'none', 'orange', 'violet']
+onboarding   / onboarding.onboarding    / panel_background_image (binary): DEL attachment: True
+# NOTHING TO DO
+
+onboarding   / onboarding.onboarding    / step_ids (one2many)           : table is now 'onboarding_onboarding_onboarding_onboarding_step_rel' ('False')
+onboarding   / onboarding.onboarding    / step_ids (one2many)           : type is now 'many2many' ('one2many')
+onboarding   / onboarding.onboarding    / text_completed (char)         : NEW hasdefault: default
+# NOTHING TO DO: handle by ORM
+
+onboarding   / onboarding.onboarding.step / onboarding_id (many2one)      : DEL relation: onboarding.onboarding, required
+onboarding   / onboarding.onboarding.step / onboarding_ids (many2many)    : NEW relation: onboarding.onboarding
+# DONE post-migration: convert from m2o to m2m
+
+onboarding   / onboarding.onboarding.step / step_image (binary)           : NEW attachment: True
+onboarding   / onboarding.onboarding.step / step_image_alt (char)         : NEW hasdefault: default
+onboarding   / onboarding.onboarding.step / step_image_filename (char)    : NEW
+# NOTHING TO DO
+
+onboarding   / onboarding.progress      / progress_step_ids (one2many)  : table is now 'onboarding_progress_onboarding_progress_step_rel' ('False')
+onboarding   / onboarding.progress      / progress_step_ids (one2many)  : type is now 'many2many' ('one2many')
+# NOTHING TO DO: handle by ORM
+
+onboarding   / onboarding.progress.step / company_id (many2one)         : NEW relation: res.company
+# NOTHING TO DO
+
+onboarding   / onboarding.progress.step / progress_id (many2one)        : DEL relation: onboarding.progress, required
+onboarding   / onboarding.progress.step / progress_ids (many2many)      : NEW relation: onboarding.progress
+# DONE pre-migration: convert from m2o to m2m
+
+---XML records in module 'onboarding'---
+DEL ir.model.constraint: onboarding.constraint_onboarding_progress_onboarding_company_uniq
+DEL ir.model.constraint: onboarding.constraint_onboarding_progress_step_progress_step_uniq
+NEW ir.ui.view: onboarding.onboarding_step
+# NOTHING TO DO
