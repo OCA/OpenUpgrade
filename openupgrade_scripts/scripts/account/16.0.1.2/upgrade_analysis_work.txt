@@ -107,8 +107,9 @@ account      / account.bank.statement   / difference (float)            : DEL
 # NOTHING TO DO
 
 account      / account.bank.statement   / first_line_index (char)       : NEW isfunction: function, stored
+# DONE pre-migration: Pre-compute for performance
 account      / account.bank.statement   / is_complete (boolean)         : NEW isfunction: function, stored
-# NOTHING TO DO: Handled by ORM
+# DONE pre-migration: Pre-compute for performance
 
 account      / account.bank.statement   / is_valid_balance_start (boolean): DEL
 account      / account.bank.statement   / journal_id (many2one)         : now a function
@@ -179,8 +180,9 @@ account      / account.move             / auto_post (boolean)           : type i
 # DONE pre-migration: Change column data type, recalculate the value if False set to 'no' else set 'at_date'
 
 account      / account.move             / auto_post_origin_id (many2one): NEW relation: account.move
-account      / account.move             / auto_post_until (date)        : NEW hasdefault: compute
 # NOTHING TO DO
+account      / account.move             / auto_post_until (date)        : NEW hasdefault: compute
+# DONE pre-migration: Pre-create column to avoid computing this new feature wich is meant to be set manually
 
 account      / account.move             / currency_id (many2one)        : now a function
 # NOTHING TO DO
@@ -190,7 +192,7 @@ account      / account.move             / invoice_payments_widget (text): type i
 # NOTHING TO DO: compute no store field
 
 account      / account.move             / is_storno (boolean)           : NEW hasdefault: compute
-# NOTHING TO DO
+# DONE pre-migration: Pre-create column to avoid computing this new feature which has to be set at company level
 
 account      / account.move             / partner_shipping_id (many2one): previously in module sale
 # NOTHING TO DO
