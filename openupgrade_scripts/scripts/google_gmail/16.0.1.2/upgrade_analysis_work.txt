@@ -1,0 +1,19 @@
+---Models in module 'google_gmail'---
+---Fields in module 'google_gmail'---
+google_gmail / fetchmail.server         / google_gmail_access_token (char): previously in module fetchmail_gmail
+google_gmail / fetchmail.server         / google_gmail_access_token_expiration (integer): previously in module fetchmail_gmail
+google_gmail / fetchmail.server         / google_gmail_authorization_code (char): previously in module fetchmail_gmail
+google_gmail / fetchmail.server         / google_gmail_refresh_token (char): previously in module fetchmail_gmail
+google_gmail / fetchmail.server         / google_gmail_uri (char)       : previously in module fetchmail_gmail
+# NOTHING TO DO: fetchmail_gmail has been merged into this
+
+google_gmail / fetchmail.server         / server_type (False)           : NEW selection_keys: ['gmail', 'imap', 'local', 'pop'], mode: modify
+# DONE pre-migration: fill value server_type is gmail if use_google_gmail_service is enable
+
+google_gmail / ir.mail_server           / smtp_authentication (False)   : NEW selection_keys: ['certificate', 'gmail', 'login'], mode: modify
+google_gmail / ir.mail_server           / use_google_gmail_service (boolean): DEL
+# DONE pre-migration: fill value smtp_authentication is gmail if use_google_gmail_service is enable
+
+---XML records in module 'google_gmail'---
+NEW ir.ui.view: google_gmail.fetchmail_server_view_form
+# NOTHING TO DO
