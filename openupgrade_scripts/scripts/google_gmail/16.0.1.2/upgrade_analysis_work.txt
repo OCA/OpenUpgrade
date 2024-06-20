@@ -1,0 +1,14 @@
+---Models in module 'google_gmail'---
+---Fields in module 'google_gmail'---
+fetchmail_gmail / fetchmail.server         / use_google_gmail_service (boolean): DEL
+google_gmail / fetchmail.server         / server_type (False)           : NEW selection_keys: ['gmail', 'imap', 'local', 'pop'], mode: modify
+# DONE: pre-migration: Set server_type='gmail' where use_google_gmail_service = True if column exists (as this is coming from `fetchmail_gmail` module)
+
+google_gmail / ir.mail_server           / smtp_authentication (False)   : NEW selection_keys: ['certificate', 'gmail', 'login'], mode: modify
+google_gmail / ir.mail_server           / use_google_gmail_service (boolean): DEL
+# DONE: pre-migration: Set smtp_authentication='gmail' where use_google_gmail_service = True
+
+---XML records in module 'google_gmail'---
+NEW ir.ui.view: google_gmail.fetchmail_server_view_form
+DEL ir.ui.view: fetchmail_gmail.fetchmail_server_view_form
+# NOTHING TO DO: ir noupdate=0 stuff
