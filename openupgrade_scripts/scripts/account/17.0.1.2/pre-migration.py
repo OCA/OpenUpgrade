@@ -1,6 +1,7 @@
 # Copyright 2024 Viindoo Technology Joint Stock Company (Viindoo)
 # License AGPL-3.0 or later (https://www.gnu.org/licenses/agpl).
 from openupgradelib import openupgrade
+from odoo.tools.sql import convert_column_translatable
 
 _fields_renames = [
     (
@@ -599,6 +600,7 @@ def migrate(env, version):
         """,
     )
     openupgrade.rename_fields(env, _fields_renames)
+    convert_column_translatable(env.cr, "account_tax", "description", "jsonb")
     openupgrade.copy_columns(env.cr, _columns_copies)
     _am_create_delivery_date_column(env)
     _am_create_incoterm_location_column(env)
