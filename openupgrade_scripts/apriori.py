@@ -91,6 +91,8 @@ merged_modules = {
     "pos_margin_account_invoice_margin": "point_of_sale",
     "pos_order_line_no_unlink": "point_of_sale",
     "pos_product_sort": "point_of_sale",
+    # OCA/product-variant
+    "purchase_variant_configurator_on_confirm": "purchase_variant_configurator",
     # OCA/project
     "project_task_milestone": "project",
     # OCA/purchase-workflow
