@@ -28,33 +28,35 @@ Openupgrade Framework
 
 |badge1| |badge2| |badge3| |badge4| |badge5|
 
-This module is a technical module that contains a number of monkeypatches
-to improve the behaviour of Odoo when migrating your database using the
-OpenUpgrade migration scripts:
+This module is a technical module that contains a number of
+monkeypatches to improve the behaviour of Odoo when migrating your
+database using the OpenUpgrade migration scripts:
 
-* Prevent dropping columns or tables in the database when fields or models
-  are obsoleted in the Odoo data model of the target release. After the
-  migration, you can review and delete unused database tables and columns
-  using `database_cleanup`. See
-  https://odoo-community.org/shop/product/database-cleanup-918
-* When data records are deleted during the migration (such as views or other
-  system records), this is done in a secure mode. If the deletion fails because
-  of some unforeseen dependency, the deletion will be cancelled and a message
-  is logged, after which the migration continues.
-* Prevent a number of log messages that do not apply when using OpenUpgrade.
-* Suppress log messages about failed view validation, which are to be expected
-  during a migration.
-* Run migration scripts for modules that are installed as new dependencies
-  of upgraded modules (when there are such scripts for those particular
-  modules)
-* Production databases generated with demo data, will be transformed to
-  non-demo ones. If you want to avoid that, you have to pass through the
-  environment variable OPENUPGRADE_USE_DEMO, the value "yes".
+-  Prevent dropping columns or tables in the database when fields or
+   models are obsoleted in the Odoo data model of the target release.
+   After the migration, you can review and delete unused database tables
+   and columns using database_cleanup. See
+   https://odoo-community.org/shop/product/database-cleanup-918
+-  When data records are deleted during the migration (such as views or
+   other system records), this is done in a secure mode. If the deletion
+   fails because of some unforeseen dependency, the deletion will be
+   cancelled and a message is logged, after which the migration
+   continues.
+-  Prevent a number of log messages that do not apply when using
+   OpenUpgrade.
+-  Suppress log messages about failed view validation, which are to be
+   expected during a migration.
+-  Run migration scripts for modules that are installed as new
+   dependencies of upgraded modules (when there are such scripts for
+   those particular modules)
+-  Production databases generated with demo data, will be transformed to
+   non-demo ones. If you want to avoid that, you have to pass through
+   the environment variable OPENUPGRADE_USE_DEMO, the value "yes".
 
 For detailed documentation see:
 
-* https://github.com/OCA/OpenUpgrade/
-* https://oca.github.io/OpenUpgrade
+-  https://github.com/OCA/OpenUpgrade/
+-  https://oca.github.io/OpenUpgrade
 
 **Table of contents**
 
@@ -64,83 +66,82 @@ For detailed documentation see:
 Installation
 ============
 
-This module does not need to be installed on a database.
-It simply needs to be available via your ``addons-path``.
+This module does not need to be installed on a database. It simply needs
+to be available via your ``addons-path``.
 
 Configuration
 =============
 
-* call your odoo instance with the option ``--load=base,web,openupgrade_framework``
+-  call your odoo instance with the option
+   ``--load=base,web,openupgrade_framework``
 
 or
 
-* add the key to your configuration file:
+-  add the key to your configuration file:
 
-.. code-block:: shell
+.. code:: shell
 
-    [options]
-    server_wide_modules = web,openupgrade_framework
+   [options]
+   server_wide_modules = web,openupgrade_framework
 
 When you load the module in either way of these ways, and you have the
-`openupgrade_scripts` module in your addons path available, the
-`--upgrade-path` option of Odoo will be set automatically to the location
+openupgrade_scripts module in your addons path available, the
+--upgrade-path option of Odoo will be set automatically to the location
 of the OpenUpgrade migration scripts.
 
 Development
 ===========
 
-The `odoo_patch` folder contains python files in a tree that mimicks the
+The odoo_patch folder contains python files in a tree that mimicks the
 folder tree of the Odoo project. It contains a number of monkey patches
 to improve the migration of an Odoo database between two major versions.
 
-So far, we are able to make everything work without overwriting large blocks
-of code, but if larger patches need to be added, please use the method
-described below:
+So far, we are able to make everything work without overwriting large
+blocks of code, but if larger patches need to be added, please use the
+method described below:
 
 To see the patches added, you can use ``meld`` tools:
 
 ``meld PATH_TO_ODOO_FOLDER/odoo/ PATH_TO_OPENUPGRADE_FRAMEWORK_MODULE/odoo_patch``
 
-
 To make more easy the diff analysis :
 
-* Make sure the python files has the same path as the original one.
+-  Make sure the python files has the same path as the original one.
+-  Keep the same indentation as the original file. (using ``if True:``
+   if required)
+-  Add the following two lines at the beginning of your file, to avoid
+   flake8 / pylint errors
 
-* Keep the same indentation as the original file. (using ``if True:`` if required)
+.. code:: python
 
-* Add the following two lines at the beginning of your file, to avoid flake8 / pylint
-  errors
+   # flake8: noqa
+   # pylint: skip-file
 
-.. code-block:: python
-
-    # flake8: noqa
-    # pylint: skip-file
-
-* When you want to change the code. add the following tags:
+-  When you want to change the code. add the following tags:
 
 For an addition:
 
-.. code-block:: python
+.. code:: python
 
-    # <OpenUpgrade:ADD>
-    some code...
-    # </OpenUpgrade>
+   # <OpenUpgrade:ADD>
+   some code...
+   # </OpenUpgrade>
 
 For a change:
 
-.. code-block:: python
+.. code:: python
 
-    # <OpenUpgrade:CHANGE>
-    some code...
-    # </OpenUpgrade>
+   # <OpenUpgrade:CHANGE>
+   some code...
+   # </OpenUpgrade>
 
 For a removal:
 
-.. code-block:: python
+.. code:: python
 
-    # <OpenUpgrade:REMOVE>
-    # Comment the code, instead of removing it.
-    # </OpenUpgrade>
+   # <OpenUpgrade:REMOVE>
+   # Comment the code, instead of removing it.
+   # </OpenUpgrade>
 
 Bug Tracker
 ===========
@@ -156,7 +157,7 @@ Credits
 =======
 
 Authors
-~~~~~~~
+-------
 
 * Therp BV
 * Opener B.V.
@@ -164,21 +165,21 @@ Authors
 * Hunki Enterprises BV
 
 Contributors
-~~~~~~~~~~~~
+------------
 
-* Stefan Rijnhart <stefan@opener.amsterdam>
-* Sylvain LE GAL <https://twitter.com/legalsylvain>
+-  Stefan Rijnhart <stefan@opener.amsterdam>
+-  Sylvain LE GAL <https://twitter.com/legalsylvain>
 
 Other credits
-~~~~~~~~~~~~~
+-------------
 
-Many developers have contributed to the OpenUpgrade framework in its previous
-incarnation. Their original contributions may no longer needed, or they are
-no longer recognizable in their current form but OpenUpgrade would not have
-existed at this point without them.
+Many developers have contributed to the OpenUpgrade framework in its
+previous incarnation. Their original contributions may no longer needed,
+or they are no longer recognizable in their current form but OpenUpgrade
+would not have existed at this point without them.
 
 Maintainers
-~~~~~~~~~~~
+-----------
 
 This module is maintained by the OCA.
 
