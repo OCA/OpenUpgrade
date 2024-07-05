@@ -34,6 +34,8 @@ merged_modules = {
     "website_sale_delivery": "website_sale",
     "website_sale_loyalty_delivery": "website_sale_loyalty",
     "website_sale_stock_product_configurator": "website_sale_product_configurator",
+    # OCA/purchase-workflow
+    "purchase_discount": "purchase",
     # OCA/web
     "web_advanced_search": "web",
     "web_listview_range_select": "web",
