@@ -624,7 +624,6 @@ def merge_gift_card_to_loyalty_card(env):
             WHERE lp.create_uid = gc.create_uid
             AND lp.create_date = gc.create_date
             AND lp.company_id = gc.company_id
-            AND lp.currency_id = gc.currency_id
             AND lp.program_type = 'gift_card'
         )
         """,
@@ -653,7 +652,7 @@ def merge_gift_card_to_loyalty_card(env):
             create_uid,
             write_uid,
             code,
-            expiration_date AS expired_date,
+            expired_date AS expiration_date,
             create_date,
             write_date,
             initial_amount AS points
@@ -661,6 +660,20 @@ def merge_gift_card_to_loyalty_card(env):
         """,
     )
     # Create records in loyalty_reward based on gift_card data
+    openupgrade.add_fields(
+        env,
+        [
+            (
+                "discount_product_domain",
+                "loyalty.reward",
+                "loyalty_reward",
+                "char",
+                False,
+                "loyalty",
+                "[]",
+            )
+        ],
+    )
     openupgrade.logged_query(
         env.cr,
         """
@@ -710,15 +723,15 @@ def merge_gift_card_to_loyalty_card(env):
     openupgrade.logged_query(
         env.cr,
         """
-        INSERT INTO loyalty_rrule (
+        INSERT INTO loyalty_rule (
             program_id,
             company_id,
-            minimun_qty,
+            minimum_qty,
             create_uid,
             write_uid,
             product_domain,
             reward_point_mode,
-            minimun_amount_tax_mode,
+            minimum_amount_tax_mode,
             mode,
             active,
             reward_point_split,
@@ -762,7 +775,7 @@ def merge_gift_card_to_loyalty_card(env):
                     JOIN gift_card gc ON gc.id = sol.gift_card_id
                     WHERE gc.program_id = lc.program_id
                 ) IS NOT NULL
-                THEN lc.initial_amount - (
+                THEN gc.initial_amount - (
                     SELECT SUM(ABS(sol.price_unit))
                     FROM sale_order_line sol
                     JOIN gift_card gc ON gc.id = sol.gift_card_id
@@ -793,4 +806,30 @@ def migrate(env, version):
     check_and_install_module_if_applicable(env)
     delete_sql_constraints(env)
     update_template_keys(env)
+
+    # Set default values
+    if not openupgrade.column_exists(env.cr, "loyalty_card", "expiration_date"):
+        openupgrade.add_fields(
+            env,
+            [
+                (
+                    "expiration_date",
+                    "loyalty.card",
+                    "loyalty_card",
+                    "date",
+                    "date",
+                    "loyalty",
+                    False,
+                )
+            ],
+        )
+        openupgrade.logged_query(
+            env.cr,
+            """
+            UPDATE loyalty_card lc
+            SET expiration_date = lc.create_date + interval '1' day * lp.validity_duration
+            from loyalty_program lp
+            where lp.id = lc.program_id and lp.validity_duration > 0
+        """,
+        )
     merge_gift_card_to_loyalty_card(env)
