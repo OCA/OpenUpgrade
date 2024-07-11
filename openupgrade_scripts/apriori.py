@@ -74,6 +74,7 @@ merged_modules = {
     "pad_project": "project",
     "pos_coupon": "pos_loyalty",
     "pos_gift_card": "pos_loyalty",
+    "project_account": "project",
     "sale_gift_card": "sale_loyalty",
     "sale_project_account": "sale_project",
     "website_sale_delivery_giftcard": "website_sale_loyalty_delivery",
