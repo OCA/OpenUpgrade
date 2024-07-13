@@ -36,6 +36,42 @@ def fill_code_enabled_rule_ids_from_sale_order(env):
     )
 
 
+def merge_sale_gift_card_to_sale_loyalty_card(env):
+    # Update the coupon_id column in the sale_order_line table with the ID of the
+    # loyalty_card table based on certain criteria and relationships established between
+    # the loyalty_card, loyalty_reward and gift_card tables
+    # program_id is added to the gift_card table in the loyalty migration script.
+    if not openupgrade.table_exists(env.cr, "gift_card"):
+        return
+    openupgrade.logged_query(
+        env.cr,
+        """
+        UPDATE sale_order_line AS sol
+        SET coupon_id = lc.id
+        FROM loyalty_card AS lc
+        JOIN loyalty_reward AS lr ON lc.program_id = lr.program_id
+        JOIN gift_card AS gc ON lc.program_id = gc.program_id
+        WHERE sol.reward_id = lr.id
+        AND lr.program_id = lc.program_id
+        AND lc.program_id = gc.program_id
+        AND sol.gift_card_id = gc.id
+        AND sol.reward_id IS NOT NULL
+        """,
+    )
+    # Values corresponding to the order_id and coupon_id columns of the sale_order_line
+    # table where reward_id is not null and gift_card_id is not null
+    openupgrade.logged_query(
+        env.cr,
+        """
+        INSERT INTO loyalty_card_sale_order_rel (sale_order_id, loyalty_card_id)
+        SELECT sol.order_id, sol.coupon_id
+        FROM sale_order_line AS sol
+        WHERE sol.reward_id IS NOT NULL
+        AND sol.gift_card_id IS NOT NULL
+        """,
+    )
+
+
 @openupgrade.migrate()
 def migrate(env, version):
     openupgrade.load_data(env.cr, "sale_loyalty", "16.0.1.0/noupdate_changes.xml")
@@ -45,3 +81,4 @@ def migrate(env, version):
     )
     convert_applied_coupons_from_sale_order_to_many2many(env)
     fill_code_enabled_rule_ids_from_sale_order(env)
+    merge_sale_gift_card_to_sale_loyalty_card(env)
