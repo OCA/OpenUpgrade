@@ -38,7 +38,7 @@ def extract_footer_copyright_company_name(env):
                 website_layout_matches[0]
                 if website_layout_matches
                 else f'<span class="o_footer_copyright_name mr-2">'
-                f"Copyright © {website.company_id.name}</span>",
+                f"Copyright © {Markup.escape(website.company_id.name)}</span>",
                 main_copyright_arch,
             )
             main_copyright_view.with_context(website_id=website.id).arch = new_arch
@@ -90,13 +90,13 @@ def update_contact_form_company_description(env):
             else ""
         )
         company_info_html = common_html_block % (
-            company.name,
-            company.street,
-            company.city,
-            company.zip,
-            company.country_id.name,
-            company.phone,
-            company.email,
+            Markup.escape(company.name),
+            Markup.escape(company.street),
+            Markup.escape(company.city),
+            Markup.escape(company.zip),
+            Markup.escape(company.country_id.name),
+            Markup.escape(company.phone),
+            Markup.escape(company.email),
             google_maps_link,
         )
         company_description_pattern = r'<div class="col-lg-4 mt-4 mt-lg-0">(.*?)<\/div>'
