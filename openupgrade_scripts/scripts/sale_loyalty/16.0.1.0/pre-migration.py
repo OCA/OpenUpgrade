@@ -38,41 +38,6 @@ def _generate_random_reward_code():
     return str(random.getrandbits(32))
 
 
-def generate_sale_order_coupon_points(env):
-    openupgrade.logged_query(
-        env.cr,
-        """
-        CREATE TABLE IF NOT EXISTS sale_order_coupon_points (
-            coupon_id INT,
-            order_id INT,
-            points FLOAT,
-            create_uid INT,
-            write_uid INT,
-            create_date DATE,
-            write_date DATE
-        )
-        """,
-    )
-    openupgrade.logged_query(
-        env.cr,
-        """
-        INSERT INTO sale_order_coupon_points (
-            coupon_id, order_id, points, create_uid, write_uid, create_date, write_date
-        )
-        SELECT
-            id AS coupon_id,
-            order_id,
-            points,
-            create_uid,
-            write_uid,
-            create_date,
-            write_date
-        FROM loyalty_card
-        WHERE order_id IS NOT NULL;
-        """,
-    )
-
-
 def update_loyalty_program_data(env):
     # Set sale_ok default values
     if not openupgrade.column_exists(env.cr, "loyalty_program", "sale_ok"):
@@ -211,7 +176,6 @@ def update_template_keys(env):
 @openupgrade.migrate()
 def migrate(env, version):
     openupgrade.rename_xmlids(env.cr, _xmlids_renames)
-    generate_sale_order_coupon_points(env)
     update_loyalty_program_data(env)
     update_sale_order_line_data(env)
     delete_sql_constraints(env)

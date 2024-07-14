@@ -72,6 +72,27 @@ def merge_sale_gift_card_to_sale_loyalty_card(env):
     )
 
 
+def _generate_sale_order_coupon_points(env):
+    openupgrade.logged_query(
+        env.cr,
+        """
+        INSERT INTO sale_order_coupon_points (
+            coupon_id, order_id, points, create_uid, write_uid, create_date, write_date
+        )
+        SELECT
+            id AS coupon_id,
+            order_id,
+            points,
+            create_uid,
+            write_uid,
+            create_date,
+            write_date
+        FROM loyalty_card
+        WHERE order_id IS NOT NULL;
+        """,
+    )
+
+
 @openupgrade.migrate()
 def migrate(env, version):
     openupgrade.load_data(env.cr, "sale_loyalty", "16.0.1.0/noupdate_changes.xml")
@@ -82,3 +103,4 @@ def migrate(env, version):
     convert_applied_coupons_from_sale_order_to_many2many(env)
     fill_code_enabled_rule_ids_from_sale_order(env)
     merge_sale_gift_card_to_sale_loyalty_card(env)
+    _generate_sale_order_coupon_points(env)
