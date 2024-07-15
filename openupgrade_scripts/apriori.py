@@ -81,6 +81,7 @@ merged_modules = {
     "pos_invoicing": "point_of_sale",
     "pos_order_mgmt": "point_of_sale",
     "pos_order_return": "point_of_sale",
+    "pos_sale_order_load": "pos_sale",
     # OCA/product-attribute
     "stock_account_product_cost_security": "product_cost_security",
     # OCA/server-tools
