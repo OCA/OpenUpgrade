@@ -191,12 +191,12 @@ def _fast_fill_account_move_line_tax_tag_invert(env):
                 IF NOT EXISTS (
                     SELECT 1 
                     FROM information_schema.columns 
-                    WHERE table_name = 'account_move' 
+                    WHERE table_name = 'account_move_line' 
                     AND column_name = 'tax_tag_invert'
                 )
                 THEN
                     -- Si no existe, agrega la columna
-                    ALTER TABLE account_move
+                    ALTER TABLE account_move_line
                     ADD COLUMN tax_tag_invert BOOLEAN;
                 END IF;
             END $$
