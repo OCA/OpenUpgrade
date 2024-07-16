@@ -113,6 +113,7 @@ merged_modules = {
     # OCA/web
     "web_drop_target": "web",
     "web_ir_actions_act_view_reload": "web",
+    "web_tree_image_tooltip": "web",
 }
 
 # only used here for upgrade_analysis
