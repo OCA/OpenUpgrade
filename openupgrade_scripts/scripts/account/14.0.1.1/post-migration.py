@@ -390,19 +390,13 @@ def fill_company_account_cash_basis_base_account_id(env):
 
 
 def fill_company_account_journal_suspense_account_id(env):
-    companies = env["res.company"].search([("chart_template_id", "!=", False)])
-    for company in companies:
-        chart = company.chart_template_id
-        account = chart._create_liquidity_journal_suspense_account(
-            company, chart.code_digits
-        )
-        company.account_journal_suspense_account_id = account
-    journals = (
-        env["account.journal"]
-        .with_context(active_test=False)
-        .search([("type", "in", ("bank", "cash")), ("company_id", "in", companies.ids)])
+    openupgrade.logged_query(
+        env.cr,
+        """
+            UPDATE account_journal
+            SET suspense_account_id = default_account_id
+        """
     )
-    journals._compute_suspense_account_id()
 
 
 def fill_statement_lines_with_no_move(env):
