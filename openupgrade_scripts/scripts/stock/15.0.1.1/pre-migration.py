@@ -16,6 +16,12 @@ def _create_column_for_avoiding_automatic_computing(env):
         ALTER TABLE stock_location ADD COLUMN IF NOT EXISTS next_inventory_date date;
         """,
     )
+    openupgrade.logged_query(
+        env.cr,
+        """
+        ALTER TABLE stock_quant ADD COLUMN IF NOT EXISTS inventory_date date;
+        """,
+    )
 
 
 def _fill_stock_quant_package_name_if_null(env):
