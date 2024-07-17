@@ -146,6 +146,7 @@ stock        / stock.quant              / in_date (datetime)            : now re
 # DONE: pre-migration: set in_date = create_date if in_date is null
 
 stock        / stock.quant              / inventory_date (date)         : NEW isfunction: function, stored
+# DONE: pre-migration: pre-fill to avoid computing of new feature
 stock        / stock.quant              / user_id (many2one)            : NEW relation: res.users
 # NOTHING TO DO: new feature
 
