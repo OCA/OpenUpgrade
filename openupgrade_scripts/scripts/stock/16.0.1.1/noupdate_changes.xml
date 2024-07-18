@@ -11,7 +11,10 @@
     <field name="model_id" ref="model_stock_route"/>
     <field name="name">stock_route multi-company</field>
   </record>
+  <!--
+  Name of the warehouse should not be rewritten, because we can edit it in the UI
   <record id="warehouse0" model="stock.warehouse">
     <field name="name"/>
   </record>
+  -->
 </odoo>
