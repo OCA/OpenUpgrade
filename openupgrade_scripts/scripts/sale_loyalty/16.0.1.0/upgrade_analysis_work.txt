@@ -91,7 +91,7 @@ DEL ir.model.access: sale_gift_card.access_gift_card_sales
 # NOTHING TO DO
 
 NEW ir.model.constraint: sale_loyalty.constraint_sale_order_coupon_points_order_coupon_unique
-# DONE pre-migration: safely delete constraint to recreate it
+# NOTHING TO DO
 
 DEL ir.rule: sale_coupon.sale_coupon_apply_code_rule (noupdate)
 # DONE: post-migration: safely deleted xmlid

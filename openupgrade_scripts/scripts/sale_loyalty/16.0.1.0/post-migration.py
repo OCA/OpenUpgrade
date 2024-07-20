@@ -80,15 +80,19 @@ def _generate_sale_order_coupon_points(env):
             coupon_id, order_id, points, create_uid, write_uid, create_date, write_date
         )
         SELECT
-            id AS coupon_id,
-            order_id,
-            points,
-            create_uid,
-            write_uid,
-            create_date,
-            write_date
-        FROM loyalty_card
-        WHERE order_id IS NOT NULL;
+            lc.id AS coupon_id,
+            lc.order_id,
+            lc.points,
+            lc.create_uid,
+            lc.write_uid,
+            lc.create_date,
+            lc.write_date
+        FROM loyalty_card lc
+        LEFT JOIN sale_order_coupon_points socp
+        ON lc.order_id = socp.order_id
+        AND lc.id = socp.coupon_id
+        WHERE lc.order_id IS NOT NULL
+        AND socp.id IS NULL
         """,
     )
 
