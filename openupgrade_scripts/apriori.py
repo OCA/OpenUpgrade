@@ -100,6 +100,7 @@ merged_modules = {
     "project_task_milestone": "project",
     # OCA/purchase-workflow
     "product_form_purchase_link": "purchase",
+    "purchase_order_line_price_history": "purchase",
     # OCA/sale-promotion
     "coupon_commercial_partner_applicability": "loyalty_partner_applicability",
     "sale_coupon_selection_wizard": "sale_loyalty_order_suggestion",
