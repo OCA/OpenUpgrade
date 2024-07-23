@@ -1,14 +1,24 @@
 ---Models in module 'calendar'---
 new model calendar.popover.delete.wizard [transient]
+# NOTHING TO DO
+
 ---Fields in module 'calendar'---
 calendar     / calendar.event           / message_main_attachment_id (many2one): DEL relation: ir.attachment
+# NOTHING TO DO
+
 calendar     / calendar.event           / rrule_type_ui (selection)     : NEW selection_keys: ['custom', 'daily', 'monthly', 'weekly', 'yearly'], hasdefault: compute
+# NOTHING TO DO: new field, compute non-store
+
 calendar     / calendar.event           / videocall_channel_id (many2one): relation is now 'discuss.channel' ('mail.channel') [nothing to do]
 calendar     / calendar.recurrence      / trigger_id (many2one)         : NEW relation: ir.cron.trigger
+# NOTHING TO DO
+
 ---XML records in module 'calendar'---
 NEW ir.actions.act_window: calendar.action_view_start_calendar_sync
 NEW ir.actions.act_window: calendar.calendar_settings_action
 NEW ir.model.access: calendar.access_calendar_attendee_employee_delete_wizard
+# NOTHING TO DO
+
 NEW ir.ui.menu: calendar.calendar_event_menu
 NEW ir.ui.menu: calendar.menu_calendar_settings
 NEW ir.ui.view: calendar.calendar_popover_delete_view
@@ -17,3 +27,4 @@ NEW ir.ui.view: calendar.res_config_settings_view_form
 NEW ir.ui.view: calendar.view_calendar_event_form_quick_create
 NEW onboarding.onboarding: calendar.onboarding_onboarding_calendar (noupdate)
 NEW onboarding.onboarding.step: calendar.onboarding_onboarding_step_setup_calendar_integration (noupdate)
+# NOTHING TO DO
