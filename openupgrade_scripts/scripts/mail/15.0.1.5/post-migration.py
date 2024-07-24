@@ -160,7 +160,7 @@ def _migrate_for(string):
     Replace mako for blocks
     Example: '% for line in lines' -> '<t t-foreach="lines" t-as="line">'
     """
-    pattern = rf"%\s?for\s+({_PY_VAR_PATTERN})\s+in\s+(.+?)\s?:*$"
+    pattern = rf"%\s?for\s+({_PY_VAR_PATTERN})\s+in\s+(.+?)\s?:\s*$"
     return re.sub(pattern, repl_for, string, flags=re.MULTILINE)
 
 
