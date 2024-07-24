@@ -95,7 +95,10 @@ def update_translatable_fields(cr):
                     bool_or(imd.noupdate) AS noupdate
                 FROM ir_translation it
                 LEFT JOIN ir_model_data imd ON imd.model = %(model)s AND imd.res_id = it.res_id
-                WHERE it.type = 'model' AND it.name = %(name)s AND it.state = 'translated'
+                WHERE it.type = 'model'
+                    AND it.name = %(name)s
+                    AND it.state = 'translated'
+                    AND COALESCE(it.value, '') != ''
                 GROUP BY it.res_id
             )
             UPDATE {table} m
