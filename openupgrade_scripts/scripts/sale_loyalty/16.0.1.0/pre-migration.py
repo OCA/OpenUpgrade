@@ -160,8 +160,8 @@ def update_template_keys(env):
         env.cr,
         """
         UPDATE ir_ui_view
-        SET key = 'sale_loyalty.sale_orde_portal_content_inherit'
-        WHERE key = 'sale_gift_card.sale_orde_portal_content_inherit'
+        SET key = 'sale_loyalty.sale_order_portal_content_inherit'
+        WHERE key = 'sale_gift_card.sale_order_portal_content_inherit'
         """,
     )
 
