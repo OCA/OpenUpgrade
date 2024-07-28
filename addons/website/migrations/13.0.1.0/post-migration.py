@@ -16,7 +16,7 @@ def _fill_website_logo(env):
     """
     default_logo = env["website"]._default_logo()
     for website in env["website"].search([]):
-        if website.logo == default_logo:
+        if not website.logo or website.logo == default_logo:
             website.logo = website.company_id.logo
 
 
