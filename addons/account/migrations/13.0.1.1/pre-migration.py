@@ -34,7 +34,6 @@ _column_renames = {
 
 _field_renames = [
     ('account.move', 'account_move', 'amount', 'amount_total'),
-    ('account.move', 'account_move', 'reverse_entry_id', 'reversed_entry_id'),
 ]
 
 _field_sale_renames = [

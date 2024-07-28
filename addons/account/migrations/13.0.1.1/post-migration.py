@@ -585,10 +585,9 @@ def fill_account_move_reversed_entry_id(env):
         env.cr, """
         UPDATE account_move am
         SET reversed_entry_id = am2.id
-        FROM account_invoice ai
-        JOIN account_invoice ai2 ON ai.refund_invoice_id = ai2.id
-        JOIN account_move am2 ON am2.old_invoice_id = ai2.id
-        WHERE am.reversed_entry_id IS NULL AND am.old_invoice_id = ai.id"""
+        FROM account_move am2
+        WHERE am.reversed_entry_id IS NULL AND am2.reverse_entry_id = am.id
+        """
     )
 
 
