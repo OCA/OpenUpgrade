@@ -93,7 +93,7 @@ account      / account.payment          / payment_method_id (many2one)  : now re
 # NOTHING TO DO
 
 account      / account.payment          / payment_method_line_id (many2one): NEW relation: account.payment.method.line, isfunction: function, stored
-# DONE: pre-migration: fast filled value for payment_method_line_id
+# DONE: pre-migration, end-migration: fast filled value for payment_method_line_id
 
 account      / account.payment.method   / _order                        : _order is now 'id' ('sequence')
 account      / account.payment.method   / sequence (integer)            : DEL
