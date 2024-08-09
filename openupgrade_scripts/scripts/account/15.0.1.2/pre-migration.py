@@ -284,7 +284,8 @@ def _create_account_payment_method_line(env):
         SELECT apm.name, 10, apm.id, aj.id,
             apm.create_uid, apm.write_uid, apm.create_date, apm.write_date
         FROM account_payment_method apm, account_journal aj
-        WHERE apm.code = 'manual' AND aj.type IN ('bank', 'cash')
+        WHERE apm.code IN ('manual', 'sepa_credit_transfer')
+            AND aj.type IN ('bank', 'cash')
         """,
     )
 
