@@ -110,6 +110,15 @@ def update_contact_form_company_description(env):
         website_contactus_view.with_context(website_id=website.id).arch = new_arch
 
 
+def handle_domain_protocol(env):
+    """We need to ensure the website protocol prefix to ensure each site correct
+    redirection"""
+    for website in env["website"].search([("domain", "!=", False)]):
+        if website.domain.startswith("http"):
+            continue
+        website.domain = f"https://{website.domain.rstrip('/')}"
+
+
 @openupgrade.migrate()
 def migrate(env, version):
     openupgrade.logged_query(env.cr, "UPDATE website SET configurator_done = True")
@@ -118,3 +127,4 @@ def migrate(env, version):
     update_website_form_call(env)
     extract_footer_copyright_company_name(env)
     update_contact_form_company_description(env)
+    handle_domain_protocol(env)
