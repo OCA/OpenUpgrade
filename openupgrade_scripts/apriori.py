@@ -98,6 +98,7 @@ merged_modules = {
     "survey_description": "survey",
     # OCA/project
     "project_mail_chatter": "project",
+    "project_status": "project",
     "project_task_dependency": "project",
     "project_timeline_task_dependency": "project_timeline",
     # OCA/timesheet
