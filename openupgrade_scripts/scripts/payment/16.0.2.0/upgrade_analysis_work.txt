@@ -65,7 +65,11 @@ payment      / payment.provider         / code (selection)              : NEW re
 payment      / payment.provider         / allow_express_checkout (boolean): NEW
 payment      / payment.provider         / available_country_ids (many2many): NEW relation: res.country
 payment      / payment.provider         / express_checkout_form_view_id (many2one): NEW relation: ir.ui.view
+# NOTHING TO DO: new features
+
 payment      / payment.provider         / is_published (boolean)        : NEW
+# DONE: Set it on enabled providers to keep the former behavior.
+
 payment      / payment.provider         / maximum_amount (float)        : NEW
 payment      / payment.provider         / token_inline_form_view_id (many2one): NEW relation: ir.ui.view
 # NOTHING TO DO: new features
