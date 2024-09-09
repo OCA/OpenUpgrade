@@ -4,6 +4,12 @@
 from openupgradelib import openupgrade
 
 
+def _set_published_state(env):
+    """Set published state according to the provider state as that will keep the former
+    visibility state"""
+    env["payment.provider"].search([("state", "=", "enabled")]).is_published = True
+
+
 @openupgrade.migrate()
 def migrate(env, version):
     openupgrade.load_data(env.cr, "payment", "16.0.2.0/noupdate_changes.xml")
@@ -17,3 +23,4 @@ def migrate(env, version):
             "payment.payment_acquirer_test",
         ],
     )
+    _set_published_state(env)
