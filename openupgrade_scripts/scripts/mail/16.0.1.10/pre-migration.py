@@ -137,6 +137,73 @@ def mail_channel_unset_wrong_group_public_id(env):
     )
 
 
+def mail_channel_private_compatibility(env):
+    """In v15 you could set a private group that only members could access, now in v16
+    this is not possible.
+    Defining the group_public_id empty will make everyone can access, and leaving the
+    value that has group_public_id with 'base.group_user' by default is totally wrong.
+    In order to maintain the compatibility of the existing channels, two transformations
+    are necessary:
+    - If a channel is private, but had only one auto-subscription group (group_ids), those
+    group become the authorized one (group_public_id) of the channel, and it remains as such
+    as a channel, since at the end, the auto-subscription groups adds as members all the
+    users of those groups, acting in the same way.
+    - If the list of members was manual, then the channel becomes a 'Direct Messages'
+    (channel_type='group'), keeping the channel name and authorized members.
+    """
+    env.cr.execute(
+        """
+        SELECT
+            c.id,
+            c.name,
+            (
+                SELECT COUNT(res_groups_id)
+                FROM mail_channel_res_groups_rel
+                WHERE mail_channel_id = c.id
+            ) AS total_groups,
+            (
+                SELECT res_groups_id
+                FROM mail_channel_res_groups_rel
+                WHERE mail_channel_id = c.id
+                LIMIT 1
+            ) AS auto_subscribe_group_0
+        FROM mail_channel AS c
+        WHERE c.channel_type = 'channel' AND c.public = 'private'
+        """
+    )
+    for channel_id, _name, total_groups, auto_subscribe_group_0 in env.cr.fetchall():
+        if total_groups == 1:
+            openupgrade.logged_query(
+                env.cr,
+                """
+                UPDATE mail_channel
+                SET group_public_id = %s
+                WHERE id = %s
+                """,
+                (auto_subscribe_group_0, channel_id),
+            )
+        else:
+            # Remove the auto-subscription groups linked also to avoid
+            # _constraint_group_id_channel()
+            openupgrade.logged_query(
+                env.cr,
+                """
+                DELETE FROM mail_channel_res_groups_rel
+                WHERE mail_channel_id= %s
+                """,
+                (channel_id,),
+            )
+            openupgrade.logged_query(
+                env.cr,
+                """
+                UPDATE mail_channel
+                SET channel_type = 'group', group_public_id = NULL
+                WHERE id = %s
+                """,
+                (channel_id,),
+            )
+
+
 def scheduled_date_set_empty_strings_to_null(env):
     openupgrade.logged_query(
         env.cr,
@@ -161,3 +228,4 @@ def migrate(env, version):
     ir_act_server_rename_state_email(env)
     mail_channel_channel_type_required(env)
     scheduled_date_set_empty_strings_to_null(env)
+    mail_channel_private_compatibility(env)
