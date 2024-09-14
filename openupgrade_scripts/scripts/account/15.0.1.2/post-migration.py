@@ -80,15 +80,16 @@ def add_default_partial_account_reconcile_model(env):
         """
         INSERT INTO account_reconcile_model (name, sequence, rule_type,
             auto_reconcile, match_nature, match_same_currency, allow_payment_tolerance,
-            match_partner, matching_order, company_id)
+            match_partner, matching_order, payment_tolerance_type, company_id)
         SELECT  'Invoices/Bills Partial Match if Underpaid', 2, 'invoice_matching',
-            FALSE, 'both', TRUE, FALSE, TRUE, 'old_first', arm.company_id
+            FALSE, 'both', TRUE, FALSE, TRUE, 'old_first', 'percentage', arm.company_id
         FROM (
             SELECT DISTINCT company_id
             FROM account_reconcile_model
             WHERE rule_type = 'invoice_matching'
         ) AS arm
-        """)
+        """,
+    )
 
 @openupgrade.migrate()
 def migrate(env, version):
