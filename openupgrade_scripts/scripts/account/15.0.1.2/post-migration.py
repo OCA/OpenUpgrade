@@ -74,6 +74,7 @@ def _handle_website_legal_page(env):
             )
             view_temp.unlink()
 
+
 def add_default_partial_account_reconcile_model(env):
     openupgrade.logged_query(
         env.cr,
