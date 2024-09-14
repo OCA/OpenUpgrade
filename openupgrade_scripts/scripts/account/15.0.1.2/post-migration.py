@@ -91,6 +91,7 @@ def add_default_partial_account_reconcile_model(env):
         """,
     )
 
+
 @openupgrade.migrate()
 def migrate(env, version):
     _fill_account_analytic_line_category(env)
