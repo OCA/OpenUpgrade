@@ -75,11 +75,30 @@ def _handle_website_legal_page(env):
             view_temp.unlink()
 
 
+def add_default_partial_account_reconcile_model(env):
+    openupgrade.logged_query(
+        env.cr,
+        """
+        INSERT INTO account_reconcile_model (name, sequence, rule_type,
+            auto_reconcile, match_nature, match_same_currency, allow_payment_tolerance,
+            match_partner, matching_order, payment_tolerance_type, company_id)
+        SELECT  'Invoices/Bills Partial Match if Underpaid', 2, 'invoice_matching',
+            FALSE, 'both', TRUE, FALSE, TRUE, 'old_first', 'percentage', arm.company_id
+        FROM (
+            SELECT DISTINCT company_id
+            FROM account_reconcile_model
+            WHERE rule_type = 'invoice_matching'
+        ) AS arm
+        """,
+    )
+
+
 @openupgrade.migrate()
 def migrate(env, version):
     _fill_account_analytic_line_category(env)
     _fill_payment_destination_journal(env)
     set_res_company_account_setup_taxes_state_done(env)
+    add_default_partial_account_reconcile_model(env)
     openupgrade.load_data(env.cr, "account", "15.0.1.2/noupdate_changes.xml")
     openupgrade.delete_record_translations(
         env.cr,
