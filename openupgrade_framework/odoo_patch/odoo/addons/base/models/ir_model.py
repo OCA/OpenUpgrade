@@ -2,7 +2,7 @@
 # License AGPL-3.0 or later (http://www.gnu.org/licenses/agpl).
 from openupgradelib import openupgrade
 
-from odoo import api, models
+from odoo import api, models, tools
 from odoo.tools import mute_logger
 
 from odoo.addons.base.models.ir_model import (
@@ -17,7 +17,11 @@ from odoo.addons.base.models.ir_model import (
 def _drop_table(self):
     """Never drop tables"""
     for model in self:
-        if self.env.get(model.model) is not None:
+        current_model = self.env.get(model.model)
+        if current_model is not None:
+            table = current_model._table
+            if tools.table_kind(self._cr, table) == "r":
+                openupgrade.remove_tables_fks(self.env.cr, [table])
             openupgrade.message(
                 self.env.cr,
                 "Unknown",
@@ -36,6 +40,15 @@ def _drop_column(self):
     for field in self:
         if field.name in models.MAGIC_COLUMNS:
             continue
+        model = self.env.get(field.model)
+        if (
+            field.store
+            and field.ttype == "many2one"
+            and model is not None
+            and tools.column_exists(self._cr, model._table, field.name)
+            and tools.table_kind(self._cr, model._table) == "r"
+        ):
+            openupgrade.lift_constraints(self.env.cr, model._table, field.name)
         openupgrade.message(
             self.env.cr,
             "Unknown",
