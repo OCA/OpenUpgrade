@@ -209,12 +209,6 @@ def fill_stock_move_line_consume_rel(cr):
             ON sml1.move_id = sqmr1.move_id
         INNER JOIN stock_move_line sml2
             ON sml2.move_id = sqmr2.move_id
-        WHERE NOT EXISTS (
-            SELECT *
-            FROM stock_move_line_consume_rel
-            WHERE consume_line_id = sml1.id
-                AND produce_line_id = sml2.id
-        )
         """
     )
 
