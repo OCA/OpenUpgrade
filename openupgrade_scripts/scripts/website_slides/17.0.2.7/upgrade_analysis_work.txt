@@ -1,0 +1,82 @@
+---Fields in module 'website_slides'---
+website_slides / res.partner              / slide_channel_ids (many2many) : not stored anymore
+website_slides / res.partner              / slide_channel_ids (many2many) : now a function
+website_slides / res.partner              / slide_channel_ids (many2many) : table is now 'False' ('slide_channel_partner')
+# NOTHING TO DO
+
+website_slides / slide.answer             / _order                        : _order is now 'question_id, sequence, id' ('question_id, sequence')
+website_slides / slide.channel            / activity_user_id (many2one)   : not related anymore
+website_slides / slide.channel            / activity_user_id (many2one)   : now a function
+website_slides / slide.channel            / channel_partner_all_ids (one2many): NEW relation: slide.channel.partner
+website_slides / slide.channel            / karma_gen_slide_vote (integer): DEL
+website_slides / slide.channel            / message_main_attachment_id (many2one): DEL relation: ir.attachment
+website_slides / slide.channel            / partner_ids (many2many)       : not stored anymore
+website_slides / slide.channel            / partner_ids (many2many)       : now a function
+website_slides / slide.channel            / partner_ids (many2many)       : table is now 'False' ('slide_channel_partner')
+website_slides / slide.channel            / prerequisite_channel_ids (many2many): NEW relation: slide.channel
+website_slides / slide.channel            / prerequisite_of_channel_ids (many2many): NEW relation: slide.channel
+website_slides / slide.channel            / visibility (selection)        : selection_keys is now '['connected', 'members', 'public']' ('['members', 'public']')
+# NOTHING TO DO
+
+website_slides / slide.channel.partner    / active (boolean)              : NEW hasdefault: default
+website_slides / slide.channel.partner    / completed (boolean)           : DEL
+website_slides / slide.channel.partner    / last_invitation_date (datetime): NEW
+website_slides / slide.channel.partner    / member_status (selection)     : NEW required, selection_keys: ['completed', 'invited', 'joined', 'ongoing']
+# NOTHING TO DO
+
+website_slides / slide.slide              / message_main_attachment_id (many2one): DEL relation: ir.attachment
+website_slides / slide.slide              / rating_ids (one2many)         : NEW relation: rating.rating
+# NOTHING TO DO
+
+---XML records in module 'website_slides'---
+NEW ir.model.access: website_slides.access_slide_channel_employee
+NEW ir.model.access: website_slides.access_slide_channel_portal
+NEW ir.model.access: website_slides.access_slide_channel_public
+NEW ir.model.access: website_slides.access_slide_channel_tag_employee
+NEW ir.model.access: website_slides.access_slide_channel_tag_group_employee
+NEW ir.model.access: website_slides.access_slide_channel_tag_group_portal
+NEW ir.model.access: website_slides.access_slide_channel_tag_group_public
+NEW ir.model.access: website_slides.access_slide_channel_tag_portal
+NEW ir.model.access: website_slides.access_slide_channel_tag_public
+NEW ir.model.access: website_slides.access_slide_embed_portal
+NEW ir.model.access: website_slides.access_slide_embed_public
+NEW ir.model.access: website_slides.access_slide_question_employee
+NEW ir.model.access: website_slides.access_slide_question_portal
+NEW ir.model.access: website_slides.access_slide_question_public
+NEW ir.model.access: website_slides.access_slide_slide_employee
+NEW ir.model.access: website_slides.access_slide_slide_portal
+NEW ir.model.access: website_slides.access_slide_slide_public
+NEW ir.model.access: website_slides.access_slide_tag_employee
+NEW ir.model.access: website_slides.access_slide_tag_portal
+NEW ir.model.access: website_slides.access_slide_tag_public
+DEL ir.model.access: website_slides.access_slide_channel_all
+DEL ir.model.access: website_slides.access_slide_channel_tag_all
+DEL ir.model.access: website_slides.access_slide_channel_tag_group_all
+DEL ir.model.access: website_slides.access_slide_embed_all
+DEL ir.model.access: website_slides.access_slide_question_all
+DEL ir.model.access: website_slides.access_slide_slide_all
+DEL ir.model.access: website_slides.access_slide_tag_all
+# NOTHING TO DO
+
+NEW ir.model.constraint: website_slides.constraint_slide_channel_check_enroll
+# NOTHING TO DO
+
+NEW ir.rule: website_slides.rule_slide_channel_visibility_public_user (noupdate)
+NEW ir.rule: website_slides.rule_slide_channel_visibility_signed_in_user (noupdate)
+NEW ir.rule: website_slides.rule_slide_slide_public_user (noupdate)
+NEW ir.rule: website_slides.rule_slide_slide_signed_in_user (noupdate)
+DEL ir.rule: website_slides.rule_slide_channel_not_website (noupdate)
+DEL ir.rule: website_slides.rule_slide_slide_not_website (noupdate)
+# NOTHING TO DO
+
+NEW ir.ui.view: website_slides.course_slides_list_placeholder
+NEW ir.ui.view: website_slides.gamification_karma_tracking_view_search
+NEW ir.ui.view: website_slides.profile_access_denied
+NEW ir.ui.view: website_slides.slide_channel_partner_view_graph
+NEW ir.ui.view: website_slides.slide_channel_partner_view_pivot
+DEL ir.ui.view: website_slides.private_profile
+DEL ir.ui.view: website_slides.slide_icon
+# NOTHING TO DO
+
+NEW mail.template: website_slides.mail_template_slide_channel_enroll (noupdate)
+# NOTHING TO DO
