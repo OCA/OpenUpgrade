@@ -7,6 +7,7 @@ new model sale.order.discount [transient]
 sale         / account.analytic.applicability / business_domain (False)       : selection_keys is now '['bill', 'expense', 'general', 'invoice', 'manufacturing_order', 'purchase_order', 'sale_order']' ('['bill', 'expense', 'general', 'invoice', 'purchase_order', 'sale_order']')
 sale         / crm.team                 / use_quotations (boolean)      : DEL
 sale         / product.document         / attached_on (selection)       : NEW selection_keys: ['quotation', 'sale_order']
+# NOTHING TO DO
 
 sale         / res.company              / prepayment_percent (float)    : NEW hasdefault: default
 sale         / res.company              / sale_discount_product_id (many2one): NEW relation: product.product
@@ -27,6 +28,8 @@ sale         / sale.order               / message_main_attachment_id (many2one):
 sale         / sale.order               / prepayment_percent (float)    : NEW hasdefault: compute
 sale         / sale.order               / rating_ids (one2many)         : NEW relation: rating.rating
 sale         / sale.order               / state (selection)             : selection_keys is now '['cancel', 'draft', 'sale', 'sent']' ('['cancel', 'done', 'draft', 'sale', 'sent']')
+# NOTHING TO DO
+
 sale         / sale.order.line          / price_reduce (float)          : DEL
 # NOTHING TO DO
 
