@@ -8,9 +8,9 @@ def _sale_sale_order_(env):
     openupgrade.logged_query(
         env.cr,
         """
-        UPDATE sale_order so
+        UPDATE sale_order
         SET locked = True
-        WHERE so.temp_state = 'done'
+        WHERE temp_state = 'done'
         """,
     )
     openupgrade.logged_query(

@@ -18,23 +18,23 @@ def _sale_sale_order(env):
         env.cr,
         """
         ALTER TABLE sale_order
-            ADD COLUMN IF NOT EXISTS locked BOOLEAN
+            ADD COLUMN IF NOT EXISTS locked BOOLEAN,
             ADD COLUMN IF NOT EXISTS temp_state VARCHAR
         """,
     )
     openupgrade.logged_query(
         env.cr,
         """
-        UPDATE sale_order so
-        SET temp_state = so.state
+        UPDATE sale_order
+        SET temp_state = state
         """,
     )
     openupgrade.logged_query(
         env.cr,
         """
-        UPDATE sale_order so
-        SET so.state = 'sale'
-        WHERE so.state = 'done'
+        UPDATE sale_order
+        SET state = 'sale'
+        WHERE state = 'done'
         """,
     )
 
