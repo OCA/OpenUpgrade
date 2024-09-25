@@ -1,7 +1,10 @@
 from openupgradelib import openupgrade
 
+import logging
 
-def _fill_payment_state(env):
+_logger = logging.getLogger(__name__)
+
+def _fill_payment_state(env, bypass_journal_lock_date=False):
     openupgrade.logged_query(
         env.cr,
         """
@@ -23,7 +26,9 @@ def _fill_payment_state(env):
     # v14 these ones were not computed being of type `entry`, which changes now
     # on v15 if the method `_payment_state_matters` returns True, which is the
     # case for the expense moves
-    for move in env["hr.expense.sheet"].search([]).account_move_id:
+    for move in env["hr.expense.sheet"].search([]).account_move_id.with_context(
+        bypass_journal_lock_date=bypass_journal_lock_date
+    ):
         # Extracted and adapted from _compute_amount() in account.move
         new_pmt_state = "not_paid" if move.move_type != "entry" else False
         total_to_pay = total_residual = 0.0
@@ -43,12 +48,16 @@ def _fill_payment_state(env):
                 new_pmt_state = move._get_invoice_in_payment_state()
         elif currency.compare_amounts(total_to_pay, total_residual) != 0:
             new_pmt_state = "partial"
+        _logger.error(move.env.context)
         move.payment_state = new_pmt_state
 
 
 @openupgrade.migrate()
 def migrate(env, version):
-    _fill_payment_state(env)
+    bypass_journal_lock_date = openupgrade.is_module_installed(
+        env.cr, "account_journal_lock_date",
+    )
+    _fill_payment_state(env, bypass_journal_lock_date)
     openupgrade.load_data(env.cr, "hr_expense", "15.0.2.0/noupdate_changes.xml")
     openupgrade.delete_record_translations(
         env.cr, "hr_expense", ["hr_expense_template_register"]
