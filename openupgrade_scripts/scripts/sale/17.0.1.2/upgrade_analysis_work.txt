@@ -17,13 +17,15 @@ sale         / res.company              / sale_onboarding_sample_quotation_state
 sale         / res.company              / sale_quotation_onboarding_state (selection): DEL selection_keys: ['closed', 'done', 'just_done', 'not_done']
 # NOTHING TO DO
 
+sale         / sale.order               / locked (boolean)              : NEW hasdefault: default
+# DONE pre-migration:
+
 sale         / sale.order               / activity_user_id (many2one)   : not related anymore
 sale         / sale.order               / activity_user_id (many2one)   : now a function
 sale         / sale.order               / amount_to_invoice (float)     : NEW isfunction: function, stored
 sale         / sale.order               / currency_id (many2one)        : not related anymore
 sale         / sale.order               / currency_id (many2one)        : now a function
 sale         / sale.order               / journal_id (many2one)         : NEW relation: account.journal, hasdefault: compute
-sale         / sale.order               / locked (boolean)              : NEW hasdefault: default
 sale         / sale.order               / message_main_attachment_id (many2one): DEL relation: ir.attachment
 sale         / sale.order               / prepayment_percent (float)    : NEW hasdefault: compute
 sale         / sale.order               / rating_ids (one2many)         : NEW relation: rating.rating
