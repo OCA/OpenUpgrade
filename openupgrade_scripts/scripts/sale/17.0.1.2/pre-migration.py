@@ -13,27 +13,19 @@ def _remove_table_constraints(env):
     )
 
 
-def _sale_sale_order(env):
+def _sale_order_populate_locked_field(env):
     openupgrade.logged_query(
         env.cr,
         """
         ALTER TABLE sale_order
-            ADD COLUMN IF NOT EXISTS locked BOOLEAN,
-            ADD COLUMN IF NOT EXISTS temp_state VARCHAR
+            ADD COLUMN IF NOT EXISTS locked BOOLEAN
         """,
     )
     openupgrade.logged_query(
         env.cr,
         """
         UPDATE sale_order
-        SET temp_state = state
-        """,
-    )
-    openupgrade.logged_query(
-        env.cr,
-        """
-        UPDATE sale_order
-        SET state = 'sale'
+        SET locked = True, state = 'sale'
         WHERE state = 'done'
         """,
     )
@@ -42,4 +34,4 @@ def _sale_sale_order(env):
 @openupgrade.migrate()
 def migrate(env, version):
     _remove_table_constraints(env)
-    _sale_sale_order(env)
+    _sale_order_populate_locked_field(env)
