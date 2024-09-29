@@ -88,7 +88,7 @@ def mapped_reservation_state(env):
 
 @openupgrade.migrate()
 def migrate(env, version):
-    openupgrade.remove_tables_fks(env.cr, 'mrp_bom_line_product_attribute_value_rel')
+    openupgrade.remove_tables_fks(env.cr, ['mrp_bom_line_product_attribute_value_rel'])
     openupgrade.rename_models(env.cr, _model_renames)
     if openupgrade.table_exists(env.cr, 'mrp_subproduct'):
         openupgrade.rename_tables(env.cr, _mrp_subproduct_table_renames)
