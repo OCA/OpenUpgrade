@@ -23,6 +23,7 @@ Contents:
    070_migration_files.rst
    080_migration_script_development.rst
    090_contribute.rst
+   100_maintain_repository.rst
 
 You should find the latest version of this documentation here: `<https://oca.github.io/OpenUpgrade>`_
 
