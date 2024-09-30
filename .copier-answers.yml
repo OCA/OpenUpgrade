@@ -1,0 +1,32 @@
+# Do NOT update manually; changes here will be overwritten by Copier
+_commit: v1.20
+_src_path: gh:oca/oca-addons-repo-template
+additional_ruff_rules: []
+ci: GitHub
+convert_readme_fragments_to_markdown: true
+generate_requirements_txt: true
+github_check_license: true
+github_ci_extra_env: {}
+github_enable_codecov: true
+github_enable_makepot: false
+github_enable_stale_action: false
+github_enforce_dev_status_compatibility: true
+include_wkhtmltopdf: false
+odoo_test_flavor: Odoo
+odoo_version: 17.0
+org_name: Odoo Community Association (OCA)
+org_slug: OCA
+rebel_module_groups: []
+repo_description: 'This <a href="https://odoo-community.org">OCA</a> project aims
+    to provide an Open Source upgrade path for <a href="https://github.com/odoo/odoo">Odoo</a>
+    from one major Odoo version to the next one.
+
+    It is hosted at <a href="https://github.com/oca/openupgrade">GitHub</a>.
+
+    For documentation, see <a href="https://oca.github.io/OpenUpgrade">here</a>.'
+repo_name: Tools to upgrade Odoo instances from a major version to another
+repo_slug: OpenUpgrade
+repo_website: https://github.com/OCA/OpenUpgrade
+use_pyproject_toml: true
+use_ruff: true
+
