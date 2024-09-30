@@ -1,0 +1,235 @@
+<!DOCTYPE html>
+<html class="writer-html5" lang="en" data-content_root="./">
+<head>
+  <meta charset="utf-8" /><meta name="viewport" content="width=device-width, initial-scale=1" />
+
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Maintain OpenUpgrade Repository &mdash; OpenUpgrade 16.0 documentation</title>
+      <link rel="stylesheet" type="text/css" href="_static/pygments.css?v=fa44fd50" />
+      <link rel="stylesheet" type="text/css" href="_static/css/theme.css?v=19f00094" />
+
+  
+  <!--[if lt IE 9]>
+    <script src="_static/js/html5shiv.min.js"></script>
+  <![endif]-->
+  
+        <script src="_static/jquery.js?v=5d32c60e"></script>
+        <script src="_static/_sphinx_javascript_frameworks_compat.js?v=2cd50e6c"></script>
+        <script src="_static/documentation_options.js?v=42b9a8fd"></script>
+        <script src="_static/doctools.js?v=9a2dae69"></script>
+        <script src="_static/sphinx_highlight.js?v=dc90522c"></script>
+    <script src="_static/js/theme.js"></script>
+    <link rel="index" title="Index" href="genindex.html" />
+    <link rel="search" title="Search" href="search.html" />
+    <link rel="prev" title="Contribute" href="090_contribute.html" /> 
+</head>
+
+<body class="wy-body-for-nav"> 
+  <div class="wy-grid-for-nav">
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search" >
+
+          
+          
+          <a href="index.html" class="icon icon-home">
+            OpenUpgrade
+          </a>
+              <div class="version">
+                16.0
+              </div>
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" aria-label="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+        </div><div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="Navigation menu">
+              <ul class="current">
+<li class="toctree-l1"><a class="reference internal" href="010_introduction.html">Introduction</a></li>
+<li class="toctree-l1"><a class="reference internal" href="020_required_knowledge.html">Required Knowledge</a></li>
+<li class="toctree-l1"><a class="reference internal" href="030_coverage_analysis.html">Coverage Analysis</a></li>
+<li class="toctree-l1"><a class="reference internal" href="040_run_migration.html">Running the migration</a></li>
+<li class="toctree-l1"><a class="reference internal" href="050_after_migration.html">After migration</a></li>
+<li class="toctree-l1"><a class="reference internal" href="060_odoo_migration_manager.html">The Odoo Migration Manager</a></li>
+<li class="toctree-l1"><a class="reference internal" href="070_migration_files.html">Migration Files</a></li>
+<li class="toctree-l1"><a class="reference internal" href="080_migration_script_development.html">Migration script development</a></li>
+<li class="toctree-l1"><a class="reference internal" href="090_contribute.html">Contribute</a></li>
+<li class="toctree-l1 current"><a class="current reference internal" href="#">Maintain OpenUpgrade Repository</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="#set-up-the-branch-for-a-new-odoo-release">Set up the branch for a new Odoo release</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#manual-changes">Manual changes</a></li>
+</ul>
+</li>
+</ul>
+
+        </div>
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap"><nav class="wy-nav-top" aria-label="Mobile navigation menu" >
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="index.html">OpenUpgrade</a>
+      </nav>
+
+      <div class="wy-nav-content">
+        <div class="rst-content">
+          <div role="navigation" aria-label="Page navigation">
+  <ul class="wy-breadcrumbs">
+      <li><a href="index.html" class="icon icon-home" aria-label="Home"></a></li>
+      <li class="breadcrumb-item active">Maintain OpenUpgrade Repository</li>
+      <li class="wy-breadcrumbs-aside">
+      </li>
+  </ul>
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+             
+  <section id="maintain-openupgrade-repository">
+<h1>Maintain OpenUpgrade Repository<a class="headerlink" href="#maintain-openupgrade-repository" title="Link to this heading"></a></h1>
+<p>The following documentation is for OpenUpgrade Maintainers.</p>
+<section id="set-up-the-branch-for-a-new-odoo-release">
+<h2>Set up the branch for a new Odoo release<a class="headerlink" href="#set-up-the-branch-for-a-new-odoo-release" title="Link to this heading"></a></h2>
+<div class="highlight-shell notranslate"><div class="highlight"><pre><span></span><span class="c1"># Configuration</span>
+<span class="nb">export</span><span class="w"> </span><span class="nv">PREV</span><span class="o">=</span><span class="m">16</span>.0<span class="w"> </span><span class="nv">OLD</span><span class="o">=</span><span class="m">17</span>.0<span class="w"> </span><span class="nv">NEW</span><span class="o">=</span><span class="m">18</span>.0
+
+git<span class="w"> </span>clone<span class="w"> </span>https://github.com/OCA/OpenUpgrade<span class="w"> </span>--single-branch<span class="w"> </span>-b<span class="w"> </span><span class="nv">$OLD</span>
+<span class="nb">cd</span><span class="w"> </span>OpenUpgrade
+
+<span class="nv">NODOTPREV</span><span class="o">=</span><span class="si">${</span><span class="nv">PREV</span><span class="p">/</span><span class="se">\.</span><span class="p">/</span><span class="si">}</span><span class="w">         </span><span class="c1"># e.g. 16.0 -&gt; 160</span>
+<span class="nv">NODOTDOLD</span><span class="o">=</span><span class="si">${</span><span class="nv">OLD</span><span class="p">/</span><span class="se">\.</span><span class="p">/</span><span class="si">}</span><span class="w">          </span><span class="c1"># e.g. 17.0 -&gt; 170</span>
+<span class="nv">NODOTNEW</span><span class="o">=</span><span class="si">${</span><span class="nv">NEW</span><span class="p">/</span><span class="se">\.</span><span class="p">/</span><span class="si">}</span><span class="w">           </span><span class="c1"># e.g. 18.0 -&gt; 180</span>
+<span class="nv">ESCAPEDPREV</span><span class="o">=</span><span class="si">${</span><span class="nv">PREV</span><span class="p">/</span><span class="se">\.</span><span class="p">/</span><span class="se">\\\.</span><span class="si">}</span><span class="w">   </span><span class="c1"># e.g. 16.0 -&gt; 16\.0</span>
+<span class="nv">ESCAPEDOLD</span><span class="o">=</span><span class="si">${</span><span class="nv">OLD</span><span class="p">/</span><span class="se">\.</span><span class="p">/</span><span class="se">\\\.</span><span class="si">}</span><span class="w">     </span><span class="c1"># e.g. 17.0 -&gt; 17\.0</span>
+
+<span class="c1"># Create a new empty branch</span>
+git<span class="w"> </span>checkout<span class="w"> </span>--orphan<span class="w"> </span><span class="nv">$NEW</span>
+git<span class="w"> </span>rm<span class="w"> </span>-rf<span class="w"> </span>.
+git<span class="w"> </span>commit<span class="w"> </span>--allow-empty<span class="w"> </span>--no-verify<span class="w"> </span>-m<span class="w"> </span><span class="s2">&quot;[INIT] </span><span class="nv">$NEW</span><span class="s2">: Initialize branch&quot;</span>
+git<span class="w"> </span>push<span class="w"> </span>origin<span class="w"> </span><span class="nv">$NEW</span>
+
+<span class="c1"># Create a dedicated branch</span>
+git<span class="w"> </span>checkout<span class="w"> </span>-b<span class="w"> </span><span class="nv">$NEW</span>-initialize
+
+<span class="c1"># Recover all the code from the old branch,</span>
+<span class="c1"># - Remove coverage docsource file from old version</span>
+<span class="c1"># - openupgrade_framework will be migrated in a future PR.</span>
+<span class="c1"># - Remove scripts from old version</span>
+git<span class="w"> </span>format-patch<span class="w"> </span>--keep-subject<span class="w"> </span>--stdout<span class="w"> </span><span class="nv">$NEW</span>..<span class="nv">$OLD</span><span class="w"> </span>--<span class="w"> </span><span class="se">\</span>
+<span class="w">    </span><span class="s1">&#39;:!docsource&#39;</span><span class="w"> </span><span class="se">\</span>
+<span class="w">    </span><span class="s1">&#39;:!openupgrade_framework&#39;</span><span class="w"> </span><span class="se">\</span>
+<span class="w">    </span><span class="s1">&#39;:!openupgrade_scripts/scripts&#39;</span><span class="w"> </span><span class="se">\</span>
+<span class="w">    </span><span class="s1">&#39;:!openupgrade_scripts/apriori.py&#39;</span><span class="w"> </span><span class="se">\</span>
+<span class="p">|</span><span class="w"> </span>git<span class="w"> </span>am<span class="w"> </span>-3<span class="w"> </span>--keep
+
+<span class="c1"># Replace No-Dot Syntax (140, 150, ...)</span>
+sed<span class="w"> </span>-i<span class="w"> </span><span class="s2">&quot;s/</span><span class="nv">$NODOTDOLD</span><span class="s2">/</span><span class="nv">$NODOTNEW</span><span class="s2">/g&quot;</span><span class="w"> </span>.github/workflows/*
+sed<span class="w"> </span>-i<span class="w"> </span><span class="s2">&quot;s/</span><span class="nv">$NODOTPREV</span><span class="s2">/</span><span class="nv">$NODOTDOLD</span><span class="s2">/g&quot;</span><span class="w"> </span>.github/workflows/*
+
+<span class="c1"># Replace Doted Syntax (14.0, 15.0, ...)</span>
+sed<span class="w"> </span>-i<span class="w"> </span><span class="s2">&quot;s/</span><span class="nv">$ESCAPEDOLD</span><span class="s2">/</span><span class="nv">$NEW</span><span class="s2">/g&quot;</span><span class="w"> </span><span class="se">\</span>
+<span class="w">    </span>.github/workflows/*<span class="w"> </span><span class="se">\</span>
+<span class="w">    </span>.pylintrc*<span class="w"> </span><span class="se">\</span>
+<span class="w">    </span>README.md<span class="w"> </span><span class="se">\</span>
+<span class="w">    </span>openupgrade_scripts/readme/*
+
+<span class="c1"># Reset version in manifest file</span>
+sed<span class="w"> </span>-i<span class="w"> </span><span class="s2">&quot;s/17\.0\(\.[[:digit:]]\)\{3\}/</span><span class="nv">$NEW</span><span class="s2">\.1\.0\.0/g&quot;</span><span class="w"> </span>openupgrade_scripts/__manifest__.py
+
+sed<span class="w"> </span>-i<span class="w"> </span><span class="s2">&quot;s/</span><span class="nv">$ESCAPEDPREV</span><span class="s2">/</span><span class="nv">$OLD</span><span class="s2">/g&quot;</span><span class="w"> </span><span class="se">\</span>
+<span class="w">    </span>.github/workflows/*<span class="w"> </span><span class="se">\</span>
+<span class="w">    </span>openupgrade_scripts/readme/*
+
+git<span class="w"> </span>commit<span class="w"> </span>-am<span class="w"> </span><span class="s2">&quot;[INIT] </span><span class="nv">$NEW</span><span class="s2">: Replace version numbers.&quot;</span><span class="w"> </span>--no-verify
+
+<span class="c1"># Initialize apriori.py file</span>
+cat<span class="w"> </span><span class="s">&lt;&lt; EOF &gt; ./openupgrade_scripts/apriori.py</span>
+<span class="s">&quot;&quot;&quot; Encode any known changes to the database here</span>
+<span class="s">to help the matching process</span>
+<span class="s">&quot;&quot;&quot;</span>
+
+<span class="s"># Renamed modules is a mapping from old module name to new module name</span>
+<span class="s">renamed_modules = {</span>
+<span class="s">    # odoo</span>
+<span class="s">    # odoo/enterprise</span>
+<span class="s">    # OCA/...</span>
+<span class="s">}</span>
+
+<span class="s"># Merged modules contain a mapping from old module names to other,</span>
+<span class="s"># preexisting module names</span>
+<span class="s">merged_modules = {</span>
+<span class="s">    # odoo</span>
+<span class="s">    # odoo/enterprise</span>
+<span class="s">    # OCA/...</span>
+<span class="s">}</span>
+
+<span class="s"># only used here for upgrade_analysis</span>
+<span class="s">renamed_models = {</span>
+<span class="s">    # odoo</span>
+<span class="s">    # OCA/...</span>
+<span class="s">}</span>
+
+<span class="s"># only used here for upgrade_analysis</span>
+<span class="s">merged_models = {</span>
+<span class="s">    # odoo</span>
+<span class="s">    # OCA/...</span>
+<span class="s">}</span>
+
+<span class="s">EOF</span>
+
+git<span class="w"> </span>add<span class="w"> </span>./openupgrade_scripts/apriori.py
+git<span class="w"> </span>commit<span class="w"> </span>-am<span class="w"> </span><span class="s2">&quot;[INIT] </span><span class="nv">$NEW</span><span class="s2">: Initialize apriori.py file.&quot;</span><span class="w"> </span>--no-verify
+</pre></div>
+</div>
+<p>Finally, <code class="docutils literal notranslate"><span class="pre">git</span> <span class="pre">push</span></code> the branch on your fork, and make a pull request against OCA/$NEW branch.</p>
+</section>
+<section id="manual-changes">
+<h2>Manual changes<a class="headerlink" href="#manual-changes" title="Link to this heading"></a></h2>
+<ul class="simple">
+<li><p>Execute the technical migration of <code class="docutils literal notranslate"><span class="pre">upgrade_analysis</span></code> from <a class="reference external" href="https://github.com/OCA/server-tools">https://github.com/OCA/server-tools</a>.</p></li>
+<li><p>Run the module migration, see <a class="reference external" href="https://github.com/OCA/OpenUpgrade/wiki/Crude-script-to-create-the-full-analysis-between-two-versions-of-Odoo">https://github.com/OCA/OpenUpgrade/wiki/Crude-script-to-create-the-full-analysis-between-two-versions-of-Odoo</a>. Run with Odoo configuration option module_coverage_file_folder = &lt;some folder&gt;.</p></li>
+<li><p>On success, propose the migration of <code class="docutils literal notranslate"><span class="pre">upgrade_analysis</span></code> into server-tools, and the analysis files into <code class="docutils literal notranslate"><span class="pre">openupgrade_scripts</span></code>.</p></li>
+<li><p>Add a coverage file (e.g. docsource/modules170-180.rst)</p></li>
+<li><p>In the <code class="docutils literal notranslate"><span class="pre">OpenUpgrade</span></code>/<code class="docutils literal notranslate"><span class="pre">documentation</span></code> branch, add a new line in <code class="docutils literal notranslate"><span class="pre">build_openupgrade_docs</span></code>.</p></li>
+<li><p>Push a test database for the old release to Github (see <a class="reference external" href="https://github.com/OCA/OpenUpgrade/wiki/How-to-create-a-reference-database">https://github.com/OCA/OpenUpgrade/wiki/How-to-create-a-reference-database</a>)</p></li>
+<li><p>Execute the technical migration of <code class="docutils literal notranslate"><span class="pre">openupgrade_framework</span></code>.</p></li>
+<li><p>Check files in .github/workflows for any required changes.</p></li>
+<li><p>Once development starts on the new edition’s migration scripts, change the default branch for new PRs at <a class="reference external" href="https://github.com/OCA/OpenUpgrade/settings/branches">https://github.com/OCA/OpenUpgrade/settings/branches</a>.</p></li>
+</ul>
+</section>
+</section>
+
+
+           </div>
+          </div>
+          <footer><div class="rst-footer-buttons" role="navigation" aria-label="Footer">
+        <a href="090_contribute.html" class="btn btn-neutral float-left" title="Contribute" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left" aria-hidden="true"></span> Previous</a>
+    </div>
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>&#169; Copyright 2012-2021, Odoo Community Association (OCA) / The OpenUpgrade developers.
+      <span class="lastupdated">Last updated on Sep 30, 2024.
+      </span></p>
+  </div>
+
+  Built with <a href="https://www.sphinx-doc.org/">Sphinx</a> using a
+    <a href="https://github.com/readthedocs/sphinx_rtd_theme">theme</a>
+    provided by <a href="https://readthedocs.org">Read the Docs</a>.
+   
+
+</footer>
+        </div>
+      </div>
+    </section>
+  </div>
+  <script>
+      jQuery(function () {
+          SphinxRtdTheme.Navigation.enable(true);
+      });
+  </script> 
+
+</body>
+</html>
