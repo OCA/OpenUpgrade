@@ -1,4 +1,4 @@
-# On each push in 17.0 branch,
+# On each push in 18.0 branch,
 # AND if the coverage file changed,
 # build documentation branch and commit the changes
 # so that the changes are visible on the website
@@ -8,7 +8,7 @@ name: Build and commit documentation
 
 on:
   push:
-    paths: ["docsource/modules160-170.rst"]
+    paths: ["docsource/modules170-180.rst"]
 
 jobs:
   documentation-commit:
@@ -27,7 +27,7 @@ jobs:
         uses: actions/checkout@v2
         with:
           repository: odoo/odoo
-          ref: "17.0"
+          ref: "18.0"
           fetch-depth: 1
           path: odoo
       - name: Configuration

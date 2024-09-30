@@ -7,7 +7,7 @@ name: Test OpenUpgrade migration
 
 on:
   push:
-    branches: ["17.0*"]
+    branches: ["18.0*"]
   pull_request:
 
 jobs:
@@ -44,19 +44,19 @@ jobs:
         run: createdb $DB
       - name: DB Restore
         run: |
-          wget -q -O- $DOWNLOADS/16.0.psql | pg_restore -d $DB --no-owner
+          wget -q -O- $DOWNLOADS/17.0.psql | pg_restore -d $DB --no-owner
       - name: Check out Odoo
         uses: actions/checkout@v2
         with:
           repository: odoo/odoo
-          ref: "17.0"
+          ref: "18.0"
           fetch-depth: 1
           path: odoo
       - name: Check out previous Odoo
         uses: actions/checkout@v2
         with:
           repository: odoo/odoo
-          ref: "16.0"
+          ref: "17.0"
           fetch-depth: 1
           path: odoo-old
       - name: Check out OpenUpgrade
@@ -101,7 +101,7 @@ jobs:
           # select modules and perform the upgrade
           MODULES_OLD=$(\
               sed -n '/^+========/,$p' \
-              openupgrade/docsource/modules160-170.rst \
+              openupgrade/docsource/modules170-180.rst \
               | grep "Done\|Partial\|Nothing" \
               | grep -v "theme_" \
               | sed -rn 's/((^\| *\|del\| *)|^\| *)([0-9a-z_]*)[ \|].*/\3/g p' \
@@ -109,7 +109,7 @@ jobs:
               | paste -d, -s)
           MODULES_NEW=$(\
               sed -n '/^+========/,$p' \
-              openupgrade/docsource/modules160-170.rst \
+              openupgrade/docsource/modules170-180.rst \
               | grep "Done\|Partial\|Nothing" \
               | grep -v "theme_" \
               | sed -rn 's/((^\| *\|new\| *)|^\| *)([0-9a-z_]*)[ \|].*/\3/g p' \
