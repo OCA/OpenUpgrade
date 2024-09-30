@@ -1,7 +1,7 @@
 
-[![Pre-commit Status](https://github.com/OCA/OpenUpgrade/actions/workflows/pre-commit.yml/badge.svg?branch=17.0)](https://github.com/OCA/OpenUpgrade/actions/workflows/pre-commit.yml?query=branch%3A17.0)
-[![Build Status](https://github.com/OCA/OpenUpgrade/actions/workflows/test.yml/badge.svg?branch=17.0)](https://github.com/OCA/OpenUpgrade/actions/workflows/test.yml?query=branch%3A17.0)
-[![codecov](https://codecov.io/gh/OCA/OpenUpgrade/branch/17.0/graph/badge.svg)](https://codecov.io/gh/OCA/OpenUpgrade)
+[![Pre-commit Status](https://github.com/OCA/OpenUpgrade/actions/workflows/pre-commit.yml/badge.svg?branch=18.0)](https://github.com/OCA/OpenUpgrade/actions/workflows/pre-commit.yml?query=branch%3A18.0)
+[![Build Status](https://github.com/OCA/OpenUpgrade/actions/workflows/test.yml/badge.svg?branch=18.0)](https://github.com/OCA/OpenUpgrade/actions/workflows/test.yml?query=branch%3A18.0)
+[![codecov](https://codecov.io/gh/OCA/OpenUpgrade/branch/18.0/graph/badge.svg)](https://codecov.io/gh/OCA/OpenUpgrade)
 
 <!-- /!\ do not modify above this line -->
 
@@ -23,8 +23,8 @@ Available addons
 ----------------
 addon | version | maintainers | summary
 --- | --- | --- | ---
-[openupgrade_framework](openupgrade_framework/) | 17.0.1.0.0 | [![legalsylvain](https://github.com/legalsylvain.png?size=30px)](https://github.com/legalsylvain) [![StefanRijnhart](https://github.com/StefanRijnhart.png?size=30px)](https://github.com/StefanRijnhart) [![hbrunn](https://github.com/hbrunn.png?size=30px)](https://github.com/hbrunn) | Module to integrate in the server_wide_modules option to make upgrades between two major revisions.
-[openupgrade_scripts](openupgrade_scripts/) | 17.0.1.0.1 |  | Module that contains all the migrations analysis and scripts for migrate Odoo SA modules.
+[openupgrade_framework](openupgrade_framework/) | 18.0.1.0.0 | [![legalsylvain](https://github.com/legalsylvain.png?size=30px)](https://github.com/legalsylvain) [![StefanRijnhart](https://github.com/StefanRijnhart.png?size=30px)](https://github.com/StefanRijnhart) [![hbrunn](https://github.com/hbrunn.png?size=30px)](https://github.com/hbrunn) | Module to integrate in the server_wide_modules option to make upgrades between two major revisions.
+[openupgrade_scripts](openupgrade_scripts/) | 18.0.1.0.1 |  | Module that contains all the migrations analysis and scripts for migrate Odoo SA modules.
 
 [//]: # (end addons)
 
