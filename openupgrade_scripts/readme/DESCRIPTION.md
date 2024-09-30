@@ -1,2 +1,2 @@
-This module is a containers of migration script to migrate from 16.0 to
-17.0 version.
+This module is a containers of migration script to migrate from 17.0 to
+18.0 version.
