@@ -851,13 +851,21 @@ def create_account_tax_repartition_lines(env):
 def move_tags_from_taxes_to_repartition_lines(env):
     openupgrade.logged_query(
         env.cr, """
+        WITH RECURSIVE tax2parent(tax_id, parent_id) AS (
+            SELECT id, id FROM account_tax
+            UNION ALL
+            SELECT rel.child_tax, rel.parent_tax
+            FROM account_tax_filiation_rel rel
+            JOIN tax2parent ON tax2parent.parent_id=rel.child_tax
+        )
         INSERT INTO account_account_tag_account_tax_repartition_line_rel (
             account_tax_repartition_line_id, account_account_tag_id)
         SELECT atrl.id, atat.account_account_tag_id
         FROM account_tax_account_tag atat
+        JOIN tax2parent ON atat.account_tax_id=tax2parent.parent_id
         JOIN account_tax_repartition_line atrl ON
-            (atat.account_tax_id = atrl.invoice_tax_id OR
-             atat.account_tax_id = atrl.refund_tax_id)
+            (tax2parent.tax_id = atrl.invoice_tax_id OR
+             tax2parent.tax_id = atrl.refund_tax_id)
         ON CONFLICT DO NOTHING"""
     )
     openupgrade.logged_query(
@@ -944,14 +952,22 @@ def assign_account_tags_to_move_lines(env):
     # move lines with taxes
     openupgrade.logged_query(
         env.cr, """
+        WITH RECURSIVE tax2child(tax_id, child_id) AS (
+            SELECT id, id FROM account_tax
+            UNION ALL
+            SELECT rel.parent_tax, rel.child_tax
+            FROM account_tax_filiation_rel rel
+            JOIN tax2child ON tax2child.child_id=rel.parent_tax
+        )
         INSERT INTO account_account_tag_account_move_line_rel (
             account_move_line_id, account_account_tag_id)
         SELECT aml.id, aat_atr_rel.account_account_tag_id
         FROM account_move_line aml
         JOIN account_move am ON aml.move_id = am.id
         JOIN account_move_line_account_tax_rel amlatr ON amlatr.account_move_line_id = aml.id
+        JOIN tax2child ON amlatr.account_tax_id=tax2child.child_id
         JOIN account_tax_repartition_line atrl ON (
-            atrl.invoice_tax_id = amlatr.account_tax_id AND atrl.repartition_type = 'base')
+            atrl.invoice_tax_id = tax2child.tax_id AND atrl.repartition_type = 'base')
         JOIN account_account_tag_account_tax_repartition_line_rel aat_atr_rel ON
             aat_atr_rel.account_tax_repartition_line_id = atrl.id
         WHERE aml.old_invoice_line_id IS NOT NULL AND am.type in ('out_invoice', 'in_invoice')
