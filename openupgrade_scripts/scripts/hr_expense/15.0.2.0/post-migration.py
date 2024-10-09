@@ -26,6 +26,11 @@ def _fill_payment_state(env):
             aat.type = 'payable'
         """,
     )
+    # Disable fiscalyear_lock_date check
+    _check_fiscalyear_lock_date = env[
+        "account.move"
+    ].__class__._check_fiscalyear_lock_date
+    env["account.move"].__class__._check_fiscalyear_lock_date = lambda self: None
     # Recompute several fields (always_tax_exigible, amount_residual,
     # amount_residual_signed, amount_untaxed, amount_untaxed_signed,
     # payment_state) for the moves associated to the expenses, as on v14 these
@@ -35,6 +40,10 @@ def _fill_payment_state(env):
     env["account.move"].with_context(active_test=False, tracking_disable=True).search(
         [("line_ids.expense_id", "!=", False)]
     )._compute_amount()
+    # Enable fiscalyear_lock_date check
+    env[
+        "account.move"
+    ].__class__._check_fiscalyear_lock_date = _check_fiscalyear_lock_date
 
 
 @openupgrade.migrate()
