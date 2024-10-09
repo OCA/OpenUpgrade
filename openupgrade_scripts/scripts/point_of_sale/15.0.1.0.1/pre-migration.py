@@ -28,9 +28,29 @@ def merge_pos_order_return_module(env):
         )
 
 
+def merge_pos_order_line_module(env):
+    """
+    The OCA/pos_order_line_note module (V12) is now merged into point_of_sale. We can hook into
+    the new core functionality just renaming the proper field.
+    """
+    if openupgrade.column_exists(env.cr, "pos_order_line", "note"):
+        openupgrade.rename_fields(
+            env,
+            [
+                (
+                    "pos.order.line",
+                    "pos_order_line",
+                    "note",
+                    "customer_note",
+                ),
+            ],
+        )
+
+
 @openupgrade.migrate()
 def migrate(env, version):
     merge_pos_order_return_module(env)
+    merge_pos_order_line_module(env)
     openupgrade.rename_fields(
         env,
         [
