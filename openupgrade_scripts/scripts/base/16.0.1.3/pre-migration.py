@@ -1,11 +1,13 @@
 # Copyright 2020 Odoo Community Association (OCA)
 # Copyright 2020 Opener B.V. <stefan@opener.am>
 # License AGPL-3.0 or later (https://www.gnu.org/licenses/agpl).
+import csv
 import logging
 
 from openupgradelib import openupgrade
 
 from odoo import tools
+from odoo.modules.module import get_resource_path
 
 from odoo.addons.openupgrade_scripts.apriori import merged_modules, renamed_modules
 
@@ -116,6 +118,29 @@ def update_translatable_fields(cr):
         )
 
 
+def _review_states_xmlids(cr):
+    data_file = open(get_resource_path("base", "data", "res.country.state.csv"), "r")
+    data_file.seek(0)
+    reader = csv.DictReader(data_file)
+    for row in reader:
+        cr.execute(
+            """
+        SELECT rcs.id
+        FROM res_country_state rcs
+            JOIN res_country rc ON rc.id = rcs.country_id
+            JOIN
+                ir_model_data imd ON imd.res_id = rc.id
+                AND imd.model = 'res.country'
+                AND imd.module = 'base'
+        WHERE rcs.code = %s AND imd.name = %s
+        """,
+            (row["code"], row["country_id:id"]),
+        )
+        result = cr.fetchone()
+        if result:
+            openupgrade.add_xmlid(cr, "base", row["id"], "res.country.state", result[0])
+
+
 @openupgrade.migrate(use_env=False)
 def migrate(cr, version):
     """
@@ -142,3 +167,4 @@ def migrate(cr, version):
     )
     # update all translatable fields
     update_translatable_fields(cr)
+    _review_states_xmlids(cr)
