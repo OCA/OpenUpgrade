@@ -269,7 +269,7 @@ def add_helper_invoice_move_rel(env):
     openupgrade.logged_query(
         env.cr, """
         UPDATE account_invoice ai
-        SET move_id = am.old_invoice_id
+        SET move_id = am.id
         FROM account_move am
         WHERE am.old_invoice_id = ai.id AND ai.move_id IS NULL
         """,
