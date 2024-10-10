@@ -54,8 +54,6 @@ renamed_modules = {
     "edi_xml": "edi_xml_oca",
     # OCA/hr-holidays
     "hr_leave_hour": "hr_leave_custom_hour_interval",
-    # OCA/hr -> OCA/payroll:
-    "hr_period": "hr_payroll_period",
     # OCA/l10n-spain
     "l10n_es_account_bank_statement_import_n43": "l10n_es_account_statement_import_n43",
     # OCA/manufacture
@@ -65,8 +63,6 @@ renamed_modules = {
     # OCA/server-tools
     "base_jsonify": "jsonifier",
     "openupgrade_records": "upgrade_analysis",
-    # OCA/web
-    "web_confirm_duplicate": "web_copy_confirm",
     # OCA/website
     "website_analytics_piwik": "website_analytics_matomo",
     # OCA/l10n-italy
@@ -100,6 +96,8 @@ merged_modules = {
     "theme_graphene_blog": "theme_graphene",
     # odoo/enterprise
     "hr_holidays_gantt_calendar": "hr_holidays_gantt",
+    # OCA/hr -> OCA/payroll:
+    "hr_period": "hr_payroll_period",
     # OCA/intrastat-extrastat
     "hs_code_link": "product_harmonized_system_delivery",
     # OCA/event
@@ -134,6 +132,8 @@ merged_modules = {
     "website_cookie_notice": "website",
     "website_form_recaptcha": "website_form",
     "website_crm_recaptcha": "website_form",
+    # OCA/web
+    "web_confirm_duplicate": "web_copy_confirm",
     # OCA/...
 }
 
