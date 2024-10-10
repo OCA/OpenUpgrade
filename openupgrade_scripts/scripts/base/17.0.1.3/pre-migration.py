@@ -1,6 +1,5 @@
 # Copyright 2024 Viindoo Technology Joint Stock Company (Viindoo)
-# Copyright 2020 Odoo Community Association (OCA)
-# Copyright 2020 Opener B.V. <stefan@opener.am>
+# Copyright 2024 Tecnativa - Pedro M. Baeza
 # License AGPL-3.0 or later (https://www.gnu.org/licenses/agpl).
 import logging
 
@@ -13,6 +12,10 @@ from odoo.addons.openupgrade_scripts.apriori import merged_modules, renamed_modu
 _logger = logging.getLogger(__name__)
 
 _xmlids_renames = [
+    (
+        "mail.model_res_users_settings",
+        "base.model_res_users_settings",
+    ),
     (
         "mail.access_res_users_settings_all",
         "base.access_res_users_settings_all",
@@ -34,6 +37,9 @@ _xmlids_renames = [
         "base.constraint_res_users_settings_unique_user_id",
     ),
 ]
+_column_renames = {
+    "res_partner": [("display_name", "complete_name")],
+}
 
 
 def _fill_ir_server_object_lines_into_action_server(cr):
@@ -41,6 +47,7 @@ def _fill_ir_server_object_lines_into_action_server(cr):
         cr,
         """
         ALTER TABLE ir_act_server
+            ADD COLUMN IF NOT EXISTS old_ias_id VARCHAR,
             ADD COLUMN IF NOT EXISTS evaluation_type VARCHAR,
             ADD COLUMN IF NOT EXISTS resource_ref VARCHAR,
             ADD COLUMN IF NOT EXISTS selection_value INTEGER,
@@ -52,79 +59,136 @@ def _fill_ir_server_object_lines_into_action_server(cr):
             ADD COLUMN IF NOT EXISTS value TEXT;
         """,
     )
+    # Update operations
     openupgrade.logged_query(
         cr,
         """
-        WITH tmp AS (
-            SELECT t1.id, t1.state, t2.col1, t2.value, t2.evaluation_type,
-            t3.name AS update_field_name, t3.ttype,
-            t3.relation, t4.id AS selection_field_id
-            FROM ir_act_server t1
-            JOIN ir_server_object_lines t2 on t1.id = t2.server_id
-            JOIN ir_model_fields t3 on t2.col1 = t3.id
-            LEFT JOIN ir_model_fields_selection t4 on t3.id = t4.field_id
+        INSERT INTO ir_act_server
+        (
+            old_ias_id,
+            evaluation_type,
+            update_field_id,
+            update_path,
+            update_related_model_id,
+            value,
+            resource_ref,
+            selection_value,
+            update_boolean_value,
+            update_m2m_operation
         )
-        UPDATE ir_act_server ias
-            SET
-                update_field_id = CASE
-                    WHEN tmp.state = 'object_create' THEN NULL
-                    WHEN tmp.state = 'object_write' THEN tmp.col1
-                    ELSE NULL
-                END,
-                update_path = CASE
-                    WHEN tmp.state = 'object_create' THEN NULL
-                    WHEN tmp.state = 'object_write' THEN tmp.update_field_name
-                    ELSE NULL
-                END,
-                update_related_model_id = CASE
-                    WHEN tmp.state = 'object_write' AND tmp.evaluation_type = 'value'
-                    AND tmp.relation IS NOT NULL THEN
-                    (SELECT id FROM ir_model WHERE model=tmp.relation LIMIT 1)
-                    ELSE NULL
-                END,
-                update_m2m_operation = 'add',
-                evaluation_type = CASE
-                    WHEN tmp.evaluation_type = 'value' then 'value'
-                    WHEN tmp.evaluation_type = 'reference' then 'value'
-                    WHEN tmp.evaluation_type = 'equation' then 'equation'
-                    ELSE 'VALUE'
-                END,
-                value = tmp.value,
-                resource_ref = CASE
-                    WHEN tmp.ttype in ('many2one', 'many2many')
-                    THEN tmp.relation || ',' || tmp.value
-                    ELSE NULL
-                END,
-                selection_value = CASE
-                    WHEN tmp.ttype = 'selection' THEN tmp.selection_field_id
-                    ELSE NULL
-                END,
-                update_boolean_value = CASE
-                    WHEN tmp.ttype = 'boolean' then 'true'
-                    ELSE NULL
-                END
-        FROM tmp
-        WHERE ias.id = tmp.id
+        SELECT
+            ias.id,
+            CASE
+                WHEN isol.evaluation_type = 'equation' then 'equation'
+                ELSE 'value'
+            END,
+            imf.id,
+            imf.name,
+            im.id,
+            CASE WHEN isol.evaluation_type = 'equation'
+                THEN isol.value
+                ELSE NULL
+            END,
+            CASE WHEN imf.ttype in ('many2one', 'many2many')
+                THEN imf.relation || ',' || isol.value
+                ELSE NULL
+            END,
+            imfs.id,
+            CASE WHEN imf.ttype = 'boolean'
+                THEN isol.value::bool
+                ELSE NULL
+            END,
+            'add'
+        FROM ir_act_server ias
+        JOIN ir_server_object_lines isol ON isol.server_id = ias.id
+        JOIN ir_model_fields imf ON imf.id = isol.col1
+        LEFT JOIN ir_model im ON im.model = imf.relation
+        LEFT JOIN ir_model_fields_selection imfs
+            ON imf.id = imfs.field_id AND imfs.value = isol.value
+        WHERE ias.state = 'object_write'
+        RETURNING id, old_ias_id
+        """,
+    )
+    for row in cr.fetchall():
+        cr.execute(
+            """
+            INSERT INTO rel_server_actions
+            (action_id, server_id)
+            VALUES (%s, %s)
+            """,
+            (row[0], row[1]),
+        )
+    openupgrade.logged_query(
+        cr,
+        """UPDATE ir_act_server ias
+        SET state = 'multi'
+        FROM ir_server_object_lines isol
+        WHERE ias.state = 'object_write'
+        AND isol.server_id = ias.id
+        """,
+    )
+    # Create operations
+    openupgrade.logged_query(
+        cr,
+        """UPDATE ir_act_server ias
+        SET value = isol.value
+        FROM ir_server_object_lines isol
+        JOIN ir_model_fields imf ON imf.id = isol.col1
+        WHERE ias.state = 'object_create'
+        AND isol.server_id = ias.id
+        AND isol.evaluation_type = 'value'
+        AND imf.name = 'name'
         """,
     )
 
 
-def _partner_create_column_complete_name(cr):
+def _fill_empty_country_codes(cr):
     openupgrade.logged_query(
         cr,
         """
-        ALTER TABLE res_partner
-            ADD COLUMN IF NOT EXISTS complete_name VARCHAR;
+        UPDATE res_country
+        SET code = 'OU' || id::VARCHAR
+        WHERE code IS NULL
         """,
     )
 
 
-def _update_partner_private_type(cr):
+def _handle_partner_private_type(cr):
+    # Copy private records into a new table
     openupgrade.logged_query(
         cr,
         """
+        CREATE TABLE ou_res_partner_private AS
+        SELECT * FROM res_partner
+        WHERE type = 'private'
+        """,
+    )
+    # Copy column for preserving the old type values
+    _column_copies = {"res_partner": [("type", None, None)]}
+    openupgrade.copy_columns(cr, _column_copies)
+    # Change contact type and erase sensitive information
+    query = "type = 'contact'"
+    for field in [
+        "street",
+        "street2",
+        "city",
+        "zip",
+        "vat",
+        "function",
+        "phone",
+        "mobile",
+        "email",
+        "website",
+        "comment",
+    ]:
+        query += f", {field} = CASE WHEN {field} IS NULL THEN NULL ELSE '*****' END"
+    openupgrade.logged_query(
+        cr,
+        f"""
         UPDATE res_partner
-        SET type = 'contact'
+        SET {query},
+        country_id = NULL,
+        state_id = NULL
         WHERE type = 'private'
         """,
     )
@@ -146,6 +210,7 @@ def migrate(cr, version):
     openupgrade.update_module_names(cr, renamed_modules.items())
     openupgrade.update_module_names(cr, merged_modules.items(), merge_modules=True)
     openupgrade.rename_xmlids(cr, _xmlids_renames)
+    openupgrade.rename_columns(cr, _column_renames)
     _fill_ir_server_object_lines_into_action_server(cr)
-    _update_partner_private_type(cr)
-    _partner_create_column_complete_name(cr)
+    _fill_empty_country_codes(cr)
+    _handle_partner_private_type(cr)

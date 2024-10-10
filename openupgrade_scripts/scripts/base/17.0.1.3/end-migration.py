@@ -1,5 +1,4 @@
 # Copyright 2024 Viindoo Technology Joint Stock Company (Viindoo)
-# Copyright 2022 ForgeFlow S.L.  <https://www.forgeflow.com>
 # License AGPL-3.0 or later (http://www.gnu.org/licenses/agpl.html).
 from openupgradelib import openupgrade
 
