@@ -1,0 +1,262 @@
+---Models in module 'base'---
+obsolete model ir.server.object.lines
+base         / ir.actions.server        / fields_lines (one2many)       : DEL relation: ir.server.object.lines
+base         / ir.server.object.lines   / col1 (many2one)               : DEL relation: ir.model.fields, required
+base         / ir.server.object.lines   / evaluation_type (selection)   : DEL required, selection_keys: ['equation', 'reference', 'value']
+base         / ir.server.object.lines   / server_id (many2one)          : DEL relation: ir.actions.server
+base         / ir.server.object.lines   / value (text)                  : DEL required
+base         / ir.actions.server        / evaluation_type (selection)   : NEW selection_keys: ['equation', 'value'], hasdefault: default
+base         / ir.actions.server        / value (text)                  : NEW
+base         / ir.actions.server        / resource_ref (reference)      : NEW
+base         / ir.actions.server        / selection_value (many2one)    : NEW relation: ir.model.fields.selection
+base         / ir.actions.server        / update_boolean_value (selection): NEW selection_keys: ['false', 'true'], hasdefault: default
+base         / ir.actions.server        / update_field_id (many2one)    : NEW relation: ir.model.fields, hasdefault: compute
+base         / ir.actions.server        / update_m2m_operation (selection): NEW selection_keys: ['add', 'clear', 'remove', 'set'], hasdefault: default
+base         / ir.actions.server        / update_path (char)            : NEW hasdefault: default
+base         / ir.actions.server        / update_related_model_id (many2one): NEW relation: ir.model, isfunction: function, stored
+# DONE: pre-migration: Create extra ir.actions.server records as childs of the original ias record when the operation is to update records and there are lines
+# DONE: pre-migration: Bring name to ir.actions.server records from the line indicating when the operation is to create record. For the rest of the cases, there isn't now equivalent
+
+new model ir.model.inherit
+base         / ir.model.inherit         / model_id (many2one)           : NEW relation: ir.model, required
+base         / ir.model.inherit         / parent_field_id (many2one)    : NEW relation: ir.model.fields
+base         / ir.model.inherit         / parent_id (many2one)          : NEW relation: ir.model, required
+# NOTHING TO DO: Populated automatically by Odoo registry through `_reflect_inherits` method
+
+model res.users.settings (moved from mail)
+# DONE: pre-migration: Rename xml-id
+
+---Fields in module 'base'---
+base         / ir.actions.act_url       / target (selection)            : selection_keys is now '['download', 'new', 'self']' ('['new', 'self']')
+# NOTHING TO DO: new URL target feature, so no conversion needed for existing ones
+
+base         / ir.actions.act_window    / mobile_view_mode (char)       : NEW hasdefault: default
+# NOTHING TO DO: new feature for setting the first view mode in mobile and small screen environments. The default "kanban" value was the old behavior.
+
+base         / ir.actions.server        / state (selection)             : selection_keys is now '['code', 'multi', 'object_create', 'object_write', 'webhook']' ('['code', 'multi', 'object_create', 'object_write']')
+base         / ir.actions.server        / webhook_field_ids (many2many) : NEW relation: ir.model.fields
+base         / ir.actions.server        / webhook_url (char)            : NEW
+# NOTHING TO DO: new feature
+
+base         / ir.cron                  / cron_name (char)              : not related anymore
+base         / ir.cron                  / cron_name (char)              : now a function
+# NOTHING TO DO: The stored values don't change
+
+base         / ir.mail_server           / _order                        : _order is now 'sequence, id' ('sequence')
+# NOTHING TO DO: Needed refinement, but on real cases, sequences are already different
+
+base         / ir.mail_server           / smtp_authentication (selection): selection_keys is now '['certificate', 'cli', 'login']' ('['certificate', 'login']')
+# NOTHING TO DO: New selection option
+
+base         / ir.model.fields          / currency_field (char)         : NEW
+base         / ir.model.fields          / sanitize (boolean)            : NEW hasdefault: default
+base         / ir.model.fields          / sanitize_attributes (boolean) : NEW hasdefault: default
+base         / ir.model.fields          / sanitize_form (boolean)       : NEW hasdefault: default
+base         / ir.model.fields          / sanitize_overridable (boolean): NEW hasdefault: default
+base         / ir.model.fields          / sanitize_style (boolean)      : NEW hasdefault: default
+base         / ir.model.fields          / sanitize_tags (boolean)       : NEW hasdefault: default
+base         / ir.model.fields          / strip_classes (boolean)       : NEW hasdefault: default
+base         / ir.model.fields          / strip_style (boolean)         : NEW hasdefault: default
+# NOTHING TO DO: Populated by Odoo registry itself
+
+base         / ir.property              / type (selection)              : selection_keys is now '['binary', 'boolean', 'char', 'date', 'datetime', 'float', 'html', 'integer', 'many2one', 'selection', 'text']' ('['binary', 'boolean', 'char', 'date', 'datetime', 'float', 'integer', 'many2one', 'selection', 'text']')
+# NOTHING TO DO: New feature for having HTML fields as company_dependent
+
+base         / ir.ui.view               / field_parent (char)           : DEL
+# NOTHING TO DO: deprecated from very longtime ago since https://github.com/odoo/odoo/commit/905e01921f3c3ef43ace6fc537d1d8c0d280002c 2017
+
+base         / res.company              / all_child_ids (one2many)      : NEW relation: res.company
+base         / res.company              / parent_path (char)            : NEW
+# NOTHING TO DO: new branch feature
+
+base         / res.company              / base_onboarding_company_state (selection): DEL selection_keys: ['done', 'just_done', 'not_done']
+# NOTHING TO DO: but need to do in account module and some module that will use onboarding at post_install perhaps , use _search_or_create_progress method
+
+base         / res.company              / favicon (binary)              : DEL attachment: True
+# NOTHING TO DO: remove feature without replacement in core. Use web_favicon OCA module for restoring the feature
+
+base         / res.company              / uses_default_logo (boolean)   : NEW isfunction: function, stored
+# NOTHING TO DO: computed by ORM
+
+base         / res.country              / code (char)                   : now required
+# DONE: pre-migration: Put as code 'OU' + the ID for empty ones
+
+base         / res.partner              / complete_name (char)          : NEW isfunction: function, stored
+base         / res.partner              / display_name (char)           : not stored anymore
+base         / res.partner              / _order                        : _order is now 'complete_name ASC, id DESC' ('display_name ASC, id DESC')
+# DONE: pre-migration: Rename column display_name to complete_name, as the value is equivalent
+
+base         / res.partner              / type (selection)              : selection_keys is now '['contact', 'delivery', 'invoice', 'other']' ('['contact', 'delivery', 'invoice', 'other', 'private']')
+# DONE: pre-migration: Perform a full copy on a new table of the private records
+# DONE: pre-migration: Copy the column for preserving the old values in case any extra module needs it
+# DONE: pre-migration: Update 'private' type with 'contact' type, and erase sensitive information
+
+base         / res.users                / res_users_settings_id (many2one): previously in module mail
+base         / res.users                / res_users_settings_ids (one2many): previously in module mail
+base         / res.users.settings       / _order                        : previously in module mail
+base         / res.users.settings       / display_name (char)           : previously in module mail
+base         / res.users.settings       / user_id (many2one)            : previously in module mail
+# NOTHING TO DO: Handled by Odoo registry
+
+---XML records in module 'base'---
+DEL ir.actions.act_window: base.action_open_base_onboarding_company
+DEL ir.actions.client: base.modules_act_cl
+DEL ir.actions.client: base.modules_updates_act_cl
+DEL ir.actions.server: base.action_server_module_immediate_install
+# NOTHING TO DO: noupdate=0 records
+
+DEL ir.config_parameter: base.icp_mail_bounce_alias (noupdate)
+DEL ir.config_parameter: base.icp_mail_catchall_alias (noupdate)
+DEL ir.config_parameter: base.icp_mail_default_from (noupdate)
+# DONE: removed in end-migration, to create new alias domain record in mail module
+
+NEW ir.actions.act_window: base.ir_client_actions_report
+NEW ir.cron: base.ir_cron_res_users_deletion
+NEW ir.model.access: base.access_ir_model_inherit
+NEW ir.model.access: base.access_res_company_employee
+NEW ir.model.access: base.access_res_company_portal
+NEW ir.model.access: base.access_res_company_public
+NEW ir.model.access: base.access_res_country_employee
+NEW ir.model.access: base.access_res_country_group_employee
+NEW ir.model.access: base.access_res_country_group_portal
+NEW ir.model.access: base.access_res_country_group_public
+NEW ir.model.access: base.access_res_country_portal
+NEW ir.model.access: base.access_res_country_public
+NEW ir.model.access: base.access_res_country_state_employee
+NEW ir.model.access: base.access_res_country_state_portal
+NEW ir.model.access: base.access_res_country_state_public
+NEW ir.model.access: base.access_res_currency_employee
+NEW ir.model.access: base.access_res_currency_portal
+NEW ir.model.access: base.access_res_currency_public
+NEW ir.model.access: base.access_res_currency_rate_employee
+NEW ir.model.access: base.access_res_currency_rate_portal
+NEW ir.model.access: base.access_res_currency_rate_public
+NEW ir.model.access: base.access_res_lang_employee
+NEW ir.model.access: base.access_res_lang_group_system
+NEW ir.model.access: base.access_res_lang_portal
+NEW ir.model.access: base.access_res_lang_public
+NEW ir.model.access: base.access_res_users_employee
+NEW ir.model.access: base.access_res_users_log_system
+NEW ir.model.access: base.access_res_users_portal
+NEW ir.model.access: base.access_res_users_public
+NEW ir.model.constraint: base.constraint_ir_model_fields_name_manual_field
+NEW ir.model.constraint: base.constraint_ir_model_inherit_uniq
+NEW ir.module.category: base.module_category_services_appointment
+NEW ir.module.module: base.module_sale_amazon (noupdate)
+NEW ir.ui.menu: base.menu_ir_client_actions_report
+DEL ir.ui.menu: base.menu_board_root
+DEL ir.ui.menu: base.menu_module_updates
+DEL ir.ui.menu: base.menu_reporting_config
+DEL ir.ui.menu: base.menu_reporting_dashboard
+DEL ir.ui.menu: base.module_mi
+NEW ir.ui.view: base.no_contact
+NEW ir.ui.view: base.res_users_identitycheck_view_form
+NEW ir.ui.view: base.res_users_identitycheck_view_form_revokedevices
+NEW ir.ui.view: base.view_client_action_form
+NEW ir.ui.view: base.view_client_action_tree
+NEW ir.ui.view: base.view_country_search
+DEL ir.ui.view: base.base_onboarding_company_form
+DEL ir.ui.view: base.identity_check_wizard
+DEL ir.ui.view: base.onboarding_company_step
+DEL ir.ui.view: base.onboarding_container
+DEL ir.ui.view: base.onboarding_step
+DEL ir.ui.view: base.view_module_category_tree
+NEW res.country.group: base.eurasian_economic_union (noupdate)
+NEW res.country.state: base.state_hk_hk
+NEW res.country.state: base.state_hk_kln
+NEW res.country.state: base.state_hk_nt
+NEW res.country.state: base.state_ke_01
+NEW res.country.state: base.state_ke_02
+NEW res.country.state: base.state_ke_03
+NEW res.country.state: base.state_ke_04
+NEW res.country.state: base.state_ke_05
+NEW res.country.state: base.state_ke_06
+NEW res.country.state: base.state_ke_07
+NEW res.country.state: base.state_ke_08
+NEW res.country.state: base.state_ke_09
+NEW res.country.state: base.state_ke_10
+NEW res.country.state: base.state_ke_11
+NEW res.country.state: base.state_ke_12
+NEW res.country.state: base.state_ke_13
+NEW res.country.state: base.state_ke_14
+NEW res.country.state: base.state_ke_15
+NEW res.country.state: base.state_ke_16
+NEW res.country.state: base.state_ke_17
+NEW res.country.state: base.state_ke_18
+NEW res.country.state: base.state_ke_19
+NEW res.country.state: base.state_ke_20
+NEW res.country.state: base.state_ke_21
+NEW res.country.state: base.state_ke_22
+NEW res.country.state: base.state_ke_23
+NEW res.country.state: base.state_ke_24
+NEW res.country.state: base.state_ke_25
+NEW res.country.state: base.state_ke_26
+NEW res.country.state: base.state_ke_27
+NEW res.country.state: base.state_ke_28
+NEW res.country.state: base.state_ke_29
+NEW res.country.state: base.state_ke_30
+NEW res.country.state: base.state_ke_31
+NEW res.country.state: base.state_ke_32
+NEW res.country.state: base.state_ke_33
+NEW res.country.state: base.state_ke_34
+NEW res.country.state: base.state_ke_35
+NEW res.country.state: base.state_ke_36
+NEW res.country.state: base.state_ke_37
+NEW res.country.state: base.state_ke_38
+NEW res.country.state: base.state_ke_39
+NEW res.country.state: base.state_ke_40
+NEW res.country.state: base.state_ke_41
+NEW res.country.state: base.state_ke_42
+NEW res.country.state: base.state_ke_43
+NEW res.country.state: base.state_ke_44
+NEW res.country.state: base.state_ke_45
+NEW res.country.state: base.state_ke_46
+NEW res.country.state: base.state_ke_47
+NEW res.country.state: base.state_uy_01
+NEW res.country.state: base.state_uy_02
+NEW res.country.state: base.state_uy_03
+NEW res.country.state: base.state_uy_04
+NEW res.country.state: base.state_uy_05
+NEW res.country.state: base.state_uy_06
+NEW res.country.state: base.state_uy_07
+NEW res.country.state: base.state_uy_08
+NEW res.country.state: base.state_uy_09
+NEW res.country.state: base.state_uy_10
+NEW res.country.state: base.state_uy_11
+NEW res.country.state: base.state_uy_12
+NEW res.country.state: base.state_uy_13
+NEW res.country.state: base.state_uy_14
+NEW res.country.state: base.state_uy_15
+NEW res.country.state: base.state_uy_16
+NEW res.country.state: base.state_uy_17
+NEW res.country.state: base.state_uy_18
+NEW res.country.state: base.state_uy_19
+NEW res.currency: base.SLE (noupdate)
+NEW res.lang: base.lang_en_NZ
+NEW res.lang: base.lang_es_419
+# NOTHING TO DO: New records
+
+NEW ir.model.access: base.access_res_users_settings_all [renamed from mail module]
+NEW ir.model.access: base.access_res_users_settings_user [renamed from mail module]
+NEW ir.model.constraint: base.constraint_res_users_settings_unique_user_id [renamed from mail module]
+NEW ir.rule: base.res_users_settings_rule_admin [renamed from mail module] (noupdate)
+NEW ir.rule: base.res_users_settings_rule_user [renamed from mail module] (noupdate)
+# DONE: renamed in pre-migration
+
+DEL ir.model.access: base.access_ir_server_object_lines_group_system
+DEL ir.model.access: base.access_res_company_group_user
+DEL ir.model.access: base.access_res_country_group_all
+DEL ir.model.access: base.access_res_country_group_group_all
+DEL ir.model.access: base.access_res_country_state_group_all
+DEL ir.model.access: base.access_res_currency_group_all
+DEL ir.model.access: base.access_res_currency_rate_group_all
+DEL ir.model.access: base.access_res_lang_group_all
+DEL ir.model.access: base.access_res_lang_group_user
+DEL ir.model.access: base.access_res_users_all
+DEL ir.model.access: base.access_res_users_log_all
+DEL res.groups: base.group_private_addresses
+# NOTHING TO DO: noupdate records
+
+DEL ir.rule: base.res_partner_rule_private_employee (noupdate)
+DEL ir.rule: base.res_partner_rule_private_group (noupdate)
+# DONE: removed in post-migration
