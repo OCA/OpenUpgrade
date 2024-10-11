@@ -140,6 +140,5 @@ jobs:
               --db_user=$DB_USERNAME \
               --load=base,web,openupgrade_framework \
               --log-handler odoo.models.unlink:WARNING \
-              --test-enable \
               --stop-after-init \
               --update=$MODULES_NEW
