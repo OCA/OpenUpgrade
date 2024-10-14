@@ -74,7 +74,13 @@ def _fill_ir_server_object_lines_into_action_server(cr):
             resource_ref,
             selection_value,
             update_boolean_value,
-            update_m2m_operation
+            update_m2m_operation,
+            binding_type,
+            state,
+            type,
+            usage,
+            model_id,
+            name
         )
         SELECT
             ias.id,
@@ -98,7 +104,13 @@ def _fill_ir_server_object_lines_into_action_server(cr):
                 THEN isol.value::bool
                 ELSE NULL
             END,
-            'add'
+            'add',
+            'action',
+            'object_write',
+            'ir.actions.server',
+            'ir_actions_server',
+            ias.model_id,
+            ias.name
         FROM ir_act_server ias
         JOIN ir_server_object_lines isol ON isol.server_id = ias.id
         JOIN ir_model_fields imf ON imf.id = isol.col1
