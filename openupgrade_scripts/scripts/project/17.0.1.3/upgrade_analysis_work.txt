@@ -1,0 +1,231 @@
+---Models in module 'project'---
+new model project.project.stage.delete.wizard [transient]
+# NOTHING TO DO
+
+---Fields in module 'project'---
+project      / project.milestone        / message_main_attachment_id (many2one): DEL relation: ir.attachment
+project      / project.milestone        / rating_ids (one2many)         : NEW relation: rating.rating
+project      / project.project          / activity_user_id (many2one)   : not related anymore
+project      / project.project          / activity_user_id (many2one)   : now a function
+# NOTHING TO DO
+
+project      / project.project          / alias_enabled (boolean)       : DEL
+project      / project.project          / allow_recurring_tasks (boolean): DEL
+project      / project.project          / allow_subtasks (boolean)      : DEL
+# NOTHING TO DO:
+
+project      / project.project          / company_id (many2one)         : now a function
+# NOTHING TO DO: handled by ORM
+
+project      / project.project          / currency_id (many2one)        : not related anymore
+project      / project.project          / currency_id (many2one)        : now a function
+# NOTHING TO DO: compute non-stored
+
+project      / project.project          / last_update_status (selection): selection_keys is now '['at_risk', 'done', 'off_track', 'on_hold', 'on_track', 'to_define']' ('['at_risk', 'off_track', 'on_hold', 'on_track', 'to_define']')
+# NOTHING TO DO: new key: 'done'
+
+project      / project.project          / message_main_attachment_id (many2one): DEL relation: ir.attachment
+# NOTHING TO DO
+
+project      / project.project          / partner_email (char)          : DEL
+project      / project.project          / partner_phone (char)          : DEL
+# NOTHING TO DO
+
+project      / project.project          / resource_calendar_id (many2one): not related anymore
+project      / project.project          / resource_calendar_id (many2one): now a function
+# NOTHING TO DO: compute non-stored
+
+project      / project.project.stage    / company_id (many2one)         : NEW relation: res.company
+project      / project.tags             / _order                        : _order is now 'name' ('id')
+project      / project.task             / _order                        : _order is now 'priority desc, sequence, date_deadline asc, id desc' ('priority desc, sequence, id desc')
+# NOTHING TO DO
+
+project      / project.task             / activity_user_id (many2one)   : not related anymore
+project      / project.task             / activity_user_id (many2one)   : now a function
+# NOTHING TO DO
+
+project      / project.task             / allocated_hours (float)       : NEW
+# DONE: rename planned_hours -> allocated_hours
+
+project      / project.task             / ancestor_id (many2one)        : DEL relation: project.task
+project      / project.task             / date_deadline (date)          : type is now 'datetime' ('date')
+# NOTHING TO DO
+
+project      / project.task             / display_in_project (boolean)  : NEW
+# DONE: fill in post-migration
+
+project      / project.task             / display_project_id (many2one) : DEL relation: project.project
+project      / project.task             / email_from (char)             : DEL
+project      / project.task             / fri (boolean)                 : DEL
+project      / project.task             / is_analytic_account_id_changed (boolean): DEL
+project      / project.task             / is_blocked (boolean)          : DEL
+project      / project.task             / is_closed (boolean)           : DEL
+project      / project.task             / kanban_state (selection)      : DEL required, selection_keys: ['blocked', 'done', 'normal']
+project      / project.task             / message_main_attachment_id (many2one): DEL relation: ir.attachment
+project      / project.task             / mon (boolean)                 : DEL
+project      / project.task             / partner_email (char)          : DEL
+project      / project.task             / partner_phone (char)          : DEL
+# NOTHING TO DO
+
+project      / project.task             / planned_hours (float)         : DEL
+# DONE: rename planned_hours -> allocated_hours
+
+project      / project.task             / recurrence_update (selection) : DEL selection_keys: ['all', 'subsequent', 'this']
+project      / project.task             / repeat_day (selection)        : DEL selection_keys: ['1', '10', '11', '12', '13', '14', '15', '16', '17', '18', '19', '2', '20', '21', '22', '23', '24', '25', '26', '27', '28', '29', '3', '30', '31', '4', '5', '6', '7', '8', '9']
+project      / project.task             / repeat_month (selection)      : DEL selection_keys: ['april', 'august', 'december', 'february', 'january', 'july', 'june', 'march', 'may', 'november', 'october', 'september']
+project      / project.task             / repeat_number (integer)       : DEL
+project      / project.task             / repeat_on_month (selection)   : DEL selection_keys: ['date', 'day']
+project      / project.task             / repeat_on_year (selection)    : DEL selection_keys: ['date', 'day']
+project      / project.task             / repeat_type (selection)       : selection_keys is now '['forever', 'until']' ('['after', 'forever', 'until']')
+project      / project.task             / repeat_week (selection)       : DEL selection_keys: ['first', 'last', 'second', 'third']
+project      / project.task             / repeat_weekday (selection)    : DEL selection_keys: ['fri', 'mon', 'sat', 'sun', 'thu', 'tue', 'wed']
+project      / project.task             / sat (boolean)                 : DEL
+# NOTHING TO DO: deleted fields, the recurrence task option has been simplified in odoo 17
+# There is no longer the ability to select days of the week, there is no longer the ability to select days of the month
+
+project      / project.task             / state (selection)             : NEW required, selection_keys: ['01_in_progress', '02_changes_requested', '03_approved', '04_waiting_normal', '1_canceled', '1_done'], isfunction: function, stored
+# DONE: migrate data from kanban_state
+
+project      / project.task             / sun (boolean)                 : DEL
+project      / project.task             / thu (boolean)                 : DEL
+project      / project.task             / tue (boolean)                 : DEL
+project      / project.task             / wed (boolean)                 : DEL
+# NOTHING TO DO
+
+project      / project.task.recurrence  / fri (boolean)                 : DEL
+project      / project.task.recurrence  / mon (boolean)                 : DEL
+project      / project.task.recurrence  / next_recurrence_date (date)   : DEL
+project      / project.task.recurrence  / recurrence_left (integer)     : DEL
+project      / project.task.recurrence  / repeat_day (selection)        : DEL selection_keys: ['1', '10', '11', '12', '13', '14', '15', '16', '17', '18', '19', '2', '20', '21', '22', '23', '24', '25', '26', '27', '28', '29', '3', '30', '31', '4', '5', '6', '7', '8', '9']
+project      / project.task.recurrence  / repeat_month (selection)      : DEL selection_keys: ['april', 'august', 'december', 'february', 'january', 'july', 'june', 'march', 'may', 'november', 'october', 'september']
+project      / project.task.recurrence  / repeat_number (integer)       : DEL
+project      / project.task.recurrence  / repeat_on_month (selection)   : DEL selection_keys: ['date', 'day']
+project      / project.task.recurrence  / repeat_on_year (selection)    : DEL selection_keys: ['date', 'day']
+project      / project.task.recurrence  / repeat_type (selection)       : selection_keys is now '['forever', 'until']' ('['after', 'forever', 'until']')
+project      / project.task.recurrence  / repeat_week (selection)       : DEL selection_keys: ['first', 'last', 'second', 'third']
+project      / project.task.recurrence  / repeat_weekday (selection)    : DEL selection_keys: ['fri', 'mon', 'sat', 'sun', 'thu', 'tue', 'wed']
+project      / project.task.recurrence  / sat (boolean)                 : DEL
+project      / project.task.recurrence  / sun (boolean)                 : DEL
+project      / project.task.recurrence  / thu (boolean)                 : DEL
+project      / project.task.recurrence  / tue (boolean)                 : DEL
+project      / project.task.recurrence  / wed (boolean)                 : DEL
+# NOTHING TO DO: The recurrence task option has been simplified in odoo 17:
+# There is no longer the ability to select days of the week, there is no longer the ability to select days of the month
+
+project      / project.task.type        / auto_validation_kanban_state (boolean): DEL
+project      / project.task.type        / auto_validation_state (boolean): NEW hasdefault: default
+# DONE pre-migration: rename field
+
+project      / project.task.type        / legend_blocked (char)         : DEL required
+project      / project.task.type        / legend_done (char)            : DEL required
+project      / project.task.type        / legend_normal (char)          : DEL required
+project      / project.task.type        / user_id (many2one)            : now a function
+# NOTHING TO DO
+
+project      / project.update           / _order                        : _order is now 'id desc' ('date desc')
+project      / project.update           / activity_user_id (many2one)   : not related anymore
+project      / project.update           / activity_user_id (many2one)   : now a function
+# NOTHING TO DO
+
+project      / project.update           / closed_task_count (integer)   : NEW
+project      / project.update           / message_main_attachment_id (many2one): DEL relation: ir.attachment
+project      / project.update           / rating_ids (one2many)         : NEW relation: rating.rating
+project      / project.update           / status (selection)            : selection_keys is now '['at_risk', 'done', 'off_track', 'on_hold', 'on_track']' ('['at_risk', 'off_track', 'on_hold', 'on_track']')
+project      / project.update           / task_count (integer)          : NEW
+project      / res.company              / analytic_plan_id (many2one)   : DEL relation: account.analytic.plan
+project      / res.partner              / project_ids (one2many)        : NEW relation: project.project
+# NOTHING TO DO
+
+---XML records in module 'project'---
+NEW ir.actions.act_window: project.action_view_my_task
+NEW ir.actions.act_window: project.mail_activity_plan_action_config_project_task_plan
+NEW ir.actions.act_window: project.mail_activity_plan_action_config_task_plan
+NEW ir.actions.act_window.view: project.mail_activity_plan_action_project_task_view_form
+NEW ir.actions.act_window.view: project.mail_activity_plan_action_project_task_view_tree
+NEW ir.actions.act_window.view: project.open_view_my_task_list_calendar
+NEW ir.actions.act_window.view: project.open_view_my_task_list_kanban
+NEW ir.actions.act_window.view: project.open_view_my_task_list_tree
+NEW ir.actions.act_window.view: project.open_view_project_all_group_stage_kanban_view
+NEW ir.actions.act_window.view: project.open_view_project_all_group_stage_tree_view
+NEW ir.actions.server: project.action_server_convert_to_subtask
+NEW ir.actions.server: project.action_server_view_my_task
+NEW ir.actions.server: project.unlink_project_stage_action
+# NOTHING TO DO
+
+DEL ir.cron: project.ir_cron_recurring_tasks (noupdate)
+# DONE: delete in post-migration
+
+NEW ir.model.access: project.access_mail_activity_plan_project_manager
+NEW ir.model.access: project.access_mail_activity_plan_template_project_manager
+NEW ir.model.access: project.access_project_project_stage_delete_wizard
+NEW ir.model.constraint: project.constraint_project_task_private_task_has_no_parent
+NEW ir.model.constraint: project.constraint_project_task_recurring_task_has_no_parent
+NEW ir.rule: project.mail_plan_rule_group_project_manager_task (noupdate)
+NEW ir.rule: project.mail_plan_templates_rule_group_project_manager_task (noupdate)
+NEW ir.rule: project.project_project_stage_rule (noupdate)
+# NOTHING TO DO: new feature
+
+NEW ir.ui.menu: project.mail_activity_plan_menu_config_project
+NEW ir.ui.menu: project.menu_project_management_all_tasks
+NEW ir.ui.menu: project.menu_project_management_my_tasks
+DEL ir.ui.menu: project.menu_tasks_config
+# NOTHING TO DO: new feature
+
+NEW ir.ui.view: project.mail_activity_plan_view_form_project_and_task
+NEW ir.ui.view: project.open_view_all_tasks_list_view
+NEW ir.ui.view: project.open_view_my_tasks_list_view
+NEW ir.ui.view: project.portal_my_task_allocated_hours_template
+NEW ir.ui.view: project.project_kanban_view_group_stage
+NEW ir.ui.view: project.project_list_view_group_stage
+NEW ir.ui.view: project.project_project_view_activity
+NEW ir.ui.view: project.project_share_wizard_confirm_form
+NEW ir.ui.view: project.project_task_convert_to_subtask_view_form
+NEW ir.ui.view: project.project_task_view_tree_base
+NEW ir.ui.view: project.project_task_view_tree_main_base
+NEW ir.ui.view: project.quick_create_project_form
+NEW ir.ui.view: project.quick_create_task_form_inherit_view_default_project
+NEW ir.ui.view: project.task_link_preview_front_end
+NEW ir.ui.view: project.task_link_preview_portal_layout
+NEW ir.ui.view: project.view_project_config
+NEW ir.ui.view: project.view_project_config_group_stage
+NEW ir.ui.view: project.view_project_config_kanban_group_stage
+NEW ir.ui.view: project.view_project_project_stage_delete_wizard
+NEW ir.ui.view: project.view_project_project_stage_unarchive_wizard
+NEW ir.ui.view: project.view_task_kanban_inherit_all_task
+NEW ir.ui.view: project.view_task_kanban_inherit_view_default_project
+NEW ir.ui.view: project.view_task_search_form_base
+NEW ir.ui.view: project.view_task_search_form_project_base
+NEW ir.ui.view: project.view_task_search_form_project_fsm_base
+# NOTHING TO DO
+
+DEL ir.ui.view: project.portal_my_task_planned_hours_template
+DEL ir.ui.view: project.project_task_view_tree_activity
+DEL ir.ui.view: project.report_project_task_user_view_tree
+DEL ir.ui.view: project.view_task_search_form_extended
+# NOTHING TO DO
+
+NEW mail.message.subtype: project.mt_project_task_approved (noupdate)
+NEW mail.message.subtype: project.mt_project_task_canceled (noupdate)
+NEW mail.message.subtype: project.mt_project_task_changes_requested (noupdate)
+NEW mail.message.subtype: project.mt_project_task_done (noupdate)
+NEW mail.message.subtype: project.mt_project_task_in_progress (noupdate)
+NEW mail.message.subtype: project.mt_project_task_waiting (noupdate)
+NEW mail.message.subtype: project.mt_task_approved (noupdate)
+NEW mail.message.subtype: project.mt_task_canceled (noupdate)
+NEW mail.message.subtype: project.mt_task_changes_requested (noupdate)
+NEW mail.message.subtype: project.mt_task_done (noupdate)
+NEW mail.message.subtype: project.mt_task_in_progress (noupdate)
+NEW mail.message.subtype: project.mt_task_waiting (noupdate)
+# NOTHING TO DO
+
+DEL mail.message.subtype: project.mt_project_task_blocked (noupdate)
+DEL mail.message.subtype: project.mt_project_task_dependency_change (noupdate)
+DEL mail.message.subtype: project.mt_project_task_ready (noupdate)
+DEL mail.message.subtype: project.mt_task_blocked (noupdate)
+DEL mail.message.subtype: project.mt_task_dependency_change (noupdate)
+DEL mail.message.subtype: project.mt_task_progress (noupdate)
+DEL mail.message.subtype: project.mt_task_ready (noupdate)
+# DONE: safely delete in post-migration
+
+DEL res.groups: project.group_subtask_project
+# NOTHING TO DO
