@@ -1,0 +1,35 @@
+---Models in module 'survey'---
+---Fields in module 'survey'---
+survey       / survey.question          / is_conditional (boolean)      : DEL
+survey       / survey.question          / triggering_answer_id (many2one): DEL relation: survey.question.answer
+survey       / survey.question          / triggering_answer_ids (many2many): NEW relation: survey.question.answer
+survey       / survey.question          / triggering_question_id (many2one): DEL relation: survey.question
+# NOTHING TO DO
+
+survey       / survey.question.answer   / _order                        : _order is now 'question_id, sequence, id' ('sequence, id')
+# NOTHING TO DO
+
+survey       / survey.survey            / activity_user_id (many2one)   : not related anymore
+survey       / survey.survey            / activity_user_id (many2one)   : now a function
+survey       / survey.survey            / message_main_attachment_id (many2one): DEL relation: ir.attachment
+survey       / survey.survey            / rating_ids (one2many)         : NEW relation: rating.rating
+survey       / survey.survey            / scoring_type (selection)      : selection_keys is now '['no_scoring', 'scoring_with_answers', 'scoring_with_answers_after_page', 'scoring_without_answers']' ('['no_scoring', 'scoring_with_answers', 'scoring_without_answers']')
+survey       / survey.survey            / survey_type (selection)       : NEW required, selection_keys: ['assessment', 'custom', 'live_session', 'survey'], hasdefault: default
+# NOTHING TO DO
+
+survey       / survey.user_input        / activity_user_id (many2one)   : not related anymore
+survey       / survey.user_input        / activity_user_id (many2one)   : now a function
+survey       / survey.user_input        / message_main_attachment_id (many2one): DEL relation: ir.attachment
+survey       / survey.user_input        / rating_ids (one2many)         : NEW relation: rating.rating
+survey       / survey.user_input        / survey_first_submitted (boolean): NEW
+# NOTHING TO DO
+
+---XML records in module 'survey'---
+NEW ir.ui.view: survey.certification_report_view_general
+NEW ir.ui.view: survey.survey_access_error
+NEW ir.ui.view: survey.survey_survey_view_activity
+# NOTHING TO DO
+
+NEW mail.message.subtype: survey.mt_survey_survey_user_input_completed (noupdate)
+NEW mail.message.subtype: survey.mt_survey_user_input_completed (noupdate)
+# NOTHING TO DO
