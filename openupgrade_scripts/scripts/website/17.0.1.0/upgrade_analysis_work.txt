@@ -1,0 +1,370 @@
+---Models in module 'website'---
+new model website.controller.page
+# NOTHING TO DO
+
+---Fields in module 'website'---
+website      / ir.ui.view               / controller_page_ids (one2many): NEW relation: website.controller.page
+website      / website                  / social_tiktok (char)          : NEW hasdefault: default
+website      / website.controller.page  / _inherits                     : NEW _inherits: {'ir.ui.view': 'view_id'}
+website      / website.controller.page  / default_layout (selection)    : NEW selection_keys: ['grid', 'list'], hasdefault: default
+website      / website.controller.page  / is_published (boolean)        : NEW hasdefault: default
+website      / website.controller.page  / menu_ids (one2many)           : NEW relation: website.menu
+website      / website.controller.page  / name_slugified (char)         : NEW isfunction: function, stored
+website      / website.controller.page  / page_name (char)              : NEW required
+website      / website.controller.page  / page_type (selection)         : NEW selection_keys: ['listing', 'single'], hasdefault: default
+website      / website.controller.page  / record_domain (char)          : NEW
+website      / website.controller.page  / view_id (many2one)            : NEW relation: ir.ui.view, required
+website      / website.controller.page  / website_id (many2one)         : NEW relation: website, isrelated: related, stored
+website      / website.menu             / controller_page_id (many2one) : NEW relation: website.controller.page
+website      / website.page             / header_text_color (char)      : NEW
+website      / website.page             / url (char)                    : now required
+# NOTHING TO DO
+
+---XML records in module 'website'---
+NEW ir.actions.act_window: website.action_website_controller_pages_list
+DEL ir.actions.act_window: website.action_show_viewhierarchy
+NEW ir.actions.client: website.action_website_view_hierarchy
+NEW ir.asset: website.s_instagram_page_000_js
+NEW ir.asset: website.s_instagram_page_000_scss
+NEW ir.asset: website.s_text_cover_000_scss
+# NOTHING TO DO
+
+ir.attachment: website.business_conference (noupdate switched)
+ir.attachment: website.header_image_1_default_image (noupdate switched)
+ir.attachment: website.library_image_01 (noupdate switched)
+ir.attachment: website.library_image_02 (noupdate switched)
+ir.attachment: website.library_image_03 (noupdate switched)
+ir.attachment: website.library_image_04 (noupdate switched)
+ir.attachment: website.library_image_05 (noupdate switched)
+ir.attachment: website.library_image_06 (noupdate switched)
+ir.attachment: website.library_image_07 (noupdate switched)
+ir.attachment: website.library_image_08 (noupdate switched)
+ir.attachment: website.library_image_09 (noupdate switched)
+ir.attachment: website.library_image_10 (noupdate switched)
+ir.attachment: website.library_image_11 (noupdate switched)
+ir.attachment: website.library_image_12 (noupdate switched)
+ir.attachment: website.library_image_13 (noupdate switched)
+ir.attachment: website.library_image_14 (noupdate switched)
+ir.attachment: website.library_image_15 (noupdate switched)
+ir.attachment: website.library_image_16 (noupdate switched)
+ir.attachment: website.library_image_17 (noupdate switched)
+ir.attachment: website.library_image_18 (noupdate switched)
+# NOTHING TO DO
+
+NEW ir.attachment: website.library_image_team
+ir.attachment: website.s_background_image_01 (noupdate switched)
+ir.attachment: website.s_background_image_02 (noupdate switched)
+ir.attachment: website.s_background_image_03 (noupdate switched)
+ir.attachment: website.s_background_image_04 (noupdate switched)
+ir.attachment: website.s_background_image_05 (noupdate switched)
+ir.attachment: website.s_background_image_06 (noupdate switched)
+ir.attachment: website.s_background_image_07 (noupdate switched)
+ir.attachment: website.s_background_image_08 (noupdate switched)
+ir.attachment: website.s_background_image_09 (noupdate switched)
+ir.attachment: website.s_banner_default_image (noupdate switched)
+NEW ir.attachment: website.s_banner_default_image_2
+NEW ir.attachment: website.s_banner_default_image_3
+ir.attachment: website.s_blockquote_cover_default_image (noupdate switched)
+ir.attachment: website.s_blockquote_default_image (noupdate switched)
+ir.attachment: website.s_carousel_default_image_1 (noupdate switched)
+ir.attachment: website.s_carousel_default_image_2 (noupdate switched)
+ir.attachment: website.s_carousel_default_image_3 (noupdate switched)
+ir.attachment: website.s_company_team_image_1 (noupdate switched)
+ir.attachment: website.s_company_team_image_2 (noupdate switched)
+ir.attachment: website.s_company_team_image_3 (noupdate switched)
+ir.attachment: website.s_company_team_image_4 (noupdate switched)
+ir.attachment: website.s_cover_default_image (noupdate switched)
+ir.attachment: website.s_image_text_default_image (noupdate switched)
+ir.attachment: website.s_masonry_block_default_image_1 (noupdate switched)
+ir.attachment: website.s_masonry_block_default_image_2 (noupdate switched)
+ir.attachment: website.s_media_list_default_image_1 (noupdate switched)
+ir.attachment: website.s_media_list_default_image_2 (noupdate switched)
+ir.attachment: website.s_media_list_default_image_3 (noupdate switched)
+ir.attachment: website.s_mega_menu_cards_default_image_1 (noupdate switched)
+ir.attachment: website.s_mega_menu_cards_default_image_2 (noupdate switched)
+ir.attachment: website.s_mega_menu_cards_default_image_3 (noupdate switched)
+ir.attachment: website.s_mega_menu_cards_default_image_4 (noupdate switched)
+ir.attachment: website.s_mega_menu_cards_default_image_5 (noupdate switched)
+ir.attachment: website.s_mega_menu_cards_default_image_6 (noupdate switched)
+ir.attachment: website.s_mega_menu_cards_default_image_7 (noupdate switched)
+ir.attachment: website.s_mega_menu_cards_default_image_8 (noupdate switched)
+ir.attachment: website.s_mega_menu_images_subtitles_default_image_1 (noupdate switched)
+ir.attachment: website.s_mega_menu_images_subtitles_default_image_2 (noupdate switched)
+ir.attachment: website.s_mega_menu_images_subtitles_default_image_3 (noupdate switched)
+ir.attachment: website.s_mega_menu_images_subtitles_default_image_4 (noupdate switched)
+ir.attachment: website.s_mega_menu_images_subtitles_default_image_5 (noupdate switched)
+ir.attachment: website.s_mega_menu_images_subtitles_default_image_6 (noupdate switched)
+ir.attachment: website.s_mega_menu_images_subtitles_default_image_7 (noupdate switched)
+ir.attachment: website.s_mega_menu_menu_image_menu_default_image (noupdate switched)
+ir.attachment: website.s_mega_menu_menus_logos_default_image (noupdate switched)
+ir.attachment: website.s_mega_menu_menus_logos_default_logo_1 (noupdate switched)
+ir.attachment: website.s_mega_menu_menus_logos_default_logo_2 (noupdate switched)
+ir.attachment: website.s_mega_menu_menus_logos_default_logo_3 (noupdate switched)
+ir.attachment: website.s_mega_menu_menus_logos_default_logo_4 (noupdate switched)
+ir.attachment: website.s_mega_menu_menus_logos_default_logo_5 (noupdate switched)
+ir.attachment: website.s_mega_menu_menus_logos_default_logo_6 (noupdate switched)
+ir.attachment: website.s_mega_menu_thumbnails_default_image_1 (noupdate switched)
+ir.attachment: website.s_mega_menu_thumbnails_default_image_10 (noupdate switched)
+ir.attachment: website.s_mega_menu_thumbnails_default_image_11 (noupdate switched)
+ir.attachment: website.s_mega_menu_thumbnails_default_image_2 (noupdate switched)
+ir.attachment: website.s_mega_menu_thumbnails_default_image_3 (noupdate switched)
+ir.attachment: website.s_mega_menu_thumbnails_default_image_4 (noupdate switched)
+ir.attachment: website.s_mega_menu_thumbnails_default_image_5 (noupdate switched)
+ir.attachment: website.s_mega_menu_thumbnails_default_image_6 (noupdate switched)
+ir.attachment: website.s_mega_menu_thumbnails_default_image_7 (noupdate switched)
+ir.attachment: website.s_mega_menu_thumbnails_default_image_8 (noupdate switched)
+ir.attachment: website.s_mega_menu_thumbnails_default_image_9 (noupdate switched)
+ir.attachment: website.s_parallax_default_image (noupdate switched)
+ir.attachment: website.s_picture_default_image (noupdate switched)
+ir.attachment: website.s_popup_default_image (noupdate switched)
+ir.attachment: website.s_product_catalog_default_image (noupdate switched)
+ir.attachment: website.s_product_list_default_image_1 (noupdate switched)
+ir.attachment: website.s_product_list_default_image_2 (noupdate switched)
+ir.attachment: website.s_product_list_default_image_3 (noupdate switched)
+ir.attachment: website.s_product_list_default_image_4 (noupdate switched)
+ir.attachment: website.s_product_list_default_image_5 (noupdate switched)
+ir.attachment: website.s_product_list_default_image_6 (noupdate switched)
+ir.attachment: website.s_quotes_carousel_demo_image_0 (noupdate switched)
+ir.attachment: website.s_quotes_carousel_demo_image_1 (noupdate switched)
+ir.attachment: website.s_quotes_carousel_demo_image_2 (noupdate switched)
+ir.attachment: website.s_quotes_carousel_demo_image_3 (noupdate switched)
+ir.attachment: website.s_quotes_carousel_demo_image_4 (noupdate switched)
+ir.attachment: website.s_quotes_carousel_demo_image_5 (noupdate switched)
+ir.attachment: website.s_reference_default_image_6 (noupdate switched)
+ir.attachment: website.s_reference_demo_image_1 (noupdate switched)
+ir.attachment: website.s_reference_demo_image_2 (noupdate switched)
+ir.attachment: website.s_reference_demo_image_3 (noupdate switched)
+ir.attachment: website.s_reference_demo_image_4 (noupdate switched)
+ir.attachment: website.s_reference_demo_image_5 (noupdate switched)
+NEW ir.attachment: website.s_text_cover_default_image
+ir.attachment: website.s_text_image_default_image (noupdate switched)
+ir.attachment: website.s_three_columns_default_image_1 (noupdate switched)
+ir.attachment: website.s_three_columns_default_image_2 (noupdate switched)
+ir.attachment: website.s_three_columns_default_image_3 (noupdate switched)
+# NOTHING TO DO
+
+NEW ir.model.access: website.access_seo_public_employee
+NEW ir.model.access: website.access_seo_public_portal
+NEW ir.model.access: website.access_seo_public_public
+NEW ir.model.access: website.access_website_controller_page_designer
+NEW ir.model.access: website.access_website_controller_page_public
+NEW ir.model.access: website.access_website_menu_employee
+NEW ir.model.access: website.access_website_menu_portal
+NEW ir.model.access: website.access_website_menu_public
+NEW ir.model.access: website.access_website_public_employee
+NEW ir.model.access: website.access_website_public_portal
+NEW ir.model.access: website.access_website_public_public
+DEL ir.model.access: website.access_seo_public
+DEL ir.model.access: website.access_website_menu
+DEL ir.model.access: website.access_website_page
+DEL ir.model.access: website.access_website_public
+NEW ir.rule: website.website_page_controller_rule_public
+NEW ir.ui.menu: website.menu_website_controller_pages_list
+# NOTHING TO DO
+
+NEW ir.ui.view: website.column_count_option
+NEW ir.ui.view: website.footer_language_selector_code
+NEW ir.ui.view: website.grid_layout_options
+NEW ir.ui.view: website.header_call_to_action_large
+NEW ir.ui.view: website.header_call_to_action_sidebar
+NEW ir.ui.view: website.header_call_to_action_stretched
+NEW ir.ui.view: website.header_language_selector_code
+NEW ir.ui.view: website.header_search_box
+NEW ir.ui.view: website.header_search_box_input
+NEW ir.ui.view: website.header_social_links
+NEW ir.ui.view: website.header_text_element
+NEW ir.ui.view: website.new_page_template_about_full_1_s_text_block_h1
+NEW ir.ui.view: website.new_page_template_about_full_1_s_text_block_h2
+NEW ir.ui.view: website.new_page_template_about_full_s_image_text
+NEW ir.ui.view: website.new_page_template_about_full_s_numbers
+NEW ir.ui.view: website.new_page_template_about_full_s_text_image
+NEW ir.ui.view: website.new_page_template_about_map_s_text_block_2nd
+NEW ir.ui.view: website.new_page_template_about_map_s_text_block_h1
+NEW ir.ui.view: website.new_page_template_about_map_s_text_block_h2
+NEW ir.ui.view: website.new_page_template_about_mini_s_text_block_h2
+NEW ir.ui.view: website.new_page_template_about_personal_s_image_text
+NEW ir.ui.view: website.new_page_template_about_personal_s_numbers
+NEW ir.ui.view: website.new_page_template_about_personal_s_text_block_h2
+NEW ir.ui.view: website.new_page_template_about_s_banner
+NEW ir.ui.view: website.new_page_template_about_s_company_team
+NEW ir.ui.view: website.new_page_template_about_s_cover
+NEW ir.ui.view: website.new_page_template_about_s_features
+NEW ir.ui.view: website.new_page_template_about_s_image_text
+NEW ir.ui.view: website.new_page_template_about_s_numbers
+NEW ir.ui.view: website.new_page_template_about_s_picture
+NEW ir.ui.view: website.new_page_template_about_s_text_block_2nd
+NEW ir.ui.view: website.new_page_template_about_s_text_block_h1
+NEW ir.ui.view: website.new_page_template_about_s_text_block_h2
+NEW ir.ui.view: website.new_page_template_about_s_text_cover
+NEW ir.ui.view: website.new_page_template_about_s_text_image
+NEW ir.ui.view: website.new_page_template_about_s_three_columns
+NEW ir.ui.view: website.new_page_template_about_timeline_s_text_block_h2
+NEW ir.ui.view: website.new_page_template_basic_2_s_text_block_h1
+NEW ir.ui.view: website.new_page_template_basic_s_picture
+NEW ir.ui.view: website.new_page_template_basic_s_quotes_carousel
+NEW ir.ui.view: website.new_page_template_basic_s_text_block_h1
+NEW ir.ui.view: website.new_page_template_basic_s_text_cover
+NEW ir.ui.view: website.new_page_template_gallery_s_banner
+NEW ir.ui.view: website.new_page_template_gallery_s_image_text_2nd
+NEW ir.ui.view: website.new_page_template_gallery_s_text_block_2nd
+NEW ir.ui.view: website.new_page_template_gallery_s_text_block_h2
+NEW ir.ui.view: website.new_page_template_groups
+NEW ir.ui.view: website.new_page_template_landing_0_s_cover
+NEW ir.ui.view: website.new_page_template_landing_1_s_banner
+NEW ir.ui.view: website.new_page_template_landing_2_s_call_to_action
+NEW ir.ui.view: website.new_page_template_landing_2_s_cover
+NEW ir.ui.view: website.new_page_template_landing_2_s_text_block_h2
+NEW ir.ui.view: website.new_page_template_landing_2_s_three_columns
+NEW ir.ui.view: website.new_page_template_landing_3_s_call_to_action
+NEW ir.ui.view: website.new_page_template_landing_3_s_text_block_h2
+NEW ir.ui.view: website.new_page_template_landing_3_s_three_columns
+NEW ir.ui.view: website.new_page_template_landing_4_s_cover
+NEW ir.ui.view: website.new_page_template_landing_4_s_text_block_h2
+NEW ir.ui.view: website.new_page_template_landing_5_s_banner
+NEW ir.ui.view: website.new_page_template_landing_s_banner
+NEW ir.ui.view: website.new_page_template_landing_s_call_to_action
+NEW ir.ui.view: website.new_page_template_landing_s_color_blocks_2
+NEW ir.ui.view: website.new_page_template_landing_s_cover
+NEW ir.ui.view: website.new_page_template_landing_s_features
+NEW ir.ui.view: website.new_page_template_landing_s_showcase
+NEW ir.ui.view: website.new_page_template_landing_s_text_block_h2
+NEW ir.ui.view: website.new_page_template_landing_s_text_cover
+NEW ir.ui.view: website.new_page_template_landing_s_text_image
+NEW ir.ui.view: website.new_page_template_landing_s_three_columns
+NEW ir.ui.view: website.new_page_template_pricing_5_s_text_block_h1
+NEW ir.ui.view: website.new_page_template_pricing_s_image_text_2nd
+NEW ir.ui.view: website.new_page_template_pricing_s_text_block_2nd
+NEW ir.ui.view: website.new_page_template_pricing_s_text_block_h1
+NEW ir.ui.view: website.new_page_template_pricing_s_text_block_h2
+NEW ir.ui.view: website.new_page_template_s_banner
+NEW ir.ui.view: website.new_page_template_s_call_to_action
+NEW ir.ui.view: website.new_page_template_s_carousel
+NEW ir.ui.view: website.new_page_template_s_color_blocks_2
+NEW ir.ui.view: website.new_page_template_s_company_team
+NEW ir.ui.view: website.new_page_template_s_cover
+NEW ir.ui.view: website.new_page_template_s_features
+NEW ir.ui.view: website.new_page_template_s_image_gallery
+NEW ir.ui.view: website.new_page_template_s_image_text
+NEW ir.ui.view: website.new_page_template_s_image_text_2nd
+NEW ir.ui.view: website.new_page_template_s_images_wall
+NEW ir.ui.view: website.new_page_template_s_map
+NEW ir.ui.view: website.new_page_template_s_media_list
+NEW ir.ui.view: website.new_page_template_s_numbers
+NEW ir.ui.view: website.new_page_template_s_parallax
+NEW ir.ui.view: website.new_page_template_s_picture
+NEW ir.ui.view: website.new_page_template_s_quotes_carousel
+NEW ir.ui.view: website.new_page_template_s_references
+NEW ir.ui.view: website.new_page_template_s_showcase
+NEW ir.ui.view: website.new_page_template_s_text_block_2nd
+NEW ir.ui.view: website.new_page_template_s_text_block_h1
+NEW ir.ui.view: website.new_page_template_s_text_block_h2
+NEW ir.ui.view: website.new_page_template_s_text_cover
+NEW ir.ui.view: website.new_page_template_s_text_image
+NEW ir.ui.view: website.new_page_template_s_three_columns
+NEW ir.ui.view: website.new_page_template_s_website_form
+NEW ir.ui.view: website.new_page_template_services_0_s_three_columns
+NEW ir.ui.view: website.new_page_template_services_3_s_text_block_h1
+NEW ir.ui.view: website.new_page_template_services_s_image_text
+NEW ir.ui.view: website.new_page_template_services_s_image_text_2nd
+NEW ir.ui.view: website.new_page_template_services_s_parallax
+NEW ir.ui.view: website.new_page_template_services_s_text_block_2nd
+NEW ir.ui.view: website.new_page_template_services_s_text_block_h1
+NEW ir.ui.view: website.new_page_template_services_s_text_block_h2
+NEW ir.ui.view: website.new_page_template_services_s_text_cover
+NEW ir.ui.view: website.new_page_template_services_s_text_image
+NEW ir.ui.view: website.new_page_template_services_s_three_columns
+NEW ir.ui.view: website.new_page_template_team_0_s_three_columns
+NEW ir.ui.view: website.new_page_template_team_2_s_text_block_h1
+NEW ir.ui.view: website.new_page_template_team_s_image_gallery
+NEW ir.ui.view: website.new_page_template_team_s_image_text
+NEW ir.ui.view: website.new_page_template_team_s_image_text_2nd
+NEW ir.ui.view: website.new_page_template_team_s_images_wall
+NEW ir.ui.view: website.new_page_template_team_s_media_list
+NEW ir.ui.view: website.new_page_template_team_s_picture
+NEW ir.ui.view: website.new_page_template_team_s_text_block_h1
+NEW ir.ui.view: website.new_page_template_team_s_text_image
+NEW ir.ui.view: website.new_page_template_team_s_three_columns
+NEW ir.ui.view: website.placeholder_header_search_box
+NEW ir.ui.view: website.placeholder_header_social_links
+NEW ir.ui.view: website.placeholder_header_text_element
+NEW ir.ui.view: website.s_button
+NEW ir.ui.view: website.s_call_to_action_about
+NEW ir.ui.view: website.s_call_to_action_digital
+NEW ir.ui.view: website.s_call_to_action_menu
+NEW ir.ui.view: website.s_image
+NEW ir.ui.view: website.s_image_text_2nd
+NEW ir.ui.view: website.s_instagram_page
+NEW ir.ui.view: website.s_instagram_page_options
+NEW ir.ui.view: website.s_picture_only
+NEW ir.ui.view: website.s_text_block_2nd
+NEW ir.ui.view: website.s_text_block_h1
+NEW ir.ui.view: website.s_text_block_h2
+NEW ir.ui.view: website.s_text_block_h2_contact
+NEW ir.ui.view: website.s_text_cover
+NEW ir.ui.view: website.s_three_columns_2nd
+NEW ir.ui.view: website.s_three_columns_menu
+NEW ir.ui.view: website.s_video
+NEW ir.ui.view: website.s_website_controller_page_listing_layout
+NEW ir.ui.view: website.shared_blocks
+NEW ir.ui.view: website.snippet_options_header_box
+NEW ir.ui.view: website.step_wizard
+NEW ir.ui.view: website.template_header_boxed_align_center
+NEW ir.ui.view: website.template_header_boxed_align_right
+NEW ir.ui.view: website.template_header_hamburger_mobile_align_center
+NEW ir.ui.view: website.template_header_hamburger_mobile_align_right
+NEW ir.ui.view: website.template_header_mobile
+NEW ir.ui.view: website.template_header_mobile_align_center
+NEW ir.ui.view: website.template_header_mobile_align_right
+NEW ir.ui.view: website.template_header_sales_four
+NEW ir.ui.view: website.template_header_sales_four_align_center
+NEW ir.ui.view: website.template_header_sales_four_align_right
+NEW ir.ui.view: website.template_header_sales_one
+NEW ir.ui.view: website.template_header_sales_one_align_center
+NEW ir.ui.view: website.template_header_sales_one_align_right
+NEW ir.ui.view: website.template_header_sales_three
+NEW ir.ui.view: website.template_header_sales_two
+NEW ir.ui.view: website.template_header_sales_two_align_center
+NEW ir.ui.view: website.template_header_sales_two_align_right
+NEW ir.ui.view: website.template_header_search
+NEW ir.ui.view: website.template_header_search_align_center
+NEW ir.ui.view: website.template_header_search_align_right
+NEW ir.ui.view: website.template_header_sidebar_align_center
+NEW ir.ui.view: website.template_header_sidebar_align_right
+NEW ir.ui.view: website.template_header_stretch
+NEW ir.ui.view: website.template_header_stretch_align_center
+NEW ir.ui.view: website.template_header_stretch_align_right
+NEW ir.ui.view: website.website_controller_pages_form_view
+NEW ir.ui.view: website.website_controller_pages_tree_view
+DEL ir.ui.view: website.language_selector_add_language
+DEL ir.ui.view: website.option_header_no_mobile_hamburger
+DEL ir.ui.view: website.option_header_off_canvas
+DEL ir.ui.view: website.option_header_off_canvas_logo_show
+DEL ir.ui.view: website.option_header_off_canvas_template_header_hamburger
+DEL ir.ui.view: website.option_header_off_canvas_template_header_hamburger_full
+DEL ir.ui.view: website.option_header_off_canvas_template_header_sidebar
+DEL ir.ui.view: website.report_viewhierarchy_children
+DEL ir.ui.view: website.template_header_boxed_oe_structure_header_boxed_1
+DEL ir.ui.view: website.template_header_centered_logo
+DEL ir.ui.view: website.template_header_contact
+DEL ir.ui.view: website.template_header_contact_oe_structure_header_contact_1
+DEL ir.ui.view: website.template_header_hamburger_align_center
+DEL ir.ui.view: website.template_header_hamburger_full
+DEL ir.ui.view: website.template_header_hamburger_full_oe_structure_header_hamburger_full_1
+DEL ir.ui.view: website.template_header_hamburger_oe_structure_header_hamburger_2
+DEL ir.ui.view: website.template_header_hamburger_oe_structure_header_hamburger_3
+DEL ir.ui.view: website.template_header_image
+DEL ir.ui.view: website.template_header_image_oe_structure_header_image_1
+DEL ir.ui.view: website.template_header_magazine
+DEL ir.ui.view: website.template_header_magazine_oe_structure_header_magazine_1
+DEL ir.ui.view: website.template_header_sidebar_oe_structure_header_sidebar_1
+DEL ir.ui.view: website.template_header_slogan
+DEL ir.ui.view: website.template_header_slogan_align_center
+DEL ir.ui.view: website.template_header_slogan_align_right
+DEL ir.ui.view: website.template_header_slogan_oe_structure_header_slogan_1
+DEL ir.ui.view: website.template_header_slogan_oe_structure_header_slogan_3
+DEL ir.ui.view: website.template_header_vertical_oe_structure_header_vertical_1
+DEL ir.ui.view: website.template_header_vertical_oe_structure_header_vertical_2
+DEL ir.ui.view: website.template_header_vertical_oe_structure_header_vertical_3
+DEL ir.ui.view: website.view_view_qweb
+NEW res.groups: website.website_page_controller_expose
+# NOTHING TO DO
