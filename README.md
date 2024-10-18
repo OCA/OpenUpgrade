@@ -28,7 +28,7 @@ Available addons
 addon | version | maintainers | summary
 --- | --- | --- | ---
 [openupgrade_framework](openupgrade_framework/) | 16.0.1.0.0 | [![legalsylvain](https://github.com/legalsylvain.png?size=30px)](https://github.com/legalsylvain) [![StefanRijnhart](https://github.com/StefanRijnhart.png?size=30px)](https://github.com/StefanRijnhart) [![hbrunn](https://github.com/hbrunn.png?size=30px)](https://github.com/hbrunn) | Module to integrate in the server_wide_modules option to make upgrades between two major revisions.
-[openupgrade_scripts](openupgrade_scripts/) | 16.0.1.0.3 |  | Module that contains all the migrations analysis and scripts for migrate Odoo SA modules.
+[openupgrade_scripts](openupgrade_scripts/) | 16.0.1.0.3 |  | Module that contains all the migrations analysis and scripts for migrating Odoo SA modules.
 
 [//]: # (end addons)
 
@@ -38,7 +38,7 @@ addon | version | maintainers | summary
 
 This repository is licensed under [AGPL-3.0](LICENSE).
 
-However, each module can have a totally different license, as long as they adhere to Odoo Community Association (OCA)
+However, each module can have a totally different license, as long as they adhere to the Odoo Community Association (OCA)
 policy. Consult each module's `__manifest__.py` file, which contains a `license` key
 that explains its license.
 
