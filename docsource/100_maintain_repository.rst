@@ -24,7 +24,7 @@ Manual changes
 
 * In the ``OpenUpgrade``/``documentation`` branch, add a new line in ``build_openupgrade_docs``.
 
-* Push a test database for the old release to Github (see https://github.com/OCA/OpenUpgrade/wiki/How-to-create-a-reference-database)
+* Push a test database for the old release to GitHub (see https://github.com/OCA/OpenUpgrade/wiki/How-to-create-a-reference-database)
 
 * Execute the technical migration of ``openupgrade_framework``.
 

@@ -32,7 +32,7 @@ See `OpenUpgrade API <https://oca.github.io/openupgradelib/API.html>`_
 For many modules, a developer will not even need to write any function, but will
 "simply" need to call pre-existing functions from `openupgradelib` with the appropriate
 arguments. The main complexities becomes to learn what are the functions available in
-`openupgradelib` and then to select appropriatly the arguments (usually according to
+`openupgradelib` and then to select appropriately the arguments (usually according to
 the `openupgrade_analysis.txt`, see below).
 
 For instance, the migration to version 13 of mass_mailing did not require any custom

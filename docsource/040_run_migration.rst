@@ -14,7 +14,7 @@ OpenUpgrade
 Make the `openupgrade_framework` and the `openupgrade_scripts` modules
 available in the addons path in the Odoo instance of the new version.
 
-Or, for older versions: check out the OpenUpgrade source code from Github
+Or, for older versions: check out the OpenUpgrade source code from GitHub
 for the branches you need. Each branch migrates to its version from the
 previous version, so branch 13.0 migrates from 12.0 to 13.0. If you are
 migrating across multiple versions, you need to run each version of
@@ -87,7 +87,7 @@ Run the upgrade and check for errors. You will probably learn a lot about
 your data and have to do some manual clean up before and after the upgrade.
 Expect to repeat the process several times as you encounter errors, clean up
 your data, and try again. If necessary, ask for help or report bugs on
-Github.
+GitHub.
 
 Write the missing migration scripts
 ...................................
