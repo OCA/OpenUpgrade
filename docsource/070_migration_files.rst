@@ -117,7 +117,7 @@ The change description flags the following types of change:
       stopped doing so. You need to audit the function for any change in
       possible values and may need to map any differences you encounter.
 
-      (Of course, a selection function could change the set of posible values
+      (Of course, a selection function could change the set of possible values
       in between functions.)
 
     * The field changes type. This always calls for action in your upgrade
@@ -130,7 +130,7 @@ The change description flags the following types of change:
       res.partner.title.
 
     * A relation field's relation changes. You need to migrate the one target
-      model to the other, and update the references to them
+      model to the other, and update the references to them.
 
     * A field is deleted from the model (marked by 'DEL'). Also fields from
       deleted models are marked in this way. TODO: mark fields from deleted

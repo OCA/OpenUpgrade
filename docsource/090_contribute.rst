@@ -96,7 +96,7 @@ Writing migration scripts for Odoo is a lot of work, that can not be
 accomplished by a single party.  We need your help.
 
 If you are at all interested in discussing strategic, functional or
-technical issues, please post an issue on the Github project:
+technical issues, please post an issue on the GitHub project:
 `<https://github.com/OCA/OpenUpgrade>`_.
 
 If you are a developer, give the OpenUpgrade software a go and give us
