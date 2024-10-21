@@ -20,7 +20,7 @@ product      / product.category         / product_properties_definition (propert
 product      / product.document         / _inherits                     : NEW _inherits: {'ir.attachment': 'ir_attachment_id'}
 product      / product.document         / active (boolean)              : NEW hasdefault: default
 product      / product.document         / ir_attachment_id (many2one)   : NEW relation: ir.attachment, required
-# NOTHING TO DO: fields in new model
+# DONE: populated in post-migration with attachments on products
 
 product      / product.packaging        / product_id (many2one)         : now required
 # NOTHING TO DO
