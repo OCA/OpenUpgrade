@@ -11,15 +11,26 @@ _tables_renames = [
     ("mail_channel", "discuss_channel"),
     ("mail_channel_member", "discuss_channel_member"),
     ("mail_channel_rtc_session", "discuss_channel_rtc_session"),
+    ("mail_channel_res_groups_rel", "discuss_channel_res_groups_rel"),
 ]
 _fields_renames = [
     (
-        "discuss.channel",
-        "discuss_channel",
+        "mail.tracking.value",
+        "mail_tracking_value",
         "field",
         "field_id",
     ),
 ]
+_columns_renames = {
+    "discuss_channel_res_groups_rel": [
+        ("mail_channel_id", "discuss_channel_id"),
+    ],
+}
+_columns_copies = {
+    "mail_template": [
+        ("report_template", None, None),
+    ],
+}
 
 
 def _discuss_channel_fill_allow_public_upload(env):
@@ -58,14 +69,9 @@ def _mail_alias_fill_multiple_values(env):
         env.cr,
         """
         UPDATE mail_alias
-        SET alias_incoming_local = True
-        """,
-    )
-    openupgrade.logged_query(
-        env.cr,
-        """
-        UPDATE mail_alias
-        SET alias_status = 'not_tested'
+        SET
+        alias_incoming_local = True,
+        alias_status = 'valid'
         """,
     )
 
@@ -80,6 +86,16 @@ def _mail_tracking_value_update_monetary_tracking_values(env):
         WHERE old_value_monetary IS NOT NULL
             OR new_value_monetary IS NOT NULL;
         """,
+    )
+
+
+def _mail_gateway_allowed(env):
+    """Set some dummy value so that the not null constraint can be created"""
+    env.cr.execute(
+        """
+        UPDATE mail_gateway_allowed SET email='admin@example.com'
+        WHERE email IS NULL
+        """
     )
 
 
@@ -113,10 +129,13 @@ def migrate(env, version):
     openupgrade.rename_models(env.cr, _models_renames)
     openupgrade.rename_tables(env.cr, _tables_renames)
     openupgrade.rename_fields(env, _fields_renames)
+    openupgrade.rename_columns(env.cr, _columns_renames)
+    openupgrade.copy_columns(env.cr, _columns_copies)
     _discuss_channel_fill_allow_public_upload(env)
     _mail_alias_fill_multiple_values(env)
     _mail_tracking_value_update_monetary_tracking_values(env)
     _company_update_email_colors(env)
+    _mail_gateway_allowed(env)
     # create column to avoid model mail.alias is loaded before model res.company
     openupgrade.logged_query(
         env.cr,

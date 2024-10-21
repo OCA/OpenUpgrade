@@ -18,7 +18,7 @@ def _fill_res_company_alias_domain_id(env):
 
     domain = icp.get_param("mail.catchall.domain")
     if domain:
-        alias_domain_id = openupgrade.logged_query(
+        openupgrade.logged_query(
             env.cr,
             f"""
             INSERT INTO mail_alias_domain (
@@ -32,6 +32,7 @@ def _fill_res_company_alias_domain_id(env):
             RETURNING id;
             """,
         )
+        (alias_domain_id,) = env.cr.fetchone()
         openupgrade.logged_query(
             env.cr,
             f"""
@@ -51,32 +52,20 @@ def _fill_res_company_alias_domain_id(env):
 
 
 def _mail_alias_fill_alias_full_name(env):
-    # Because we fill same alias domain for every company so only need one here
-    company = env["res.company"].search([], limit=1)
-    if company.alias_domain_id:
-        openupgrade.logged_query(
-            env.cr,
-            f"""
-            UPDATE mail_alias
-            SET alias_domain_id = {company.alias_domain_id.id},
-                alias_full_name = CASE
-                    WHEN alias_name IS NOT NULL
-                    THEN alias_name || '@' || '{company.alias_domain_id.name}'
-                    ELSE NULL
-                END
-            """,
-        )
-    else:
-        openupgrade.logged_query(
-            env.cr,
-            """
-            UPDATE mail_alias
-            SET alias_full_name = CASE
-                WHEN alias_name IS NOT NULL THEN alias_name
-                ELSE NULL
-            END
-            """,
-        )
+    openupgrade.logged_query(
+        env.cr,
+        """
+        UPDATE mail_alias
+        SET
+        alias_domain_id = mail_alias_domain.id,
+        alias_full_name = CASE
+            WHEN alias_name IS NOT NULL
+            THEN alias_name || '@' || mail_alias_domain.name
+            ELSE NULL
+        END
+        FROM mail_alias_domain
+        """,
+    )
 
 
 def _mail_template_convert_report_template_m2o_to_m2m(env):

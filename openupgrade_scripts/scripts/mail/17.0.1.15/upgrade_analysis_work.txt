@@ -247,7 +247,7 @@ mail         / mail.template            / report_name (char)            : DEL
 
 mail         / mail.template            / report_template (many2one)    : DEL relation: ir.actions.report
 mail         / mail.template            / report_template_ids (many2many): NEW relation: ir.actions.report
-# DONE pre-migraton: m2o to m2m
+# DONE post-migraton: m2o to m2m
 
 mail         / mail.template            / user_id (many2one)            : NEW relation: res.users
 # NOTHING TO DO: new feature
@@ -265,7 +265,7 @@ mail         / mail.tracking.value      / field_id (many2one)           : NEW re
 
 mail         / mail.tracking.value      / new_value_monetary (float)    : DEL
 mail         / mail.tracking.value      / old_value_monetary (float)    : DEL
-# TODO pre-migration: fill value into old/new_value_float
+# DONE pre-migration: fill value into old/new_value_float
 
 mail         / mail.alias.domain        / bounce_alias (char)           : NEW required, hasdefault: default
 mail         / mail.alias.domain        / catchall_alias (char)         : NEW required, hasdefault: default
@@ -298,7 +298,7 @@ mail         / res.users                / res_users_settings_ids (one2many): mod
 mail         / res.users.settings       / _order                        : module is now 'base' ('mail')
 mail         / res.users.settings       / display_name (char)           : module is now 'base' ('mail')
 mail         / res.users.settings       / user_id (many2one)            : module is now 'base' ('mail')
-# NOTHING TODO
+# NOTHING TO DO: done in base migration scripts
 
 ---XML records in module 'mail'---
 NEW discuss.channel: mail.channel_all_employees (noupdate)
@@ -408,7 +408,7 @@ DEL ir.rule: mail.ir_rule_mail_channel_member_group_system (noupdate)
 DEL ir.rule: mail.ir_rule_mail_channel_member_group_user (noupdate)
 DEL ir.rule: mail.mail_channel_admin (noupdate)
 DEL ir.rule: mail.mail_channel_rule (noupdate)
-# NOTHING TO DO: removed in post-migration
+# DONE: post-migration: safe removal
 
 DEL ir.rule: mail.res_users_settings_rule_admin [renamed to base module] (noupdate)
 DEL ir.rule: mail.res_users_settings_rule_user [renamed to base module] (noupdate)
@@ -482,7 +482,7 @@ DEL ir.ui.view: mail.view_mail_alias_tree
 
 DEL mail.channel: mail.channel_all_employees (noupdate)
 DEL mail.channel.member: mail.channel_member_general_channel_for_admin (noupdate)
-# NOTHING TO DO: removed in post-migration
+# DONE: post-migration: safe removal
 
 NEW res.groups: mail.group_mail_notification_type_inbox (noupdate)
 # NOTHING TO DO
