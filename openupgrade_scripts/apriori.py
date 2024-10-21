@@ -88,6 +88,9 @@ merged_modules = {
     "account_invoice_report_due_list": "account",
     # OCA/e-commerce
     "website_sale_require_login": "website_sale",
+    # OCA/l10n-spain
+    "l10n_es_irnr": "l10n_es",
+    "l10n_es_irnr_sii": "l10n_es_aeat_sii_oca",
     # OCA/partner-contact
     "partner_company_group": "base_partner_company_group",
     # OCA/pos
