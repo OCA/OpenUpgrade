@@ -38,3 +38,8 @@ def migrate(env, version):
         DROP INDEX IF EXISTS account_analytic_account_name_index;
         """,
     )
+    # Save company_id field of analytic plans for modules reinstating this
+    # to pick up
+    openupgrade.copy_columns(
+        env.cr, {"account_analytic_plan": [("company_id", None, None)]}
+    )

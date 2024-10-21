@@ -38,31 +38,23 @@ def _analytic_line_create_x_plan_column(env):
 
 def _analytic_plan_update_applicability_into_property(env):
     """
-    Manually create ir.property for default_applicability of account.analytic.plan
+    Create ir.property for default_applicability of account.analytic.plan
+    in all companies as the company_id field was shifted from account.analytic.plan
+    to account.analytic.applicability
     """
-    vals_list = []
-    field_id = (
-        env["ir.model.fields"]._get("account.analytic.plan", "default_applicability").id
-    )
     env.cr.execute(
         """
-        SELECT id, default_applicability, company_id FROM account_analytic_plan
+        SELECT id, default_applicability FROM account_analytic_plan
         WHERE default_applicability != 'optional'
         """
     )
-    for plan_id, default_applicability, company_id in env.cr.fetchall():
-        vals_list.append(
-            {
-                "fields_id": field_id,
-                "company_id": company_id,
-                "res_id": "account.analytic.plan,%s" % plan_id,
-                "name": "default_applicability",
-                "value": default_applicability,
-                "type": "selection",
-            }
+    values = dict(env.cr.fetchall())
+    for company in env["res.company"].search([]):
+        env["ir.property"].with_company(company)._set_multi(
+            "default_applicability",
+            "account.analytic.plan",
+            values,
         )
-    if vals_list:
-        env["ir.property"].create(vals_list)
 
 
 @openupgrade.migrate()
