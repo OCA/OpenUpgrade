@@ -68,6 +68,7 @@ merged_modules = {
     "website_sale_cart_no_redirect": "website_sale",
     # OCA/hr
     "hr_recruitment_notification": "hr_recruitment",
+    "hr_contract_type": "hr_contract",
     # OCA/e-commerce
     "website_sale_attribute_filter_price": "website_sale",
     "website_sale_stock_available_display": "website_sale_stock",
