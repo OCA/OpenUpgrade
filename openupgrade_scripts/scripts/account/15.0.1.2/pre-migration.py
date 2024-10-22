@@ -68,9 +68,21 @@ def _fast_fill_account_move_always_tax_exigible(env):
     openupgrade.logged_query(
         env.cr,
         """
-        ALTER TABLE account_move
-        ADD COLUMN IF NOT EXISTS always_tax_exigible BOOL""",
-    )
+           DO $$
+            BEGIN
+                IF NOT EXISTS (
+                    SELECT 1 
+                    FROM information_schema.columns 
+                    WHERE table_name = 'account_move' 
+                    AND column_name = 'always_tax_exigible'
+                )
+                THEN
+                    -- Si no existe, agrega la columna
+                    ALTER TABLE account_move
+                    ADD COLUMN always_tax_exigible BOOLEAN;
+                END IF;
+            END $$;""",
+        )
     # 1. Set always_tax_exigible = False if record.is_invoice(True) is True
     openupgrade.logged_query(
         env.cr,
@@ -139,8 +151,21 @@ def _fast_fill_account_move_amount_total_in_currency_signed(env):
     openupgrade.logged_query(
         env.cr,
         """
-        ALTER TABLE account_move
-        ADD COLUMN IF NOT EXISTS amount_total_in_currency_signed NUMERIC""",
+         DO $$
+            BEGIN
+                IF NOT EXISTS (
+                    SELECT 1 
+                    FROM information_schema.columns 
+                    WHERE table_name = 'account_move' 
+                    AND column_name = 'amount_total_in_currency_signed'
+                )
+                THEN
+                    -- Si no existe, agrega la columna
+                    ALTER TABLE account_move
+                    ADD COLUMN amount_total_in_currency_signed NUMERIC;
+                END IF;
+            END $$
+        """,
     )
     openupgrade.logged_query(
         env.cr,
@@ -161,8 +186,21 @@ def _fast_fill_account_move_line_tax_tag_invert(env):
     openupgrade.logged_query(
         env.cr,
         """
-        ALTER TABLE account_move_line
-        ADD COLUMN IF NOT EXISTS tax_tag_invert BOOL""",
+        DO $$
+            BEGIN
+                IF NOT EXISTS (
+                    SELECT 1 
+                    FROM information_schema.columns 
+                    WHERE table_name = 'account_move_line' 
+                    AND column_name = 'tax_tag_invert'
+                )
+                THEN
+                    -- Si no existe, agrega la columna
+                    ALTER TABLE account_move_line
+                    ADD COLUMN tax_tag_invert BOOLEAN;
+                END IF;
+            END $$
+        """,
     )
     # 1. Invoices imported from other softwares might only have kept the tags,
     # not the taxes
@@ -293,8 +331,21 @@ def _fast_fill_account_payment_payment_method_line_id(env):
     openupgrade.logged_query(
         env.cr,
         """
-        ALTER TABLE account_payment
-        ADD COLUMN IF NOT EXISTS payment_method_line_id INTEGER""",
+        DO $$
+            BEGIN
+                IF NOT EXISTS (
+                    SELECT 1 
+                    FROM information_schema.columns 
+                    WHERE table_name = 'account_payment' 
+                    AND column_name = 'payment_method_line_id'
+                )
+                THEN
+                    -- Si no existe, agrega la columna
+                    ALTER TABLE account_payment
+                    ADD COLUMN payment_method_line_id INTEGER;
+                END IF;
+            END $$
+      """,
     )
 
 
@@ -302,8 +353,20 @@ def _fill_account_tax_country_id(env):
     openupgrade.logged_query(
         env.cr,
         """
-        ALTER TABLE account_tax
-        ADD COLUMN IF NOT EXISTS country_id INTEGER
+         DO $$
+            BEGIN
+                IF NOT EXISTS (
+                    SELECT 1 
+                    FROM information_schema.columns 
+                    WHERE table_name = 'account_tax' 
+                    AND column_name = 'country_id'
+                )
+                THEN
+                    -- Si no existe, agrega la columna
+                    ALTER TABLE account_tax
+                    ADD COLUMN country_id INTEGER;
+                END IF;
+            END $$
         """,
     )
     openupgrade.logged_query(
@@ -323,8 +386,20 @@ def _fill_res_company_account_journal_payment_accounts(env):
     openupgrade.logged_query(
         env.cr,
         """
-        ALTER TABLE res_company
-        ADD COLUMN IF NOT EXISTS account_journal_payment_credit_account_id INTEGER
+            DO $$
+            BEGIN
+                IF NOT EXISTS (
+                    SELECT 1 
+                    FROM information_schema.columns 
+                    WHERE table_name = 'res_company' 
+                    AND column_name = 'account_journal_payment_credit_account_id'
+                )
+                THEN
+                    -- Si no existe, agrega la columna
+                    ALTER TABLE res_company
+                    ADD COLUMN account_journal_payment_credit_account_id INTEGER;
+                END IF;
+            END $$
         """,
     )
     openupgrade.logged_query(
@@ -342,8 +417,21 @@ def _fill_res_company_account_journal_payment_accounts(env):
     openupgrade.logged_query(
         env.cr,
         """
-        ALTER TABLE res_company
-        ADD COLUMN IF NOT EXISTS account_journal_payment_debit_account_id INTEGER
+         DO $$
+            BEGIN
+                IF NOT EXISTS (
+                    SELECT 1 
+                    FROM information_schema.columns 
+                    WHERE table_name = 'res_company' 
+                    AND column_name = 'account_journal_payment_debit_account_id'
+                )
+                THEN
+                    -- Si no existe, agrega la columna
+                    ALTER TABLE res_company
+                    ADD COLUMN account_journal_payment_debit_account_id INTEGER;
+                END IF;
+            END $$
+
         """,
     )
     openupgrade.logged_query(
@@ -364,8 +452,21 @@ def _fast_create_account_payment_outstanding_account_id(env):
     openupgrade.logged_query(
         env.cr,
         """
-        ALTER TABLE account_payment
-        ADD COLUMN IF NOT EXISTS outstanding_account_id INTEGER""",
+        DO $$
+            BEGIN
+                IF NOT EXISTS (
+                    SELECT 1 
+                    FROM information_schema.columns 
+                    WHERE table_name = 'account_payment' 
+                    AND column_name = 'outstanding_account_id'
+                )
+                THEN
+                    -- Si no existe, agrega la columna
+                    ALTER TABLE account_payment
+                    ADD COLUMN outstanding_account_id INTEGER;
+                END IF;
+            END $$
+        """,
     )
 
 
