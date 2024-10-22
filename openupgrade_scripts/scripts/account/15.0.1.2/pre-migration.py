@@ -1,3 +1,5 @@
+import asyncio
+
 from openupgradelib import openupgrade
 
 from odoo.tools import sql
@@ -53,15 +55,15 @@ def switch_payment_tolerance_param_value(env):
         )
 
 
-def _convert_field_to_html(env):
+async def _convert_field_to_html(env):
     openupgrade.convert_field_to_html(
         env.cr, "res_company", "invoice_terms", "invoice_terms"
     )
     openupgrade.convert_field_to_html(env.cr, "account_fiscal_position", "note", "note")
-    openupgrade.convert_field_to_html(
+    openupgrade.convert_field_to_html(env.cr, "account_payment_term", "note", "note")
+    await openupgrade.convert_field_to_html(
         env.cr, "account_move", "narration", "narration", verbose=False
     )
-    openupgrade.convert_field_to_html(env.cr, "account_payment_term", "note", "note")
 
 
 def _fast_fill_account_move_always_tax_exigible(env):
@@ -385,15 +387,12 @@ def _remove_table_constraints(env):
     )
 
 
-@openupgrade.migrate()
-def migrate(env, version):
-    openupgrade.set_xml_ids_noupdate_value(
-        env, "account", ["action_account_resequence"], True
-    )
+async def tasks_wrapper(env):
     openupgrade.rename_fields(env, _renamed_fields)
     openupgrade.delete_records_safely_by_xml_id(env, ["account.invoice_send"])
+    # We don't really care when this is finished
+    aync_html_conversion = asyncio.create_task(_convert_field_to_html(env))
     switch_payment_tolerance_param_value(env)
-    _convert_field_to_html(env)
     _fast_fill_account_move_always_tax_exigible(env)
     _fast_fill_account_move_amount_total_in_currency_signed(env)
     _fast_fill_account_move_line_tax_tag_invert(env)
@@ -403,3 +402,12 @@ def migrate(env, version):
     _fast_create_account_payment_outstanding_account_id(env)
     _fill_account_tax_country_id(env)
     _remove_table_constraints(env)
+    await aync_html_conversion
+
+
+@openupgrade.migrate()
+def migrate(env, version):
+    openupgrade.set_xml_ids_noupdate_value(
+        env, "account", ["action_account_resequence"], True
+    )
+    asyncio.run(tasks_wrapper(env))
