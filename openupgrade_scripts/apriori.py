@@ -49,6 +49,7 @@ renamed_modules = {
     # OCA/server-ux
     "mass_editing": "server_action_mass_edit",
     # OCA/l10n-italy
+    "l10n_it_account_balance_eu": "l10n_it_financial_statement_eu",
     "l10n_it_ricevute_bancarie": "l10n_it_riba",
     # OCA/...
 }
