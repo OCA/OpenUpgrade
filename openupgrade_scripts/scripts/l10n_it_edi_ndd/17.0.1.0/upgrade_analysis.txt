@@ -1,0 +1,36 @@
+---Models in module 'l10n_it_edi_ndd'---
+new model l10n_it.document.type
+---Fields in module 'l10n_it_edi_ndd'---
+l10n_it_edi_ndd / account.move             / l10n_it_document_type (many2one): NEW relation: l10n_it.document.type, hasdefault: compute
+l10n_it_edi_ndd / account.move             / l10n_it_payment_method (selection): NEW selection_keys: ['MP01', 'MP02', 'MP03', 'MP04', 'MP05', 'MP06', 'MP07', 'MP08', 'MP09', 'MP10', 'MP11', 'MP12', 'MP13', 'MP14', 'MP15', 'MP16', 'MP17', 'MP18', 'MP19', 'MP20', 'MP21', 'MP22', 'MP23'], hasdefault: compute
+l10n_it_edi_ndd / account.payment.method.line / l10n_it_payment_method (selection): NEW selection_keys: ['MP01', 'MP02', 'MP03', 'MP04', 'MP05', 'MP06', 'MP07', 'MP08', 'MP09', 'MP10', 'MP11', 'MP12', 'MP13', 'MP14', 'MP15', 'MP16', 'MP17', 'MP18', 'MP19', 'MP20', 'MP21', 'MP22', 'MP23'], hasdefault: default
+l10n_it_edi_ndd / l10n_it.document.type    / code (char)                   : NEW required
+l10n_it_edi_ndd / l10n_it.document.type    / name (char)                   : NEW required
+l10n_it_edi_ndd / l10n_it.document.type    / type (selection)              : NEW required, selection_keys: ['purchase', 'sale']
+---XML records in module 'l10n_it_edi_ndd'---
+NEW ir.model.access: l10n_it_edi_ndd.access_l10n_it_document_type
+NEW ir.ui.view: l10n_it_edi_ndd.account_invoice_form_l10n_it
+NEW ir.ui.view: l10n_it_edi_ndd.l10n_it_document_type_tree
+NEW ir.ui.view: l10n_it_edi_ndd.view_account_journal_form_l10n_it
+NEW l10n_it.document.type: l10n_it_edi_ndd.l10n_it_document_type_01
+NEW l10n_it.document.type: l10n_it_edi_ndd.l10n_it_document_type_02
+NEW l10n_it.document.type: l10n_it_edi_ndd.l10n_it_document_type_03
+NEW l10n_it.document.type: l10n_it_edi_ndd.l10n_it_document_type_04
+NEW l10n_it.document.type: l10n_it_edi_ndd.l10n_it_document_type_05
+NEW l10n_it.document.type: l10n_it_edi_ndd.l10n_it_document_type_06
+NEW l10n_it.document.type: l10n_it_edi_ndd.l10n_it_document_type_07
+NEW l10n_it.document.type: l10n_it_edi_ndd.l10n_it_document_type_08
+NEW l10n_it.document.type: l10n_it_edi_ndd.l10n_it_document_type_09
+NEW l10n_it.document.type: l10n_it_edi_ndd.l10n_it_document_type_16
+NEW l10n_it.document.type: l10n_it_edi_ndd.l10n_it_document_type_17
+NEW l10n_it.document.type: l10n_it_edi_ndd.l10n_it_document_type_18
+NEW l10n_it.document.type: l10n_it_edi_ndd.l10n_it_document_type_19
+NEW l10n_it.document.type: l10n_it_edi_ndd.l10n_it_document_type_20
+NEW l10n_it.document.type: l10n_it_edi_ndd.l10n_it_document_type_21
+NEW l10n_it.document.type: l10n_it_edi_ndd.l10n_it_document_type_22
+NEW l10n_it.document.type: l10n_it_edi_ndd.l10n_it_document_type_23
+NEW l10n_it.document.type: l10n_it_edi_ndd.l10n_it_document_type_24
+NEW l10n_it.document.type: l10n_it_edi_ndd.l10n_it_document_type_25
+NEW l10n_it.document.type: l10n_it_edi_ndd.l10n_it_document_type_26
+NEW l10n_it.document.type: l10n_it_edi_ndd.l10n_it_document_type_27
+NEW l10n_it.document.type: l10n_it_edi_ndd.l10n_it_document_type_28

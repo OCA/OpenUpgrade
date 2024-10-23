@@ -1,0 +1,19 @@
+---Models in module 'l10n_in_withholding'---
+new model l10n_in.withhold.wizard [transient]
+new model l10n_in.withhold.wizard.line [transient]
+---Fields in module 'l10n_in_withholding'---
+l10n_in_withholding / account.move             / l10n_in_is_withholding (boolean): NEW
+l10n_in_withholding / account.move             / l10n_in_withhold_move_ids (one2many): NEW relation: account.move
+l10n_in_withholding / account.move             / l10n_in_withholding_ref_move_id (many2one): NEW relation: account.move
+l10n_in_withholding / account.tax              / l10n_in_tds_tax_type (selection): NEW selection_keys: ['purchase', 'sale']
+l10n_in_withholding / res.company              / l10n_in_withholding_account_id (many2one): NEW relation: account.account
+l10n_in_withholding / res.company              / l10n_in_withholding_journal_id (many2one): NEW relation: account.journal
+---XML records in module 'l10n_in_withholding'---
+NEW ir.actions.act_window: l10n_in_withholding.l10n_in_withholding_entry_form_action
+NEW ir.model.access: l10n_in_withholding.access_l10n_in_withhold_wizard
+NEW ir.model.access: l10n_in_withholding.access_l10n_in_withhold_wizard_line
+NEW ir.ui.view: l10n_in_withholding.account_move_view_form_inherit_l10n_in_withholding
+NEW ir.ui.view: l10n_in_withholding.res_config_settings_view_form_inherit_l10n_in_withholding
+NEW ir.ui.view: l10n_in_withholding.tds_entry_view_form
+NEW ir.ui.view: l10n_in_withholding.view_account_payment_form_inherit_l10n_in_withholding
+NEW ir.ui.view: l10n_in_withholding.view_tax_form_inherited_l10n_in_withholding

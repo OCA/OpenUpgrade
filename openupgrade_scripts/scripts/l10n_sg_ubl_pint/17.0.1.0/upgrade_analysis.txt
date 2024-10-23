@@ -1,0 +1,6 @@
+---Models in module 'l10n_sg_ubl_pint'---
+new model account.edi.xml.pint_sg [abstract]
+---Fields in module 'l10n_sg_ubl_pint'---
+l10n_sg_ubl_pint / account.tax              / ubl_cii_tax_category_code (False): NEW selection_keys: ['AE', 'B', 'DS', 'E', 'ES33', 'ESN33', 'G', 'K', 'L', 'M', 'NA', 'NG', 'O', 'OS', 'S', 'SR', 'SRCA-C', 'SRCA-S', 'SRLVG', 'SROVR-LVG', 'SROVR-RS', 'Z', 'ZR'], mode: modify
+l10n_sg_ubl_pint / res.partner              / ubl_cii_format (False)        : NEW selection_keys: ['ciusro', 'facturx', 'nlcius', 'oioubl_201', 'pint_anz', 'pint_jp', 'pint_my', 'pint_sg', 'ubl_a_nz', 'ubl_bis3', 'ubl_sg', 'xrechnung'], mode: modify
+---XML records in module 'l10n_sg_ubl_pint'---

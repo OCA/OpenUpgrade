@@ -10,6 +10,8 @@ mrp          / mrp.bom                  / rating_ids (one2many)         : NEW re
 mrp          / mrp.production           / _order                        : _order is now 'priority desc, date_start asc,id' ('priority desc, date_planned_start asc,id')
 mrp          / mrp.production           / activity_user_id (many2one)   : not related anymore
 mrp          / mrp.production           / activity_user_id (many2one)   : now a function
+mrp          / mrp.production           / all_move_ids (one2many)       : NEW relation: stock.move
+mrp          / mrp.production           / all_move_raw_ids (one2many)   : NEW relation: stock.move
 mrp          / mrp.production           / components_availability_state (selection): selection_keys is now '['available', 'expected', 'late', 'unavailable']' ('['available', 'expected', 'late']')
 mrp          / mrp.production           / date_finished (datetime)      : now a function
 mrp          / mrp.production           / date_planned_finished (datetime): DEL
