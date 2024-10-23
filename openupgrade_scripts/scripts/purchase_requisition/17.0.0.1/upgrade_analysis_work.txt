@@ -1,0 +1,11 @@
+---Models in module 'purchase_requisition'---
+---Fields in module 'purchase_requisition'---
+purchase_requisition / purchase.requisition     / activity_user_id (many2one)   : not related anymore
+purchase_requisition / purchase.requisition     / activity_user_id (many2one)   : now a function
+purchase_requisition / purchase.requisition     / message_main_attachment_id (many2one): DEL relation: ir.attachment
+purchase_requisition / purchase.requisition     / rating_ids (one2many)         : NEW relation: rating.rating
+# NOTHING TO DO
+
+---XML records in module 'purchase_requisition'---
+NEW ir.ui.view: purchase_requisition.report_purchaserequisition_document
+# NOTHING TO DO
