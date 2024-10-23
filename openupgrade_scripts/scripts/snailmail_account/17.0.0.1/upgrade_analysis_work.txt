@@ -1,0 +1,10 @@
+---Models in module 'snailmail_account'---
+obsolete model snailmail.confirm.invoice [transient]
+# NOTHING TO DO:
+
+---Fields in module 'snailmail_account'---
+---XML records in module 'snailmail_account'---
+DEL ir.model.access: snailmail_account.access_snailmail_confirm_invoice
+NEW ir.ui.view: snailmail_account.account_move_send_inherit_snailmail
+DEL ir.ui.view: snailmail_account.account_invoice_send_inherit_account_wizard_form
+# NOTHING TO DO:
