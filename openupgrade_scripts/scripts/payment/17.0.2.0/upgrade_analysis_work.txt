@@ -1,0 +1,352 @@
+---Models in module 'payment'---
+obsolete model payment.icon
+new model payment.method
+# DONE: pre-migration: rename model
+
+new model payment.capture.wizard [transient]
+# NOTHING TO DO
+
+---Fields in module 'payment'---
+payment      / payment.icon             / image (binary)                : DEL attachment: True
+payment      / payment.icon             / image_payment_form (binary)   : DEL attachment: True
+payment      / payment.icon             / name (char)                   : DEL
+payment      / payment.icon             / provider_ids (many2many)      : DEL relation: payment.provider
+payment      / payment.icon             / sequence (integer)            : DEL
+payment      / payment.method           / image (binary)                : NEW required, attachment: True
+payment      / payment.method           / image_payment_form (binary)   : NEW attachment: True, isrelated: related, stored
+payment      / payment.method           / name (char)                   : NEW required
+payment      / payment.method           / provider_ids (many2many)      : NEW relation: payment.provider
+payment      / payment.method           / sequence (integer)            : NEW hasdefault: default
+# DONE: pre-migration: rename model and table
+
+payment      / payment.method           / active (boolean)              : NEW hasdefault: default
+payment      / payment.method           / brand_ids (one2many)          : NEW relation: payment.method
+payment      / payment.method           / code (char)                   : NEW required
+payment      / payment.method           / primary_payment_method_id (many2one): NEW relation: payment.method
+payment      / payment.method           / support_express_checkout (boolean): NEW
+payment      / payment.method           / support_refund (selection)    : NEW selection_keys: ['full_only', 'partial']
+payment      / payment.method           / support_tokenization (boolean): NEW
+payment      / payment.method           / supported_country_ids (many2many): NEW relation: res.country
+payment      / payment.method           / supported_currency_ids (many2many): NEW relation: res.currency
+# NOTHING TO DO: new fields created by ORM
+
+payment      / payment.provider         / payment_icon_ids (many2many)  : DEL relation: payment.icon
+payment      / payment.provider         / payment_method_ids (many2many): NEW relation: payment.method
+# DONE: post-migration: recreate all payment methods on providers (from noupdate_changes.xml)
+
+payment      / payment.provider         / available_currency_ids (many2many): NEW relation: res.currency, hasdefault: compute
+# NOTHING TO DO: handled by ORM
+
+payment      / payment.provider         / display_as (char)             : DEL
+payment      / payment.provider         / fees_active (boolean)         : DEL
+payment      / payment.provider         / fees_dom_fixed (float)        : DEL
+payment      / payment.provider         / fees_dom_var (float)          : DEL
+payment      / payment.provider         / fees_int_fixed (float)        : DEL
+payment      / payment.provider         / fees_int_var (float)          : DEL
+# NOTHING TO DO: fields / related function removed
+
+payment      / payment.provider         / support_manual_capture (boolean): selection_keys is now '['full_only', 'partial']' ('False')
+payment      / payment.provider         / support_manual_capture (boolean): type is now 'selection' ('boolean')
+# NOTHING TO DO: computed non stored field
+
+payment      / payment.token            / payment_method_id (many2one)  : NEW relation: payment.method, required
+payment      / payment.transaction      / payment_method_id (many2one)  : NEW relation: payment.method, required
+# DONE: post-migration: filled with unknown payment_method by default if none can be found with existing data
+
+payment      / payment.token            / verified (boolean)            : DEL
+payment      / payment.transaction      / fees (float)                  : DEL
+# NOTHING TO DO: fields / related function removed
+
+payment      / res.company              / payment_provider_onboarding_state (selection): DEL selection_keys: ['done', 'just_done', 'not_done']
+# NOTHING TO DO: if needed this should be done in account module
+
+---XML records in module 'payment'---
+DEL ir.actions.act_window: payment.action_payment_icon
+NEW ir.actions.act_window: payment.action_payment_method
+# DONE: pre-migration: renamed XML-ids
+
+NEW ir.model.access: payment.payment_capture_wizard_user
+NEW ir.model.access: payment.payment_method_employee
+NEW ir.model.access: payment.payment_method_portal
+NEW ir.model.access: payment.payment_method_public
+NEW ir.model.access: payment.payment_method_system
+NEW ir.model.access: payment.payment_token_employee
+NEW ir.model.access: payment.payment_token_public
+DEL ir.model.access: payment.payment_icon_all
+DEL ir.model.access: payment.payment_icon_system
+DEL ir.model.access: payment.payment_token_all
+DEL ir.model.access: payment.payment_token_user
+DEL ir.model.access: payment.payment_transaction_all
+DEL ir.model.access: payment.payment_transaction_user [renamed to account_payment module]
+# NOTHING TO DO: access rules will be replaced by ORM
+
+NEW ir.rule: payment.payment_capture_wizard_rule (noupdate)
+# NOTHING TO DO: should be done in account_payment migration script
+
+DEL ir.rule: payment.payment_transaction_user_rule (noupdate)
+# DONE: post-migration: safe delete
+
+NEW ir.ui.view: payment.company_mismatch_warning
+NEW ir.ui.view: payment.form
+NEW ir.ui.view: payment.form_icon
+NEW ir.ui.view: payment.form_logo
+NEW ir.ui.view: payment.method_form
+NEW ir.ui.view: payment.payment_capture_wizard_view_form
+NEW ir.ui.view: payment.payment_method_form
+NEW ir.ui.view: payment.payment_method_kanban
+NEW ir.ui.view: payment.payment_method_search
+NEW ir.ui.view: payment.payment_method_tree
+NEW ir.ui.view: payment.portal_my_home_payment
+NEW ir.ui.view: payment.submit_button
+NEW ir.ui.view: payment.summary_item
+NEW ir.ui.view: payment.token_form
+# NOTHING TO DO: new views
+
+DEL ir.ui.view: payment.checkout
+DEL ir.ui.view: payment.footer
+DEL ir.ui.view: payment.icon_list
+DEL ir.ui.view: payment.manage
+DEL ir.ui.view: payment.payment_icon_form
+DEL ir.ui.view: payment.payment_icon_tree
+DEL ir.ui.view: payment.verified_token_checkmark
+# NOTHING TO DO: removed views
+
+NEW onboarding.onboarding.step: payment.onboarding_onboarding_step_payment_provider (noupdate)
+# NOTHING TO DO: onboarding step added, to be taken into account in account module if needed
+
+DEL payment.icon: payment.payment_icon_airtel_money
+DEL payment.icon: payment.payment_icon_apple_pay
+DEL payment.icon: payment.payment_icon_bbva_bancomer
+DEL payment.icon: payment.payment_icon_cc_western_union
+DEL payment.icon: payment.payment_icon_cc_webmoney
+DEL payment.icon: payment.payment_icon_sadad
+DEL payment.icon: payment.payment_icon_citibanamex
+# NOTHING TO DO: payment methods removed with PR 120446 or 140907 without replacement
+
+DEL payment.icon: payment.payment_icon_barter_by_flutterwave
+NEW payment.method: payment.payment_method_ussd (noupdate)
+DEL payment.icon: payment.payment_icon_cc_american_express
+NEW payment.method: payment.payment_method_amex (noupdate)
+DEL payment.icon: payment.payment_icon_cc_bancontact
+NEW payment.method: payment.payment_method_bancontact (noupdate)
+DEL payment.icon: payment.payment_icon_cc_cirrus
+NEW payment.method: payment.payment_method_cirrus (noupdate)
+DEL payment.icon: payment.payment_icon_cc_codensa_easy_credit
+NEW payment.method: payment.payment_method_codensa (noupdate)
+DEL payment.icon: payment.payment_icon_cc_diners_club_intl
+NEW payment.method: payment.payment_method_diners (noupdate)
+DEL payment.icon: payment.payment_icon_cc_discover
+NEW payment.method: payment.payment_method_discover (noupdate)
+DEL payment.icon: payment.payment_icon_cc_eps
+NEW payment.method: payment.payment_method_eps (noupdate)
+DEL payment.icon: payment.payment_icon_cc_giropay
+NEW payment.method: payment.payment_method_giropay (noupdate)
+DEL payment.icon: payment.payment_icon_cc_ideal
+NEW payment.method: payment.payment_method_ideal (noupdate)
+DEL payment.icon: payment.payment_icon_cc_jcb
+NEW payment.method: payment.payment_method_jcb (noupdate)
+DEL payment.icon: payment.payment_icon_cc_maestro
+NEW payment.method: payment.payment_method_maestro (noupdate)
+DEL payment.icon: payment.payment_icon_cc_mastercard
+NEW payment.method: payment.payment_method_mastercard (noupdate)
+DEL payment.icon: payment.payment_icon_cc_p24
+NEW payment.method: payment.payment_method_p24 (noupdate)
+DEL payment.icon: payment.payment_icon_cc_rupay
+NEW payment.method: payment.payment_method_rupay (noupdate)
+DEL payment.icon: payment.payment_icon_cc_unionpay
+NEW payment.method: payment.payment_method_unionpay (noupdate)
+DEL payment.icon: payment.payment_icon_cc_visa
+NEW payment.method: payment.payment_method_visa (noupdate)
+DEL payment.icon: payment.payment_icon_kbc
+NEW payment.method: payment.payment_method_kbc_cbc (noupdate)
+DEL payment.icon: payment.payment_icon_mada
+NEW payment.method: payment.payment_method_mada (noupdate)
+DEL payment.icon: payment.payment_icon_mpesa
+NEW payment.method: payment.payment_method_mpesa (noupdate)
+DEL payment.icon: payment.payment_icon_mtn_mobile_money
+NEW payment.method: payment.payment_method_mobile_money (noupdate)
+DEL payment.icon: payment.payment_icon_paypal
+NEW payment.method: payment.payment_method_paypal (noupdate)
+DEL payment.icon: payment.payment_icon_sepa
+NEW payment.method: payment.payment_method_sepa_direct_debit (noupdate)
+# DONE: pre-migration: rename payment methods and switch noupdate to True
+# DONE: post-migration: update missing data on payment methods (from noupdate_changes.xml)
+
+NEW payment.method: payment.payment_method_7eleven (noupdate)
+NEW payment.method: payment.payment_method_ach_direct_debit (noupdate)
+NEW payment.method: payment.payment_method_affirm (noupdate)
+NEW payment.method: payment.payment_method_afterpay (noupdate)
+NEW payment.method: payment.payment_method_afterpay_riverty (noupdate)
+NEW payment.method: payment.payment_method_akulaku (noupdate)
+NEW payment.method: payment.payment_method_alipay (noupdate)
+NEW payment.method: payment.payment_method_alipay_hk (noupdate)
+NEW payment.method: payment.payment_method_alma (noupdate)
+NEW payment.method: payment.payment_method_amazon_pay (noupdate)
+NEW payment.method: payment.payment_method_argencard (noupdate)
+NEW payment.method: payment.payment_method_atome (noupdate)
+NEW payment.method: payment.payment_method_axis (noupdate)
+NEW payment.method: payment.payment_method_bacs_direct_debit (noupdate)
+NEW payment.method: payment.payment_method_bancnet (noupdate)
+NEW payment.method: payment.payment_method_banco_de_bogota (noupdate)
+NEW payment.method: payment.payment_method_bancolombia (noupdate)
+NEW payment.method: payment.payment_method_bancomat_pay (noupdate)
+NEW payment.method: payment.payment_method_bangkok_bank (noupdate)
+NEW payment.method: payment.payment_method_bank_account (noupdate)
+NEW payment.method: payment.payment_method_bank_bca (noupdate)
+NEW payment.method: payment.payment_method_bank_of_ayudhya (noupdate)
+NEW payment.method: payment.payment_method_bank_permata (noupdate)
+NEW payment.method: payment.payment_method_bank_reference (noupdate)
+NEW payment.method: payment.payment_method_bank_transfer (noupdate)
+NEW payment.method: payment.payment_method_becs_direct_debit (noupdate)
+NEW payment.method: payment.payment_method_belfius (noupdate)
+NEW payment.method: payment.payment_method_benefit (noupdate)
+NEW payment.method: payment.payment_method_bharatqr (noupdate)
+NEW payment.method: payment.payment_method_billease (noupdate)
+NEW payment.method: payment.payment_method_billink (noupdate)
+NEW payment.method: payment.payment_method_bizum (noupdate)
+NEW payment.method: payment.payment_method_blik (noupdate)
+NEW payment.method: payment.payment_method_bni (noupdate)
+NEW payment.method: payment.payment_method_boleto (noupdate)
+NEW payment.method: payment.payment_method_boost (noupdate)
+NEW payment.method: payment.payment_method_bpi (noupdate)
+NEW payment.method: payment.payment_method_brankas (noupdate)
+NEW payment.method: payment.payment_method_bri (noupdate)
+NEW payment.method: payment.payment_method_bsi (noupdate)
+NEW payment.method: payment.payment_method_cabal (noupdate)
+NEW payment.method: payment.payment_method_caixa (noupdate)
+NEW payment.method: payment.payment_method_card (noupdate)
+NEW payment.method: payment.payment_method_carnet (noupdate)
+NEW payment.method: payment.payment_method_cartes_bancaires (noupdate)
+NEW payment.method: payment.payment_method_cash_app_pay (noupdate)
+NEW payment.method: payment.payment_method_cashalo (noupdate)
+NEW payment.method: payment.payment_method_cebuana (noupdate)
+NEW payment.method: payment.payment_method_cencosud (noupdate)
+NEW payment.method: payment.payment_method_cimb_niaga (noupdate)
+NEW payment.method: payment.payment_method_clearpay (noupdate)
+NEW payment.method: payment.payment_method_cmr (noupdate)
+NEW payment.method: payment.payment_method_cofidis (noupdate)
+NEW payment.method: payment.payment_method_cordial (noupdate)
+NEW payment.method: payment.payment_method_cordobesa (noupdate)
+NEW payment.method: payment.payment_method_credit (noupdate)
+NEW payment.method: payment.payment_method_dana (noupdate)
+NEW payment.method: payment.payment_method_dankort (noupdate)
+NEW payment.method: payment.payment_method_davivienda (noupdate)
+NEW payment.method: payment.payment_method_dolfin (noupdate)
+NEW payment.method: payment.payment_method_duitnow (noupdate)
+NEW payment.method: payment.payment_method_elo (noupdate)
+NEW payment.method: payment.payment_method_emi (noupdate)
+NEW payment.method: payment.payment_method_enets (noupdate)
+NEW payment.method: payment.payment_method_floa_bank (noupdate)
+NEW payment.method: payment.payment_method_fps (noupdate)
+NEW payment.method: payment.payment_method_fpx (noupdate)
+NEW payment.method: payment.payment_method_frafinance (noupdate)
+NEW payment.method: payment.payment_method_gcash (noupdate)
+NEW payment.method: payment.payment_method_gopay (noupdate)
+NEW payment.method: payment.payment_method_grabpay (noupdate)
+NEW payment.method: payment.payment_method_gsb (noupdate)
+NEW payment.method: payment.payment_method_hd (noupdate)
+NEW payment.method: payment.payment_method_hipercard (noupdate)
+NEW payment.method: payment.payment_method_hoolah (noupdate)
+NEW payment.method: payment.payment_method_humm (noupdate)
+NEW payment.method: payment.payment_method_in3 (noupdate)
+NEW payment.method: payment.payment_method_jeniuspay (noupdate)
+NEW payment.method: payment.payment_method_jkopay (noupdate)
+NEW payment.method: payment.payment_method_kakaopay (noupdate)
+NEW payment.method: payment.payment_method_kasikorn_bank (noupdate)
+NEW payment.method: payment.payment_method_klarna (noupdate)
+NEW payment.method: payment.payment_method_klarna_pay_over_time (noupdate)
+NEW payment.method: payment.payment_method_klarna_paynow (noupdate)
+NEW payment.method: payment.payment_method_knet (noupdate)
+NEW payment.method: payment.payment_method_kredivo (noupdate)
+NEW payment.method: payment.payment_method_krungthai_bank (noupdate)
+NEW payment.method: payment.payment_method_lider (noupdate)
+NEW payment.method: payment.payment_method_linepay (noupdate)
+NEW payment.method: payment.payment_method_linkaja (noupdate)
+NEW payment.method: payment.payment_method_lydia (noupdate)
+NEW payment.method: payment.payment_method_lyfpay (noupdate)
+NEW payment.method: payment.payment_method_magna (noupdate)
+NEW payment.method: payment.payment_method_mandiri (noupdate)
+NEW payment.method: payment.payment_method_maya (noupdate)
+NEW payment.method: payment.payment_method_maybank (noupdate)
+NEW payment.method: payment.payment_method_mbway (noupdate)
+NEW payment.method: payment.payment_method_meeza (noupdate)
+NEW payment.method: payment.payment_method_mercado_livre (noupdate)
+NEW payment.method: payment.payment_method_mobile_pay (noupdate)
+NEW payment.method: payment.payment_method_momo (noupdate)
+NEW payment.method: payment.payment_method_multibanco (noupdate)
+NEW payment.method: payment.payment_method_mybank (noupdate)
+NEW payment.method: payment.payment_method_napas_card (noupdate)
+NEW payment.method: payment.payment_method_naps (noupdate)
+NEW payment.method: payment.payment_method_naranja (noupdate)
+NEW payment.method: payment.payment_method_nativa (noupdate)
+NEW payment.method: payment.payment_method_naver_pay (noupdate)
+NEW payment.method: payment.payment_method_netbanking (noupdate)
+NEW payment.method: payment.payment_method_oca (noupdate)
+NEW payment.method: payment.payment_method_octopus (noupdate)
+NEW payment.method: payment.payment_method_omannet (noupdate)
+NEW payment.method: payment.payment_method_online_banking_czech_republic (noupdate)
+NEW payment.method: payment.payment_method_online_banking_india (noupdate)
+NEW payment.method: payment.payment_method_online_banking_slovakia (noupdate)
+NEW payment.method: payment.payment_method_online_banking_thailand (noupdate)
+NEW payment.method: payment.payment_method_open_banking (noupdate)
+NEW payment.method: payment.payment_method_ovo (noupdate)
+NEW payment.method: payment.payment_method_pace (noupdate)
+NEW payment.method: payment.payment_method_pay_easy (noupdate)
+NEW payment.method: payment.payment_method_pay_id (noupdate)
+NEW payment.method: payment.payment_method_paybright (noupdate)
+NEW payment.method: payment.payment_method_paylib (noupdate)
+NEW payment.method: payment.payment_method_payme (noupdate)
+NEW payment.method: payment.payment_method_paynow (noupdate)
+NEW payment.method: payment.payment_method_paypal (noupdate)
+NEW payment.method: payment.payment_method_paypay (noupdate)
+NEW payment.method: payment.payment_method_paysafecard (noupdate)
+NEW payment.method: payment.payment_method_paytm (noupdate)
+NEW payment.method: payment.payment_method_paytrail (noupdate)
+NEW payment.method: payment.payment_method_payu (noupdate)
+NEW payment.method: payment.payment_method_pix (noupdate)
+NEW payment.method: payment.payment_method_poli (noupdate)
+NEW payment.method: payment.payment_method_poste_pay (noupdate)
+NEW payment.method: payment.payment_method_pps (noupdate)
+NEW payment.method: payment.payment_method_presto (noupdate)
+NEW payment.method: payment.payment_method_promptpay (noupdate)
+NEW payment.method: payment.payment_method_pse (noupdate)
+NEW payment.method: payment.payment_method_qris (noupdate)
+NEW payment.method: payment.payment_method_rabbit_line_pay (noupdate)
+NEW payment.method: payment.payment_method_ratepay (noupdate)
+NEW payment.method: payment.payment_method_revolut_pay (noupdate)
+NEW payment.method: payment.payment_method_samsung_pay (noupdate)
+NEW payment.method: payment.payment_method_scb (noupdate)
+NEW payment.method: payment.payment_method_shopback (noupdate)
+NEW payment.method: payment.payment_method_shopeepay (noupdate)
+NEW payment.method: payment.payment_method_shopping (noupdate)
+NEW payment.method: payment.payment_method_sofort (noupdate)
+NEW payment.method: payment.payment_method_swish (noupdate)
+NEW payment.method: payment.payment_method_tarjeta_mercadopago (noupdate)
+NEW payment.method: payment.payment_method_techcom (noupdate)
+NEW payment.method: payment.payment_method_tendopay (noupdate)
+NEW payment.method: payment.payment_method_tenpay (noupdate)
+NEW payment.method: payment.payment_method_tienphong (noupdate)
+NEW payment.method: payment.payment_method_tinka (noupdate)
+NEW payment.method: payment.payment_method_tmb (noupdate)
+NEW payment.method: payment.payment_method_toss_pay (noupdate)
+NEW payment.method: payment.payment_method_touch_n_go (noupdate)
+NEW payment.method: payment.payment_method_truemoney (noupdate)
+NEW payment.method: payment.payment_method_trustly (noupdate)
+NEW payment.method: payment.payment_method_ttb (noupdate)
+NEW payment.method: payment.payment_method_twint (noupdate)
+NEW payment.method: payment.payment_method_uatp (noupdate)
+NEW payment.method: payment.payment_method_unknown (noupdate)
+NEW payment.method: payment.payment_method_uob (noupdate)
+NEW payment.method: payment.payment_method_upi (noupdate)
+NEW payment.method: payment.payment_method_venmo (noupdate)
+NEW payment.method: payment.payment_method_vietcom (noupdate)
+NEW payment.method: payment.payment_method_vipps (noupdate)
+NEW payment.method: payment.payment_method_vpay (noupdate)
+NEW payment.method: payment.payment_method_wallets_india (noupdate)
+NEW payment.method: payment.payment_method_walley (noupdate)
+NEW payment.method: payment.payment_method_wechat_pay (noupdate)
+NEW payment.method: payment.payment_method_welend (noupdate)
+NEW payment.method: payment.payment_method_zalopay (noupdate)
+NEW payment.method: payment.payment_method_zip (noupdate)
+NEW payment.provider: payment.payment_provider_xendit (noupdate)
+# NOTHING TO DO: new payment methods / provider
