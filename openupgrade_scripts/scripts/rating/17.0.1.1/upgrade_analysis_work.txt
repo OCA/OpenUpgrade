@@ -1,0 +1,23 @@
+---Models in module 'rating'---
+---Fields in module 'rating'---
+rating       / account.analytic.account / rating_ids (one2many)         : NEW relation: rating.rating
+rating       / calendar.event           / rating_ids (one2many)         : NEW relation: rating.rating
+rating       / discuss.channel          / rating_ids (one2many)         : NEW relation: rating.rating
+rating       / fleet.vehicle            / rating_ids (one2many)         : NEW relation: rating.rating
+rating       / fleet.vehicle.log.contract / rating_ids (one2many)         : NEW relation: rating.rating
+rating       / fleet.vehicle.log.services / rating_ids (one2many)         : NEW relation: rating.rating
+rating       / gamification.badge       / rating_ids (one2many)         : NEW relation: rating.rating
+rating       / gamification.challenge   / rating_ids (one2many)         : NEW relation: rating.rating
+rating       / lunch.supplier           / rating_ids (one2many)         : NEW relation: rating.rating
+rating       / mail.blacklist           / rating_ids (one2many)         : NEW relation: rating.rating
+rating       / maintenance.equipment    / rating_ids (one2many)         : NEW relation: rating.rating
+rating       / maintenance.equipment.category / rating_ids (one2many)         : NEW relation: rating.rating
+rating       / maintenance.request      / rating_ids (one2many)         : NEW relation: rating.rating
+rating       / phone.blacklist          / rating_ids (one2many)         : NEW relation: rating.rating
+rating       / product.pricelist        / rating_ids (one2many)         : NEW relation: rating.rating
+rating       / product.product          / rating_ids (one2many)         : previously in module website_sale
+rating       / product.template         / rating_ids (one2many)         : previously in module website_sale
+rating       / res.partner              / rating_ids (one2many)         : NEW relation: rating.rating
+# NOTHING TO DO: new features
+
+---XML records in module 'rating'---
