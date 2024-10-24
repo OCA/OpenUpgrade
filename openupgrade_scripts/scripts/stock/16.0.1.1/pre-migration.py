@@ -127,6 +127,74 @@ def _handle_stock_picking_backorder_strategy(env):
         )
 
 
+def _prefill_stock_move_quantity_done(env):
+    """It's going to be an stored field now. Let's try to speed up the field
+    computation so it performs better in larga stock_move tables"""
+    if not openupgrade.column_exists(env.cr, "stock_move", "quantity_done"):
+        openupgrade.add_fields(
+            env,
+            [
+                (
+                    "quantity_done",
+                    "stock.move",
+                    "stock_move",
+                    "float",
+                    False,
+                    "stock",
+                )
+            ],
+        )
+    # For moves with lines with different units of measure we rather pass them through
+    # the ORM in post-migration, although this will deal with the vast majority of
+    # moves.
+    openupgrade.logged_query(
+        env.cr,
+        """
+        WITH
+        precision_cte AS (
+            SELECT digits FROM decimal_precision
+            WHERE name = 'Product Unit of Measure' LIMIT 1
+        ),
+        consistent_moves AS (
+            SELECT
+                move_id
+            FROM
+                stock_move_line
+            GROUP BY
+                move_id
+            HAVING
+                COUNT(DISTINCT product_uom_id) = 1 AND
+                SUM(qty_done) <> 0
+        ),
+        move_quantities AS (
+            SELECT
+                sm.id AS move_id,
+                -- Round the values to the current decimal precision in case it changed
+                -- in the past
+                SUM(
+                    ROUND(sml.qty_done, (SELECT digits FROM precision_cte))
+                ) AS total_quantity_done
+            FROM
+                stock_move sm
+            JOIN
+                stock_move_line sml ON sm.id = sml.move_id
+            WHERE
+                sm.id IN (SELECT move_id FROM consistent_moves)
+            GROUP BY
+                sm.id
+        )
+        UPDATE
+            stock_move
+        SET
+            quantity_done = mq.total_quantity_done
+        FROM
+            move_quantities mq
+        WHERE
+            stock_move.id = mq.move_id;
+    """,
+    )
+
+
 @openupgrade.migrate()
 def migrate(env, version):
     openupgrade.rename_tables(env.cr, _tables_renames)
@@ -138,3 +206,4 @@ def migrate(env, version):
     _update_sol_product_category_name(env)
     _compute_stock_location_replenish_location(env)
     _handle_stock_picking_backorder_strategy(env)
+    _prefill_stock_move_quantity_done(env)
