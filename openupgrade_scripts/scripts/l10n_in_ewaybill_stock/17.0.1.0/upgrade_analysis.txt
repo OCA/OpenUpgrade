@@ -22,7 +22,7 @@ l10n_in_ewaybill_stock / l10n.in.ewaybill         / partner_ship_from_id (many2o
 l10n_in_ewaybill_stock / l10n.in.ewaybill         / partner_ship_to_id (many2one) : NEW relation: res.partner, hasdefault: compute
 l10n_in_ewaybill_stock / l10n.in.ewaybill         / picking_id (many2one)         : NEW relation: stock.picking
 l10n_in_ewaybill_stock / l10n.in.ewaybill         / rating_ids (one2many)         : NEW relation: rating.rating
-l10n_in_ewaybill_stock / l10n.in.ewaybill         / state (selection)             : NEW required, selection_keys: ['cancel', 'generated', 'pending']
+l10n_in_ewaybill_stock / l10n.in.ewaybill         / state (selection)             : NEW required, selection_keys: ['cancel', 'challan', 'generated', 'pending']
 l10n_in_ewaybill_stock / l10n.in.ewaybill         / transportation_doc_date (date): NEW
 l10n_in_ewaybill_stock / l10n.in.ewaybill         / transportation_doc_no (char)  : NEW
 l10n_in_ewaybill_stock / l10n.in.ewaybill         / transporter_id (many2one)     : NEW relation: res.partner
@@ -31,8 +31,8 @@ l10n_in_ewaybill_stock / l10n.in.ewaybill         / type_id (many2one)          
 l10n_in_ewaybill_stock / l10n.in.ewaybill         / vehicle_no (char)             : NEW
 l10n_in_ewaybill_stock / l10n.in.ewaybill         / vehicle_type (selection)      : NEW selection_keys: ['O', 'R'], hasdefault: compute
 l10n_in_ewaybill_stock / l10n.in.ewaybill         / website_message_ids (one2many): NEW relation: mail.message
-l10n_in_ewaybill_stock / stock.move               / ewaybill_price_unit (float)   : NEW isfunction: function, stored
-l10n_in_ewaybill_stock / stock.move               / ewaybill_tax_ids (many2many)  : NEW relation: account.tax, isfunction: function, stored
+l10n_in_ewaybill_stock / stock.move               / ewaybill_price_unit (float)   : NEW hasdefault: compute
+l10n_in_ewaybill_stock / stock.move               / ewaybill_tax_ids (many2many)  : NEW relation: account.tax, hasdefault: compute
 l10n_in_ewaybill_stock / stock.picking            / l10n_in_ewaybill_id (one2many): NEW relation: l10n.in.ewaybill
 ---XML records in module 'l10n_in_ewaybill_stock'---
 NEW ir.actions.act_window: l10n_in_ewaybill_stock.l10n_in_ewaybill_form_action

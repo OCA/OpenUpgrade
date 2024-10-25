@@ -9,9 +9,6 @@ calendar     / calendar.recurrence      / trigger_id (many2one)         : NEW re
 NEW ir.actions.act_window: calendar.action_view_start_calendar_sync
 NEW ir.actions.act_window: calendar.calendar_settings_action
 NEW ir.model.access: calendar.access_calendar_attendee_employee_delete_wizard
-DEL ir.model.constraint: calendar.constraint_calendar_event_type_name_uniq
-DEL ir.model.constraint: calendar.constraint_calendar_filters_user_id_partner_id_unique
-DEL ir.model.constraint: calendar.constraint_calendar_recurrence_month_day
 NEW ir.ui.menu: calendar.calendar_event_menu
 NEW ir.ui.menu: calendar.menu_calendar_settings
 NEW ir.ui.view: calendar.calendar_popover_delete_view

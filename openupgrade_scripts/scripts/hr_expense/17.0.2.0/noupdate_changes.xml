@@ -54,4 +54,7 @@
       </table>
     </div>
   </template>
+  <record id="ir_rule_hr_expense_employee" model="ir.rule">
+    <field name="domain_force">[('employee_id.user_id', '=', user.id)]</field>
+  </record>
 </odoo>

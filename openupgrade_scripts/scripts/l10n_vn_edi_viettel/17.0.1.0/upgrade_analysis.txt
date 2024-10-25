@@ -1,0 +1,50 @@
+---Models in module 'l10n_vn_edi_viettel'---
+new model l10n_vn_edi_viettel.cancellation [transient]
+new model l10n_vn_edi_viettel.sinvoice.symbol
+new model l10n_vn_edi_viettel.sinvoice.template
+---Fields in module 'l10n_vn_edi_viettel'---
+l10n_vn_edi_viettel / account.move             / l10n_vn_edi_adjustment_type (selection): NEW selection_keys: ['1', '2']
+l10n_vn_edi_viettel / account.move             / l10n_vn_edi_agreement_document_date (datetime): NEW
+l10n_vn_edi_viettel / account.move             / l10n_vn_edi_agreement_document_name (char): NEW
+l10n_vn_edi_viettel / account.move             / l10n_vn_edi_invoice_number (char): NEW
+l10n_vn_edi_viettel / account.move             / l10n_vn_edi_invoice_state (selection): NEW selection_keys: ['adjusted', 'canceled', 'payment_state_to_update', 'ready_to_send', 'replaced', 'sent'], hasdefault: compute
+l10n_vn_edi_viettel / account.move             / l10n_vn_edi_invoice_symbol (many2one): NEW relation: l10n_vn_edi_viettel.sinvoice.symbol, hasdefault: compute
+l10n_vn_edi_viettel / account.move             / l10n_vn_edi_invoice_transaction_id (char): NEW
+l10n_vn_edi_viettel / account.move             / l10n_vn_edi_issue_date (datetime): NEW
+l10n_vn_edi_viettel / account.move             / l10n_vn_edi_replacement_origin_id (many2one): NEW relation: account.move
+l10n_vn_edi_viettel / account.move             / l10n_vn_edi_reservation_code (char): NEW
+l10n_vn_edi_viettel / account.move             / l10n_vn_edi_sinvoice_file (binary): NEW attachment: True
+l10n_vn_edi_viettel / account.move             / l10n_vn_edi_sinvoice_pdf_file (binary): NEW attachment: True
+l10n_vn_edi_viettel / account.move             / l10n_vn_edi_sinvoice_xml_file (binary): NEW attachment: True
+l10n_vn_edi_viettel / l10n_vn_edi_viettel.sinvoice.symbol / invoice_template_id (many2one): NEW relation: l10n_vn_edi_viettel.sinvoice.template, required
+l10n_vn_edi_viettel / l10n_vn_edi_viettel.sinvoice.symbol / name (char)                   : NEW required
+l10n_vn_edi_viettel / l10n_vn_edi_viettel.sinvoice.template / invoice_symbols_ids (one2many): NEW relation: l10n_vn_edi_viettel.sinvoice.symbol
+l10n_vn_edi_viettel / l10n_vn_edi_viettel.sinvoice.template / name (char)                   : NEW required
+l10n_vn_edi_viettel / l10n_vn_edi_viettel.sinvoice.template / template_invoice_type (selection): NEW required, selection_keys: ['1', '2', '3', '4', '5', '6']
+l10n_vn_edi_viettel / res.company              / l10n_vn_edi_password (char)   : NEW
+l10n_vn_edi_viettel / res.company              / l10n_vn_edi_token (char)      : NEW
+l10n_vn_edi_viettel / res.company              / l10n_vn_edi_token_expiry (datetime): NEW
+l10n_vn_edi_viettel / res.company              / l10n_vn_edi_username (char)   : NEW
+l10n_vn_edi_viettel / res.partner              / l10n_vn_edi_symbol (many2one) : NEW relation: l10n_vn_edi_viettel.sinvoice.symbol
+---XML records in module 'l10n_vn_edi_viettel'---
+NEW ir.actions.act_window: l10n_vn_edi_viettel.action_sinvoice_symbol
+NEW ir.actions.act_window: l10n_vn_edi_viettel.action_sinvoice_template
+NEW ir.actions.server: l10n_vn_edi_viettel.l10n_vn_edi_send_invoice_payment_status
+NEW ir.model.access: l10n_vn_edi_viettel.access_l10n_vn_edi_viettel_cancellation
+NEW ir.model.access: l10n_vn_edi_viettel.access_l10n_vn_edi_viettel_sinvoice_symbol
+NEW ir.model.access: l10n_vn_edi_viettel.access_l10n_vn_edi_viettel_sinvoice_symbol_manager
+NEW ir.model.access: l10n_vn_edi_viettel.access_l10n_vn_edi_viettel_sinvoice_template
+NEW ir.model.access: l10n_vn_edi_viettel.access_l10n_vn_edi_viettel_sinvoice_template_manager
+NEW ir.model.constraint: l10n_vn_edi_viettel.constraint_l10n_vn_edi_viettel_sinvoice_symbol_name_template_uniq
+NEW ir.model.constraint: l10n_vn_edi_viettel.constraint_l10n_vn_edi_viettel_sinvoice_template_name_uniq
+NEW ir.ui.menu: l10n_vn_edi_viettel.l10n_vn_edi_sinvoice_menu
+NEW ir.ui.menu: l10n_vn_edi_viettel.l10n_vn_edi_sinvoice_symbols
+NEW ir.ui.menu: l10n_vn_edi_viettel.l10n_vn_edi_sinvoice_templates
+NEW ir.ui.view: l10n_vn_edi_viettel.account_move_send_inherit_l10n_vn_edi
+NEW ir.ui.view: l10n_vn_edi_viettel.l10n_vn_edi_cancellation_form
+NEW ir.ui.view: l10n_vn_edi_viettel.res_config_settings_view_form_inherit_l10n_vn_edi
+NEW ir.ui.view: l10n_vn_edi_viettel.res_partner_view_from_inherit_l10n_vn_edi
+NEW ir.ui.view: l10n_vn_edi_viettel.view_account_invoice_filter_inherit_l10n_vn_edi
+NEW ir.ui.view: l10n_vn_edi_viettel.view_account_move_reversal_inherit_l10n_vn_edi
+NEW ir.ui.view: l10n_vn_edi_viettel.view_invoice_form_inherit_l10n_vn_edi
+NEW ir.ui.view: l10n_vn_edi_viettel.view_invoice_tree_inherit_l10n_vn_edi

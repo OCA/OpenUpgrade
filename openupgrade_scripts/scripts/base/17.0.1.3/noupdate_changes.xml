@@ -13,6 +13,7 @@
     <field name="vat_label">GST/HST number</field>
   </record>
   <record id="ec" model="res.country">
+    <field name="address_format" eval="'%(street)s\n%(street2)s\n%(city)s\n%(country_name)s'"/>
     <field name="zip_required">0</field>
   </record>
   <!-- <record id="es" model="res.country">

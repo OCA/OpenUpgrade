@@ -1,0 +1,34 @@
+---Models in module 'l10n_ro_efactura'---
+new model l10n_ro_edi.document
+---Fields in module 'l10n_ro_efactura'---
+l10n_ro_efactura / account.move             / l10n_ro_edi_attachment_id (many2one): NEW relation: ir.attachment
+l10n_ro_efactura / account.move             / l10n_ro_edi_document_ids (one2many): NEW relation: l10n_ro_edi.document
+l10n_ro_efactura / account.move             / l10n_ro_edi_state (selection) : NEW selection_keys: ['invoice_sending', 'invoice_sent'], isfunction: function, stored
+l10n_ro_efactura / l10n_ro_edi.document     / attachment_id (many2one)      : NEW relation: ir.attachment
+l10n_ro_efactura / l10n_ro_edi.document     / datetime (datetime)           : NEW required, hasdefault: default
+l10n_ro_efactura / l10n_ro_edi.document     / invoice_id (many2one)         : NEW relation: account.move, required
+l10n_ro_efactura / l10n_ro_edi.document     / key_certificate (char)        : NEW
+l10n_ro_efactura / l10n_ro_edi.document     / key_loading (char)            : NEW
+l10n_ro_efactura / l10n_ro_edi.document     / key_signature (char)          : NEW
+l10n_ro_efactura / l10n_ro_edi.document     / message (char)                : NEW
+l10n_ro_efactura / l10n_ro_edi.document     / state (selection)             : NEW required, selection_keys: ['invoice_sending', 'invoice_sending_failed', 'invoice_sent']
+l10n_ro_efactura / res.company              / l10n_ro_edi_access_expiry_date (date): NEW
+l10n_ro_efactura / res.company              / l10n_ro_edi_access_token (char): NEW
+l10n_ro_efactura / res.company              / l10n_ro_edi_client_id (char)  : NEW
+l10n_ro_efactura / res.company              / l10n_ro_edi_client_secret (char): NEW
+l10n_ro_efactura / res.company              / l10n_ro_edi_oauth_error (char): NEW
+l10n_ro_efactura / res.company              / l10n_ro_edi_refresh_expiry_date (date): NEW
+l10n_ro_efactura / res.company              / l10n_ro_edi_refresh_token (char): NEW
+l10n_ro_efactura / res.company              / l10n_ro_edi_test_env (boolean): NEW hasdefault: default
+---XML records in module 'l10n_ro_efactura'---
+NEW ir.actions.server: l10n_ro_efactura.l10n_ro_edi_action_fetch_ciusro_status
+NEW ir.cron: l10n_ro_efactura.ir_cron_l10n_ro_edi_refresh_access_token
+NEW ir.model.access: l10n_ro_efactura.access_l10n_ro_edi_document_group_invoice
+NEW ir.model.access: l10n_ro_efactura.access_l10n_ro_edi_document_readonly
+NEW ir.ui.view: l10n_ro_efactura.account_move_form_inherit_l10n_ro_edi
+NEW ir.ui.view: l10n_ro_efactura.account_move_send_inherit_l10n_ro_edi
+NEW ir.ui.view: l10n_ro_efactura.in_invoice_tree_inherit_l10n_ro_edi
+NEW ir.ui.view: l10n_ro_efactura.l10n_ro_edi_view_account_invoice_filter
+NEW ir.ui.view: l10n_ro_efactura.out_credit_note_tree_inherit_l10n_ro_edi
+NEW ir.ui.view: l10n_ro_efactura.out_invoice_tree_inherit_l10n_ro_edi
+NEW ir.ui.view: l10n_ro_efactura.res_config_settings_form_inherit_l10n_ro_edi

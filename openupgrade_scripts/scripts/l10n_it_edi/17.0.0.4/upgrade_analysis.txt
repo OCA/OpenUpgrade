@@ -29,6 +29,7 @@ l10n_it_edi  / account.tax              / l10n_it_law_reference (char)  : module
 l10n_it_edi  / account.tax              / l10n_it_vat_due_date (selection): DEL selection_keys: ['D', 'I', 'S']
 l10n_it_edi  / account_edi_proxy_client.user / proxy_type (False)            : NEW selection_keys: ['l10n_it_edi', 'peppol'], mode: modify
 ---XML records in module 'l10n_it_edi'---
+NEW account.account.tag: l10n_it_edi.l10n_it_edi_professional_fees_tag
 DEL account.edi.format: l10n_it_edi.edi_fatturaPA
 NEW ir.cron: l10n_it_edi.ir_cron_l10n_it_edi_download_and_update
 DEL ir.cron: l10n_it_edi.ir_cron_receive_fattura_pa_invoice

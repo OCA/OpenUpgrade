@@ -1,0 +1,12 @@
+<?xml version='1.0' encoding='utf-8'?>
+<odoo>
+  <record id="mail.mail_activity_data_todo" model="mail.activity.type">
+    <field name="category">reminder</field>
+  </record>
+  <record id="project.task_visibility_rule" model="ir.rule">
+    <field name="groups" eval="[(4,ref('base.group_user'))]"/>
+    <field name="perm_create" eval="False"/>
+    <field name="perm_unlink" eval="False"/>
+    <field name="perm_write" eval="False"/>
+  </record>
+</odoo>
