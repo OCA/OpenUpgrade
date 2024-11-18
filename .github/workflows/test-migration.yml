@@ -45,6 +45,7 @@ jobs:
       - name: DB Restore
         run: |
           wget -q -O- $DOWNLOADS/17.0.psql | pg_restore -d $DB --no-owner
+          psql $DB -c "UPDATE ir_module_module SET demo=False"
       - name: Check out Odoo
         uses: actions/checkout@v2
         with:
@@ -144,4 +145,5 @@ jobs:
               --test-tags openupgrade \
               --log-handler odoo.models.unlink:WARNING \
               --stop-after-init \
+              --without-demo=$MODULES_NEW \
               --update=$MODULES_NEW
