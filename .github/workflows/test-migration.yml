@@ -91,8 +91,8 @@ jobs:
           pip install asn1crypto
       - name: Test data
         run: |
-          if test -n "$(ls openupgrade/openupgrade_scripts/scripts/*/*/tests/data*.py 2> /dev/null)"; then
-             for snippet in openupgrade/openupgrade_scripts/scripts/*/*/tests/data*.py; do
+          if test -n "$(ls openupgrade/openupgrade_scripts/scripts/*/tests/data*.py 2> /dev/null)"; then
+             for snippet in openupgrade/openupgrade_scripts/scripts/*/tests/data*.py; do
                odoo-old/odoo-bin shell -d $DB < $snippet
              done
           fi
@@ -131,7 +131,7 @@ jobs:
           echo Execution of Openupgrade with the update of the following modules : $MODULES_NEW
           # Silence redundant logs from unlinking records (1 line is enough)
           # to prevent log overflow
-          OPENUPGRADE_TESTS=1 $ODOO \
+          $ODOO \
               --addons-path=`echo $ADDONS_PATHS | awk -v OFS="," '$1=$1'` \
               --database=$DB \
               --db_host=$DB_HOST \
@@ -139,6 +139,8 @@ jobs:
               --db_port=$DB_PORT \
               --db_user=$DB_USERNAME \
               --load=base,web,openupgrade_framework \
+              --test-enable \
+              --test-tags openupgrade \
               --log-handler odoo.models.unlink:WARNING \
               --stop-after-init \
               --update=$MODULES_NEW
