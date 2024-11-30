@@ -91,6 +91,7 @@ jobs:
           pip install -r ./openupgrade/requirements.txt
           # this is for v16 l10n_eg_edi_eta which crashes without it
           pip install asn1crypto
+          pip install coverage
       - name: Test data
         run: |
           if test -n "$(ls openupgrade/openupgrade_scripts/scripts/*/tests/data*.py 2> /dev/null)"; then
@@ -133,6 +134,8 @@ jobs:
           echo Execution of Openupgrade with the update of the following modules : $MODULES_NEW
           # Silence redundant logs from unlinking records (1 line is enough)
           # to prevent log overflow
+          coverage run \
+              --source=$GITHUB_WORKSPACE/openupgrade/openupgrade_scripts/scripts \
           $ODOO \
               --addons-path=`echo $ADDONS_PATHS | awk -v OFS="," '$1=$1'` \
               --database=$DB \
@@ -147,3 +150,9 @@ jobs:
               --stop-after-init \
               --without-demo=$MODULES_NEW \
               --update=$MODULES_NEW
+      - name: Generate coverage.xml
+        run: coverage xml
+      - uses: codecov/codecov-action@v4
+        with:
+          files: coverage.xml
+          token: ${{ secrets.CODECOV_TOKEN }}
