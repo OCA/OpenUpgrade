@@ -335,6 +335,9 @@ def post_statements(env):
         """,
     )
     stmt_ids = list({x[0] for x in env.cr.fetchall()})
+    openupgrade.logger.debug(
+        f"[post_statements] button_post {(len(stmt_ids))} statenments"
+    )
     env["account.bank.statement"].browse(stmt_ids).button_post()
 
 
@@ -418,6 +421,9 @@ def fill_statement_lines_with_no_move(env):
         else:
             stl_dates_by_company[stl_company] = stl_date
     st_lines = env["account.bank.statement.line"].browse(list(stl_dates.keys()))
+    openupgrade.logger.debug(
+        f"[fill_statement_lines_with_no_move] Creando {len(st_lines)} account.move"
+    )
     for st_line in st_lines.with_context(
         check_move_validity=False, tracking_disable=True
     ):
@@ -669,6 +675,9 @@ def fill_account_payment_with_no_move(env):
         else:
             p_dates_by_company[p_company] = p_payment_date
     payments = env["account.payment"].browse(list(p_data.keys()))
+    openupgrade.logger.debug(
+        f"[fill_account_payment_with_no_move] Creando {(len(payments))} account.move"
+    )
     for payment in payments.with_context(
         check_move_validity=False, tracking_disable=True
     ):
@@ -846,14 +855,23 @@ def migrate(env, version):
     openupgrade.load_data(env.cr, "account", "14.0.1.1/noupdate_changes.xml")
     try_delete_noupdate_records(env)
     _create_hooks(env)
+    openupgrade.logger.debug("[START] fill_company_account_journal_suspense_account_id")
     fill_company_account_journal_suspense_account_id(env)
+    openupgrade.logger.debug("[START] fill_statement_lines_with_no_move")
     fill_statement_lines_with_no_move(env)
+    openupgrade.logger.debug("[START] fill_account_journal_payment_credit_debit_account_id")
     fill_account_journal_payment_credit_debit_account_id(env)
+    openupgrade.logger.debug("[START] create_new_counterpart_account_payment_transfer")
     create_new_counterpart_account_payment_transfer(env)
+    openupgrade.logger.debug("[START] map_account_payment_transfer")
     map_account_payment_transfer(env)
+    openupgrade.logger.debug("[START] fill_account_payment_reconciliation")
     fill_account_payment_reconciliation(env)
+    openupgrade.logger.debug("[START] fill_account_payment_with_no_move")
     fill_account_payment_with_no_move(env)
+    openupgrade.logger.debug("[START] fill_account_bank_statement_line_reconciliation")
     fill_account_bank_statement_line_reconciliation(env)
+    openupgrade.logger.debug("[START] post_statements")
     post_statements(env)
     _delete_hooks(env)
     update_payment_state_partial(env)
