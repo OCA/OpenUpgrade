@@ -92,7 +92,7 @@ def create_account_invoice_amount_tax_company_signed(env):
         openupgrade.logged_query(
             env.cr, """
             ALTER TABLE account_invoice
-            ADD COLUMN amount_tax_company_signed numeric"""
+            ADD COLUMN IF NOT EXISTS amount_tax_company_signed numeric"""
         )
         openupgrade.logged_query(
             env.cr, """
@@ -150,7 +150,7 @@ def create_account_move_new_columns(env):
             openupgrade.logged_query(
                 env.cr, """
                 ALTER TABLE {table}
-                ADD COLUMN {column} {column_type}""".format(
+                ADD COLUMN IF NOT EXISTS {column} {column_type}""".format(
                     table=table, column=column, column_type=column_type
                 ),
             )
@@ -161,8 +161,8 @@ def fill_account_move_line(env):
     openupgrade.logged_query(
         env.cr, """
         ALTER TABLE account_move_line
-        ADD COLUMN parent_state varchar,
-        ADD COLUMN account_internal_type varchar""",
+        ADD COLUMN IF NOT EXISTS parent_state varchar,
+        ADD COLUMN IF NOT EXISTS account_internal_type varchar""",
     )
     openupgrade.logged_query(
         env.cr, """
@@ -183,7 +183,7 @@ def create_res_partner_ranks(env):
     openupgrade.logged_query(
         env.cr, """
         ALTER TABLE res_partner
-        ADD COLUMN customer_rank integer
+        ADD COLUMN IF NOT EXISTS customer_rank integer
         DEFAULT 0""",
     )
     openupgrade.logged_query(
@@ -193,7 +193,7 @@ def create_res_partner_ranks(env):
     openupgrade.logged_query(
         env.cr, """
         ALTER TABLE res_partner
-        ADD COLUMN supplier_rank integer
+        ADD COLUMN IF NOT EXISTS supplier_rank integer
         DEFAULT 0""",
     )
     openupgrade.logged_query(
@@ -248,7 +248,7 @@ def add_helper_invoice_move_rel(env):
     openupgrade.logged_query(
         env.cr, """
         ALTER TABLE account_move
-        ADD COLUMN old_invoice_id integer""",
+        ADD COLUMN IF NOT EXISTS old_invoice_id integer""",
     )
     openupgrade.logged_query(
         env.cr, """
@@ -277,12 +277,12 @@ def add_helper_invoice_move_rel(env):
     openupgrade.logged_query(
         env.cr, """
         ALTER TABLE account_move_line
-        ADD COLUMN old_invoice_line_id integer""",
+        ADD COLUMN IF NOT EXISTS old_invoice_line_id integer""",
     )
     openupgrade.logged_query(
         env.cr, """
         ALTER TABLE account_move_line
-        ADD COLUMN old_invoice_tax_id integer""",
+        ADD COLUMN IF NOT EXISTS old_invoice_tax_id integer""",
     )
     # Create index for these columns, as they are going to be accessed frequently
     for table, field in [
@@ -298,7 +298,7 @@ def add_helper_voucher_move_rel(env):
     openupgrade.logged_query(
         env.cr, """
         ALTER TABLE account_move
-        ADD COLUMN old_voucher_id integer""",
+        ADD COLUMN IF NOT EXISTS old_voucher_id integer""",
     )
     openupgrade.logged_query(
         env.cr, """
@@ -311,7 +311,7 @@ def add_helper_voucher_move_rel(env):
     openupgrade.logged_query(
         env.cr, """
         ALTER TABLE account_move_line
-        ADD COLUMN old_voucher_line_id integer""",
+        ADD COLUMN IF NOT EXISTS old_voucher_line_id integer""",
     )
 
 

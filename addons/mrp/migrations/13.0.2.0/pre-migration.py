@@ -43,12 +43,12 @@ def fast_precreation_and_fill_mrp_bom_byproduct(env):
     openupgrade.logged_query(
         env.cr, """
         ALTER TABLE mrp_bom_byproduct
-        ADD COLUMN company_id integer""",
+        ADD COLUMN IF NOT EXISTS company_id integer""",
     )
     openupgrade.logged_query(
         env.cr, """
         ALTER TABLE mrp_bom_byproduct
-        ADD COLUMN routing_id integer""",
+        ADD COLUMN IF NOT EXISTS routing_id integer""",
     )
     openupgrade.logged_query(
         env.cr, """
@@ -63,7 +63,7 @@ def fast_precreation_and_fill_mrp_bom_line(env):
     openupgrade.logged_query(
         env.cr, """
         ALTER TABLE mrp_bom_line
-        ADD COLUMN company_id integer""",
+        ADD COLUMN IF NOT EXISTS company_id integer""",
     )
     openupgrade.logged_query(
         env.cr, """

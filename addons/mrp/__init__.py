@@ -16,9 +16,9 @@ def _pre_init_mrp(cr):
         - Also set the default value for unit_factor in the same UPDATE query to save some SQL constraint checks"""
     # Openupgrade: the following lines will generate an errors, when running
     # openupgrade_records.
-    # cr.execute("""ALTER TABLE "stock_move" ADD COLUMN "unit_factor" float;""")
-    # cr.execute("""ALTER TABLE "stock_move" ADD COLUMN "is_done" bool;""")
-    # cr.execute("""ALTER TABLE "stock_move_line" ADD COLUMN "done_move" bool;""")
+    # cr.execute("""ALTER TABLE "stock_move" ADD COLUMN IF NOT EXISTS "unit_factor" float;""")
+    # cr.execute("""ALTER TABLE "stock_move" ADD COLUMN IF NOT EXISTS "is_done" bool;""")
+    # cr.execute("""ALTER TABLE "stock_move_line" ADD COLUMN IF NOT EXISTS "done_move" bool;""")
     # cr.execute("""UPDATE stock_move
     #                  SET is_done=COALESCE(state in ('done', 'cancel'), FALSE),
     #                      unit_factor=1.0;""")

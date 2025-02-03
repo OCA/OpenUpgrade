@@ -71,7 +71,7 @@ def fill_slide_sequence(env):
 
 def convert_slide_categories(env):
     openupgrade.logged_query(
-        env.cr, "ALTER TABLE slide_slide ADD COLUMN old_category_id int4"
+        env.cr, "ALTER TABLE slide_slide ADD COLUMN IF NOT EXISTS old_category_id int4"
     )
     openupgrade.logged_query(
         env.cr, sql.SQL("""

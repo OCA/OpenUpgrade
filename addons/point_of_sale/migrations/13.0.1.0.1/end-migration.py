@@ -11,7 +11,7 @@ def create_pos_payment_methods(env):
         openupgrade.logged_query(
             env.cr, """
             ALTER TABLE pos_payment_method
-            ADD COLUMN old_journal_id int"""
+            ADD COLUMN IF NOT EXISTS old_journal_id int"""
         )
         env.cr.execute("""
                SELECT DISTINCT journal_id

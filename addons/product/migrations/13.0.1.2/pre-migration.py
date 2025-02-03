@@ -168,7 +168,7 @@ def calculate_product_product_combination_indices(env):
     openupgrade.logged_query(
         env.cr, """
         ALTER TABLE product_product
-        ADD COLUMN combination_indices varchar""",
+        ADD COLUMN IF NOT EXISTS combination_indices varchar""",
     )
     openupgrade.logged_query(
         env.cr, """
@@ -222,7 +222,7 @@ def fill_product_template_attribute_value_attribute_line_id(env):
     openupgrade.logged_query(
         env.cr,
         "ALTER TABLE product_template_attribute_value "
-        "ADD COLUMN attribute_line_id INT4",
+        "ADD COLUMN IF NOT EXISTS attribute_line_id INT4",
     )
     openupgrade.logged_query(
         env.cr, """
@@ -244,7 +244,7 @@ def fill_product_template_attribute_value__attribute_id_related(env):
     openupgrade.logged_query(
         env.cr,
         "ALTER TABLE product_template_attribute_value "
-        "ADD COLUMN attribute_id INT4",
+        "ADD COLUMN IF NOT EXISTS attribute_id INT4",
     )
     openupgrade.logged_query(
         env.cr, """

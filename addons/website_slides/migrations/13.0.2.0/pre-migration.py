@@ -41,7 +41,7 @@ def migrate(env, version):
     openupgrade.rename_columns(env.cr, _column_renames)
     openupgrade.copy_columns(env.cr, _column_copies)
     openupgrade.rename_fields(env, _field_renames)
-    openupgrade.logged_query(env.cr, "ALTER TABLE slide_slide ADD COLUMN category_id int4")
+    openupgrade.logged_query(env.cr, "ALTER TABLE slide_slide ADD COLUMN IF NOT EXISTS category_id int4")
     openupgrade.rename_tables(env.cr, [("rel_channel_groups", "res_groups_slide_channel_rel")])
     openupgrade.set_xml_ids_noupdate_value(
         env,

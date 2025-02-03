@@ -25,7 +25,7 @@ def fill_website_rewrite_name(cr):
     openupgrade.logged_query(
         cr, """
         ALTER TABLE website_rewrite
-        ADD COLUMN name varchar""",
+        ADD COLUMN IF NOT EXISTS name varchar""",
     )
     openupgrade.logged_query(
         cr, """

@@ -24,7 +24,7 @@ def fill_mail_channel_livechat_operator_id(env):
     openupgrade.logged_query(
         env.cr, """
         ALTER TABLE mail_channel
-        ADD COLUMN livechat_operator_id integer""",
+        ADD COLUMN IF NOT EXISTS livechat_operator_id integer""",
     )
     openupgrade.logged_query(
         env.cr, """

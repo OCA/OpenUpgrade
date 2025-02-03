@@ -7,7 +7,7 @@ def fix_crm_reveal_rule_contact_filter_type(env):
     openupgrade.logged_query(
         env.cr, """
         ALTER TABLE crm_reveal_rule
-        ADD COLUMN contact_filter_type varchar""",
+        ADD COLUMN IF NOT EXISTS contact_filter_type varchar""",
     )
     openupgrade.logged_query(
         env.cr, """

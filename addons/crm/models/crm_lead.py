@@ -163,7 +163,7 @@ class Lead(models.Model):
     @api.model
     def _read_group_stage_ids(self, stages, domain, order):
         # retrieve team_id from the context and write the domain
-        # - ('id', 'in', stages.ids): add columns that should be present
+        # - ('id', 'in', stages.ids): ADD COLUMN IF NOT EXISTSs that should be present
         # - OR ('fold', '=', False): add default columns that are not folded
         # - OR ('team_ids', '=', team_id), ('fold', '=', False) if team_id: add team columns that are not folded
         team_id = self._context.get('default_team_id')

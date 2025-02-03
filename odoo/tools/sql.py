@@ -77,7 +77,7 @@ def column_exists(cr, tablename, columnname):
 def create_column(cr, tablename, columnname, columntype, comment=None):
     """ Create a column with the given type. """
     coldefault = (columntype.upper()=='BOOLEAN') and 'DEFAULT false' or ''
-    cr.execute('ALTER TABLE "{}" ADD COLUMN "{}" {} {}'.format(tablename, columnname, columntype, coldefault))
+    cr.execute('ALTER TABLE "{}" ADD COLUMN IF NOT EXISTS "{}" {} {}'.format(tablename, columnname, columntype, coldefault))
     if comment:
         cr.execute('COMMENT ON COLUMN "{}"."{}" IS %s'.format(tablename, columnname), (comment,))
     _schema.debug("Table %r: added column %r of type %s", tablename, columnname, columntype)
@@ -97,7 +97,7 @@ def convert_column(cr, tablename, columnname, columntype):
         # can't do inplace change -> use a casted temp column
         query = '''
             ALTER TABLE "{0}" RENAME COLUMN "{1}" TO __temp_type_cast;
-            ALTER TABLE "{0}" ADD COLUMN "{1}" {2};
+            ALTER TABLE "{0}" ADD COLUMN IF NOT EXISTS "{1}" {2};
             UPDATE "{0}" SET "{1}"= __temp_type_cast::{2};
             ALTER TABLE "{0}" DROP COLUMN  __temp_type_cast CASCADE;
         '''

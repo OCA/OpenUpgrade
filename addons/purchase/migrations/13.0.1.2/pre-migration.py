@@ -30,7 +30,7 @@ def migrate(env, version):
     openupgrade.logged_query(
         env.cr, """
         ALTER TABLE purchase_order_line
-        ADD COLUMN qty_received_method varchar""",
+        ADD COLUMN IF NOT EXISTS qty_received_method varchar""",
     )
     # Add temporary table for avoiding the automatic launch of the compute method
     openupgrade.logged_query(

@@ -61,7 +61,7 @@ def add_helper_survey_question_page_rel(env):
     openupgrade.logged_query(
         env.cr, """
         ALTER TABLE survey_question
-        ADD COLUMN old_page_id integer""",
+        ADD COLUMN IF NOT EXISTS old_page_id integer""",
     )
 
 
@@ -70,7 +70,7 @@ def fill_survey_user_input_line_question_sequence(env):
     openupgrade.logged_query(
         env.cr, """
         ALTER TABLE survey_user_input_line
-        ADD COLUMN question_sequence integer""",
+        ADD COLUMN IF NOT EXISTS question_sequence integer""",
     )
     openupgrade.logged_query(
         env.cr, """

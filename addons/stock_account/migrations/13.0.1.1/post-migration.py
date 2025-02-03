@@ -186,7 +186,7 @@ def generate_stock_valuation_layer(env):
     openupgrade.logged_query(
         env.cr, """
             ALTER TABLE stock_valuation_layer
-            ADD COLUMN old_product_price_history_id integer""",
+            ADD COLUMN IF NOT EXISTS old_product_price_history_id integer""",
     )
     company_obj = env["res.company"]
     product_obj = env["product.product"]
