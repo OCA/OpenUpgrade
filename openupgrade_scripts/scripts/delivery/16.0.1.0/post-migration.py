@@ -174,6 +174,33 @@ def _convert_carrier_zip_ranges(env):
             carrier.zip_prefix_ids |= prefix_record
 
 
+def _delivery_carrier_multi_zip(env):
+    """Transform the zips data defined with delivery_carrier_zip."""
+    if not openupgrade.table_exists(env.cr, "delivery_carrier_zip"):
+        return
+    env.cr.execute("SELECT carrier_id, zip_from, zip_to FROM delivery_carrier_zip")
+    for carrier_id, zip_from, zip_to in env.cr.fetchall():
+        if zip_from.isnumeric() and zip_to.isnumeric():
+            prefixes = numerical_range_to_prefixes(int(zip_from), int(zip_to))
+        else:
+            try:
+                prefixes = range_to_prefixes(zip_from, zip_to)
+            except Exception as error:
+                _logger.error(
+                    f"Failed to convert the zip range '{zip_from} --"
+                    f" {zip_to}'of delivery method {carrier_id} to a set of"
+                    f" prefixes. Got error:\n\n{error}"
+                )
+                continue
+        carrier = env["delivery.carrier"].browse(carrier_id)
+        for prefix in prefixes:
+            prefix_record = env["delivery.zip.prefix"].search([("name", "=", prefix)])
+            if not prefix_record:
+                prefix_record = env["delivery.zip.prefix"].create({"name": prefix})
+            carrier.zip_prefix_ids |= prefix_record
+
+
 @openupgrade.migrate()
 def migrate(env, version):
     _convert_carrier_zip_ranges(env)
+    _delivery_carrier_multi_zip(env)

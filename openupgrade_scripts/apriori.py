@@ -88,6 +88,8 @@ merged_modules = {
     "account_invoice_search_by_reference": "account",
     # OCA/account-invoice-reporting
     "account_invoice_report_due_list": "account",
+    # OCA/delivery
+    "delivery_carrier_multi_zip": "delivery",
     # OCA/e-commerce
     "website_sale_require_login": "website_sale",
     # OCA/l10n-spain
