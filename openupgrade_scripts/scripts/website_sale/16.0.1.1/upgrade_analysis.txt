@@ -1,6 +1,8 @@
 ---Models in module 'website_sale'---
 obsolete model website.sale.payment.acquirer.onboarding.wizard [transient]
 ---Fields in module 'website_sale'---
+website_sale / account.move             / website_id (many2one)         : not related anymore
+website_sale / account.move             / website_id (many2one)         : now a function
 website_sale / product.ribbon           / product_tag_ids (one2many)    : NEW relation: product.tag
 website_sale / product.tag              / ribbon_id (many2one)          : NEW relation: product.ribbon
 website_sale / product.tag              / website_id (many2one)         : NEW relation: website

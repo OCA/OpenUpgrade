@@ -90,7 +90,7 @@ stock        / stock.move               / lot_ids (many2many)           : relati
 # NOTHING TO DO
 
 stock        / stock.move               / quantity_done (float)         : is now stored
-# NOTHING TO DO: handle by ORM, can improve in the future
+# DONE: pre-migration: pre-compute the majority for performance post-migration: compute with ORM the rest
 
 stock        / stock.move               / route_ids (many2many)         : relation is now 'stock.route' ('stock.location.route') [nothing to do]
 # NOTHING TO DO

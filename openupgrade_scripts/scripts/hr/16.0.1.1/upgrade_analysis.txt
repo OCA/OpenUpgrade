@@ -31,6 +31,8 @@ NEW ir.actions.server: hr.action_hr_employee_create_user
 NEW ir.model.access: hr.access_hr_contract_type_manager [renamed from hr_contract module]
 NEW ir.rule: hr.hr_plan_activity_type_company_rule (noupdate)
 NEW ir.rule: hr.hr_plan_company_rule (noupdate)
+NEW ir.rule: hr.ir_rule_res_partner_bank_employees (noupdate)
+NEW ir.rule: hr.ir_rule_res_partner_bank_internal_users (noupdate)
 NEW ir.ui.menu: hr.menu_config_employee
 NEW ir.ui.menu: hr.menu_config_recruitment
 NEW ir.ui.menu: hr.menu_view_hr_contract_type

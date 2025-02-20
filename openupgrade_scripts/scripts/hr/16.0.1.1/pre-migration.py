@@ -44,9 +44,9 @@ def migrate(env, version):
     openupgrade.add_fields(env, _new_fields)
     # Backup Many2many relation between hr.plan and hr.plan.activity.type
     openupgrade.remove_tables_fks(env.cr, ["hr_plan_hr_plan_activity_type_rel"])
-    # get_legacy_name cannot be used here, because there is confilct in
-    # renaming constrains on this table. Waiting for a fix in
-    # openupgradelib, we will fix a new table name here.
+    # get_legacy_name cannot be used here, as there is a length limit in table name,
+    # and it causes a conflict. Waiting for a fix in
+    # openupgradelib, we will use a new table name here.
     openupgrade.rename_tables(
         env.cr,
         [

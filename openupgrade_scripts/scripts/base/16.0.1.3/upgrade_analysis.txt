@@ -6,6 +6,7 @@ new model ir.binary [abstract]
 new model ir.qweb.field.time [abstract]
 new model res.users.deletion
 ---Fields in module 'base'---
+base         / ir.actions.report        / _order                        : _order is now 'name, id' ('name')
 base         / ir.model.fields          / ttype (selection)             : selection_keys is now '['binary', 'boolean', 'char', 'date', 'datetime', 'float', 'html', 'integer', 'json', 'many2many', 'many2one', 'many2one_reference', 'monetary', 'one2many', 'properties', 'properties_definition', 'reference', 'selection', 'text']' ('['binary', 'boolean', 'char', 'date', 'datetime', 'float', 'html', 'integer', 'many2many', 'many2one', 'many2one_reference', 'monetary', 'one2many', 'reference', 'selection', 'text']')
 base         / ir.profile               / sql_count (integer)           : NEW
 base         / ir.translation           / comments (text)               : DEL

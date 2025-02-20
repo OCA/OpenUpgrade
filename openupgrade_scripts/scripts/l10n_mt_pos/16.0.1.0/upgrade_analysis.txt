@@ -1,0 +1,11 @@
+---Models in module 'l10n_mt_pos'---
+new model compliance.letter.wizard [transient]
+---Fields in module 'l10n_mt_pos'---
+---XML records in module 'l10n_mt_pos'---
+NEW ir.actions.act_window: l10n_mt_pos.action_generate_compliance_letter
+NEW ir.actions.report: l10n_mt_pos.report_compliance_letter
+NEW ir.model.access: l10n_mt_pos.access_compliance_letter_admin
+NEW ir.model.access: l10n_mt_pos.access_compliance_letter_user
+NEW ir.ui.menu: l10n_mt_pos.menu_compliance_letter
+NEW ir.ui.view: l10n_mt_pos.report_compliance_letter_template
+NEW ir.ui.view: l10n_mt_pos.view_generate_compliance_letter

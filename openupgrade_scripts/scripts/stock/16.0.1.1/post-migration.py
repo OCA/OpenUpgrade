@@ -12,12 +12,13 @@ def _handle_multi_location_visibility(env):
     by default with active=True.
     """
     multi_location_group_xml_id = "stock.group_stock_multi_locations"
-    if env.ref("base.group_user") in env.ref(multi_location_group_xml_id).implied_ids:
+    internal_user_id = "base.group_user"
+    if env.ref(multi_location_group_xml_id) in env.ref(internal_user_id).implied_ids:
         for xml_id in (
             "stock.stock_location_view_tree2_editable",
             "stock.stock_location_view_form_editable",
         ):
-            view = (env.ref(xml_id, raise_if_not_found=False),)
+            view = env.ref(xml_id, raise_if_not_found=False)
             if view:
                 view.active = False
 
@@ -42,8 +43,26 @@ def _handle_stock_picking_backorder_strategy(env):
         )
 
 
+def _complete_stock_move_quantity_done_with_orm(env):
+    """In pre-migration we left out the moves with lines with different units of
+    measure to be treated by the ORM"""
+    env.cr.execute(
+        """
+        SELECT move_id
+        FROM stock_move_line
+        WHERE state != 'cancel'
+        GROUP BY move_id
+        HAVING COUNT(DISTINCT product_uom_id) > 1
+            AND SUM(qty_done) <> 0
+    """
+    )
+    move_ids = [id for id, *_ in env.cr.fetchall() if id]
+    env["stock.move"].browse(move_ids)._quantity_done_compute()
+
+
 @openupgrade.migrate()
 def migrate(env, version):
     _handle_multi_location_visibility(env)
     _handle_stock_picking_backorder_strategy(env)
     openupgrade.load_data(env.cr, "stock", "16.0.1.1/noupdate_changes.xml")
+    _complete_stock_move_quantity_done_with_orm(env)

@@ -1,91 +1,12 @@
 # Copyright 2023 Coop IT Easy (https://coopiteasy.be)
+# Copyright 2024 Tecnativa - Víctor Martínez
 # License AGPL-3.0 or later (http://www.gnu.org/licenses/agpl.html).
 
 import logging
 
 from openupgradelib import openupgrade
-from psycopg2.extensions import AsIs
 
 _logger = logging.getLogger(__name__)
-
-
-def warn_about_dataloss(cr, source_relation_table, relation_comodel_field):
-    """Warn user about data loss when migrating data from many2many to
-    many2one.
-
-    :param source_relation_table: The many2many relation table
-    of the model that will be on the 'one' side of the relation
-    :param relation_comodel_field: The name of the column containing ids
-    of the 'many' part of the new relation.
-    """
-    openupgrade.logged_query(
-        cr,
-        """
-        SELECT DISTINCT %(relation_comodel_field)s
-        FROM %(source_relation_table)s
-        WHERE %(relation_comodel_field)s IN (
-            SELECT %(relation_comodel_field)s
-            FROM %(source_relation_table)s
-            GROUP BY %(relation_comodel_field)s
-            HAVING COUNT(*) > 1
-        )
-        """,
-        {
-            "source_relation_table": AsIs(source_relation_table),
-            "relation_comodel_field": AsIs(relation_comodel_field),
-        },
-    )
-    for res in cr.fetchall():
-        _logger.error(
-            "hr.plan.activity.type(%s,) is linked to several hr.plan. "
-            "hr.plan.activity.type can only be linked to one hr.plan. "
-            "Fix these data before migrating to avoid data loss.",
-            res[0],
-        )
-
-
-def m2m_to_o2m(
-    env,
-    model,
-    field,
-    source_relation_table,
-    relation_source_field,
-    relation_comodel_field,
-):
-    """Transform many2many relations into one2many (with possible data
-    loss).
-
-    Use rename_tables() in your pre-migrate script to keep the many2many
-    relation table and give them as 'source_relation_table' argument.
-    And remove foreign keys constraints with remove_tables_fks().
-
-    :param model: The target registery model
-    :param field: The field that changes from m2m to o2m
-    :param source_relation_table: The (renamed) many2many relation table
-    :param relation_source_field: The column name of the 'model' id
-    in the relation table
-    :param relation_comodel_field: The column name of the comodel id in
-    the relation table
-    """
-    columns = env[model]._fields.get(field)
-    target_table = env[columns.comodel_name]._table
-    target_field = columns.inverse_name
-    openupgrade.logged_query(
-        env.cr,
-        """
-        UPDATE %(target_table)s AS target
-        SET %(target_field)s=source.%(relation_source_field)s
-        FROM %(source_relation_table)s AS source
-        WHERE source.%(relation_comodel_field)s=target.id
-        """,
-        {
-            "target_table": AsIs(target_table),
-            "target_field": AsIs(target_field),
-            "source_relation_table": AsIs(source_relation_table),
-            "relation_source_field": AsIs(relation_source_field),
-            "relation_comodel_field": AsIs(relation_comodel_field),
-        },
-    )
 
 
 def create_work_contact(env):
@@ -182,21 +103,57 @@ def fill_master_department_id(cr):
     )
 
 
+def _hr_plan_activity_type_m2m_to_o2m(env):
+    """Before, the activities in plans (hr.plan) were linked to the
+    plan_activity_type_ids field with a m2m field, now the field
+    is an o2m. We define the data in the table hr_plan_activity_type according to the
+    table ou_legacy_16_0_hr_plan_hr_plan_activity_type_rel that we have defined
+    previously in pre-migration to ensure that no data is lost.
+    """
+    openupgrade.logged_query(
+        env.cr,
+        """
+        UPDATE hr_plan_activity_type hpat
+        SET plan_id = rel.hr_plan_id
+        FROM ou_legacy_16_0_hr_plan_hr_plan_activity_type_rel rel
+        WHERE rel.hr_plan_activity_type_id = hpat.id
+        """,
+    )
+    openupgrade.logged_query(
+        env.cr,
+        """
+        INSERT INTO hr_plan_activity_type (
+            plan_id,
+            activity_type_id,
+            summary,
+            responsible,
+            responsible_id,
+            note,
+            create_uid,
+            create_date,
+            write_uid,
+            write_date
+        )
+        SELECT rel.hr_plan_id,
+            detail.activity_type_id,
+            detail.summary,
+            detail.responsible,
+            detail.responsible_id,
+            detail.note,
+            detail.create_uid,
+            detail.create_date,
+            detail.write_uid,
+            detail.write_date
+        FROM ou_legacy_16_0_hr_plan_hr_plan_activity_type_rel rel
+        JOIN hr_plan_activity_type detail ON rel.hr_plan_activity_type_id = detail.id
+        WHERE detail.plan_id != rel.hr_plan_id
+        """,
+    )
+
+
 @openupgrade.migrate()
 def migrate(env, version):
-    warn_about_dataloss(
-        env.cr,
-        "ou_legacy_16_0_hr_plan_hr_plan_activity_type_rel",
-        "hr_plan_activity_type_id",
-    )
-    m2m_to_o2m(
-        env,
-        "hr.plan",
-        "plan_activity_type_ids",
-        "ou_legacy_16_0_hr_plan_hr_plan_activity_type_rel",
-        "hr_plan_id",
-        "hr_plan_activity_type_id",
-    )
+    _hr_plan_activity_type_m2m_to_o2m(env)
     fill_master_department_id(env.cr)
     create_work_contact(env)
     openupgrade.load_data(env.cr, "hr", "16.0.1.1/noupdate_changes.xml")

@@ -4,7 +4,7 @@
     <field name="groups" eval="[(4, ref('base.group_user')), (4, ref('base.group_portal'))]"/>
   </record>
 
-  <!-- payment_provider form 16.0 -->
+<!-- payment_provider from 16.0 -->
   <record id="payment_provider_adyen" model="payment.provider">
     <field name="image_128" type="base64" file="payment_adyen/static/description/icon.png"/>
   </record>

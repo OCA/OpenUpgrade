@@ -27,6 +27,7 @@ stock        / stock.move               / lot_ids (many2many)           : relati
 stock        / stock.move               / quantity_done (float)         : is now stored
 stock        / stock.move               / route_ids (many2many)         : relation is now 'stock.route' ('stock.location.route') [nothing to do]
 stock        / stock.move               / route_ids (many2many)         : table is now 'stock_route_move' ('stock_location_route_move')
+stock        / stock.move.line          / _order                        : _order is now 'result_package_id desc, id' ('result_package_id desc, location_id asc, location_dest_id asc, picking_id asc, id')
 stock        / stock.move.line          / lot_id (many2one)             : relation is now 'stock.lot' ('stock.production.lot') [nothing to do]
 stock        / stock.move.line          / product_category_name (char)  : NEW isrelated: related, stored
 stock        / stock.move.line          / product_qty (float)           : DEL
@@ -78,6 +79,7 @@ NEW ir.ui.view: stock.product_search_form_view_stock_report
 NEW ir.ui.view: stock.replenishment_option_tree_view
 NEW ir.ui.view: stock.replenishment_option_warning_view
 NEW ir.ui.view: stock.report_picking_packages
+NEW ir.ui.view: stock.view_move_line_mobile_form
 DEL ir.ui.view: stock.stock_report_view_search
 DEL ir.ui.view: stock.view_warehouse_orderpoint_tree_editable_config
 NEW res.groups: stock.group_stock_lot_print_gs1

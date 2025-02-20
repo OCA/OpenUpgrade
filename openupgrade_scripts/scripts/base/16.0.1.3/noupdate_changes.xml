@@ -12,6 +12,9 @@
   <record id="hr" model="res.country">
     <field name="currency_id" ref="EUR"/>
   </record>
+  <record id="mx" model="res.country">
+    <field eval="'%(street)s\n%(street2)s\n%(zip)s %(city)s, %(state_code)s\n%(country_name)s'" name="address_format"/>
+  </record>
   <record id="nz" model="res.country">
     <field name="vat_label">IRD/GST</field>
   </record>
@@ -86,6 +89,9 @@
   </record>
   <record id="sz" model="res.country">
     <field name="name">Eswatini</field>
+  </record>
+  <record id="tr" model="res.country">
+    <field name="name">Türkiye</field>
   </record>
   <record id="us" model="res.country">
     <field name="vat_label"/>

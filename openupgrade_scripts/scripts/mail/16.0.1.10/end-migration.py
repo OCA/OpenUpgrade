@@ -27,11 +27,7 @@ def find_record_data_path(model_name, module_name, xml_id):
         filepath = "/".join((module_name, xml_file))
         with file_open(filepath, "rb") as f:
             root = etree.parse(f)
-            found = root.xpath(
-                '//record[@model="{model_name}"][@id="{xml_id}"]'.format(
-                    model_name=model_name, xml_id=xml_id
-                )
-            )
+            found = root.xpath(f'//record[@model="{model_name}"][@id="{xml_id}"]')
             if found:
                 return filepath
     return None

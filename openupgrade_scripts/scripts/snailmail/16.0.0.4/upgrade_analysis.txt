@@ -1,6 +1,7 @@
 ---Models in module 'snailmail'---
 obsolete model snailmail.letter.cancel [transient]
 ---Fields in module 'snailmail'---
+snailmail    / snailmail.letter         / info_msg (char)               : type is now 'html' ('char')
 ---XML records in module 'snailmail'---
 DEL ir.actions.act_window: snailmail.snailmail_letter_cancel_action
 DEL ir.model.access: snailmail.access_snailmail_letter_cancel

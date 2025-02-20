@@ -2,7 +2,6 @@
 [![Build Status](https://github.com/OCA/OpenUpgrade/actions/workflows/test.yml/badge.svg?branch=16.0)](https://github.com/OCA/OpenUpgrade/actions/workflows/test.yml?query=branch%3A16.0)
 [![codecov](https://codecov.io/gh/OCA/OpenUpgrade/branch/16.0/graph/badge.svg)](https://codecov.io/gh/OCA/openupgrade)
 
-
 <!-- /!\ do not modify above this line -->
 
 ![OpenUpgrade logo](https://oca.github.io/OpenUpgrade/_images/OpenUpgrade.png)

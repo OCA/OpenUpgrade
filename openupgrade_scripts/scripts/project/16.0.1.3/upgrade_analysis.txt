@@ -1,0 +1,79 @@
+---Models in module 'project'---
+obsolete model project.delete.wizard [transient]
+---Fields in module 'project'---
+pad_project  / project.project          / description_pad (char)        : DEL
+pad_project  / project.project          / use_pads (boolean)            : DEL
+pad_project  / project.task             / description_pad (char)        : DEL
+project      / account.analytic.tag     / task_ids (many2many)          : DEL relation: project.task
+project      / project.milestone        / task_ids (one2many)           : NEW relation: project.task
+project      / project.project          / allow_milestones (boolean)    : NEW hasdefault: default
+project      / project.project          / last_update_status (selection): not a function anymore
+project      / project.project          / last_update_status (selection): now required
+project      / project.project          / last_update_status (selection): selection_keys is now '['at_risk', 'off_track', 'on_hold', 'on_track', 'to_define']' ('['at_risk', 'off_track', 'on_hold', 'on_track']')
+project      / project.project          / task_properties_definition (properties_definition): NEW
+project      / project.tags             / project_ids (many2many)       : NEW relation: project.project
+project      / project.tags             / task_ids (many2many)          : NEW relation: project.task
+project      / project.task             / analytic_tag_ids (many2many)  : DEL relation: account.analytic.tag
+project      / project.task             / ancestor_id (many2one)        : NEW relation: project.task, isfunction: function, stored
+project      / project.task             / is_analytic_account_id_changed (boolean): NEW isfunction: function, stored
+project      / project.task             / is_blocked (boolean)          : NEW isfunction: function, stored
+project      / project.task             / is_closed (boolean)           : is now stored
+project      / project.task             / milestone_id (many2one)       : NEW relation: project.milestone, hasdefault: compute
+project      / project.task             / task_properties (properties)  : NEW hasdefault: compute
+project      / project.task.type        / is_closed (boolean)           : DEL
+project      / res.company              / analytic_plan_id (many2one)   : NEW relation: account.analytic.plan, hasdefault: compute
+---XML records in module 'project'---
+NEW digest.tip: project.digest_tip_project_1
+NEW ir.actions.act_window: project.action_send_mail_project_project
+NEW ir.actions.act_window: project.action_send_mail_project_task
+NEW ir.actions.act_window: project.action_view_task_from_milestone
+NEW ir.actions.act_window: project.open_view_project_all_config_group_stage
+NEW ir.actions.act_window: project.project_sharing_project_task_action_sub_task
+NEW ir.actions.act_window: project.project_task_action_sub_task
+DEL ir.actions.act_window: project.project_milestone_all
+NEW ir.actions.act_window.view: project.open_view_all_task_list_calendar
+NEW ir.actions.act_window.view: project.open_view_all_task_list_kanban
+NEW ir.actions.act_window.view: project.open_view_all_task_list_tree
+NEW ir.actions.act_window.view: project.open_view_project_all_config_group_stage_kanban_action_view
+NEW ir.actions.act_window.view: project.open_view_project_all_config_group_stage_tree_action_view
+NEW ir.actions.act_window.view: project.project_all_task_activity_action_view
+NEW ir.actions.act_window.view: project.project_all_task_calendar_action_view
+NEW ir.actions.act_window.view: project.project_all_task_graph_action_view
+NEW ir.actions.act_window.view: project.project_all_task_pivot_action_view
+NEW ir.actions.act_window.view: project.project_sharing_subtasks_form_action_view
+NEW ir.actions.act_window.view: project.project_sharing_subtasks_kanban_action_view
+NEW ir.actions.act_window.view: project.project_sharing_subtasks_tree_action_view
+NEW ir.actions.act_window.view: project.project_task_form_action_view
+NEW ir.actions.act_window.view: project.project_task_kanban_action_view
+NEW ir.actions.act_window.view: project.project_task_tree_action_view
+NEW ir.actions.act_window.view: project.rating_rating_action_task_kanban
+NEW ir.actions.act_window.view: project.rating_rating_action_view_project_rating_kanban
+DEL ir.actions.server: project.unlink_project_action
+NEW ir.model.access: project.access_project_task_burndown_chart_report_user
+NEW ir.model.access: project.access_report_project_task_user_project_user
+DEL ir.model.access: project.access_project_delete_wizard
+NEW ir.rule: project.burndown_chart_project_manager_rule (noupdate)
+NEW ir.rule: project.burndown_chart_project_user_rule (noupdate)
+NEW ir.rule: project.project_milestone_rule_portal_project_sharing (noupdate)
+NEW ir.rule: project.report_project_task_manager_rule (noupdate)
+NEW ir.rule: project.report_project_task_user_rule (noupdate)
+NEW ir.ui.menu: project.menu_projects_config_group_stage
+NEW ir.ui.view: project.rating_rating_project_view_kanban
+NEW ir.ui.view: project.task_type_tree_inherited
+NEW ir.ui.view: project.view_project_calendar
+NEW ir.ui.view: project.view_project_config_kanban
+NEW ir.ui.view: project.view_project_task_pivot_inherit
+NEW ir.ui.view: project.view_project_task_type_unarchive_wizard
+NEW ir.ui.view: project.view_task_all_calendar
+NEW ir.ui.view: project.view_task_kanban_inherit_my_task
+DEL ir.ui.view: pad_project.project_project_view_form
+DEL ir.ui.view: pad_project.res_config_settings_view_form
+DEL ir.ui.view: pad_project.view_task_form2_inherit_pad_project
+DEL ir.ui.view: project.project_collaborator_view_form
+DEL ir.ui.view: project.project_delete_wizard_form
+DEL ir.ui.view: project.project_task_burndown_chart_report_view_pivot
+DEL ir.ui.view: project_account.res_config_settings_view_form
+NEW mail.message.subtype: project.mt_project_update_create (noupdate)
+NEW mail.message.subtype: project.mt_task_progress (noupdate)
+NEW mail.message.subtype: project.mt_update_create (noupdate)
+NEW res.groups: project.group_project_milestone

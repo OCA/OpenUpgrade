@@ -16,7 +16,4 @@
                 ('employee_id.expense_manager_id', '=', user.id),
                 ('user_id', '=', user.id)]</field>
   </record>
-  <record id="ir_rule_hr_expense_sheet_employee" model="ir.rule">
-    <field name="domain_force">[('employee_id.user_id', '=', user.id), ('state', '=', 'draft')]</field>
-  </record>
 </odoo>

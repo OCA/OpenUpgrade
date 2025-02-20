@@ -229,3 +229,4 @@ def migrate(env, version):
     mail_channel_channel_type_required(env)
     scheduled_date_set_empty_strings_to_null(env)
     mail_channel_private_compatibility(env)
+    mail_channel_unset_wrong_group_public_id(env)

@@ -131,17 +131,17 @@ def numerical_range_to_prefixes(min_, max_):
     for stop in split_to_ranges(min_, max_):
         pattern = ""
         any_digit_count = 0
-        for start_digit, stop_digit in zip(str(start), str(stop)):
+        for start_digit, stop_digit in zip(str(start), str(stop), strict=True):
             if start_digit == stop_digit:
                 pattern += start_digit
             elif start_digit != "0" or stop_digit != "9":
-                pattern += "[{}-{}]".format(start_digit, stop_digit)
+                pattern += f"[{start_digit}-{stop_digit}]"
             else:
                 any_digit_count += 1
         if any_digit_count:
             pattern += r"\d"
         if any_digit_count > 1:
-            pattern += "{{{}}}".format(any_digit_count)
+            pattern += f"{{{any_digit_count}}}"
         subpatterns.append(pattern)
         start = stop + 1
     return subpatterns

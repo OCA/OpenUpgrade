@@ -230,6 +230,7 @@ account      / account.report.line      / groupby (char)                : NEW
 account      / account.report.line      / hide_if_zero (boolean)        : NEW
 account      / account.report.line      / hierarchy_level (integer)     : NEW required, hasdefault: compute
 account      / account.report.line      / print_on_new_page (boolean)   : NEW
+account      / account.report.line      / tax_tags_formula (char)       : NEW
 account      / account.tax              / name_searchable (char)        : NEW
 account      / account.tax              / real_amount (float)           : NEW isfunction: function, stored
 account      / account.tax.carryover.line / _order                        : _order is now 'date, id' ('id')
@@ -263,13 +264,13 @@ account      / res.company              / account_onboarding_create_invoice_stat
 account      / res.company              / account_storno (boolean)      : NEW
 account      / res.company              / account_use_credit_limit (boolean): NEW
 account      / res.company              / early_pay_discount_computation (selection): NEW selection_keys: ['excluded', 'included', 'mixed'], hasdefault: compute
-account      / res.company              / fiscal_position_ids (one2many): NEW relation: account.fiscal.position
 account      / res.company              / message_follower_ids (one2many): NEW relation: mail.followers
 account      / res.company              / message_ids (one2many)        : NEW relation: mail.message
 account      / res.company              / message_main_attachment_id (many2one): NEW relation: ir.attachment
 account      / res.company              / quick_edit_mode (selection)   : NEW selection_keys: ['in_invoices', 'out_and_in_invoices', 'out_invoices']
 account      / res.company              / website_message_ids (one2many): NEW relation: mail.message
 account      / res.partner              / credit_limit (float)          : previously in module base
+account      / res.partner              / is_coa_installed (boolean)    : NEW hasdefault: default
 account      / res.partner.bank         / activity_ids (one2many)       : NEW relation: mail.activity
 account      / res.partner.bank         / message_follower_ids (one2many): NEW relation: mail.followers
 account      / res.partner.bank         / message_ids (one2many)        : NEW relation: mail.message
@@ -318,6 +319,7 @@ DEL ir.actions.act_window: account.analytic_rule_action_user
 DEL ir.actions.act_window: account.tax_adjustments_form
 DEL ir.actions.act_window.view: account.action_bank_statement_form_bank
 DEL ir.actions.report: account.action_report_journal
+NEW ir.model.access: account.access_account_analytic_applicability_accountant
 NEW ir.model.access: account.access_account_analytic_distribution_invoice
 NEW ir.model.access: account.access_account_analytic_distribution_readonly
 NEW ir.model.access: account.access_account_analytic_plan_accountant
@@ -358,6 +360,7 @@ ir.model.constraint: account.constraint_account_move_line_check_amount_currency_
 ir.model.constraint: account.constraint_account_move_line_check_credit_debit (changed definition: is now 'check(display_type in('line_section','line_note') or credit * debit=0)' ('check(credit + debit>=0 and credit * debit=0)'))
 NEW ir.model.constraint: account.constraint_account_reconcile_model_name_unique
 NEW ir.model.constraint: account.constraint_account_report_line_code_uniq
+NEW ir.rule: account.ir_rule_res_partner_bank_billing_officers (noupdate)
 NEW ir.rule: account.report_external_value_comp_rule (noupdate)
 DEL ir.rule: account.account_tax_carryover_line_comp_rule (noupdate)
 DEL ir.rule: account.analytic_default_comp_rule (noupdate)

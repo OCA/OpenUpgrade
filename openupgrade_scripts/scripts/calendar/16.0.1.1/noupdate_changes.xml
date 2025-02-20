@@ -29,7 +29,7 @@
                             (<t t-out="object.mail_tz or ''">Europe/Brussels</t>)
                         </div></t></t></div></td><td width="20px;"/><td style="padding-top: 5px;"><p><strong>Details of the event</strong></p><ul><t t-if="object.event_id.location"><li>Location: <t t-out="object.event_id.location or ''">Bruxelles</t>
                         (<a target="_blank" t-attf-href="http://maps.google.com/maps?oi=map&amp;q={{ object.event_id.location }}">View Map</a>)
-                    </li></t><t t-if="recurrent"><li>When: <t t-out="object.recurrence_id.name or ''">Every 1 Weeks, for 3 events</t></li></t><t t-if="not object.event_id.allday and object.event_id.duration"><li>Duration: <t t-out="('%dH%02d' % (object.event_id.duration,round(object.event_id.duration*60)%60)) or ''">0H30</t></li></t><li>Attendees
+                    </li></t><t t-if="recurrent"><li>When: <t t-out="object.recurrence_id.get_recurrence_name()">Every 1 Weeks, for 3 events</t></li></t><t t-if="not object.event_id.allday and object.event_id.duration"><li>Duration: <t t-out="('%dH%02d' % (object.event_id.duration,round(object.event_id.duration*60)%60)) or ''">0H30</t></li></t><li>Attendees
                 <ul><li t-foreach="object.event_id.attendee_ids" t-as="attendee"><div t-attf-style="display: inline-block; border-radius: 50%; width: 10px; height: 10px; background: {{ colors.get(attendee.state) or 'white' }};"> </div><t t-if="attendee.common_name != object.common_name"><span style="margin-left:5px" t-out="attendee.common_name or ''">Mitchell Admin</span></t><t t-else=""><span style="margin-left:5px">You</span></t></li></ul></li><t t-if="object.event_id.videocall_location"><li>
                         How to Join:
                         <t t-if="object.get_base_url() in object.event_id.videocall_location"> Join with Odoo Discuss</t>
@@ -68,7 +68,7 @@
                             (<t t-out="object.mail_tz or ''">Europe/Brussels</t>)
                         </div></t></t></div></td><td width="20px;"/><td style="padding-top: 5px;"><p><strong>Details of the event</strong></p><ul><t t-if="is_online"><li>Appointment Type: <t t-out="object.event_id.appointment_type_id.name or ''">Schedule a Demo</t></li></t><t t-if="object.event_id.location"><li>Location: <t t-out="object.event_id.location or ''">Bruxelles</t>
                         (<a target="_blank" t-attf-href="http://maps.google.com/maps?oi=map&amp;q={{object.event_id.location}}">View Map</a>)
-                    </li></t><t t-if="recurrent"><li>When: <t t-out="object.recurrence_id.name or ''">Every 1 Weeks, for 3 events</t></li></t><t t-if="not object.event_id.allday and object.event_id.duration"><li>Duration: <t t-out="('%dH%02d' % (object.event_id.duration,round(object.event_id.duration*60)%60)) or ''">0H30</t></li></t><li>Attendees
+                    </li></t><t t-if="recurrent"><li>When: <t t-out="object.recurrence_id.get_recurrence_name()">Every 1 Weeks, for 3 events</t></li></t><t t-if="not object.event_id.allday and object.event_id.duration"><li>Duration: <t t-out="('%dH%02d' % (object.event_id.duration,round(object.event_id.duration*60)%60)) or ''">0H30</t></li></t><li>Attendees
                 <ul><li t-foreach="object.event_id.attendee_ids" t-as="attendee"><div t-attf-style="display: inline-block; border-radius: 50%; width: 10px; height: 10px; background:{{ colors.get(attendee.state) or 'white' }};"> </div><t t-if="attendee.common_name != object.common_name"><span style="margin-left:5px" t-out="attendee.common_name or ''">Mitchell Admin</span></t><t t-else=""><span style="margin-left:5px">You</span></t></li></ul></li><t t-if="object.event_id.videocall_location"><li>
                         How to Join:
                         <t t-if="object.get_base_url() in object.event_id.videocall_location"> Join with Odoo Discuss</t>
@@ -94,7 +94,7 @@
                             (<t t-out="object.mail_tz or ''">Europe/Brussels</t>)
                         </div></t></t></div></td><td width="20px;"/><td style="padding-top: 5px;"><p><strong>Details of the event</strong></p><ul><t t-if="object.event_id.location"><li>Location: <t t-out="object.event_id.location or ''">Bruxelles</t>
                         (<a target="_blank" t-attf-href="http://maps.google.com/maps?oi=map&amp;q={{ object.event_id.location }}">View Map</a>)
-                    </li></t><t t-if="recurrent"><li>When: <t t-out="object.recurrence_id.name or ''">Every 1 Weeks, for 3 events</t></li></t><t t-if="not object.event_id.allday and object.event_id.duration"><li>Duration: <t t-out="('%dH%02d' % (object.event_id.duration,round(object.event_id.duration*60)%60)) or ''">0H30</t></li></t><li>Attendees
+                    </li></t><t t-if="recurrent"><li>When: <t t-out="object.recurrence_id.get_recurrence_name()">Every 1 Weeks, for 3 events</t></li></t><t t-if="not object.event_id.allday and object.event_id.duration"><li>Duration: <t t-out="('%dH%02d' % (object.event_id.duration,round(object.event_id.duration*60)%60)) or ''">0H30</t></li></t><li>Attendees
                 <ul><li t-foreach="object.event_id.attendee_ids" t-as="attendee"><div t-attf-style="display: inline-block; border-radius: 50%; width: 10px; height: 10px; background:{{ colors.get(attendee.state) or 'white' }};"> </div><t t-if="attendee.common_name != object.common_name"><span style="margin-left:5px" t-out="attendee.common_name or ''">Mitchell Admin</span></t><t t-else=""><span style="margin-left:5px">You</span></t></li></ul></li><t t-if="object.event_id.videocall_location"><li>
                         How to Join:
                         <t t-if="object.get_base_url() in object.event_id.videocall_location"> Join with Odoo Discuss</t>
@@ -167,7 +167,7 @@
                             </li>
                   </t>
                   <t t-if="recurrent">
-                    <li>When: <t t-out="object.recurrence_id.name or ''"/></li>
+                    <li>When: <t t-out="object.recurrence_id.get_recurrence_name()"/></li>
                   </t>
                   <t t-if="not object.allday and object.duration">
                     <li>Duration:

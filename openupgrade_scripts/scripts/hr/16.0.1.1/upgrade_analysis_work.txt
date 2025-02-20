@@ -43,7 +43,7 @@ hr           / hr.employee              / work_email (char)             : now a 
 
 hr           / hr.plan                  / plan_activity_type_ids (many2many): table is now 'False' ('hr_plan_hr_plan_activity_type_rel')
 hr           / hr.plan                  / plan_activity_type_ids (many2many): type is now 'one2many' ('many2many')
-# DONE: pre-migration and post-migration: move data from many2many table to plan_id colomn in hr.plan.activity.type
+# DONE: pre-migration and post-migration: move data from many2many table to plan_id column in hr.plan.activity.type
 
 hr           / hr.plan.activity.type    / plan_id (many2one)            : NEW relation: hr.plan
 # DONE: see plan_activity_type_ids from hr.plan

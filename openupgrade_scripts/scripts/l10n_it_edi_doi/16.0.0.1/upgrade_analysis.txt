@@ -1,0 +1,56 @@
+---Models in module 'l10n_it_edi_doi'---
+new model l10n_it_edi_doi.declaration_of_intent
+---Fields in module 'l10n_it_edi_doi'---
+l10n_it_edi_doi / account.move             / l10n_it_edi_doi_amount (float): NEW isfunction: function, stored
+l10n_it_edi_doi / account.move             / l10n_it_edi_doi_id (many2one) : NEW relation: l10n_it_edi_doi.declaration_of_intent, hasdefault: compute
+l10n_it_edi_doi / l10n_it_edi_doi.declaration_of_intent / activity_ids (one2many)       : NEW relation: mail.activity
+l10n_it_edi_doi / l10n_it_edi_doi.declaration_of_intent / company_id (many2one)         : NEW relation: res.company, required, hasdefault: default
+l10n_it_edi_doi / l10n_it_edi_doi.declaration_of_intent / currency_id (many2one)        : NEW relation: res.currency, required
+l10n_it_edi_doi / l10n_it_edi_doi.declaration_of_intent / end_date (date)               : NEW required
+l10n_it_edi_doi / l10n_it_edi_doi.declaration_of_intent / invoice_ids (one2many)        : NEW relation: account.move
+l10n_it_edi_doi / l10n_it_edi_doi.declaration_of_intent / invoiced (float)              : NEW isfunction: function, stored
+l10n_it_edi_doi / l10n_it_edi_doi.declaration_of_intent / issue_date (date)             : NEW required, hasdefault: default
+l10n_it_edi_doi / l10n_it_edi_doi.declaration_of_intent / message_follower_ids (one2many): NEW relation: mail.followers
+l10n_it_edi_doi / l10n_it_edi_doi.declaration_of_intent / message_ids (one2many)        : NEW relation: mail.message
+l10n_it_edi_doi / l10n_it_edi_doi.declaration_of_intent / message_main_attachment_id (many2one): NEW relation: ir.attachment
+l10n_it_edi_doi / l10n_it_edi_doi.declaration_of_intent / not_yet_invoiced (float)      : NEW isfunction: function, stored
+l10n_it_edi_doi / l10n_it_edi_doi.declaration_of_intent / partner_id (many2one)         : NEW relation: res.partner, required
+l10n_it_edi_doi / l10n_it_edi_doi.declaration_of_intent / protocol_number_part1 (char)  : NEW required
+l10n_it_edi_doi / l10n_it_edi_doi.declaration_of_intent / protocol_number_part2 (char)  : NEW required
+l10n_it_edi_doi / l10n_it_edi_doi.declaration_of_intent / remaining (float)             : NEW isfunction: function, stored
+l10n_it_edi_doi / l10n_it_edi_doi.declaration_of_intent / sale_order_ids (one2many)     : NEW relation: sale.order
+l10n_it_edi_doi / l10n_it_edi_doi.declaration_of_intent / start_date (date)             : NEW required
+l10n_it_edi_doi / l10n_it_edi_doi.declaration_of_intent / state (selection)             : NEW required, selection_keys: ['active', 'draft', 'revoked', 'terminated']
+l10n_it_edi_doi / l10n_it_edi_doi.declaration_of_intent / threshold (float)             : NEW required
+l10n_it_edi_doi / l10n_it_edi_doi.declaration_of_intent / website_message_ids (one2many): NEW relation: mail.message
+l10n_it_edi_doi / res.company              / l10n_it_edi_doi_fiscal_position_id (many2one): NEW relation: account.fiscal.position
+l10n_it_edi_doi / res.company              / l10n_it_edi_doi_tax_id (many2one): NEW relation: account.tax
+l10n_it_edi_doi / res.partner              / l10n_it_edi_doi_ids (one2many): NEW relation: l10n_it_edi_doi.declaration_of_intent
+l10n_it_edi_doi / sale.order               / l10n_it_edi_doi_id (many2one) : NEW relation: l10n_it_edi_doi.declaration_of_intent, hasdefault: compute
+l10n_it_edi_doi / sale.order               / l10n_it_edi_doi_not_yet_invoiced (float): NEW isfunction: function, stored
+l10n_it_edi_doi / sale.order.line          / qty_invoiced_posted (float)   : NEW isfunction: function, stored
+---XML records in module 'l10n_it_edi_doi'---
+NEW account.fiscal.position.tax.template: l10n_it_edi_doi.afpttn_declaration_of_intent_fiscal_position_1
+NEW account.fiscal.position.tax.template: l10n_it_edi_doi.afpttn_declaration_of_intent_fiscal_position_2
+NEW account.fiscal.position.tax.template: l10n_it_edi_doi.afpttn_declaration_of_intent_fiscal_position_3
+NEW account.fiscal.position.tax.template: l10n_it_edi_doi.afpttn_declaration_of_intent_fiscal_position_4
+NEW account.fiscal.position.template: l10n_it_edi_doi.declaration_of_intent_fiscal_position
+NEW account.tax.template: l10n_it_edi_doi.00di
+NEW ir.model.access: l10n_it_edi_doi.access_l10n_it_edi_doi_declaration_of_intent_invoice
+NEW ir.model.access: l10n_it_edi_doi.access_l10n_it_edi_doi_declaration_of_intent_readonly
+NEW ir.model.constraint: l10n_it_edi_doi.constraint_l10n_it_edi_doi_declaration_of_intent_protocol_number_unique
+NEW ir.model.constraint: l10n_it_edi_doi.constraint_l10n_it_edi_doi_declaration_of_intent_threshold_positive
+NEW ir.ui.view: l10n_it_edi_doi.account_invoice_line_it_FatturaPA
+NEW ir.ui.view: l10n_it_edi_doi.report_invoice_document
+NEW ir.ui.view: l10n_it_edi_doi.report_saleorder_document
+NEW ir.ui.view: l10n_it_edi_doi.res_partner_view_search
+NEW ir.ui.view: l10n_it_edi_doi.view_account_invoice_filter
+NEW ir.ui.view: l10n_it_edi_doi.view_l10n_it_edi_doi_declaration_of_intent_search
+NEW ir.ui.view: l10n_it_edi_doi.view_l10n_it_edi_doi_form
+NEW ir.ui.view: l10n_it_edi_doi.view_l10n_it_edi_doi_tree
+NEW ir.ui.view: l10n_it_edi_doi.view_move_form
+NEW ir.ui.view: l10n_it_edi_doi.view_move_tree
+NEW ir.ui.view: l10n_it_edi_doi.view_order_form
+NEW ir.ui.view: l10n_it_edi_doi.view_partner_l10n_form
+NEW ir.ui.view: l10n_it_edi_doi.view_quotation_tree
+NEW ir.ui.view: l10n_it_edi_doi.view_sales_order_filter

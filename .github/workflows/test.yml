@@ -12,7 +12,7 @@ on:
 
 jobs:
   test:
-    runs-on: ubuntu-latest
+    runs-on: ubuntu-22.04
     env:
       DB: "openupgrade"
       DB_HOST: "localhost"
@@ -27,7 +27,7 @@ jobs:
       OPENUPGRADE_USE_DEMO: "yes"
     steps:
       - name: Set up Python
-        uses: actions/setup-python@v4
+        uses: actions/setup-python@v5
         with:
           python-version: '3.10'
       - name: Configure Postgres
@@ -46,21 +46,21 @@ jobs:
         run: |
           wget -q -O- $DOWNLOADS/15.0.psql | pg_restore -d $DB --no-owner
       - name: Check out Odoo
-        uses: actions/checkout@v2
+        uses: actions/checkout@v4
         with:
           repository: odoo/odoo
           ref: "16.0"
           fetch-depth: 1
           path: odoo
       - name: Check out previous Odoo
-        uses: actions/checkout@v2
+        uses: actions/checkout@v4
         with:
           repository: odoo/odoo
           ref: "15.0"
           fetch-depth: 1
           path: odoo-old
       - name: Check out OpenUpgrade
-        uses: actions/checkout@v2
+        uses: actions/checkout@v4
         with:
           path: openupgrade
       - name: Configuration
@@ -85,6 +85,7 @@ jobs:
               unixodbc-dev
       - name: Requirements Installation
         run: |
+          sed -i -E "s/(gevent==)21\.8\.0( ; sys_platform != 'win32' and python_version > '3.9' and python_version <= '3.10')/\122.10.2\2/;s/(greenlet==)1.1.2( ; sys_platform != 'win32' and python_version  > '3.9' and python_version <= '3.10')/\12.0.2\2/" odoo/requirements.txt
           pip install -q -r odoo/requirements.txt
           pip install -r ./openupgrade/requirements.txt
           # this is for v15 l10n_eg_edi_eta which crashes without it

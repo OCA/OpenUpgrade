@@ -71,6 +71,7 @@ new model chatbot.message [module im_livechat]
 new model chatbot.script [module im_livechat]
 new model chatbot.script.answer [module im_livechat]
 new model chatbot.script.step [module im_livechat]
+new model compliance.letter.wizard [module l10n_mt_pos]
 new model data_recycle.model [module data_recycle]
 new model data_recycle.record [module data_recycle]
 new model delivery.zip.prefix [module delivery]
@@ -86,6 +87,7 @@ new model ir.binary [module base]
 new model ir.qweb.field.time [module base]
 new model ir.websocket [module bus]
 new model l10n_ch.qr_invoice.wizard [module l10n_ch]
+new model l10n_it_edi_doi.declaration_of_intent [module l10n_it_edi_doi]
 new model l10n_latam.payment.mass.transfer [module l10n_latam_check]
 new model l10n_pl_tax_office [module l10n_pl_jpk]
 new model lot.label.layout [module stock]
@@ -139,13 +141,13 @@ new model transifex.code.translation [module transifex]
 new model transifex.translation [module transifex]
 new model utm.source.mixin [module utm]
 ---Fields in module 'general'---
-# 12132 fields matched,
-# Direct match: 12074
-# Found in other module: 58
+# 12152 fields matched,
+# Direct match: 12091
+# Found in other module: 61
 # Found with different type: 0
 # In obsolete models: 93
-# New columns: 1376
-# Not matched: 645
+# New columns: 1452
+# Not matched: 635
 ---XML records in module 'general'---
 ERROR: module not in list of installed modules:
 ---Models in module 'gift_card'---
@@ -256,10 +258,56 @@ l10n_sa_invoice / account.payment          / l10n_sa_show_delivery_date (boolean
 DEL ir.ui.view: l10n_sa_invoice.arabic_english_invoice
 DEL ir.ui.view: l10n_sa_invoice.view_move_form
 ERROR: module not in list of installed modules:
----Models in module 'project_account'---
----Fields in module 'project_account'---
----XML records in module 'project_account'---
-DEL ir.ui.view: project_account.res_config_settings_view_form
+---Models in module 'payment_alipay'---
+---Fields in module 'payment_alipay'---
+payment_alipay / payment.acquirer         / alipay_md5_signature_key (char): DEL
+payment_alipay / payment.acquirer         / alipay_merchant_partner_id (char): DEL
+payment_alipay / payment.acquirer         / alipay_payment_method (selection): DEL selection_keys: ['express_checkout', 'standard_checkout']
+payment_alipay / payment.acquirer         / alipay_seller_email (char)    : DEL
+payment_alipay / payment.acquirer         / provider (False)              : DEL selection_keys: ['adyen', 'alipay', 'none'], mode: modify
+---XML records in module 'payment_alipay'---
+DEL account.payment.method: payment_alipay.payment_method_alipay (noupdate)
+DEL ir.ui.view: payment_alipay.payment_acquirer_form
+DEL ir.ui.view: payment_alipay.redirect_form
+DEL payment.acquirer: payment.payment_acquirer_alipay (noupdate)
+ERROR: module not in list of installed modules:
+---Models in module 'payment_ogone'---
+---Fields in module 'payment_ogone'---
+payment_ogone / payment.acquirer         / ogone_password (char)         : DEL
+payment_ogone / payment.acquirer         / ogone_pspid (char)            : DEL
+payment_ogone / payment.acquirer         / ogone_shakey_in (char)        : DEL
+payment_ogone / payment.acquirer         / ogone_shakey_out (char)       : DEL
+payment_ogone / payment.acquirer         / ogone_userid (char)           : DEL
+payment_ogone / payment.acquirer         / provider (False)              : DEL selection_keys: ['adyen', 'alipay', 'authorize', 'buckaroo', 'mollie', 'none', 'ogone'], mode: modify
+---XML records in module 'payment_ogone'---
+DEL account.payment.method: payment_ogone.payment_method_ogone (noupdate)
+DEL ir.config_parameter: payment_ogone.payment_ogone_hash_function (noupdate)
+DEL ir.ui.view: payment_ogone.payment_acquirer_form
+DEL ir.ui.view: payment_ogone.redirect_form
+DEL payment.acquirer: payment.payment_acquirer_ogone (noupdate)
+ERROR: module not in list of installed modules:
+---Models in module 'payment_payulatam'---
+---Fields in module 'payment_payulatam'---
+payment_payulatam / payment.acquirer         / payulatam_account_id (char)   : DEL
+payment_payulatam / payment.acquirer         / payulatam_api_key (char)      : DEL
+payment_payulatam / payment.acquirer         / payulatam_merchant_id (char)  : DEL
+payment_payulatam / payment.acquirer         / provider (False)              : DEL selection_keys: ['adyen', 'alipay', 'authorize', 'buckaroo', 'mollie', 'none', 'ogone', 'paypal', 'payulatam'], mode: modify
+---XML records in module 'payment_payulatam'---
+DEL account.payment.method: payment_payulatam.payment_method_payulatam (noupdate)
+DEL ir.ui.view: payment_payulatam.payment_acquirer_form
+DEL ir.ui.view: payment_payulatam.redirect_form
+DEL payment.acquirer: payment.payment_acquirer_payulatam (noupdate)
+ERROR: module not in list of installed modules:
+---Models in module 'payment_payumoney'---
+---Fields in module 'payment_payumoney'---
+payment_payumoney / payment.acquirer         / payumoney_merchant_key (char) : DEL
+payment_payumoney / payment.acquirer         / payumoney_merchant_salt (char): DEL
+payment_payumoney / payment.acquirer         / provider (False)              : DEL selection_keys: ['adyen', 'alipay', 'authorize', 'buckaroo', 'mollie', 'none', 'ogone', 'paypal', 'payulatam', 'payumoney'], mode: modify
+---XML records in module 'payment_payumoney'---
+DEL account.payment.method: payment_payumoney.payment_method_payumoney (noupdate)
+DEL ir.ui.view: payment_payumoney.payment_acquirer_form
+DEL ir.ui.view: payment_payumoney.redirect_form
+DEL payment.acquirer: payment.payment_acquirer_payumoney (noupdate)
 ERROR: module not in list of installed modules:
 ---Models in module 'purchase_requisition_stock_dropshipping'---
 ---Fields in module 'purchase_requisition_stock_dropshipping'---

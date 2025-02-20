@@ -11,6 +11,7 @@ delivery     / product.template         / country_of_origin (many2one)  : NEW re
 delivery     / stock.move.line          / carrier_name (char)           : NEW isrelated: related, stored
 ---XML records in module 'delivery'---
 NEW ir.actions.act_window: delivery.action_delivery_zip_prefix_list
+NEW ir.model.access: delivery.access_choose_delivery_carrier_salesman
 NEW ir.model.access: delivery.access_delivery_carrier_system
 NEW ir.model.access: delivery.access_delivery_zip_prefix
 NEW ir.model.access: delivery.access_delivery_zip_prefix_stock_manager

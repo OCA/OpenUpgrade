@@ -1,0 +1,15 @@
+---Models in module 'event_booth_sale'---
+---Fields in module 'event_booth_sale'---
+event_booth_sale / event.booth              / price (float)                 : is now stored
+event_booth_sale / event.type.booth         / price (float)                 : is now stored
+# DONE: post-migration: fill related stored fields
+
+event_booth_sale / product.template         / detailed_type (False)         : selection_keys is now '['consu', 'course', 'event', 'event_booth', 'product', 'service']' ('['consu', 'event', 'event_booth', 'gift', 'product', 'service']')
+# NOTHING TO DO
+
+---XML records in module 'event_booth_sale'---
+NEW ir.ui.view: event_booth_sale.event_booth_view_graph
+NEW ir.ui.view: event_booth_sale.event_booth_view_pivot
+NEW ir.ui.view: event_booth_sale.event_booth_view_tree_from_event
+DEL ir.ui.view: event_booth_sale.event_booth_view_tree
+# NOTHING TO DO

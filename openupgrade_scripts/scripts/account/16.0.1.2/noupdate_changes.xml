@@ -24,19 +24,21 @@
   </record>
   <record id="account_payment_term_advance_60days" model="account.payment.term">
     <field name="line_ids" eval="[                 Command.clear(),                 Command.create({'value': 'percent', 'value_amount': 30.0, 'days': 0}),                 Command.create({'value': 'balance', 'value_amount': 0.0, 'days': 60})]"/>
-  </record>
-  <record id="account_payment_term_immediate" model="account.payment.term">
-    <field name="line_ids" eval="[Command.clear(), Command.create({'value': 'balance', 'value_amount': 0.0})]"/>
-  </record> -->
+  </record>-->
   <!-- We distinguish this one, as it requires new fields to be filled -->
   <record id="account_payment_term_end_following_month" model="account.payment.term">
     <field name="line_ids" eval="[Command.clear(), Command.create({'value': 'balance', 'value_amount': 0.0, 'months': 1, 'end_month': True})]"/>
   </record>
+  <!--
+  <record id="account_payment_term_immediate" model="account.payment.term">
+    <field name="line_ids" eval="[Command.clear(), Command.create({'value': 'balance', 'value_amount': 0.0})]"/>
+  </record>
+  -->
   <record id="account_send_payment_receipt_by_email_action" model="ir.actions.act_window">
     <field name="context" eval="{                 'mail_post_autofollow': True,                 'default_composition_mode': 'comment',                 'default_use_template': True,                 'default_template_id': ref('account.mail_template_data_payment_receipt'),                 'default_email_layout_xmlid': 'mail.mail_notification_light',             }"/>
   </record>
   <record id="account_send_payment_receipt_by_email_action_multi" model="ir.actions.act_window">
-    <field name="context" eval="{                 'mail_post_autofollow': True,                 'default_composition_mode': 'mass_mail',                 'default_use_template': True,                 'default_template_id': ref('account.mail_template_data_payment_receipt'),                 'default_email_layout_xmlid': 'mail.mail_notification_light',             }"/>
+    <field name="context" eval="{                 'mailing_document_based': True,                 'mail_post_autofollow': True,                 'default_composition_mode': 'mass_mail',                 'default_use_template': True,                 'default_template_id': ref('account.mail_template_data_payment_receipt'),                 'default_email_layout_xmlid': 'mail.mail_notification_light',             }"/>
   </record>
   <record id="email_template_edi_credit_note" model="mail.template">
     <field name="body_html" type="html">

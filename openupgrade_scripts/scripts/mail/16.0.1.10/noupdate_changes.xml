@@ -14,6 +14,7 @@
             </field>
   </record>
   <record id="ir_rule_mail_channel_member_group_user" model="ir.rule">
+    <!-- manually added due to xmlid rename -->
     <field name="domain_force">[
                 '|',
                     '&amp;',

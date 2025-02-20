@@ -1,0 +1,8 @@
+<?xml version='1.0' encoding='utf-8'?>
+<odoo>
+  <record id="fiscal_position_template_1" model="account.fiscal.position.template">
+    <field name="country_id"/>
+    <field name="name">Suisse national (+Liechtenstein)</field>
+    <field name="country_group_id" ref="base.ch_and_li"/>
+  </record>
+</odoo>
