@@ -34,6 +34,8 @@ renamed_modules = {
     "knowledge": "document_knowledge",
     # OCA/multi-company
     "res_partner_category_multi_company": "partner_category_multi_company",
+    # OCA/pos
+    "pos_cashback_warning": "pos_cashback",
     # OCA/product-attribute
     "product_packaging_type": "product_packaging_level",
     # OCA/project
