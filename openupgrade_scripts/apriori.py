@@ -30,6 +30,8 @@ renamed_modules = {
     "crm_project": "crm_lead_to_task",
     # OCA/knowledge
     "knowledge": "document_knowledge",
+    # OCA/multi-company
+    "res_partner_category_multi_company": "partner_category_multi_company",
     # OCA/project
     "project_stage_mgmt": "project_task_stage_mgmt",
     # OCA/sale-promotion
