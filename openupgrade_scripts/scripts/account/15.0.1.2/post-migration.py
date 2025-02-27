@@ -73,6 +73,15 @@ def _handle_website_legal_page(env):
                 }
             )
             view_temp.unlink()
+    # let's install again the module for the extra needs
+    env["ir.module.module"].update_list()
+    openupgrade.logged_query(
+        env.cr,
+        """
+        UPDATE ir_module_module
+        SET state='to install'
+        WHERE name = 'website_legal_page' AND state='uninstalled'""",
+    )
 
 
 @openupgrade.migrate()
