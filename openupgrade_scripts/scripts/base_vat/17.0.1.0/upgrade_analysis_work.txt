@@ -1,0 +1,7 @@
+---Models in module 'base_vat'---
+---Fields in module 'base_vat'---
+base_vat     / res.partner              / vies_failed_message (char)    : DEL
+# NOTHING TO DO
+base_vat     / res.partner              / vies_valid (boolean)          : NEW hasdefault: compute
+# DONE: pre-migration: Pre-create the column for not triggering the method. post-migration: Fill the vies_valid field in res_partner.
+---XML records in module 'base_vat'---

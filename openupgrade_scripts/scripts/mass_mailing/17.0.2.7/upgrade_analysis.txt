@@ -1,6 +1,6 @@
 ---Models in module 'mass_mailing'---
-obsolete model mailing.contact.subscription
-new model mailing.subscription
+obsolete model mailing.contact.subscription (renamed to mailing.subscription)
+new model mailing.subscription (renamed from mailing.contact.subscription)
 new model mailing.subscription.optout
 ---Fields in module 'mass_mailing'---
 mass_mailing / mail.blacklist           / opt_out_reason_id (many2one)  : NEW relation: mailing.subscription.optout
@@ -10,9 +10,7 @@ mass_mailing / mailing.contact          / message_main_attachment_id (many2one):
 mass_mailing / mailing.contact          / rating_ids (one2many)         : NEW relation: rating.rating
 mass_mailing / mailing.contact          / subscription_ids (one2many)   : NEW relation: mailing.subscription
 mass_mailing / mailing.contact          / subscription_list_ids (one2many): DEL relation: mailing.contact.subscription
-mass_mailing / mailing.contact.subscription / contact_id (many2one)         : DEL relation: mailing.contact, required
-mass_mailing / mailing.contact.subscription / list_id (many2one)            : DEL relation: mailing.list, required
-mass_mailing / mailing.contact.subscription / opt_out (boolean)             : DEL
+mass_mailing / mailing.contact.subscription / _order                        : _order is now 'list_id DESC, contact_id DESC' ('id')
 mass_mailing / mailing.contact.subscription / unsubscription_date (datetime): DEL
 mass_mailing / mailing.list             / contact_ids (many2many)       : table is now 'mailing_subscription' ('mailing_contact_list_rel')
 mass_mailing / mailing.list             / subscription_ids (one2many)   : relation is now 'mailing.subscription' ('mailing.contact.subscription') [nothing to do]
@@ -27,9 +25,6 @@ mass_mailing / mailing.mailing          / rating_ids (one2many)         : NEW re
 mass_mailing / mailing.mailing          / received_ratio (integer)      : type is now 'float' ('integer')
 mass_mailing / mailing.mailing          / replied_ratio (integer)       : type is now 'float' ('integer')
 mass_mailing / mailing.mailing          / schedule_date (datetime)      : not a function anymore
-mass_mailing / mailing.subscription     / contact_id (many2one)         : NEW relation: mailing.contact, required
-mass_mailing / mailing.subscription     / list_id (many2one)            : NEW relation: mailing.list, required
-mass_mailing / mailing.subscription     / opt_out (boolean)             : NEW hasdefault: default
 mass_mailing / mailing.subscription     / opt_out_datetime (datetime)   : NEW hasdefault: compute
 mass_mailing / mailing.subscription     / opt_out_reason_id (many2one)  : NEW relation: mailing.subscription.optout
 mass_mailing / mailing.subscription.optout / is_feedback (boolean)         : NEW

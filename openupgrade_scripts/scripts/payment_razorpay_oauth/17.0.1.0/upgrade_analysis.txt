@@ -1,0 +1,10 @@
+---Models in module 'payment_razorpay_oauth'---
+---Fields in module 'payment_razorpay_oauth'---
+payment_razorpay_oauth / payment.provider         / razorpay_access_token (char)  : NEW
+payment_razorpay_oauth / payment.provider         / razorpay_access_token_expiry (datetime): NEW
+payment_razorpay_oauth / payment.provider         / razorpay_account_id (char)    : NEW
+payment_razorpay_oauth / payment.provider         / razorpay_public_token (char)  : NEW
+payment_razorpay_oauth / payment.provider         / razorpay_refresh_token (char) : NEW
+---XML records in module 'payment_razorpay_oauth'---
+NEW ir.ui.view: payment_razorpay_oauth.authorization_error
+NEW ir.ui.view: payment_razorpay_oauth.payment_provider_form_razorpay_oauth

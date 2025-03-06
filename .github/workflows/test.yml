@@ -12,7 +12,7 @@ on:
 
 jobs:
   test:
-    runs-on: ubuntu-latest
+    runs-on: ubuntu-22.04
     env:
       DB: "openupgrade"
       DB_HOST: "localhost"
@@ -27,7 +27,7 @@ jobs:
       OPENUPGRADE_USE_DEMO: "yes"
     steps:
       - name: Set up Python
-        uses: actions/setup-python@v4
+        uses: actions/setup-python@v5
         with:
           python-version: '3.10'
       - name: Configure Postgres
@@ -45,22 +45,23 @@ jobs:
       - name: DB Restore
         run: |
           wget -q -O- $DOWNLOADS/16.0.psql | pg_restore -d $DB --no-owner
+          psql $DB -c "UPDATE ir_module_module SET demo=False"
       - name: Check out Odoo
-        uses: actions/checkout@v2
+        uses: actions/checkout@v4
         with:
           repository: odoo/odoo
           ref: "17.0"
           fetch-depth: 1
           path: odoo
       - name: Check out previous Odoo
-        uses: actions/checkout@v2
+        uses: actions/checkout@v4
         with:
           repository: odoo/odoo
           ref: "16.0"
           fetch-depth: 1
           path: odoo-old
       - name: Check out OpenUpgrade
-        uses: actions/checkout@v2
+        uses: actions/checkout@v4
         with:
           path: openupgrade
       - name: Configuration
@@ -85,14 +86,16 @@ jobs:
               unixodbc-dev
       - name: Requirements Installation
         run: |
+          sed -i -E "s/(gevent==)21\.8\.0( ; sys_platform != 'win32' and python_version == '3.10')/\122.10.2\2/;s/(greenlet==)1.1.2( ; sys_platform != 'win32' and python_version == '3.10')/\12.0.2\2/" odoo/requirements.txt
           pip install -q -r odoo/requirements.txt
           pip install -r ./openupgrade/requirements.txt
           # this is for v16 l10n_eg_edi_eta which crashes without it
           pip install asn1crypto
+          pip install coverage
       - name: Test data
         run: |
-          if test -n "$(ls openupgrade/openupgrade_scripts/scripts/*/*/tests/data*.py 2> /dev/null)"; then
-             for snippet in openupgrade/openupgrade_scripts/scripts/*/*/tests/data*.py; do
+          if test -n "$(ls openupgrade/openupgrade_scripts/scripts/*/tests/data*.py 2> /dev/null)"; then
+             for snippet in openupgrade/openupgrade_scripts/scripts/*/tests/data*.py; do
                odoo-old/odoo-bin shell -d $DB < $snippet
              done
           fi
@@ -124,6 +127,14 @@ jobs:
           echo Set the modules as not installable if they are not in the following list : $MODULES_OLD
           echo Running $REQUEST
           psql $DB -c "$REQUEST"
+          echo Set chart template to generic for companies with charts from not yet migrated localizations
+          REQUEST="update res_company set chart_template_id=(
+            select res_id from ir_model_data where module='l10n_generic_coa' and name='configurable_chart_template'
+          ) where id in (
+            select res_id from ir_model_data where model='res.company' and module not in
+            ('$(echo $MODULES_OLD | sed -e "s/,/','/g")')
+          )"
+          psql $DB -c "$REQUEST"
           ADDONS_PATHS="\
               $GITHUB_WORKSPACE/odoo/addons \
               $GITHUB_WORKSPACE/odoo/odoo/addons \
@@ -131,7 +142,9 @@ jobs:
           echo Execution of Openupgrade with the update of the following modules : $MODULES_NEW
           # Silence redundant logs from unlinking records (1 line is enough)
           # to prevent log overflow
-          OPENUPGRADE_TESTS=1 $ODOO \
+          coverage run \
+              --source=$GITHUB_WORKSPACE/openupgrade/openupgrade_scripts/scripts \
+          $ODOO \
               --addons-path=`echo $ADDONS_PATHS | awk -v OFS="," '$1=$1'` \
               --database=$DB \
               --db_host=$DB_HOST \
@@ -139,6 +152,15 @@ jobs:
               --db_port=$DB_PORT \
               --db_user=$DB_USERNAME \
               --load=base,web,openupgrade_framework \
+              --test-enable \
+              --test-tags openupgrade \
               --log-handler odoo.models.unlink:WARNING \
               --stop-after-init \
+              --without-demo=$MODULES_NEW \
               --update=$MODULES_NEW
+      - name: Generate coverage.xml
+        run: coverage xml
+      - uses: codecov/codecov-action@v4
+        with:
+          files: coverage.xml
+          token: ${{ secrets.CODECOV_TOKEN }}

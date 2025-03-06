@@ -1,0 +1,31 @@
+---Models in module 'stock_account'---
+---Fields in module 'stock_account'---
+stock_account / account.move.line        / cogs_origin_id (many2one)     : NEW relation: account.move.line
+# DONE: post-migration: filled using display_type = 'cogs'
+
+stock_account / stock.move               / analytic_account_line_id (many2one): DEL relation: account.analytic.line
+stock_account / stock.move               / analytic_account_line_ids (many2many): NEW relation: account.analytic.line
+# DONE post-migraton: m2o to m2m
+
+stock_account / stock.valuation.layer    / categ_id (many2one)           : is now stored
+# DONE: pre-migration: Add new column & set value for it
+
+---XML records in module 'stock_account'---
+NEW ir.actions.act_window: stock_account.inventory_aging_action
+NEW ir.filters: stock_account.filter_invoice_inventory_valuation
+# NOTHING TO DO: new feature
+
+DEL ir.property: stock_account.property_stock_account_input_categ_id (noupdate)
+DEL ir.property: stock_account.property_stock_account_output_categ_id (noupdate)
+# DONE: post-migration: ir.model.data deleted to avoid deleting the default values during xmlid cleanup
+
+NEW ir.ui.menu: stock_account.menu_inventory_aging
+NEW ir.ui.view: stock_account.stock_valuation_layer_graph
+NEW ir.ui.view: stock_account.stock_valuation_layer_valuation_at_date_tree_inherited
+# NOTHING TO DO: new feature
+
+DEL ir.ui.view: stock_account.stock_account_report_product_product_replenishment
+# NOTHING TO DO
+
+NEW res.groups: stock_account.group_stock_accounting_automatic (noupdate)
+# NOTHING TO DO: New noupdate="1" records

@@ -1,0 +1,10 @@
+---Models in module 'snailmail'---
+---Fields in module 'snailmail'---
+snailmail    / mail.message             / message_type (False)          : selection_keys is now '['auto_comment', 'comment', 'email', 'email_outgoing', 'notification', 'sms', 'snailmail', 'user_notification']' ('['auto_comment', 'comment', 'email', 'notification', 'sms', 'snailmail', 'user_notification']')
+snailmail    / mail.notification        / failure_type (False)          : selection_keys is now '['mail_bounce', 'mail_email_invalid', 'mail_email_missing', 'mail_from_invalid', 'mail_from_missing', 'mail_smtp', 'sms_acc', 'sms_country_not_supported', 'sms_credit', 'sms_expired', 'sms_invalid_destination', 'sms_not_allowed', 'sms_not_delivered', 'sms_number_format', 'sms_number_missing', 'sms_registration_needed', 'sms_rejected', 'sms_server', 'sn_credit', 'sn_error', 'sn_fields', 'sn_format', 'sn_price', 'sn_trial', 'unknown']' ('['mail_email_invalid', 'mail_email_missing', 'mail_smtp', 'sms_acc', 'sms_credit', 'sms_number_format', 'sms_number_missing', 'sms_server', 'sn_credit', 'sn_error', 'sn_fields', 'sn_format', 'sn_price', 'sn_trial', 'unknown']')
+snailmail    / snailmail.letter         / error_code (selection)        : selection_keys is now '['ATTACHMENT_ERROR', 'CREDIT_ERROR', 'FORMAT_ERROR', 'MISSING_REQUIRED_FIELDS', 'NO_PRICE_AVAILABLE', 'TRIAL_ERROR', 'UNKNOWN_ERROR']' ('['CREDIT_ERROR', 'FORMAT_ERROR', 'MISSING_REQUIRED_FIELDS', 'NO_PRICE_AVAILABLE', 'TRIAL_ERROR', 'UNKNOWN_ERROR']')
+# NOTHING TO DO:
+
+---XML records in module 'snailmail'---
+DEL ir.ui.view: snailmail.snailmail_confirm_view
+# NOTHING TO DO

@@ -8,7 +8,8 @@ renamed_modules = {
     "note": "project_todo",
     "website_sale_delivery_mondialrelay": "website_sale_mondialrelay",
     # odoo/enterprise
-    # OCA/...
+    # OCA/social
+    "mail_activity_unlink_log": "mail_activity_cancel_tracking",
 }
 
 # Merged modules contain a mapping from old module names to other,
@@ -20,6 +21,7 @@ merged_modules = {
     "association": "membership",
     "l10n_de_skr03": "l10n_de",
     "l10n_de_skr04": "l10n_de",
+    "l10n_generic_coa": "account",
     "l10n_hr_euro": "l10n_hr",
     "l10n_in_tcs_tds": "l10n_in",
     "l10n_in_upi": "l10n_in",
@@ -31,28 +33,45 @@ merged_modules = {
     "purchase_price_diff": "purchase_stock",
     "web_kanban_gauge": "web",
     "website_event_crm_questions": "website_event_crm",
+    "website_event_questions": "website_event",
     "website_sale_delivery": "website_sale",
     "website_sale_loyalty_delivery": "website_sale_loyalty",
     "website_sale_stock_product_configurator": "website_sale_product_configurator",
     # OCA/l10n-spain
     "l10n_es_irnr": "l10n_es",
     "l10n_es_irnr_sii": "l10n_es_aeat_sii_oca",
+    # OCA/maintenance
+    "base_maintenance_config": "maintenance",
+    "maintenance_plan": "maintenance",
+    "maintenance_plan_activity": "maintenance",
     # OCA/purchase-workflow
     "purchase_discount": "purchase",
+    # OCA/social
+    "mail_activity_plan": "mail",
+    # OCA/stock-logistics-warehouse
+    "stock_lot_filter_available": "stock",
     # OCA/web
     "web_advanced_search": "web",
     "web_listview_range_select": "web",
+    "web_pwa_oca": "web",
     # OCA/...
 }
 
 # only used here for upgrade_analysis
 renamed_models = {
     # odoo
+    "mail.channel": "discuss.channel",
+    "mail.channel.member": "discuss.channel.member",
+    "mail.channel.rtc.session": "discuss.channel.rtc.session",
+    "mailing.contact.subscription": "mailing.subscription",
+    "payment.icon": "payment.method",
+    "restaurant.printer": "pos.printer",
     # OCA/...
 }
 
 # only used here for upgrade_analysis
 merged_models = {
     # odoo
+    "repair.line": "stock.move",
     # OCA/...
 }

@@ -14,7 +14,7 @@ base         / ir.actions.server        / update_boolean_value (selection): NEW 
 base         / ir.actions.server        / update_field_id (many2one)    : NEW relation: ir.model.fields, hasdefault: compute
 base         / ir.actions.server        / update_m2m_operation (selection): NEW selection_keys: ['add', 'clear', 'remove', 'set'], hasdefault: default
 base         / ir.actions.server        / update_path (char)            : NEW hasdefault: default
-base         / ir.actions.server        / update_related_model_id (many2one): NEW relation: ir.model, isfunction: function, stored
+base         / ir.actions.server        / update_related_model_id (many2one): NEW relation: ir.model, hasdefault: compute
 base         / ir.actions.server        / value (text)                  : NEW
 base         / ir.actions.server        / webhook_field_ids (many2many) : NEW relation: ir.model.fields
 base         / ir.actions.server        / webhook_url (char)            : NEW

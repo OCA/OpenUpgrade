@@ -1,0 +1,23 @@
+---Models in module 'purchase_stock'---
+---Fields in module 'purchase_stock'---
+purchase_stock / product.category         / property_account_creditor_price_difference_categ (many2one): previously in module purchase_price_diff
+purchase_stock / product.product          / property_account_creditor_price_difference (many2one): previously in module purchase_price_diff
+purchase_stock / product.template         / property_account_creditor_price_difference (many2one): previously in module purchase_price_diff
+# NOTHING TO DO
+
+purchase_stock / purchase.order.line      / move_dest_ids (one2many)      : table is now 'stock_move_created_purchase_line_rel' ('False')
+purchase_stock / purchase.order.line      / move_dest_ids (one2many)      : type is now 'many2many' ('one2many')
+purchase_stock / stock.move               / created_purchase_line_id (many2one): DEL relation: purchase.order.line
+purchase_stock / stock.move               / created_purchase_line_ids (many2many): NEW relation: purchase.order.line
+# DONE post-migration: convert from m2o to m2m
+
+---XML records in module 'purchase_stock'---
+NEW ir.ui.view: purchase_stock.product_template_form_view
+NEW ir.ui.view: purchase_stock.product_view_kanban_catalog_purchase_only
+NEW ir.ui.view: purchase_stock.stock_reorder_report_search_inherited_purchase_stock
+NEW ir.ui.view: purchase_stock.view_category_property_form
+NEW ir.ui.view: purchase_stock.view_product_replenish_form_inherit_stock
+# NOTHING TO DO: new feature
+
+DEL ir.ui.view: purchase_stock.purchase_report_product_product_replenishment
+# NOTHING TO DO

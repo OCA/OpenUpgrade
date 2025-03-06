@@ -3,7 +3,6 @@ obsolete model hr.plan
 obsolete model hr.plan.activity.type
 obsolete model hr.plan.wizard [transient]
 ---Fields in module 'hr'---
-hr           / discuss.channel          / subscription_department_ids (many2many): NEW relation: hr.department
 hr           / hr.contract.type         / code (char)                   : NEW hasdefault: compute
 hr           / hr.contract.type         / country_id (many2one)         : NEW relation: res.country
 hr           / hr.department            / message_main_attachment_id (many2one): DEL relation: ir.attachment
@@ -44,7 +43,8 @@ hr           / hr.plan.activity.type    / summary (char)                : DEL
 hr           / hr.work.location         / location_type (selection)     : NEW required, selection_keys: ['home', 'office', 'other'], hasdefault: default
 hr           / mail.activity.plan       / department_id (many2one)      : NEW relation: hr.department, hasdefault: compute
 hr           / mail.activity.plan.template / responsible_type (False)      : NEW selection_keys: ['coach', 'employee', 'manager', 'on_demand', 'other'], mode: modify
-hr           / mail.channel             / subscription_department_ids (many2many): DEL relation: hr.department
+hr           / mail.channel             / subscription_department_ids (many2many): column1 is now 'discuss_channel_id' ('mail_channel_id') [hr_department_mail_channel_rel]
+hr           / mail.channel             / subscription_department_ids (many2many): table is now 'discuss_channel_hr_department_rel' ('hr_department_mail_channel_rel')
 hr           / res.company              / employee_properties_definition (properties_definition): NEW
 ---XML records in module 'hr'---
 NEW hr.contract.type: hr.contract_type_full_time (noupdate)
@@ -77,8 +77,6 @@ DEL ir.model.access: hr.access_hr_plan_employee
 DEL ir.model.access: hr.access_hr_plan_hr_user
 DEL ir.model.access: hr.access_hr_plan_wizard
 NEW ir.rule: hr.ir_rule_hr_contract_type_multi_company (noupdate)
-NEW ir.rule: hr.ir_rule_res_partner_bank_employees (noupdate)
-NEW ir.rule: hr.ir_rule_res_partner_bank_internal_users (noupdate)
 NEW ir.rule: hr.mail_plan_rule_group_hr_manager (noupdate)
 NEW ir.rule: hr.mail_plan_templates_rule_group_hr_manager (noupdate)
 DEL ir.rule: hr.hr_plan_activity_type_company_rule (noupdate)

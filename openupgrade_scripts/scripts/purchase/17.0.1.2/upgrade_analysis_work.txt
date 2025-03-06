@@ -1,0 +1,21 @@
+---Models in module 'purchase'---
+---Fields in module 'purchase'---
+purchase     / purchase.order           / activity_user_id (many2one)   : not related anymore
+purchase     / purchase.order           / activity_user_id (many2one)   : now a function
+purchase     / purchase.order           / message_main_attachment_id (many2one): DEL relation: ir.attachment
+purchase     / purchase.order           / rating_ids (one2many)         : NEW relation: rating.rating
+# NOTHING TO DO
+
+purchase     / purchase.order.line      / discount (float)              : NEW hasdefault: compute
+# DONE: create column in pre-migration to avoid expensive recomputation
+
+purchase     / res.partner              / buyer_id (many2one)           : NEW relation: res.users
+# NOTHING TO DO
+
+---XML records in module 'purchase'---
+NEW ir.ui.view: purchase.document_tax_totals
+NEW ir.ui.view: purchase.product_template_search_view_purchase
+NEW ir.ui.view: purchase.product_view_kanban_catalog_purchase_only
+NEW ir.ui.view: purchase.product_view_search_catalog
+NEW ir.ui.view: purchase.view_product_product_supplier_inherit
+# NOTHING TO DO

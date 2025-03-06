@@ -1,0 +1,9 @@
+---Models in module 'l10n_it_edi_sale'---
+---Fields in module 'l10n_it_edi_sale'---
+l10n_it_edi_sale / sale.order               / l10n_it_cig (char)            : NEW
+l10n_it_edi_sale / sale.order               / l10n_it_cup (char)            : NEW
+l10n_it_edi_sale / sale.order               / l10n_it_origin_document_date (date): NEW
+l10n_it_edi_sale / sale.order               / l10n_it_origin_document_name (char): NEW
+l10n_it_edi_sale / sale.order               / l10n_it_origin_document_type (selection): NEW selection_keys: ['agreement', 'contract', 'purchase_order']
+---XML records in module 'l10n_it_edi_sale'---
+NEW ir.ui.view: l10n_it_edi_sale.view_order_form_inherit_l10n_it_edi_sale

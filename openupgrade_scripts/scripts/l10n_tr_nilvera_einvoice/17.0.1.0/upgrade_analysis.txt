@@ -1,0 +1,11 @@
+---Models in module 'l10n_tr_nilvera_einvoice'---
+new model account.edi.xml.ubl.tr [abstract]
+---Fields in module 'l10n_tr_nilvera_einvoice'---
+l10n_tr_nilvera_einvoice / account.move             / l10n_tr_nilvera_send_status (selection): NEW selection_keys: ['error', 'not_sent', 'sent', 'succeed', 'unknown', 'waiting']
+l10n_tr_nilvera_einvoice / account.move             / l10n_tr_nilvera_uuid (char)   : NEW
+---XML records in module 'l10n_tr_nilvera_einvoice'---
+NEW ir.cron: l10n_tr_nilvera_einvoice.ir_cron_nilvera_get_invoice_status
+NEW ir.cron: l10n_tr_nilvera_einvoice.ir_cron_nilvera_get_new_documents
+NEW ir.ui.view: l10n_tr_nilvera_einvoice.account_journal_dashboard_kanban_view
+NEW ir.ui.view: l10n_tr_nilvera_einvoice.account_move_send_inherit_l10n_tr_nilvera_einvoice
+NEW ir.ui.view: l10n_tr_nilvera_einvoice.account_nilvera_view_move_form

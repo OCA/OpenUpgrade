@@ -13,6 +13,16 @@
     <field name="responsible_ids" eval="[(4, ref('base.user_admin'))]"/>
   </record>
   <record id="hr_leave_allocation_rule_multicompany" model="ir.rule">
+    <field name="domain_force">[
+            '|',
+                '&amp;',
+                    ('employee_id', '=', False),
+                    '|',
+                        ('employee_ids', '=', False),
+                        ('employee_ids.company_id', 'in', company_ids),
+                ('employee_id.company_id', 'in', company_ids),
+            ('holiday_status_id.company_id', 'in', company_ids + [False])
+        ]</field>
     <field name="name">Time Off: multi company global rule</field>
   </record>
   <record id="hr_leave_allocation_rule_officer_update" model="ir.rule">

@@ -52,6 +52,7 @@ jobs:
               unixodbc-dev
       - name: Requirements Installation
         run: |
+          sed -i -E "s/(gevent==)21\.8\.0( ; sys_platform != 'win32' and python_version == '3.10')/\122.10.2\2/;s/(greenlet==)1.1.2( ; sys_platform != 'win32' and python_version == '3.10')/\12.0.2\2/" odoo/requirements.txt
           pip install -q -r odoo/requirements.txt
           pip install -r ./requirements.txt
       - name: OpenUpgrade Docs

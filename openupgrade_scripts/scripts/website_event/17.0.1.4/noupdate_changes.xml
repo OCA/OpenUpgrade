@@ -1,0 +1,15 @@
+<?xml version='1.0' encoding='utf-8'?>
+<odoo>
+  <record id="ir_rule_event_question_answer_event_user" model="ir.rule">
+    <field name="model_id" ref="website_event.model_event_question_answer"/>
+  </record>
+  <record id="ir_rule_event_question_answer_published" model="ir.rule">
+    <field name="model_id" ref="website_event.model_event_question_answer"/>
+  </record>
+  <record id="ir_rule_event_question_event_user" model="ir.rule">
+    <field name="model_id" ref="website_event.model_event_question"/>
+  </record>
+  <record id="ir_rule_event_question_published" model="ir.rule">
+    <field name="model_id" ref="website_event.model_event_question"/>
+  </record>
+</odoo>

@@ -2,26 +2,8 @@
 ---Fields in module 'im_livechat'---
 im_livechat  / chatbot.message          / discuss_channel_id (many2one) : NEW relation: discuss.channel, required
 im_livechat  / chatbot.message          / mail_channel_id (many2one)    : DEL relation: mail.channel, required
-im_livechat  / discuss.channel          / anonymous_name (char)         : NEW
-im_livechat  / discuss.channel          / channel_type (False)          : NEW selection_keys: ['channel', 'chat', 'group', 'livechat'], mode: modify
-im_livechat  / discuss.channel          / chatbot_current_step_id (many2one): NEW relation: chatbot.script.step
-im_livechat  / discuss.channel          / chatbot_message_ids (one2many): NEW relation: chatbot.message
-im_livechat  / discuss.channel          / country_id (many2one)         : NEW relation: res.country
-im_livechat  / discuss.channel          / livechat_active (boolean)     : NEW
-im_livechat  / discuss.channel          / livechat_channel_id (many2one): NEW relation: im_livechat.channel
-im_livechat  / discuss.channel          / livechat_operator_id (many2one): NEW relation: res.partner
-im_livechat  / discuss.channel          / rating_last_value (float)     : NEW isfunction: function, stored
 im_livechat  / im_livechat.channel      / channel_ids (one2many)        : relation is now 'discuss.channel' ('mail.channel') [nothing to do]
-im_livechat  / mail.channel             / anonymous_name (char)         : DEL
-im_livechat  / mail.channel             / channel_type (False)          : DEL selection_keys: ['channel', 'chat', 'group', 'livechat'], mode: modify
-im_livechat  / mail.channel             / chatbot_current_step_id (many2one): DEL relation: chatbot.script.step
-im_livechat  / mail.channel             / chatbot_message_ids (one2many): DEL relation: chatbot.message
-im_livechat  / mail.channel             / country_id (many2one)         : DEL relation: res.country
-im_livechat  / mail.channel             / livechat_active (boolean)     : DEL
-im_livechat  / mail.channel             / livechat_channel_id (many2one): DEL relation: im_livechat.channel
-im_livechat  / mail.channel             / livechat_operator_id (many2one): DEL relation: res.partner
-im_livechat  / mail.channel             / rating_ids (one2many)         : DEL relation: rating.rating
-im_livechat  / mail.channel             / rating_last_value (float)     : DEL
+im_livechat  / mail.channel             / rating_ids (one2many)         : module is now 'rating' ('im_livechat')
 im_livechat  / res.users                / livechat_username (char)      : not stored anymore
 im_livechat  / res.users                / livechat_username (char)      : now a function
 im_livechat  / res.users.settings       / livechat_lang_ids (many2many) : NEW relation: res.lang

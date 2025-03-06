@@ -1,0 +1,9 @@
+---Models in module 'payment_custom'---
+---Fields in module 'payment_custom'---
+---XML records in module 'payment_custom'---
+NEW ir.ui.view: payment_custom.payment_method_form
+NEW ir.ui.view: payment_custom.token_form
+# NOTHING TO DO: new views
+
+NEW payment.method: payment_custom.payment_method_wire_transfer (noupdate)
+# NOTHING TO DO: new payment method

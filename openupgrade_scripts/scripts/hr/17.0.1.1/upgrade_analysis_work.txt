@@ -1,0 +1,154 @@
+---Models in module 'hr'---
+obsolete model hr.plan
+obsolete model hr.plan.activity.type
+# DONE pre-migration: move data into mail.activity.plan
+
+obsolete model hr.plan.wizard [transient]
+# NOTHING TO DO
+
+---Fields in module 'hr'---
+hr           / mail.channel             / subscription_department_ids (many2many): column1 is now 'discuss_channel_id' ('mail_channel_id') [hr_department_mail_channel_rel]
+hr           / mail.channel             / subscription_department_ids (many2many): table is now 'discuss_channel_hr_department_rel' ('hr_department_mail_channel_rel')
+# DONE: pre-migration: Rename table and column
+
+hr           / hr.contract.type         / code (char)                   : NEW hasdefault: compute
+# DONE: pre-migration: Column created and filled with the name. It wouldn't be too much burden to let the ORM compute, being few records, but let's do it by SQL anyway.
+
+hr           / hr.contract.type         / country_id (many2one)         : NEW relation: res.country
+# NOTHING TO DO: new feature
+
+hr           / hr.department            / message_main_attachment_id (many2one): DEL relation: ir.attachment
+# NOTHING TO DO
+
+hr           / hr.department            / plan_ids (one2many)           : relation is now 'mail.activity.plan' ('hr.plan') [nothing to do]
+hr           / hr.plan                  / active (boolean)              : DEL
+hr           / hr.plan                  / company_id (many2one)         : DEL relation: res.company
+hr           / hr.plan                  / department_id (many2one)      : DEL relation: hr.department
+hr           / hr.plan                  / name (char)                   : DEL required
+hr           / hr.plan                  / plan_activity_type_ids (one2many): DEL relation: hr.plan.activity.type
+hr           / hr.plan.activity.type    / activity_type_id (many2one)   : DEL relation: mail.activity.type
+hr           / hr.plan.activity.type    / company_id (many2one)         : DEL relation: res.company
+hr           / hr.plan.activity.type    / note (html)                   : DEL
+hr           / hr.plan.activity.type    / plan_id (many2one)            : DEL relation: hr.plan
+hr           / hr.plan.activity.type    / responsible (selection)       : DEL required, selection_keys: ['coach', 'employee', 'manager', 'other']
+hr           / hr.plan.activity.type    / responsible_id (many2one)     : DEL relation: res.users
+hr           / hr.plan.activity.type    / summary (char)                : DEL
+hr           / mail.activity.plan       / department_id (many2one)      : NEW relation: hr.department, hasdefault: compute
+hr           / mail.activity.plan.template / responsible_type (False)      : NEW selection_keys: ['coach', 'employee', 'manager', 'on_demand', 'other'], mode: modify
+# DONE: pre-migration: move data into mail.activity.plan
+
+hr           / hr.department            / rating_ids (one2many)         : NEW relation: rating.rating
+# NOTHING TO DO
+
+hr           / hr.departure.reason      / reason_code (integer)         : NEW
+# DONE post-migration: load noupdate
+
+hr           / hr.employee              / activity_user_id (many2one)   : not related anymore
+hr           / hr.employee              / activity_user_id (many2one)   : now a function
+# NOTHING TO DO: no store field
+
+hr           / hr.employee              / employee_properties (properties): NEW hasdefault: compute
+hr           / res.company              / employee_properties_definition (properties_definition): NEW
+# NOTHING TO DO: new feature for assigning properties
+
+hr           / hr.employee              / private_car_plate (char)      : NEW
+# NOTHING TO DO: new feature
+
+hr           / hr.employee              / address_home_id (many2one)    : DEL relation: res.partner
+hr           / hr.employee              / lang (selection)              : is now stored
+hr           / hr.employee              / lang (selection)              : not related anymore
+hr           / hr.employee              / private_city (char)           : NEW
+hr           / hr.employee              / private_country_id (many2one) : NEW relation: res.country
+hr           / hr.employee              / private_email (char)          : is now stored
+hr           / hr.employee              / private_email (char)          : not related anymore
+hr           / hr.employee              / private_phone (char)          : NEW
+hr           / hr.employee              / private_state_id (many2one)   : NEW relation: res.country.state
+hr           / hr.employee              / private_street (char)         : NEW
+hr           / hr.employee              / private_street2 (char)        : NEW
+hr           / hr.employee              / private_zip (char)            : NEW
+# DONE: post-migration: fill values from address_home_id to the employee fields, and anonymize the information on the res.partner record
+
+hr           / hr.employee              / rating_ids (one2many)         : NEW relation: rating.rating
+hr           / hr.job                   / message_main_attachment_id (many2one): DEL relation: ir.attachment
+hr           / hr.job                   / rating_ids (one2many)         : NEW relation: rating.rating
+# NOTHING TO DO: New rating inheritance
+
+hr           / hr.work.location         / location_type (selection)     : NEW required, selection_keys: ['home', 'office', 'other'], hasdefault: default
+# DONE: pre-migration: Pre-created and filled with the value 'office', which is fine according previous version behavior.
+
+---XML records in module 'hr'---
+NEW hr.contract.type: hr.contract_type_full_time (noupdate)
+NEW hr.contract.type: hr.contract_type_part_time (noupdate)
+NEW hr.contract.type: hr.contract_type_permanent (noupdate)
+NEW hr.contract.type: hr.contract_type_seasonal (noupdate)
+NEW hr.contract.type: hr.contract_type_temporary (noupdate)
+# NOTHING TO DO
+
+DEL hr.department: hr.dep_sales (noupdate)
+DEL ir.rule: hr.hr_plan_activity_type_company_rule (noupdate)
+DEL ir.rule: hr.hr_plan_company_rule (noupdate)
+DEL res.partner: hr.res_partner_admin_private_address (noupdate)
+# DONE: post-migration: removed safely
+
+DEL hr.plan: hr.offboarding_plan (noupdate)
+DEL hr.plan: hr.onboarding_plan (noupdate)
+DEL hr.plan.activity.type: hr.offboarding_setup_compute_out_delais (noupdate)
+DEL hr.plan.activity.type: hr.offboarding_take_back_hr_materials (noupdate)
+DEL hr.plan.activity.type: hr.onboarding_plan_training (noupdate)
+DEL hr.plan.activity.type: hr.onboarding_setup_it_materials (noupdate)
+DEL hr.plan.activity.type: hr.onboarding_training (noupdate)
+NEW mail.activity.plan: hr.offboarding_plan (noupdate)
+NEW mail.activity.plan: hr.onboarding_plan (noupdate)
+NEW mail.activity.plan.template: hr.offboarding_setup_compute_out_delais (noupdate)
+NEW mail.activity.plan.template: hr.offboarding_take_back_hr_materials (noupdate)
+NEW mail.activity.plan.template: hr.onboarding_plan_training (noupdate)
+NEW mail.activity.plan.template: hr.onboarding_setup_it_materials (noupdate)
+NEW mail.activity.plan.template: hr.onboarding_training (noupdate)
+# DONE: pre-migration: Reassign XML-IDs to the new mail.activity.plan* records
+
+NEW hr.work.location: hr.home_work_location (noupdate)
+NEW hr.work.location: hr.home_work_office (noupdate)
+NEW hr.work.location: hr.home_work_other (noupdate)
+NEW ir.actions.act_window: hr.mail_activity_plan_action
+DEL ir.actions.act_window: hr.hr_employee_action_from_user
+DEL ir.actions.act_window: hr.hr_plan_action
+DEL ir.actions.act_window: hr.hr_plan_activity_type_action
+NEW ir.actions.act_window.view: hr.mail_activity_plan_action_employee_view_form
+NEW ir.actions.act_window.view: hr.mail_activity_plan_action_employee_view_tree
+NEW ir.model.access: hr.access_mail_activity_plan_hr_manager
+NEW ir.model.access: hr.access_mail_activity_plan_template_hr_manager
+DEL ir.model.access: hr.access_hr_plan_activity_type_employee
+DEL ir.model.access: hr.access_hr_plan_activity_type_hr_user
+DEL ir.model.access: hr.access_hr_plan_employee
+DEL ir.model.access: hr.access_hr_plan_hr_user
+DEL ir.model.access: hr.access_hr_plan_wizard
+DEL ir.model.constraint: hr.constraint_hr_employee_barcode_uniq
+DEL ir.model.constraint: hr.constraint_hr_employee_category_name_uniq
+DEL ir.model.constraint: hr.constraint_hr_employee_user_uniq
+DEL ir.model.constraint: hr.constraint_hr_job_name_company_uniq
+DEL ir.model.constraint: hr.constraint_hr_job_no_of_recruitment_positive
+NEW ir.rule: hr.ir_rule_hr_contract_type_multi_company (noupdate)
+NEW ir.rule: hr.mail_plan_rule_group_hr_manager (noupdate)
+NEW ir.rule: hr.mail_plan_templates_rule_group_hr_manager (noupdate)
+# NOTHING TO DO
+
+NEW ir.ui.menu: hr.menu_resource_calendar_view
+NEW ir.ui.view: hr.discuss_channel_view_form
+NEW ir.ui.view: hr.hr_employee_plan_activity_summary
+NEW ir.ui.view: hr.hr_employee_view_graph
+NEW ir.ui.view: hr.hr_employee_view_pivot
+NEW ir.ui.view: hr.mail_activity_plan_template_view_form
+NEW ir.ui.view: hr.mail_activity_plan_view_form
+NEW ir.ui.view: hr.mail_activity_plan_view_form_hr_employee
+NEW ir.ui.view: hr.mail_activity_plan_view_tree
+NEW ir.ui.view: hr.mail_activity_schedule_view_form
+DEL ir.ui.view: hr.hr_plan_activity_type_view_form
+DEL ir.ui.view: hr.hr_plan_activity_type_view_tree
+DEL ir.ui.view: hr.hr_plan_view_form
+DEL ir.ui.view: hr.hr_plan_view_search
+DEL ir.ui.view: hr.hr_plan_view_tree
+DEL ir.ui.view: hr.mail_channel_view_form_
+DEL ir.ui.view: hr.plan_wizard
+DEL ir.ui.view: hr.view_employee_form_smartbutton
+DEL ir.ui.view: hr.view_partner_tree2
+# NOTHING TO DO

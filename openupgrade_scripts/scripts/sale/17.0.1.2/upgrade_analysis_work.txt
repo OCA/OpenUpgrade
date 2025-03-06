@@ -1,0 +1,109 @@
+---Models in module 'sale'---
+new model sale.mass.cancel.orders [transient]
+new model sale.order.discount [transient]
+# NOTHING TO DO
+
+---Fields in module 'sale'---
+sale         / account.analytic.applicability / business_domain (False)       : selection_keys is now '['bill', 'expense', 'general', 'invoice', 'manufacturing_order', 'purchase_order', 'sale_order']' ('['bill', 'expense', 'general', 'invoice', 'purchase_order', 'sale_order']')
+sale         / crm.team                 / use_quotations (boolean)      : DEL
+sale         / product.document         / attached_on (selection)       : NEW selection_keys: ['quotation', 'sale_order']
+# NOTHING TO DO
+
+sale         / res.company              / prepayment_percent (float)    : NEW hasdefault: default
+sale         / res.company              / sale_discount_product_id (many2one): NEW relation: product.product
+sale         / res.company              / sale_down_payment_product_id (many2one): NEW relation: product.product
+sale         / res.company              / sale_onboarding_order_confirmation_state (selection): DEL selection_keys: ['done', 'just_done', 'not_done']
+sale         / res.company              / sale_onboarding_sample_quotation_state (selection): DEL selection_keys: ['done', 'just_done', 'not_done']
+sale         / res.company              / sale_quotation_onboarding_state (selection): DEL selection_keys: ['closed', 'done', 'just_done', 'not_done']
+# NOTHING TO DO
+
+sale         / sale.order               / locked (boolean)              : NEW hasdefault: default
+# DONE post-migration: set locked if state was done
+
+sale         / sale.order               / activity_user_id (many2one)   : not related anymore
+sale         / sale.order               / activity_user_id (many2one)   : now a function
+sale         / sale.order               / amount_to_invoice (float)     : NEW isfunction: function, stored
+sale         / sale.order               / currency_id (many2one)        : not related anymore
+sale         / sale.order               / currency_id (many2one)        : now a function
+sale         / sale.order               / journal_id (many2one)         : NEW relation: account.journal, hasdefault: compute
+sale         / sale.order               / message_main_attachment_id (many2one): DEL relation: ir.attachment
+sale         / sale.order               / prepayment_percent (float)    : NEW hasdefault: compute
+sale         / sale.order               / rating_ids (one2many)         : NEW relation: rating.rating
+# NOTHING TO DO
+
+sale         / sale.order               / state (selection)             : selection_keys is now '['cancel', 'draft', 'sale', 'sent']' ('['cancel', 'done', 'draft', 'sale', 'sent']')
+# DONE: pre-migration: copy 'state' field for preserving old values
+# DONE: post-migration: map state 'done' to 'sale', lock as described above
+
+sale         / sale.order.line          / price_reduce (float)          : DEL
+# NOTHING TO DO
+
+---XML records in module 'sale'---
+NEW ir.actions.act_window: sale.action_mass_cancel_orders
+NEW ir.actions.act_window: sale.action_order_report_customers
+NEW ir.actions.act_window: sale.action_order_report_products
+NEW ir.actions.act_window: sale.action_order_report_salesperson
+NEW ir.actions.act_window: sale.mail_activity_plan_action_sale_order
+DEL ir.actions.act_window: sale.action_open_sale_payment_provider_onboarding_wizard
+# NOTHING TO DO
+
+NEW ir.model.access: sale.access_account_move_send_salesman
+NEW ir.model.access: sale.access_mail_activity_plan_sale_manager
+NEW ir.model.access: sale.access_mail_activity_plan_template_sale_manager
+NEW ir.model.access: sale.access_sale_mass_cancel_orders
+NEW ir.model.access: sale.access_sale_order_discount
+DEL ir.model.access: sale.access_account_invoice_send_salesman
+# NOTHING TO DO
+
+ir.model.constraint: sale.constraint_res_company_check_quotation_validity_days (changed definition: is now 'check(quotation_validity_days >= 0)' ('check(quotation_validity_days > 0)'))
+ir.model.constraint: sale.constraint_sale_order_date_order_conditional_required (changed definition: is now 'check((state = 'sale' and date_order is not null) or state != 'sale')' ('check((state in('sale','done') and date_order is not null) or state not in('sale','done'))'))
+# NOTHING TO DO
+
+NEW ir.rule: sale.mail_plan_rule_group_sale_manager (noupdate)
+NEW ir.rule: sale.mail_plan_template_rule_group_sale_manager (noupdate)
+NEW ir.rule: sale.sale_mass_cancel_orders_rule (noupdate)
+# NOTHING TO DO
+
+NEW ir.ui.menu: sale.menu_product_categories
+NEW ir.ui.menu: sale.menu_reporting_customer
+NEW ir.ui.menu: sale.menu_reporting_product
+NEW ir.ui.menu: sale.menu_reporting_sales
+NEW ir.ui.menu: sale.menu_reporting_salespeople
+NEW ir.ui.menu: sale.payment_menu
+NEW ir.ui.menu: sale.payment_method_menu
+NEW ir.ui.menu: sale.payment_provider_menu
+NEW ir.ui.menu: sale.payment_token_menu
+NEW ir.ui.menu: sale.payment_transaction_menu
+NEW ir.ui.menu: sale.sale_menu_config_activity_plan
+# NOTHING TO DO
+
+NEW ir.ui.view: sale.document_tax_totals
+NEW ir.ui.view: sale.mass_cancel_orders_view_form
+NEW ir.ui.view: sale.payment_link_wizard_view_form
+NEW ir.ui.view: sale.product_document_form
+NEW ir.ui.view: sale.product_document_kanban
+NEW ir.ui.view: sale.product_document_list
+NEW ir.ui.view: sale.product_document_search
+NEW ir.ui.view: sale.product_view_kanban_catalog
+NEW ir.ui.view: sale.product_view_search_catalog
+NEW ir.ui.view: sale.report_saleorder_raw
+NEW ir.ui.view: sale.sale_order_line_wizard_form
+NEW ir.ui.view: sale.sale_order_tree
+NEW ir.ui.view: sale.sale_report_graph_bar
+NEW ir.ui.view: sale.sale_report_graph_pie
+DEL ir.ui.view: sale.badge_extra_price
+DEL ir.ui.view: sale.onboarding_quotation_layout_step
+DEL ir.ui.view: sale.payment_checkout_inherit
+DEL ir.ui.view: sale.payment_manage_inherit
+DEL ir.ui.view: sale.sale_onboarding_order_confirmation_step
+DEL ir.ui.view: sale.sale_onboarding_sample_quotation_step
+DEL ir.ui.view: sale.sale_quotation_onboarding_panel
+DEL ir.ui.view: sale.variants
+DEL ir.ui.view: sale.view_sales_order_auto_done_setting
+# NOTHING TO DO
+
+NEW mail.template: sale.mail_template_sale_payment_executed (noupdate)
+NEW onboarding.onboarding: sale.onboarding_onboarding_sale_quotation (noupdate)
+NEW onboarding.onboarding.step: sale.onboarding_onboarding_step_sale_order_confirmation (noupdate)
+NEW onboarding.onboarding.step: sale.onboarding_onboarding_step_sample_quotation (noupdate)
+# NOTHING TO DO

@@ -1,5 +1,5 @@
 ---Models in module 'pos_restaurant'---
-obsolete model restaurant.printer
+obsolete model restaurant.printer (renamed to pos.printer in module point_of_sale)
 ---Fields in module 'pos_restaurant'---
 pos_restaurant / pos.config               / floor_ids (one2many)          : table is now 'pos_config_restaurant_floor_rel' ('False')
 pos_restaurant / pos.config               / floor_ids (one2many)          : type is now 'many2many' ('one2many')
@@ -13,10 +13,12 @@ pos_restaurant / pos.order.line           / mp_skip (boolean)             : DEL
 pos_restaurant / pos.order.line           / uuid (char)                   : module is now 'point_of_sale' ('pos_restaurant')
 pos_restaurant / restaurant.floor         / pos_config_id (many2one)      : DEL relation: pos.config
 pos_restaurant / restaurant.floor         / pos_config_ids (many2many)    : NEW relation: pos.config
-pos_restaurant / restaurant.printer       / name (char)                   : DEL required
-pos_restaurant / restaurant.printer       / printer_type (selection)      : DEL selection_keys: ['iot']
-pos_restaurant / restaurant.printer       / product_categories_ids (many2many): DEL relation: pos.category
-pos_restaurant / restaurant.printer       / proxy_ip (char)               : DEL
+pos_restaurant / restaurant.printer       / _order                        : module is now 'point_of_sale' ('pos_restaurant')
+pos_restaurant / restaurant.printer       / display_name (char)           : module is now 'point_of_sale' ('pos_restaurant')
+pos_restaurant / restaurant.printer       / name (char)                   : module is now 'point_of_sale' ('pos_restaurant')
+pos_restaurant / restaurant.printer       / printer_type (selection)      : module is now 'point_of_sale' ('pos_restaurant')
+pos_restaurant / restaurant.printer       / product_categories_ids (many2many): module is now 'point_of_sale' ('pos_restaurant')
+pos_restaurant / restaurant.printer       / proxy_ip (char)               : module is now 'point_of_sale' ('pos_restaurant')
 ---XML records in module 'pos_restaurant'---
 DEL ir.actions.act_window: pos_restaurant.action_restaurant_printer_form
 DEL ir.model.access: pos_restaurant.access_restaurant_printer

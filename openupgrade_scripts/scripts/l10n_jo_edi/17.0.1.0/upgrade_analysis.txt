@@ -1,0 +1,26 @@
+---Models in module 'l10n_jo_edi'---
+new model account.edi.xml.ubl_21.jo [abstract]
+---Fields in module 'l10n_jo_edi'---
+l10n_jo_edi  / account.move             / l10n_jo_edi_error (text)      : NEW
+l10n_jo_edi  / account.move             / l10n_jo_edi_qr (char)         : NEW
+l10n_jo_edi  / account.move             / l10n_jo_edi_state (selection) : NEW selection_keys: ['sent', 'to_send']
+l10n_jo_edi  / account.move             / l10n_jo_edi_uuid (char)       : NEW isfunction: function, stored
+l10n_jo_edi  / account.move             / l10n_jo_edi_xml_attachment_file (binary): NEW attachment: True
+l10n_jo_edi  / res.company              / l10n_jo_edi_client_identifier (char): NEW
+l10n_jo_edi  / res.company              / l10n_jo_edi_secret_key (char) : NEW
+l10n_jo_edi  / res.company              / l10n_jo_edi_sequence_income_source (char): NEW
+l10n_jo_edi  / res.company              / l10n_jo_edi_taxpayer_type (selection): NEW selection_keys: ['income', 'sales', 'special']
+---XML records in module 'l10n_jo_edi'---
+NEW ir.ui.view: l10n_jo_edi.account_move_send_form
+NEW ir.ui.view: l10n_jo_edi.report_invoice
+NEW ir.ui.view: l10n_jo_edi.report_invoice_document
+NEW ir.ui.view: l10n_jo_edi.res_config_settings_view_form
+NEW ir.ui.view: l10n_jo_edi.ubl_jo_Invoice
+NEW ir.ui.view: l10n_jo_edi.ubl_jo_InvoiceLineType
+NEW ir.ui.view: l10n_jo_edi.ubl_jo_InvoiceType
+NEW ir.ui.view: l10n_jo_edi.ubl_jo_PaymentMeansType
+NEW ir.ui.view: l10n_jo_edi.ubl_jo_TaxTotalType
+NEW ir.ui.view: l10n_jo_edi.view_account_invoice_filter
+NEW ir.ui.view: l10n_jo_edi.view_move_form
+NEW ir.ui.view: l10n_jo_edi.view_out_credit_note_tree
+NEW ir.ui.view: l10n_jo_edi.view_out_invoice_tree

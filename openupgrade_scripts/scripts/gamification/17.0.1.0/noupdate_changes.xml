@@ -101,6 +101,10 @@
       </table>
     </field>
   </record>
+  <record id="ir_cron_consolidate" model="ir.cron">
+    <!-- manually added -->
+    <field name="code">model._consolidate_cron()</field>
+  </record>
   <record id="mail_template_data_new_rank_reached" model="mail.template">
     <field name="body_html" type="html">
       <div style="background:#F0F0F0;color:#515166;padding:10px 0px;font-family:Arial,Helvetica,sans-serif;font-size:14px;">

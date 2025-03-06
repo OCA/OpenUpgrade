@@ -1,0 +1,97 @@
+---Models in module 'product'---
+obsolete model report.product.report_producttemplatelabel [abstract]
+new model product.catalog.mixin [abstract]
+new model product.document
+new model report.product.report_producttemplatelabel2x7 [abstract]
+new model report.product.report_producttemplatelabel4x12 [abstract]
+new model report.product.report_producttemplatelabel4x12noprice [abstract]
+new model report.product.report_producttemplatelabel4x7 [abstract]
+# NOTHING TO DO
+
+---Fields in module 'product'---
+product      / product.attribute        / display_type (selection)      : selection_keys is now '['color', 'multi', 'pills', 'radio', 'select']' ('['color', 'pills', 'radio', 'select']')
+# NOTHING TO DO: add new selection: multi
+
+product      / product.attribute.value  / default_extra_price (float)   : NEW
+# NOTHING TO DO: new feature for filling with this value the product variant attribute values created from this
+
+product      / product.attribute.value  / image (binary)                : NEW attachment: True
+# NOTHING TO DO: new feature for having an image linked to this value
+
+product      / product.category         / product_properties_definition (properties_definition): NEW
+product      / product.template         / product_properties (properties): NEW hasdefault: compute
+# NOTHING TO DO: new feature for having properties on products
+
+product      / product.document         / _inherits                     : NEW _inherits: {'ir.attachment': 'ir_attachment_id'}
+product      / product.document         / active (boolean)              : NEW hasdefault: default
+product      / product.document         / ir_attachment_id (many2one)   : NEW relation: ir.attachment, required
+product      / product.product          / product_document_ids (one2many): NEW relation: product.document
+product      / product.template         / product_document_ids (one2many): NEW relation: product.document
+# DONE: post-migration: populated with attachments on product.template and product.product
+
+product      / product.packaging        / product_id (many2one)         : now required
+# DONE: pre-migration: delete records with no product_id, as they are not valid
+
+product      / product.pricelist        / _order                        : _order is now 'sequence asc, id asc' ('sequence asc, id desc')
+# DONE: post-migration: Write sequence for making sure the old pricelist order is preserved
+
+product      / product.pricelist        / activity_ids (one2many)       : NEW relation: mail.activity
+product      / product.pricelist        / message_follower_ids (one2many): NEW relation: mail.followers
+product      / product.pricelist        / message_ids (one2many)        : NEW relation: mail.message
+# NOTHING TO DO: Chatter + activity new feature
+
+product      / product.pricelist.item   / active (boolean)              : DEL
+# NOTHING TO DO: It was a related stored of the pricelist active, so not adding value
+
+product      / product.product          / activity_user_id (many2one)   : not related anymore
+product      / product.product          / activity_user_id (many2one)   : now a function
+product      / product.product          / message_main_attachment_id (many2one): DEL relation: ir.attachment
+# NOTHING TO DO
+
+product      / product.supplierinfo     / discount (float)              : NEW
+# NOTHING TO DO
+
+product      / product.tag              / color (integer)               : type is now 'char' ('integer')
+# DONE: pre-migration: converted to the corresponding hexadecimal values
+
+product      / product.template         / activity_user_id (many2one)   : not related anymore
+product      / product.template         / activity_user_id (many2one)   : now a function
+product      / product.template         / message_main_attachment_id (many2one): DEL relation: ir.attachment
+# NOTHING TO DO
+
+product      / product.template.attribute.line / _order                        : _order is now 'sequence, attribute_id, id' ('attribute_id, id')
+product      / product.template.attribute.line / sequence (integer)            : NEW hasdefault: default
+# NOTHING TO DO: new feature
+
+---XML records in module 'product'---
+NEW ir.actions.report: product.report_product_template_label_2x7
+NEW ir.actions.report: product.report_product_template_label_4x12
+NEW ir.actions.report: product.report_product_template_label_4x12_noprice
+NEW ir.actions.report: product.report_product_template_label_4x7
+DEL ir.actions.report: product.report_product_template_label
+NEW ir.model.access: product.access_product_document_user
+NEW ir.model.constraint: product.constraint_product_attribute_check_multi_checkbox_no_variant
+# NOTHING TO DO
+
+NEW ir.rule: product.product_document_comp_rule (noupdate)
+NEW ir.ui.view: product.product_attribute_value_list
+NEW ir.ui.view: product.product_document_form
+NEW ir.ui.view: product.product_document_kanban
+NEW ir.ui.view: product.product_document_list
+NEW ir.ui.view: product.product_document_search
+NEW ir.ui.view: product.product_product_view_tree_tag
+NEW ir.ui.view: product.product_template_view_tree_tag
+NEW ir.ui.view: product.product_view_kanban_catalog
+NEW ir.ui.view: product.product_view_search_catalog
+NEW ir.ui.view: product.report_producttemplatelabel2x7
+NEW ir.ui.view: product.report_producttemplatelabel4x12
+NEW ir.ui.view: product.report_producttemplatelabel4x12noprice
+NEW ir.ui.view: product.report_producttemplatelabel4x7
+NEW ir.ui.view: product.report_simple_label4x12_no_price
+# NOTHING TO DO
+
+DEL ir.ui.view: product.report_producttemplatelabel
+# NOTHING TO DO
+
+DEL product.pricelist: product.list0 (noupdate)
+DONE: post-migration: Only remove it if it wasn't not touched and it contains the basic rule. If not, we remove the XML-ID and preserve it

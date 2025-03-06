@@ -1,0 +1,37 @@
+---Models in module 'maintenance'---
+new model maintenance.mixin [abstract]
+---Fields in module 'maintenance'---
+maintenance  / maintenance.equipment    / activity_user_id (many2one)   : not related anymore
+maintenance  / maintenance.equipment    / activity_user_id (many2one)   : now a function
+maintenance  / maintenance.equipment    / expected_mtbf (integer)       : NEW
+maintenance  / maintenance.equipment    / maintenance_duration (float)  : DEL
+maintenance  / maintenance.equipment    / message_main_attachment_id (many2one): DEL relation: ir.attachment
+maintenance  / maintenance.equipment    / next_action_date (date)       : DEL
+maintenance  / maintenance.equipment    / period (integer)              : DEL
+maintenance  / maintenance.equipment.category / message_main_attachment_id (many2one): DEL relation: ir.attachment
+maintenance  / maintenance.request      / activity_user_id (many2one)   : not related anymore
+maintenance  / maintenance.request      / activity_user_id (many2one)   : now a function
+# NOTHING TO DO
+maintenance  / maintenance.request      / company_id (many2one)         : now required
+# DONE: pre-migration: Define the most appropriate value
+maintenance  / maintenance.request      / instruction_google_slide (char): NEW
+maintenance  / maintenance.request      / instruction_pdf (binary)      : NEW attachment: True
+maintenance  / maintenance.request      / instruction_text (html)       : NEW
+maintenance  / maintenance.request      / instruction_type (selection)  : NEW selection_keys: ['google_slide', 'pdf', 'text'], hasdefault: default
+maintenance  / maintenance.request      / message_main_attachment_id (many2one): DEL relation: ir.attachment
+# NOTHING TO DO
+maintenance  / maintenance.request      / recurring_maintenance (boolean): NEW hasdefault: compute
+maintenance  / maintenance.request      / repeat_interval (integer)     : NEW hasdefault: default
+maintenance  / maintenance.request      / repeat_type (selection)       : NEW selection_keys: ['forever', 'until'], hasdefault: default
+maintenance  / maintenance.request      / repeat_unit (selection)       : NEW selection_keys: ['day', 'month', 'week', 'year'], hasdefault: default
+maintenance  / maintenance.request      / repeat_until (date)           : NEW
+# DONE: post-migration: maintenance_plan compatibility
+---XML records in module 'maintenance'---
+NEW ir.actions.act_window: maintenance.action_maintenance_configuration
+DEL ir.cron: maintenance.maintenance_requests_cron
+NEW ir.ui.menu: maintenance.menu_maintenance_config
+NEW ir.ui.view: maintenance.maintenance_request_view_activity
+NEW ir.ui.view: maintenance.res_config_settings_view_form
+# NOTHING TO DO
+DEL mail.alias: maintenance.mail_alias_equipment (noupdate)
+# DONE: removed in post-migration

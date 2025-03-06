@@ -1,5 +1,5 @@
 ---Models in module 'delivery'---
-model choose.delivery.package (moved to stock_delivery) [column['model_type']]
+model choose.delivery.package (moved to stock_delivery) [transient]
 ---Fields in module 'delivery'---
 delivery     / delivery.carrier         / fixed_margin (float)          : NEW
 delivery     / delivery.carrier         / invoice_policy (selection)    : selection_keys is now '['estimated']' ('['estimated', 'real']')

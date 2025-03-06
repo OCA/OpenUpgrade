@@ -1,0 +1,86 @@
+---Models in module 'im_livechat'---
+# NOTHING TO DO
+
+---Fields in module 'im_livechat'---
+im_livechat  / chatbot.message          / discuss_channel_id (many2one) : NEW relation: discuss.channel, required
+im_livechat  / chatbot.message          / mail_channel_id (many2one)    : DEL relation: mail.channel, required
+im_livechat  / discuss.channel          / anonymous_name (char)         : NEW
+im_livechat  / discuss.channel          / channel_type (False)          : NEW selection_keys: ['channel', 'chat', 'group', 'livechat'], mode: modify
+im_livechat  / discuss.channel          / chatbot_current_step_id (many2one): NEW relation: chatbot.script.step
+im_livechat  / discuss.channel          / chatbot_message_ids (one2many): NEW relation: chatbot.message
+im_livechat  / discuss.channel          / country_id (many2one)         : NEW relation: res.country
+im_livechat  / discuss.channel          / livechat_active (boolean)     : NEW
+im_livechat  / discuss.channel          / livechat_channel_id (many2one): NEW relation: im_livechat.channel
+im_livechat  / discuss.channel          / livechat_operator_id (many2one): NEW relation: res.partner
+# NOTHING TO DO
+
+im_livechat  / discuss.channel          / rating_last_value (float)     : NEW isfunction: function, stored
+# DONE create column in pre-migration and compute using orm in end-migration
+
+im_livechat  / im_livechat.channel      / channel_ids (one2many)        : relation is now 'discuss.channel' ('mail.channel') [nothing to do]
+im_livechat  / mail.channel             / anonymous_name (char)         : DEL
+im_livechat  / mail.channel             / channel_type (False)          : DEL selection_keys: ['channel', 'chat', 'group', 'livechat'], mode: modify
+im_livechat  / mail.channel             / chatbot_current_step_id (many2one): DEL relation: chatbot.script.step
+im_livechat  / mail.channel             / chatbot_message_ids (one2many): DEL relation: chatbot.message
+im_livechat  / mail.channel             / country_id (many2one)         : DEL relation: res.country
+im_livechat  / mail.channel             / livechat_active (boolean)     : DEL
+im_livechat  / mail.channel             / livechat_channel_id (many2one): DEL relation: im_livechat.channel
+im_livechat  / mail.channel             / livechat_operator_id (many2one): DEL relation: res.partner
+im_livechat  / mail.channel             / rating_ids (one2many)         : DEL relation: rating.rating
+im_livechat  / mail.channel             / rating_last_value (float)     : DEL
+im_livechat  / res.users                / livechat_username (char)      : not stored anymore
+im_livechat  / res.users                / livechat_username (char)      : now a function
+im_livechat  / res.users.settings       / livechat_lang_ids (many2many) : NEW relation: res.lang
+im_livechat  / res.users.settings       / livechat_username (char)      : NEW
+# NOTHING TO DO
+
+---XML records in module 'im_livechat'---
+NEW ir.actions.act_window: im_livechat.discuss_channel_action
+NEW ir.actions.act_window: im_livechat.discuss_channel_action_from_livechat_channel
+DEL ir.actions.act_window: im_livechat.im_livechat_canned_response_action
+DEL ir.actions.act_window: im_livechat.mail_channel_action
+DEL ir.actions.act_window: im_livechat.mail_channel_action_from_livechat_channel
+NEW ir.actions.act_window.view: im_livechat.discuss_channel_action_form
+NEW ir.actions.act_window.view: im_livechat.discuss_channel_action_livechat_form
+NEW ir.actions.act_window.view: im_livechat.discuss_channel_action_livechat_tree
+NEW ir.actions.act_window.view: im_livechat.discuss_channel_action_tree
+NEW ir.actions.act_window.view: im_livechat.rating_rating_action_livechat_view_tree
+DEL ir.actions.act_window.view: im_livechat.mail_channel_action_form
+DEL ir.actions.act_window.view: im_livechat.mail_channel_action_livechat_form
+DEL ir.actions.act_window.view: im_livechat.mail_channel_action_livechat_tree
+DEL ir.actions.act_window.view: im_livechat.mail_channel_action_tree
+NEW ir.model.access: im_livechat.access_livechat_channel_employee
+NEW ir.model.access: im_livechat.access_livechat_channel_portal
+NEW ir.model.access: im_livechat.access_livechat_channel_public
+NEW ir.model.access: im_livechat.access_livechat_channel_rule_employee
+NEW ir.model.access: im_livechat.access_livechat_channel_rule_portal
+NEW ir.model.access: im_livechat.access_livechat_channel_rule_public
+DEL ir.model.access: im_livechat.access_chatbot_message_all
+DEL ir.model.access: im_livechat.access_chatbot_script
+DEL ir.model.access: im_livechat.access_chatbot_script_step
+DEL ir.model.access: im_livechat.access_livechat_channel
+DEL ir.model.access: im_livechat.access_livechat_channel_rule
+# NOTHING TO DO
+
+NEW ir.model.constraint: im_livechat.constraint_discuss_channel_livechat_operator_id
+DEL ir.model.constraint: im_livechat.constraint_mail_channel_livechat_operator_id
+# DONE: pre-migration: deleted safely old constraint (we don't have renaming mechanism)
+
+NEW ir.rule: im_livechat.ir_rule_discuss_channel_group_im_livechat_group_manager (noupdate)
+NEW ir.rule: im_livechat.ir_rule_discuss_channel_member_group_im_livechat_group_manager (noupdate)
+# NOTHING TO DO
+
+DEL ir.rule: im_livechat.im_livechat_rule_manager_read_all_mail_channel (noupdate)
+# DONE: post-migration: deleted safely
+
+NEW ir.ui.view: im_livechat.discuss_channel_view_form
+NEW ir.ui.view: im_livechat.discuss_channel_view_search
+NEW ir.ui.view: im_livechat.discuss_channel_view_tree
+NEW ir.ui.view: im_livechat.qunit_embed_suite
+NEW ir.ui.view: im_livechat.rating_rating_view_kanban
+NEW ir.ui.view: im_livechat.rating_rating_view_tree
+DEL ir.ui.view: im_livechat.im_livechat_canned_response_view_tree
+DEL ir.ui.view: im_livechat.mail_channel_view_form
+DEL ir.ui.view: im_livechat.mail_channel_view_search
+DEL ir.ui.view: im_livechat.mail_channel_view_tree
+# NOTHING TO DO

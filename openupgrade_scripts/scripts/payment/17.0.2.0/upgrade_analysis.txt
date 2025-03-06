@@ -1,22 +1,17 @@
 ---Models in module 'payment'---
-obsolete model payment.icon
+obsolete model payment.icon (renamed to payment.method)
 new model payment.capture.wizard [transient]
-new model payment.method
+new model payment.method (renamed from payment.icon)
 ---Fields in module 'payment'---
-payment      / payment.icon             / image (binary)                : DEL attachment: True
-payment      / payment.icon             / image_payment_form (binary)   : DEL attachment: True
-payment      / payment.icon             / name (char)                   : DEL
-payment      / payment.icon             / provider_ids (many2many)      : DEL relation: payment.provider
-payment      / payment.icon             / sequence (integer)            : DEL
+payment      / payment.icon             / _order                        : _order is now 'active desc, sequence, name' ('sequence, name')
+payment      / payment.icon             / image (binary)                : now required
+payment      / payment.icon             / name (char)                   : now required
+payment      / payment.icon             / provider_ids (many2many)      : column1 is now 'payment_method_id' ('payment_icon_id') [payment_icon_payment_provider_rel]
+payment      / payment.icon             / provider_ids (many2many)      : table is now 'payment_method_payment_provider_rel' ('payment_icon_payment_provider_rel')
 payment      / payment.method           / active (boolean)              : NEW hasdefault: default
 payment      / payment.method           / brand_ids (one2many)          : NEW relation: payment.method
 payment      / payment.method           / code (char)                   : NEW required
-payment      / payment.method           / image (binary)                : NEW required, attachment: True
-payment      / payment.method           / image_payment_form (binary)   : NEW attachment: True, isrelated: related, stored
-payment      / payment.method           / name (char)                   : NEW required
 payment      / payment.method           / primary_payment_method_id (many2one): NEW relation: payment.method
-payment      / payment.method           / provider_ids (many2many)      : NEW relation: payment.provider
-payment      / payment.method           / sequence (integer)            : NEW hasdefault: default
 payment      / payment.method           / support_express_checkout (boolean): NEW
 payment      / payment.method           / support_refund (selection)    : NEW selection_keys: ['full_only', 'partial']
 payment      / payment.method           / support_tokenization (boolean): NEW

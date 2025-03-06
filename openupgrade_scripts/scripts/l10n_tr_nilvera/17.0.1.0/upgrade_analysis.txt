@@ -1,0 +1,18 @@
+---Models in module 'l10n_tr_nilvera'---
+new model l10n_tr.nilvera.alias
+---Fields in module 'l10n_tr_nilvera'---
+l10n_tr_nilvera / account.journal          / is_nilvera_journal (boolean)  : NEW
+l10n_tr_nilvera / l10n_tr.nilvera.alias    / name (char)                   : NEW
+l10n_tr_nilvera / l10n_tr.nilvera.alias    / partner_id (many2one)         : NEW relation: res.partner
+l10n_tr_nilvera / res.company              / l10n_tr_nilvera_api_key (char): NEW
+l10n_tr_nilvera / res.company              / l10n_tr_nilvera_environment (selection): NEW required, selection_keys: ['production', 'sandbox'], hasdefault: default
+l10n_tr_nilvera / res.company              / l10n_tr_nilvera_purchase_journal_id (many2one): NEW relation: account.journal, isfunction: function, stored
+l10n_tr_nilvera / res.partner              / l10n_tr_nilvera_customer_alias_id (many2one): NEW relation: l10n_tr.nilvera.alias, hasdefault: compute
+l10n_tr_nilvera / res.partner              / l10n_tr_nilvera_customer_alias_ids (one2many): NEW relation: l10n_tr.nilvera.alias
+l10n_tr_nilvera / res.partner              / l10n_tr_nilvera_customer_status (selection): NEW selection_keys: ['earchive', 'einvoice', 'not_checked'], isfunction: function, stored
+l10n_tr_nilvera / res.partner              / ubl_cii_format (False)        : NEW selection_keys: ['facturx', 'nlcius', 'pint_jp', 'pint_my', 'ubl_a_nz', 'ubl_bis3', 'ubl_sg', 'ubl_tr', 'xrechnung'], mode: modify
+---XML records in module 'l10n_tr_nilvera'---
+NEW ir.model.access: l10n_tr_nilvera.access_l10n_tr_nilvera_alias
+NEW ir.model.access: l10n_tr_nilvera.access_l10n_tr_nilvera_alias_readonly
+NEW ir.ui.view: l10n_tr_nilvera.res_config_settings_view_form
+NEW ir.ui.view: l10n_tr_nilvera.view_partner_property_form_inherit_ubl_tr

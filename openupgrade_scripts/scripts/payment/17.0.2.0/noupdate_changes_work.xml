@@ -1,0 +1,405 @@
+<?xml version='1.0' encoding='utf-8'?>
+<odoo>
+    <!-- OpenUpgrade: these methods are created manually /-->
+    <record id="payment_method_bancontact" model="payment.method">
+        <field name="name">Bancontact</field>
+        <field name="code">bancontact</field>
+        <field name="sequence">1000</field>
+        <field name="active">False</field>
+        <field name="image" type="base64" file="payment/static/img/bancontact.png"/>
+        <field name="support_tokenization">False</field>
+        <field name="support_express_checkout">False</field>
+        <field name="support_refund">partial</field>
+        <field name="supported_country_ids"
+               eval="[Command.set([
+                         ref('base.be'),
+                     ])]"
+        />
+        <field name="supported_currency_ids"
+               eval="[Command.set([
+                         ref('base.EUR'),
+                     ])]"
+        />
+    </record>
+    <record id="payment_method_eps" model="payment.method">
+        <field name="name">EPS</field>
+        <field name="code">eps</field>
+        <field name="sequence">1000</field>
+        <field name="active">False</field>
+        <field name="image" type="base64" file="payment/static/img/eps.png"/>
+        <field name="support_tokenization">False</field>
+        <field name="support_express_checkout">False</field>
+        <field name="support_refund">partial</field>
+        <field name="supported_country_ids"
+               eval="[Command.set([
+                         ref('base.at'),
+                     ])]"
+        />
+        <field name="supported_currency_ids"
+               eval="[Command.set([
+                         ref('base.EUR'),
+                     ])]"
+        />
+    </record>
+    <record id="payment_method_giropay" model="payment.method">
+        <field name="name">Giropay</field>
+        <field name="code">giropay</field>
+        <field name="sequence">1000</field>
+        <field name="active">False</field>
+        <field name="image" type="base64" file="payment/static/img/giropay.png"/>
+        <field name="support_tokenization">False</field>
+        <field name="support_express_checkout">False</field>
+        <field name="support_refund">partial</field>
+        <field name="supported_country_ids"
+               eval="[Command.set([
+                         ref('base.de'),
+                     ])]"
+        />
+        <field name="supported_currency_ids"
+               eval="[Command.set([
+                         ref('base.EUR'),
+                     ])]"
+        />
+    </record>
+    <record id="payment_method_ideal" model="payment.method">
+        <field name="name">iDEAL</field>
+        <field name="code">ideal</field>
+        <field name="sequence">1000</field>
+        <field name="active">False</field>
+        <field name="image" type="base64" file="payment/static/img/ideal.png"/>
+        <field name="support_tokenization">False</field>
+        <field name="support_express_checkout">False</field>
+        <field name="support_refund">partial</field>
+        <field name="supported_country_ids"
+               eval="[Command.set([
+                         ref('base.nl'),
+                     ])]"
+        />
+        <field name="supported_currency_ids"
+               eval="[Command.set([
+                         ref('base.EUR'),
+                     ])]"
+        />
+    </record>
+    <record id="payment_method_kbc_cbc" model="payment.method">
+        <field name="name">KBC/CBC</field>
+        <field name="code">kbc_cbc</field>
+        <field name="sequence">1000</field>
+        <field name="active">False</field>
+        <field name="image" type="base64" file="payment/static/img/kbc.png"/>
+        <field name="support_tokenization">False</field>
+        <field name="support_express_checkout">False</field>
+        <field name="support_refund">partial</field>
+        <field name="supported_country_ids"
+               eval="[Command.set([
+                         ref('base.be'),
+                     ])]"
+        />
+        <field name="supported_currency_ids"
+               eval="[Command.set([
+                         ref('base.EUR'),
+                     ])]"
+        />
+    </record>
+    <record id="payment_method_mobile_money" model="payment.method">
+        <field name="name">Mobile money</field>
+        <field name="code">mobile_money</field>
+        <field name="sequence">1000</field>
+        <field name="active">False</field>
+        <field name="image" type="base64" file="payment/static/img/mtn-mobile-money.png"/>
+        <field name="support_tokenization">False</field>
+        <field name="support_express_checkout">False</field>
+        <field name="support_refund"></field>
+        <field name="supported_country_ids"
+               eval="[Command.set([
+                         ref('base.gh'),
+                         ref('base.cm'),
+                         ref('base.ci'),
+                         ref('base.ml'),
+                         ref('base.sn'),
+                         ref('base.ug'),
+                         ref('base.rw'),
+                         ref('base.zm'),
+                     ])]"
+        />
+        <field name="supported_currency_ids"
+               eval="[Command.set([
+                         ref('base.GHS'),
+                         ref('base.XAF'),
+                         ref('base.XOF'),
+                         ref('base.UGX'),
+                         ref('base.RWF'),
+                         ref('base.ZMW'),
+                     ])]"
+        />
+    </record>
+    <record id="payment_method_mpesa" model="payment.method">
+        <field name="name">M-Pesa</field>
+        <field name="code">mpesa</field>
+        <field name="sequence">1000</field>
+        <field name="active">False</field>
+        <field name="image" type="base64" file="payment/static/img/mpesa.png"/>
+        <field name="support_tokenization">False</field>
+        <field name="support_express_checkout">False</field>
+        <field name="support_refund"></field>
+        <field name="supported_country_ids"
+               eval="[Command.set([
+                         ref('base.ke'),
+                     ])]"
+        />
+        <field name="supported_currency_ids"
+               eval="[Command.set([
+                         ref('base.KES'),
+                     ])]"
+        />
+    </record>
+    <record id="payment_method_paypal" model="payment.method">
+        <field name="name">Paypal</field>
+        <field name="code">paypal</field>
+        <field name="sequence">20</field>
+        <field name="active">False</field>
+        <field name="image" type="base64" file="payment/static/img/paypal.png"/>
+        <field name="support_tokenization">False</field>
+        <field name="support_express_checkout">False</field>
+        <field name="support_refund">partial</field>
+    </record>
+    <record id="payment_method_p24" model="payment.method">
+        <field name="name">P24</field>
+        <field name="code">p24</field>
+        <field name="sequence">1000</field>
+        <field name="active">False</field>
+        <field name="image" type="base64" file="payment/static/img/p24.png"/>
+        <field name="support_tokenization">False</field>
+        <field name="support_express_checkout">False</field>
+        <field name="support_refund">partial</field>
+        <field name="supported_country_ids"
+               eval="[Command.set([
+                         ref('base.pl'),
+                     ])]"
+        />
+        <field name="supported_currency_ids"
+               eval="[Command.set([
+                         ref('base.EUR'),
+                         ref('base.PLN'),
+                     ])]"
+        />
+    </record>
+    <record id="payment_method_sepa_direct_debit" model="payment.method">
+        <field name="name">SEPA Direct Debit</field>
+        <field name="code">sepa_direct_debit</field>
+        <field name="sequence">1000</field>
+        <field name="active">False</field>
+        <field name="image" type="base64" file="payment/static/img/sepa.png"/>
+        <field name="support_tokenization">True</field>
+        <field name="support_express_checkout">False</field>
+        <field name="support_refund">partial</field>
+        <field name="supported_country_ids"
+               eval="[Command.set([
+                         ref('base.at'),
+                         ref('base.be'),
+                         ref('base.cy'),
+                         ref('base.ee'),
+                         ref('base.fi'),
+                         ref('base.fr'),
+                         ref('base.de'),
+                         ref('base.gr'),
+                         ref('base.ie'),
+                         ref('base.it'),
+                         ref('base.lv'),
+                         ref('base.lt'),
+                         ref('base.lu'),
+                         ref('base.mt'),
+                         ref('base.nl'),
+                         ref('base.pt'),
+                         ref('base.sk'),
+                         ref('base.si'),
+                         ref('base.es'),
+                         ref('base.ch'),
+                         ref('base.cz'),
+                         ref('base.uk'),
+                         ref('base.is'),
+                         ref('base.hu'),
+                         ref('base.ro'),
+                         ref('base.se'),
+                         ref('base.hr'),
+                         ref('base.no'),
+                         ref('base.bg'),
+                     ])]"
+        />
+        <field name="supported_currency_ids"
+               eval="[Command.set([
+                         ref('base.EUR'),
+                     ])]"
+        />
+    </record>
+    <record id="payment_method_ussd" model="payment.method">
+        <field name="name">USSD</field>
+        <field name="code">ussd</field>
+        <field name="sequence">1000</field>
+        <field name="active">False</field>
+        <field name="image" type="base64" file="payment/static/img/flutterwave.png"/>
+        <field name="support_tokenization">False</field>
+        <field name="support_express_checkout">False</field>
+        <field name="support_refund"></field>
+    </record>
+    <record id="payment_method_amex" model="payment.method">
+        <field name="name">American Express</field>
+        <field name="code">amex</field>
+        <field name="primary_payment_method_id" eval="ref('payment.payment_method_card')"/>
+        <field name="sequence">1000</field>
+        <field name="active">False</field>
+        <field name="image" type="base64" file="payment/static/img/amex.png"/>
+    </record>
+    <record id="payment_method_cirrus" model="payment.method">
+        <field name="name">Cirrus</field>
+        <field name="code">cirrus</field>
+        <field name="primary_payment_method_id" eval="ref('payment.payment_method_card')"/>
+        <field name="sequence">1000</field>
+        <field name="active">False</field>
+        <field name="image" type="base64" file="payment/static/img/cirrus.png"/>
+    </record>
+    <record id="payment_method_codensa" model="payment.method">
+        <field name="name">Codensa</field>
+        <field name="code">codensa</field>
+        <field name="primary_payment_method_id" eval="ref('payment.payment_method_card')"/>
+        <field name="sequence">1000</field>
+        <field name="active">False</field>
+        <field name="image" type="base64" file="payment/static/img/codensa.png"/>
+    </record>
+    <record id="payment_method_diners" model="payment.method">
+        <field name="name">Diners Club International</field>
+        <field name="code">diners</field>
+        <field name="primary_payment_method_id" eval="ref('payment.payment_method_card')"/>
+        <field name="sequence">1000</field>
+        <field name="active">False</field>
+        <field name="image" type="base64" file="payment/static/img/diners.png"/>
+    </record>
+    <record id="payment_method_discover" model="payment.method">
+        <field name="name">Discover</field>
+        <field name="code">discover</field>
+        <field name="primary_payment_method_id" eval="ref('payment.payment_method_card')"/>
+        <field name="sequence">1000</field>
+        <field name="active">False</field>
+        <field name="image" type="base64" file="payment/static/img/discover.png"/>
+    </record>
+    <record id="payment_method_jcb" model="payment.method">
+        <field name="name">JCB</field>
+        <field name="code">jcb</field>
+        <field name="primary_payment_method_id" eval="ref('payment.payment_method_card')"/>
+        <field name="sequence">1000</field>
+        <field name="active">False</field>
+        <field name="image" type="base64" file="payment/static/img/jcb.png"/>
+    </record>
+    <record id="payment_method_mada" model="payment.method">
+        <field name="name">Mada</field>
+        <field name="code">mada</field>
+        <field name="sequence">1000</field>
+        <field name="active">False</field>
+        <field name="image" type="base64" file="payment/static/img/mada.png"/>
+        <field name="support_tokenization">False</field>
+        <field name="support_express_checkout">False</field>
+        <field name="support_refund"></field>
+        <field name="supported_country_ids"
+               eval="[Command.set([
+                         ref('base.sa'),
+                         ref('base.ae'),
+                     ])]"
+        />
+        <field name="supported_currency_ids"
+               eval="[Command.set([
+                         ref('base.SAR'),
+                     ])]"
+        />
+    </record>
+    <record id="payment_method_maestro" model="payment.method">
+        <field name="name">Maestro</field>
+        <field name="code">maestro</field>
+        <field name="primary_payment_method_id" eval="ref('payment.payment_method_card')"/>
+        <field name="sequence">1000</field>
+        <field name="active">False</field>
+        <field name="image" type="base64" file="payment/static/img/maestro.png"/>
+    </record>
+    <record id="payment_method_mastercard" model="payment.method">
+        <field name="name">MasterCard</field>
+        <field name="code">mastercard</field>
+        <field name="primary_payment_method_id" eval="ref('payment.payment_method_card')"/>
+        <field name="sequence">1000</field>
+        <field name="active">False</field>
+        <field name="image" type="base64" file="payment/static/img/mastercard.png"/>
+    </record>
+    <record id="payment_method_rupay" model="payment.method">
+        <field name="name">RuPay</field>
+        <field name="code">rupay</field>
+        <field name="primary_payment_method_id" eval="ref('payment.payment_method_card')"/>
+        <field name="sequence">1000</field>
+        <field name="active">False</field>
+        <field name="image" type="base64" file="payment/static/img/rupay.png"/>
+    </record>
+    <record id="payment_method_unionpay" model="payment.method">
+        <field name="name">UnionPay</field>
+        <field name="code">unionpay</field>
+        <field name="primary_payment_method_id" eval="ref('payment.payment_method_card')"/>
+        <field name="sequence">1000</field>
+        <field name="active">False</field>
+        <field name="image" type="base64" file="payment/static/img/unionpay.png"/>
+    </record>
+    <record id="payment_method_visa" model="payment.method">
+        <field name="name">VISA</field>
+        <field name="code">visa</field>
+        <field name="primary_payment_method_id" eval="ref('payment.payment_method_card')"/>
+        <field name="sequence">1000</field>
+        <field name="active">False</field>
+        <field name="image" type="base64" file="payment/static/img/visa.png"/>
+    </record>
+    <!-- OpenUpgrade: end of manual additions /-->
+  <record id="payment_provider_adyen" model="payment.provider">
+    <field name="payment_method_ids" eval="[Command.set([                          ref('payment.payment_method_ach_direct_debit'),                          ref('payment.payment_method_affirm'),                          ref('payment.payment_method_afterpay'),                          ref('payment.payment_method_alipay'),                          ref('payment.payment_method_alipay_hk'),                          ref('payment.payment_method_alma'),                          ref('payment.payment_method_bacs_direct_debit'),                          ref('payment.payment_method_bancontact'),                          ref('payment.payment_method_benefit'),                          ref('payment.payment_method_bizum'),                          ref('payment.payment_method_blik'),                          ref('payment.payment_method_card'),                          ref('payment.payment_method_cash_app_pay'),                          ref('payment.payment_method_clearpay'),                          ref('payment.payment_method_dana'),                          ref('payment.payment_method_duitnow'),                          ref('payment.payment_method_elo'),                          ref('payment.payment_method_eps'),                          ref('payment.payment_method_fpx'),                          ref('payment.payment_method_gcash'),                          ref('payment.payment_method_giropay'),                          ref('payment.payment_method_gopay'),                          ref('payment.payment_method_hipercard'),                          ref('payment.payment_method_ideal'),                          ref('payment.payment_method_kakaopay'),                          ref('payment.payment_method_klarna'),                          ref('payment.payment_method_klarna_paynow'),                          ref('payment.payment_method_klarna_pay_over_time'),                          ref('payment.payment_method_knet'),                          ref('payment.payment_method_mbway'),                          ref('payment.payment_method_mobile_pay'),                          ref('payment.payment_method_momo'),                          ref('payment.payment_method_multibanco'),                          ref('payment.payment_method_napas_card'),                          ref('payment.payment_method_online_banking_czech_republic'),                          ref('payment.payment_method_online_banking_india'),                          ref('payment.payment_method_online_banking_slovakia'),                          ref('payment.payment_method_online_banking_thailand'),                          ref('payment.payment_method_open_banking'),                          ref('payment.payment_method_p24'),                          ref('payment.payment_method_paybright'),                          ref('payment.payment_method_paysafecard'),                          ref('payment.payment_method_paynow'),                          ref('payment.payment_method_paypal'),                          ref('payment.payment_method_paytm'),                          ref('payment.payment_method_paytrail'),                          ref('payment.payment_method_pix'),                          ref('payment.payment_method_promptpay'),                          ref('payment.payment_method_ratepay'),                          ref('payment.payment_method_samsung_pay'),                          ref('payment.payment_method_sepa_direct_debit'),                          ref('payment.payment_method_sofort'),                          ref('payment.payment_method_swish'),                          ref('payment.payment_method_touch_n_go'),                          ref('payment.payment_method_trustly'),                          ref('payment.payment_method_twint'),                          ref('payment.payment_method_upi'),                          ref('payment.payment_method_vipps'),                          ref('payment.payment_method_wallets_india'),                          ref('payment.payment_method_walley'),                          ref('payment.payment_method_wechat_pay'),                          ref('payment.payment_method_zip'),                      ])]"/>
+  </record>
+  <record id="payment_provider_aps" model="payment.provider">
+    <field name="payment_method_ids" eval="[Command.set([                          ref('payment.payment_method_card'),                          ref('payment.payment_method_mada'),                          ref('payment.payment_method_knet'),                          ref('payment.payment_method_meeza'),                          ref('payment.payment_method_naps'),                          ref('payment.payment_method_omannet'),                          ref('payment.payment_method_benefit'),                      ])]"/>
+  </record>
+  <record id="payment_provider_asiapay" model="payment.provider">
+    <field name="payment_method_ids" eval="[Command.set([                          ref('payment.payment_method_card'),                          ref('payment.payment_method_alipay'),                          ref('payment.payment_method_wechat_pay'),                          ref('payment.payment_method_poli'),                          ref('payment.payment_method_afterpay'),                          ref('payment.payment_method_clearpay'),                          ref('payment.payment_method_humm'),                          ref('payment.payment_method_zip'),                          ref('payment.payment_method_paypal'),                          ref('payment.payment_method_atome'),                          ref('payment.payment_method_pace'),                          ref('payment.payment_method_shopback'),                          ref('payment.payment_method_grabpay'),                          ref('payment.payment_method_samsung_pay'),                          ref('payment.payment_method_hoolah'),                          ref('payment.payment_method_boost'),                          ref('payment.payment_method_duitnow'),                          ref('payment.payment_method_touch_n_go'),                          ref('payment.payment_method_bancnet'),                          ref('payment.payment_method_gcash'),                          ref('payment.payment_method_paynow'),                          ref('payment.payment_method_linepay'),                          ref('payment.payment_method_bangkok_bank'),                          ref('payment.payment_method_krungthai_bank'),                          ref('payment.payment_method_uob'),                          ref('payment.payment_method_scb'),                          ref('payment.payment_method_bank_of_ayudhya'),                          ref('payment.payment_method_kasikorn_bank'),                          ref('payment.payment_method_rabbit_line_pay'),                          ref('payment.payment_method_truemoney'),                          ref('payment.payment_method_fpx'),                          ref('payment.payment_method_fps'),                          ref('payment.payment_method_hd'),                          ref('payment.payment_method_maybank'),                          ref('payment.payment_method_pay_id'),                          ref('payment.payment_method_promptpay'),                          ref('payment.payment_method_techcom'),                          ref('payment.payment_method_tienphong'),                          ref('payment.payment_method_ttb'),                          ref('payment.payment_method_upi'),                          ref('payment.payment_method_vietcom'),                          ref('payment.payment_method_tendopay'),                          ref('payment.payment_method_alipay_hk'),                          ref('payment.payment_method_bharatqr'),                          ref('payment.payment_method_momo'),                          ref('payment.payment_method_octopus'),                          ref('payment.payment_method_maya'),                          ref('payment.payment_method_uatp'),                          ref('payment.payment_method_tenpay'),                          ref('payment.payment_method_enets'),                          ref('payment.payment_method_jkopay'),                          ref('payment.payment_method_payme'),                          ref('payment.payment_method_tmb'),                      ])]"/>
+  </record>
+  <record id="payment_provider_authorize" model="payment.provider">
+    <field name="payment_method_ids" eval="[Command.set([                          ref('payment.payment_method_ach_direct_debit'),                          ref('payment.payment_method_card'),                      ])]"/>
+  </record>
+  <record id="payment_provider_buckaroo" model="payment.provider">
+    <field name="payment_method_ids" eval="[Command.set([                          ref('payment.payment_method_bancontact'),                          ref('payment.payment_method_bank_reference'),                          ref('payment.payment_method_card'),                          ref('payment.payment_method_paypal'),                          ref('payment.payment_method_ideal'),                          ref('payment.payment_method_afterpay_riverty'),                          ref('payment.payment_method_sepa_direct_debit'),                          ref('payment.payment_method_alipay'),                          ref('payment.payment_method_wechat_pay'),                          ref('payment.payment_method_klarna'),                          ref('payment.payment_method_trustly'),                          ref('payment.payment_method_sofort'),                          ref('payment.payment_method_in3'),                          ref('payment.payment_method_tinka'),                          ref('payment.payment_method_billink'),                          ref('payment.payment_method_kbc_cbc'),                          ref('payment.payment_method_belfius'),                          ref('payment.payment_method_giropay'),                          ref('payment.payment_method_p24'),                          ref('payment.payment_method_poste_pay'),                          ref('payment.payment_method_eps'),                          ref('payment.payment_method_cartes_bancaires'),                      ])]"/>
+  </record>
+  <record id="payment_provider_company_rule" model="ir.rule">
+    <field name="domain_force">[('company_id', 'parent_of', company_ids)]</field>
+  </record>
+  <record id="payment_provider_flutterwave" model="payment.provider">
+    <field name="payment_method_ids" eval="[Command.set([                          ref('payment.payment_method_card'),                          ref('payment.payment_method_mpesa'),                          ref('payment.payment_method_mobile_money'),                          ref('payment.payment_method_bank_transfer'),                          ref('payment.payment_method_bank_account'),                          ref('payment.payment_method_credit'),                          ref('payment.payment_method_paypal'),                          ref('payment.payment_method_ussd'),                      ])]"/>
+  </record>
+  <record id="payment_provider_mercado_pago" model="payment.provider">
+    <field name="payment_method_ids" eval="[Command.set([                          ref('payment.payment_method_card'),                          ref('payment.payment_method_bank_transfer'),                          ref('payment.payment_method_paypal'),                      ])]"/>
+  </record>
+  <record id="payment_provider_mollie" model="payment.provider">
+    <field name="payment_method_ids" eval="[Command.set([                          ref('payment.payment_method_bancontact'),                          ref('payment.payment_method_bank_transfer'),                          ref('payment.payment_method_belfius'),                          ref('payment.payment_method_card'),                          ref('payment.payment_method_eps'),                          ref('payment.payment_method_giropay'),                          ref('payment.payment_method_ideal'),                          ref('payment.payment_method_kbc_cbc'),                          ref('payment.payment_method_paypal'),                          ref('payment.payment_method_paysafecard'),                          ref('payment.payment_method_p24'),                          ref('payment.payment_method_sofort'),                          ref('payment.payment_method_twint'),                      ])]"/>
+  </record>
+  <record id="payment_provider_paypal" model="payment.provider">
+    <field name="payment_method_ids" eval="[Command.set([                          ref('payment.payment_method_paypal'),                      ])]"/>
+  </record>
+  <record id="payment_provider_razorpay" model="payment.provider">
+    <field name="payment_method_ids" eval="[Command.set([                          ref('payment.payment_method_card'),                          ref('payment.payment_method_netbanking'),                          ref('payment.payment_method_upi'),                          ref('payment.payment_method_wallets_india'),                      ])]"/>
+  </record>
+  <record id="payment_provider_sepa_direct_debit" model="payment.provider">
+    <field name="payment_method_ids" eval="[Command.set([                      ref('payment.payment_method_sepa_direct_debit'),                  ])]"/>
+  </record>
+  <record id="payment_provider_sips" model="payment.provider">
+    <field name="payment_method_ids" eval="[Command.set([                          ref('payment.payment_method_card'),                          ref('payment.payment_method_ideal'),                          ref('payment.payment_method_sofort'),                          ref('payment.payment_method_giropay'),                          ref('payment.payment_method_kbc_cbc'),                          ref('payment.payment_method_paypal'),                          ref('payment.payment_method_samsung_pay'),                          ref('payment.payment_method_bancontact'),                          ref('payment.payment_method_lyfpay'),                          ref('payment.payment_method_lydia'),                          ref('payment.payment_method_floa_bank'),                          ref('payment.payment_method_cofidis'),                          ref('payment.payment_method_frafinance'),                      ])]"/>
+  </record>
+  <record id="payment_provider_stripe" model="payment.provider">
+    <field name="payment_method_ids" eval="[Command.set([                          ref('payment.payment_method_ach_direct_debit'),                          ref('payment.payment_method_affirm'),                          ref('payment.payment_method_afterpay'),                          ref('payment.payment_method_alipay'),                          ref('payment.payment_method_bacs_direct_debit'),                          ref('payment.payment_method_bancontact'),                          ref('payment.payment_method_becs_direct_debit'),                          ref('payment.payment_method_boleto'),                          ref('payment.payment_method_card'),                          ref('payment.payment_method_cash_app_pay'),                          ref('payment.payment_method_clearpay'),                          ref('payment.payment_method_eps'),                          ref('payment.payment_method_fpx'),                          ref('payment.payment_method_giropay'),                          ref('payment.payment_method_grabpay'),                          ref('payment.payment_method_ideal'),                          ref('payment.payment_method_klarna'),                          ref('payment.payment_method_mobile_pay'),                          ref('payment.payment_method_multibanco'),                          ref('payment.payment_method_p24'),                          ref('payment.payment_method_paynow'),                          ref('payment.payment_method_paypal'),                          ref('payment.payment_method_pix'),                          ref('payment.payment_method_promptpay'),                          ref('payment.payment_method_revolut_pay'),                          ref('payment.payment_method_sepa_direct_debit'),                          ref('payment.payment_method_sofort'),                          ref('payment.payment_method_upi'),                          ref('payment.payment_method_wechat_pay'),                          ref('payment.payment_method_zip'),                      ])]"/>
+  </record>
+  <record id="payment_token_company_rule" model="ir.rule">
+    <field name="domain_force">[('company_id', 'parent_of', company_ids)]</field>
+  </record>
+  <record id="payment_token_user_rule" model="ir.rule">
+    <field name="domain_force">[('partner_id', '=', user.partner_id.id)]</field>
+    <field name="groups" eval="[(4, ref('base.group_user')),                                     (4, ref('base.group_portal')),                                     (4, ref('base.group_public'))]"/>
+    <field name="name">Users can access only their own tokens</field>
+  </record>
+</odoo>

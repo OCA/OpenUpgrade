@@ -8,8 +8,6 @@ _deleted_xml_records = [
     "mail.ir_rule_mail_channel_member_group_user",
     "mail.mail_channel_admin",
     "mail.mail_channel_rule",
-    "mail.channel_all_employees",
-    "mail.channel_member_general_channel_for_admin",
 ]
 
 
@@ -89,6 +87,65 @@ def _mail_template_convert_report_template_m2o_to_m2m(env):
     )
 
 
+def _fill_mail_message_outgoing(env):
+    # set outgoing messages
+    group = env.ref("base.group_user")
+    openupgrade.logged_query(
+        env.cr,
+        f"""
+        UPDATE mail_message mm
+        SET message_type = 'email_outgoing'
+        FROM mail_mail mail, res_partner rp
+        JOIN res_users ru ON ru.partner_id = rp.id
+        JOIN res_groups_users_rel rel ON rel.uid = ru.id
+            AND rel.gid = {group.id}
+        WHERE mm.message_type = 'email'
+        AND mm.message_id like '%-openerp-' || mm.res_id || '-' || mm.model || '@%'
+        AND (mm.author_id = rp.id OR mail.mail_message_id = mm.id)
+        """,
+    )
+
+
+def _mail_activity_plan_template(env):
+    """If the OCA mail_activity_plan module was installed, we create the
+    mail.activity.plan.template records.
+    """
+    if not openupgrade.table_exists(env.cr, "mail_activity_plan_activity_type"):
+        return
+    openupgrade.logged_query(
+        env.cr,
+        """
+        INSERT INTO mail_activity_plan_template (
+            plan_id,
+            sequence,
+            activity_type_id,
+            summary,
+            responsible_type,
+            responsible_id,
+            create_uid,
+            create_date,
+            write_uid,
+            write_date
+        ) SELECT rel.mail_activity_plan_id,
+            10,
+            detail.activity_type_id,
+            detail.summary,
+            CASE
+              WHEN detail.user_id IS NOT NULL THEN 'other'
+              ELSE 'on_demand'
+            END AS responsible_type,
+            detail.user_id,
+            detail.create_uid,
+            detail.create_date,
+            detail.write_uid,
+            detail.write_date
+        FROM mail_activity_plan_mail_activity_plan_activity_type_rel AS rel
+        LEFT JOIN mail_activity_plan_activity_type AS detail
+            ON rel.mail_activity_plan_activity_type_id = detail.id
+        """,
+    )
+
+
 @openupgrade.migrate()
 def migrate(env, version):
     openupgrade.load_data(env, "mail", "17.0.1.15/noupdate_changes.xml")
@@ -100,3 +157,5 @@ def migrate(env, version):
     _fill_res_company_alias_domain_id(env)
     _mail_alias_fill_alias_full_name(env)
     _mail_template_convert_report_template_m2o_to_m2m(env)
+    _fill_mail_message_outgoing(env)
+    _mail_activity_plan_template(env)

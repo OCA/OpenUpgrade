@@ -1,0 +1,13 @@
+---Models in module 'sales_team'---
+---Fields in module 'sales_team'---
+sales_team   / crm.team                 / message_main_attachment_id (many2one): DEL relation: ir.attachment
+sales_team   / crm.team.member          / message_main_attachment_id (many2one): DEL relation: ir.attachment
+NOTHING TO DO: related to mail module
+
+sales_team   / crm.team                 / rating_ids (one2many)         : NEW relation: rating.rating
+sales_team   / crm.team.member          / rating_ids (one2many)         : NEW relation: rating.rating
+NOTHING TO DO: one2many
+
+---XML records in module 'sales_team'---
+DEL ir.ui.menu: sales_team.menu_sale_config
+NOTHING TO DO

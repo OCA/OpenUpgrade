@@ -6,6 +6,8 @@ purchase     / purchase.order           / message_main_attachment_id (many2one):
 purchase     / purchase.order           / rating_ids (one2many)         : NEW relation: rating.rating
 purchase     / purchase.order.line      / discount (float)              : NEW hasdefault: compute
 purchase     / res.partner              / buyer_id (many2one)           : NEW relation: res.users
+purchase     / res.partner              / supplier_invoice_count (integer): previously in module account
+purchase     / res.users                / supplier_invoice_count (integer): previously in module account
 ---XML records in module 'purchase'---
 NEW ir.ui.view: purchase.document_tax_totals
 NEW ir.ui.view: purchase.product_template_search_view_purchase

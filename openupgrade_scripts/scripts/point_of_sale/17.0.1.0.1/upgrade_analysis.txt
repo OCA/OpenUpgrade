@@ -3,7 +3,7 @@ obsolete model pos.cache
 obsolete model pos.session.check_product_wizard [transient]
 new model pos.combo
 new model pos.combo.line
-new model pos.printer
+new model pos.printer (renamed from restaurant.printer in module pos_restaurant)
 ---Fields in module 'point_of_sale'---
 point_of_sale / account.move             / pos_refunded_invoice_ids (many2many): NEW relation: account.move
 point_of_sale / pos.combo                / combo_line_ids (one2many)     : NEW relation: pos.combo.line
@@ -37,10 +37,6 @@ point_of_sale / pos.order.line           / uuid (char)                   : previ
 point_of_sale / pos.payment.method       / _order                        : _order is now 'sequence, id' ('id asc')
 point_of_sale / pos.payment.method       / image (binary)                : NEW attachment: True
 point_of_sale / pos.payment.method       / sequence (integer)            : NEW
-point_of_sale / pos.printer              / name (char)                   : NEW required, hasdefault: default
-point_of_sale / pos.printer              / printer_type (selection)      : NEW selection_keys: ['iot'], hasdefault: default
-point_of_sale / pos.printer              / product_categories_ids (many2many): NEW relation: pos.category
-point_of_sale / pos.printer              / proxy_ip (char)               : NEW
 point_of_sale / pos.session              / access_token (char)           : NEW
 point_of_sale / pos.session              / activity_user_id (many2one)   : not related anymore
 point_of_sale / pos.session              / activity_user_id (many2one)   : now a function
@@ -53,14 +49,20 @@ point_of_sale / product.template         / pos_categ_id (many2one)       : DEL r
 point_of_sale / product.template         / pos_categ_ids (many2many)     : NEW relation: pos.category
 point_of_sale / product.template         / type (False)                  : NEW selection_keys: ['combo', 'consu', 'product', 'service'], mode: modify
 point_of_sale / res.company              / point_of_sale_ticket_unique_code (boolean): NEW
+point_of_sale / restaurant.printer       / _order                        : previously in module pos_restaurant
+point_of_sale / restaurant.printer       / display_name (char)           : previously in module pos_restaurant
+point_of_sale / restaurant.printer       / name (char)                   : previously in module pos_restaurant
+point_of_sale / restaurant.printer       / printer_type (selection)      : previously in module pos_restaurant
+point_of_sale / restaurant.printer       / product_categories_ids (many2many): previously in module pos_restaurant
+point_of_sale / restaurant.printer       / proxy_ip (char)               : previously in module pos_restaurant
 pos_cache    / pos.cache                / cache (binary)                : DEL attachment: True
 pos_cache    / pos.cache                / compute_user_id (many2one)    : DEL relation: res.users, required
 pos_cache    / pos.cache                / config_id (many2one)          : DEL relation: pos.config, required
 pos_cache    / pos.cache                / product_domain (text)         : DEL required
 pos_cache    / pos.cache                / product_fields (text)         : DEL required
 pos_cache    / pos.config               / cache_ids (one2many)          : DEL relation: pos.cache
-pos_epson_printer_restaurant / restaurant.printer       / epson_printer_ip (char)       : DEL
-pos_epson_printer_restaurant / restaurant.printer       / printer_type (False)          : DEL selection_keys: ['epson_epos', 'iot'], mode: modify
+pos_epson_printer_restaurant / restaurant.printer       / epson_printer_ip (char)       : module is now 'pos_epson_printer' ('pos_epson_printer_restaurant')
+pos_epson_printer_restaurant / restaurant.printer       / printer_type (False)          : module is now 'pos_epson_printer' ('pos_epson_printer_restaurant')
 ---XML records in module 'point_of_sale'---
 NEW ir.actions.act_window: point_of_sale.action_pos_combo
 NEW ir.actions.act_window: point_of_sale.action_pos_config_tree

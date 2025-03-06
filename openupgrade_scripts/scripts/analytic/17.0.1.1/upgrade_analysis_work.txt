@@ -1,0 +1,30 @@
+---Models in module 'analytic'---
+---Fields in module 'analytic'---
+analytic     / account.analytic.account / message_main_attachment_id (many2one): DEL relation: ir.attachment
+# NOTHING TO DO: Feature mainly not used
+
+analytic     / account.analytic.account / root_plan_id (many2one)       : not a function anymore
+analytic     / account.analytic.account / root_plan_id (many2one)       : now related
+# NOTHING TO DO: The related is equivalent to the previous compute
+
+analytic     / account.analytic.plan    / _order                        : _order is now 'sequence asc, id' ('complete_name asc')
+analytic     / account.analytic.plan    / sequence (integer)            : NEW hasdefault: default
+# DONE: post-migration: Set sequence for following the same order than in previous version
+
+analytic     / account.analytic.applicability / company_id (many2one)         : NEW relation: res.company, hasdefault: default
+analytic     / account.analytic.plan    / company_id (many2one)         : DEL relation: res.company
+# DONE: pre-migration: create column and let empty value, as it's what preserves the previous behavior
+
+analytic     / account.analytic.line    / plan_id (many2one)            : DEL relation: account.analytic.plan
+# DONE: post-migration: create dynamic x_plan_id column using '_sync_plan_column' method in analytic.plan, pr: https://github.com/odoo/odoo/pull/139225
+
+analytic     / account.analytic.plan    / default_applicability (selection): not stored anymore
+# DONE: post-migration: create ir.property if default_applicability != 'optional'
+
+---XML records in module 'analytic'---
+NEW account.analytic.plan: analytic.analytic_plan_projects (noupdate)
+NEW ir.rule: analytic.analytic_applicability_comp_rule (noupdate)
+# NOTHING TO DO
+
+DEL ir.rule: analytic.analytic_plan_comp_rule (noupdate)
+# DONE: post-migration: try to delete safely the record

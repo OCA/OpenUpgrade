@@ -1,0 +1,163 @@
+---Models in module 'stock'---
+obsolete model report.stock.report_product_product_replenishment [abstract]
+obsolete model report.stock.report_product_template_replenishment [abstract]
+obsolete model stock.immediate.transfer [transient]
+obsolete model stock.immediate.transfer.line [transient]
+new model stock.forecasted_product_product [abstract]
+new model stock.forecasted_product_template [abstract]
+new model stock.quant.relocate [transient]
+# NOTHING TO DO
+
+---Fields in module 'stock'---
+stock        / product.category         / filter_for_stock_putaway_rule (boolean): NEW
+stock        / product.product          / lot_properties_definition (properties_definition): NEW
+# NOTHING TO DO: fields in new model
+
+stock        / product.product          / sale_delay (float)            : type is now 'integer' ('float')
+stock        / product.template         / sale_delay (float)            : type is now 'integer' ('float')
+# NOTHING TO DO
+
+stock        / stock.lot                / activity_user_id (many2one)   : not related anymore
+stock        / stock.lot                / activity_user_id (many2one)   : now a function
+stock        / stock.lot                / location_id (many2one)        : NEW relation: stock.location, isfunction: function, stored
+stock        / stock.lot                / lot_properties (properties)   : NEW hasdefault: compute
+stock        / stock.lot                / message_main_attachment_id (many2one): DEL relation: ir.attachment
+stock        / stock.lot                / rating_ids (one2many)         : NEW relation: rating.rating
+# NOTHING TO DO
+
+stock        / stock.move               / move_line_nosuggest_ids (one2many): DEL relation: stock.move.line
+stock        / stock.move               / picked (boolean)              : NEW isfunction: function, stored
+stock        / stock.move               / picking_type_id (many2one)    : not a function anymore
+# NOTHING TO DO
+
+stock        / stock.move               / quantity (float)              : NEW isfunction: function, stored
+stock        / stock.move               / quantity_done (float)         : DEL
+# DONE: renamed in pre-migration
+
+stock        / stock.move               / scrap_id (many2one)           : NEW relation: stock.scrap
+stock        / stock.move               / scrap_ids (one2many)          : DEL relation: stock.scrap
+stock        / stock.scrap              / move_id (many2one)            : DEL relation: stock.move
+stock        / stock.scrap              / move_ids (one2many)           : NEW relation: stock.move
+# DONE post-migration: convert data many2one to one2many
+
+stock        / stock.move.line          / qty_done (float)              : DEL
+stock        / stock.move.line          / quantity (float)              : NEW hasdefault: compute
+# DONE: pre-migration
+
+stock        / stock.move.line          / picked (boolean)              : NEW hasdefault: compute
+stock        / stock.move.line          / quant_id (many2one)           : NEW relation: stock.quant
+stock        / stock.move.line          / quantity_product_uom (float)  : NEW isfunction: function, stored
+# NOTHING TO DO
+
+stock        / stock.move.line          / reserved_qty (float)          : DEL
+stock        / stock.move.line          / reserved_uom_qty (float)      : DEL required
+# DONE: added to quantity in pre-migration, recompute stock.move#quantity in post-migration
+
+
+stock        / stock.package.type       / height (integer)              : type is now 'float' ('integer')
+stock        / stock.package.type       / packaging_length (integer)    : type is now 'float' ('integer')
+stock        / stock.package.type       / width (integer)               : type is now 'float' ('integer')
+# NOTHING TO DO
+
+stock        / stock.picking            / activity_user_id (many2one)   : not related anymore
+stock        / stock.picking            / activity_user_id (many2one)   : now a function
+stock        / stock.picking            / immediate_transfer (boolean)  : DEL
+stock        / stock.picking            / message_main_attachment_id (many2one): DEL relation: ir.attachment
+stock        / stock.picking            / move_ids_without_package (one2many): is now stored
+stock        / stock.picking            / move_ids_without_package (one2many): not a function anymore
+stock        / stock.picking            / move_line_nosuggest_ids (one2many): DEL relation: stock.move.line
+stock        / stock.picking            / picking_properties (properties): NEW hasdefault: compute
+stock        / stock.picking            / rating_ids (one2many)         : NEW relation: rating.rating
+stock        / stock.picking            / show_operations (boolean)     : not a function anymore
+stock        / stock.picking            / show_operations (boolean)     : now related
+# NOTHING TO DO
+
+stock        / stock.picking            / return_id (many2one)          : NEW relation: stock.picking
+stock        / stock.picking            / return_ids (one2many)         : NEW relation: stock.picking
+# DONE filled from returned moves in post-migration
+
+stock        / stock.picking.type       / auto_print_delivery_slip (boolean): NEW
+stock        / stock.picking.type       / auto_print_lot_labels (boolean): NEW
+stock        / stock.picking.type       / auto_print_package_label (boolean): NEW
+stock        / stock.picking.type       / auto_print_packages (boolean) : NEW
+stock        / stock.picking.type       / auto_print_product_labels (boolean): NEW
+stock        / stock.picking.type       / auto_print_reception_report (boolean): NEW
+stock        / stock.picking.type       / auto_print_reception_report_labels (boolean): NEW
+stock        / stock.picking.type       / auto_print_return_slip (boolean): NEW
+stock        / stock.picking.type       / lot_label_format (selection)  : NEW selection_keys: ['4x12_lots', '4x12_units', 'zpl_lots', 'zpl_units'], hasdefault: default
+stock        / stock.picking.type       / package_label_to_print (selection): NEW selection_keys: ['pdf', 'zpl'], hasdefault: default
+stock        / stock.picking.type       / picking_properties_definition (properties_definition): NEW
+stock        / stock.picking.type       / product_label_format (selection): NEW selection_keys: ['2x7xprice', '4x12', '4x12xprice', '4x7xprice', 'dymo', 'zpl', 'zplxprice'], hasdefault: default
+
+# NOTHING TO DO: new features
+
+stock        / stock.picking.type       / show_reserved (boolean)       : now a function
+
+# NOTHING TO DO: compute function acts as a default
+
+stock        / stock.picking.type       / default_location_return_id (many2one): NEW relation: stock.location
+# DONE set from warehouse's previous return picking type's destination location
+
+stock        / stock.scrap              / message_main_attachment_id (many2one): DEL relation: ir.attachment
+stock        / stock.scrap              / rating_ids (one2many)         : NEW relation: rating.rating
+stock        / stock.scrap              / should_replenish (boolean)    : NEW
+stock        / stock.warehouse          / return_type_id (many2one)     : DEL relation: stock.picking.type
+# NOTHING TO DO
+
+---XML records in module 'stock'---
+NEW ir.actions.act_window: stock.action_picking_tree_incoming
+NEW ir.actions.act_window: stock.action_picking_tree_internal
+NEW ir.actions.act_window: stock.action_picking_tree_outgoing
+NEW ir.actions.act_window: stock.action_product_production_lot_form
+# NOTHING TO DO
+
+NEW ir.actions.client: stock.stock_forecasted_product_product_action
+NEW ir.actions.client: stock.stock_forecasted_product_template_action
+DEL ir.actions.client: stock.stock_replenishment_product_product_action
+DEL ir.actions.client: stock.stock_replenishment_product_template_action
+
+NEW ir.actions.report: stock.return_label_report
+NEW ir.actions.server: stock.action_scrap
+NEW ir.actions.server: stock.action_toggle_is_locked
+NEW ir.actions.server: stock.action_view_set_to_zero_quants_tree
+DEL ir.actions.server: stock.stock_quant_stock_move_line_desynchronization
+# NOTHING TO DO
+
+NEW ir.model.access: stock.access_stock_quant_relocate
+DEL ir.model.access: stock.access_stock_immediate_transfer
+DEL ir.model.access: stock.access_stock_immediate_transfer_line
+# NOTHING TO DO: new feature
+
+ir.model.constraint: stock.constraint_stock_package_type_positive_height (changed definition: is now 'check(height>=0.0)' ('check(height>=0)'))
+ir.model.constraint: stock.constraint_stock_package_type_positive_length (changed definition: is now 'check(packaging_length>=0.0)' ('check(packaging_length>=0)'))
+ir.model.constraint: stock.constraint_stock_package_type_positive_width (changed definition: is now 'check(width>=0.0)' ('check(width>=0)'))
+# NOTHING TO DO
+
+NEW ir.ui.menu: stock.in_picking
+NEW ir.ui.menu: stock.int_picking
+NEW ir.ui.menu: stock.menu_stock_adjustments
+NEW ir.ui.menu: stock.menu_stock_procurement
+NEW ir.ui.menu: stock.menu_stock_transfers
+NEW ir.ui.menu: stock.out_picking
+DEL ir.ui.menu: stock.all_picking
+# NOTHING TO DO: new feature
+
+NEW ir.ui.view: stock.product_view_kanban_catalog
+NEW ir.ui.view: stock.report_return_slip
+NEW ir.ui.view: stock.stock_picking_view_activity
+NEW ir.ui.view: stock.stock_quant_relocate_view_form
+NEW ir.ui.view: stock.view_production_lot_kanban
+NEW ir.ui.view: stock.view_stock_move_line_pivot
+NEW ir.ui.view: stock.view_stock_quant_form
+NEW ir.ui.view: stock.view_stock_quant_tree_simple
+DEL ir.ui.view: stock.report_mrp_line
+DEL ir.ui.view: stock.report_product_product_replenishment
+DEL ir.ui.view: stock.report_product_template_replenishment
+DEL ir.ui.view: stock.report_replenishment_header
+DEL ir.ui.view: stock.report_stock_inventory
+DEL ir.ui.view: stock.view_immediate_transfer
+DEL ir.ui.view: stock.view_stock_move_nosuggest_operations
+# NOTHING TO DO
+
+NEW product.removal: stock.removal_least_packages
+# NOTHING TO DO

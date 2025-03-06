@@ -1,0 +1,550 @@
+---Models in module 'account'---
+obsolete model account.account.template
+obsolete model account.fiscal.position.account.template
+obsolete model account.fiscal.position.tax.template
+obsolete model account.fiscal.position.template
+obsolete model account.group.template
+obsolete model account.reconcile.model.line.template
+obsolete model account.reconcile.model.template
+obsolete model account.tax.repartition.line.template
+obsolete model account.tax.template
+# DONE: these models has been converted to CSV definition and existing company records XML-ID follow the same logic. Removed all constraints from tables
+
+obsolete model account.invoice.send [transient]
+new model account.move.send [transient]
+# NOTHING TO DO: Replaced feature, but nothing to transfer, being transient models
+
+---Fields in module 'account'---
+account      / account.account          / _order                        : _order is now 'code, company_id' ('is_off_balance, code, company_id')
+account      / account.account          / is_off_balance (boolean)      : DEL
+# NOTHING TO DO: is_off_balance dissapears, but nobody will miss it, as it was underused and even incorrect (due to blocking certain operations)
+
+account      / account.account          / message_main_attachment_id (many2one): DEL relation: ir.attachment
+# NOTHING TO DO: Feature not used in general
+
+account      / account.account          / rating_ids (one2many)         : NEW relation: rating.rating
+# NOTHING TO DO: New feature
+
+account      / account.account.template / account_type (selection)      : DEL selection_keys: ['asset_cash', 'asset_current', 'asset_fixed', 'asset_non_current', 'asset_prepayments', 'asset_receivable', 'equity', 'equity_unaffected', 'expense', 'expense_depreciation', 'expense_direct_cost', 'income', 'income_other', 'liability_credit_card', 'liability_current', 'liability_non_current', 'liability_payable', 'off_balance']
+account      / account.account.template / chart_template_id (many2one)  : DEL relation: account.chart.template
+account      / account.account.template / code (char)                   : DEL required
+account      / account.account.template / currency_id (many2one)        : DEL relation: res.currency
+account      / account.account.template / message_follower_ids (one2many): DEL relation: mail.followers
+account      / account.account.template / message_ids (one2many)        : DEL relation: mail.message
+account      / account.account.template / message_main_attachment_id (many2one): DEL relation: ir.attachment
+account      / account.account.template / name (char)                   : DEL required
+account      / account.account.template / nocreate (boolean)            : DEL
+account      / account.account.template / note (text)                   : DEL
+account      / account.account.template / reconcile (boolean)           : DEL
+account      / account.account.template / tag_ids (many2many)           : DEL relation: account.account.tag
+account      / account.account.template / tax_ids (many2many)           : DEL relation: account.tax.template
+account      / account.account.template / website_message_ids (one2many): DEL relation: mail.message
+account      / account.bank.statement.line / amount_total_words (char)     : previously in module l10n_dz
+account      / account.bank.statement.line / transaction_details (json)    : NEW
+account      / account.chart.template   / account_ids (one2many)        : DEL relation: account.account.template
+account      / account.chart.template   / account_journal_early_pay_discount_gain_account_id (many2one): DEL relation: account.account.template
+account      / account.chart.template   / account_journal_early_pay_discount_loss_account_id (many2one): DEL relation: account.account.template
+account      / account.chart.template   / account_journal_payment_credit_account_id (many2one): DEL relation: account.account.template
+account      / account.chart.template   / account_journal_payment_debit_account_id (many2one): DEL relation: account.account.template
+account      / account.chart.template   / account_journal_suspense_account_id (many2one): DEL relation: account.account.template
+account      / account.chart.template   / bank_account_code_prefix (char): DEL required
+account      / account.chart.template   / cash_account_code_prefix (char): DEL required
+account      / account.chart.template   / code_digits (integer)         : DEL required
+account      / account.chart.template   / country_id (many2one)         : DEL relation: res.country
+account      / account.chart.template   / currency_id (many2one)        : DEL relation: res.currency, required
+account      / account.chart.template   / default_cash_difference_expense_account_id (many2one): DEL relation: account.account.template
+account      / account.chart.template   / default_cash_difference_income_account_id (many2one): DEL relation: account.account.template
+account      / account.chart.template   / default_pos_receivable_account_id (many2one): DEL relation: account.account.template
+account      / account.chart.template   / expense_currency_exchange_account_id (many2one): DEL relation: account.account.template
+account      / account.chart.template   / income_currency_exchange_account_id (many2one): DEL relation: account.account.template
+account      / account.chart.template   / name (char)                   : DEL required
+account      / account.chart.template   / parent_id (many2one)          : DEL relation: account.chart.template
+account      / account.chart.template   / property_account_expense_categ_id (many2one): DEL relation: account.account.template
+account      / account.chart.template   / property_account_expense_id (many2one): DEL relation: account.account.template
+account      / account.chart.template   / property_account_income_categ_id (many2one): DEL relation: account.account.template
+account      / account.chart.template   / property_account_income_id (many2one): DEL relation: account.account.template
+account      / account.chart.template   / property_account_payable_id (many2one): DEL relation: account.account.template
+account      / account.chart.template   / property_account_receivable_id (many2one): DEL relation: account.account.template
+account      / account.chart.template   / property_advance_tax_payment_account_id (many2one): DEL relation: account.account.template
+account      / account.chart.template   / property_cash_basis_base_account_id (many2one): DEL relation: account.account.template
+account      / account.chart.template   / property_stock_account_input_categ_id (many2one): DEL relation: account.account.template
+account      / account.chart.template   / property_stock_account_output_categ_id (many2one): DEL relation: account.account.template
+account      / account.chart.template   / property_stock_valuation_account_id (many2one): DEL relation: account.account.template
+account      / account.chart.template   / property_tax_payable_account_id (many2one): DEL relation: account.account.template
+account      / account.chart.template   / property_tax_receivable_account_id (many2one): DEL relation: account.account.template
+account      / account.chart.template   / tax_template_ids (one2many)   : DEL relation: account.tax.template
+account      / account.chart.template   / transfer_account_code_prefix (char): DEL required
+account      / account.chart.template   / use_anglo_saxon (boolean)     : DEL
+account      / account.chart.template   / use_storno_accounting (boolean): DEL
+account      / account.chart.template   / visible (boolean)             : DEL
+account      / account.fiscal.position.account.template / account_dest_id (many2one)    : DEL relation: account.account.template, required
+account      / account.fiscal.position.account.template / account_src_id (many2one)     : DEL relation: account.account.template, required
+account      / account.fiscal.position.account.template / position_id (many2one)        : DEL relation: account.fiscal.position.template, required
+account      / account.fiscal.position.tax.template / position_id (many2one)        : DEL relation: account.fiscal.position.template, required
+account      / account.fiscal.position.tax.template / tax_dest_id (many2one)        : DEL relation: account.tax.template
+account      / account.fiscal.position.tax.template / tax_src_id (many2one)         : DEL relation: account.tax.template, required
+account      / account.fiscal.position.template / account_ids (one2many)        : DEL relation: account.fiscal.position.account.template
+account      / account.fiscal.position.template / auto_apply (boolean)          : DEL
+account      / account.fiscal.position.template / chart_template_id (many2one)  : DEL relation: account.chart.template, required
+account      / account.fiscal.position.template / country_group_id (many2one)   : DEL relation: res.country.group
+account      / account.fiscal.position.template / country_id (many2one)         : DEL relation: res.country
+account      / account.fiscal.position.template / name (char)                   : DEL required
+account      / account.fiscal.position.template / note (text)                   : DEL
+account      / account.fiscal.position.template / sequence (integer)            : DEL
+account      / account.fiscal.position.template / state_ids (many2many)         : DEL relation: res.country.state
+account      / account.fiscal.position.template / tax_ids (one2many)            : DEL relation: account.fiscal.position.tax.template
+account      / account.fiscal.position.template / vat_required (boolean)        : DEL
+account      / account.fiscal.position.template / zip_from (char)               : DEL
+account      / account.fiscal.position.template / zip_to (char)                 : DEL
+account      / account.group.template   / chart_template_id (many2one)  : DEL relation: account.chart.template, required
+account      / account.group.template   / code_prefix_end (char)        : DEL
+account      / account.group.template   / code_prefix_start (char)      : DEL
+account      / account.group.template   / name (char)                   : DEL required
+account      / account.group.template   / parent_id (many2one)          : DEL relation: account.group.template
+# NOTHING TO DO: These models has been converted to CSV definition and existing company records XML-ID follow the same logic
+
+account      / account.full.reconcile   / name (char)                   : DEL required
+account      / account.move.line        / matching_number (char)        : not a function anymore
+# NOTHING TO DO: The matching is now expressed through the record ID stored in the aml, instead of a sequence stored in the afr, so no real feature loss
+
+account      / account.journal          / access_token (char)           : NEW
+# NOTHING TO DO: It's filled dynamically when the content is shared
+
+account      / account.journal          / activity_user_id (many2one)   : not related anymore
+account      / account.journal          / activity_user_id (many2one)   : now a function
+account      / account.journal          / alias_domain (char)           : not a function anymore
+account      / account.journal          / alias_domain (char)           : now related
+account      / account.journal          / alias_name (char)             : not a function anymore
+account      / account.journal          / alias_name (char)             : now related
+# NOTHING TO DO: Changes on the underlying mixins, but without impact
+
+account      / account.journal          / message_main_attachment_id (many2one): DEL relation: ir.attachment
+# NOTHING TO DO: Non used feature removed
+
+account      / account.journal          / rating_ids (one2many)         : NEW relation: rating.rating
+# NOTHING TO DO: New feature (not used, but brought by inheritance)
+
+account      / account.move             / _order                        : _order is now 'date desc, name desc, invoice_date desc, id desc' ('date desc, name desc, id desc')
+# NOTHING TO DO: Criteria order added, but in third place, not impacting in usual cases
+
+account      / account.move             / activity_user_id (many2one)   : not related anymore
+account      / account.move             / activity_user_id (many2one)   : now a function
+# NOTHING TO DO: Changes on the underlying mixins, but without impact
+
+account      / account.move             / amount_total_words (char)     : previously in module l10n_dz
+# NOTHING TO DO: compute no store
+
+account      / account.move             / delivery_date (date)          : NEW isfunction: function, stored
+# DONE: pre-migration: Pre-create the column for not triggering the method. Modules modifying the computation (l10n_de and sale_stock) will fill the value. More info at https://github.com/odoo/odoo/pull/116643
+
+account      / account.move             / incoterm_location (char)      : NEW hasdefault: compute
+# DONE: pre-migration: Pre-create the column for not triggering the method. Modules modifying the computation (sale_stock and purchase_stock) will fill the value. More info at https://github.com/odoo/odoo/pull/118954
+
+account      / account.move             / invoice_payment_term_id (many2one): now a function
+# NOTHING TO DO: inverse function added, compute function unchanged
+
+account      / account.move             / invoice_pdf_report_file (binary): NEW attachment: True
+# DONE: post-migration: update message_main_attachment_id with res_field and res_id of each invoice, see '_link_invoice_documents' in 'account.move.send'
+
+account      / account.move             / rating_ids (one2many)         : NEW relation: rating.rating
+# NOTHING TO DO: New feature by inheritance (although not used)
+
+account      / account.move             / send_and_print_values (json)  : NEW
+# NOTHING TO DO: This field is for storing transient data to indicate that the invoice is "programmed" to be sent, which is a new feature, so empty is OK.
+
+account      / account.move             / show_update_fpos (boolean)    : NEW
+# NOTHING TO DO: Used in UI
+
+account      / account.bank.statement.line / quick_encoding_vals (binary)  : type is now 'json' ('binary')
+account      / account.move             / quick_encoding_vals (binary)  : type is now 'json' ('binary')
+account      / account.payment          / quick_encoding_vals (binary)  : type is now 'json' ('binary')
+# NOTHING TO DO: it's a non-stored field
+
+account      / account.move.line        / discount_percentage (float)   : DEL
+# NOTHING TO DO: Auxiliary field for Early Payment discounts from payment terms that seems unused.
+
+account      / account.move.line        / display_type (selection)      : selection_keys is now '['cogs', 'discount', 'epd', 'line_note', 'line_section', 'payment_term', 'product', 'rounding', 'tax']' ('['cogs', 'epd', 'line_note', 'line_section', 'payment_term', 'product', 'rounding', 'tax']')
+# NOTHING TO DO: new feature "Discount allocation" https://github.com/odoo/odoo/pull/133286
+
+account      / account.move.line        / invoice_date (date)           : NEW isrelated: related, stored
+# NOTHING TO DO: ORM resolves by SQL this filling being a direct related field with 1 level depth.
+
+account      / account.move.line        / tax_audit (char)              : DEL
+# NOTHING TO DO: deprecated
+
+account      / account.partial.reconcile / company_id (many2one)         : not related anymore
+# NOTHING TO DO
+
+account      / account.payment          / activity_user_id (many2one)   : not related anymore
+account      / account.payment          / activity_user_id (many2one)   : now a function
+# NOTHING TO DO: New feature by inheritance.
+
+account      / account.payment          / amount_total_words (char)     : previously in module l10n_dz
+# NOTHING TO DO: Compute non stored field.
+
+account      / account.payment          / rating_ids (one2many)         : NEW relation: rating.rating
+# NOTHING TO DO: New feature by inheritance.
+
+account      / account.payment          / qr_code (char)                : type is now 'html' ('char')
+# NOTHING TO DO: no store field
+
+account      / account.payment.term     / discount_days (integer)       : NEW hasdefault: default
+account      / account.payment.term     / discount_percentage (float)   : NEW hasdefault: default
+account      / account.payment.term     / early_discount (boolean)      : NEW
+account      / account.payment.term.line / discount_days (integer)       : DEL
+account      / account.payment.term.line / discount_percentage (float)   : DEL
+# DONE: post-migration: Transfer when possible the early payment discount from lines to header.
+
+account      / account.payment.term     / early_pay_discount_computation (selection): NEW selection_keys: ['excluded', 'included', 'mixed'], hasdefault: compute
+account      / res.company              / early_pay_discount_computation (selection): DEL selection_keys: ['excluded', 'included', 'mixed']
+# DONE: pre-migration: Pre-create the column for avoiding triggering the compute and transfer data from companies to all the payment terms.
+
+account      / account.payment.term     / currency_id (many2one)        : NEW relation: res.currency, hasdefault: default
+# NOTHING TO DO: Compute non stored
+
+account      / account.payment.term.line / days (integer)                : DEL required
+account      / account.payment.term.line / days_after (integer)          : DEL
+account      / account.payment.term.line / delay_type (selection)        : NEW required, selection_keys: ['days_after', 'days_after_end_of_month', 'days_after_end_of_next_month'], hasdefault: default
+account      / account.payment.term.line / end_month (boolean)           : DEL
+account      / account.payment.term.line / months (integer)              : DEL required
+account      / account.payment.term.line / nb_days (integer)             : NEW hasdefault: compute
+account      / account.payment.term.line / value (selection)             : selection_keys is now '['fixed', 'percent']' ('['balance', 'fixed', 'percent']')
+# DONE: post-migration: convert columns, type and percentage https://github.com/odoo/odoo/pull/110274/
+
+account      / account.reconcile.model  / message_main_attachment_id (many2one): DEL relation: ir.attachment
+account      / account.reconcile.model  / rating_ids (one2many)         : NEW relation: rating.rating
+account      / account.reconcile.model.line.template / account_id (many2one)         : DEL relation: account.account.template
+account      / account.reconcile.model.line.template / amount_string (char)          : DEL
+account      / account.reconcile.model.line.template / amount_type (selection)       : DEL required, selection_keys: ['fixed', 'percentage', 'regex']
+account      / account.reconcile.model.line.template / force_tax_included (boolean)  : DEL
+account      / account.reconcile.model.line.template / label (char)                  : DEL
+account      / account.reconcile.model.line.template / model_id (many2one)           : DEL relation: account.reconcile.model.template
+account      / account.reconcile.model.line.template / sequence (integer)            : DEL required
+account      / account.reconcile.model.line.template / tax_ids (many2many)           : DEL relation: account.tax.template
+account      / account.reconcile.model.template / allow_payment_tolerance (boolean): DEL
+account      / account.reconcile.model.template / auto_reconcile (boolean)      : DEL
+account      / account.reconcile.model.template / chart_template_id (many2one)  : DEL relation: account.chart.template, required
+account      / account.reconcile.model.template / decimal_separator (char)      : DEL
+account      / account.reconcile.model.template / line_ids (one2many)           : DEL relation: account.reconcile.model.line.template
+account      / account.reconcile.model.template / match_amount (selection)      : DEL selection_keys: ['between', 'greater', 'lower']
+account      / account.reconcile.model.template / match_amount_max (float)      : DEL
+account      / account.reconcile.model.template / match_amount_min (float)      : DEL
+account      / account.reconcile.model.template / match_journal_ids (many2many) : DEL relation: account.journal
+account      / account.reconcile.model.template / match_label (selection)       : DEL selection_keys: ['contains', 'match_regex', 'not_contains']
+account      / account.reconcile.model.template / match_label_param (char)      : DEL
+account      / account.reconcile.model.template / match_nature (selection)      : DEL required, selection_keys: ['amount_paid', 'amount_received', 'both']
+account      / account.reconcile.model.template / match_note (selection)        : DEL selection_keys: ['contains', 'match_regex', 'not_contains']
+account      / account.reconcile.model.template / match_note_param (char)       : DEL
+account      / account.reconcile.model.template / match_partner (boolean)       : DEL
+account      / account.reconcile.model.template / match_partner_category_ids (many2many): DEL relation: res.partner.category
+account      / account.reconcile.model.template / match_partner_ids (many2many) : DEL relation: res.partner
+account      / account.reconcile.model.template / match_same_currency (boolean) : DEL
+account      / account.reconcile.model.template / match_text_location_label (boolean): DEL
+account      / account.reconcile.model.template / match_text_location_note (boolean): DEL
+account      / account.reconcile.model.template / match_text_location_reference (boolean): DEL
+account      / account.reconcile.model.template / match_transaction_type (selection): DEL selection_keys: ['contains', 'match_regex', 'not_contains']
+account      / account.reconcile.model.template / match_transaction_type_param (char): DEL
+account      / account.reconcile.model.template / matching_order (selection)    : DEL selection_keys: ['new_first', 'old_first']
+account      / account.reconcile.model.template / name (char)                   : DEL required
+account      / account.reconcile.model.template / payment_tolerance_param (float): DEL
+account      / account.reconcile.model.template / payment_tolerance_type (selection): DEL required, selection_keys: ['fixed_amount', 'percentage']
+account      / account.reconcile.model.template / rule_type (selection)         : DEL required, selection_keys: ['invoice_matching', 'writeoff_button', 'writeoff_suggestion']
+account      / account.reconcile.model.template / sequence (integer)            : DEL required
+account      / account.reconcile.model.template / to_check (boolean)            : DEL
+account      / account.report           / _order                        : _order is now 'sequence, id' ('id')
+# NOTHING TO DO
+account      / account.report           / active (boolean)              : NEW hasdefault: default
+# DONE: precreated with value True
+
+account      / account.report           / chart_template (selection)    : NEW selection_keys: function
+account      / account.report           / chart_template_id (many2one)  : DEL relation: account.chart.template
+# DONE: map chart_template_id > chart_template in post-migration
+
+account      / account.report           / default_opening_date_filter (selection): selection_keys is now '['last_month', 'last_quarter', 'last_tax_period', 'last_year', 'this_month', 'this_quarter', 'this_tax_period', 'this_year', 'today']' ('['last_month', 'last_quarter', 'last_year', 'this_month', 'this_quarter', 'this_year', 'today']')
+# NOTHING TO DO: new feature
+
+account      / account.report           / filter_account_type (boolean) : selection_keys is now '['both', 'disabled', 'payable', 'receivable']' ('False')
+account      / account.report           / filter_account_type (boolean) : type is now 'selection' ('boolean')
+# DONE: pre-migration: map False > disabled and True > both.
+
+account      / account.report           / filter_aml_ir_filters (boolean): NEW hasdefault: compute
+account      / account.report           / filter_hide_0_lines (selection): NEW selection_keys: ['by_default', 'never', 'optional'], hasdefault: compute
+account      / account.report           / prefix_groups_threshold (integer): NEW
+account      / account.report           / section_main_report_ids (many2many): NEW relation: account.report
+account      / account.report           / section_report_ids (many2many): NEW relation: account.report
+account      / account.report           / sequence (integer)            : NEW
+account      / account.report           / use_sections (boolean)        : NEW hasdefault: compute
+account      / account.report.external.value / text_value (char)             : NEW
+account      / account.report.line      / external_formula (char)       : NEW
+account      / account.report.line      / user_groupby (char)           : NEW
+# NOTHING TO DO: probably need to do in module that add Localization report
+
+account      / account.report.column    / figure_type (selection)       : selection_keys is now '['boolean', 'date', 'datetime', 'float', 'integer', 'monetary', 'percentage', 'string']' ('['date', 'datetime', 'float', 'integer', 'monetary', 'none', 'percentage']')
+account      / account.report.expression / figure_type (selection)       : selection_keys is now '['boolean', 'date', 'datetime', 'float', 'integer', 'monetary', 'percentage', 'string']' ('['date', 'datetime', 'float', 'integer', 'monetary', 'none', 'percentage']')
+# DONE pre-migration: copy column for preservation and update none -> string
+
+account      / account.tax              / invoice_label (char)          : NEW
+# DONE pre-migration: create jsonb column(because translate=True) and fill value with 'description' field https://github.com/odoo/odoo/pull/113236
+
+account      / account.tax              / message_follower_ids (one2many): NEW relation: mail.followers
+account      / account.tax              / message_ids (one2many)        : NEW relation: mail.message
+account      / account.tax              / rating_ids (one2many)         : NEW relation: rating.rating
+# NOTHING TO DO
+
+account      / account.tax              / real_amount (float)           : DEL
+# NOTHING TO DO
+
+account      / account.tax              / repartition_line_ids (one2many): NEW relation: account.tax.repartition.line
+# NOTHING TO DO: https://github.com/odoo/odoo/pull/110016/commits/a4c1f62ebd2710b3810c2d01195d88e4a9f13a9f
+
+account      / account.tax              / website_message_ids (one2many): NEW relation: mail.messag
+# NOTHING TO DO
+
+account      / account.tax.group        / advance_tax_payment_account_id (many2one): NEW relation: account.account
+account      / account.tax.group        / property_advance_tax_payment_account_id (many2one): DEL relation: account.account
+account      / account.tax.group        / property_tax_payable_account_id (many2one): DEL relation: account.account
+account      / account.tax.group        / property_tax_receivable_account_id (many2one): DEL relation: account.account
+account      / account.tax.group        / tax_payable_account_id (many2one): NEW relation: account.account
+account      / account.tax.group        / tax_receivable_account_id (many2one): NEW relation: account.account
+# DONE pre-migration: update value base on ir.property
+
+account      / account.tax.group        / company_id (many2one)         : NEW relation: res.company, required, hasdefault: default
+# DONE pre-migration: create column and fill value base on account.tax
+
+account      / account.tax.repartition.line / _order                        : _order is now 'document_type, repartition_type, sequence, id' ('sequence, repartition_type, id')
+account      / account.tax.repartition.line / company_id (many2one)         : not a function anymore
+account      / account.tax.repartition.line / company_id (many2one)         : now related
+# NOTHING TO DO
+
+account      / account.tax.repartition.line / document_type (selection)     : is now stored
+account      / account.tax.repartition.line / document_type (selection)     : not a function anymore
+account      / account.tax.repartition.line / document_type (selection)     : now required
+account      / account.tax.repartition.line / invoice_tax_id (many2one)     : DEL relation: account.tax
+account      / account.tax.repartition.line / refund_tax_id (many2one)      : DEL relation: account.tax
+account      / account.tax.repartition.line / tax_id (many2one)             : is now stored
+account      / account.tax.repartition.line / tax_id (many2one)             : not a function anymore
+# DONE : fill document_type and tax_id base on invoice_tax_id and refund_tax_id https://github.com/odoo/odoo/pull/110016/commits/a4c1f62ebd2710b3810c2d01195d88e4a9f13a9f
+
+account      / account.tax.repartition.line.template / account_id (many2one)         : DEL relation: account.account.template
+account      / account.tax.repartition.line.template / factor_percent (float)        : DEL required
+account      / account.tax.repartition.line.template / invoice_tax_id (many2one)     : DEL relation: account.tax.template
+account      / account.tax.repartition.line.template / minus_report_expression_ids (many2many): DEL relation: account.report.expression
+account      / account.tax.repartition.line.template / plus_report_expression_ids (many2many): DEL relation: account.report.expression
+account      / account.tax.repartition.line.template / refund_tax_id (many2one)      : DEL relation: account.tax.template
+account      / account.tax.repartition.line.template / repartition_type (selection)  : DEL required, selection_keys: ['base', 'tax']
+account      / account.tax.repartition.line.template / tag_ids (many2many)           : DEL relation: account.account.tag
+account      / account.tax.repartition.line.template / use_in_tax_closing (boolean)  : DEL
+account      / account.tax.template     / active (boolean)              : DEL
+account      / account.tax.template     / amount (float)                : DEL required
+account      / account.tax.template     / amount_type (selection)       : DEL required, selection_keys: ['division', 'fixed', 'group', 'percent']
+account      / account.tax.template     / analytic (boolean)            : DEL
+account      / account.tax.template     / cash_basis_transition_account_id (many2one): DEL relation: account.account.template
+account      / account.tax.template     / chart_template_id (many2one)  : DEL relation: account.chart.template, required
+account      / account.tax.template     / children_tax_ids (many2many)  : DEL relation: account.tax.template
+account      / account.tax.template     / description (char)            : DEL
+account      / account.tax.template     / include_base_amount (boolean) : DEL
+account      / account.tax.template     / invoice_repartition_line_ids (one2many): DEL relation: account.tax.repartition.line.template
+account      / account.tax.template     / is_base_affected (boolean)    : DEL
+account      / account.tax.template     / name (char)                   : DEL required
+account      / account.tax.template     / price_include (boolean)       : DEL
+account      / account.tax.template     / refund_repartition_line_ids (one2many): DEL relation: account.tax.repartition.line.template
+account      / account.tax.template     / sequence (integer)            : DEL required
+account      / account.tax.template     / tax_exigibility (selection)   : DEL selection_keys: ['on_invoice', 'on_payment']
+account      / account.tax.template     / tax_group_id (many2one)       : DEL relation: account.tax.group
+account      / account.tax.template     / tax_scope (selection)         : DEL selection_keys: ['consu', 'service']
+account      / account.tax.template     / type_tax_use (selection)      : DEL required, selection_keys: ['none', 'purchase', 'sale']
+# NOTHING TO DO
+
+account      / res.company              / account_dashboard_onboarding_state (selection): DEL selection_keys: ['closed', 'done', 'just_done', 'not_done']
+account      / res.company              / account_invoice_onboarding_state (selection): DEL selection_keys: ['closed', 'done', 'just_done', 'not_done']
+account      / res.company              / account_onboarding_create_invoice_state_flag (boolean): DEL
+account      / res.company              / account_onboarding_invoice_layout_state (selection): DEL selection_keys: ['done', 'just_done', 'not_done']
+account      / res.company              / account_onboarding_sale_tax_state (selection): DEL selection_keys: ['done', 'just_done', 'not_done']
+account      / res.company              / account_setup_bank_data_state (selection): DEL selection_keys: ['done', 'just_done', 'not_done']
+account      / res.company              / account_setup_bill_state (selection): DEL selection_keys: ['done', 'just_done', 'not_done']
+account      / res.company              / account_setup_coa_state (selection): DEL selection_keys: ['done', 'just_done', 'not_done']
+account      / res.company              / account_setup_fy_data_state (selection): DEL selection_keys: ['done', 'just_done', 'not_done']
+account      / res.company              / account_setup_taxes_state (selection): DEL selection_keys: ['done', 'just_done', 'not_done']
+# DONE post-migration: update base on onboarding module
+
+account      / res.company              / account_discount_expense_allocation_id (many2one): NEW relation: account.account
+account      / res.company              / account_discount_income_allocation_id (many2one): NEW relation: account.account
+# NOTHING TO DO: new feature
+
+account      / res.company              / chart_template (selection)    : NEW selection_keys: function
+account      / res.company              / chart_template_id (many2one)  : DEL relation: account.chart.template
+# DONE: map chart_template_id > chart_template in post-migration
+
+account      / res.company              / display_invoice_amount_total_words (boolean): NEW
+# NOTHING TO DO: new feature
+
+account      / res.company              / invoice_is_download (boolean) : NEW hasdefault: default
+account      / res.company              / invoice_is_print (boolean)    : DEL
+# DONE pre-migration: rename field https://github.com/odoo/odoo/pull/119397
+
+account      / res.company              / message_main_attachment_id (many2one): DEL relation: ir.attachment
+# NOTHING TO DO
+
+account      / res.company              / property_stock_account_input_categ_id (many2one): DEL relation: account.account
+account      / res.company              / property_stock_account_output_categ_id (many2one): DEL relation: account.account
+account      / res.company              / property_stock_valuation_account_id (many2one): DEL relation: account.account
+# NOTHING TO DO
+
+account      / res.company              / rating_ids (one2many)         : NEW relation: rating.rating
+account      / res.partner.bank         / activity_user_id (many2one)   : not related anymore
+account      / res.partner.bank         / activity_user_id (many2one)   : now a function
+account      / res.partner.bank         / has_iban_warning (boolean)    : NEW isfunction: function, stored
+account      / res.partner.bank         / has_money_transfer_warning (boolean): NEW isfunction: function, stored
+account      / res.partner.bank         / message_main_attachment_id (many2one): DEL relation: ir.attachment
+account      / res.partner.bank         / rating_ids (one2many)         : NEW relation: rating.rating
+account      / res.partner.bank         / related_moves (one2many)      : NEW relation: account.move
+# NOTHING TO DO
+
+account      / res.partner              / supplier_invoice_count (integer): module is now 'purchase' ('account')
+account      / res.users                / supplier_invoice_count (integer): module is now 'purchase' ('account')
+# NOTHING TO DO
+
+---XML records in module 'account'---
+DEL account.account.template: l10n_generic_coa.capital
+DEL account.account.template: l10n_generic_coa.cash_diff_expense
+DEL account.account.template: l10n_generic_coa.cash_diff_income
+DEL account.account.template: l10n_generic_coa.cash_discount_gain
+DEL account.account.template: l10n_generic_coa.cash_discount_loss
+DEL account.account.template: l10n_generic_coa.cost_of_goods_sold
+DEL account.account.template: l10n_generic_coa.current_assets
+DEL account.account.template: l10n_generic_coa.current_liabilities
+DEL account.account.template: l10n_generic_coa.dividends
+DEL account.account.template: l10n_generic_coa.expense
+DEL account.account.template: l10n_generic_coa.expense_currency_exchange
+DEL account.account.template: l10n_generic_coa.expense_finance
+DEL account.account.template: l10n_generic_coa.expense_invest
+DEL account.account.template: l10n_generic_coa.expense_rd
+DEL account.account.template: l10n_generic_coa.expense_rent
+DEL account.account.template: l10n_generic_coa.expense_salary
+DEL account.account.template: l10n_generic_coa.expense_sales
+DEL account.account.template: l10n_generic_coa.fixed_assets
+DEL account.account.template: l10n_generic_coa.income
+DEL account.account.template: l10n_generic_coa.income_currency_exchange
+DEL account.account.template: l10n_generic_coa.non_current_assets
+DEL account.account.template: l10n_generic_coa.non_current_liabilities
+DEL account.account.template: l10n_generic_coa.other_income
+DEL account.account.template: l10n_generic_coa.payable
+DEL account.account.template: l10n_generic_coa.pos_receivable
+DEL account.account.template: l10n_generic_coa.prepayments
+DEL account.account.template: l10n_generic_coa.receivable
+DEL account.account.template: l10n_generic_coa.stock_in
+DEL account.account.template: l10n_generic_coa.stock_out
+DEL account.account.template: l10n_generic_coa.stock_valuation
+DEL account.account.template: l10n_generic_coa.tax_paid
+DEL account.account.template: l10n_generic_coa.tax_payable
+DEL account.account.template: l10n_generic_coa.tax_receivable
+DEL account.account.template: l10n_generic_coa.tax_received
+DEL account.account.template: l10n_generic_coa.to_receive_pay
+DEL account.account.template: l10n_generic_coa.to_receive_rec
+DEL account.chart.template: l10n_generic_coa.configurable_chart_template
+# NOTHING TO DO
+
+DEL account.payment.term: account.account_payment_term_2months (noupdate)
+DEL account.tax.group: account.tax_group_taxes (noupdate)
+# DONE: removed in post-migration
+
+DEL account.tax.group: l10n_generic_coa.tax_group_15 (noupdate)
+DEL account.tax.template: l10n_generic_coa.purchase_tax_template
+DEL account.tax.template: l10n_generic_coa.sale_tax_template
+# DONE: pre-migration: renamed xmlid
+
+NEW ir.actions.act_window: account.action_account_all_payments
+NEW ir.actions.act_window: account.action_account_supplier_accounts
+NEW ir.actions.act_window: account.action_analytic_reporting
+NEW ir.actions.act_window: account.action_open_payment_items
+NEW ir.actions.act_window: account.action_open_sale_payment_items
+DEL ir.actions.act_window: account.action_account_tax_template_form
+DEL ir.actions.act_window: account.action_open_account_onboarding_create_invoice
+DEL ir.actions.act_window: account.action_open_account_onboarding_sale_tax
+DEL ir.actions.act_window: account.res_partner_action_supplier_bills
+NEW ir.actions.server: account.action_automatic_entry_change_account
+NEW ir.actions.server: account.action_automatic_entry_change_period
+NEW ir.actions.server: account.action_move_switch_move_type
+DEL ir.actions.server: account.action_automatic_entry
+DEL ir.actions.server: account.action_move_switch_invoice_to_credit_note
+NEW ir.cron: account.ir_cron_account_move_send
+NEW ir.model.access: account.access_account_journal_group_invoice
+NEW ir.model.access: account.access_account_journal_group_readonly
+NEW ir.model.access: account.access_account_move_send
+DEL ir.model.access: account.access_account_account_template
+DEL ir.model.access: account.access_account_chart_template
+DEL ir.model.access: account.access_account_fiscal_position_account_template
+DEL ir.model.access: account.access_account_fiscal_position_tax_template
+DEL ir.model.access: account.access_account_fiscal_position_template
+DEL ir.model.access: account.access_account_group_template
+DEL ir.model.access: account.access_account_invoice_send
+DEL ir.model.access: account.access_account_journal_group_all
+DEL ir.model.access: account.access_account_reconcile_model_line_template
+DEL ir.model.access: account.access_account_reconcile_model_template
+DEL ir.model.access: account.access_account_tag_internal_user
+DEL ir.model.access: account.access_account_tax_repartition_line_template_manager
+DEL ir.model.access: account.access_account_tax_template
+DEL ir.model.constraint: account.constraint_account_account_code_company_uniq
+DEL ir.model.constraint: account.constraint_account_fiscal_position_account_account_src_dest_uniq
+DEL ir.model.constraint: account.constraint_account_tax_name_company_uniq
+DEL ir.model.constraint: account.constraint_account_tax_template_name_company_uniq
+DEL ir.model.constraint: account_sequence.constraint_account_move_unique_name
+NEW ir.module.category: account.module_category_accounting_bank
+NEW ir.rule: account.account_move_send_rule_group_invoice (noupdate)
+NEW ir.rule: account.tax_group_comp_rule (noupdate)
+# NOTHING TO DO
+
+DEL ir.rule: account.account_invoice_send_rule_group_invoice (noupdate)
+DEL ir.sequence: account.sequence_reconcile_seq (noupdate)
+# DONE: removed in post-migration
+
+NEW ir.ui.menu: account.menu_account_supplier_accounts
+NEW ir.ui.menu: account.menu_action_analytic_reporting
+NEW ir.ui.menu: account.menu_action_open_payment_items
+NEW ir.ui.menu: account.menu_action_open_sale_payment_items
+NEW ir.ui.view: account.account_move_send_form
+NEW ir.ui.view: account.account_move_view_activity
+NEW ir.ui.view: account.document_tax_totals_company_currency_template
+NEW ir.ui.view: account.document_tax_totals_template
+NEW ir.ui.view: account.product_uom_form_view_inherit
+NEW ir.ui.view: account.report_statement_internal_layout
+NEW ir.ui.view: account.res_company_form_view_onboarding
+NEW ir.ui.view: account.res_company_form_view_onboarding_sale_tax
+NEW ir.ui.view: account.view_account_move_line_payment_filter
+NEW ir.ui.view: account.view_account_payment_method_line_tree
+NEW ir.ui.view: account.view_move_line_payment_tree
+NEW ir.ui.view: account.view_partner_bank_search_inherit
+DEL ir.ui.view: account.account_dashboard_onboarding_panel
+DEL ir.ui.view: account.account_invoice_onboarding_panel
+DEL ir.ui.view: account.account_invoice_onboarding_sale_tax_form
+DEL ir.ui.view: account.account_invoice_send_wizard_form
+DEL ir.ui.view: account.onboarding_bank_account_step
+DEL ir.ui.view: account.onboarding_chart_of_account_step
+DEL ir.ui.view: account.onboarding_create_invoice_step
+DEL ir.ui.view: account.onboarding_fiscal_year_step
+DEL ir.ui.view: account.onboarding_invoice_layout_step
+DEL ir.ui.view: account.onboarding_sale_tax_step
+DEL ir.ui.view: account.onboarding_taxes_step
+DEL ir.ui.view: account.view_account_analytic_line_filter_inherit
+DEL ir.ui.view: account.view_account_position_template_form
+DEL ir.ui.view: account.view_account_position_template_search
+DEL ir.ui.view: account.view_account_position_template_tree
+DEL ir.ui.view: account.view_account_tax_template_form
+DEL ir.ui.view: account.view_account_tax_template_search
+DEL ir.ui.view: account.view_account_tax_template_tree
+NEW onboarding.onboarding: account.onboarding_onboarding_account_dashboard (noupdate)
+NEW onboarding.onboarding: account.onboarding_onboarding_account_invoice (noupdate)
+NEW onboarding.onboarding.step: account.onboarding_onboarding_step_bank_account (noupdate)
+NEW onboarding.onboarding.step: account.onboarding_onboarding_step_base_document_layout (noupdate)
+NEW onboarding.onboarding.step: account.onboarding_onboarding_step_chart_of_accounts (noupdate)
+NEW onboarding.onboarding.step: account.onboarding_onboarding_step_company_data (noupdate)
+NEW onboarding.onboarding.step: account.onboarding_onboarding_step_create_invoice (noupdate)
+NEW onboarding.onboarding.step: account.onboarding_onboarding_step_default_taxes (noupdate)
+NEW onboarding.onboarding.step: account.onboarding_onboarding_step_fiscal_year (noupdate)
+NEW onboarding.onboarding.step: account.onboarding_onboarding_step_sales_tax (noupdate)
+NEW onboarding.onboarding.step: account.onboarding_onboarding_step_setup_bill (noupdate)
+NEW report.paperformat: account.paperformat_euro_bank_statement
+NEW res.groups: account.group_validate_bank_account
+DEL res.groups: account.group_show_line_subtotals_tax_excluded
+DEL res.groups: account.group_show_line_subtotals_tax_included
+# NOTHING TO DO

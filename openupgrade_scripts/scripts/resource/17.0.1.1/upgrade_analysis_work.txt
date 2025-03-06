@@ -1,0 +1,21 @@
+---Models in module 'resource'---
+---Fields in module 'resource'---
+resource     / resource.calendar        / hours_per_day (float)         : now a function
+# Nothing To Do, compute non-stored
+
+resource     / resource.calendar.attendance / _order                        : _order is now 'sequence, week_type, dayofweek, hour_from' ('week_type, dayofweek, hour_from')
+# DONE: pre-migration: Reset the sequence field to its default value for preserving the order.
+
+resource     / resource.calendar.attendance / day_period (selection)        : selection_keys is now '['afternoon', 'lunch', 'morning']' ('['afternoon', 'morning']')
+# Nothing To Do, new option: lunch
+
+resource     / resource.calendar.attendance / duration_days (float)         : NEW hasdefault: compute
+# Nothing To Do, no need precomputation
+
+---XML records in module 'resource'---
+resource.calendar: resource.resource_calendar_std (noupdate) (noupdate switched)
+# DONE: switched noupdate
+
+DEL resource.calendar: resource.resource_calendar_std_35h (noupdate)
+DEL resource.calendar: resource.resource_calendar_std_38h (noupdate)
+# DONE: safely delete in post-migration

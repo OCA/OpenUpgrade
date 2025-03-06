@@ -106,6 +106,36 @@ def _company_update_email_colors(env):
     )
 
 
+def _mail_activity_plan(env):
+    """If the OCA mail_activity_plan module is installed, we convert the existing data
+    to adapt them to the standard.
+    """
+    if not openupgrade.table_exists(env.cr, "mail_activity_plan"):
+        return
+    _mail_activity_plan_fields_renames = [
+        (
+            "mail.activity.plan",
+            "mail_activity_plan",
+            "model",
+            "res_model",
+        ),
+        (
+            "mail.activity.plan",
+            "mail_activity_plan",
+            "model_id",
+            "res_model_id",
+        ),
+    ]
+    openupgrade.rename_fields(env, _mail_activity_plan_fields_renames)
+    openupgrade.remove_tables_fks(
+        env.cr,
+        [
+            "mail_activity_plan_activity_type",
+            "mail_activity_plan_mail_activity_plan_activity_type_rel",
+        ],
+    )
+
+
 @openupgrade.migrate()
 def migrate(env, version):
     openupgrade.rename_models(env.cr, _models_renames)
@@ -117,6 +147,7 @@ def migrate(env, version):
     _mail_tracking_value_update_monetary_tracking_values(env)
     _company_update_email_colors(env)
     _mail_gateway_allowed(env)
+    _mail_activity_plan(env)
     # create column to avoid model mail.alias is loaded before model res.company
     openupgrade.logged_query(
         env.cr,

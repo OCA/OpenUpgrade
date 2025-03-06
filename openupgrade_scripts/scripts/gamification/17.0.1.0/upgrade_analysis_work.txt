@@ -1,0 +1,37 @@
+---Models in module 'gamification'---
+---Fields in module 'gamification'---
+gamification / gamification.badge       / message_main_attachment_id (many2one): DEL relation: ir.attachment
+gamification / gamification.challenge   / message_main_attachment_id (many2one): DEL relation: ir.attachment
+# NOTHING TO DO: feature removed
+
+gamification / gamification.challenge   / report_message_group_id (many2one): relation is now 'discuss.channel' ('mail.channel') [nothing to do]
+# NOTHING TO DO: done in mail module
+
+gamification / gamification.karma.tracking / _order                        : _order is now 'tracking_date desc, id desc' ('tracking_date DESC')
+gamification / gamification.karma.tracking / gain (integer)                : NEW hasdefault: compute
+# NOTHING TO DO: non-stored fields
+
+gamification / gamification.karma.tracking / origin_ref (reference)        : NEW hasdefault: default
+gamification / gamification.karma.tracking / origin_ref_model_name (selection): NEW selection_keys: function, isfunction: function, stored
+# DONE: pre-migration: filled with user_id
+
+gamification / gamification.karma.tracking / reason (text)                 : NEW hasdefault: default
+# NOTHING TO DO: let's use default one. Should we create/fill in pre-migration too?
+
+gamification / gamification.karma.tracking / tracking_date (date)          : type is now 'datetime' ('date')
+# DONE: post-migration: set to datetime using user_id timezone (and fill missing ones with create_date)
+
+---XML records in module 'gamification'---
+NEW gamification.karma.tracking: gamification.karma_tracking_user_admin (noupdate)
+NEW gamification.karma.tracking: gamification.karma_tracking_user_root (noupdate)
+# NOTHING TO DO: New noupdate="1" records
+
+NEW ir.cron: gamification.ir_cron_consolidate (noupdate)
+DEL ir.cron: gamification.ir_cron_consolidate_last_month (noupdate)
+# DONE: pre-migration: XML-ID renamed
+
+NEW ir.model.access: gamification.gamification_karma_rank_access_employee
+NEW ir.model.access: gamification.gamification_karma_rank_access_portal
+NEW ir.model.access: gamification.gamification_karma_rank_access_public
+DEL ir.model.access: gamification.gamification_karma_rank_access_all
+# NOTHING TO DO: new feature
