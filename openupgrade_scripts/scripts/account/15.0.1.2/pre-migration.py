@@ -150,10 +150,9 @@ def _fast_fill_account_move_amount_total_in_currency_signed(env):
             CASE
                 WHEN move_type = 'entry'
                 THEN ABS(amount_total)
-                WHEN move_type IN ('in_invoice', 'out_refund', 'in_receipt')
-                THEN -amount_total
-                ELSE amount_total
-            END""",
+                ELSE -amount_total
+            END
+        WHERE move_type in ('in_invoice', 'out_refund', 'in_receipt', 'entry')""",
     )
 
 
