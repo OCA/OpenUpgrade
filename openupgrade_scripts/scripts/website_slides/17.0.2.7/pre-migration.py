@@ -7,7 +7,8 @@ def precreate_slide_channel_partner_active(env):
     openupgrade.logged_query(
         env.cr,
         """
-        ALTER TABLE slide_channel_partner ADD COLUMN active boolean DEFAULT true
+        ALTER TABLE slide_channel_partner
+        ADD COLUMN IF NOT EXISTS active boolean DEFAULT true
         """,
     )
     openupgrade.logged_query(
@@ -22,7 +23,8 @@ def fill_slide_channel_partner_member_status(env):
     openupgrade.logged_query(
         env.cr,
         """
-        ALTER TABLE slide_channel_partner ADD COLUMN IF NOT EXISTS member_status varchar
+        ALTER TABLE slide_channel_partner
+        ADD COLUMN IF NOT EXISTS member_status varchar
         """,
     )
     openupgrade.logged_query(

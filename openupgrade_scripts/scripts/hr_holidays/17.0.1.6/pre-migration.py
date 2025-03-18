@@ -18,7 +18,8 @@ def _pre_create_accrual_plan_active(cr):
     openupgrade.logged_query(
         cr,
         """
-        ALTER TABLE hr_leave_accrual_plan ADD COLUMN active boolean DEFAULT true
+        ALTER TABLE hr_leave_accrual_plan
+        ADD COLUMN IF NOT EXISTS active boolean DEFAULT true
         """,
     )
     openupgrade.logged_query(

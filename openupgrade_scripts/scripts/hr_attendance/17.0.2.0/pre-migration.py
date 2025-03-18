@@ -63,7 +63,8 @@ def fill_res_company_attendance_from_systray(env):
     openupgrade.logged_query(
         env.cr,
         """
-        ALTER TABLE res_company ADD COLUMN attendance_from_systray boolean DEFAULT true
+        ALTER TABLE res_company
+        ADD COLUMN IF NOT EXISTS attendance_from_systray boolean DEFAULT true
         """,
     )
     openupgrade.logged_query(

@@ -51,7 +51,7 @@ def _hr_plan_sync_to_mail_activity_plan(env):
         env.cr,
         """
         ALTER TABLE mail_activity_plan_template
-        ADD COLUMN hr_plan_activity_type_legacy_id INTEGER""",
+        ADD COLUMN IF NOT EXISTS hr_plan_activity_type_legacy_id INTEGER""",
     )
     hr_plan_activity_type_query = """
         INSERT INTO mail_activity_plan_template (

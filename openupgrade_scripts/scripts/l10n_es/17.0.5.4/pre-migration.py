@@ -7,7 +7,8 @@ from openupgradelib import openupgrade
 def _pre_create_and_fill_l10n_es_is_simplified(env):
     openupgrade.logged_query(
         env.cr,
-        "ALTER TABLE account_move ADD COLUMN l10n_es_is_simplified BOOL DEFAULT false",
+        """ALTER TABLE account_move
+        ADD COLUMN IF NOT EXISTS l10n_es_is_simplified BOOL DEFAULT false""",
     )
     openupgrade.logged_query(
         env.cr,

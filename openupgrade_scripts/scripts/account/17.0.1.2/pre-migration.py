@@ -24,7 +24,7 @@ def _map_account_report_filter_account_type(env):
         env.cr,
         """
         ALTER TABLE account_report
-        ADD COLUMN filter_account_type character varying;
+        ADD COLUMN IF NOT EXISTS filter_account_type character varying;
         """,
     )
     openupgrade.logged_query(
@@ -237,7 +237,7 @@ def _pre_create_account_report_active(env):
     openupgrade.logged_query(
         env.cr,
         """
-        ALTER TABLE account_report ADD COLUMN active boolean DEFAULT true
+        ALTER TABLE account_report ADD COLUMN IF NOT EXISTS active boolean DEFAULT true
         """,
     )
     openupgrade.logged_query(
