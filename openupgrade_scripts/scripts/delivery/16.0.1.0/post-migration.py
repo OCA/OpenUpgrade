@@ -139,9 +139,10 @@ def numerical_range_to_prefixes(min_, max_):
             else:
                 any_digit_count += 1
         if any_digit_count:
-            pattern += r"\d"
+            pattern += "[0-9]"
         if any_digit_count > 1:
             pattern += f"{{{any_digit_count}}}"
+        pattern += "$"
         subpatterns.append(pattern)
         start = stop + 1
     return subpatterns
