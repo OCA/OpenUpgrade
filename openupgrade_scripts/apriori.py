@@ -54,6 +54,13 @@ renamed_modules = {
     # OCA/l10n-italy
     "l10n_it_ricevute_bancarie": "l10n_it_riba",
     # OCA/...
+    # SE7
+    "se7_account_journal_fields_traking": "se7_account_journal_fields_tracking",
+    "se7_project_form_partner": "se7_project_view_form_simplified_partner",
+    "se7_project_kanban_to_form": "se7_project_kanban_open_form",
+    "se7_project_task_scheduling": "se7_project_schedule",
+    "se7_sale_mrp_line_associated_bom": "se7_sale_line_associated_bom",
+    "se7_import_nominas_a3": "se7_import_account_move_payroll_a3",
 }
 
 # Merged modules contain a mapping from old module names to other,
@@ -123,6 +130,21 @@ merged_modules = {
     "web_drop_target": "web",
     "web_ir_actions_act_view_reload": "web",
     "web_tree_image_tooltip": "web",
+    # SE7
+    "se7_fc_sale_project_name": "se7_project_usability",
+    "se7_hr_timesheet_filters": "se7_hr_timesheet_usability",
+    "se7_fc_account": "se7_fusteriacomas",
+    "se7_fc_account_invoice_report": "se7_fusteriacomas",
+    "se7_fc_font": "se7_fusteriacomas",
+    "se7_fc_hr_timesheet": "se7_fusteriacomas",
+    "se7_fc_mrp": "se7_fusteriacomas",
+    "se7_fc_project": "se7_fusteriacomas",
+    "se7_fc_purchase": "se7_fusteriacomas",
+    "se7_fc_sale": "se7_fusteriacomas",
+    "se7_dni_company_contact": "se7_h2o2",
+    "se7_h2o2_pago_pagare": "se7_h2o2",
+    "se7_h2o2_sale": "se7_h2o2",
+
 }
 
 # only used here for upgrade_analysis
