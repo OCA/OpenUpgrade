@@ -15,6 +15,8 @@ renamed_modules = {
 merged_modules = {
     # odoo
     # odoo/enterprise
+    # OCA/sale-workflow
+    "sale_order_qty_change_no_recompute": "sale",
     # OCA/...
 }
 
