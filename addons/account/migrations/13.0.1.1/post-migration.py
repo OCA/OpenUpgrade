@@ -861,12 +861,13 @@ def create_account_tax_repartition_lines(env):
 def move_tags_from_taxes_to_repartition_lines(env):
     openupgrade.logged_query(
         env.cr, """
-        WITH RECURSIVE tax2parent(tax_id, parent_id) AS (
-            SELECT id, id FROM account_tax
+        WITH RECURSIVE tax2parent(tax_id, parent_id, is_cycle, all_parents) AS (
+            SELECT id, id, false, array[id] as all_parents FROM account_tax
             UNION ALL
-            SELECT rel.child_tax, rel.parent_tax
+            SELECT rel.child_tax, rel.parent_tax, rel.parent_tax = any(all_parents),
+                tax2parent.all_parents || rel.parent_tax
             FROM account_tax_filiation_rel rel
-            JOIN tax2parent ON tax2parent.parent_id=rel.child_tax
+            JOIN tax2parent ON tax2parent.parent_id=rel.child_tax AND not is_cycle
         )
         INSERT INTO account_account_tag_account_tax_repartition_line_rel (
             account_tax_repartition_line_id, account_account_tag_id)
@@ -962,12 +963,13 @@ def assign_account_tags_to_move_lines(env):
     # move lines with taxes
     openupgrade.logged_query(
         env.cr, """
-        WITH RECURSIVE tax2child(tax_id, child_id) AS (
-            SELECT id, id FROM account_tax
+        WITH RECURSIVE tax2child(tax_id, child_id, is_cycle, all_parents) AS (
+            SELECT id, id, false, array[id] as all_parents FROM account_tax
             UNION ALL
-            SELECT rel.parent_tax, rel.child_tax
+            SELECT rel.parent_tax, rel.child_tax, rel.parent_tax = any(all_parents),
+                tax2child.all_parents || rel.parent_tax
             FROM account_tax_filiation_rel rel
-            JOIN tax2child ON tax2child.child_id=rel.parent_tax
+            JOIN tax2child ON tax2child.child_id=rel.parent_tax AND not is_cycle
         )
         INSERT INTO account_account_tag_account_move_line_rel (
             account_move_line_id, account_account_tag_id)
