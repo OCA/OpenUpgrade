@@ -29,6 +29,7 @@ def _update_account_analytic_line_timesheet_invoice_type(env):
 
 @openupgrade.migrate()
 def migrate(env, version):
+    openupgrade.load_data(env.cr, "sale_timesheet", "16.0.1.0/noupdate_changes.xml")
     _update_account_analytic_line_timesheet_invoice_type(env)
     # Remove SQL view project_profitability_report not used anymore in Odoo 16
     openupgrade.logged_query(
