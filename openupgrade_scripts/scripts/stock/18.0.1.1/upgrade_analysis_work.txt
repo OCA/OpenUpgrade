@@ -1,0 +1,138 @@
+---Models in module 'stock'---
+obsolete model stock.assign.serial [transient]
+obsolete model stock.scheduler.compute [transient]
+new model stock.lot.report [sql_view]
+new model stock.replenish.mixin [abstract]
+new model stock.scrap.reason.tag
+# NOTHING TO DO
+
+---Fields in module 'stock'---
+stock        / product.template         / detailed_type (False)         : DEL selection_keys: ['consu', 'product', 'service'], mode: modify
+stock        / product.template         / type (False)                  : DEL selection_keys: ['consu', 'product', 'service'], mode: modify
+stock        / product.template         / is_storable (boolean)         : NEW hasdefault: default
+# DONE: pre-migration:: pre-create and fill is_storable and move 'product' to 'consu'
+
+stock        / product.template         / route_from_categ_ids (many2many): table is now 'False' ('stock.route')
+# NOTHING TO DO: related field
+
+stock        / product.template         / property_stock_inventory (many2one): needs conversion to v18-style company dependent
+stock        / product.template         / property_stock_production (many2one): needs conversion to v18-style company dependent
+stock        / product.template         / responsible_id (many2one)     : needs conversion to v18-style company dependent
+stock        / res.partner              / property_stock_customer (many2one): needs conversion to v18-style company dependent
+stock        / res.partner              / property_stock_supplier (many2one): needs conversion to v18-style company dependent
+# DONE: post-migration: used openupgrade_180.convert_company_dependent
+
+stock        / stock.location           / return_location (boolean)     : DEL
+stock        / stock.picking.type       / default_location_return_id (many2one): DEL relation: stock.location
+# NOTHING TO DO: now is using _can_return() method instead
+
+stock        / stock.move               / location_dest_id (many2one)   : now a function
+stock        / stock.move               / location_final_id (many2one)  : NEW relation: stock.location
+stock        / stock.rule               / location_dest_from_rule (boolean): NEW hasdefault: default
+# DONE: pre-migration: rename location_dest_id to location_final_id, pre-create and fill location_dest_id and location_dest_from_rule
+
+stock        / stock.move               / never_product_template_attribute_value_ids (many2many): NEW relation: product.template.attribute.value
+# NOTHING TO DO: new technical feature
+
+stock        / stock.move.line          / product_category_name (char)  : not stored anymore
+# NOTHING TO DO
+
+stock        / stock.picking            / search_date_category (selection): NEW selection_keys: ['after', 'before', 'day_1', 'day_2', 'today', 'yesterday']
+stock        / stock.picking            / shipping_weight (float)       : previously in module stock_delivery
+stock        / stock.picking            / weight_bulk (float)           : previously in module stock_delivery
+# NOTHING TO DO: not stored
+
+stock        / stock.picking.type       / _order                        : _order is now 'is_favorite desc, sequence, id' ('sequence, id')
+# NOTHING TO DO: is_favorite is not stored
+
+stock        / stock.picking.type       / default_location_dest_id (many2one): now required
+stock        / stock.picking.type       / default_location_src_id (many2one): now required
+# NOTHING TO DO? (not sure if we can assure it someway)
+
+stock        / stock.picking.type       / favorite_user_ids (many2many) : NEW relation: res.users
+# NOTHING TO DO: new feature
+
+stock        / stock.picking.type       / move_type (selection)         : NEW required, selection_keys: ['direct', 'one'], hasdefault: default
+# DONE: pre-migration: pre-create and fill it with default 'direct'
+
+stock        / stock.picking.type       / show_reserved (boolean)       : DEL
+# NOTHING TO DO: obsolete, see https://github.com/odoo/odoo/commit/54a795bf11d1ef5d791e587b0c9e4d260b97a79d
+
+stock        / stock.putaway.rule       / sublocation (selection)       : NEW selection_keys: ['closest_location', 'last_used', 'no'], hasdefault: default
+# DONE: pre-migration: pre-create and fill it ('no' by default, 'closest_location' if storage_category_id is not null)
+
+stock        / stock.quant.package      / location_id (many2one)        : not a function anymore
+# NOTHING TO DO: not sure why marked this way, it's the same in both v17 and v18
+
+stock        / stock.quant.package      / shipping_weight (float)       : previously in module stock_delivery
+# NOTHING TO DO
+
+stock        / stock.rule               / push_domain (char)            : NEW
+# NOTHING TO DO: new feature
+
+stock        / stock.scrap              / scrap_reason_tag_ids (many2many): NEW relation: stock.scrap.reason.tag
+stock        / stock.scrap.reason.tag   / color (char)                  : NEW hasdefault: default
+stock        / stock.scrap.reason.tag   / name (char)                   : NEW required
+stock        / stock.scrap.reason.tag   / sequence (integer)            : NEW hasdefault: default
+# NOTHING TO DO: new feature
+
+stock        / stock.warehouse          / qc_type_id (many2one)         : NEW relation: stock.picking.type
+stock        / stock.warehouse          / store_type_id (many2one)      : NEW relation: stock.picking.type
+stock        / stock.warehouse          / xdock_type_id (many2one)      : NEW relation: stock.picking.type
+# DONE: post-migration: created / updated default return type for all warehouses
+
+stock        / stock.warehouse.orderpoint / qty_to_order (float)          : not stored anymore
+stock        / stock.warehouse.orderpoint / qty_to_order (float)          : now a function
+stock        / stock.warehouse.orderpoint / qty_to_order_manual (float)   : NEW
+# DONE: pre-migration: rename qty_to_order to qty_to_order_manual
+
+---XML records in module 'stock'---
+NEW digest.tip: stock.digest_tip_stock_1
+NEW ir.actions.act_window: stock.action_get_picking_type_ready_moves
+NEW ir.actions.act_window: stock.action_inventory_at_date
+NEW ir.actions.act_window: stock.action_lot_report
+NEW ir.actions.act_window: stock.action_picking_tree_graph
+# NOTHING TO DO
+
+ir.actions.act_window: stock.stock_picking_action_picking_type (deleted domain)
+# NOTHING TO DO: domain was already empty
+
+DEL ir.actions.act_window: stock.act_assign_serial_numbers
+DEL ir.actions.act_window: stock.action_procurement_compute
+NEW ir.actions.server: stock.action_install_barcode
+NEW ir.actions.server: stock.action_print_labels
+NEW ir.actions.server: stock.click_dashboard_graph
+NEW ir.actions.server: stock.method_action_picking_tree_incoming
+NEW ir.actions.server: stock.method_action_picking_tree_internal
+NEW ir.actions.server: stock.method_action_picking_tree_outgoing
+NEW ir.actions.server: stock.stock_split_picking
+NEW ir.config_parameter: stock.barcode_separator (noupdate)
+NEW ir.model.access: stock.access_stock_inventory_adjustment_name_manager
+NEW ir.model.access: stock.access_stock_inventory_adjustment_name_user
+NEW ir.model.access: stock.access_stock_location_all_user
+NEW ir.model.access: stock.access_stock_lot_report
+NEW ir.model.access: stock.access_stock_scrap_reason_tag_manager
+NEW ir.model.access: stock.access_stock_scrap_reason_tag_user
+NEW ir.model.access: stock.access_update_product_attribute_value_stock_manager
+DEL ir.model.access: stock.access_stock_assign_serial
+DEL ir.model.access: stock.access_stock_inventory_adjustment_name
+DEL ir.model.access: stock.access_stock_scheduler_compute
+NEW ir.model.constraint: stock.constraint_stock_scrap_reason_tag_name_uniq
+DEL ir.ui.menu: stock.menu_reordering_rules_config
+NEW ir.ui.view: stock.help_message_template
+NEW ir.ui.view: stock.product_template_search_view_inherit_stock
+NEW ir.ui.view: stock.search_customer_lot_filter
+NEW ir.ui.view: stock.stock_lot_customer_report_view_list
+DEL ir.ui.view: stock.view_assign_serial_numbers
+DEL ir.ui.view: stock.view_procurement_compute_wizard
+DEL res.groups: stock.group_stock_picking_wave
+DEL res.groups: stock.group_stock_storage_categories
+# NOTHING TO DO
+
+DEL ir.property: stock.property_stock_customer (noupdate)
+DEL ir.property: stock.property_stock_supplier (noupdate)
+# DONE: post-migration: safely delete records
+
+NEW stock.location: stock.stock_location_inter_company (noupdate)
+DEL stock.location: stock.stock_location_inter_wh (noupdate)
+# DONE: pre-migration: rename xmlid
