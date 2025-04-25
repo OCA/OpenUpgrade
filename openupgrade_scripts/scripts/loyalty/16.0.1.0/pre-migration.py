@@ -819,7 +819,7 @@ def migrate(env, version):
                     "date",
                     "date",
                     "loyalty",
-                    False,
+                    None,
                 )
             ],
         )
