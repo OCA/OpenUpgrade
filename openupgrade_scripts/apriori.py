@@ -130,6 +130,8 @@ merged_modules = {
     "mail_preview_base": "mail",
     # OCA/stock-logistics-workflow
     "stock_picking_backorder_strategy": "stock",
+    # OCA/survey
+    "survey_placeholder": "survey",
     # OCA/web
     "web_drop_target": "web",
     "web_ir_actions_act_view_reload": "web",
