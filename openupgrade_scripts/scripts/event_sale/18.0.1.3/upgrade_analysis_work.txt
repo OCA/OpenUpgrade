@@ -1,0 +1,35 @@
+---Models in module 'event_sale'---
+---Fields in module 'event_sale'---
+event_sale   / event.event              / currency_id (many2one)        : module is now 'event_product' ('event_sale')
+event_sale   / event.event.ticket       / _order                        : module is now 'event_product' ('event_sale')
+event_sale   / event.event.ticket       / currency_id (many2one)        : module is now 'event_product' ('event_sale')
+event_sale   / event.event.ticket       / description (False)           : module is now 'event_product' ('event_sale')
+event_sale   / event.event.ticket       / price (float)                 : module is now 'event_product' ('event_sale')
+event_sale   / event.event.ticket       / price_incl (float)            : module is now 'event_product' ('event_sale')
+event_sale   / event.event.ticket       / price_reduce (float)          : module is now 'event_product' ('event_sale')
+event_sale   / event.event.ticket       / price_reduce_taxinc (float)   : module is now 'event_product' ('event_sale')
+event_sale   / event.event.ticket       / product_id (many2one)         : module is now 'event_product' ('event_sale')
+event_sale   / event.type.ticket        / _order                        : module is now 'event_product' ('event_sale')
+event_sale   / event.type.ticket        / currency_id (many2one)        : module is now 'event_product' ('event_sale')
+event_sale   / event.type.ticket        / description (False)           : module is now 'event_product' ('event_sale')
+event_sale   / event.type.ticket        / price (float)                 : module is now 'event_product' ('event_sale')
+event_sale   / event.type.ticket        / price_reduce (float)          : module is now 'event_product' ('event_sale')
+event_sale   / event.type.ticket        / product_id (many2one)         : module is now 'event_product' ('event_sale')
+event_sale   / product.product          / event_ticket_ids (one2many)   : module is now 'event_product' ('event_sale')
+event_sale   / product.template         / detailed_type (False)         : DEL selection_keys: ['combo', 'consu', 'event', 'product', 'service'], mode: modify
+# NOTHING TO DO
+
+---XML records in module 'event_sale'---
+NEW ir.ui.view: event_sale.product_template_form_view
+DEL ir.ui.view: event_sale.event_event_ticket_form_view
+DEL ir.ui.view: event_sale.event_event_ticket_view_form_from_event
+DEL ir.ui.view: event_sale.event_event_ticket_view_kanban_from_event
+DEL ir.ui.view: event_sale.event_event_ticket_view_tree_from_event
+DEL ir.ui.view: event_sale.event_type_ticket_view_form_from_type
+DEL ir.ui.view: event_sale.event_type_ticket_view_tree_from_type
+# NOTHING TO DO: Handled by ORM
+
+---XML records in module 'event_product'---
+DEL product.category: event_sale.product_category_events [renamed to event_product module] (noupdate)
+DEL product.product: event_sale.product_product_event [renamed to event_product module] (noupdate)
+# DONE: pre-migration: moved to event_product
