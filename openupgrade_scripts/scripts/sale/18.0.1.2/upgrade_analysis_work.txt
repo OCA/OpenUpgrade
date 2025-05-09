@@ -1,0 +1,54 @@
+---Models in module 'sale'---
+---Fields in module 'sale'---
+sale         / account.analytic.applicability / business_domain (False)       : selection_keys is now '['bill', 'expense', 'general', 'invoice', 'manufacturing_order', 'purchase_order', 'sale_order', 'stock_picking', 'timesheet']' ('['bill', 'expense', 'general', 'invoice', 'manufacturing_order', 'purchase_order', 'sale_order']')
+sale         / account.move.line        / is_downpayment (boolean)      : module is now 'purchase' ('sale')
+sale         / product.category         / property_account_downpayment_categ_id (many2one): NEW relation: account.account
+sale         / product.document         / attached_on (selection)       : DEL selection_keys: ['quotation', 'sale_order']
+sale         / product.document         / attached_on_sale (selection)  : NEW required, selection_keys: ['hidden', 'quotation', 'sale_order'], hasdefault: default
+sale         / res.company              / sale_down_payment_product_id (many2one): DEL relation: product.product
+sale         / sale.order               / amount_to_invoice (float)     : not stored anymore
+sale         / sale.order               / analytic_account_id (many2one): DEL relation: account.analytic.account
+sale         / sale.order.line          / analytic_distribution_search (json): DEL
+sale         / sale.order.line          / combo_item_id (many2one)      : NEW relation: product.combo.item
+sale         / sale.order.line          / linked_line_id (many2one)     : previously in module website_sale
+sale         / sale.order.line          / linked_line_ids (one2many)    : NEW relation: sale.order.line
+sale         / sale.order.line          / linked_virtual_id (char)      : NEW
+sale         / sale.order.line          / qty_invoiced_posted (float)   : previously in module l10n_it_edi_doi
+sale         / sale.order.line          / selected_combo_items (char)   : NEW
+sale         / sale.order.line          / technical_price_unit (float)  : NEW
+sale         / sale.order.line          / virtual_id (char)             : NEW
+---XML records in module 'sale'---
+NEW ir.actions.act_window.view: sale.action_quotations_kanban
+NEW ir.actions.act_window.view: sale.action_quotations_tree
+NEW ir.actions.server: sale.model_sale_order_send_mail
+NEW ir.model.access: sale.access_account_move_send_batch_wizard_salesman
+NEW ir.model.access: sale.access_account_move_send_wizard_salesman
+NEW ir.model.access: sale.access_update_product_attribute_value_sale_manager
+DEL ir.model.access: sale.access_account_move_send_salesman
+ir.model.constraint: sale.constraint_sale_order_line_accountable_required_fields (changed definition: is now 'check(display_type is not null or is_downpayment or(product_id is not null and product_uom is not null))' ('check(display_type is not null or(product_id is not null and product_uom is not null))'))
+NEW ir.rule: sale.account_invoice_send_batch_rule_see_all (noupdate)
+NEW ir.rule: sale.account_invoice_send_batch_rule_see_personal (noupdate)
+NEW ir.rule: sale.account_invoice_send_single_rule_see_all (noupdate)
+NEW ir.rule: sale.account_invoice_send_single_rule_see_personal (noupdate)
+DEL ir.rule: sale.account_invoice_send_rule_see_all (noupdate)
+DEL ir.rule: sale.account_invoice_send_rule_see_personal (noupdate)
+NEW ir.ui.menu: sale.menu_product_combos
+NEW ir.ui.menu: sale.menu_product_tags
+NEW ir.ui.menu: sale.sale_menu_config_activities
+NEW ir.ui.view: sale.product_template_view_form
+NEW ir.ui.view: sale.quote_document_layout_preview
+NEW ir.ui.view: sale.sale_order_kanban_upload
+NEW ir.ui.view: sale.sale_order_list_upload
+NEW ir.ui.view: sale.view_category_property_form
+NEW ir.ui.view: sale.view_quotation_kanban_with_onboarding
+DEL ir.ui.view: sale_product_configurator.product_template_view_form
+DEL ir.ui.view: sale_product_configurator.sale_order_view_form
+NEW mail.message.subtype: sale.mt_order_viewed (noupdate)
+NEW mail.message.subtype: sale.mt_salesteam_order_viewed (noupdate)
+DEL onboarding.onboarding: sale.onboarding_onboarding_sale_quotation (noupdate)
+DEL onboarding.onboarding.step: sale.onboarding_onboarding_step_sale_order_confirmation (noupdate)
+DEL onboarding.onboarding.step: sale.onboarding_onboarding_step_sample_quotation (noupdate)
+NEW res.groups: sale.group_discount_per_so_line [renamed from product module]
+NEW web_tour.tour: sale.sale_tour
+
+# NOTHING TO DO
