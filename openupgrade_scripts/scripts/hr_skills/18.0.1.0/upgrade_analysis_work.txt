@@ -1,0 +1,64 @@
+---Models in module 'hr_skills'---
+---Fields in module 'hr_skills'---
+hr_skills    / hr.resume.line           / description (text)            : type is now 'html' ('text')
+hr_skills    / hr.skill.type            / active (boolean)              : NEW hasdefault: default
+hr_skills    / hr.skill.type            / color (integer)               : NEW hasdefault: default
+---XML records in module 'hr_skills'---
+NEW hr.resume.line.type: hr_skills.resume_type_social_media
+NEW hr.skill: hr_skills.hr_skill_adaptability (noupdate)
+NEW hr.skill: hr_skills.hr_skill_arabic (noupdate)
+NEW hr.skill: hr_skills.hr_skill_bengali (noupdate)
+NEW hr.skill: hr_skills.hr_skill_communication (noupdate)
+NEW hr.skill: hr_skills.hr_skill_conflict_management (noupdate)
+NEW hr.skill: hr_skills.hr_skill_creativity (noupdate)
+NEW hr.skill: hr_skills.hr_skill_critical_thinking (noupdate)
+NEW hr.skill: hr_skills.hr_skill_decision_making (noupdate)
+NEW hr.skill: hr_skills.hr_skill_english (noupdate)
+NEW hr.skill: hr_skills.hr_skill_filipino (noupdate)
+NEW hr.skill: hr_skills.hr_skill_french (noupdate)
+NEW hr.skill: hr_skills.hr_skill_german (noupdate)
+NEW hr.skill: hr_skills.hr_skill_hindi (noupdate)
+NEW hr.skill: hr_skills.hr_skill_indonesian (noupdate)
+NEW hr.skill: hr_skills.hr_skill_japanese (noupdate)
+NEW hr.skill: hr_skills.hr_skill_javanese (noupdate)
+NEW hr.skill: hr_skills.hr_skill_korean (noupdate)
+NEW hr.skill: hr_skills.hr_skill_leadership (noupdate)
+NEW hr.skill: hr_skills.hr_skill_mandarin_chinese (noupdate)
+NEW hr.skill: hr_skills.hr_skill_marathi (noupdate)
+NEW hr.skill: hr_skills.hr_skill_openness_to_criticism (noupdate)
+NEW hr.skill: hr_skills.hr_skill_organizational (noupdate)
+NEW hr.skill: hr_skills.hr_skill_persuasion (noupdate)
+NEW hr.skill: hr_skills.hr_skill_portuguese (noupdate)
+NEW hr.skill: hr_skills.hr_skill_problem_solving (noupdate)
+NEW hr.skill: hr_skills.hr_skill_punjabi (noupdate)
+NEW hr.skill: hr_skills.hr_skill_resourcefulness (noupdate)
+NEW hr.skill: hr_skills.hr_skill_russian (noupdate)
+NEW hr.skill: hr_skills.hr_skill_spanish (noupdate)
+NEW hr.skill: hr_skills.hr_skill_stress_management (noupdate)
+NEW hr.skill: hr_skills.hr_skill_teamwork (noupdate)
+NEW hr.skill: hr_skills.hr_skill_telugu (noupdate)
+NEW hr.skill: hr_skills.hr_skill_time_management (noupdate)
+NEW hr.skill: hr_skills.hr_skill_turkish (noupdate)
+NEW hr.skill: hr_skills.hr_skill_urdu (noupdate)
+NEW hr.skill: hr_skills.hr_skill_wu_chinese (noupdate)
+NEW hr.skill.level: hr_skills.hr_skill_level_a1 (noupdate)
+NEW hr.skill.level: hr_skills.hr_skill_level_a2 (noupdate)
+NEW hr.skill.level: hr_skills.hr_skill_level_advanced_softskill (noupdate)
+NEW hr.skill.level: hr_skills.hr_skill_level_b1 (noupdate)
+NEW hr.skill.level: hr_skills.hr_skill_level_b2 (noupdate)
+NEW hr.skill.level: hr_skills.hr_skill_level_beginner_softskill (noupdate)
+NEW hr.skill.level: hr_skills.hr_skill_level_c1 (noupdate)
+NEW hr.skill.level: hr_skills.hr_skill_level_c2 (noupdate)
+NEW hr.skill.level: hr_skills.hr_skill_level_elementary_softskill (noupdate)
+NEW hr.skill.level: hr_skills.hr_skill_level_expert_softskill (noupdate)
+NEW hr.skill.level: hr_skills.hr_skill_level_intermediate_softskill (noupdate)
+NEW hr.skill.type: hr_skills.hr_skill_type_softskill (noupdate)
+NEW ir.model.access: hr_skills.access_hr_employee_skill_log_manager
+NEW ir.model.access: hr_skills.access_hr_employee_skill_report_manager
+NEW ir.model.access: hr_skills.access_hr_employee_skill_report_user
+DEL ir.model.access: hr_skills.access_hr_employee_skill_report
+NEW ir.rule: hr_skills.hr_employee_skill_report_hr_user (noupdate)
+NEW ir.rule: hr_skills.hr_employee_skill_report_manager (noupdate)
+NEW ir.ui.view: hr_skills.hr_employee_skill_report_view_graph
+NEW ir.ui.view: hr_skills.hr_skill_type_view_search
+# NOTHING TO DO
