@@ -26,7 +26,6 @@ def _create_and_fill_data_from_slide_type_to_slide_category(env):
         [("webpage", "article"), ("presentation", "document")],
         table="slide_slide",
     )
-    openupgrade.rename_columns(env.cr, {"slide_slide": [("slide_type", None)]})
 
 
 def _create_and_fill_data_for_source_type(env):
