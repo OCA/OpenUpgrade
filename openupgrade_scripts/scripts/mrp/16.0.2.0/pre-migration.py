@@ -31,7 +31,30 @@ def _fill_stock_move_manual_consumption(env):
     )
 
 
+def _fill_origin_not_set_on_stock_move(env):
+    """In v15, there was an issue with the origin field when adding
+    a new stock move to a production order after it was completed.
+    This script ensures that the origin field, which was not filled
+    in the previous version, is now properly populated in this new
+    one.
+    """
+    openupgrade.logged_query(
+        env.cr,
+        """
+        UPDATE stock_move sm
+        SET origin = mrp.name
+        FROM mrp_production mrp
+        WHERE sm.origin IS NULL
+            AND (
+                sm.raw_material_production_id = mrp.id
+                OR sm.production_id = mrp.id
+            )
+        """,
+    )
+
+
 @openupgrade.migrate()
 def migrate(env, version):
     openupgrade.rename_fields(env, _fields_renames)
     _fill_stock_move_manual_consumption(env)
+    _fill_origin_not_set_on_stock_move(env)

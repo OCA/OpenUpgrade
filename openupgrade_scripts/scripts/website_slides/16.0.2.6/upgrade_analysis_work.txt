@@ -45,7 +45,7 @@ website_slides / slide.slide              / slide_category (selection)    : NEW 
 # DONE: pre-migration: copy column slide_type + map values that changes
 
 website_slides / slide.slide              / slide_type (selection)        : selection_keys is now '['article', 'doc', 'google_drive_video', 'image', 'pdf', 'quiz', 'sheet', 'slides', 'vimeo_video', 'youtube_video']' ('['document', 'infographic', 'presentation', 'quiz', 'video', 'webpage']')
-# NOTHING TO DO: Let ORM handle recomputes this field
+# DONE (end-migration): Let ORM handle recomputes this field
 
 website_slides / slide.slide              / source_type (selection)       : NEW required, selection_keys: ['external', 'local_file'], hasdefault: default
 # DONE: post-migration: Switch to external for those with `google_drive_id`, that are the only where these applies: https://github.com/odoo/odoo/blob/42bcc3ef284ca355e2323641176573b53e7d2e28/addons/website_slides/controllers/main.py#L1197

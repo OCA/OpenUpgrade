@@ -1,0 +1,18 @@
+---Models in module 'project_sms'---
+---Fields in module 'project_sms'---
+project_sms  / project.project.stage    / sms_template_id (many2one)    : NEW relation: sms.template
+project_sms  / project.task.type        / sms_template_id (many2one)    : NEW relation: sms.template
+# NOTHING TO DO
+
+---XML records in module 'project_sms'---
+NEW ir.actions.act_window: project_sms.project_project_act_window_sms_composer
+NEW ir.actions.act_window: project_sms.project_task_act_window_sms_composer
+NEW ir.model.access: project_sms.access_sms_template_project_manager
+NEW ir.rule: project_sms.ir_rule_sms_template_project_manager (noupdate)
+NEW ir.ui.view: project_sms.project_project_stage_view_form_inherit_project_sms
+NEW ir.ui.view: project_sms.project_project_stage_view_search_inherit_project_sms
+NEW ir.ui.view: project_sms.project_project_stage_view_tree_inherit_project_sms
+NEW ir.ui.view: project_sms.task_type_edit_view_form_inherit_project_sms
+NEW ir.ui.view: project_sms.task_type_edit_view_tree_inherit_project_sms
+NEW ir.ui.view: project_sms.task_type_search_view_search_inherit_project_sms
+# NOTHING TO DO

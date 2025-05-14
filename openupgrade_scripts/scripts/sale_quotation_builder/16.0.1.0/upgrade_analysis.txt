@@ -2,4 +2,6 @@
 ---Fields in module 'sale_quotation_builder'---
 sale_quotation_builder / sale.order.template.line / website_description (html)    : is now stored
 sale_quotation_builder / sale.order.template.line / website_description (html)    : not related anymore
+# NOTHING TO DO: quotation_description in product_template is store=False, so let the ORM recompute the field here.
+
 ---XML records in module 'sale_quotation_builder'---

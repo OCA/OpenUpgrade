@@ -44,13 +44,16 @@ def create_work_contact(env):
                     partner.id,
                 )
         else:
-            matching_partner = env["res.partner"].search(
-                [
-                    ("email", "=", employee.work_email),
-                    ("mobile", "=", employee.mobile_phone),
-                ]
-            )
-            nb_matching_partner = len(matching_partner)
+            if employee.work_email and employee.mobile_phone:
+                matching_partner = env["res.partner"].search(
+                    [
+                        ("email", "=", employee.work_email),
+                        ("mobile", "=", employee.mobile_phone),
+                    ]
+                )
+                nb_matching_partner = len(matching_partner)
+            else:
+                nb_matching_partner = 0
             if nb_matching_partner == 1:
                 employee.work_contact_id = matching_partner
                 _logger.info(

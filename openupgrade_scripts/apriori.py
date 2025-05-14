@@ -28,6 +28,8 @@ renamed_modules = {
     "account_statement_import_txt_xlsx": "account_statement_import_sheet_file",
     # OCA/crm
     "crm_project": "crm_lead_to_task",
+    # OCA/commission
+    "sale_commission_delegated_partner": "commission_delegated_partner",
     # OCA/knowledge
     # "knowledge": "document_knowledge",
     # OCA/multi-company
@@ -52,6 +54,8 @@ renamed_modules = {
     # OCA/server-ux
     "mass_editing": "server_action_mass_edit",
     # OCA/l10n-italy
+    "assets_management": "l10n_it_asset_management",
+    "l10n_it_account_balance_eu": "l10n_it_financial_statement_eu",
     "l10n_it_ricevute_bancarie": "l10n_it_riba",
     # OCA/...
     # SE7
@@ -129,6 +133,8 @@ merged_modules = {
     "mail_preview_base": "mail",
     # OCA/stock-logistics-workflow
     "stock_picking_backorder_strategy": "stock",
+    # OCA/survey
+    "survey_placeholder": "survey",
     # OCA/web
     "web_drop_target": "web",
     "web_ir_actions_act_view_reload": "web",
