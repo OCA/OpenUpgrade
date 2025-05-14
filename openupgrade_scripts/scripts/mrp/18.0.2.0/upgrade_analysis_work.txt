@@ -1,0 +1,116 @@
+---Models in module 'mrp'---
+obsolete model mrp.document (merged to product.document)
+# DONE: pre-migration: renamed table `mrp_document` to `product_document_mrp_legacy`.
+# DONE: post-migration: data from `product_document_mrp_legacy` (ir_attachment_id, active, priority as sequence)
+#       migrated to `product.document`, setting `attached_on_mrp` = 'bom'.
+#       Old table `product_document_mrp_legacy` is dropped.
+
+new model mrp.batch.produce [transient]
+# NOTHING TO DO: New transient model.
+
+---Fields in module 'mrp'---
+mrp          / mrp.document             / _inherits                     : DEL _inherits: {'ir.attachment': 'ir_attachment_id'}
+mrp          / mrp.document             / active (boolean)              : DEL
+mrp          / mrp.document             / ir_attachment_id (many2one)   : DEL relation: ir.attachment, required
+mrp          / mrp.document             / priority (selection)          : DEL selection_keys: ['0', '1', '2', '3']
+# DONE: Fields of the deleted `mrp.document` model. Data migrated in post-migration.
+
+mrp          / mrp.production           / location_final_id (many2one)  : NEW relation: stock.location
+mrp          / mrp.production           / never_product_template_attribute_value_ids (many2many): NEW relation: product.template.attribute.value
+mrp          / mrp.production           / search_date_category (selection): NEW selection_keys: ['after', 'before', 'day_1', 'day_2', 'today', 'yesterday']
+# NOTHING TO DO: New fields, new functionality.
+
+mrp          / mrp.routing.workcenter   / activity_ids (one2many)       : NEW relation: mail.activity
+mrp          / mrp.routing.workcenter   / message_follower_ids (one2many): NEW relation: mail.followers
+mrp          / mrp.routing.workcenter   / message_ids (one2many)        : NEW relation: mail.message
+mrp          / mrp.routing.workcenter   / rating_ids (one2many)         : NEW relation: rating.rating
+mrp          / mrp.routing.workcenter   / website_message_ids (one2many): NEW relation: mail.message
+# NOTHING TO DO: New mail-related fields due to inheritance changes.
+
+mrp          / mrp.unbuild              / bom_id (many2one)             : now a function
+mrp          / mrp.unbuild              / lot_id (many2one)             : now a function
+# NOTHING TO DO: Change from stored to compute. ORM will handle recomputation.
+
+mrp          / mrp.workcenter           / message_follower_ids (one2many): NEW relation: mail.followers
+mrp          / mrp.workcenter           / message_ids (one2many)        : NEW relation: mail.message
+mrp          / mrp.workcenter           / rating_ids (one2many)         : NEW relation: rating.rating
+mrp          / mrp.workcenter           / website_message_ids (one2many): NEW relation: mail.message
+# NOTHING TO DO: New mail-related fields due to inheritance changes.
+
+mrp          / mrp.workorder            / _order                        : _order is now 'sequence, leave_id, date_start, id' ('leave_id, date_start, id')
+# NOTHING TO DO: Change in default sort order.
+
+mrp          / mrp.workorder            / production_date (datetime)    : not related anymore
+mrp          / mrp.workorder            / production_date (datetime)    : now a function
+# NOTHING TO DO: Change from related to compute. ORM will handle recomputation.
+
+mrp          / mrp.workorder            / sequence (integer)            : NEW hasdefault: default
+# NOTHING TO DO: New field with default.
+
+mrp          / product.document         / attached_on_mrp (selection)   : NEW required, selection_keys: ['bom', 'hidden'], hasdefault: default
+# DONE: New field on `product.document`. Populated in post-migration for migrated `mrp.document` records.
+
+mrp          / stock.move               / manual_consumption (boolean)  : not a function anymore
+# DONE: This field's computation now relies on `mrp.bom.line.manual_consumption`.
+#       The `mrp.bom.line.manual_consumption` field itself was a compute and is now stored;
+#       its value is set in post-migration script for `mrp.bom.line` based on old logic.
+#       The stock module migration will then correctly compute and store `stock.move.manual_consumption`.
+
+mrp          / stock.picking.type       / use_auto_consume_components_lots (boolean): DEL
+# DONE: Field removed. The logic is now handled by `mrp.bom.line.manual_consumption`. No data migration needed for this field itself.
+
+mrp          / mrp.production           / date_planned_start (datetime) : RENAMED to date_start
+mrp          / mrp.production           / date_planned_finished (datetime) : RENAMED to date_finished
+mrp          / mrp.workorder            / date_planned_start (datetime) : RENAMED to date_start
+mrp          / mrp.workorder            / date_planned_finished (datetime) : RENAMED to date_finished
+# DONE: Renamed in pre-migration.py.
+
+mrp          / mrp.bom                  / produce_delay (float)         : type changed to integer
+# DONE: Type changed from float to integer. Handled in pre-migration by rounding.
+
+mrp          / mrp.bom.line             / manual_consumption (boolean)  : logic changed from compute to stored with default.
+# DONE: Populated in post-migration based on v17 logic: (line.tracking != 'none' or line.operation_id).
+
+mrp          / mrp.workorder            / next_work_order_id (many2one) : DEL relation: mrp.workorder
+# NOTHING TO DO: Field removed. Replaced by `blocked_by_workorder_ids` and `needed_by_workorder_ids`. Logic for linking workorders is in `mrp.production._link_workorders_and_moves`.
+
+---XML records in module 'mrp'---
+NEW ir.actions.act_window: mrp.action_mrp_batch_produce
+NEW ir.actions.act_window: mrp.action_picking_tree_mrp_operation_graph
+# NOTHING TO DO: New records.
+
+DEL ir.actions.act_window: mrp.act_assign_serial_numbers_production
+# DONE: Deleted in post-migration.
+
+NEW ir.actions.server: mrp.action_pause_workorders
+NEW ir.actions.server: mrp.action_print_labels
+NEW ir.actions.server: mrp.action_production_order_lock_unlock
+NEW ir.actions.server: mrp.action_production_order_scrap
+NEW ir.actions.server: mrp.action_start_workorders
+NEW ir.model.access: mrp.access_mrp_batch_produce
+NEW ir.model.access: mrp.access_stock_move_mrp_user
+NEW ir.ui.view: mrp.mrp_production_workorder_tree_editable_view_mo_form
+NEW ir.ui.view: mrp.product_document_form
+NEW ir.ui.view: mrp.product_view_search_catalog
+NEW ir.ui.view: mrp.view_mrp_batch_produce_form
+NEW ir.ui.view: mrp.view_mrp_stock_move_operations
+NEW ir.ui.view: mrp.view_stock_rule_form
+# NOTHING TO DO: New records.
+
+DEL ir.ui.view: mrp.mrp_workorder_view_gantt
+DEL ir.ui.view: mrp.view_assign_serial_numbers_production
+# DONE: Deleted in post-migration.
+
+DEL ir.ui.view: mrp.view_document_file_kanban_mrp
+DEL ir.ui.view: mrp.view_mrp_document_form
+# DONE: Related to `mrp.document` removal. Deleted in post-migration.
+
+DEL ir.ui.view: mrp.workcenter_line_gantt_production
+# DONE: Deleted in post-migration.
+
+NEW mail.message.subtype: mrp.mrp_mo_in_cancelled (noupdate)
+NEW mail.message.subtype: mrp.mrp_mo_in_confirmed (noupdate)
+NEW mail.message.subtype: mrp.mrp_mo_in_done (noupdate)
+NEW mail.message.subtype: mrp.mrp_mo_in_progress (noupdate)
+NEW mail.message.subtype: mrp.mrp_mo_in_to_close (noupdate)
+# NOTHING TO DO: New records.
