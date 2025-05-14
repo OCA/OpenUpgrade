@@ -29,7 +29,7 @@ renamed_modules = {
     # OCA/crm
     "crm_project": "crm_lead_to_task",
     # OCA/knowledge
-    "knowledge": "document_knowledge",
+    # "knowledge": "document_knowledge",
     # OCA/multi-company
     "res_partner_category_multi_company": "partner_category_multi_company",
     # OCA/project
@@ -61,6 +61,9 @@ renamed_modules = {
     "se7_project_task_scheduling": "se7_project_schedule",
     "se7_sale_mrp_line_associated_bom": "se7_sale_line_associated_bom",
     "se7_import_nominas_a3": "se7_import_account_move_payroll_a3",
+    "se7_pg_export_a3": "se7_account_move_export_a3",
+    "se7_account_invoice_tag": "se7_account_move_tag",
+    # "se7_pg_yacht": "se7_boat_area", TODO: Pendent, lo millor seria fer se7_pg_yacht_area a s'Odoo 12.0
 }
 
 # Merged modules contain a mapping from old module names to other,
@@ -144,7 +147,6 @@ merged_modules = {
     "se7_dni_company_contact": "se7_h2o2",
     "se7_h2o2_pago_pagare": "se7_h2o2",
     "se7_h2o2_sale": "se7_h2o2",
-
 }
 
 # only used here for upgrade_analysis
@@ -166,6 +168,13 @@ renamed_models = {
     "stock.location.route": "stock.route",
     "stock.production.lot": "stock.lot",
     # OCA/...
+
+    # SE7
+    # se7_account_invoice_tag / se7_account_move_tag
+    "account.invoice.tag": "account.move.tag",
+    # se7_pg_yacht / se7_boat_area TODO: Pendent, lo millor seria fer se7_pg_yacht_area a s'Odoo 12.0
+    # "yacht.yacht": "boat.boat",
+    # "yacht.area": "boat.area",
 }
 
 # only used here for upgrade_analysis
