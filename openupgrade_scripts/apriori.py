@@ -67,6 +67,7 @@ renamed_modules = {
     "se7_import_nominas_a3": "se7_import_account_move_payroll_a3",
     "se7_pg_export_a3": "se7_account_move_export_a3",
     "se7_account_invoice_tag": "se7_account_move_tag",
+    "se7_pg_adaptacion_proyectos": "se7_pg_yachting",
     # "se7_pg_yacht": "se7_boat_area", TODO: Pendent, lo millor seria fer se7_pg_yacht_area a s'Odoo 12.0
 }
 
