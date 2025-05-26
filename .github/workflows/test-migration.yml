@@ -94,6 +94,8 @@ jobs:
           # this is for v16 l10n_eg_edi_eta which crashes without it
           pip install asn1crypto
           pip install coverage
+          # this is for account_peppol
+          pip install phonenumbers
       - name: Test data
         run: |
           if test -n "$(ls openupgrade/openupgrade_scripts/scripts/*/tests/data*.py 2> /dev/null)"; then
