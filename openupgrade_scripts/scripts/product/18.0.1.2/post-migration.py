@@ -12,22 +12,23 @@ def product_document_sequence(env):
         env.cr,
         """
         UPDATE product_document
-        SET sequence=sequence.sequence
+        SET sequence = "sequence".sequence
         FROM
         (
             SELECT
-            product_document.id, row_number() OVER (
+            product_document.id,
+            row_number() OVER (
                 PARTITION BY ir_attachment.res_id, ir_attachment.res_model
                 ORDER BY ir_attachment.name
-            ) sequence
+            ) AS sequence
             FROM
             product_document
             JOIN ir_attachment
-            ON product_document.ir_attachment_id=ir_attachment.id
-        ) sequence
+            ON product_document.ir_attachment_id = ir_attachment.id
+        ) AS "sequence"
         WHERE
-        sequence.id=product_document.id
-        AND product_document.sequence IS NULL
+        "sequence".id = product_document.id
+        AND product_document.sequence IS NULL;
         """,
     )
 
