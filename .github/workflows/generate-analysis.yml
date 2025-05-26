@@ -219,8 +219,8 @@ jobs:
           base: "${{ env.TO_VERSION }}"
           body-path: "${{ steps.generate_body.outputs.body-file }}"
           branch: "${{ env.TO_VERSION }}-update-analysis-bot"
-          commit-message: "[${{ env.TO_VERSION }}][UPD] analysis files"
+          commit-message: "[IMP] Update analysis files"
           delete-branch: true
           milestone: "${{ steps.get_milestone.outputs.number }}"
           path: "openupgrade-${{ env.TO_VERSION }}"
-          title: "[${{ env.TO_VERSION }}][UPD] analysis files"
+          title: "[${{ env.TO_VERSION }}][IMP] Update analysis files"
