@@ -12,7 +12,7 @@ def product_document_sequence(env):
         env.cr,
         """
         UPDATE product_document
-        SET sequence=seq.sequence
+        SET sequence=seq.seq
         FROM
         (
             SELECT
