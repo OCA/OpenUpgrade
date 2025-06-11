@@ -1,0 +1,27 @@
+---Models in module 'account_edi_ubl_cii'---
+---Fields in module 'account_edi_ubl_cii'---
+account_edi_ubl_cii / res.company              / invoice_is_ubl_cii (boolean)  : DEL
+# NOTHING TO DO: removed parameter not used anymore
+
+account_edi_ubl_cii / res.partner              / invoice_edi_format (False)    : NEW selection_keys: ['facturx', 'nlcius', 'ubl_a_nz', 'ubl_bis3', 'ubl_sg', 'xrechnung'], mode: modify
+account_edi_ubl_cii / res.partner              / ubl_cii_format (selection)    : DEL selection_keys: ['facturx', 'nlcius', 'ubl_a_nz', 'ubl_bis3', 'ubl_sg', 'xrechnung']
+# NOTHING TO DO: field renamed but already added in account and computed not stored
+
+account_edi_ubl_cii / res.partner              / is_peppol_edi_format (boolean): previously in module account_peppol
+account_edi_ubl_cii / res.users                / is_peppol_edi_format (boolean): previously in module account_peppol
+# NOTHING TO DO: fields moved from account_peppol, to be handled in account_peppol migration script
+
+account_edi_ubl_cii / res.partner              / peppol_eas (selection)        : selection_keys is now '['0002', '0007', '0009', '0037', '0060', '0088', '0096', '0097', '0106', '0130', '0135', '0142', '0151', '0183', '0184', '0188', '0190', '0191', '0192', '0193', '0195', '0196', '0198', '0199', '0200', '0201', '0202', '0204', '0208', '0209', '0210', '0211', '0213', '0216', '0221', '0230', '9910', '9913', '9914', '9915', '9918', '9919', '9920', '9922', '9923', '9924', '9925', '9926', '9927', '9928', '9929', '9930', '9931', '9932', '9933', '9934', '9935', '9936', '9937', '9938', '9939', '9940', '9941', '9942', '9943', '9944', '9945', '9946', '9947', '9948', '9949', '9950', '9951', '9952', '9953', '9955', '9957', '9959']' ('['0002', '0007', '0009', '0037', '0060', '0088', '0096', '0097', '0106', '0130', '0135', '0142', '0151', '0183', '0184', '0188', '0190', '0191', '0192', '0193', '0195', '0196', '0198', '0199', '0200', '0201', '0202', '0204', '0208', '0209', '0210', '0211', '0212', '0213', '0215', '0216', '0221', '0230', '9901', '9910', '9913', '9914', '9915', '9918', '9919', '9920', '9922', '9923', '9924', '9925', '9926', '9927', '9928', '9929', '9930', '9931', '9932', '9933', '9934', '9935', '9936', '9937', '9938', '9939', '9940', '9941', '9942', '9943', '9944', '9945', '9946', '9947', '9948', '9949', '9950', '9951', '9952', '9953', '9955', '9957', '9959']')
+# NOTHING TO DO: values will be removed by ORM and should be handled manually if where used (0212, 0215, 9901)
+
+---XML records in module 'account_edi_ubl_cii'---
+NEW ir.ui.view: account_edi_ubl_cii.ubl_20_InvoicePeriodType
+NEW ir.ui.view: account_edi_ubl_cii.ubl_21_AddressType
+NEW ir.ui.view: account_edi_ubl_cii.ubl_21_InvoiceLineType
+NEW ir.ui.view: account_edi_ubl_cii.ubl_21_PartyType
+DEL ir.ui.view: account_edi_ubl_cii.account_move_send_form
+DEL ir.ui.view: account_edi_ubl_cii.res_config_settings_view_form
+DEL ir.ui.view: account_edi_ubl_cii.res_partner_view_search
+DEL ir.ui.view: account_edi_ubl_cii.res_partner_view_tree
+DEL ir.ui.view: account_edi_ubl_cii.ubl_20_InvoicePeriod
+# NOTHING TO DO: handled by ORM
