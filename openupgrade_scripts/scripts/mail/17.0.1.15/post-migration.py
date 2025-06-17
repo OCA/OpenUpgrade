@@ -151,6 +151,22 @@ def _mail_activity_plan_template(env):
     )
 
 
+def _mail_tracking_value_field_desc_type_on_field_info(env):
+    openupgrade.logged_query(
+        env.cr,
+        """
+        UPDATE mail_tracking_value
+        SET field_info = jsonb_build_object(
+            'type', field_type,
+            'desc', field_desc
+        )
+        WHERE field_info IS NULL
+        AND field_type IS NOT NULL
+        AND field_desc IS NOT NULL;
+        """,
+    )
+
+
 @openupgrade.migrate()
 def migrate(env, version):
     openupgrade.load_data(env, "mail", "17.0.1.15/noupdate_changes.xml")
@@ -164,3 +180,4 @@ def migrate(env, version):
     _mail_template_convert_report_template_m2o_to_m2m(env)
     _fill_mail_message_outgoing(env)
     _mail_activity_plan_template(env)
+    _mail_tracking_value_field_desc_type_on_field_info(env)

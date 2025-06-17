@@ -172,7 +172,8 @@ mail         / mail.tracking.value      / field_desc (char)             : DEL re
 mail         / mail.tracking.value      / field_info (json)             : NEW
 mail         / mail.tracking.value      / field_type (char)             : DEL
 mail         / mail.tracking.value      / tracking_sequence (integer)   : DEL
-# NOTHING TO DO: read commits ids a88381cc1230a7942f6d8446e21613e724e649f2, b2d7f03398dc3ae850b75753646d3a6b9b0ea054, 6aa0a25df7022b8bc307e42960abc41aed502e4d
+# NOTHING TO DO: read commits ids a88381cc1230a7942f6d8446e21613e724e649f2, b2d7f03398dc3ae850b75753646d3a6b9b0ea054, 6aa0a25df7022b8bc307e42960abc41aed502e4d, 997a9404f73b110a106d7850c9010f63c7aa8e90
+# DONE: post-migration: set field_info from field_type and field_desc where NULL
 
 mail         / mail.tracking.value      / field (many2one)              : DEL relation: ir.model.fields, required
 mail         / mail.tracking.value      / field_id (many2one)           : NEW relation: ir.model.fields
