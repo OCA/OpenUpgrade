@@ -68,7 +68,8 @@ renamed_modules = {
     "se7_pg_export_a3": "se7_account_move_export_a3",
     "se7_account_invoice_tag": "se7_account_move_tag",
     "se7_pg_adaptacion_proyectos": "se7_pg_yachting",
-    # "se7_pg_yacht": "se7_boat_area", TODO: Pendent, lo millor seria fer se7_pg_yacht_area a s'Odoo 12.0
+    "se7_pg_yacht": "se7_boat",
+    "se7_pg_yacht_area": "se7_boat_area",
 }
 
 # Merged modules contain a mapping from old module names to other,
@@ -154,6 +155,10 @@ merged_modules = {
     "se7_dni_company_contact": "se7_h2o2",
     "se7_h2o2_pago_pagare": "se7_h2o2",
     "se7_h2o2_sale": "se7_h2o2",
+    "se7_crm_rosello_solar": "se7_rosello_solar",
+    "se7_sale_line_nomenclature": "se7_rosello_solar",
+    "se7_partner_sql_code": "se7_rosello_solar",
+    "se7_rs_project_onedrive": "se7_rosello_solar",
 }
 
 # only used here for upgrade_analysis
