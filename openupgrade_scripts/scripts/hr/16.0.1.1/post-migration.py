@@ -75,7 +75,7 @@ def create_work_contact(env):
                     partner.id,
                     employee.id,
                 )
-            else:
+            elif employee.work_email or employee.mobile_phone:
                 partner_vals = {
                     "name": employee.name,
                     "email": employee.work_email,

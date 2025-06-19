@@ -169,7 +169,7 @@ renamed_models = {
     "coupon.rule": "loyalty.rule",
     "mail.channel.partner": "mail.channel.member",
     "payment.acquirer": "payment.provider",
-    "payment.acquirer.onboarding.wizard ": "payment.provider.onboarding.wizard",
+    "payment.acquirer.onboarding.wizard": "payment.provider.onboarding.wizard",
     "sale.coupon.apply.code": "sale.loyalty.coupon.wizard",
     "sale.payment.acquirer.onboarding.wizard": "sale.payment.provider.onboarding.wizard",
     "stock.location.route": "stock.route",

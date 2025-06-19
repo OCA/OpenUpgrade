@@ -49,7 +49,7 @@ def migrate(env, _version):
         FROM (
             SELECT
                 id,
-                regexp_match(street, '^(.*?)(?:\\s([0-9][0-9\\S]*))?(?: - (.+))?$') AS rgx
+                regexp_match(street, '^(.*?)(?:\\s([0-9][0-9^\\s]*))?(?: - (.+))?$') AS rgx
             FROM res_partner
             WHERE street IS NOT NULL
         ) AS sub
