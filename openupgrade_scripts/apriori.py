@@ -184,9 +184,9 @@ renamed_models = {
     # SE7
     # se7_account_invoice_tag / se7_account_move_tag
     "account.invoice.tag": "account.move.tag",
-    # se7_pg_yacht / se7_boat_area TODO: Pendent, lo millor seria fer se7_pg_yacht_area a s'Odoo 12.0
-    # "yacht.yacht": "boat.boat",
-    # "yacht.area": "boat.area",
+    # se7_pg_yacht / se7_boat_area
+    "yacht.yacht": "boat.boat",
+    "yacht.area": "boat.area",
 }
 
 # only used here for upgrade_analysis

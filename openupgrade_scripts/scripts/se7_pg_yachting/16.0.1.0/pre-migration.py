@@ -84,26 +84,13 @@ _tables_renames = [
     ("invoice_sale_purchase_line_rel", "in_out_account_move_line_rel")
 ]
 
+_column_renames = {
+    "in_out_account_move_line_rel": [("sale_line_id", "out_move_line_id"), ("purchase_line_id", "in_move_line_id")],
+}
+
 
 @openupgrade.migrate()
 def migrate(env, version):
     openupgrade.rename_fields(env, _fields_renames)
-    if openupgrade.column_exists(env.cr, "invoice_sale_purchase_line_rel", "sale_line_id"):
-        openupgrade.rename_columns(
-            env.cr,
-            {
-                "invoice_sale_purchase_line_rel": [
-                    ("sale_line_id", "out_move_line_id"),
-                ],
-            },
-        )
-    if openupgrade.column_exists(env.cr, "invoice_sale_purchase_line_rel", "purchase_line_id"):
-        openupgrade.rename_columns(
-            env.cr,
-            {
-                "invoice_sale_purchase_line_rel": [
-                    ("purchase_line_id", "in_move_line_id"),
-                ],
-            },
-        )
-    openupgrade.rename_tables(env.cr, _tables_renames)
+    # openupgrade.rename_tables(env.cr, _tables_renames)
+    # openupgrade.rename_columns(env.cr, _column_renames)
