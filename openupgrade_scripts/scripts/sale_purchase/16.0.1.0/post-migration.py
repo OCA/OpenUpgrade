@@ -71,6 +71,10 @@ def convert_service_to_purchase_to_company_dependent(env):
         """,
         {"field_id": service_to_purchase_field_id},
     )
+    openupgrade.rename_columns(
+        env.cr,
+        {"product_template": [("service_to_purchase", None)]},
+    )
 
 
 @openupgrade.migrate()
