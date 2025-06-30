@@ -15,9 +15,11 @@ def migrate_module(self, pkg, stage):
     to_install = pkg.state == "to install"
     if to_install:
         pkg.state = "to upgrade"
+        pkg.installed_version = "0.0"
     MigrationManager.migrate_module._original_method(self, pkg, stage)
     if to_install:
         pkg.state = "to install"
+        pkg.installed_version = None
 
 
 def _get_files(self):
