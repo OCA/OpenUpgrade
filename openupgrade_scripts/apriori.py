@@ -113,6 +113,7 @@ merged_modules = {
     # OCA/web
     "web_decimal_numpad_dot": "web",
     # OCA/website
+    "website_crm_privacy_policy": "website_form_require_legal",
     "website_google_analytics_4": "website",
     "website_snippet_timeline": "website",
 }
