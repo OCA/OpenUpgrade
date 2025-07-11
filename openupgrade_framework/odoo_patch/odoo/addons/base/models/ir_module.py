@@ -11,7 +11,7 @@ def update_list(self):
     installed.
     Ignore localization modules that are set to auto_install
     """
-    Module.update_list._original_method(self)
+    result = Module.update_list._original_method(self)
     new_auto_install_modules = self.browse([])
     for module in self.env["ir.module.module"].search(
         [
@@ -27,6 +27,7 @@ def update_list(self):
             new_auto_install_modules |= module
     if new_auto_install_modules:
         new_auto_install_modules.button_install()
+    return result
 
 
 update_list._original_method = Module.update_list
