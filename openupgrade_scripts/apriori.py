@@ -63,6 +63,8 @@ merged_modules = {
     "maintenance_plan_employee": "maintenance",
     # OCA/purchase-workflow
     "purchase_discount": "purchase",
+    # OCA/sale-promotion
+    "loyalty_initial_date_validity": "loyalty",
     # OCA/social
     "mail_activity_plan": "mail",
     "mass_mailing_custom_unsubscribe_event": "mass_mailing",
