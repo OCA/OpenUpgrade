@@ -15,9 +15,14 @@ def migrate_module(self, pkg, stage):
     to_install = pkg.state == "to install"
     if to_install:
         pkg.state = "to upgrade"
+    load_state_to_install = getattr(pkg, "load_state", False)
+    if load_state_to_install == "to install":
+        pkg.load_state = "to upgrade"
     MigrationManager.migrate_module._original_method(self, pkg, stage)
     if to_install:
         pkg.state = "to install"
+    if load_state_to_install == "to install":
+        pkg.load_state = "to install"
 
 
 migrate_module._original_method = MigrationManager.migrate_module
