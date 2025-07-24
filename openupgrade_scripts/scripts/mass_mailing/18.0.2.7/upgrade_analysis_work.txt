@@ -1,0 +1,19 @@
+---Models in module 'mass_mailing'---
+---Fields in module 'mass_mailing'---
+mass_mailing / mailing.contact          / first_name (char)             : NEW
+mass_mailing / mailing.contact          / last_name (char)              : NEW
+# NOTHING TO DO: new functionality
+
+---XML records in module 'mass_mailing'---
+DEL ir.actions.act_window.view: mass_mailing.mailing_mailing_action_mail_fullwidth_form
+DEL ir.actions.act_window.view: mass_mailing.mailing_mailing_action_mail_fullwidth_graph
+NEW ir.ui.view: mass_mailing.email_designer_themes
+NEW ir.ui.view: mass_mailing.mailing_contact_view_form_split_name (noupdate)
+NEW ir.ui.view: mass_mailing.mailing_contact_view_tree_split_name (noupdate)
+NEW ir.ui.view: mass_mailing.mailing_subscription_view_graph
+NEW ir.ui.view: mass_mailing.mailing_subscription_view_pivot
+NEW ir.ui.view: mass_mailing.mailing_view_generic
+DEL ir.ui.view: mass_mailing.mailing_mailing_view_form_full_width
+DEL ir.ui.view: mass_mailing.view_mail_mass_mailing_graph
+NEW web_tour.tour: mass_mailing.mass_mailing_tour
+# NOTHING TO DO
