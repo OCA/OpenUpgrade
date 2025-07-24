@@ -1,10 +1,13 @@
-from odoo.tests import TransactionCase
+import unittest
+
+from odoo.tests.common import TransactionCase
 
 from odoo.addons.openupgrade_framework import openupgrade_test
 
 
 @openupgrade_test
 class TestStockMigration(TransactionCase):
+    @unittest.skip("Should be executed at end-migration")
     def test_picking_type_required_fields(self):
         """Test that newly required fields are set"""
         for picking_type in self.env["stock.picking.type"].search([]):

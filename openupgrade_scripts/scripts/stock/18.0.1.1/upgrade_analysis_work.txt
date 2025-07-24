@@ -48,7 +48,7 @@ stock        / stock.picking.type       / _order                        : _order
 
 stock        / stock.picking.type       / default_location_dest_id (many2one): now required
 stock        / stock.picking.type       / default_location_src_id (many2one): now required
-# DONE: post-migration: assured is filled by calling computes
+# DONE: end-migration: assured is filled by calling computes
 
 stock        / stock.picking.type       / favorite_user_ids (many2many) : NEW relation: res.users
 # NOTHING TO DO: new feature
