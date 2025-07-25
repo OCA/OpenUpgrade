@@ -1,0 +1,20 @@
+---Models in module 'payment_paypal'---
+---Fields in module 'payment_paypal'---
+payment_paypal / payment.provider         / code (False)                  : selection_keys added: [nuvei] (most likely nothing to do)
+# NOTHING TO DO
+
+payment_paypal / payment.provider         / paypal_access_token (char)    : NEW
+payment_paypal / payment.provider         / paypal_access_token_expiry (datetime): NEW hasdefault: default
+payment_paypal / payment.provider         / paypal_webhook_id (char)      : NEW
+# NOTHING TO DO: https://github.com/odoo/odoo/commit/2c500348b9026dd776798f2e0b81d068972237f3
+
+payment_paypal / payment.provider         / paypal_client_id (char)       : NEW
+payment_paypal / payment.provider         / paypal_client_secret (char)   : NEW
+payment_paypal / payment.provider         / paypal_pdt_token (char)       : DEL
+# NOTHING TO DO: I think there is no way to correspond them.
+
+---XML records in module 'payment_paypal'---
+NEW ir.ui.view: payment_paypal.method_form
+NEW ir.ui.view: payment_paypal.payment_submit_button_inherit
+DEL ir.ui.view: payment_paypal.redirect_form
+# NOTHING TO DO
