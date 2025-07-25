@@ -1,0 +1,32 @@
+---Models in module 'repair'---
+obsolete model repair.warn.uncomplete.move [transient]
+# NOTHING TO DO
+
+---Fields in module 'repair'---
+repair       / repair.order             / product_location_dest_id (many2one): NEW relation: stock.location, required, hasdefault: compute
+repair       / repair.order             / product_location_src_id (many2one): NEW relation: stock.location, required, hasdefault: compute
+repair       / stock.picking.type       / default_product_location_dest_id (many2one): NEW relation: stock.location, hasdefault: compute
+repair       / stock.picking.type       / default_product_location_src_id (many2one): NEW relation: stock.location, hasdefault: compute
+# NOTHING TO DO: computed by ORM
+
+repair       / repair.order             / repair_properties (properties): NEW hasdefault: compute
+repair       / stock.picking.type       / repair_properties_definition (properties_definition): NEW
+# NOTHING TO DO: computed by ORM
+
+repair       / repair.order             / search_date_category (selection): NEW selection_keys: ['after', 'before', 'day_1', 'day_2', 'today', 'yesterday'], stored: False
+# NOTHING TO DO: stored = False
+
+repair       / stock.warehouse          / repair_mto_pull_id (many2one) : NEW relation: stock.rule
+# DONE: post-migration: create rule for the warehouse that need it
+
+---XML records in module 'repair'---
+NEW ir.actions.act_window: repair.action_picking_repair_graph
+NEW ir.actions.act_window: repair.action_repair_picking_type_kanban
+NEW ir.actions.server: repair.action_repair_overview
+DEL ir.model.access: repair.access_repair_warn_uncomplete_move
+NEW ir.ui.menu: repair.repair_menu_product_product
+NEW ir.ui.menu: repair.repair_menu_product_template
+NEW ir.ui.menu: repair.repair_picking_type_menu
+NEW ir.ui.view: repair.product_view_search_catalog
+DEL ir.ui.view: repair.view_repair_warn_uncomplete_move
+# NOTHING TO DO
