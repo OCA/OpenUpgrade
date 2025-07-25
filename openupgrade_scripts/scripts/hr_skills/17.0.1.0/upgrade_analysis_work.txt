@@ -1,0 +1,20 @@
+---Models in module 'hr_skills'---
+new model hr.employee.cv.wizard [transient]
+new model report.hr_skills.report_employee_cv [abstract]
+# NOTHING TO DO: New transient or abstract models
+
+---Fields in module 'hr_skills'---
+---XML records in module 'hr_skills'---
+NEW hr.skill.type: hr_skills.hr_skill_type_lang (noupdate)
+NEW ir.actions.act_window: hr_skills.action_hr_employee_cv_wizard
+NEW ir.actions.report: hr_skills.action_report_employee_cv
+NEW ir.actions.server: hr_skills.action_print_employees_cv
+DEL ir.actions.server: hr_skills.action_open_skills_log_employee
+NEW ir.model.access: hr_skills.access_hr_employee_cv_wizard
+NEW ir.ui.view: hr_skills.hr_employee_cv_wizard_view_form
+NEW ir.ui.view: hr_skills.report_employee_cv
+NEW ir.ui.view: hr_skills.report_employee_cv_company
+NEW ir.ui.view: hr_skills.report_employee_cv_main_panel
+NEW ir.ui.view: hr_skills.report_employee_cv_sidepanel
+NEW report.paperformat: hr_skills.paperformat_resume
+# NOTHING TO DO: new stuff or delete noupdate=0 ir stuff
