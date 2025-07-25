@@ -2,12 +2,22 @@
 new model project.share.collaborator.wizard [transient]
 ---Fields in module 'project'---
 project      / project.collaborator     / limited_access (boolean)      : NEW hasdefault: default
+# NOTHING TO DO
+
 project      / project.project          / account_id (many2one)         : NEW relation: account.analytic.account
 project      / project.project          / analytic_account_id (many2one): DEL relation: account.analytic.account
-project      / project.project          / is_favorite (boolean)         : not a function anymore
+# DONE: pre-migration: renamed field
+
 project      / project.task             / analytic_account_id (many2one): DEL relation: account.analytic.account
+# NOTHING TO DO
+
+project      / project.project          / is_favorite (boolean)         : not a function anymore
 project      / project.task             / html_field_history (json)     : NEW
+# NOTHING TO DO
+
 project      / project.task.type        / description (text)            : DEL
+# NOTHING TO DO: deprecated field
+
 ---XML records in module 'project'---
 NEW digest.tip: project.digest_tip_project_2
 NEW digest.tip: project.digest_tip_project_3
@@ -37,7 +47,6 @@ NEW ir.exports.line: project.project_task_export_template_line_state
 NEW ir.exports.line: project.project_task_export_template_line_tag_ids
 NEW ir.exports.line: project.project_task_export_template_line_user_ids
 NEW ir.model.access: project.access_project_share_collaborator_manager
-NEW ir.rule: project.task_visibility_rule_project_user [renamed from project_todo module] (noupdate)
 NEW ir.ui.view: project.open_view_blocked_by_list_view
 NEW ir.ui.view: project.project_sub_task_view_kanban_mobile
 NEW ir.ui.view: project.quick_create_task_form_res_partner
@@ -53,3 +62,6 @@ DEL ir.ui.view: project.project_collaborator_view_search
 DEL ir.ui.view: project.project_sharing_access_view_tree
 NEW web_tour.tour: project.project_tour
 # NOTHING TO DO
+
+NEW ir.rule: project.task_visibility_rule_project_user [renamed from project_todo module] (noupdate)
+# DONE: pre-migration: if exists, renamed xmlid
