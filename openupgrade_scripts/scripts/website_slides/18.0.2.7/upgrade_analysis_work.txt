@@ -1,0 +1,9 @@
+---Models in module 'website_slides'---
+---Fields in module 'website_slides'---
+website_slides / slide.slide.resource     / _order                        : _order is now 'sequence, id' ('id')
+website_slides / slide.slide.resource     / sequence (integer)            : NEW
+# NOTHING TO DO: Having the same sequence all the existing records (NULL, which by the way it's weird to not have default value), then id is still the sorting key as previously
+
+---XML records in module 'website_slides'---
+NEW web_tour.tour: website_slides.slides_tour
+# NOTHING TO DO: new stuff
