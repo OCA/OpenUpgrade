@@ -1,0 +1,8 @@
+---Models in module 'website_payment'---
+---Fields in module 'website_payment'---
+website_payment / res.country              / is_stripe_supported_country (boolean): module is now 'payment' ('website_payment')
+# NOTHING TO DO: Column still exists.
+
+---XML records in module 'website_payment'---
+DEL ir.actions.server: website_payment.action_activate_stripe [renamed to payment module]
+# NOTHING TO DO: Already handled in "payment" module.
