@@ -1,0 +1,64 @@
+<?xml version='1.0' encoding='utf-8'?>
+<odoo>
+  <!-- New command syntax, but it's the same
+  <record id="base.group_portal" model="res.groups">
+    <field name="implied_ids" eval="[             Command.link(ref('account.group_delivery_invoice_address')),         ]"/>
+  </record>
+  <record id="base.group_public" model="res.groups">
+    <field name="implied_ids" eval="[             Command.link(ref('account.group_delivery_invoice_address')),         ]"/>
+  </record>
+  <record id="base.group_user" model="res.groups">
+    <field name="implied_ids" eval="[             Command.link(ref('account.group_delivery_invoice_address')),         ]"/>
+  </record>
+  -->
+  <!-- We shouldn't rewrite possible modifications done by the users
+  <record id="new_ribbon" model="product.ribbon">
+    <field name="bg_color">#0275d8</field>
+    <field name="text_color">#FFFFFF</field>
+    <field name="name">New!</field>
+    <field name="position">left</field>
+  </record>
+  <record id="out_of_stock_ribbon" model="product.ribbon">
+    <field name="bg_color">#ffc107</field>
+    <field name="text_color">#FFFFFF</field>
+    <field name="name">Out of stock</field>
+    <field name="position">left</field>
+  </record>
+  -->
+  <record id="product_pricelist_comp_rule" model="ir.rule">
+    <!-- Just an extra space, but let's do it -->
+    <field name="domain_force">['|', ('company_id', 'in', [False, website.company_id.id]), ('company_id', 'in', company_ids)]</field>
+  </record>
+  <record id="product_pricelist_item_comp_rule" model="ir.rule">
+    <!-- Just an extra space, but let's do it -->
+    <field name="domain_force">['|', ('company_id', 'in', [False, website.company_id.id]), ('company_id', 'in', company_ids)]</field>
+  </record>
+  <record id="product_template_public" model="ir.rule">
+    <!-- Just a replacing of " by ', but let's do it -->
+    <field name="domain_force">[('website_published', '=', True), ('sale_ok', '=', True)]</field>
+    <!-- New command syntax, but it's the same
+    <field name="groups" eval="[             Command.link(ref('base.group_public')),             Command.link(ref('base.group_portal')),         ]"/>
+    -->
+  </record>
+  <!-- We shouldn't rewrite possible modifications done by the users
+  <record id="sale_ribbon" model="product.ribbon">
+    <field name="bg_color">#0CA725</field>
+    <field name="text_color">#FFFFFF</field>
+    <field name="name">Sale</field>
+    <field name="position">left</field>
+  </record>
+  -->
+  <!-- New command syntax, but it's the same
+  <record id="sales_team.group_sale_manager" model="res.groups">
+    <field name="implied_ids" eval="[             Command.link(ref('website.group_website_restricted_editor')),         ]"/>
+  </record>
+  -->
+  <!-- We shouldn't rewrite possible modifications done by the users
+  <record id="sold_out_ribbon" model="product.ribbon">
+    <field name="bg_color">#d9534f</field>
+    <field name="text_color">#FFFFFF</field>
+    <field name="name">Sold out</field>
+    <field name="position">left</field>
+  </record>
+  -->
+</odoo>

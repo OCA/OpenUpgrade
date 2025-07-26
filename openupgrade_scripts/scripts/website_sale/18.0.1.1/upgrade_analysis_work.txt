@@ -1,0 +1,86 @@
+---Models in module 'website_sale'---
+---Fields in module 'website_sale'---
+website_sale / product.product          / ribbon_id (many2one)          : DEL relation: product.ribbon
+website_sale / product.product          / variant_ribbon_id (many2one)  : NEW relation: product.ribbon
+# DONE: pre-migration: Field renamed.
+
+website_sale / product.public.category  / website_footer (html)         : NEW translate
+# NOTHING TO DO: New feature for inserting website blocks at the footer of the category.
+
+website_sale / product.ribbon           / bg_color (char)               : now required
+website_sale / product.ribbon           / text_color (char)             : now required
+# DONE: pre-migration: Set to empty string when no value, as observed from runbot test.
+
+website_sale / product.ribbon           / html (html)                   : DEL required
+website_sale / product.ribbon           / name (char)                   : NEW required, translate
+# DONE: post-migration: Plain HTML from html field to text.
+
+website_sale / product.ribbon           / html_class (char)             : DEL required
+website_sale / product.ribbon           / position (selection)          : NEW required, selection_keys: ['left', 'right'], hasdefault: default
+# DONE: post-migration: Deduce position right from HTML class for changing the default value.
+
+website_sale / sale.order               / access_point_address (json)   : DEL
+# NOTHING TO DO: Redundant information.
+
+website_sale / sale.order.line          / linked_line_id (many2one)     : module is now 'sale' ('website_sale')
+# NOTHING TO DO: The field is still there.
+
+website_sale / sale.order.line          / option_line_ids (one2many)    : DEL relation: sale.order.line
+# NOTHING TO DO: The inverse field is still there (linked_line_id). It's just the o2m has been removed, but it can be redefined and used in any module that needs it.
+
+website_sale / website                  / add_to_cart_action (selection): selection_keys added: [force_dialog] (most likely nothing to do)
+# NOTHING TO DO: New feature.
+
+website_sale / website                  / ecommerce_access (selection)  : NEW required, selection_keys: ['everyone', 'logged_in'], hasdefault: default
+# NOTHING TO DO: New feature, but the default "everyone" preserves previous behavior.
+
+website_sale / website                  / shop_gap (char)               : NEW hasdefault: default
+# NOTHING TO DO: New feature, but the default 16px is the same as previously.
+
+website_sale_product_configurator / website                  / add_to_cart_action (False)    : DEL selection_keys: ['force_dialog', 'go_to_cart', 'stay'], mode: modify
+# NOTHING TO DO: Glitch in the upgrade analysis due to the merge of the module.
+
+---XML records in module 'website_sale'---
+NEW ir.actions.act_window: website_sale.product_ribbon_action
+DEL ir.actions.server: website_sale.ir_actions_server_sale_cart_recovery_email
+NEW ir.ui.menu: website_sale.menu_product_combos
+NEW ir.ui.menu: website_sale.product_catalog_product_ribbons
+NEW ir.ui.view: website_sale.accordion_more_information
+NEW ir.ui.view: website_sale.address_row
+NEW ir.ui.view: website_sale.billing_address_row
+NEW ir.ui.view: website_sale.cart_combo_item_line
+NEW ir.ui.view: website_sale.cart_product_price
+NEW ir.ui.view: website_sale.delivery_address_row
+NEW ir.ui.view: website_sale.delivery_form
+NEW ir.ui.view: website_sale.delivery_method
+NEW ir.ui.view: website_sale.product_accordion
+NEW ir.ui.view: website_sale.product_product_view_form_normalized
+NEW ir.ui.view: website_sale.product_product_view_form_normalized_website_sale
+NEW ir.ui.view: website_sale.products_attributes_collapsible
+NEW ir.ui.view: website_sale.products_carousel_16x9
+NEW ir.ui.view: website_sale.products_carousel_21x9
+NEW ir.ui.view: website_sale.products_carousel_4x3
+NEW ir.ui.view: website_sale.products_carousel_4x5
+NEW ir.ui.view: website_sale.products_categories_list_collapsible
+NEW ir.ui.view: website_sale.s_dynamic_snippet_products_preview_data
+NEW ir.ui.view: website_sale.s_mega_menu_big_icons_subtitles
+NEW ir.ui.view: website_sale.s_mega_menu_cards
+NEW ir.ui.view: website_sale.s_mega_menu_images_subtitles
+NEW ir.ui.view: website_sale.s_mega_menu_little_icons
+NEW ir.ui.view: website_sale.s_mega_menu_menu_image_menu
+NEW ir.ui.view: website_sale.s_mega_menu_menus_logos
+NEW ir.ui.view: website_sale.s_mega_menu_multi_menus
+NEW ir.ui.view: website_sale.s_mega_menu_odoo_menu
+NEW ir.ui.view: website_sale.s_mega_menu_thumbnails
+DEL ir.ui.view: website_sale.cart_delivery
+DEL ir.ui.view: website_sale.payment_delivery
+DEL ir.ui.view: website_sale.payment_delivery_methods
+DEL ir.ui.view: website_sale.product_product_view_form_add
+DEL ir.ui.view: website_sale.products_fiscal_position
+DEL ir.ui.view: website_sale.row_addresses
+DEL ir.ui.view: website_sale_product_configurator.configure_optional_products
+DEL ir.ui.view: website_sale_product_configurator.optional_product_items
+DEL ir.ui.view: website_sale_product_configurator.optional_products_modal
+DEL ir.ui.view: website_sale_product_configurator.product_quantity_config
+NEW web_tour.tour: website_sale.test_01_admin_shop_tour
+# NOTHING TO DO: New stuff or removed noupdate=0 stuff.
