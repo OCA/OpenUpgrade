@@ -45,6 +45,9 @@ def convert_field_html_string_bootstrap_4to5(env):
         "mailing.mailing",
         "account.invoice.send",
         "mail.alias",
+        "survey.survey",
+        "survey.question",
+        "forum.forum",
     ]
     # We could want to refine a certain field logic to discard a good bunch of records
     field_special_domain = {
@@ -54,6 +57,16 @@ def convert_field_html_string_bootstrap_4to5(env):
             ]
         },
     }
+    # Certain fields had sanitize=False or other sanitization disablings (like
+    # sanitize_attributes=False or sanitize_form=False), so when converting to BS 5,
+    # we should allow to save the result without re-sanitizing such content. For that,
+    # if the user is not on the sanitize overridable group, we add it, removing it after
+    # conversion
+    group_overridable = False
+    if not env.user._has_group("base.group_sanitize_override"):
+        group_overridable = env.ref("base.group_sanitize_override")
+        env.user.groups_id = [(4, group_overridable.id)]
+    # Search
     fields = env["ir.model.fields"].search(
         [
             ("ttype", "=", "html"),
@@ -72,6 +85,9 @@ def convert_field_html_string_bootstrap_4to5(env):
                     env.cr, env[model]._table, field.name
                 ):
                     convert_field_bootstrap_4to5(env, model, field.name, domain=domain)
+    # Remove the group if applicable
+    if group_overridable:
+        env.user.groups_id = [(3, group_overridable.id)]
 
 
 def rename_t_group_website_restricted_editor(env):
