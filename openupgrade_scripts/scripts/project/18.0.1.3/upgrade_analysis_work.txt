@@ -1,0 +1,67 @@
+---Models in module 'project'---
+new model project.share.collaborator.wizard [transient]
+---Fields in module 'project'---
+project      / project.collaborator     / limited_access (boolean)      : NEW hasdefault: default
+# NOTHING TO DO
+
+project      / project.project          / account_id (many2one)         : NEW relation: account.analytic.account
+project      / project.project          / analytic_account_id (many2one): DEL relation: account.analytic.account
+# DONE: pre-migration: renamed field
+
+project      / project.task             / analytic_account_id (many2one): DEL relation: account.analytic.account
+# NOTHING TO DO
+
+project      / project.project          / is_favorite (boolean)         : not a function anymore
+project      / project.task             / html_field_history (json)     : NEW
+# NOTHING TO DO
+
+project      / project.task.type        / description (text)            : DEL
+# NOTHING TO DO: deprecated field
+
+---XML records in module 'project'---
+NEW digest.tip: project.digest_tip_project_2
+NEW digest.tip: project.digest_tip_project_3
+NEW ir.actions.act_window: project.project_sharing_project_task_action_blocking_tasks
+NEW ir.actions.act_window: project.project_sharing_project_task_recurring_tasks_action
+DEL ir.actions.act_window: project.act_res_users_2_project_task_opened
+DEL ir.actions.act_window: project.mail_activity_plan_action_config_task_plan
+DEL ir.actions.act_window: project.project_collaborator_action
+NEW ir.actions.act_window.view: project.project_sharing_blocking_form_action_view
+NEW ir.actions.act_window.view: project.project_sharing_blocking_kanban_action_view
+NEW ir.actions.act_window.view: project.project_sharing_blocking_tree_action_view
+NEW ir.actions.act_window.view: project.project_sharing_recurring_tasks_form_action_view
+NEW ir.actions.act_window.view: project.project_sharing_recurring_tasks_kanban_action_view
+NEW ir.actions.act_window.view: project.project_sharing_recurring_tasks_tree_action_view
+NEW ir.actions.act_window.view: project.project_task_action_from_partner_calendar_view
+NEW ir.actions.act_window.view: project.project_task_action_from_partner_form_view
+NEW ir.actions.act_window.view: project.project_task_action_from_partner_kanban_view
+NEW ir.actions.act_window.view: project.project_task_action_from_partner_tree_view
+NEW ir.embedded.actions: project.project_embedded_action_all_tasks_dashboard
+NEW ir.embedded.actions: project.project_embedded_action_project_updates
+NEW ir.exports: project.project_task_export_template
+NEW ir.exports.line: project.project_task_export_template_line_id
+NEW ir.exports.line: project.project_task_export_template_line_name
+NEW ir.exports.line: project.project_task_export_template_line_project_id
+NEW ir.exports.line: project.project_task_export_template_line_stage_id
+NEW ir.exports.line: project.project_task_export_template_line_state
+NEW ir.exports.line: project.project_task_export_template_line_tag_ids
+NEW ir.exports.line: project.project_task_export_template_line_user_ids
+NEW ir.model.access: project.access_project_share_collaborator_manager
+NEW ir.ui.view: project.open_view_blocked_by_list_view
+NEW ir.ui.view: project.project_sub_task_view_kanban_mobile
+NEW ir.ui.view: project.quick_create_task_form_res_partner
+NEW ir.ui.view: project.task_invitation_follower (noupdate)
+NEW ir.ui.view: project.view_account_analytic_account_list_inherit
+NEW ir.ui.view: project.view_project_task_graph_inherit
+NEW ir.ui.view: project.view_task_form_res_partner
+NEW ir.ui.view: project.view_task_kanban_res_partner
+NEW ir.ui.view: project.view_task_project_user_fsm_graph_base
+NEW ir.ui.view: project.view_task_project_user_fsm_pivot_base
+DEL ir.ui.view: project.personal_task_type_edit
+DEL ir.ui.view: project.project_collaborator_view_search
+DEL ir.ui.view: project.project_sharing_access_view_tree
+NEW web_tour.tour: project.project_tour
+# NOTHING TO DO
+
+NEW ir.rule: project.task_visibility_rule_project_user [renamed from project_todo module] (noupdate)
+# DONE: pre-migration: if exists, renamed xmlid
