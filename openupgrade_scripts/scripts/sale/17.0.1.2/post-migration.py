@@ -16,6 +16,10 @@ def _sale_order_populate_locked_field(env):
         WHERE state = 'done'
         """,
     )
+    # Update by SQL the corresponding related state field in sale.order.line
+    openupgrade.logged_query(
+        env.cr, "UPDATE sale_order_line SET state = 'sale' WHERE state = 'done'"
+    )
 
 
 @openupgrade.migrate()
