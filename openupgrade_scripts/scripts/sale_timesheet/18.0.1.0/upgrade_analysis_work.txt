@@ -1,0 +1,34 @@
+---Models in module 'sale_timesheet'---
+obsolete model project.create.sale.order [transient]
+obsolete model project.create.sale.order.line [transient]
+# NOTHING TO DO: Odoo removed this unused wizard in https://github.com/odoo/odoo/pull/147533
+
+---Fields in module 'sale_timesheet'---
+---XML records in module 'sale_timesheet'---
+DEL ir.actions.act_window: sale_timesheet.project_project_action_multi_create_sale_order
+# NOTHING TO DO: handled by ORM
+
+NEW ir.actions.act_window.view: sale_timesheet.timesheet_action_view_report_by_billing_rate_list
+NEW ir.exports: sale_timesheet.aal_costs_revenues_export_template
+NEW ir.exports.line: sale_timesheet.aal_costs_revenues_export_template_line_amount
+NEW ir.exports.line: sale_timesheet.aal_costs_revenues_export_template_line_date
+NEW ir.exports.line: sale_timesheet.aal_costs_revenues_export_template_line_name
+NEW ir.exports.line: sale_timesheet.aal_costs_revenues_export_template_line_partner_id
+NEW ir.exports.line: sale_timesheet.aal_costs_revenues_export_template_line_product_id
+NEW ir.exports.line: sale_timesheet.aal_costs_revenues_export_template_line_project_id
+NEW ir.exports.line: sale_timesheet.aal_costs_revenues_export_template_line_unit_amount
+NEW ir.exports.line: sale_timesheet.account_analytic_line_export_template_line_so_line
+# NOTHING TO DO: new features
+
+DEL ir.model.access: sale_timesheet.access_project_create_sale_order
+DEL ir.model.access: sale_timesheet.access_project_create_sale_order_line
+DEL ir.model.constraint: sale_timesheet.constraint_project_create_sale_order_line_unique_employee_per_wizard
+# NOTHING TO DO: handled by ORM
+
+NEW ir.ui.view: sale_timesheet.timesheete_analysis_report_form
+NEW ir.ui.view: sale_timesheet.timesheets_analysis_report_list_inherited
+NEW ir.ui.view: sale_timesheet.view_task_project_user_fsm_graph_base_inherited
+NEW ir.ui.view: sale_timesheet.view_task_project_user_fsm_pivot_base_inherited
+DEL ir.ui.view: sale_timesheet.project_create_sale_order_view_form
+DEL ir.ui.view: sale_timesheet.project_sharing_inherit_project_task_view_tree_sale_timesheet
+# NOTHING TO DO: new features
