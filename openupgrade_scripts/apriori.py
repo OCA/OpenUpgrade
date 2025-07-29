@@ -61,6 +61,8 @@ merged_modules = {
     "stock_landed_costs_company": "stock_landed_costs",
     "website_sale_product_configurator": "website_sale",
     # odoo/enterprise
+    # OCA/e-commerce
+    "website_sale_product_attachment": "website_sale",
     # OCA/knowledge
     "document_page_group": "document_page_access_group",
     # OCA/l10n-france
