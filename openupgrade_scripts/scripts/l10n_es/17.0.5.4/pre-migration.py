@@ -90,6 +90,17 @@ def _handle_dua_transition(env):
     record = env.ref("l10n_es.producto_dua_compensacion", False)
     if record:
         record.active = False
+    openupgrade.logged_query(
+        env.cr,
+        """
+        DELETE FROM ir_model_data
+        WHERE module='l10n_es'
+        AND name IN (
+            'producto_dua_compensacion',
+            'producto_dua_compensacion_product_template'
+        )
+        """,
+    )
     # Tax groups
     imds = env["ir.model.data"].search(
         [
