@@ -1,0 +1,8 @@
+---Models in module 'hr_skills_survey'---
+---Fields in module 'hr_skills_survey'---
+hr_skills_survey / survey.survey            / certification_validity_months (integer): NEW
+# NOTHING TO DO: new feature to set date end as dat_start + this validity. This behavior seems more correct, and we keep it for new records. Old ones will continue as it was.
+
+---XML records in module 'hr_skills_survey'---
+NEW ir.ui.view: hr_skills_survey.survey_survey_view_form
+# NOTHING TO DO: handled by ORM
