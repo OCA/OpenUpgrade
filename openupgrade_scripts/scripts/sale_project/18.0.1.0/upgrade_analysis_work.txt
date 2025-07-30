@@ -1,0 +1,40 @@
+---Models in module 'sale_project'---
+---Fields in module 'sale_project'---
+sale_project / product.product          / service_tracking (selection)  : module is now 'product' ('sale_project')
+sale_project / product.template         / service_tracking (selection)  : module is now 'product' ('sale_project')
+sale_project / product.template         / service_tracking (False)      : NEW selection_keys: ['event', 'event_booth', 'no', 'project_only', 'task_global_project', 'task_in_project'], mode: modify
+# NOTHING TO DO: handled by ORM
+
+sale_project / product.template         / project_id (many2one)         : needs conversion to v18-style company dependent
+sale_project / product.template         / project_template_id (many2one): needs conversion to v18-style company dependent
+# DONE: pre-migration: copy columns if exist
+# DONE: post-migration: used openupgrade_180.convert_company_dependent
+
+sale_project / project.project          / reinvoiced_sale_order_id (many2one): NEW relation: sale.order
+# DONE: pre-migration: pre-create field and fill with sale_line_id.order_id (as done in _onchange_sale_line_id())
+
+---XML records in module 'sale_project'---
+NEW ir.actions.server: sale_project.model_sale_order_action_create_project
+NEW ir.embedded.actions: sale_project.project_embedded_action_invoices
+NEW ir.embedded.actions: sale_project.project_embedded_action_invoices_dashboard
+NEW ir.embedded.actions: sale_project.project_embedded_action_sales_orders
+NEW ir.embedded.actions: sale_project.project_embedded_action_sales_orders_dashboard
+NEW ir.embedded.actions: sale_project.project_embedded_action_vendor_bills
+NEW ir.exports: sale_project.services_template_export_template
+NEW ir.exports.line: sale_project.project_task_export_template_line_sale_line_id
+NEW ir.exports.line: sale_project.services_template_export_template_invoice_policy
+NEW ir.exports.line: sale_project.services_template_export_template_line_id
+NEW ir.exports.line: sale_project.services_template_export_template_line_list_price
+NEW ir.exports.line: sale_project.services_template_export_template_line_name
+NEW ir.exports.line: sale_project.services_template_export_template_line_product_tag_ids
+NEW ir.exports.line: sale_project.services_template_export_template_line_type
+NEW ir.exports.line: sale_project.services_template_export_template_line_uom_id
+NEW ir.exports.line: sale_project.services_template_export_template_project_id
+NEW ir.exports.line: sale_project.services_template_export_template_project_template_id
+NEW ir.exports.line: sale_project.services_template_export_template_service_tracking
+NEW ir.ui.view: sale_project.milestone_deadline_inherit
+NEW ir.ui.view: sale_project.project_sharing_inherit_project_task_view_tree
+NEW ir.ui.view: sale_project.quick_create_task_form_res_partner
+NEW ir.ui.view: sale_project.view_sales_order_filter_inherit_sale_project
+NEW ir.ui.view: sale_project.view_task_form_res_partner
+# NOTHING TO DO: will be created by ORM
