@@ -1,0 +1,60 @@
+---Models in module 'sale_pdf_quote_builder'---
+new model quotation.document
+new model sale.pdf.form.field
+# handled below
+
+---Fields in module 'sale_pdf_quote_builder'---
+sale_pdf_quote_builder / product.document         / attached_on (False)           : DEL selection_keys: ['inside', 'quotation', 'sale_order'], mode: modify
+sale_pdf_quote_builder / product.document         / attached_on_sale (False)      : NEW selection_keys: ['hidden', 'inside', 'quotation', 'sale_order'], mode: modify
+# NOTHING TO DO: rename handled in sale module
+
+sale_pdf_quote_builder / product.document         / form_field_ids (many2many)    : NEW relation: sale.pdf.form.field, isfunction: function, stored
+sale_pdf_quote_builder / quotation.document       / _inherits                     : NEW _inherits: {'ir.attachment': 'ir_attachment_id'}, stored: False
+sale_pdf_quote_builder / quotation.document       / active (boolean)              : NEW hasdefault: default
+sale_pdf_quote_builder / quotation.document       / document_type (selection)     : NEW required, selection_keys: ['footer', 'header'], hasdefault: default
+sale_pdf_quote_builder / quotation.document       / form_field_ids (many2many)    : NEW relation: sale.pdf.form.field, isfunction: function, stored
+sale_pdf_quote_builder / quotation.document       / ir_attachment_id (many2one)   : NEW relation: ir.attachment, required
+sale_pdf_quote_builder / quotation.document       / quotation_template_ids (many2many): NEW relation: sale.order.template
+sale_pdf_quote_builder / quotation.document       / sequence (integer)            : NEW hasdefault: default
+sale_pdf_quote_builder / res.company              / sale_footer (binary)          : DEL attachment: True
+sale_pdf_quote_builder / res.company              / sale_footer_name (char)       : DEL
+sale_pdf_quote_builder / res.company              / sale_header (binary)          : DEL attachment: True
+sale_pdf_quote_builder / res.company              / sale_header_name (char)       : DEL
+sale_pdf_quote_builder / sale.order.template      / sale_footer (binary)          : DEL attachment: True
+sale_pdf_quote_builder / sale.order.template      / sale_footer_name (char)       : DEL
+sale_pdf_quote_builder / sale.order.template      / sale_header (binary)          : DEL attachment: True
+sale_pdf_quote_builder / sale.order.template      / sale_header_name (char)       : DEL
+sale_pdf_quote_builder / sale.order.template      / quotation_document_ids (many2many): NEW relation: quotation.document
+# DONE: post-migration: create a quotation.document for each binary attachment
+
+sale_pdf_quote_builder / sale.order               / customizable_pdf_form_fields (json): NEW
+sale_pdf_quote_builder / sale.order               / quotation_document_ids (many2many): NEW relation: quotation.document
+sale_pdf_quote_builder / sale.order.line          / product_document_ids (many2many): NEW relation: product.document
+# NOTHING TO DO: new functionality
+
+sale_pdf_quote_builder / sale.pdf.form.field      / document_type (selection)     : NEW required, selection_keys: ['product_document', 'quotation_document']
+sale_pdf_quote_builder / sale.pdf.form.field      / name (char)                   : NEW required
+sale_pdf_quote_builder / sale.pdf.form.field      / path (char)                   : NEW
+sale_pdf_quote_builder / sale.pdf.form.field      / product_document_ids (many2many): NEW relation: product.document
+sale_pdf_quote_builder / sale.pdf.form.field      / quotation_document_ids (many2many): NEW relation: quotation.document
+# DONE: post-migration: filled calling _add_basic_mapped_form_fields()
+
+---XML records in module 'sale_pdf_quote_builder'---
+NEW ir.actions.act_window: sale_pdf_quote_builder.quotation_document_action
+NEW ir.cron: sale_pdf_quote_builder.cron_post_upgrade_assign_missing_form_fields
+NEW ir.model.access: sale_pdf_quote_builder.access_quotation_document_sales_manager
+NEW ir.model.access: sale_pdf_quote_builder.access_quotation_document_user
+NEW ir.model.access: sale_pdf_quote_builder.access_sale_pdf_form_field_system
+NEW ir.model.access: sale_pdf_quote_builder.access_sale_pdf_form_field_user
+NEW ir.model.constraint: sale_pdf_quote_builder.constraint_sale_pdf_form_field_unique_name_per_doc_type
+NEW ir.rule: sale_pdf_quote_builder.quotation_document_comp_rule (noupdate)
+NEW ir.ui.menu: sale_pdf_quote_builder.sale_menu_quotation_document_action
+NEW ir.ui.view: sale_pdf_quote_builder.product_document_form
+NEW ir.ui.view: sale_pdf_quote_builder.quotation_document_form
+NEW ir.ui.view: sale_pdf_quote_builder.quotation_document_kanban
+NEW ir.ui.view: sale_pdf_quote_builder.quotation_document_list
+NEW ir.ui.view: sale_pdf_quote_builder.quotation_document_search
+NEW ir.ui.view: sale_pdf_quote_builder.quotation_document_search_view
+NEW ir.ui.view: sale_pdf_quote_builder.sale_order_form_inherit_sale_pdf_quote_builder
+NEW ir.ui.view: sale_pdf_quote_builder.sale_pdf_form_field_list
+# NOTHING TO DO
