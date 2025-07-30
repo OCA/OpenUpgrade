@@ -7,7 +7,7 @@ sale_project / product.template         / service_tracking (False)      : NEW se
 
 sale_project / product.template         / project_id (many2one)         : needs conversion to v18-style company dependent
 sale_project / product.template         / project_template_id (many2one): needs conversion to v18-style company dependent
-# DONE: pre-migration: copy columns if exist
+# DONE: pre-migration: rename columns if they exist for avoiding collapses.
 # DONE: post-migration: used openupgrade_180.convert_company_dependent
 
 sale_project / project.project          / reinvoiced_sale_order_id (many2one): NEW relation: sale.order
