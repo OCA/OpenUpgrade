@@ -1,0 +1,9 @@
+---Models in module 'project_todo'---
+---Fields in module 'project_todo'---
+project_todo / mail.activity.type       / category (False)              : DEL selection_keys: ['default', 'meeting', 'phonecall', 'reminder', 'upload_file'], mode: modify
+# DONE: post-migration: changed activity records from `reminder` to `todo`. see https://github.com/odoo/odoo/pull/129011
+---XML records in module 'project_todo'---
+DEL ir.rule: project_todo.task_visibility_rule_project_user [renamed to project module] (noupdate)
+# NOTHING TO DO: Handled in the project migration script
+DEL mail.activity.type: project_todo.mail_activity_data_reminder (noupdate)
+# DONE: post-migration: safely delete
