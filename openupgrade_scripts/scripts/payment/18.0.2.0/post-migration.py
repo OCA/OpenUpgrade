@@ -4,14 +4,30 @@ from openupgradelib import openupgrade, openupgrade_merge_records
 
 
 def merge_ogone_sips_into_worldline(env):
-    ogone = env["payment.provider"].search([("code", "=", "ogone")], limit=1)
-    sips = env.ref("payment.payment_provider_sips")
+    ogone = env["payment.provider"].search([("code", "=", "ogone")])
+    sips = env["payment.provider"].search([("code", "=", "sips")])
     worldline = env.ref("payment.payment_provider_worldline")
     to_merge = []
     if ogone:
-        to_merge.append(ogone.id)
+        openupgrade.logged_query(
+            env.cr,
+            """
+            UPDATE payment_provider
+            SET state = 'disabled'
+            WHERE code = 'ogone'
+            """,
+        )
+        to_merge.extend(ogone.ids)
     if sips:
-        to_merge.append(sips.id)
+        openupgrade.logged_query(
+            env.cr,
+            """
+            UPDATE payment_provider
+            SET state = 'disabled'
+            WHERE code = 'sips'
+            """,
+        )
+        to_merge.extend(sips.ids)
     if to_merge:
         openupgrade_merge_records.merge_records(
             env,
@@ -28,4 +44,13 @@ def migrate(env, version):
     merge_ogone_sips_into_worldline(env)
     openupgrade.load_data(env, "payment", "18.0.2.0/noupdate_changes_manual.xml")
     openupgrade.load_data(env, "payment", "18.0.2.0/noupdate_changes.xml")
-    openupgrade.delete_records_safely_by_xml_id(env, ["payment.payment_provider_sips"])
+    imd = env["ir.model.data"].search(
+        [("module", "=", "payment_ogone"), ("name", "=", "payment_provider_ogone")]
+    )
+    if imd:
+        imd.unlink()
+    imd = env["ir.model.data"].search(
+        [("module", "=", "payment"), ("name", "=", "payment_provider_sips")]
+    )
+    if imd:
+        imd.unlink()
