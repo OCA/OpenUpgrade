@@ -5,4 +5,12 @@ from openupgradelib import openupgrade
 
 @openupgrade.migrate()
 def migrate(env, version):
+    openupgrade.logged_query(
+        env.cr,
+        """
+        UPDATE payment_provider
+        SET state = 'disabled'
+        WHERE code = 'paypal'
+        """,
+    )
     openupgrade.load_data(env, "payment_paypal", "18.0.2.0/noupdate_changes.xml")
