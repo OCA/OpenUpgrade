@@ -12,6 +12,7 @@ payment_paypal / payment.provider         / paypal_client_id (char)       : NEW
 payment_paypal / payment.provider         / paypal_client_secret (char)   : NEW
 payment_paypal / payment.provider         / paypal_pdt_token (char)       : DEL
 # NOTHING TO DO: I think there is no way to correspond them.
+# DONE: post-migration, we archive the provider, because paypal_client_id is required if provider is active
 
 ---XML records in module 'payment_paypal'---
 NEW ir.ui.view: payment_paypal.method_form
