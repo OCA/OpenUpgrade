@@ -1,0 +1,33 @@
+---Models in module 'google_calendar'---
+obsolete model google.calendar.credentials (merged to res.users.settings)
+# NOTHING TO DO: Handled by the ORM
+
+---Fields in module 'google_calendar'---
+google_calendar / google.calendar.credentials / calendar_cal_id (char)        : DEL
+google_calendar / google.calendar.credentials / calendar_rtoken (char)        : DEL
+google_calendar / google.calendar.credentials / calendar_sync_token (char)    : DEL
+google_calendar / google.calendar.credentials / calendar_token (char)         : DEL
+google_calendar / google.calendar.credentials / calendar_token_validity (datetime): DEL
+google_calendar / google.calendar.credentials / synchronization_stopped (boolean): DEL
+google_calendar / google.calendar.credentials / user_ids (one2many)           : DEL relation: res.users, required
+google_calendar / res.users                / google_calendar_account_id (many2one): DEL relation: google.calendar.credentials
+google_calendar / res.users.settings       / google_calendar_cal_id (char) : NEW
+google_calendar / res.users.settings       / google_calendar_rtoken (char) : NEW
+google_calendar / res.users.settings       / google_calendar_sync_token (char): NEW
+google_calendar / res.users.settings       / google_calendar_token (char)  : NEW
+google_calendar / res.users.settings       / google_calendar_token_validity (datetime): NEW
+google_calendar / res.users.settings       / google_synchronization_stopped (boolean): NEW
+# DONE: post-migration: Populate the table with user information
+
+---XML records in module 'google_calendar'---
+DEL ir.model.access: google_calendar.access_google_calendar_credentials
+DEL ir.model.access: google_calendar.google_calendar_manager
+# NOTHING TO DO: Handled by the ORM
+
+DEL ir.model.constraint: google_calendar.constraint_res_users_google_token_uniq
+# DONE: pre-migration: delete it
+
+DEL ir.rule: google_calendar.google_calendar_not_own_token_rule (noupdate)
+DEL ir.rule: google_calendar.google_calendar_own_token_rule (noupdate)
+DEL ir.rule: google_calendar.google_calendar_token_system_access (noupdate)
+# DONE: post-migration: safely delete
