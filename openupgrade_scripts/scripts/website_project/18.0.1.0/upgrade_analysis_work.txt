@@ -1,0 +1,22 @@
+---Models in module 'website_project'---
+---Fields in module 'website_project'---
+website_project / project.task             / email_from (char)             : NEW
+# NOTHING TO DO: This field is only for technical purposes,
+# used to determine when to search for and assign the partner to the new task.
+# Therefore, it should not be filled in existing tasks.
+# See this commit for more information:
+# https://github.com/odoo/odoo/commit/1aa5cbb06be85e94c01f8f55ef57b9415b9bb50f
+
+website_project / project.task             / partner_company_name (char)   : NEW isrelated: related, stored
+website_project / project.task             / partner_name (char)           : NEW isrelated: related, stored
+website_project / project.task             / partner_phone (char)          : NEW isfunction: function, stored
+# DONE: pre-migration: pre-created and filled
+
+---XML records in module 'website_project'---
+NEW ir.ui.view: website_project.task_submitted
+NEW ir.ui.view: website_project.website_portal_my_project
+NEW ir.ui.view: website_project.website_portal_my_task
+DEL ir.ui.view: website_form_project.website_portal_my_project
+DEL ir.ui.view: website_form_project.website_portal_my_task
+NEW website.page: website_project.task_submitted_page
+# NOTHING TO DO: Handled by ORM
