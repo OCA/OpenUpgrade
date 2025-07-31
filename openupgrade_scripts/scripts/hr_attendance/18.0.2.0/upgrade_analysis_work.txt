@@ -1,0 +1,37 @@
+---Models in module 'hr_attendance'---
+---Fields in module 'hr_attendance'---
+hr_attendance / hr.attendance            / expected_hours (float)        : NEW isfunction: function, stored
+# DONE: pre-migration: pre-created and filled
+
+hr_attendance / hr.attendance            / in_mode (selection)           : selection_keys is now '['kiosk', 'manual', 'systray', 'technical']' ('['kiosk', 'manual', 'systray']')
+hr_attendance / hr.attendance            / out_mode (selection)          : selection_keys is now '['auto_check_out', 'kiosk', 'manual', 'systray', 'technical']' ('['kiosk', 'manual', 'systray']')
+hr_attendance / hr.attendance            / overtime_status (selection)   : NEW selection_keys: ['approved', 'refused', 'to_approve'], isfunction: function, stored
+hr_attendance / hr.attendance            / validated_overtime_hours (float): NEW hasdefault: compute
+# DONE: pre-migration: pre-created and filled
+
+hr_attendance / res.company              / absence_management (boolean)  : NEW hasdefault: default
+hr_attendance / res.company              / attendance_overtime_validation (selection): NEW selection_keys: ['by_manager', 'no_validation'], hasdefault: default
+hr_attendance / res.company              / auto_check_out (boolean)      : NEW hasdefault: default
+hr_attendance / res.company              / auto_check_out_tolerance (float): NEW hasdefault: default
+# DONE: pre-migration: pre-created and filled
+
+hr_attendance / res.company              / hr_attendance_overtime (boolean): DEL
+hr_attendance / res.company              / overtime_start_date (date)    : DEL
+# NOTHING TO DO: deprecated fields (https://github.com/odoo/odoo/commit/cac96f5d3c391ea0d52da2e3433e7eabe07e8fb0)
+
+---XML records in module 'hr_attendance'---
+NEW ir.actions.act_window: hr_attendance.hr_attendance_management_action
+NEW ir.actions.client: hr_attendance.hr_attendance_action_install_kiosk_pwa
+NEW ir.actions.server: hr_attendance.action_load_demo_data
+NEW ir.actions.server: hr_attendance.action_try_kiosk
+NEW ir.cron: hr_attendance.hr_attendance_absence_cron
+NEW ir.cron: hr_attendance.hr_attendance_check_out_cron
+NEW ir.ui.menu: hr_attendance.menu_action_open_form
+NEW ir.ui.menu: hr_attendance.menu_hr_attendance_view_attendances_management
+DEL ir.ui.menu: hr_attendance.menu_hr_attendance_kiosk_no_user_mode
+NEW ir.ui.view: hr_attendance.hr_attendance_management_view_filter
+NEW ir.ui.view: hr_attendance.hr_attendance_overtime_view_pivot
+NEW ir.ui.view: hr_attendance.hr_attendance_validated_hours_employee_simple_tree_view
+NEW ir.ui.view: hr_attendance.view_attendance_overtime_graph
+NEW ir.ui.view: hr_attendance.view_attendance_tree_management
+# NOTHING TO DO
