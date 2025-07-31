@@ -63,6 +63,7 @@ merged_modules = {
     "maintenance_plan_employee": "maintenance",
     # OCA/product-attribute
     "product_catalog": "product",
+    "product_catalog_sale": "sale",
     # OCA/purchase-workflow
     "purchase_discount": "purchase",
     # OCA/social
