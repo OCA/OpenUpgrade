@@ -66,6 +66,9 @@ merged_modules = {
     "product_catalog_sale": "sale",
     # OCA/purchase-workflow
     "purchase_discount": "purchase",
+    # OCA/sale-promotion
+    "loyalty_initial_date_validity": "loyalty",
+    "sale_loyalty_initial_date_validity": "sale_loyalty",
     # OCA/social
     "mail_activity_plan": "mail",
     "mass_mailing_custom_unsubscribe_event": "mass_mailing",
