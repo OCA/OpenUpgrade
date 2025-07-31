@@ -1,0 +1,19 @@
+---Models in module 'project_mrp'---
+---Fields in module 'project_mrp'---
+project_mrp  / mrp.bom                  / project_id (many2one)         : NEW relation: project.project
+project_mrp  / mrp.production           / project_id (many2one)         : NEW relation: project.project, hasdefault: compute
+# NOTHING TO DO: new functionality
+
+project_mrp  / project.project          / bom_count (integer)           : not related anymore
+project_mrp  / project.project          / bom_count (integer)           : now a function
+project_mrp  / project.project          / production_count (integer)    : not related anymore
+project_mrp  / project.project          / production_count (integer)    : now a function
+# NOTHING TO DO
+
+---XML records in module 'project_mrp'---
+NEW ir.embedded.actions: project_mrp.project_embedded_action_bills_of_materials
+NEW ir.embedded.actions: project_mrp.project_embedded_action_manufacturing_orders
+NEW ir.ui.view: project_mrp.mrp_bom_form_view_inherited_project_mrp
+NEW ir.ui.view: project_mrp.mrp_production_form_view_inherit_project_mrp
+NEW ir.ui.view: project_mrp.view_production_tree_view_inherit_project_mrp
+# NOTHING TO DO

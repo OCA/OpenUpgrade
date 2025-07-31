@@ -1,0 +1,12 @@
+---Models in module 'project_stock_account'---
+---Fields in module 'project_stock_account'---
+project_stock_account / account.analytic.applicability / business_domain (False)       : NEW selection_keys: ['bill', 'expense', 'general', 'invoice', 'manufacturing_order', 'purchase_order', 'stock_picking', 'timesheet'], mode: modify
+project_stock_account / account.analytic.line    / category (False)              : NEW selection_keys: ['invoice', 'manufacturing_order', 'other', 'picking_entry', 'vendor_bill'], mode: modify
+# NOTHING TO DO: new functionality
+
+project_stock_account / stock.picking.type       / analytic_costs (boolean)      : NEW
+# NOTHING TO DO: new functionality
+
+---XML records in module 'project_stock_account'---
+NEW ir.ui.view: project_stock_account.view_picking_type_form_inherit_sale_project_stock
+# NOTHING TO DO
