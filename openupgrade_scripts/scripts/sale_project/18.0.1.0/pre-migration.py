@@ -19,7 +19,6 @@ def _fill_project_reinvoiced_sale_order_id(env):
         SET reinvoiced_sale_order_id = sol.order_id
         FROM sale_order_line sol
         WHERE p.reinvoiced_sale_order_id IS NULL
-        AND p.sale_line_id IS NOT NULL
         AND p.sale_line_id = sol.id
         """,
     )

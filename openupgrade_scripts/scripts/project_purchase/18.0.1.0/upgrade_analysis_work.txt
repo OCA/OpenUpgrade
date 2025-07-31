@@ -1,0 +1,9 @@
+---Models in module 'project_purchase'---
+---Fields in module 'project_purchase'---
+project_purchase / purchase.order           / project_id (many2one)         : NEW relation: project.project
+# NOTHING TO DO: new feature
+
+---XML records in module 'project_purchase'---
+NEW ir.embedded.actions: project_purchase.project_embedded_action_purchase_orders
+NEW ir.ui.view: project_purchase.view_order_form_inherit_project_purchase
+# NOTHING TO DO
