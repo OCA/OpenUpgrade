@@ -69,6 +69,8 @@ merged_modules = {
     # OCA/sale-promotion
     "loyalty_initial_date_validity": "loyalty",
     "sale_loyalty_initial_date_validity": "sale_loyalty",
+    # OCA/sale-reporting
+    "sale_report_country_state": "sale",
     # OCA/social
     "mail_activity_plan": "mail",
     "mass_mailing_custom_unsubscribe_event": "mass_mailing",
