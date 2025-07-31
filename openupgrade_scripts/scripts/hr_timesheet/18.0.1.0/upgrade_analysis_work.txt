@@ -1,0 +1,33 @@
+---Models in module 'hr_timesheet'---
+---Fields in module 'hr_timesheet'---
+hr_timesheet / account.analytic.applicability / business_domain (False)       : NEW selection_keys: ['bill', 'expense', 'general', 'invoice', 'purchase_order', 'timesheet'], mode: modify
+# NOTHING TO DO: new selection added for new functionality
+
+hr_timesheet / project.task             / analytic_account_active (boolean): not a function anymore
+hr_timesheet / project.task             / analytic_account_active (boolean): now related
+# NOTHING TO DO: handled by ORM to get analytic_account from parent project_id
+
+---XML records in module 'hr_timesheet'---
+NEW ir.actions.act_window.view: hr_timesheet.timesheet_action_view_report_by_employee_list
+NEW ir.actions.act_window.view: hr_timesheet.timesheet_action_view_report_by_project_list
+NEW ir.actions.act_window.view: hr_timesheet.timesheet_action_view_report_by_task_list
+NEW ir.embedded.actions: hr_timesheet.project_embedded_action_timesheets
+NEW ir.embedded.actions: hr_timesheet.project_embedded_action_timesheets_dashboard
+NEW ir.exports: hr_timesheet.account_analytic_line_export_template
+NEW ir.exports.line: hr_timesheet.account_analytic_line_export_template_line_date
+NEW ir.exports.line: hr_timesheet.account_analytic_line_export_template_line_employee_id
+NEW ir.exports.line: hr_timesheet.account_analytic_line_export_template_line_id
+NEW ir.exports.line: hr_timesheet.account_analytic_line_export_template_line_name
+NEW ir.exports.line: hr_timesheet.account_analytic_line_export_template_line_project_id
+NEW ir.exports.line: hr_timesheet.account_analytic_line_export_template_line_task_id
+NEW ir.exports.line: hr_timesheet.account_analytic_line_export_template_line_unit_amount
+NEW ir.exports.line: hr_timesheet.project_task_export_template_line_allocated_hours
+NEW ir.model.access: hr_timesheet.access_timesheets_analysis_report
+DEL ir.model.access: hr_timesheet.access_timesheets_analysis_report_manager
+DEL ir.model.access: hr_timesheet.access_timesheets_analysis_report_user
+NEW ir.rule: hr_timesheet.timesheet_analysis_report_department_manager (noupdate)
+NEW ir.ui.view: hr_timesheet.timesheet_report_subtask
+NEW ir.ui.view: hr_timesheet.timesheets_analysis_report_form
+NEW ir.ui.view: hr_timesheet.timesheets_analysis_report_list
+NEW ir.ui.view: hr_timesheet.view_hr_timesheet_line_by_project
+# NOTHING TO DO: handled by ORM
