@@ -1,0 +1,18 @@
+---Models in module 'website_slides_survey'---
+---Fields in module 'website_slides_survey'---
+website_slides_survey / slide.channel.partner    / survey_certification_success (boolean): NEW
+# DONE: post-migration: fill survey_certification_success based on the survey_certification_success field from slide_channel_partner
+# https://github.com/odoo/odoo/blob/74eecadb39e0c260f4cfc1ae9478c84eda815132/addons/website_slides_survey/models/slide_slide.py#L31-L44
+
+---XML records in module 'website_slides_survey'---
+NEW ir.rule: website_slides_survey.survey_question_answer_slide_channel_officer (noupdate)
+NEW ir.rule: website_slides_survey.survey_question_rule_slide_channel_officer (noupdate)
+NEW ir.rule: website_slides_survey.survey_rule_slide_channel_officer (noupdate)
+NEW ir.rule: website_slides_survey.survey_user_input_line_rule_slide_channel_officer (noupdate)
+NEW ir.rule: website_slides_survey.survey_user_input_rule_slide_channel_officer (noupdate)
+NEW ir.ui.view: website_slides_survey.slide_channel_partner_view_search
+NEW ir.ui.view: website_slides_survey.slide_channel_partner_view_tree
+# NOTHING TO DO: new features
+
+DEL ir.ui.view: website_slides_survey.slide_channel_view_kanban
+# NOTHING TO DO: handled by ORM
