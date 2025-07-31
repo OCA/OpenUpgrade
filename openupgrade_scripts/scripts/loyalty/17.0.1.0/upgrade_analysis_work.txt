@@ -1,0 +1,14 @@
+---Models in module 'loyalty'---
+---Fields in module 'loyalty'---
+loyalty      / loyalty.card             / message_main_attachment_id (many2one): DEL relation: ir.attachment
+loyalty      / loyalty.card             / rating_ids (one2many)         : NEW relation: rating.rating
+loyalty      / loyalty.program          / date_from (date)              : NEW
+loyalty      / loyalty.program          / pricelist_ids (many2many)     : NEW relation: product.pricelist
+# NOTHING TO DO
+
+---XML records in module 'loyalty'---
+NEW ir.ui.view: loyalty.res_partner_form
+NEW loyalty.program: loyalty.gift_card_program
+NEW loyalty.reward: loyalty.gift_card_program_reward
+NEW loyalty.rule: loyalty.gift_card_program_rule
+# NOTHING TO DO
