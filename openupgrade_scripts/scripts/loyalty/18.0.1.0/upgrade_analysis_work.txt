@@ -1,0 +1,36 @@
+---Models in module 'loyalty'---
+new model loyalty.card.update.balance [transient]
+new model loyalty.history
+---Fields in module 'loyalty'---
+loyalty      / loyalty.card             / active (boolean)              : NEW hasdefault: default
+# NOTHING TO DO
+
+loyalty      / loyalty.card             / message_has_sms_error (boolean): previously in module sms
+loyalty      / loyalty.card             / website_message_ids (one2many): previously in module portal
+# NOTHING TO DO
+
+loyalty      / loyalty.card             / history_ids (one2many)        : NEW relation: loyalty.history
+loyalty      / loyalty.history          / card_id (many2one)            : NEW relation: loyalty.card, required
+loyalty      / loyalty.history          / description (text)            : NEW required
+loyalty      / loyalty.history          / issued (float)                : NEW
+loyalty      / loyalty.history          / order_id (many2one_reference) : NEW relation: order_model
+loyalty      / loyalty.history          / order_model (char)            : NEW
+loyalty      / loyalty.history          / used (float)                  : NEW
+# NOTHING TO DO: new model
+
+loyalty      / loyalty.reward           / description (char)            : now required
+# DONE: end-migration: call _compute_description for empty descriptions
+
+loyalty      / loyalty.reward           / tax_ids (many2many)           : NEW relation: account.tax
+# NOTHING TO DO: new functionality
+
+---XML records in module 'loyalty'---
+NEW ir.model.access: loyalty.access_loyalty_card_update_balance_user
+NEW ir.model.access: loyalty.access_loyalty_history
+NEW ir.rule: loyalty.loyalty_history_company_rule (noupdate)
+NEW ir.ui.view: loyalty.loyalty_buttons
+NEW ir.ui.view: loyalty.loyalty_card_history_template
+NEW ir.ui.view: loyalty.loyalty_card_update_balance_form
+NEW ir.ui.view: loyalty.loyalty_history_form
+NEW ir.ui.view: loyalty.portal_loyalty_history_breadcrumbs
+# NOTHING TO DO
