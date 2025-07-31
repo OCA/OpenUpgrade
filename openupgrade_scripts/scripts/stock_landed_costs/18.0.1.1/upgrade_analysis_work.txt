@@ -1,0 +1,11 @@
+---Models in module 'stock_landed_costs'---
+---Fields in module 'stock_landed_costs'---
+stock_landed_costs / stock.landed.cost        / company_id (many2one)         : is now stored
+stock_landed_costs / stock.landed.cost        / company_id (many2one)         : not related anymore
+stock_landed_costs / stock.landed.cost        / company_id (many2one)         : now required
+# DONE: pre-migration: pre-created and filled if stock_landed_costs_company is not installed or the field is empty
+
+stock_landed_costs_company / stock.landed.cost        / company_id (False)            : DEL required, mode: modify
+# NOTHING TO DO: handled by ORM
+
+---XML records in module 'stock_landed_costs'---
