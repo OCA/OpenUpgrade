@@ -159,6 +159,7 @@ merged_modules = {
     "se7_sale_line_nomenclature": "se7_rosello_solar",
     "se7_partner_sql_code": "se7_rosello_solar",
     "se7_rs_project_onedrive": "se7_rosello_solar",
+    "se7_pg_impuestos_tpa": "se7_pg_yachting",
 }
 
 # only used here for upgrade_analysis
