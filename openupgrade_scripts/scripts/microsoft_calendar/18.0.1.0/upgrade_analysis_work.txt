@@ -1,0 +1,31 @@
+---Models in module 'microsoft_calendar'---
+obsolete model microsoft.calendar.credentials (merged to res.users.settings)
+# DONE: Merge into res.users.settings in pre-migrate
+
+---Fields in module 'microsoft_calendar'---
+microsoft_calendar / calendar.event           / ms_universal_event_id (char)  : is now stored
+microsoft_calendar / calendar.event           / ms_universal_event_id (char)  : not a function anymore
+microsoft_calendar / calendar.recurrence      / ms_universal_event_id (char)  : is now stored
+microsoft_calendar / calendar.recurrence      / ms_universal_event_id (char)  : not a function anymore
+# DONE: Precompute in pre-migrate
+
+microsoft_calendar / microsoft.calendar.credentials / calendar_sync_token (char)    : DEL
+microsoft_calendar / microsoft.calendar.credentials / last_sync_date (datetime)     : DEL
+microsoft_calendar / microsoft.calendar.credentials / synchronization_stopped (boolean): DEL
+microsoft_calendar / microsoft.calendar.credentials / user_ids (one2many)           : DEL relation: res.users, required
+microsoft_calendar / res.users                / microsoft_calendar_account_id (many2one): DEL relation: microsoft.calendar.credentials
+microsoft_calendar / res.users.settings       / microsoft_calendar_sync_token (char): NEW
+microsoft_calendar / res.users.settings       / microsoft_last_sync_date (datetime): NEW
+microsoft_calendar / res.users.settings       / microsoft_synchronization_stopped (boolean): NEW
+# DONE: Merge into res.users.settings in pre-migrate
+
+---XML records in module 'microsoft_calendar'---
+DEL ir.model.access: microsoft_calendar.access_microsoft_calendar_credentials
+DEL ir.model.access: microsoft_calendar.microsoft_calendar_manager
+DEL ir.model.constraint: microsoft_calendar.constraint_res_users_microsoft_token_uniq
+# DONE: Nothing to do
+
+DEL ir.rule: microsoft_calendar.microsoft_calendar_not_own_token_rule (noupdate)
+DEL ir.rule: microsoft_calendar.microsoft_calendar_own_token_rule (noupdate)
+DEL ir.rule: microsoft_calendar.microsoft_calendar_token_system_access (noupdate)
+# DONE: Safely deleted in post-migration
