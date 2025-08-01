@@ -24,7 +24,7 @@ hr_holidays  / hr.leave                 / parent_id (many2one)          : DEL re
 hr_holidays  / hr.leave.allocation      / parent_id (many2one)          : DEL relation: hr.leave.allocation
 hr_holidays  / hr.leave                 / employee_id (many2one)        : now required
 hr_holidays  / hr.leave.allocation      / employee_id (many2one)        : now required
-# TODO
+# DONE: pre-migration: split leaves, one for each employee
 
 hr_holidays  / hr.leave                 / report_note (text)            : DEL
 # NOTHING TO DO: deprecated (https://github.com/odoo/odoo/commit/ca34732081b1ce6c339dd941abb9696861d95878)

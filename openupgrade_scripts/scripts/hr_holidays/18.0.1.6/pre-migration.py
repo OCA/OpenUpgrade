@@ -85,6 +85,102 @@ def update_allocation_validation_type(env):
     )
 
 
+def split_employee_leaves(env):
+    for table in ["hr_leave", "hr_leave_allocation"]:
+        env.cr.execute(
+            f"""
+            SELECT column_name
+            FROM information_schema.columns
+            WHERE table_name = '{table}'
+            """
+        )
+        columns = ", ".join(
+            [x[0] for x in env.cr.fetchall() if x[0] not in ("id", "employee_id")]
+        )
+        leave_employees = []
+        # case multi_employee
+        env.cr.execute(
+            f"""
+            SELECT leave.id, 'employee', array_agg(rel.hr_employee_id) as employee_ids
+            FROM {table} AS leave
+            JOIN hr_employee_{table}_rel rel ON rel.{table}_id = leave.id
+            WHERE leave.holiday_type = 'employee' AND leave.multi_employee
+            GROUP BY leave.id
+            """
+        )
+        leave_employees.extend(env.cr.fetchall())
+        # case company
+        env.cr.execute(
+            f"""
+            SELECT leave.id, 'company', array_agg(he.id) as employee_ids
+            FROM {table} AS leave
+            JOIN hr_employee he ON he.company_id = leave.mode_company_id
+            WHERE leave.holiday_type = 'company'
+            GROUP BY leave.id
+            """
+        )
+        leave_employees.extend(env.cr.fetchall())
+        # case category
+        env.cr.execute(
+            f"""
+            SELECT leave.id, 'category', array_agg(rel.employee_id) as employee_ids
+            FROM {table} AS leave
+            JOIN employee_category_rel rel ON rel.category_id = leave.category_id
+            WHERE leave.holiday_type = 'category'
+            GROUP BY leave.id
+            """
+        )
+        leave_employees.extend(env.cr.fetchall())
+        # case department
+        env.cr.execute(
+            f"""
+            SELECT leave.id, 'department', array_agg(he.id) as employee_ids
+            FROM {table} AS leave
+            JOIN hr_employee he ON he.department_id = leave.department_id
+            WHERE leave.holiday_type = 'department'
+            GROUP BY leave.id
+            """
+        )
+        leave_employees.extend(env.cr.fetchall())
+        for table_id, holiday_type, employee_ids in leave_employees:
+            employees = env["hr.employee"].browse(employee_ids)
+            if employee_ids:
+                openupgrade.logged_query(
+                    env.cr,
+                    f"""
+                    UPDATE {table}
+                    SET employee_id = {employees[0].id}
+                    WHERE id = {table_id}
+                    """,
+                )
+                if holiday_type != "employee":
+                    openupgrade.logged_query(
+                        env.cr,
+                        f"""
+                        UPDATE {table}
+                        SET holiday_type = 'employee'
+                        WHERE id = {table_id}
+                        """,
+                    )
+                for employee in employees[1:]:
+                    openupgrade.logged_query(
+                        env.cr,
+                        f"""
+                        INSERT INTO {table} (employee_id, {columns})
+                        SELECT {employee.id}, {columns}
+                        FROM {table}
+                        WHERE id = {table_id}
+                        """,
+                    )
+            else:
+                openupgrade.logged_query(
+                    env.cr,
+                    f"""
+                    DELETE FROM {table} WHERE id = {table_id}
+                    """,
+                )
+
+
 @openupgrade.migrate()
 def migrate(env, version):
     openupgrade.rename_columns(env.cr, _column_renames)
@@ -95,3 +191,4 @@ def migrate(env, version):
     openupgrade.remove_tables_fks(
         env.cr, ["hr_employee_hr_leave_rel", "hr_employee_hr_leave_allocation_rel"]
     )
+    split_employee_leaves(env)
