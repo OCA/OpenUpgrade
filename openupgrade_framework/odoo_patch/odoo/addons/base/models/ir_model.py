@@ -74,12 +74,18 @@ IrModelRelation._module_data_uninstall = _module_data_uninstall
 
 
 def _process_ondelete(self):
-    """Don't break on missing models when deleting their selection fields"""
+    """Don't break on missing models or wrong field types
+    when deleting their selection fields"""
     to_process = self.browse([])
     for selection in self:
         try:
-            self.env[selection.field_id.model]  # pylint: disable=pointless-statement
-            to_process += selection
+            model_name = selection.field_id.model
+            field = selection.field_id
+            # Validate that the model exists
+            # and that the field has an ondelete attribute
+            self.env[model_name]  # pylint: disable=pointless-statement
+            if hasattr(field, "ondelete"):
+                to_process += selection
         except KeyError:
             continue
     return IrModelSelection._process_ondelete._original_method(to_process)
