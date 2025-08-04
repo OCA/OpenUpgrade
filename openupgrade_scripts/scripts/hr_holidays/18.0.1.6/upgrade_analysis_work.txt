@@ -1,0 +1,114 @@
+---Models in module 'hr_holidays'---
+new model hr.leave.allocation.generate.multi.wizard [transient]
+new model hr.leave.generate.multi.wizard [transient]
+---Fields in module 'hr_holidays'---
+hr_holidays  / hr.employee              / current_leave_state (selection): selection_keys removed: [draft]
+hr_holidays  / hr.employee              / hr_icon_display (False)       : selection_keys added: [presence_archive, presence_out_of_working_hour], removed: [presence_absent_active, presence_to_define]
+# NOTHING TO DO: non stored
+
+hr_holidays  / hr.leave                 / employee_ids (many2many)      : DEL relation: hr.employee
+hr_holidays  / hr.leave.allocation      / employee_ids (many2many)      : DEL relation: hr.employee
+# DONE: pre-migration: remove many2many table fks
+
+hr_holidays  / hr.leave                 / category_id (many2one)        : DEL relation: hr.employee.category
+hr_holidays  / hr.leave.allocation      / category_id (many2one)        : DEL relation: hr.employee.category
+hr_holidays  / hr.leave                 / holiday_type (selection)      : DEL required, selection_keys: ['category', 'company', 'department', 'employee']
+hr_holidays  / hr.leave.allocation      / holiday_type (selection)      : DEL required, selection_keys: ['category', 'company', 'department', 'employee']
+hr_holidays  / hr.leave                 / linked_request_ids (one2many) : DEL relation: hr.leave
+hr_holidays  / hr.leave.allocation      / linked_request_ids (one2many) : DEL relation: hr.leave.allocation
+hr_holidays  / hr.leave                 / mode_company_id (many2one)    : DEL relation: res.company
+hr_holidays  / hr.leave.allocation      / mode_company_id (many2one)    : DEL relation: res.company
+hr_holidays  / hr.leave                 / multi_employee (boolean)      : DEL
+hr_holidays  / hr.leave.allocation      / multi_employee (boolean)      : DEL
+hr_holidays  / hr.leave                 / parent_id (many2one)          : DEL relation: hr.leave
+hr_holidays  / hr.leave.allocation      / parent_id (many2one)          : DEL relation: hr.leave.allocation
+hr_holidays  / hr.leave                 / employee_id (many2one)        : now required
+hr_holidays  / hr.leave.allocation      / employee_id (many2one)        : now required
+# DONE: pre-migration: split leaves, one for each employee
+
+hr_holidays  / hr.leave                 / report_note (text)            : DEL
+# NOTHING TO DO: deprecated (https://github.com/odoo/odoo/commit/ca34732081b1ce6c339dd941abb9696861d95878)
+
+hr_holidays  / hr.leave                 / request_hour_from (selection) : selection_keys is now 'False' ('['0', '0.5', '1', '1.5', '10', '10.5', '11', '11.5', '12', '12.5', '13', '13.5', '14', '14.5', '15', '15.5', '16', '16.5', '17', '17.5', '18', '18.5', '19', '19.5', '2', '2.5', '20', '20.5', '21', '21.5', '22', '22.5', '23', '23.5', '3', '3.5', '4', '4.5', '5', '5.5', '6', '6.5', '7', '7.5', '8', '8.5', '9', '9.5']')
+hr_holidays  / hr.leave                 / request_hour_from (selection) : type is now 'float' ('selection')
+hr_holidays  / hr.leave                 / request_hour_to (selection)   : selection_keys is now 'False' ('['0', '0.5', '1', '1.5', '10', '10.5', '11', '11.5', '12', '12.5', '13', '13.5', '14', '14.5', '15', '15.5', '16', '16.5', '17', '17.5', '18', '18.5', '19', '19.5', '2', '2.5', '20', '20.5', '21', '21.5', '22', '22.5', '23', '23.5', '3', '3.5', '4', '4.5', '5', '5.5', '6', '6.5', '7', '7.5', '8', '8.5', '9', '9.5']')
+hr_holidays  / hr.leave                 / request_hour_to (selection)   : type is now 'float' ('selection')
+# DONE: pre-migration: transform to float
+
+hr_holidays  / hr.leave                 / active (boolean)              : DEL
+hr_holidays  / hr.leave.allocation      / active (boolean)              : DEL
+hr_holidays  / hr.leave                 / state (selection)             : selection_keys added: [cancel], removed: [draft]
+hr_holidays  / hr.leave.allocation      / state (selection)             : selection_keys added: [validate1] (most likely nothing to do)
+# DONE: pre-migration: set state = 'cancel' if archived. Also, 'draft' set to 'confirm' for leaves
+
+hr_holidays  / hr.leave.accrual.level   / accrual_validity (boolean)    : NEW
+hr_holidays  / hr.leave.accrual.level   / accrual_validity_count (integer): NEW hasdefault: default
+hr_holidays  / hr.leave.accrual.level   / accrual_validity_type (selection): NEW required, selection_keys: ['day', 'month'], hasdefault: default
+# NOTHING TO DO: new functionality
+
+hr_holidays  / hr.leave.accrual.level   / cap_accrued_time_yearly (boolean): NEW
+hr_holidays  / hr.leave.accrual.level   / maximum_leave_yearly (float)  : NEW
+# NOTHING TO DO: new feature
+
+hr_holidays  / hr.leave.allocation      / accrual_plan_id (many2one)    : now a function
+# NOTHING TO DO
+
+hr_holidays  / hr.leave.allocation      / actual_lastcall (date)        : NEW
+hr_holidays  / hr.leave.allocation      / last_executed_carryover_date (date): NEW
+# NOTHING TO DO
+
+hr_holidays  / hr.leave.allocation      / carried_over_days_expiration_date (date): NEW
+hr_holidays  / hr.leave.allocation      / expiring_carryover_days (float): NEW
+# NOTHING TO DO: new functionality
+
+hr_holidays  / hr.leave.allocation      / is_name_custom (boolean)      : NEW
+hr_holidays  / hr.leave.allocation      / name (char)                   : is now stored
+hr_holidays  / hr.leave.allocation      / name (char)                   : not a function anymore
+hr_holidays  / hr.leave.allocation      / private_name (char)           : DEL
+# DONE: pre-migration: renamed private_name to name
+
+hr_holidays  / hr.leave.allocation      / number_of_hours_display (float): is now stored
+# NOTHING TO DO: let odoo compute it
+
+hr_holidays  / hr.leave.allocation      / second_approver_id (many2one) : NEW relation: hr.employee
+# NOTHING TO DO: new functionality
+
+hr_holidays  / hr.leave.allocation      / yearly_accrued_amount (float) : NEW
+# NOTHING TO DO
+
+hr_holidays  / hr.leave.type            / allocation_validation_type (selection): selection_keys added: [both, hr, manager, no_validation], removed: [no, officer]
+# DONE: pre-migration: officer -> hr, no -> no_validation
+
+hr_holidays  / hr.leave.type            / include_public_holidays_in_duration (boolean): NEW hasdefault: default
+# NOTHING TO DO: new feature
+
+hr_holidays  / hr.leave.type            / show_on_dashboard (boolean)   : NEW hasdefault: default
+# NOTHING TO DO: new feature
+
+---XML records in module 'hr_holidays'---
+NEW ir.actions.act_window: hr_holidays.action_hr_leave_allocation_generate_multi_wizard
+NEW ir.actions.act_window: hr_holidays.action_hr_leave_generate_multi_wizard
+NEW ir.actions.act_window: hr_holidays.action_hr_leave_report
+NEW ir.actions.act_window: hr_holidays.hr_leave_report_action
+DEL ir.actions.act_window: hr_holidays.act_hr_employee_holiday_type
+DEL ir.actions.act_window: hr_holidays.hr_leave_action_action_department
+NEW ir.model.access: hr_holidays.access_hr_leave_allocation_generate_multi_wizard
+NEW ir.model.access: hr_holidays.access_hr_leave_employee_type_report_manager
+NEW ir.model.access: hr_holidays.access_hr_leave_generate_multi_wizard
+DEL ir.model.access: hr_holidays.access_hr_leave_employee_type_report
+NEW ir.model.constraint: hr_holidays.constraint_hr_leave_accrual_level_valid_yearly_cap_value
+DEL ir.model.constraint: hr_holidays.constraint_hr_leave_allocation_type_value
+DEL ir.model.constraint: hr_holidays.constraint_hr_leave_type_value
+NEW ir.ui.menu: hr_holidays.menu_hr_holidays_balance
+NEW ir.ui.view: hr_holidays.hr_leave_allocation_generate_multi_wizard_view_form
+NEW ir.ui.view: hr_holidays.hr_leave_generate_multi_wizard_view_form
+NEW ir.ui.view: hr_holidays.hr_leave_view_search_report
+NEW ir.ui.view: hr_holidays.view_calendar_event_form_inherit
+DEL ir.ui.view: hr_holidays.hr_departure_wizard_view_form
+DEL ir.ui.view: hr_holidays.hr_leave_report_search_view
+NEW mail.activity.type: hr_holidays.mail_act_leave_allocation_second_approval (noupdate)
+NEW web_tour.tour: hr_holidays.hr_holidays_tour
+# NOTHING TO DO
+
+DEL mail.message.subtype: hr_holidays.mt_leave_home_working (noupdate)
+# DONE: post-migration: safely delete
