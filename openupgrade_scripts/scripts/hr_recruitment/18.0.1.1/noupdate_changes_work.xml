@@ -1,0 +1,41 @@
+<?xml version='1.0' encoding='utf-8'?>
+<odoo>
+  <template id="candidate_hired_template">
+Employee created: <a href="#" t-att-data-oe-id="candidate.employee_id.id" data-oe-model="hr.employee"><t t-esc="candidate.employee_id.name"/></a>
+  </template>
+  <record id="group_hr_recruitment_manager" model="res.groups">
+    <field name="implied_ids" eval="[(4, ref('group_hr_recruitment_user'))]"/>
+  </record>
+  <record id="group_hr_recruitment_user" model="res.groups">
+    <field name="implied_ids" eval="[(4, ref('group_hr_recruitment_interviewer'))]"/>
+  </record>
+  <record id="mt_department_new" model="mail.message.subtype">
+    <field name="parent_id"/>
+    <field name="default">False</field>
+  </record>
+  <record id="mt_job_new" model="mail.message.subtype">
+    <field name="description">Job Position created</field>
+  </record>
+  <record id="refuse_reason_1" model="hr.applicant.refuse.reason">
+    <field name="name">Does not fit the job requirements</field>
+    <field name="sequence">12</field>
+  </record>
+  <record id="refuse_reason_2" model="hr.applicant.refuse.reason">
+    <field name="name">Refused by applicant: job fit</field>
+    <field name="sequence">11</field>
+  </record>
+  <record id="refuse_reason_5" model="hr.applicant.refuse.reason">
+    <field name="name">Job already fulfilled</field>
+    <field name="sequence">13</field>
+  </record>
+  <record id="refuse_reason_6" model="hr.applicant.refuse.reason">
+    <field name="sequence">14</field>
+  </record>
+  <record id="refuse_reason_7" model="hr.applicant.refuse.reason">
+    <field name="sequence">15</field>
+  </record>
+  <record id="refuse_reason_8" model="hr.applicant.refuse.reason">
+    <field name="name">Refused by applicant: salary</field>
+    <field name="sequence">10</field>
+  </record>
+</odoo>
