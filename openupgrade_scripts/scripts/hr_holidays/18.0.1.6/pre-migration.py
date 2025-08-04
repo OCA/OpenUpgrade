@@ -28,15 +28,6 @@ def refill_hr_leave_request_hours(env):
         WHERE {old_request_hour_to} IS NOT NULL;
         """,
     )
-    openupgrade.logged_query(
-        env.cr,  # to avoid AttributeError: 'Float' object has no attribute 'ondelete'
-        """
-        DELETE FROM ir_model_fields_selection imfs
-        USING ir_model_fields imf
-        WHERE imfs.field_id = imf.id AND imf.model = 'hr.leave'
-        AND imf.name in ('request_hour_from', 'request_hour_to')
-        """,
-    )
 
 
 def update_states(env):
