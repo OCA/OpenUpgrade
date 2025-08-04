@@ -1,0 +1,11 @@
+---Models in module 'l10n_es_edi_verifactu_pos'---
+---Fields in module 'l10n_es_edi_verifactu_pos'---
+l10n_es_edi_verifactu_pos / l10n_es_edi_verifactu.document / pos_order_id (many2one)       : NEW relation: pos.order
+l10n_es_edi_verifactu_pos / pos.order                / l10n_es_edi_verifactu_document_ids (one2many): NEW relation: l10n_es_edi_verifactu.document
+l10n_es_edi_verifactu_pos / pos.order                / l10n_es_edi_verifactu_refund_reason (selection): NEW selection_keys: ['R1', 'R2', 'R3', 'R4', 'R5']
+l10n_es_edi_verifactu_pos / pos.order                / l10n_es_edi_verifactu_state (selection): NEW selection_keys: ['accepted', 'cancelled', 'registered_with_errors', 'rejected'], isfunction: function, stored
+---XML records in module 'l10n_es_edi_verifactu_pos'---
+NEW ir.model.access: l10n_es_edi_verifactu_pos.access_l10n_es_edi_verifactu_document
+NEW ir.ui.view: l10n_es_edi_verifactu_pos.view_pos_order_filter
+NEW ir.ui.view: l10n_es_edi_verifactu_pos.view_pos_order_form_inherit_l10n_es_pos_verifactu
+NEW ir.ui.view: l10n_es_edi_verifactu_pos.view_pos_order_tree
