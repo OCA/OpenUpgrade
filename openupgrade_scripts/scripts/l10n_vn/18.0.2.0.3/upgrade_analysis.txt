@@ -1,6 +1,7 @@
 ---Models in module 'l10n_vn'---
 ---Fields in module 'l10n_vn'---
 l10n_vn      / account.move             / l10n_vn_e_invoice_number (char): NEW
+l10n_vn      / res.partner.bank         / proxy_type (False)            : selection_keys added: [bakong_id_merchant, bakong_id_solo] (most likely nothing to do)
 ---XML records in module 'l10n_vn'---
 NEW account.report.column: l10n_vn.tax_report_amount_untaxed
 NEW account.report.expression: l10n_vn.account_tax_report_line_01_01_01_vn_tag_base

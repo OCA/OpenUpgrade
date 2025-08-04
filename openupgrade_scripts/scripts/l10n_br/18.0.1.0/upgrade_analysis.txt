@@ -5,6 +5,7 @@ l10n_br      / l10n_br.zip.range        / city_id (many2one)            : NEW re
 l10n_br      / l10n_br.zip.range        / end (char)                    : NEW required
 l10n_br      / l10n_br.zip.range        / start (char)                  : NEW required
 l10n_br      / res.city                 / l10n_br_zip_range_ids (one2many): NEW relation: l10n_br.zip.range
+l10n_br_pix  / res.partner.bank         / proxy_type (False)            : selection_keys added: [bakong_id_merchant, bakong_id_solo] (most likely nothing to do)
 ---XML records in module 'l10n_br'---
 NEW ir.model.access: l10n_br.access_l10n_br_zip_range_group_manager
 NEW ir.model.access: l10n_br.access_l10n_br_zip_range_group_user

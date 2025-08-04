@@ -1,0 +1,44 @@
+---Models in module 'l10n_es_edi_verifactu'---
+new model l10n_es_edi_verifactu.document
+---Fields in module 'l10n_es_edi_verifactu'---
+l10n_es_edi_verifactu / account.move             / l10n_es_edi_verifactu_clave_regimen (selection): NEW selection_keys: function, hasdefault: compute
+l10n_es_edi_verifactu / account.move             / l10n_es_edi_verifactu_document_ids (one2many): NEW relation: l10n_es_edi_verifactu.document
+l10n_es_edi_verifactu / account.move             / l10n_es_edi_verifactu_refund_reason (selection): NEW selection_keys: ['R1', 'R2', 'R3', 'R4', 'R5']
+l10n_es_edi_verifactu / account.move             / l10n_es_edi_verifactu_state (selection): NEW selection_keys: ['accepted', 'cancelled', 'registered_with_errors', 'rejected'], isfunction: function, stored
+l10n_es_edi_verifactu / account.move             / l10n_es_edi_verifactu_substituted_entry_id (many2one): NEW relation: account.move
+l10n_es_edi_verifactu / account.move             / l10n_es_edi_verifactu_substitution_move_ids (one2many): NEW relation: account.move
+l10n_es_edi_verifactu / account.tax              / l10n_es_applicability (selection): NEW selection_keys: ['01', '02', '03']
+l10n_es_edi_verifactu / certificate.certificate  / scope (False)                 : NEW selection_keys: ['facturae', 'general', 'sii', 'tbai', 'verifactu'], mode: modify
+l10n_es_edi_verifactu / l10n_es_edi_verifactu.document / chain_index (integer)         : NEW
+l10n_es_edi_verifactu / l10n_es_edi_verifactu.document / company_id (many2one)         : NEW relation: res.company, required
+l10n_es_edi_verifactu / l10n_es_edi_verifactu.document / document_type (selection)     : NEW required, selection_keys: ['cancellation', 'submission']
+l10n_es_edi_verifactu / l10n_es_edi_verifactu.document / errors (html)                 : NEW
+l10n_es_edi_verifactu / l10n_es_edi_verifactu.document / json_attachment_id (many2one) : NEW relation: ir.attachment
+l10n_es_edi_verifactu / l10n_es_edi_verifactu.document / move_id (many2one)            : NEW relation: account.move
+l10n_es_edi_verifactu / l10n_es_edi_verifactu.document / response_csv (char)           : NEW
+l10n_es_edi_verifactu / l10n_es_edi_verifactu.document / state (selection)             : NEW selection_keys: ['accepted', 'registered_with_errors', 'rejected']
+l10n_es_edi_verifactu / res.company              / l10n_es_edi_verifactu_certificate_ids (one2many): NEW relation: certificate.certificate
+l10n_es_edi_verifactu / res.company              / l10n_es_edi_verifactu_chain_sequence_id (many2one): NEW relation: ir.sequence
+l10n_es_edi_verifactu / res.company              / l10n_es_edi_verifactu_next_batch_time (datetime): NEW
+l10n_es_edi_verifactu / res.company              / l10n_es_edi_verifactu_required (boolean): NEW
+l10n_es_edi_verifactu / res.company              / l10n_es_edi_verifactu_special_vat_regime (selection): NEW selection_keys: ['reagyp', 'recargo', 'simplified']
+l10n_es_edi_verifactu / res.company              / l10n_es_edi_verifactu_test_environment (boolean): NEW hasdefault: default
+---XML records in module 'l10n_es_edi_verifactu'---
+NEW ir.actions.act_window: l10n_es_edi_verifactu.l10n_es_edi_verifactu_certificate_action
+NEW ir.cron: l10n_es_edi_verifactu.cron_verifactu_batch (noupdate)
+NEW ir.model.access: l10n_es_edi_verifactu.access_l10n_es_edi_verifactu_document_readonly
+NEW ir.ui.menu: l10n_es_edi_verifactu.menu_l10n_es_edi_verifactu_certificates
+NEW ir.ui.menu: l10n_es_edi_verifactu.menu_l10n_es_edi_verifactu_root
+NEW ir.ui.view: l10n_es_edi_verifactu.certificate_certificate_view_form
+NEW ir.ui.view: l10n_es_edi_verifactu.certificate_certificate_view_search
+NEW ir.ui.view: l10n_es_edi_verifactu.report_invoice_document
+NEW ir.ui.view: l10n_es_edi_verifactu.res_config_settings_view_form
+NEW ir.ui.view: l10n_es_edi_verifactu.view_account_invoice_filter
+NEW ir.ui.view: l10n_es_edi_verifactu.view_account_move_filter
+NEW ir.ui.view: l10n_es_edi_verifactu.view_account_move_reversal_inherit_l10n_es_edi_verifactu
+NEW ir.ui.view: l10n_es_edi_verifactu.view_company_form
+NEW ir.ui.view: l10n_es_edi_verifactu.view_invoice_tree
+NEW ir.ui.view: l10n_es_edi_verifactu.view_l10n_es_edi_verifactu_document_form
+NEW ir.ui.view: l10n_es_edi_verifactu.view_move_form_inherit_l10n_es_edi_verifactu
+NEW ir.ui.view: l10n_es_edi_verifactu.view_move_tree
+NEW ir.ui.view: l10n_es_edi_verifactu.view_tax_form_inherit_l10n_es_edi_verifactu
