@@ -1,0 +1,45 @@
+---Models in module 'survey'---
+---Fields in module 'survey'---
+survey       / survey.question          / is_time_customized (boolean)  : NEW
+survey       / survey.question          / question_type (selection)     : selection_keys added [scale]
+survey       / survey.question          / scale_max (integer)           : NEW hasdefault: default
+survey       / survey.question          / scale_max_label (char)        : NEW
+survey       / survey.question          / scale_mid_label (char)        : NEW
+survey       / survey.question          / scale_min (integer)           : NEW hasdefault: default
+survey       / survey.question          / scale_min_label (char)        : NEW
+survey       / survey.survey            / restrict_user_ids (many2many) : NEW relation: res.users
+survey       / survey.survey            / session_speed_rating_time_limit (integer): NEW
+survey       / survey.user_input.line   / answer_type (selection)       : selection_keys added [scale]
+survey       / survey.user_input.line   / value_scale (integer)         : NEW
+# NOTHING TO DO: new functionalities
+
+---XML records in module 'survey'---
+NEW ir.actions.server: survey.action_survey_print
+NEW ir.model.constraint: survey.constraint_survey_question_answer_value_not_empty
+NEW ir.model.constraint: survey.constraint_survey_question_is_time_limited_have_time_limit
+NEW ir.model.constraint: survey.constraint_survey_question_scale
+NEW ir.model.constraint: survey.constraint_survey_survey_session_speed_rating_has_time_limit
+NEW ir.rule: survey.survey_invite_survey_manager (noupdate)
+NEW ir.rule: survey.survey_invite_survey_user (noupdate)
+NEW ir.rule: survey.survey_question_answer_rule_survey_user (noupdate)
+NEW ir.rule: survey.survey_question_rule_survey_user (noupdate)
+NEW ir.rule: survey.survey_survey_rule_survey_user (noupdate)
+NEW ir.rule: survey.survey_user_input_line_rule_survey_user (noupdate)
+NEW ir.rule: survey.survey_user_input_rule_survey_user (noupdate)
+# NOTHING TO DO: handled by ORM
+
+DEL ir.rule: survey.survey_question_answer_rule_survey_user_cw (noupdate)
+DEL ir.rule: survey.survey_question_answer_rule_survey_user_read (noupdate)
+DEL ir.rule: survey.survey_question_rule_survey_user_cw (noupdate)
+DEL ir.rule: survey.survey_question_rule_survey_user_read (noupdate)
+DEL ir.rule: survey.survey_survey_rule_survey_user_cwu (noupdate)
+DEL ir.rule: survey.survey_survey_rule_survey_user_read (noupdate)
+DEL ir.rule: survey.survey_user_input_line_rule_survey_user_cw (noupdate)
+DEL ir.rule: survey.survey_user_input_line_rule_survey_user_read (noupdate)
+DEL ir.rule: survey.survey_user_input_rule_survey_user_cw (noupdate)
+DEL ir.rule: survey.survey_user_input_rule_survey_user_read (noupdate)
+# DONE: post-migration: safe delete noupdate rules
+
+NEW ir.ui.view: survey.question_scale
+NEW web_tour.tour: survey.survey_tour
+# NOTHING TO DO: handled by ORM
