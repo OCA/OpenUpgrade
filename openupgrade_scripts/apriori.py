@@ -63,6 +63,8 @@ merged_modules = {
     # odoo/enterprise
     # OCA/e-commerce
     "website_sale_product_attachment": "website_sale",
+    # OCA/hr-attendance
+    "hr_attendance_autoclose": "hr_attendance",
     # OCA/knowledge
     "document_page_group": "document_page_access_group",
     # OCA/l10n-france
