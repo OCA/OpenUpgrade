@@ -1,0 +1,68 @@
+---Models in module 'website_event'---
+model event.question (moved to event)
+model event.question.answer (moved to event)
+model event.registration.answer (moved to event)
+---Fields in module 'website_event'---
+website_event / event.event              / menu_register_cta (boolean)   : DEL
+website_event / event.type               / menu_register_cta (boolean)   : DEL
+# NOTHING TO DO: deprecated, see https://github.com/odoo/odoo/commit/9b1523a615b8288c89b169e774068f8d906b2c8c
+
+website_event / event.event              / website_visibility (selection): NEW required, selection_keys: ['link', 'logged_users', 'public'], hasdefault: default
+# NOTHING TO DO
+
+website_event / event.event              / general_question_ids (one2many): module is now 'event' ('website_event')
+website_event / event.event              / question_ids (one2many)       : module is now 'event' ('website_event')
+website_event / event.event              / specific_question_ids (one2many): module is now 'event' ('website_event')
+website_event / event.question           / _order                        : module is now 'event' ('website_event')
+website_event / event.question           / answer_ids (one2many)         : module is now 'event' ('website_event')
+website_event / event.question           / display_name (char)           : module is now 'event' ('website_event')
+website_event / event.question           / event_id (many2one)           : module is now 'event' ('website_event')
+website_event / event.question           / event_type_id (many2one)      : module is now 'event' ('website_event')
+website_event / event.question           / is_mandatory_answer (boolean) : module is now 'event' ('website_event')
+website_event / event.question           / once_per_order (boolean)      : module is now 'event' ('website_event')
+website_event / event.question           / question_type (selection)     : module is now 'event' ('website_event')
+website_event / event.question           / sequence (integer)            : module is now 'event' ('website_event')
+website_event / event.question           / title (char)                  : module is now 'event' ('website_event')
+website_event / event.question.answer    / _order                        : module is now 'event' ('website_event')
+website_event / event.question.answer    / display_name (char)           : module is now 'event' ('website_event')
+website_event / event.question.answer    / name (char)                   : module is now 'event' ('website_event')
+website_event / event.question.answer    / question_id (many2one)        : module is now 'event' ('website_event')
+website_event / event.question.answer    / sequence (integer)            : module is now 'event' ('website_event')
+website_event / event.registration       / registration_answer_choice_ids (one2many): module is now 'event' ('website_event')
+website_event / event.registration       / registration_answer_ids (one2many): module is now 'event' ('website_event')
+website_event / event.registration.answer / _order                        : module is now 'event' ('website_event')
+website_event / event.registration.answer / display_name (char)           : module is now 'event' ('website_event')
+website_event / event.registration.answer / event_id (many2one)           : module is now 'event' ('website_event')
+website_event / event.registration.answer / partner_id (many2one)         : module is now 'event' ('website_event')
+website_event / event.registration.answer / question_id (many2one)        : module is now 'event' ('website_event')
+website_event / event.registration.answer / question_type (selection)     : module is now 'event' ('website_event')
+website_event / event.registration.answer / registration_id (many2one)    : module is now 'event' ('website_event')
+website_event / event.registration.answer / value_answer_id (many2one)    : module is now 'event' ('website_event')
+website_event / event.registration.answer / value_text_box (text)         : module is now 'event' ('website_event')
+website_event / event.type               / question_ids (one2many)       : module is now 'event' ('website_event')
+# NOTHING TO DO
+
+---XML records in module 'website_event'---
+DEL ir.actions.act_window: website_event.action_event_registration_report [renamed to event module]
+DEL ir.model.access: website_event.access_event_question_answer_employee [renamed to event module]
+DEL ir.model.access: website_event.access_event_question_answer_registration [renamed to event module]
+DEL ir.model.access: website_event.access_event_registration_answer [renamed to event module]
+DEL ir.model.constraint: website_event.constraint_event_registration_answer_value_check [renamed to event module]
+# NOTHING TO DO
+
+NEW ir.filters: website_event.ir_filters_event_list_snippet_unfinished
+DEL ir.model.access: website_event.access_event_question_employee
+NEW ir.ui.view: website_event.event_confirmation_end_page_hook
+NEW ir.ui.view: website_event.event_description_dates
+NEW ir.ui.view: website_event.navbar_dropdown
+NEW ir.ui.view: website_event.opt_event_description_cover_hidden
+NEW ir.ui.view: website_event.opt_event_description_cover_top
+NEW ir.ui.view: website_event.registration_ticket_access
+NEW ir.ui.view: website_event.s_event_upcoming_snippet_preview_data
+DEL ir.ui.view: website_event.event_question_view_form
+DEL ir.ui.view: website_event.event_registration_answer_view_graph
+DEL ir.ui.view: website_event.event_registration_answer_view_pivot
+DEL ir.ui.view: website_event.event_registration_answer_view_search
+DEL ir.ui.view: website_event.event_registration_answer_view_tree
+NEW website.snippet.filter: website_event.website_snippet_filter_event_list_unfinished
+# NOTHING TO DO

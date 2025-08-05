@@ -53,16 +53,18 @@ event        / event.mail               / last_registration_id (many2one): NEW r
 
 ---XML records in module 'event'---
 NEW ir.actions.act_window: event.action_event_registration_report [renamed from website_event module]
-NEW ir.actions.client: event.event_action_install_kiosk_pwa
-NEW ir.actions.report: event.action_report_event_registration_badge_96x134
-NEW ir.actions.report: event.action_report_event_registration_badge_96x82
 NEW ir.model.access: event.access_event_question_answer_employee [renamed from website_event module]
 NEW ir.model.access: event.access_event_question_answer_registration [renamed from website_event module]
 NEW ir.model.access: event.access_event_question_answer_user [renamed from website_event module]
-NEW ir.model.access: event.access_event_question_manager
-NEW ir.model.access: event.access_event_question_user
 NEW ir.model.access: event.access_event_registration_answer [renamed from website_event module]
 NEW ir.model.constraint: event.constraint_event_registration_answer_value_check [renamed from website_event module]
+# DONE: pre-migration: rename xmlids
+
+NEW ir.actions.client: event.event_action_install_kiosk_pwa
+NEW ir.actions.report: event.action_report_event_registration_badge_96x134
+NEW ir.actions.report: event.action_report_event_registration_badge_96x82
+NEW ir.model.access: event.access_event_question_manager
+NEW ir.model.access: event.access_event_question_user
 NEW ir.ui.view: event.event_question_view_form
 NEW ir.ui.view: event.event_registration_answer_view_graph
 NEW ir.ui.view: event.event_registration_answer_view_pivot
