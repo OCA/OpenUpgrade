@@ -1,0 +1,24 @@
+---Models in module 'stock_picking_batch'---
+---Fields in module 'stock_picking_batch'---
+stock_picking_batch / stock.picking            / batch_sequence (integer)      : NEW
+# DONE: post-migration: Set batch_sequence for following the same order than in previous version
+
+stock_picking_batch / stock.picking.batch      / description (char)            : NEW
+stock_picking_batch / stock.picking.batch      / properties (properties)       : NEW hasdefault: compute
+stock_picking_batch / stock.picking.type       / batch_properties_definition (properties_definition): NEW
+stock_picking_batch / stock.picking.type       / wave_category_ids (many2many) : NEW relation: product.category
+stock_picking_batch / stock.picking.type       / wave_group_by_category (boolean): NEW
+stock_picking_batch / stock.picking.type       / wave_group_by_location (boolean): NEW
+stock_picking_batch / stock.picking.type       / wave_group_by_product (boolean): NEW
+stock_picking_batch / stock.picking.type       / wave_location_ids (many2many) : NEW relation: stock.location
+# NOTHING TO DO: New feature, does not change the current behavior
+
+---XML records in module 'stock_picking_batch'---
+NEW ir.actions.act_window: stock_picking_batch.action_prepare_wave
+NEW ir.actions.act_window: stock_picking_batch.action_prepare_wave_for_picking_type
+NEW ir.ui.menu: stock_picking_batch.menu_stock_jobs
+NEW ir.ui.view: stock_picking_batch.stock_picking_batch_calendar
+NEW ir.ui.view: stock_picking_batch.stock_picking_view_batch_tree_ref
+NEW ir.ui.view: stock_picking_batch.vpicktree
+DEL ir.ui.view: stock_picking_batch.vpicktree_inherit_stock_picking_batch
+# NOTHING TO DO: handled by ORM
