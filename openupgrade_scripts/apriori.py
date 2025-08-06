@@ -76,6 +76,8 @@ merged_modules = {
     # OCA/e-commerce
     "website_sale_attribute_filter_price": "website_sale",
     "website_sale_stock_available_display": "website_sale_stock",
+    # OCA/fleet
+    "fleet_vehicle_notebook": "fleet",
     # OCA/hr-attendance
     "hr_attendance_user_list": "hr_attendance",
     # OCA/l10n-germany
