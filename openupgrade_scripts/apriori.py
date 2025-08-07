@@ -78,6 +78,7 @@ merged_modules = {
     "website_sale_stock_available_display": "website_sale_stock",
     # OCA/fleet
     "fleet_vehicle_notebook": "fleet",
+    "fleet_vehicle_pivot_graph": "fleet",
     # OCA/hr-attendance
     "hr_attendance_user_list": "hr_attendance",
     # OCA/l10n-germany
