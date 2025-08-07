@@ -18,9 +18,9 @@ def mrp_document_to_product_document(env):
         env.cr,
         f"""
         INSERT INTO product_document
-        (ir_attachment_id, active, sequence, {link_column})
+        (ir_attachment_id, active, sequence, {link_column}, attached_on_mrp)
         SELECT
-        ir_attachment_id, active, 10-COALESCE(priority, '0')::int, id
+        ir_attachment_id, active, 10-COALESCE(priority, '0')::int, id, 'hidden'
         FROM mrp_document
         """,
     )
