@@ -4,7 +4,7 @@
 from openupgradelib import openupgrade, openupgrade_180
 
 
-def replace_period_lock_date(env):
+def handle_lock_dates(env):
     openupgrade.logged_query(
         env.cr,
         """
@@ -12,6 +12,22 @@ def replace_period_lock_date(env):
         SET sale_lock_date = period_lock_date, purchase_lock_date = period_lock_date
         WHERE period_lock_date IS NOT NULL""",
     )
+    env.cr.execute(
+        f"""
+        SELECT state
+        FROM {openupgrade.get_legacy_name("ir_module_module")}
+        WHERE name = 'account_lock'
+        """
+    )
+    account_lock_state = env.cr.fetchone()[0]
+    if account_lock_state == "installed":
+        openupgrade.logged_query(
+            env.cr,
+            """
+            UPDATE res_company
+            SET hard_lock_date = fiscalyear_lock_date
+            WHERE fiscalyear_lock_date IS NOT NULL""",
+        )
 
 
 def link_payments_to_moves(env):
@@ -138,7 +154,7 @@ def account_account_code_fields(env):
 
 @openupgrade.migrate()
 def migrate(env, version):
-    replace_period_lock_date(env)
+    handle_lock_dates(env)
     link_payments_to_moves(env)
     account_account_code_fields(env)
     openupgrade.m2o_to_x2m(

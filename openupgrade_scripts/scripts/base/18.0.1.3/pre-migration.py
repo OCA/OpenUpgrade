@@ -64,6 +64,13 @@ def _fix_company_layout_background(cr):
 
 @openupgrade.migrate(use_env=False)
 def migrate(cr, version):
+    openupgrade.logged_query(
+        cr,
+        f"""
+        CREATE TABLE {openupgrade.get_legacy_name("ir_module_module")
+            } AS (SELECT name, state FROM ir_module_module);
+        """,
+    )
     openupgrade.update_module_names(cr, renamed_modules.items())
     openupgrade.update_module_names(cr, merged_modules.items(), merge_modules=True)
     openupgrade.clean_transient_models(cr)
