@@ -85,6 +85,7 @@ merged_modules = {
     # OCA/l10n-spain
     "l10n_es_extra_data": "l10n_es",
     # OCA/manufacture
+    "mrp_production_byproduct_cost_share": "mrp_account",
     "mrp_subcontracting_resupply_link": "mrp_subcontracting_purchase",
     # OCA/pos
     "pos_invoicing": "point_of_sale",
