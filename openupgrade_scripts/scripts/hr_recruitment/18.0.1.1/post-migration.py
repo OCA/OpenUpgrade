@@ -1,4 +1,4 @@
-from openupgradelib import openupgrade, openupgrade_merge_records
+from openupgradelib import openupgrade
 
 from odoo import Command
 
@@ -29,7 +29,104 @@ def _fill_hr_candidate(env):
                user_id, company_id, id,
                create_date, write_date, create_uid, write_uid
         FROM hr_applicant
-        WHERE candidate_id IS NULL;
+        WHERE candidate_id IS NULL AND partner_id IS NULL;
+        """,
+    )
+    openupgrade.logged_query(
+        env.cr,
+        """
+        INSERT INTO hr_candidate (
+            partner_id, partner_name, email_from, email_cc, email_normalized,
+            partner_phone, partner_phone_sanitized, phone_sanitized,
+            employee_id, linkedin_profile, type_id, priority,
+            availability, color, message_bounce, active,
+            user_id, company_id, old_applicant_id,
+            create_date, write_date, create_uid, write_uid
+        )
+        SELECT
+            partner_id,
+            partner_name,
+            email_from, email_cc, email_normalized,
+            partner_phone, partner_phone_sanitized,
+            phone_sanitized, emp_id, linkedin_profile,
+            type_id, priority,
+            availability, color, message_bounce, TRUE as active,
+            user_id, company_id, id as old_applicant_id,
+            create_date, write_date, create_uid, write_uid
+        FROM (
+            SELECT
+                partner_id,
+                FIRST_VALUE(CASE WHEN partner_name IS NOT NULL THEN partner_name END)
+                    OVER (PARTITION BY partner_id, company_id ORDER BY create_date DESC
+                    ) AS partner_name,
+                FIRST_VALUE(CASE WHEN email_from IS NOT NULL THEN email_from END)
+                    OVER (PARTITION BY partner_id, company_id ORDER BY create_date DESC
+                    ) AS email_from,
+                FIRST_VALUE(CASE WHEN email_cc IS NOT NULL THEN email_cc END)
+                    OVER (PARTITION BY partner_id, company_id ORDER BY create_date DESC
+                    ) AS email_cc,
+                FIRST_VALUE(
+                    CASE WHEN email_normalized IS NOT NULL THEN email_normalized END)
+                    OVER (PARTITION BY partner_id, company_id ORDER BY create_date DESC
+                    ) AS email_normalized,
+                FIRST_VALUE(
+                    CASE WHEN COALESCE(partner_mobile, partner_phone) IS NOT NULL
+                    THEN COALESCE(partner_mobile, partner_phone) END)
+                    OVER (PARTITION BY partner_id, company_id ORDER BY create_date DESC
+                    ) AS partner_phone,
+                FIRST_VALUE(CASE WHEN COALESCE(
+                        partner_mobile_sanitized, partner_phone_sanitized) IS NOT NULL
+                        THEN COALESCE(partner_mobile_sanitized, partner_phone_sanitized
+                        ) END)
+                    OVER (PARTITION BY partner_id, company_id ORDER BY create_date DESC
+                    ) AS partner_phone_sanitized,
+                FIRST_VALUE(
+                    CASE WHEN phone_sanitized IS NOT NULL THEN phone_sanitized END)
+                    OVER (PARTITION BY partner_id, company_id ORDER BY create_date DESC
+                    ) AS phone_sanitized,
+                FIRST_VALUE(CASE WHEN emp_id IS NOT NULL THEN emp_id END)
+                    OVER (PARTITION BY partner_id, company_id ORDER BY create_date DESC
+                    ) AS emp_id,
+                FIRST_VALUE(
+                    CASE WHEN linkedin_profile IS NOT NULL THEN linkedin_profile END)
+                    OVER (PARTITION BY partner_id, company_id ORDER BY create_date DESC
+                    ) AS linkedin_profile,
+                FIRST_VALUE(CASE WHEN type_id IS NOT NULL THEN type_id END)
+                    OVER (PARTITION BY partner_id, company_id ORDER BY create_date DESC
+                    ) AS type_id,
+                FIRST_VALUE(CASE WHEN priority IS NOT NULL THEN priority END)
+                    OVER (PARTITION BY partner_id, company_id ORDER BY create_date DESC
+                    ) AS priority,
+                MAX(CASE WHEN availability IS NOT NULL THEN availability END)
+                    OVER (PARTITION BY partner_id, company_id) AS availability,
+                FIRST_VALUE(CASE WHEN color IS NOT NULL THEN color END)
+                    OVER (PARTITION BY partner_id, company_id ORDER BY create_date DESC
+                    ) AS color,
+                FIRST_VALUE(
+                        CASE WHEN message_bounce IS NOT NULL THEN message_bounce END)
+                    OVER (PARTITION BY partner_id, company_id ORDER BY create_date DESC
+                    ) AS message_bounce,
+                FIRST_VALUE(CASE WHEN user_id IS NOT NULL THEN user_id END)
+                    OVER (PARTITION BY partner_id, company_id ORDER BY create_date DESC
+                    ) AS user_id,
+                company_id,
+                id,
+                MIN(CASE WHEN create_date IS NOT NULL THEN create_date END)
+                    OVER (PARTITION BY partner_id, company_id) AS create_date,
+                MAX(CASE WHEN write_date IS NOT NULL THEN write_date END)
+                    OVER (PARTITION BY partner_id, company_id) AS write_date,
+                FIRST_VALUE(CASE WHEN create_uid IS NOT NULL THEN create_uid END)
+                    OVER (PARTITION BY partner_id, company_id ORDER BY create_date DESC
+                    ) AS create_uid,
+                FIRST_VALUE(CASE WHEN write_uid IS NOT NULL THEN write_uid END)
+                    OVER (PARTITION BY partner_id, company_id ORDER BY create_date DESC
+                    ) AS write_uid,
+                ROW_NUMBER() OVER (
+                    PARTITION BY partner_id, company_id ORDER BY create_date DESC) AS rn
+            FROM hr_applicant
+            WHERE candidate_id IS NULL AND partner_id IS NOT NULL
+        ) ranked
+        WHERE rn = 1;
         """,
     )
     # Update hr_applicant.candidate_id using helper old_applicant_id
@@ -40,6 +137,17 @@ def _fill_hr_candidate(env):
         SET candidate_id = hc.id
         FROM hr_candidate hc
         WHERE ha.id = hc.old_applicant_id
+        """,
+    )
+    openupgrade.logged_query(
+        env.cr,
+        """
+        UPDATE hr_applicant ha
+        SET candidate_id = hc.id
+        FROM hr_candidate hc
+        WHERE ha.candidate_id IS NULL AND ha.partner_id = hc.partner_id
+            AND (ha.company_id = hc.company_id
+                OR (ha.company_id IS NULL AND hc.company_id IS NULL))
         """,
     )
     # remove helper
@@ -73,47 +181,6 @@ def _fill_hr_candidate(env):
         WHERE ce.applicant_id = ha.id
         """,
     )
-    # unify candidates
-    env.cr.execute(
-        """
-        SELECT array_agg(id order by create_date desc), partner_id, company_id
-        FROM hr_candidate
-        WHERE partner_id IS NOT NULL
-        GROUP BY partner_id, company_id
-        HAVING COUNT(id) > 1
-        """,
-    )
-    all_candidates = [x[0] for x in env.cr.fetchall()]
-    for candidates in all_candidates:
-        candidate_ids = env["hr.candidate"].browse(candidates)
-        openupgrade_merge_records.merge_records(
-            env,
-            "hr.candidate",
-            candidate_ids[1:].ids,
-            candidate_ids[0].id,
-            {
-                "partner_id": "first_not_null",
-                "partner_name": "first_not_null",
-                "email_from": "first_not_null",
-                "email_normalized": "first_not_null",
-                "email_cc": "first_not_null",
-                "partner_phone": "first_not_null",
-                "partner_phone_sanitized": "first_not_null",
-                "phone_sanitized": "first_not_null",
-                "employee_id": "first_not_null",
-                "linkedin_profile": "first_not_null",
-                "type_id": "first_not_null",
-                "priority": "first_not_null",
-                "color": "first_not_null",
-                "user_id": "first_not_null",
-                "company_id": "first_not_null",
-                "categ_ids": "merge",
-                "availability": "max",
-                "write_date": "max",
-                "create_date": "min",
-                "openupgrade_other_fields": "preserve",
-            },
-        )
     candidates = env["hr.candidate"].search([])
     for candidate in candidates:
         if len(candidate.applicant_ids) > 1:
