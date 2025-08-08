@@ -5,4 +5,4 @@ from openupgradelib import openupgrade
 
 @openupgrade.migrate()
 def migrate(env, version):
-    openupgrade.load_data(env, "mass_mailing", "18.0.2.7/noupdate_changes_work.xml")
+    openupgrade.load_data(env, "mass_mailing", "18.0.2.7/noupdate_changes.xml")
