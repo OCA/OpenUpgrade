@@ -88,23 +88,11 @@ def _set_inter_company_locations(env):
             inter_company_location.sudo().write({"active": False})
 
 
-def fill_stock_picking_type_default_locations(env):
-    picking_types = env["stock.picking.type"].search(
-        [("default_location_src_id", "=", False)]
-    )
-    picking_types._compute_default_location_src_id()
-    picking_types = env["stock.picking.type"].search(
-        [("default_location_dest_id", "=", False)]
-    )
-    picking_types._compute_default_location_dest_id()
-
-
 @openupgrade.migrate()
 def migrate(env, version):
     convert_company_dependent(env)
     _create_default_new_types_for_all_warehouses(env)
     _set_inter_company_locations(env)
-    fill_stock_picking_type_default_locations(env)
     openupgrade.load_data(env, "stock", "18.0.1.1/noupdate_changes.xml")
     openupgrade.delete_records_safely_by_xml_id(
         env, ["stock.property_stock_customer", "stock.property_stock_supplier"]
