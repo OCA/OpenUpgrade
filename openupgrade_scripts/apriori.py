@@ -94,8 +94,9 @@ renamed_models = {
 merged_models = {
     # odoo
     "google.calendar.credentials": "res.users.settings",
-    "l10n_es_edi_facturae.certificate": "certificate.certificate",
     "l10n_es_edi.certificate": "certificate.certificate",
+    "l10n_es_edi_facturae.certificate": "certificate.certificate",
+    "l10n_es_edi_verifactu.certificate": "certificate.certificate",
     "microsoft.calendar.credentials": "res.users.settings",
     "mrp.document": "product.document",
     # OCA/...
