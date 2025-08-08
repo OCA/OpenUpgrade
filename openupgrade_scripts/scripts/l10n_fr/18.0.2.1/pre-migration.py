@@ -14,7 +14,7 @@ def migrate(env, version):
         WHERE module = 'l10n_fr' AND model IN (
             'account.account.tag', 'account.report', 'account.report.column',
             'account.report.expression', 'account.report.line',
-            'ir.config_parameter', 'res_bank')
+            'ir.config_parameter', 'res.bank')
         """,
     )
     openupgrade.logged_query(
