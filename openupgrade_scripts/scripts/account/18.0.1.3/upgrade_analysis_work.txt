@@ -228,6 +228,7 @@ account      / res.company              / period_lock_date (date)       : DEL
 account      / res.company              / purchase_lock_date (date)     : NEW
 account      / res.company              / sale_lock_date (date)         : NEW
 # DONE: post-migration: filled sale_lock_date and purchase_lock_date with period_lock_date
+# DONE: post-migration: filled hard_lock_date with fiscalyear_lock_date (if account_lock was installed)
 
 account      / res.currency             / fiscal_country_codes (char)   : not a function anymore
 NOTHING TO DO (still store=False)
