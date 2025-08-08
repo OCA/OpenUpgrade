@@ -98,6 +98,9 @@ DEL ir.model.access: point_of_sale.access_pos_combo_line_user
 DEL ir.model.access: point_of_sale.access_pos_combo_manager
 DEL ir.model.access: point_of_sale.access_pos_combo_user
 NEW ir.model.constraint: point_of_sale.constraint_pos_note_name_unique
+NEW ir.model.constraint: point_of_sale.constraint_pos_order_line_uuid_unique
+NEW ir.model.constraint: point_of_sale.constraint_pos_order_uuid_unique
+NEW ir.model.constraint: point_of_sale.constraint_pos_payment_uuid_unique
 NEW ir.rule: point_of_sale.rule_invoice_line_pos_user (noupdate)
 NEW ir.ui.menu: point_of_sale.menu_pos_note_model
 NEW ir.ui.menu: point_of_sale.menu_product_combo

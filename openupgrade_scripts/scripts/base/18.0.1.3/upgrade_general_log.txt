@@ -10,6 +10,7 @@ obsolete model ir.property [module base]
 obsolete model l10n_es_edi.certificate (merged to certificate.certificate) [module l10n_es_edi_sii]
 obsolete model l10n_es_edi_facturae_adm_centers.ac_role_type (renamed to l10n_es_edi_facturae.ac_role_type) [module l10n_es_edi_facturae]
 obsolete model l10n_es_edi_facturae.certificate (merged to certificate.certificate) [module l10n_es_edi_facturae]
+obsolete model l10n_es_edi_verifactu.certificate (merged to certificate.certificate) [module l10n_es_edi_verifactu]
 obsolete model mail.notification.web.push (renamed to mail.push) [module mail]
 obsolete model mail.partner.device (renamed to mail.push.device) [module mail]
 obsolete model mail.shortcode (renamed to mail.canned.response) [module mail]
@@ -70,7 +71,6 @@ new model l10n_ar.partner.tax [module l10n_ar_withholding]
 new model l10n_br.zip.range [module l10n_br]
 new model l10n_es_edi_facturae.ac_role_type (renamed from l10n_es_edi_facturae_adm_centers.ac_role_type) [module l10n_es_edi_facturae]
 new model l10n_es_edi_tbai.document [module l10n_es_edi_tbai]
-new model l10n_es_edi_verifactu.document [module l10n_es_edi_verifactu]
 new model l10n_fr.fec.export.wizard [module l10n_fr_account]
 new model l10n_gr_edi.document [module l10n_gr_edi]
 new model l10n_gr_edi.preferred_classification [module l10n_gr_edi]
@@ -120,14 +120,14 @@ new model website.custom_blocked_third_party_domains [module website]
 new model website.page.properties [module website]
 new model website.page.properties.base [module website]
 ---Fields in module 'general'---
-# 13396 fields matched,
-# Direct match: 13296
+# 13449 fields matched,
+# Direct match: 13349
 # Found in other module with different type: 0
 # Found in other module: 92
 # Found with different type: 8
 # In obsolete models: 34
-# New columns: 1702
-# Not matched: 825
+# New columns: 1649
+# Not matched: 844
 ---XML records in module 'general'---
 ERROR: module not in list of installed modules:
 ---Models in module 'pos_mercury'---
