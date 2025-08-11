@@ -1,0 +1,170 @@
+---Models in module 'hr_recruitment'---
+new model candidate.send.mail [transient]
+# NOTHING TO DO: New feature
+
+new model hr.candidate
+# DONE: post-migration: create new record from hr.applicant
+
+new model hr.job.platform
+# NOTHING TO DO: New feature (See https://github.com/odoo/odoo/commit/0f68d1506358c81a1d369a62e240086a177d5076)
+
+---Fields in module 'hr_recruitment'---
+hr_recruitment / calendar.event           / candidate_id (many2one)       : NEW relation: hr.candidate, hasdefault: compute
+# DONE: pre-migration: pre-created and filled from applicant_id
+
+hr_recruitment / hr.applicant             / applicant_notes (html)        : NEW
+hr_recruitment / hr.applicant             / description (html)            : DEL
+# DONE: pre-migration: renamed field
+
+hr_recruitment / hr.applicant             / refuse_date (datetime)        : NEW
+# DONE: pre-migration: if refused, filled with write_date
+
+hr_recruitment / hr.applicant             / name (char)                   : DEL required
+# NOTHING TO DO: deprecated
+
+hr_recruitment / hr.applicant             / candidate_id (many2one)       : NEW relation: hr.candidate, required
+hr_recruitment / hr.candidate             / applicant_ids (one2many)      : NEW relation: hr.applicant
+# DONE: post-migration: Unify them by partner_id
+
+hr_recruitment / hr.applicant             / availability (date)           : not stored anymore
+hr_recruitment / hr.applicant             / availability (date)           : now related
+hr_recruitment / hr.candidate             / availability (date)           : NEW
+hr_recruitment / hr.applicant             / color (integer)               : not stored anymore
+hr_recruitment / hr.applicant             / color (integer)               : now related
+hr_recruitment / hr.candidate             / color (integer)               : NEW hasdefault: default
+hr_recruitment / hr.applicant             / email_from (char)             : not a function anymore
+hr_recruitment / hr.applicant             / email_from (char)             : not stored anymore
+hr_recruitment / hr.applicant             / email_from (char)             : now related
+hr_recruitment / hr.candidate             / email_from (char)             : NEW isfunction: function, stored
+hr_recruitment / hr.applicant             / email_normalized (char)       : not a function anymore
+hr_recruitment / hr.applicant             / email_normalized (char)       : not stored anymore
+hr_recruitment / hr.applicant             / email_normalized (char)       : now related
+hr_recruitment / hr.candidate             / email_normalized (char)       : NEW isfunction: function, stored
+hr_recruitment / hr.applicant             / emp_id (many2one)             : DEL relation: hr.employee
+hr_recruitment / hr.candidate             / employee_id (many2one)        : NEW relation: hr.employee
+hr_recruitment / hr.applicant             / linkedin_profile (char)       : not stored anymore
+hr_recruitment / hr.applicant             / linkedin_profile (char)       : now related
+hr_recruitment / hr.candidate             / linkedin_profile (char)       : NEW
+hr_recruitment / hr.applicant             / message_bounce (integer)      : DEL
+hr_recruitment / hr.candidate             / message_bounce (integer)      : NEW hasdefault: default
+hr_recruitment / hr.applicant             / partner_id (many2one)         : not stored anymore
+hr_recruitment / hr.applicant             / partner_id (many2one)         : now related
+hr_recruitment / hr.candidate             / partner_id (many2one)         : NEW relation: res.partner
+hr_recruitment / hr.applicant             / partner_name (char)           : not stored anymore
+hr_recruitment / hr.applicant             / partner_name (char)           : now a function
+hr_recruitment / hr.candidate             / partner_name (char)           : NEW
+hr_recruitment / hr.applicant             / partner_phone (char)          : not a function anymore
+hr_recruitment / hr.applicant             / partner_phone (char)          : not stored anymore
+hr_recruitment / hr.applicant             / partner_phone (char)          : now related
+hr_recruitment / hr.candidate             / partner_phone (char)          : NEW isfunction: function, stored
+hr_recruitment / hr.applicant             / partner_phone_sanitized (char): not a function anymore
+hr_recruitment / hr.applicant             / partner_phone_sanitized (char): not stored anymore
+hr_recruitment / hr.applicant             / partner_phone_sanitized (char): now related
+hr_recruitment / hr.candidate             / partner_phone_sanitized (char): NEW isfunction: function, stored
+hr_recruitment / hr.applicant             / phone_mobile_search (char)    : DEL stored: False
+hr_recruitment / hr.candidate             / phone_mobile_search (char)    : NEW stored: False
+hr_recruitment / hr.applicant             / phone_sanitized (char)        : DEL
+hr_recruitment / hr.candidate             / phone_sanitized (char)        : NEW isfunction: function, stored
+hr_recruitment / hr.applicant             / type_id (many2one)            : not stored anymore
+hr_recruitment / hr.applicant             / type_id (many2one)            : now related
+hr_recruitment / hr.candidate             / type_id (many2one)            : NEW relation: hr.recruitment.degree
+hr_recruitment / hr.candidate             / categ_ids (many2many)         : NEW relation: hr.applicant.category
+hr_recruitment / hr.candidate             / email_cc (char)               : NEW
+hr_recruitment / hr.candidate             / company_id (many2one)         : NEW relation: res.company, hasdefault: default
+hr_recruitment / hr.candidate             / priority (selection)          : NEW selection_keys: ['0', '1', '2', '3'], isfunction: function, stored
+hr_recruitment / hr.candidate             / user_id (many2one)            : NEW relation: res.users, hasdefault: default
+# DONE: post-migration: Populate the table from hr_applicant.
+
+hr_recruitment / hr.applicant             / partner_mobile (char)         : DEL
+hr_recruitment / hr.applicant             / partner_mobile_sanitized (char): DEL
+# DONE: post-migration: use in partner_phone & partner_phone_sanitized
+
+hr_recruitment / hr.candidate             / active (boolean)              : NEW hasdefault: default
+# DONE: post-migration: put to inactive if not active applicants
+
+hr_recruitment / hr.candidate             / attachment_ids (one2many)     : NEW relation: ir.attachment
+# DONE: post-migration: moved attachments
+
+hr_recruitment / hr.candidate             / activity_ids (one2many)       : NEW relation: mail.activity
+hr_recruitment / hr.candidate             / candidate_properties (properties): NEW hasdefault: compute
+hr_recruitment / hr.candidate             / meeting_ids (one2many)        : NEW relation: calendar.event
+hr_recruitment / hr.candidate             / message_follower_ids (one2many): NEW relation: mail.followers
+hr_recruitment / hr.candidate             / message_ids (one2many)        : NEW relation: mail.message
+hr_recruitment / hr.candidate             / message_main_attachment_id (many2one): NEW relation: ir.attachment
+hr_recruitment / hr.candidate             / rating_ids (one2many)         : NEW relation: rating.rating
+hr_recruitment / hr.candidate             / website_message_ids (one2many): NEW relation: mail.message
+# NOTHING TO DO?
+
+hr_recruitment / hr.employee              / applicant_id (one2many)       : DEL relation: hr.applicant
+hr_recruitment / hr.employee              / candidate_id (one2many)       : NEW relation: hr.candidate
+# NOTHING TO DO: one2many (handled by ORM)
+
+hr_recruitment / hr.job                   / date_from (date)              : NEW
+hr_recruitment / hr.job                   / date_to (date)                : NEW
+hr_recruitment / hr.job                   / industry_id (many2one)        : NEW relation: res.partner.industry
+# NOTHING TO DO: new functionality
+
+hr_recruitment / hr.job                   / job_properties (properties)   : NEW hasdefault: compute
+# NOTHING TO DO: new feature
+
+hr           / hr.job                   / no_of_hired_employee (integer): now a function
+hr_recruitment / hr.job                   / no_of_hired_employee (integer): previously in module hr
+# NOTHING TO DO: Moved from hr in https://github.com/odoo/odoo/commit/9e199cf7c624208229ad1e1c2d127fbbdaa3aa71
+
+hr_recruitment / hr.job.platform          / email (char)                  : NEW required
+hr_recruitment / hr.job.platform          / name (char)                   : NEW required
+hr_recruitment / hr.job.platform          / regex (char)                  : NEW
+hr_recruitment / res.company              / candidate_properties_definition (properties_definition): NEW
+hr_recruitment / res.company              / job_properties_definition (properties_definition): NEW
+# NOTHING TO DO: new features
+
+---XML records in module 'hr_recruitment'---
+NEW hr.job.platform: hr_recruitment.indeed_job_platform (noupdate)
+NEW hr.job.platform: hr_recruitment.jobsdb_job_platform (noupdate)
+NEW hr.job.platform: hr_recruitment.linkedin_job_platform (noupdate)
+NEW ir.actions.act_window: hr_recruitment.action_hr_candidate
+NEW ir.actions.act_window: hr_recruitment.action_hr_job_platforms
+NEW ir.actions.act_window: hr_recruitment.mail_activity_plan_action_config_hr_applicant
+NEW ir.actions.server: hr_recruitment.action_candidate_send_mail
+NEW ir.actions.server: hr_recruitment.action_load_demo_data
+NEW ir.model.access: hr_recruitment.access_candidate_send_mail
+NEW ir.model.access: hr_recruitment.access_candidate_send_mail_interviewer
+NEW ir.model.access: hr_recruitment.access_hr_candidate_interviewer
+NEW ir.model.access: hr_recruitment.access_hr_candidate_user
+NEW ir.model.access: hr_recruitment.access_hr_job_platform
+NEW ir.model.access: hr_recruitment.access_hr_job_user
+NEW ir.model.access: hr_recruitment.access_mail_activity_plan_hr_recruitment_manager
+NEW ir.model.access: hr_recruitment.access_mail_activity_plan_template_hr_recruitment_manager
+NEW ir.model.constraint: hr_recruitment.constraint_hr_job_platform_email_uniq
+NEW ir.rule: hr_recruitment.hr_candidate_comp_rule (noupdate)
+NEW ir.rule: hr_recruitment.hr_candidate_interviewer_rule (noupdate)
+NEW ir.rule: hr_recruitment.hr_candidate_user_rule (noupdate)
+NEW ir.rule: hr_recruitment.mail_plan_rule_group_hr_recruitment_manager_applicant (noupdate)
+NEW ir.rule: hr_recruitment.mail_plan_templates_rule_group_hr_recruitment_manager_applicant (noupdate)
+NEW ir.ui.menu: hr_recruitment.hr_recruitment_menu_config_activity_plan
+NEW ir.ui.menu: hr_recruitment.menu_hr_candidate
+NEW ir.ui.menu: hr_recruitment.menu_hr_job_boards
+NEW ir.ui.menu: hr_recruitment.menu_hr_recruitment_emails
+NEW ir.ui.view: hr_recruitment.candidate_send_mail_view_form
+NEW ir.ui.view: hr_recruitment.hr_candidate_view_calendar
+NEW ir.ui.view: hr_recruitment.hr_candidate_view_form
+NEW ir.ui.view: hr_recruitment.hr_candidate_view_kanban
+NEW ir.ui.view: hr_recruitment.hr_candidate_view_search
+NEW ir.ui.view: hr_recruitment.hr_candidate_view_tree
+NEW ir.ui.view: hr_recruitment.hr_job_platform_form
+NEW ir.ui.view: hr_recruitment.hr_job_platform_tree
+DEL ir.ui.view: hr_recruitment.hr_recruitment_source_kanban
+NEW web_tour.tour: hr_recruitment.hr_recruitment_tour
+# NOTHING TO DO
+
+DEL hr.applicant.refuse.reason: hr_recruitment.refuse_reason_3 (noupdate)
+DEL hr.applicant.refuse.reason: hr_recruitment.refuse_reason_4 (noupdate)
+# DONE: pre-migration: merged into refuse_reason_2
+
+DEL calendar.event.type: hr_recruitment.categ_meet_interview (noupdate)
+DEL ir.config_parameter: hr_recruitment.hr_recruitment_blacklisted_emails (noupdate)
+# DONE: post-migration: safely removed
+
+NEW ir.ui.view: hr_recruitment.candidate_hired_template (noupdate)
+DEL ir.ui.view: hr_recruitment.applicant_hired_template (noupdate)
+# DONE: pre-migration: renamed xmlids
