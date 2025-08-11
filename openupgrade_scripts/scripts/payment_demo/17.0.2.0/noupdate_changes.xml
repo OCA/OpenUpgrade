@@ -4,7 +4,9 @@
     <field name="allow_express_checkout">True</field>
     <field name="express_checkout_form_view_id" ref="express_checkout_form"/>
     <field name="is_published">True</field>
+    <!-- OpenUpgrade - Commented on purpose, loaded in post-migration.py on broader scope
     <field name="payment_method_ids" eval="[Command.set([                          ref('payment_demo.payment_method_demo'),                      ])]"/>
+    -->
     <field name="state">test</field>
   </record>
 </odoo>

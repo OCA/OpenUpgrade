@@ -3,7 +3,17 @@
 
 from openupgradelib import openupgrade
 
+from odoo import Command
+
 
 @openupgrade.migrate()
 def migrate(env, version):
-    openupgrade.load_data(env, "payment_custom", "17.0.2.0/noupdate_changes.xml")
+    # Instead of loading noupdate_changes we apply method_ids on all payment.provider
+    # with custom code (since in multi-company scenario, they can get duplicated)
+    env["payment.provider"].search([("code", "=", "custom")]).write(
+        {
+            "payment_method_ids": [
+                Command.set([env.ref("payment_custom.payment_method_wire_transfer").id])
+            ],
+        }
+    )
