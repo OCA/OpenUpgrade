@@ -181,6 +181,28 @@ def _fill_hr_candidate(env):
         WHERE ce.applicant_id = ha.id
         """,
     )
+    # duplicate attachments
+    env.cr.execute(
+        """
+        SELECT column_name
+        FROM information_schema.columns
+        WHERE table_name = 'ir_attachment'
+        """
+    )
+    attachment_columns = [
+        x[0] for x in env.cr.fetchall() if x[0] not in ["id", "res_model", "res_id"]
+    ]
+    select_columns = ",".join(["ia." + x for x in attachment_columns])
+    insert_columns = ",".join(attachment_columns)
+    openupgrade.logged_query(
+        env.cr,
+        f"""
+        INSERT INTO ir_attachment (res_model,res_id,{insert_columns})
+        SELECT 'hr.candidate',ha.candidate_id,{select_columns}
+        FROM ir_attachment ia
+        JOIN hr_applicant ha ON ia.res_model = 'hr.applicant' AND ia.res_id = ha.id
+        """,
+    )
     candidates = env["hr.candidate"].search([])
     for candidate in candidates:
         if len(candidate.applicant_ids) > 1:
@@ -188,16 +210,6 @@ def _fill_hr_candidate(env):
         if all(not applicant.active for applicant in candidate.applicant_ids):
             # archive inactive candidates if all applicants are inactive
             candidate.active = False
-    # update attachments
-    openupgrade.logged_query(
-        env.cr,
-        """
-        UPDATE ir_attachment ia
-        SET res_model = 'hr.candidate', res_id = ha.candidate_id
-        FROM hr_applicant ha
-        WHERE ia.res_model = 'hr.applicant' AND ia.res_id = ha.id
-        """,
-    )
 
 
 def _normalize_res_groups_implied(env):
