@@ -1,0 +1,45 @@
+---Models in module 'hr_recruitment_survey'---
+---Fields in module 'hr_recruitment_survey'---
+hr_recruitment_survey / survey.survey            / hr_job_ids (one2many)         : NEW relation: hr.job
+# NOTHING TO DO: one2many (handled by ORM)
+
+hr_recruitment_survey / survey.survey            / survey_type (False)           : NEW selection_keys: ['assessment', 'custom', 'live_session', 'recruitment', 'survey'], mode: modify
+# DONE: post-migration: Set `recruitment` in surveys where it is set in a recruitment
+
+---XML records in module 'hr_recruitment_survey'---
+NEW ir.actions.act_window: hr_recruitment_survey.survey_survey_action_recruitment
+NEW ir.model.access: hr_recruitment_survey.access_survey_invite_recruitment_interviewer
+NEW ir.model.access: hr_recruitment_survey.access_survey_invite_recruitment_user
+NEW ir.model.access: hr_recruitment_survey.access_survey_question_answer_recruitment_manager
+NEW ir.model.access: hr_recruitment_survey.access_survey_question_recruitment_interviewer
+NEW ir.model.access: hr_recruitment_survey.access_survey_question_recruitment_manager
+NEW ir.model.access: hr_recruitment_survey.access_survey_survey_recruitment_interviewer
+NEW ir.model.access: hr_recruitment_survey.access_survey_survey_recruitment_manager
+NEW ir.model.access: hr_recruitment_survey.access_survey_user_input_line_recruitment_interviewer
+NEW ir.model.access: hr_recruitment_survey.access_survey_user_input_line_recruitment_manager
+NEW ir.model.access: hr_recruitment_survey.access_survey_user_input_line_recruitment_user
+NEW ir.model.access: hr_recruitment_survey.access_survey_user_input_recruitment_interviewer
+NEW ir.model.access: hr_recruitment_survey.access_survey_user_input_recruitment_manager
+NEW ir.model.access: hr_recruitment_survey.access_survey_user_input_recruitment_user
+NEW ir.rule: hr_recruitment_survey.survey_invite_recruitment_interviewer (noupdate)
+NEW ir.rule: hr_recruitment_survey.survey_invite_recruitment_manager (noupdate)
+NEW ir.rule: hr_recruitment_survey.survey_invite_recruitment_user (noupdate)
+NEW ir.rule: hr_recruitment_survey.survey_question_answer_rule_recruitment_manager (noupdate)
+NEW ir.rule: hr_recruitment_survey.survey_question_recruitment_interviewer (noupdate)
+NEW ir.rule: hr_recruitment_survey.survey_question_rule_recruitment_manager (noupdate)
+NEW ir.rule: hr_recruitment_survey.survey_survey_recruitment_interviewer (noupdate)
+NEW ir.rule: hr_recruitment_survey.survey_survey_rule_recruitment_manager (noupdate)
+NEW ir.rule: hr_recruitment_survey.survey_user_input_line_rule_recruitment_interviewer (noupdate)
+NEW ir.rule: hr_recruitment_survey.survey_user_input_line_rule_recruitment_manager (noupdate)
+NEW ir.rule: hr_recruitment_survey.survey_user_input_line_rule_recruitment_user (noupdate)
+NEW ir.rule: hr_recruitment_survey.survey_user_input_rule_recruitment_manager (noupdate)
+NEW ir.rule: hr_recruitment_survey.survey_user_input_rule_recruitment_user (noupdate)
+# NOTHING TO DO: Specific survey access rules for recruitment, see https://github.com/odoo/odoo/commit/027a2a66d63225abbfaef425448188007f573ac5
+# The group_hr_recruitment_manager can manage surveys with full CRUD permissions.
+# The group_hr_recruitment_user can read and invite participants to surveys.
+
+NEW ir.ui.menu: hr_recruitment_survey.menu_hr_recruitment_config_surveys
+NEW ir.ui.view: hr_recruitment_survey.hr_recruitment_survey_button_form_view
+NEW ir.ui.view: hr_recruitment_survey.survey_survey_view_form
+NEW ir.ui.view: hr_recruitment_survey.survey_survey_view_kanban
+# NOTHING TO DO: New menu and views specific to creating surveys
