@@ -20,6 +20,29 @@ field_renames = [
 ]
 
 
+def create_imd_entry_for_config_param(env):
+    """
+    If database has config parameter mail.restrict.template.rendering already
+    set, create an ir.model.data entry for it to avoid trying to create it a
+    second time
+    """
+    param = env["ir.config_parameter"].search(
+        [("key", "=", "mail.restrict.template.rendering")]
+    )
+    if param and not env.ref(
+        "mail.restrict_template_rendering", raise_if_not_found=False
+    ):
+        env["ir.model.data"].create(
+            {
+                "name": "restrict_template_rendering",
+                "module": "mail",
+                "model": param._name,
+                "res_id": param.id,
+                "noupdate": True,
+            }
+        )
+
+
 @openupgrade.migrate()
 def migrate(env, version):
     openupgrade.rename_models(env.cr, model_renames)
@@ -34,3 +57,4 @@ def migrate(env, version):
             )
         ],
     )
+    create_imd_entry_for_config_param(env)
