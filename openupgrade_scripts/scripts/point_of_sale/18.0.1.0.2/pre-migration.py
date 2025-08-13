@@ -65,18 +65,10 @@ def migrate(env, version):
     openupgrade.add_columns(
         env,
         [
-            ("sale.order.line", "technical_price_unit", "float"),
             ("pos.order", "amount_difference", "float", None, "pos_order"),
             ("pos.order.line", "price_type", "selection", "original", "pos_order_line"),
             ("pos.printer", "company_id", "many2one", None, "pos_printer"),
         ],
-    )
-    openupgrade.logged_query(
-        env.cr,
-        """
-        UPDATE sale_order_line
-        SET technical_price_unit = price_unit
-        """,
     )
     openupgrade.logged_query(
         env.cr,
