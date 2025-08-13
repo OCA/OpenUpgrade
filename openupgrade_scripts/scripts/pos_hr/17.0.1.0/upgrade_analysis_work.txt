@@ -1,0 +1,12 @@
+---Models in module 'pos_hr'---
+---Fields in module 'pos_hr'---
+pos_hr       / pos.config               / advanced_employee_ids (many2many): NEW relation: hr.employee
+pos_hr       / pos.config               / basic_employee_ids (many2many): NEW relation: hr.employee
+pos_hr       / pos.config               / employee_ids (many2many)      : DEL relation: hr.employee
+# DONE: pre-migration: rename table from hr_employee_pos_config_rel to pos_hr_basic_employee_hr_employee
+# Fill basic_employee_ids with records from employee_ids to preserve the old behavior.
+# The new field advanced_employee_ids is used for employees who do not have a user_id but can be considered managers.
+# However, this feature must be set manually by the user if necessary,
+# see https://github.com/odoo/odoo/commit/a3d530c846ffd0692ffe386ed9c2fc2991cdbb14
+
+---XML records in module 'pos_hr'---
