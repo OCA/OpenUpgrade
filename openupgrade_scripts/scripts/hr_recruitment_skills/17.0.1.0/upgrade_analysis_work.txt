@@ -1,0 +1,11 @@
+---Models in module 'hr_recruitment_skills'---
+---Fields in module 'hr_recruitment_skills'---
+---XML records in module 'hr_recruitment_skills'---
+DEL ir.model.access: hr_recruitment_skills.access_hr_applicant_skill
+# NOTHING TO DO: Handled by ORM
+
+NEW ir.rule: hr_recruitment_skills.hr_applicant_skill_officer_rule (noupdate)
+# NOTHING TO DO: new security rules added in https://github.com/odoo/odoo/commit/3faad0a7a057c9e620e3b6f58d191f64bece6fb8
+
+NEW ir.ui.menu: hr_recruitment_skills.hr_recruitment_skill_type_menu
+# NOTHING TO DO: Handled by ORM
