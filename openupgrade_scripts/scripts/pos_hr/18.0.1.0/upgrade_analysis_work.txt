@@ -1,0 +1,25 @@
+---Models in module 'pos_hr'---
+new model report.pos_hr.multi_employee_sales_report [abstract]
+new model report.pos_hr.single_employee_sales_report [abstract]
+# NOTHING TO DO: new feature added in https://github.com/odoo/odoo/commit/5193e458ac0dc165757fa0f3fc17796376ad1b3b
+
+---Fields in module 'pos_hr'---
+pos_hr       / account.bank.statement.line / employee_id (many2one)        : NEW relation: hr.employee
+# DONE: post-migration: Fill this field based on the employee related to the user who created the record.
+# https://github.com/odoo/odoo/blob/ceb4791a89e95080b56590baa9625ac085e2e7be/addons/pos_hr/static/src/overrides/components/navbar/cash_move_popup/cash_move_popup.js#L8
+
+pos_hr       / pos.payment              / employee_id (many2one)        : NEW relation: hr.employee, isrelated: related, stored
+# DONE: pre-migration: pre-created column and filled in post-migration
+
+pos_hr       / pos.session              / employee_id (many2one)        : NEW relation: hr.employee
+# DONE: post-migration: Fill this field based on the user who opened the session.
+# Note: For open sessions, this field is set every time an employee logs in to the POS.
+# see https://github.com/odoo/odoo/blob/ceb4791a89e95080b56590baa9625ac085e2e7be/addons/pos_hr/static/src/overrides/models/pos_store.js#L61-L63
+
+---XML records in module 'pos_hr'---
+NEW ir.actions.report: pos_hr.multi_employee_sales_report_action
+NEW ir.ui.view: pos_hr.multi_employee_sales_report
+NEW ir.ui.view: pos_hr.single_employee_sales_report
+NEW ir.ui.view: pos_hr.view_pos_daily_sales_reports_wizard
+NEW ir.ui.view: pos_hr.view_pos_payment_tree_inherit
+# NOTHING TO DO: new feature added in https://github.com/odoo/odoo/commit/5193e458ac0dc165757fa0f3fc17796376ad1b3b
