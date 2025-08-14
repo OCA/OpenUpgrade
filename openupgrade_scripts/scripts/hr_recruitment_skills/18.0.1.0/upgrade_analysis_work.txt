@@ -1,0 +1,48 @@
+---Models in module 'hr_recruitment_skills'---
+obsolete model hr.applicant.skill (renamed to hr.candidate.skill)
+new model hr.candidate.skill (renamed from hr.applicant.skill)
+# DONE: pre-migration: rename model from hr.applicant.skill
+# DONE: post-migration: Populate the table from hr_applicant_skill.
+
+---Fields in module 'hr_recruitment_skills'---
+hr_recruitment_skills / hr.applicant             / applicant_skill_ids (one2many): DEL relation: hr.applicant.skill
+# NOTHING TO DO: one2many (handled by ORM)
+
+hr_recruitment_skills / hr.applicant             / skill_ids (many2many)         : not a function anymore
+hr_recruitment_skills / hr.applicant             / skill_ids (many2many)         : not stored anymore
+hr_recruitment_skills / hr.applicant             / skill_ids (many2many)         : now related
+hr_recruitment_skills / hr.applicant             / skill_ids (many2many)         : table is now 'False' ('hr_applicant_hr_skill_rel')
+# NOTHING TO DO: this field is related to hr.candidate
+
+hr_recruitment_skills / hr.applicant.skill       / applicant_id (many2one)       : DEL relation: hr.applicant, required
+hr_recruitment_skills / hr.candidate.skill       / candidate_id (many2one)       : NEW relation: hr.candidate, required
+# DONE: post-migration: Populate the table from hr_applicant_skill.
+
+hr_recruitment_skills / hr.candidate             / candidate_skill_ids (one2many): NEW relation: hr.candidate.skill
+# NOTHING TO DO: one2many (handled by ORM)
+
+hr_recruitment_skills / hr.candidate             / skill_ids (many2many)         : NEW relation: hr.skill, isfunction: function, stored
+# DONE: post-migration: Populate the table from hr_applicant_hr_skill_rel.
+
+hr_recruitment_skills / hr.job                   / skill_ids (many2many)         : NEW relation: hr.skill
+# NOTHING TO DO: New feature, this field must be empty, and the user can fill it in when they need to use the new action `Search Matching Applicants`
+
+---XML records in module 'hr_recruitment_skills'---
+NEW ir.actions.server: hr_recruitment_skills.action_applicant_search_applicant
+# NOTHING TO DO: New feature
+
+NEW ir.model.access: hr_recruitment_skills.access_hr_candidate_skill_interviewer
+DEL ir.model.access: hr_recruitment_skills.access_hr_applicant_skill_interviewer
+# NOTHING TO DO: handled by ORM
+
+NEW ir.model.constraint: hr_recruitment_skills.constraint_hr_candidate_skill__unique_skill
+# NOTHING TO DO: Let ORM create it.
+
+DEL ir.model.constraint: hr_recruitment_skills.constraint_hr_applicant_skill__unique_skill
+# DONE: pre-migration: safely delete
+
+NEW ir.ui.view: hr_recruitment_skills.hr_candidate_view_form
+NEW ir.ui.view: hr_recruitment_skills.hr_candidate_view_search
+NEW ir.ui.view: hr_recruitment_skills.hr_candidate_view_tree
+NEW ir.ui.view: hr_recruitment_skills.hr_job_form_inherit_hr_recruitment_skills
+# NOTHING TO DO: New feature
