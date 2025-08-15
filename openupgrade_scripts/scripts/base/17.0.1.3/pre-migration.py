@@ -45,6 +45,32 @@ _column_renames = {
 }
 
 
+def _handle_l10n_de_mis_reports_xmlids(cr):
+    """Before executing the merged modules, we need to rename some XML-IDs with the same
+    name of l10n_de_skr03_mis_reports/l10n_de_skr04_mis_reports into
+    l10n_de_mis_reports.
+    """
+    if not openupgrade.is_module_installed(
+        cr, "l10n_de_skr03_mis_reports"
+    ) and not openupgrade.is_module_installed(cr, "l10n_de_skr04_mis_reports"):
+        return
+    _xmlids_renames = []
+    # fmt: off
+    bs_names = ["anlagevermoegen", "immaterielle", "schutzrechte", "konzessionen", "firmenwert", "geleistetet_anzahlungen", "total_immaterielle", "grundstueck", "maschinen", "ausstattung", "anlagen_im_bau", "total_sachanlagen", "anteile", "ausleihungen", "beteiligungen", "ausleihungen_beteiligung", "wertpapiere_av", "sonstige_ausleihungen", "total_finanzanlagen", "total_anlagevermoegen", "umlaufvermoegen", "i_vorraete", "roh_hilfs_betriebsstoffe", "unfertige_leistungen", "fertige_erzeugnisse", "anzahlungen", "total_vorraete", "ii_forderungen", "forderungen_ll", "forderungen_unternehmen", "forderungen_beteiligungen", "total_forderungen", "iii_wertpapiere", "wertpapiere_uv_anteile", "wertpapiere_uv_sonstige", "total_wertpapiere_uv", "liquide_mittel", "total_umlaufvermoegen", "rechnungsabgrenzung_aktiva", "aktive_latente_steuern", "fehlbetrag", "aktivseite", "eigenkapital", "gezeichnetes_kapital", "variables_kapital", "gewinnruecklage", "ruecklage_gesetzlich", "ruecklage_eigene_anteile", "ruecklage_satzung", "ruecklage_andere_gewinne", "gewinn_des_jahres", "total_gewinnruecklage", "gewinn_verlustvortrag", "jahresgewinn_verlust", "sopo_mit_ruecklage", "total_eigenkapital", "rueckstellungen", "rueckstellungen_pensionen", "rueckstellungen_steuern", "rueckstellungen_sonstige", "total_rueckstellungen", "verbindlichkeiten", "verbindlichkeiten_anleihen", "verbindlichkeiten_bank", "verbindlichkeiten_ll", "verbindlichkeiten_wechsel", "verbindlichkeiten_sonstige", "total_verbindlichkeiten", "rechnungsabgrenzung_passiva", "passive_latente_steuern", "passivseite"]  # noqa: E501
+    pl_names = ["betriebliche_erloese", "umsatzerloese", "bestandsveraenderungen", "eigenleistungen", "sonstige_ertraege", "total_erloese", "betriebsaufwand", "materialaufwand", "materialaufwand_a", "materialaufwand_b", "personalaufwand", "personalaufwand_a", "personalaufwand_b", "abschreibungen", "abschreibungen_a", "abschreibungen_b", "sonstige_aufwendungen", "total_aufwendungen", "total_betriebsergebnis", "ertraege_beteiligungen", "ertraege_wertpapiere", "zinsertraege", "zinsaufwendungen", "ergebnis_gewoehnliche", "ao_ergebnis", "ao_ergebnis_erloese", "ao_ergebnis_aufwendungen", "total_ao_ergebnis", "steuern", "steuern_ertrag", "sonstige_steuern", "gewinn_verlust", "gewinnvortrag_vj", "entnahme_kapitalruecklage", "entnahme_gewinnruecklage", "einstellung_ruecklage", "bilanzgewinn"]  # noqa: E501
+    # fmt: on
+    for coa in ("skr03", "skr04"):
+        for report in ("mis_report_bs", "mis_report_pl"):
+            for name in [""] + bs_names + pl_names:
+                _xmlids_renames.append(
+                    (
+                        f"l10n_de_{coa}_mis_reports.{report}{'_' if name else ''}{name}",  # noqa: E501
+                        f"l10n_de_mis_reports.{report}_{coa}{'_' if name else ''}{name}",  # noqa: E501
+                    )
+                )
+    openupgrade.rename_xmlids(cr, _xmlids_renames)
+
+
 def _fill_ir_server_object_lines_into_action_server(cr):
     openupgrade.logged_query(
         cr,
@@ -236,6 +262,7 @@ def migrate(cr, version):
             "when migrating your database."
         )
     openupgrade.update_module_names(cr, renamed_modules.items())
+    _handle_l10n_de_mis_reports_xmlids(cr)
     openupgrade.update_module_names(cr, merged_modules.items(), merge_modules=True)
     openupgrade.clean_transient_models(cr)
     openupgrade.rename_xmlids(cr, _xmlids_renames)
