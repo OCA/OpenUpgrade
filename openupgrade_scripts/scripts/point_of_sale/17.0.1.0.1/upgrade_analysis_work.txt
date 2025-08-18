@@ -45,7 +45,7 @@ point_of_sale / pos.order                / config_id (many2one)          : is no
 # DONE: pre-migration: it's a related field, let's fill it session_id.config_id
 
 point_of_sale / pos.order                / last_order_preparation_change (char): NEW
-# NOTHING TO DO: new feature
+# DONE: pre-migration: renamed from multiprint_resume (pos_restaurant)
 
 point_of_sale / pos.order                / shipping_date (date)          : NEW
 point_of_sale / pos.order                / to_ship (boolean)             : DEL
