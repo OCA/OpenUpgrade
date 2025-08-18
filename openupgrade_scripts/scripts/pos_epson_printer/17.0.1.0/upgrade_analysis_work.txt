@@ -1,0 +1,9 @@
+---Models in module 'pos_epson_printer'---
+---Fields in module 'pos_epson_printer'---
+pos_epson_printer / restaurant.printer       / epson_printer_ip (char)       : previously in module pos_epson_printer_restaurant
+pos_epson_printer / restaurant.printer       / printer_type (False)          : previously in module pos_epson_printer_restaurant
+# NOTHING TO DO: fields moved from pos_epson_printer_restaurant module, which depends on pos_epson_printer, so these fields are available
+
+---XML records in module 'pos_epson_printer'---
+NEW ir.ui.view: pos_epson_printer.view_pos_printer_form
+# NOTHING TO DO: Handled by ORM
