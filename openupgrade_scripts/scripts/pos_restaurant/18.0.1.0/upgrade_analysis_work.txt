@@ -1,0 +1,34 @@
+---Models in module 'pos_restaurant'---
+---Fields in module 'pos_restaurant'---
+pos_restaurant / pos.config               / iface_orderline_notes (boolean): DEL
+# NOTHING TO DO: Odoo enables by default the possibility to add a note into order lines without an additional setting
+# see https://github.com/odoo/odoo/commit/f47b9a27e50266899e73b43a71c31621e57e8c6c
+
+pos_restaurant / pos.config               / module_pos_restaurant (False) : DEL mode: modify
+# NOTHING TO DO: this field is present in the point_of_sale module.
+# Odoo removed the default value of True, so when creating a new pos.config,
+# enabling restaurant features must be an explicit user setting, without altering existing data.
+
+pos_restaurant / pos.config               / takeaway (boolean)            : NEW
+pos_restaurant / pos.config               / takeaway_fp_id (many2one)     : NEW relation: account.fiscal.position
+pos_restaurant / pos.order                / takeaway (boolean)            : NEW hasdefault: default
+# DONE: pre-migration: Moved from pos_self_order and renamed these fields
+# see https://github.com/odoo/odoo/commit/1395065fe1283db957a99305bccc742483999485
+
+pos_restaurant / pos.order.line           / note (char)                   : module is now 'point_of_sale' ('pos_restaurant')
+# NOTHING TO DO: field moved in commit https://github.com/odoo/odoo/commit/1b079fdc18bbede882ac8e68b81ca0516344aba6
+
+pos_restaurant / restaurant.floor         / floor_background_image (binary): NEW attachment: True
+# NOTHING TO DO: New feature added in https://github.com/odoo/odoo/commit/b42b0f8b541a13621b671b0b7e57812ef11fc1b2
+
+pos_restaurant / restaurant.table         / name (char)                   : DEL required
+pos_restaurant / restaurant.table         / table_number (integer)        : NEW required, hasdefault: default
+# DONE: post-migration: convert char to integer where possible, otherwise generate a table number by floor_id
+# see https://github.com/odoo/odoo/commit/e96cbbcc9656089da21afe57c16970fdd0621d1c
+
+pos_restaurant / restaurant.table         / parent_id (many2one)          : NEW relation: restaurant.table
+# NOTHING TO DO: new feature to merge tables, introduced in commit https://github.com/odoo/odoo/commit/fbd632a9a6a8a68618f0445c96e2c2746ffc907d
+
+---XML records in module 'pos_restaurant'---
+DEL pos.config: pos_restaurant.pos_config_main_restaurant (noupdate)
+# DONE: post-migration: safely delete
