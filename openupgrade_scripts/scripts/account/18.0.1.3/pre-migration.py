@@ -134,7 +134,7 @@ def adapt_account_move_sending_data(env):
             '{author_user_id}', sending_data::jsonb->'sp_user_id')
         WHERE sending_data IS NOT NULL AND sending_data::jsonb ? 'sp_user_id'""",
     )
-    # send_mail: True -> 'sending_methods': {"email"}:
+    # send_mail: True -> 'sending_methods': ["email"]:
     openupgrade.logged_query(
         env.cr,
         """
