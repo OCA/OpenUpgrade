@@ -10,6 +10,7 @@ _table_renames = [
 ]
 
 _field_renames = [
+    ("pos.order", "pos_order", "multiprint_resume", "last_order_preparation_change"),
     ("pos.order.line", "pos_order_line", "mp_skip", "skip_change"),
 ]
 
