@@ -62,6 +62,7 @@ merged_modules = {
     "website_sale_product_configurator": "website_sale",
     # odoo/enterprise
     # OCA/account-invoicing
+    "account_invoice_mass_sending": "account",
     "account_invoice_supplierinfo_update_discount": "account_invoice_supplierinfo_update",  # noqa: E501
     # OCA/e-commerce
     "website_sale_product_attachment": "website_sale",
