@@ -1,0 +1,67 @@
+---Models in module 'fleet'---
+new model fleet.vehicle.send.mail [transient]
+# NOTHING TO DO
+---Fields in module 'fleet'---
+fleet        / fleet.vehicle            / power_unit (selection)        : NEW required, selection_keys: ['horsepower', 'power'], hasdefault: default
+fleet        / fleet.vehicle            / vehicle_range (integer)       : NEW
+fleet        / fleet.vehicle.model      / activity_ids (one2many)       : NEW relation: mail.activity
+fleet        / fleet.vehicle.model      / message_follower_ids (one2many): NEW relation: mail.followers
+fleet        / fleet.vehicle.model      / message_ids (one2many)        : NEW relation: mail.message
+fleet        / fleet.vehicle.model      / power_unit (selection)        : NEW required, selection_keys: ['horsepower', 'power'], hasdefault: default
+fleet        / fleet.vehicle.model      / vehicle_range (integer)       : NEW
+# DONE: post-migration: set power_unit to horsepower (default is power) if horsepower is > 0 and power = 0.
+Other fields are new with no consequence on existing data
+
+---XML records in module 'fleet'---
+DEL fleet.vehicle.model: fleet.model_a1
+DEL fleet.vehicle.model: fleet.model_a3
+DEL fleet.vehicle.model: fleet.model_a4
+DEL fleet.vehicle.model: fleet.model_a5
+DEL fleet.vehicle.model: fleet.model_a6
+DEL fleet.vehicle.model: fleet.model_a7
+DEL fleet.vehicle.model: fleet.model_a8
+DEL fleet.vehicle.model: fleet.model_agila
+DEL fleet.vehicle.model: fleet.model_ampera
+DEL fleet.vehicle.model: fleet.model_antara
+DEL fleet.vehicle.model: fleet.model_astra
+DEL fleet.vehicle.model: fleet.model_astragtc
+DEL fleet.vehicle.model: fleet.model_classa
+DEL fleet.vehicle.model: fleet.model_classb
+DEL fleet.vehicle.model: fleet.model_classc
+DEL fleet.vehicle.model: fleet.model_classcl
+DEL fleet.vehicle.model: fleet.model_classcls
+DEL fleet.vehicle.model: fleet.model_classe
+DEL fleet.vehicle.model: fleet.model_classgl
+DEL fleet.vehicle.model: fleet.model_classglk
+DEL fleet.vehicle.model: fleet.model_classm
+DEL fleet.vehicle.model: fleet.model_classr
+DEL fleet.vehicle.model: fleet.model_classs
+DEL fleet.vehicle.model: fleet.model_classslk
+DEL fleet.vehicle.model: fleet.model_classsls
+DEL fleet.vehicle.model: fleet.model_combotour
+DEL fleet.vehicle.model: fleet.model_corsa
+DEL fleet.vehicle.model: fleet.model_insignia
+DEL fleet.vehicle.model: fleet.model_meriva
+DEL fleet.vehicle.model: fleet.model_mokka
+DEL fleet.vehicle.model: fleet.model_q3
+DEL fleet.vehicle.model: fleet.model_q5
+DEL fleet.vehicle.model: fleet.model_q7
+DEL fleet.vehicle.model: fleet.model_serie1
+DEL fleet.vehicle.model: fleet.model_serie3
+DEL fleet.vehicle.model: fleet.model_serie5
+DEL fleet.vehicle.model: fleet.model_serie6
+DEL fleet.vehicle.model: fleet.model_serie7
+DEL fleet.vehicle.model: fleet.model_seriehybrid
+DEL fleet.vehicle.model: fleet.model_seriem
+DEL fleet.vehicle.model: fleet.model_seriex
+DEL fleet.vehicle.model: fleet.model_seriez4
+DEL fleet.vehicle.model: fleet.model_tt
+DEL fleet.vehicle.model: fleet.model_zafira
+DEL fleet.vehicle.model: fleet.model_zafiratourer
+# DONE: post-migration: keep fleet.vehicle.model records, XML-ID deleted
+
+NEW ir.actions.server: fleet.action_fleet_vehicle_send_mail
+NEW ir.model.access: fleet.access_fleet_vehicle_send_mail
+NEW ir.ui.view: fleet.fleet_vehicle_send_mail_view_form
+NEW ir.ui.view: fleet.fleet_vehicle_state_view_form
+# NOTHING TO DO
