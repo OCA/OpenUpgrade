@@ -1,7 +1,7 @@
 new model purchase.order.group
 purchase_requisition / purchase.order           / purchase_group_id (many2one)  : NEW relation: purchase.order.group
 purchase_requisition / purchase.order.group     / order_ids (one2many)          : NEW relation: purchase.order
-# DONE: post-migration: group purchases by their requisition if it has the deleted type "purchase_requisition.type_multi"
+# DONE: post-migration: group purchases by their requisition if there's more than one PO per requisition
 
 new model purchase.requisition.alternative.warning [transient]
 new model purchase.requisition.create.alternative [transient]
