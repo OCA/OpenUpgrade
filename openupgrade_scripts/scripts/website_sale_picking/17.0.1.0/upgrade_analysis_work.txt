@@ -1,0 +1,12 @@
+---Models in module 'website_sale_picking'---
+---Fields in module 'website_sale_picking'---
+---XML records in module 'website_sale_picking'---
+NEW ir.ui.view: website_sale_picking.payment_method_form
+DEL ir.ui.view: website_sale_picking.checkout_payment
+# DONE: pre-migration: XML-ID renamed
+
+NEW payment.method: website_sale_picking.payment_method_pay_on_site
+# NOTHING TO DO: New record used to set in payment.provider payment_provider_onsite
+
+payment.provider: website_sale_picking.payment_provider_onsite (noupdate switched)
+# DONE: pre-migration: Switch noupdate flag
