@@ -1,10 +1,12 @@
 # Copyright Odoo Community Association (OCA)
 # License AGPL-3.0 or later (http://www.gnu.org/licenses/agpl).
 
+from odoo import api
 
 from odoo.addons.base.models.ir_module import Module
 
 
+@api.model
 def update_list(self):
     """
     Mark auto_install modules as to install if all their dependencies are some kind of
