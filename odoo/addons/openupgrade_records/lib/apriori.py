@@ -166,6 +166,20 @@ merged_modules = {
     'muk_dms_view': 'dms',
 }
 
+# Deleted modules
+deleted_modules = [
+    # odoo
+    "hw_posbox_upgrade",
+    "l10n_be_hr_payroll",
+    "l10n_be_hr_payroll_account",
+    "l10n_be_hr_payroll_fleet",
+    "l10n_fr_hr_payroll",
+    "l10n_in_hr_payroll",
+    "l10n_in_schedule6",
+    "website_hr",
+    # OCA/...
+]
+
 # only used here for openupgrade_records analysis:
 renamed_models = {
     # Odoo
