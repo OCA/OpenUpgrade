@@ -107,6 +107,18 @@ merged_modules = {
     'l10n_br_zip_correios': 'l10n_br_zip',
 }
 
+# Deleted modules
+deleted_modules = [
+    # odoo
+    "anonymization",
+    "l10n_be_intrastat",
+    "l10n_be_intrastat_2019",
+    "pos_data_drinks",
+    "report_intrastat",
+    "website_forum_doc",
+    # OCA/...
+]
+
 # only used here for openupgrade_records analysis:
 renamed_models = {
     # Odoo
