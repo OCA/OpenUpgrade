@@ -120,15 +120,21 @@ new model website.custom_blocked_third_party_domains [module website]
 new model website.page.properties [module website]
 new model website.page.properties.base [module website]
 ---Fields in module 'general'---
-# 13449 fields matched,
+# 13450 fields matched,
 # Direct match: 13349
 # Found in other module with different type: 0
-# Found in other module: 92
+# Found in other module: 93
 # Found with different type: 8
 # In obsolete models: 34
-# New columns: 1651
+# New columns: 1650
 # Not matched: 845
 ---XML records in module 'general'---
+ERROR: module not in list of installed modules:
+---Models in module 'account_debit_note_sequence'---
+---Fields in module 'account_debit_note_sequence'---
+account_debit_note_sequence / account.journal          / debit_sequence (boolean)      : module is now 'account_debit_note' ('account_debit_note_sequence')
+---XML records in module 'account_debit_note_sequence'---
+DEL ir.ui.view: account_debit_note_sequence.view_account_journal_form_inherit_debit_note
 ERROR: module not in list of installed modules:
 ---Models in module 'pos_mercury'---
 obsolete model pos_mercury.configuration
