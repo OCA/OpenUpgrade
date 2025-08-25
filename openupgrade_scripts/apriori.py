@@ -60,6 +60,8 @@ merged_modules = {
     "sale_product_configurator": "sale",
     "stock_landed_costs_company": "stock_landed_costs",
     "website_sale_product_configurator": "website_sale",
+    "spreadsheet_dashboard_purchase": "spreadsheet_dashboard",
+    "spreadsheet_dashboard_purchase_stock": "spreadsheet_dashboard",
     # odoo/enterprise
     # OCA/account-invoicing
     "account_invoice_mass_sending": "account",
