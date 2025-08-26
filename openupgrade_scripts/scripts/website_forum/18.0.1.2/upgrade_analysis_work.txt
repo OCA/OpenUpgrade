@@ -1,0 +1,17 @@
+---Models in module 'website_forum'---
+---Fields in module 'website_forum'---
+website_forum / forum.forum              / menu_id (many2one)            : DEL relation: website.menu
+# NOTHING TO DO: unused field removed in https://github.com/odoo/odoo/commit/79fea306e8bcbd641abc69cb1acc32dc3932bb97
+
+website_forum / forum.post               / tag_ids (many2many)           : column1 is now 'forum_post_id' ('forum_id') [forum_tag_rel]
+website_forum / forum.tag                / post_ids (many2many)          : column2 is now 'forum_post_id' ('forum_id') [forum_tag_rel]
+# DONE: pre-migration: renamed forum_id to forum_post_id
+
+website_forum / forum.tag                / color (integer)               : NEW
+# NOTHING TO DO: new feature, no default value
+
+---XML records in module 'website_forum'---
+NEW ir.ui.view: website_forum.forum_related_posts
+NEW ir.ui.view: website_forum.forum_sign_up_cta
+NEW web_tour.tour: website_forum.question
+# NOTHING TO DO: new feature
