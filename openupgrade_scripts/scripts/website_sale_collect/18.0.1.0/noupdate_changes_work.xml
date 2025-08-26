@@ -1,0 +1,17 @@
+<?xml version='1.0' encoding='utf-8'?>
+<odoo>
+    <record id="product_pick_up_in_store" model="product.product">
+        <field name="name">Pick up in store</field>
+        <field name="description"/>
+    </record>
+
+    <record id="carrier_pick_up_in_store" model="delivery.carrier">
+        <field name="name">Pick up in store</field>
+        <field name="delivery_type">in_store</field>
+        <field name="product_id" ref="website_sale_collect.product_pick_up_in_store"/>
+        <!-- In the previous version, this record was published on the website,
+        so we must not unpublish it, as it can still be used.
+        <field name="website_published" /> -->
+    </record>
+
+</odoo>
