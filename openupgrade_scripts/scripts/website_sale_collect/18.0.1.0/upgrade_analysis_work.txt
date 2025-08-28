@@ -1,0 +1,42 @@
+---Models in module 'website_sale_collect'---
+---Fields in module 'website_sale_collect'---
+website_sale_collect / delivery.carrier         / warehouse_ids (many2many)     : NEW relation: stock.warehouse
+website_sale_picking / delivery.carrier         / warehouse_id (many2one)       : DEL relation: stock.warehouse
+# DONE: post-migration: convert data many2one to many2many
+
+website_sale_collect / stock.warehouse          / opening_hours (many2one)      : NEW relation: resource.calendar
+# NOTHING TO DO: New feature, the location selector only displays the opening hours info if it is set.
+# added in https://github.com/odoo/odoo/commit/087c48c4ed2eff55361a2b9fa925800dbdc46fab
+
+website_sale_picking / delivery.carrier         / delivery_type (False)         : selection_keys added: [gelato, in_store], removed: [onsite]
+website_sale_picking / payment.provider         / custom_mode (False)           : selection_keys added: [on_site], removed: [onsite]
+# DONE: pre-migration: copy columns for preserving values.
+# DONE: post-migration: map values: delivery.carrier: onsite > in_store. payment.provider: onsite > on_site
+
+---XML records in module 'website_sale_collect'---
+NEW ir.ui.view: website_sale_collect.in_store_delivery_method
+NEW ir.ui.view: website_sale_collect.product_page_click_and_collect
+NEW ir.ui.view: website_sale_collect.stock_picking_form
+NEW ir.ui.view: website_sale_collect.stock_warehouse_form
+NEW ir.ui.view: website_sale_collect.unavailable_products_warning
+DEL ir.ui.view: website_sale_picking.checkout_delivery
+DEL ir.ui.view: website_sale_picking.payment_method_form
+# NOTHING TO DO: handled by ORM
+
+NEW delivery.carrier: website_sale_collect.carrier_pick_up_in_store (noupdate)
+DEL delivery.carrier: website_sale_picking.default_onsite_carrier (noupdate)
+NEW payment.provider: website_sale_collect.payment_provider_on_site
+DEL payment.provider: website_sale_picking.payment_provider_onsite
+NEW product.product: website_sale_collect.product_pick_up_in_store (noupdate)
+DEL product.product: website_sale_picking.onsite_delivery_product (noupdate)
+NEW ir.ui.view: website_sale_collect.delivery_carrier_form
+DEL ir.ui.view: website_sale_picking.view_delivery_carrier_form_with_onsite_picking
+NEW ir.ui.view: website_sale_collect.res_config_settings_form
+DEL ir.ui.view: website_sale_picking.res_config_settings_view_form
+# DONE: pre-migration: rename XML-IDs for this data according this commit https://github.com/odoo/odoo/commit/087c48c4ed2eff55361a2b9fa925800dbdc46fab
+
+NEW ir.ui.view: website_sale_collect.payment_confirmation_status
+DEL ir.ui.view: website_sale_picking.payment_confirmation_status
+NEW payment.method: website_sale_collect.payment_method_pay_on_site [renamed from website_sale_picking module]
+DEL payment.method: website_sale_picking.payment_method_pay_on_site [renamed to website_sale_collect module]
+# NOTHING TO DO: The XML-IDs are identical; the rename is handled in the base module when modules are renamed.
