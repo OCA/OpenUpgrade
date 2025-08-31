@@ -1,0 +1,13 @@
+---Models in module 'account_fleet'---
+---Fields in module 'account_fleet'---
+account_fleet / account.move.line        / vehicle_log_service_ids (one2many): NEW relation: fleet.vehicle.log.services
+account_fleet / fleet.vehicle.log.services / account_move_line_id (many2one): NEW relation: account.move.line
+# Done: post-migration
+
+account_fleet / fleet.vehicle.log.services / vehicle_id (False)            : NEW mode: modify, hasdefault: compute
+# NOTHING TO DO: New compute fills this field using the account_move_line_id.vehicle_id
+# which did not exist previously so there's no need for a pre-compute.
+
+---XML records in module 'account_fleet'---
+NEW ir.ui.view: account_fleet.fleet_vehicle_log_services_view_form
+# NOTHING TO DO
