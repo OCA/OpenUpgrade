@@ -79,6 +79,8 @@ new model l10n_id.qris.transaction [module l10n_id]
 new model l10n_in.section.alert [module l10n_in_withholding]
 new model l10n_latam.check [module l10n_latam_check]
 new model l10n_latam.payment.register.check [module l10n_latam_check]
+new model l10n_tw_edi.invoice.cancel [module l10n_tw_edi_ecpay]
+new model l10n_tw_edi.invoice.print [module l10n_tw_edi_ecpay]
 new model loyalty.card.update.balance [module loyalty]
 new model loyalty.history [module loyalty]
 new model mail.canned.response (renamed from mail.shortcode) [module mail]
@@ -126,7 +128,7 @@ new model website.page.properties.base [module website]
 # Found in other module: 93
 # Found with different type: 8
 # In obsolete models: 34
-# New columns: 1650
+# New columns: 1700
 # Not matched: 845
 ---XML records in module 'general'---
 ERROR: module not in list of installed modules:
@@ -175,12 +177,12 @@ ERROR: module not in list of installed modules:
 ---Models in module 'spreadsheet_dashboard_purchase'---
 ---Fields in module 'spreadsheet_dashboard_purchase'---
 ---XML records in module 'spreadsheet_dashboard_purchase'---
-DEL spreadsheet.dashboard: spreadsheet_dashboard_purchase.spreadsheet_dashboard_vendors
+---nothing has changed in this module--
 ERROR: module not in list of installed modules:
 ---Models in module 'spreadsheet_dashboard_purchase_stock'---
 ---Fields in module 'spreadsheet_dashboard_purchase_stock'---
 ---XML records in module 'spreadsheet_dashboard_purchase_stock'---
-DEL spreadsheet.dashboard: spreadsheet_dashboard_purchase_stock.spreadsheet_dashboard_purchase
+---nothing has changed in this module--
 ERROR: module not in list of installed modules:
 ---Models in module 'website_twitter'---
 obsolete model website.twitter.tweet

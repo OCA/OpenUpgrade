@@ -1,7 +1,7 @@
 ---Models in module 'l10n_ro_edi'---
 ---Fields in module 'l10n_ro_edi'---
 l10n_ro_edi  / account.move             / l10n_ro_edi_index (char)      : NEW
-l10n_ro_edi  / res.partner              / invoice_edi_format (False)    : NEW selection_keys: ['ciusro', 'es_facturae', 'facturx', 'it_edi_xml', 'nlcius', 'oioubl_201', 'pint_anz', 'pint_jp', 'pint_my', 'ubl_a_nz', 'ubl_bis3', 'ubl_sg', 'ubl_tr', 'xrechnung'], mode: modify
+l10n_ro_edi  / res.partner              / invoice_edi_format (False)    : NEW selection_keys: ['ciusro', 'es_facturae', 'facturx', 'it_edi_xml', 'nlcius', 'oioubl_201', 'pint_anz', 'pint_jp', 'pint_my', 'tw_ecpay', 'ubl_a_nz', 'ubl_bis3', 'ubl_sg', 'ubl_tr', 'xrechnung'], mode: modify
 l10n_ro_edi  / res.partner              / ubl_cii_format (False)        : DEL selection_keys: ['ciusro', 'facturx', 'nlcius', 'oioubl_201', 'pint_anz', 'pint_jp', 'pint_my', 'ubl_a_nz', 'ubl_bis3', 'ubl_sg', 'ubl_tr', 'xrechnung'], mode: modify
 l10n_ro_efactura / account.move             / l10n_ro_edi_state (selection) : selection_keys added: [invoice_validated], removed: [invoice_sending]
 l10n_ro_efactura / l10n_ro_edi.document     / state (selection)             : selection_keys added: [invoice_validated], removed: [invoice_sending]

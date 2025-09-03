@@ -1,0 +1,44 @@
+---Models in module 'l10n_tw_edi_ecpay'---
+new model l10n_tw_edi.invoice.cancel [transient]
+new model l10n_tw_edi.invoice.print [transient]
+---Fields in module 'l10n_tw_edi_ecpay'---
+l10n_tw_edi_ecpay / account.move             / l10n_tw_edi_allowance_notify_way (selection): NEW selection_keys: ['email', 'phone']
+l10n_tw_edi_ecpay / account.move             / l10n_tw_edi_carrier_number (char): NEW hasdefault: compute
+l10n_tw_edi_ecpay / account.move             / l10n_tw_edi_carrier_number_2 (char): NEW hasdefault: compute
+l10n_tw_edi_ecpay / account.move             / l10n_tw_edi_carrier_type (selection): NEW selection_keys: ['1', '2', '3', '4', '5'], hasdefault: compute
+l10n_tw_edi_ecpay / account.move             / l10n_tw_edi_clearance_mark (selection): NEW selection_keys: ['1', '2']
+l10n_tw_edi_ecpay / account.move             / l10n_tw_edi_ecpay_invoice_id (char): NEW
+l10n_tw_edi_ecpay / account.move             / l10n_tw_edi_file (binary)     : NEW attachment: True
+l10n_tw_edi_ecpay / account.move             / l10n_tw_edi_invalidate_reason (char): NEW
+l10n_tw_edi_ecpay / account.move             / l10n_tw_edi_invoice_create_date (datetime): NEW
+l10n_tw_edi_ecpay / account.move             / l10n_tw_edi_invoice_type (selection): NEW selection_keys: ['07', '08'], hasdefault: compute
+l10n_tw_edi_ecpay / account.move             / l10n_tw_edi_is_print (boolean): NEW hasdefault: compute
+l10n_tw_edi_ecpay / account.move             / l10n_tw_edi_love_code (char)  : NEW hasdefault: compute
+l10n_tw_edi_ecpay / account.move             / l10n_tw_edi_refund_agreement_type (selection): NEW selection_keys: ['offline', 'online']
+l10n_tw_edi_ecpay / account.move             / l10n_tw_edi_refund_invoice_number (char): NEW
+l10n_tw_edi_ecpay / account.move             / l10n_tw_edi_refund_state (selection): NEW selection_keys: ['agreed', 'disagreed', 'to_be_agreed']
+l10n_tw_edi_ecpay / account.move             / l10n_tw_edi_related_number (char): NEW
+l10n_tw_edi_ecpay / account.move             / l10n_tw_edi_state (selection) : NEW selection_keys: ['invalid', 'invoiced', 'valid']
+l10n_tw_edi_ecpay / account.move             / l10n_tw_edi_zero_tax_rate_reason (selection): NEW selection_keys: ['71', '72', '73', '74', '75', '76', '77', '78', '79']
+l10n_tw_edi_ecpay / account.move.line        / l10n_tw_edi_ecpay_item_sequence (integer): NEW
+l10n_tw_edi_ecpay / account.tax              / l10n_tw_edi_special_tax_type (selection): NEW selection_keys: ['1', '2', '3', '4', '5', '6', '7', '8']
+l10n_tw_edi_ecpay / account.tax              / l10n_tw_edi_tax_type (selection): NEW selection_keys: ['1', '2', '3', '4'], hasdefault: compute
+l10n_tw_edi_ecpay / res.company              / l10n_tw_edi_ecpay_hashIV (char): NEW
+l10n_tw_edi_ecpay / res.company              / l10n_tw_edi_ecpay_hashkey (char): NEW
+l10n_tw_edi_ecpay / res.company              / l10n_tw_edi_ecpay_merchant_id (char): NEW
+l10n_tw_edi_ecpay / res.company              / l10n_tw_edi_ecpay_staging_mode (boolean): NEW
+l10n_tw_edi_ecpay / res.partner              / invoice_edi_format (False)    : NEW selection_keys: ['facturx', 'nlcius', 'pint_jp', 'pint_my', 'tw_ecpay', 'ubl_a_nz', 'ubl_bis3', 'ubl_sg', 'ubl_tr', 'xrechnung'], mode: modify
+---XML records in module 'l10n_tw_edi_ecpay'---
+NEW ir.actions.server: l10n_tw_edi_ecpay.action_print_ecpay_invoice
+NEW ir.model.access: l10n_tw_edi_ecpay.access_l10n_tw_edi_invoice_cancel_invoice
+NEW ir.model.access: l10n_tw_edi_ecpay.access_l10n_tw_edi_invoice_cancel_manager
+NEW ir.model.access: l10n_tw_edi_ecpay.access_l10n_tw_edi_invoice_cancel_readonly
+NEW ir.model.access: l10n_tw_edi_ecpay.access_l10n_tw_edi_invoice_print_invoice
+NEW ir.model.access: l10n_tw_edi_ecpay.access_l10n_tw_edi_invoice_print_manager
+NEW ir.model.access: l10n_tw_edi_ecpay.access_l10n_tw_edi_invoice_print_readonly
+NEW ir.ui.view: l10n_tw_edi_ecpay.ec_view_tax_form_inherit
+NEW ir.ui.view: l10n_tw_edi_ecpay.l10n_tw_edi_invoice_cancel_form
+NEW ir.ui.view: l10n_tw_edi_ecpay.l10n_tw_edi_invoice_print_form
+NEW ir.ui.view: l10n_tw_edi_ecpay.res_config_settings_view_form
+NEW ir.ui.view: l10n_tw_edi_ecpay.view_account_move_reversal_inherit_ecpay
+NEW ir.ui.view: l10n_tw_edi_ecpay.view_move_form_inherit_ecpay
