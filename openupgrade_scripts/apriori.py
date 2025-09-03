@@ -7,6 +7,8 @@ renamed_modules = {
     # odoo
     "l10n_es_pos_tbai": "l10n_es_edi_tbai_pos",
     "mrp_subonctracting_landed_costs": "mrp_subcontracting_landed_costs",
+    "spreadsheet_dashboard_purchase": "spreadsheet_dashboard_purchase_oca",
+    "spreadsheet_dashboard_purchase_stock": "spreadsheet_dashboard_purchase_stock_oca",
     "website_sale_picking": "website_sale_collect",
     "website_form_project": "website_project",
     # odoo/enterprise
