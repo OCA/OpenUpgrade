@@ -1,6 +1,10 @@
 ---Models in module 'l10n_tr_nilvera_einvoice'---
 ---Fields in module 'l10n_tr_nilvera_einvoice'---
 ---XML records in module 'l10n_tr_nilvera_einvoice'---
+NEW ir.cron: l10n_tr_nilvera_einvoice.ir_cron_nilvera_get_new_earchive_sale_documents
+NEW ir.cron: l10n_tr_nilvera_einvoice.ir_cron_nilvera_get_new_einvoice_sale_documents
+NEW ir.cron: l10n_tr_nilvera_einvoice.ir_cron_nilvera_get_new_purchase_documents
+DEL ir.cron: l10n_tr_nilvera_einvoice.ir_cron_nilvera_get_new_documents
 DEL ir.ui.view: l10n_tr_nilvera_einvoice.account_move_send_inherit_l10n_tr_nilvera_einvoice
 DEL res.partner.category: l10n_tr_nilvera_einvoice.res_partner_category_aboneno
 DEL res.partner.category: l10n_tr_nilvera_einvoice.res_partner_category_aracikurumetiket
