@@ -28,7 +28,6 @@ base         / res.company              / active (boolean)              : NEW ha
 base         / res.company              / company_registry (char)       : not stored anymore
 base         / res.company              / company_registry (char)       : now related
 base         / res.company              / font (selection)              : selection_keys is now '['Lato', 'Montserrat', 'Open_Sans', 'Oswald', 'Raleway', 'Roboto', 'Tajawal']' ('['Lato', 'Montserrat', 'Open_Sans', 'Oswald', 'Raleway', 'Roboto']')
-base         / res.partner              / company_registry (char)       : NEW hasdefault: compute
 base         / res.partner              / credit_limit (float)          : module is now 'account' ('base')
 base         / res.partner              / credit_limit (float)          : not stored anymore
 base         / res.partner.bank         / allow_out_payment (boolean)   : NEW hasdefault: default
@@ -39,6 +38,9 @@ base         / res.users.deletion       / user_id (many2one)            : NEW re
 base         / res.users.deletion       / user_id_int (integer)         : NEW isfunction: function, stored
 
 # NOTHING TO DO
+
+base         / res.partner              / company_registry (char)       : NEW hasdefault: compute
+# DONE: pre-migration: Pre-create the field for not triggering the compute. Further modules scripts (right now only l10n_be and l10n_ro seems to override the method) have to include the computation, or trigger the computation on end-migration.
 
 ---XML records in module 'base'---
 DEL ir.actions.act_window: base.action_translation
