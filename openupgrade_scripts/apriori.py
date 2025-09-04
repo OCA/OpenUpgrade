@@ -70,6 +70,7 @@ renamed_modules = {
     "se7_pg_adaptacion_proyectos": "se7_pg_yachting",
     "se7_pg_yacht": "se7_boat",
     "se7_pg_yacht_area": "se7_boat_area",
+    "se7_equipment_maintenance": "se7_sale_management_equips",
 }
 
 # Merged modules contain a mapping from old module names to other,
