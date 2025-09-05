@@ -30,6 +30,7 @@ renamed_modules = {
     "coupon_chatter": "loyalty_program_chatter",
     # OCA/sale-workflow
     "product_supplierinfo_for_customer_sale": "product_customerinfo_sale",
+    "product_supplierinfo_for_customer_elaboration": "product_customerinfo_elaboration",
     "sale_product_set_sale_by_packaging": "product_set_sell_only_by_packaging",
     # OCA/stock-logistics-workflow
     "stock_picking_type_shipping_policy": "stock_picking_type_force_move_type",
