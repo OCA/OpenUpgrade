@@ -1,8 +1,6 @@
 # Copyright 2024 Viindoo Technology Joint Stock Company (Viindoo)
 # License AGPL-3.0 or later (https://www.gnu.org/licenses/agpl).
-from openupgradelib import openupgrade
-
-from odoo.tools.sql import convert_column_translatable
+from openupgradelib import openupgrade, openupgrade_160
 
 _fields_renames = [
     (
@@ -73,7 +71,12 @@ def _convert_account_tax_description(env):
     openupgrade.rename_columns(
         env.cr, {"account_tax": [("description", "invoice_label")]}
     )
-    convert_column_translatable(env.cr, "account_tax", "invoice_label", "jsonb")
+    # Deliberately call migrate_translations_to_jsonb instead of
+    # convert_column_translatable to support the case you have translate=True on
+    # the field in v16 (l10n_multilang compatibility).
+    openupgrade_160.migrate_translations_to_jsonb(
+        env, [("account_tax", "invoice_label")]
+    )
 
 
 def _am_create_delivery_date_column(env):
