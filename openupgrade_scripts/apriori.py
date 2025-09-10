@@ -34,6 +34,8 @@ renamed_modules = {
     # "knowledge": "document_knowledge",
     # OCA/multi-company
     "res_partner_category_multi_company": "partner_category_multi_company",
+    # OCA/product-attribute
+    "product_packaging_type": "product_packaging_level",
     # OCA/project
     "project_stage_mgmt": "project_task_stage_mgmt",
     # OCA/sale-promotion
@@ -51,6 +53,8 @@ renamed_modules = {
     "sale_coupon_partner": "sale_loyalty_partner",
     "website_sale_coupon_page": "website_sale_loyalty_page",
     "website_sale_coupon_selection_wizard": "website_sale_loyalty_suggestion_wizard",
+    # OCA/sale-workflow
+    "sale_by_packaging": "sell_only_by_packaging",
     # OCA/server-ux
     "mass_editing": "server_action_mass_edit",
     # OCA/l10n-italy
