@@ -189,6 +189,13 @@ renamed_models = {
     # se7_pg_yacht / se7_boat_area
     "yacht.yacht": "boat.boat",
     "yacht.area": "boat.area",
+
+    #databases
+    "ir.database":"database.database",
+    "ir.database.module":"database.module",
+    "ir.database.user":"database.user",
+    "ir.server":"database.server",
+    
 }
 
 # only used here for upgrade_analysis
