@@ -70,7 +70,8 @@ renamed_modules = {
     "se7_pg_adaptacion_proyectos": "se7_pg_yachting",
     "se7_pg_yacht": "se7_boat",
     "se7_pg_yacht_area": "se7_boat_area",
-    "se7_equipment_maintenance": "se7_sale_management_equips",
+    "se7_sale_management_equips" : "se7_equipment_maintenance",
+    "se7_databases": "se7_database",
 }
 
 # Merged modules contain a mapping from old module names to other,
@@ -195,7 +196,7 @@ renamed_models = {
     "ir.database.module":"database.module",
     "ir.database.user":"database.user",
     "ir.server":"database.server",
-    
+
 }
 
 # only used here for upgrade_analysis
