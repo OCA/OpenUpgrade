@@ -1,6 +1,6 @@
 # Copyright 2024 Viindoo Technology Joint Stock Company (Viindoo)
 # License AGPL-3.0 or later (https://www.gnu.org/licenses/agpl).
-from openupgradelib import openupgrade, openupgrade_160
+from openupgradelib import openupgrade
 
 _fields_renames = [
     (
@@ -70,12 +70,6 @@ def _generic_coa_rename_xml_id(env):
 def _convert_account_tax_description(env):
     openupgrade.rename_columns(
         env.cr, {"account_tax": [("description", "invoice_label")]}
-    )
-    # Deliberately call migrate_translations_to_jsonb instead of
-    # convert_column_translatable to support the case you have translate=True on
-    # the field in v16 (l10n_multilang compatibility).
-    openupgrade_160.migrate_translations_to_jsonb(
-        env, [("account_tax", "invoice_label")]
     )
 
 
