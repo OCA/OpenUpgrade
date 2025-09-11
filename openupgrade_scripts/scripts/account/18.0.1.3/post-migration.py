@@ -19,7 +19,8 @@ def handle_lock_dates(env):
         WHERE name = 'account_lock'
         """
     )
-    account_lock_state = env.cr.fetchone()[0]
+    row = env.cr.fetchone()
+    account_lock_state = row and row[0] or ""
     if account_lock_state == "installed":
         openupgrade.logged_query(
             env.cr,
