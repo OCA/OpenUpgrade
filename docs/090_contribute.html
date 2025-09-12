@@ -162,15 +162,18 @@ module as <code class="docutils literal notranslate"><span class="pre">done</spa
 <li><p>Finally, commit and push your changes.</p></li>
 </ul>
 <div class="highlight-shell notranslate"><div class="highlight"><pre><span></span>git<span class="w"> </span>add<span class="w"> </span>.
-git<span class="w"> </span>commit<span class="w"> </span>-am<span class="w"> </span><span class="s2">&quot;[OU-ADD] account&quot;</span>
+git<span class="w"> </span>commit<span class="w"> </span>-am<span class="w"> </span><span class="s2">&quot;[ADD] account&quot;</span>
 git<span class="w"> </span>push<span class="w"> </span>MY_REMOTE<span class="w"> </span><span class="m">16</span>.0-mig-account
 </pre></div>
 </div>
 <p><strong>Note:</strong></p>
 <blockquote>
 <div><ul class="simple">
-<li><p>For a fix of an existing migration scripts, use <code class="docutils literal notranslate"><span class="pre">[OU-FIX]</span></code></p></li>
-<li><p>For an improvement of an existing migration scripts, use <code class="docutils literal notranslate"><span class="pre">[OU-IMP]</span></code></p></li>
+<li><p>For a fix of an existing migration scripts, use <code class="docutils literal notranslate"><span class="pre">[FIX]</span></code></p></li>
+<li><p>For an improvement of an existing migration scripts, use <code class="docutils literal notranslate"><span class="pre">[IMP]</span></code></p></li>
+<li><p>For old versions when OpenUpgrade was a fork (in V13 and before),
+use “[OU-ADD]” / “[OU-FIX]” and “[OU-IMP]” to distinguish Odoo team commits
+and Openupgraders commits.</p></li>
 </ul>
 </div></blockquote>
 <ul class="simple">
@@ -216,7 +219,7 @@ to upgrade a copy of your database and give us feedback.</p>
 
   <div role="contentinfo">
     <p>&#169; Copyright 2012-2021, Odoo Community Association (OCA) / The OpenUpgrade developers.
-      <span class="lastupdated">Last updated on Sep 03, 2025.
+      <span class="lastupdated">Last updated on Sep 12, 2025.
       </span></p>
   </div>
 
