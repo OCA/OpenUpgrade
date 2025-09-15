@@ -1,7 +1,7 @@
 # Copyright 2024 Viindoo Technology Joint Stock Company (Viindoo)
 # License AGPL-3.0 or later (http://www.gnu.org/licenses/agpl.html).
 
-from openupgradelib import openupgrade, openupgrade_160
+from openupgradelib import openupgrade
 
 from odoo import models
 
@@ -558,15 +558,6 @@ def _rename_coa_elements_xmlids(env):
         )
 
 
-def _convert_account_tax_description(env):
-    # Deliberately call migrate_translations_to_jsonb instead of
-    # convert_column_translatable to support the case you have translate=True on
-    # the field in v16 (l10n_multilang compatibility).
-    openupgrade_160.migrate_translations_to_jsonb(
-        env, [("account.tax", "invoice_label")]
-    )
-
-
 @openupgrade.migrate()
 def migrate(env, version):
     _account_payment_term_migration(env)
@@ -592,4 +583,3 @@ def migrate(env, version):
     _map_chart_template_id_to_chart_template(env, "res_company")
     _map_chart_template_id_to_chart_template(env, "account_report")
     _rename_coa_elements_xmlids(env)
-    _convert_account_tax_description(env)
