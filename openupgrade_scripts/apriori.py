@@ -80,6 +80,8 @@ merged_modules = {
     "document_page_group": "document_page_access_group",
     # OCA/l10n-france
     "l10n_fr_pos_cert_update_draft_order_line": "l10n_fr_pos_cert",
+    # OCA/l10n-spain
+    "l10n_es_igic": "l10n_es",
     # OCA/sale-workflow
     "sale_order_qty_change_no_recompute": "sale",
     # OCA/server-brand
