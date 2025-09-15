@@ -30,6 +30,7 @@ obsolete model stock.scheduler.compute [module stock]
 obsolete model website.twitter.tweet [module website_twitter]
 new model account.autopost.bills.wizard [module account]
 new model account.code.mapping [module account]
+new model account.edi.xml.oioubl_21 [module l10n_dk_nemhandel]
 new model account.lock_exception [module account]
 new model account.merge.wizard [module account]
 new model account.merge.wizard.line [module account]
@@ -93,6 +94,7 @@ new model mrp.batch.produce [module mrp]
 new model myinvois.consolidate.invoice.wizard [module l10n_my_edi_pos]
 new model myinvois.document [module l10n_my_edi_pos]
 new model myinvois.document.status.update.wizard [module l10n_my_edi_pos]
+new model nemhandel.registration [module l10n_dk_nemhandel]
 new model peppol.registration [module account_peppol]
 new model pos.bus.mixin [module point_of_sale]
 new model pos.load.mixin [module point_of_sale]
@@ -128,7 +130,7 @@ new model website.page.properties.base [module website]
 # Found in other module: 93
 # Found with different type: 8
 # In obsolete models: 34
-# New columns: 1700
+# New columns: 1725
 # Not matched: 845
 ---XML records in module 'general'---
 ERROR: module not in list of installed modules:
