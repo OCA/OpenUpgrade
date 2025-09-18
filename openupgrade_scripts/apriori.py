@@ -16,6 +16,7 @@ renamed_modules = {
     "account_commission": "account_commission_oca",
     "commission": "commission_oca",
     "hr_commission": "hr_commission_oca",
+    "sale_commission_margin": "sale_commission_margin_oca",
     "sale_commission": "sale_commission_oca",
     # OCA/edi
     "pdf_helper": "pdf_xml_attachment",
