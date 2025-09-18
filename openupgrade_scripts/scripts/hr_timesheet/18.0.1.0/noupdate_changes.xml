@@ -3,12 +3,27 @@
   <record id="base.module_category_services_timesheets" model="ir.module.category">
     <field name="description"/>
   </record>
+  <record id="timesheet_analysis_report_approver" model="ir.rule">
+    <field name="domain_force">[
+                '|',
+                    ('project_id.privacy_visibility', '!=', 'followers'),
+                    ('project_id.message_partner_ids', 'in', [user.partner_id.id])
+            ]</field>
+  </record>
   <record id="timesheet_analysis_report_user" model="ir.rule">
     <field name="domain_force">[
                 ('user_id', '=', user.id),
                 '|',
                     ('project_id.privacy_visibility', '!=', 'followers'),
                     ('message_partner_ids', 'in', [user.partner_id.id])
+            ]</field>
+  </record>
+  <record id="timesheet_line_rule_approver" model="ir.rule">
+    <field name="domain_force">[
+                ('project_id', '!=', False),
+                '|',
+                    ('project_id.privacy_visibility', '!=', 'followers'),
+                    ('project_id.message_partner_ids', 'in', [user.partner_id.id])
             ]</field>
   </record>
   <record id="timesheet_line_rule_portal_user" model="ir.rule">

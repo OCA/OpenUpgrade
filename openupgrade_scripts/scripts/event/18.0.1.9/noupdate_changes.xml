@@ -210,7 +210,7 @@
                               <tr>
                                 <td>
                                   <div>
-                                    <i class="fa fa-map-marker"/>
+                                    <img src="/web_editor/font_to_img/61505/rgb(81,81,102)/20" height="20" style="vertical-align: bottom;"/>
                                     <a t-attf-href="https://maps.google.com/maps?q={{ location }}" target="new">
                                       <img t-if="event_address.static_map_url and event_address.static_map_url_is_valid" t-att-src="event_address.static_map_url" style="vertical-align:bottom; width: 100%;" alt="Google Maps"/>
                                       <t t-else="">See location on Google Maps</t>
@@ -459,7 +459,7 @@
                             <tr>
                               <td>
                                 <div>
-                                  <i class="fa fa-map-marker"/>
+                                  <img src="/web_editor/font_to_img/61505/rgb(81,81,102)/20" height="20" style="vertical-align: bottom;"/>
                                   <a t-attf-href="https://maps.google.com/maps?q={{ location }}" target="new">
                                     <img t-if="event_address.static_map_url and event_address.static_map_url_is_valid" t-attf-src="{{ event_address.static_map_url }}" style="vertical-align:bottom; width: 100%;" alt="Google Maps"/>
                                     <span t-else="">See location on Google Maps</span>
@@ -730,7 +730,7 @@
                               <tr>
                                 <td>
                                   <div>
-                                    <i class="fa fa-map-marker"/>
+                                    <img src="/web_editor/font_to_img/61505/rgb(81,81,102)/20" height="20" style="vertical-align: bottom;"/>
                                     <a t-attf-href="https://maps.google.com/maps?q={{ location }}" target="new">
                                       <img t-if="event_address.static_map_url and event_address.static_map_url_is_valid" t-att-src="event_address.static_map_url" style="vertical-align:bottom; width: 100%;" alt="Google Maps"/>
                                       <t t-else="">See location on Google Maps</t>
