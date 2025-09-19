@@ -174,6 +174,8 @@ def split_employee_leaves(env):
 
 @openupgrade.migrate()
 def migrate(env, version):
+    if openupgrade.column_exists(env.cr, "hr_leave_allocation", "name"):  # from 13.0
+        openupgrade.rename_columns(env.cr, {"hr_leave_allocation": [("name", False)]})
     openupgrade.rename_columns(env.cr, _column_renames)
     openupgrade.add_columns(env, _column_adds)
     refill_hr_leave_request_hours(env)
