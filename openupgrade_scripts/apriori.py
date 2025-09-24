@@ -17,6 +17,8 @@ renamed_modules = {
     "commission": "commission_oca",
     "hr_commission": "hr_commission_oca",
     "sale_commission": "sale_commission_oca",
+    # OCA/edi
+    "pdf_helper": "pdf_xml_attachment",
     # OCA/product-attribute
     "product_packaging_type_vendor": "product_packaging_level_vendor",
     "product_supplierinfo_for_customer": "product_customerinfo",
