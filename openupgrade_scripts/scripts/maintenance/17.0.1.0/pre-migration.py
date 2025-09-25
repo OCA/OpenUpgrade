@@ -1,6 +1,22 @@
-# Copyright 2024 Tecnativa - Víctor Martínez
+# Copyright 2024-2025 Tecnativa - Víctor Martínez
 # License AGPL-3.0 or later (http://www.gnu.org/licenses/agpl.html).
 from openupgradelib import openupgrade
+
+
+def _maintenance_plan(env):
+    """Rename the fields if the maintenance_plan module was installed."""
+    if openupgrade.column_exists(env.cr, "maintenance_request", "note"):
+        openupgrade.rename_fields(
+            env,
+            [
+                (
+                    "maintenance.request",
+                    "maintenance_request",
+                    "note",
+                    "instruction_text",
+                ),
+            ],
+        )
 
 
 def _maintenance_request_company_id(env):
@@ -34,3 +50,4 @@ def _maintenance_request_company_id(env):
 @openupgrade.migrate()
 def migrate(env, version):
     _maintenance_request_company_id(env)
+    _maintenance_plan(env)
