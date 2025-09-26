@@ -21,6 +21,7 @@ on:
 
 jobs:
   generate-analysis18:
+    name: Generate analysis 18.0
     if: |
       github.repository == 'OCA/OpenUpgrade' && (github.event_name == 'schedule' || github.ref_name == '18.0') ||
       github.event_name == 'workflow_dispatch' && (inputs.version == '18.0' || inputs.version == 'all')
@@ -28,3 +29,12 @@ jobs:
     with:
       from_version: "17.0"
       to_version: "18.0"
+  generate-analysis19:
+    name: Generate analysis 19.0
+    if: |
+      github.repository == 'OCA/OpenUpgrade' && (github.event_name == 'schedule' || github.ref_name == '19.0') ||
+      github.event_name == 'workflow_dispatch' && (inputs.version == '19.0' || inputs.version == 'all')
+    uses: ./.github/workflows/generate-analysis.yml
+    with:
+      from_version: "18.0"
+      to_version: "19.0"
