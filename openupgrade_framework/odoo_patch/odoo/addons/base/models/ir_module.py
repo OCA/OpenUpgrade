@@ -3,7 +3,7 @@
 
 from odoo import api
 
-from odoo.addons.base.models.ir_module import Module
+from odoo.addons.base.models.ir_module import IrModuleModule
 
 
 @api.model
@@ -13,7 +13,7 @@ def update_list(self):
     installed.
     Ignore localization modules that are set to auto_install
     """
-    result = Module.update_list._original_method(self)
+    result = IrModuleModule.update_list._original_method(self)
     new_auto_install_modules = self.browse([])
     for module in self.env["ir.module.module"].search(
         [
@@ -32,5 +32,19 @@ def update_list(self):
     return result
 
 
-update_list._original_method = Module.update_list
-Module.update_list = update_list
+def check_external_dependencies(self, module_name, newstate="to install"):
+    try:
+        IrModuleModule.check_external_dependencies._original_method(
+            self, module_name, newstate=newstate
+        )
+    except AttributeError:  # pylint: disable=except-pass
+        # this happens when a module is installed that doesn't exist in the new version
+        pass
+
+
+update_list._original_method = IrModuleModule.update_list
+IrModuleModule.update_list = update_list
+check_external_dependencies._original_method = (
+    IrModuleModule.check_external_dependencies
+)
+IrModuleModule.check_external_dependencies = check_external_dependencies
