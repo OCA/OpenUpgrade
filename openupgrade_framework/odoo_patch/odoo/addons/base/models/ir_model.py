@@ -2,14 +2,12 @@
 # License AGPL-3.0 or later (http://www.gnu.org/licenses/agpl).
 from openupgradelib import openupgrade
 
-from odoo import api, models
+from odoo import models
 
 from odoo.addons.base.models.ir_model import (
     IrModel,
-    IrModelData,
     IrModelFields,
     IrModelRelation,
-    IrModelSelection,
 )
 
 
@@ -50,19 +48,6 @@ def _drop_column(self):
 IrModelFields._drop_column = _drop_column
 
 
-@api.model
-def _module_data_uninstall(self, modules_to_remove):
-    """To pass context, that the patch in __getitem__ of api.Environment uses"""
-    patched_self = self.with_context(**{"missing_model": True})
-    return IrModelData._module_data_uninstall._original_method(
-        patched_self, modules_to_remove
-    )
-
-
-_module_data_uninstall._original_method = IrModelData._module_data_uninstall
-IrModelData._module_data_uninstall = _module_data_uninstall
-
-
 def _module_data_uninstall(self):
     """Don't delete many2many relation tables. Only unlink the
     ir.model.relation record itself.
@@ -71,25 +56,3 @@ def _module_data_uninstall(self):
 
 
 IrModelRelation._module_data_uninstall = _module_data_uninstall
-
-
-def _process_ondelete(self):
-    """Don't break on missing models or wrong field types
-    when deleting their selection fields"""
-    to_process = self.browse([])
-    for selection in self:
-        try:
-            model_name = selection.field_id.model
-            field = selection.field_id
-            # Validate that the model exists
-            # and that the field has an ondelete attribute
-            self.env[model_name]  # pylint: disable=pointless-statement
-            if hasattr(field, "ondelete"):
-                to_process += selection
-        except KeyError:
-            continue
-    return IrModelSelection._process_ondelete._original_method(to_process)
-
-
-_process_ondelete._original_method = IrModelSelection._process_ondelete
-IrModelSelection._process_ondelete = _process_ondelete
