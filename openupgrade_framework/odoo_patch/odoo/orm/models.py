@@ -22,12 +22,12 @@ def unlink(self):
     savepoint = str(uuid4)
     try:
         self.env.cr.execute(  # pylint: disable=sql-injection
-            'SAVEPOINT "%s"' % savepoint
+            f'SAVEPOINT "{savepoint}"'
         )
         return BaseModel.unlink._original_method(self)
     except Exception as e:
         self.env.cr.execute(  # pylint: disable=sql-injection
-            'ROLLBACK TO SAVEPOINT "%s"' % savepoint
+            f'ROLLBACK TO SAVEPOINT "{savepoint}"'
         )
         _logger.warning(
             "Could not delete obsolete record with ids %s of model %s: %s",
