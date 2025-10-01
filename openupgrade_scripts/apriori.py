@@ -38,6 +38,7 @@ renamed_modules = {
     # OCA/stock-logistics-workflow
     "stock_picking_type_shipping_policy": "stock_picking_type_force_move_type",
     # OCA/web
+    "company_dependent_flag": "web_field_company_dependent_flag",
     "web_widget_product_label_section_and_note": "web_widget_product_label_section_and_note_name_visibility",  # noqa: E501
     # OCA/...
 }
