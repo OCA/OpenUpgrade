@@ -23,7 +23,7 @@ jobs:
       DB_PASSWORD: "odoo"
       DB_PORT: 5432
       DB_USERNAME: "odoo"
-      DOWNLOADS: https://github.com/OCA/OpenUpgrade/releases/download/databases
+      DOWNLOADS: https://github.com/${{github.repository}}/releases/download/databases
       ODOO: "./odoo/odoo-bin"
       PGHOST: "localhost"
       PGPASSWORD: "odoo"
