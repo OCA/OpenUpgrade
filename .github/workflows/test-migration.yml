@@ -6,9 +6,13 @@
 name: Test OpenUpgrade migration
 
 on:
-  push:
-    branches: ["19.0*"]
   pull_request:
+    branches:
+      - "19.0*"
+  push:
+    branches:
+      - "19.0"
+      - "19.0-ocabot-*"
 
 jobs:
   test:
