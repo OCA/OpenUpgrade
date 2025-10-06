@@ -80,6 +80,8 @@ new model l10n_id.qris.transaction [module l10n_id]
 new model l10n_in.section.alert [module l10n_in_withholding]
 new model l10n_latam.check [module l10n_latam_check]
 new model l10n_latam.payment.register.check [module l10n_latam_check]
+new model l10n_tr_nilvera_einvoice_extended.account.tax.code [module l10n_tr_nilvera_einvoice_extended]
+new model l10n_tr_nilvera_einvoice_extended.tax.office [module l10n_tr_nilvera_einvoice_extended]
 new model l10n_tw_edi.invoice.cancel [module l10n_tw_edi_ecpay]
 new model l10n_tw_edi.invoice.print [module l10n_tw_edi_ecpay]
 new model loyalty.card.update.balance [module loyalty]
@@ -124,14 +126,14 @@ new model website.custom_blocked_third_party_domains [module website]
 new model website.page.properties [module website]
 new model website.page.properties.base [module website]
 ---Fields in module 'general'---
-# 13469 fields matched,
-# Direct match: 13368
+# 13472 fields matched,
+# Direct match: 13369
 # Found in other module with different type: 0
-# Found in other module: 93
+# Found in other module: 95
 # Found with different type: 8
 # In obsolete models: 34
-# New columns: 1725
-# Not matched: 845
+# New columns: 1757
+# Not matched: 846
 ---XML records in module 'general'---
 ERROR: module not in list of installed modules:
 ---Models in module 'account_debit_note_sequence'---
