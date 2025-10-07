@@ -24,7 +24,7 @@ hr_holidays  / hr.leave                 / parent_id (many2one)          : DEL re
 hr_holidays  / hr.leave.allocation      / parent_id (many2one)          : DEL relation: hr.leave.allocation
 hr_holidays  / hr.leave                 / employee_id (many2one)        : now required
 hr_holidays  / hr.leave.allocation      / employee_id (many2one)        : now required
-# DONE: pre-migration: split leaves, one for each employee
+# DONE: pre-migration: split leaves / allocations, one for each employee (only for draft leaves / allocations)
 
 hr_holidays  / hr.leave                 / report_note (text)            : DEL
 # NOTHING TO DO: deprecated (https://github.com/odoo/odoo/commit/ca34732081b1ce6c339dd941abb9696861d95878)
@@ -39,7 +39,7 @@ hr_holidays  / hr.leave                 / active (boolean)              : DEL
 hr_holidays  / hr.leave.allocation      / active (boolean)              : DEL
 hr_holidays  / hr.leave                 / state (selection)             : selection_keys added: [cancel], removed: [draft]
 hr_holidays  / hr.leave.allocation      / state (selection)             : selection_keys added: [validate1] (most likely nothing to do)
-# DONE: pre-migration: set state = 'cancel' if archived. Also, 'draft' set to 'confirm' for leaves
+# DONE: pre-migration: set state = 'cancel' for leaves / 'refuse' for allocations if archived. Also, 'draft' set to 'confirm' for leaves
 
 hr_holidays  / hr.leave.accrual.level   / accrual_validity (boolean)    : NEW
 hr_holidays  / hr.leave.accrual.level   / accrual_validity_count (integer): NEW hasdefault: default
