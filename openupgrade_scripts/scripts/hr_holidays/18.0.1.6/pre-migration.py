@@ -125,7 +125,7 @@ def split_employee_leaves(env):
             SELECT leave.id, 'company', array_agg(he.id) as employee_ids
             FROM {table} AS leave
             JOIN hr_employee he ON he.company_id = leave.mode_company_id
-            WHERE leave.holiday_type = 'company' and he.active = True
+            WHERE leave.holiday_type = 'company'
             GROUP BY leave.id
             """
         )
@@ -136,8 +136,7 @@ def split_employee_leaves(env):
             SELECT leave.id, 'category', array_agg(rel.employee_id) as employee_ids
             FROM {table} AS leave
             JOIN employee_category_rel rel ON rel.category_id = leave.category_id
-            JOIN hr_employee he ON he.id = rel.employee_id
-            WHERE leave.holiday_type = 'category' and he.active = True
+            WHERE leave.holiday_type = 'category'
             GROUP BY leave.id
             """
         )
@@ -148,13 +147,13 @@ def split_employee_leaves(env):
             SELECT leave.id, 'department', array_agg(he.id) as employee_ids
             FROM {table} AS leave
             JOIN hr_employee he ON he.department_id = leave.department_id
-            WHERE leave.holiday_type = 'department' and he.active = True
+            WHERE leave.holiday_type = 'department'
             GROUP BY leave.id
             """
         )
         leave_employees.extend(env.cr.fetchall())
         for table_id, holiday_type, employee_ids in leave_employees:
-            employees = env["hr.employee"].browse(employee_ids)
+            employees = env["hr.employee"].browse(employee_ids).filtered("active")
             if employee_ids:
                 openupgrade.logged_query(
                     env.cr,
