@@ -42,6 +42,15 @@ _new_columns = [
 ]
 
 
+def _drop_sql_views(env):
+    openupgrade.logged_query(
+        env.cr,
+        """
+        DROP VIEW IF EXISTS account_root
+        """,
+    )
+
+
 def rename_selection_option(env):
     openupgrade.logged_query(
         env.cr,
@@ -218,6 +227,7 @@ def migrate(env, version):
         openupgrade.rename_fields(env, field_renames_l10n_dk_bookkeeping)
     openupgrade.rename_fields(env, field_renames)
     openupgrade.add_columns(env, _new_columns)
+    _drop_sql_views(env)
     update_account_move_amount_untaxed_in_currency_signed(env)
     update_account_move_checked(env)
     fill_account_move_preferred_payment_method_line_id(env)
