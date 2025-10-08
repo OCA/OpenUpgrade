@@ -12,6 +12,9 @@ new model account.move.send.wizard [transient]
 new model account.secure.entries.wizard [transient]
 # NOTHING TO DO
 
+obsolete model account.root [sql_view]
+# DONE: pre-migration: drop view if exists
+
 ---Fields in module 'account'---
 account      / account.account          / _order                        : _order is now 'code, placeholder_code' ('code, company_id')
 account      / account.account          / code_mapping_ids (one2many)   : NEW relation: account.code.mapping
