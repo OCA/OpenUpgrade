@@ -51,7 +51,7 @@ def update_states(env):
         env.cr,
         """
         UPDATE hr_leave_allocation
-        SET state = 'cancel'
+        SET state = 'refuse'
         WHERE active IS DISTINCT FROM TRUE
         """,
     )
@@ -77,7 +77,26 @@ def update_allocation_validation_type(env):
 
 
 def split_employee_leaves(env):
+    """
+    Confirmed leave or allocation already have duplicated leave for each employee
+    Since multi employee leave / allocation are not allowed anymore,
+    these should be removed
+    Draft (= 'confirm' state) are the only ones which have not yet
+    been duplicated and therefore should be transformed
+    """
     for table in ["hr_leave", "hr_leave_allocation"]:
+        # First remove all multi-employee leaves / allocations
+        # already confirmed or refused
+        openupgrade.logged_query(
+            env.cr,
+            f"""
+            DELETE FROM {table}
+            WHERE state IN ('refuse', 'validate1', 'validate', 'cancel') AND (
+                (holiday_type = 'employee' AND multi_employee)
+                OR holiday_type IN ('company', 'category', 'department'))
+            """,
+        )
+        # Then for the remaining ones we transform existing data for each employee
         env.cr.execute(
             f"""
             SELECT column_name
@@ -106,7 +125,7 @@ def split_employee_leaves(env):
             SELECT leave.id, 'company', array_agg(he.id) as employee_ids
             FROM {table} AS leave
             JOIN hr_employee he ON he.company_id = leave.mode_company_id
-            WHERE leave.holiday_type = 'company'
+            WHERE leave.holiday_type = 'company' and he.active = True
             GROUP BY leave.id
             """
         )
@@ -117,7 +136,8 @@ def split_employee_leaves(env):
             SELECT leave.id, 'category', array_agg(rel.employee_id) as employee_ids
             FROM {table} AS leave
             JOIN employee_category_rel rel ON rel.category_id = leave.category_id
-            WHERE leave.holiday_type = 'category'
+            JOIN hr_employee he ON he.id = rel.employee_id
+            WHERE leave.holiday_type = 'category' and he.active = True
             GROUP BY leave.id
             """
         )
@@ -128,7 +148,7 @@ def split_employee_leaves(env):
             SELECT leave.id, 'department', array_agg(he.id) as employee_ids
             FROM {table} AS leave
             JOIN hr_employee he ON he.department_id = leave.department_id
-            WHERE leave.holiday_type = 'department'
+            WHERE leave.holiday_type = 'department' and he.active = True
             GROUP BY leave.id
             """
         )
