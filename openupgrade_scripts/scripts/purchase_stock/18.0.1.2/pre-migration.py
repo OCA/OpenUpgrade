@@ -33,7 +33,7 @@ def fill_purchase_order_line_group_id(env):
         WHERE pol.order_id = po.id AND pol.group_id IS NULL
         """,
     )
-    if openupgrade.table_exists(env.cr, "sale_order_line"):
+    if openupgrade.column_exists(env.cr, "purchase_order_line", "sale_line_id"):
         openupgrade.logged_query(
             env.cr,
             """
