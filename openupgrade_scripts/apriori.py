@@ -73,6 +73,7 @@ merged_modules = {
     # OCA/e-commerce
     "website_sale_product_attachment": "website_sale",
     "website_sale_product_attribute_filter_collapse": "website_sale",
+    "website_sale_product_description": "website_sale",
     # OCA/hr-attendance
     "hr_attendance_autoclose": "hr_attendance",
     # OCA/knowledge
