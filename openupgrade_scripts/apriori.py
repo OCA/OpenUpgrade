@@ -47,6 +47,7 @@ renamed_modules = {
 merged_modules = {
     # odoo
     "account_audit_trail": "account",
+    "account_debit_note_sequence": "account_debit_note",
     "account_lock": "account",
     "account_payment_term": "account",
     "l10n_br_pix": "l10n_br",
