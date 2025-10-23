@@ -1,0 +1,10 @@
+---Models in module 'account_debit_note'---
+---Fields in module 'account_debit_note'---
+account_debit_note / account.journal          / debit_sequence (boolean)      : previously in module account_debit_note_sequence
+# DONE: pre-migration: if the column does not exist, create it and set it to False to preserve the previous behavior.
+# otherwise, nothing to do. This column comes from the module account_debit_note_sequence,
+# backported to V17 in https://github.com/odoo/odoo/pull/217128/commits/0239b1252fe04f208c7d5e993cda2384d3977fde
+
+---XML records in module 'account_debit_note'---
+NEW ir.ui.view: account_debit_note.view_account_journal_form_inherit_debit_note
+# NOTHING TO DO: Handled by ORM
