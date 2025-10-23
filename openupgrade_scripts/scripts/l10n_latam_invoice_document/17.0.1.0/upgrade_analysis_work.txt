@@ -1,0 +1,15 @@
+---Models in module 'l10n_latam_invoice_document'---
+---Fields in module 'l10n_latam_invoice_document'---
+l10n_latam_invoice_document / l10n_latam.document.type / internal_type (selection)     : selection_keys is now '['all', 'credit_note', 'debit_note', 'invoice']' ('['credit_note', 'debit_note', 'invoice']')
+# NOTHING TO DO: New feature, does not alter existing data
+
+---XML records in module 'l10n_latam_invoice_document'---
+NEW ir.model.access: l10n_latam_invoice_document.access_l10n_latam_document_type
+DEL ir.model.access: l10n_latam_invoice_document.access_l10n_latam_document_type_all
+# NOTHING TO DO: Handled by ORM
+
+NEW ir.model.constraint: l10n_latam_invoice_document.constraint_account_move_unique_name [renamed from l10n_latam_account_sequence module]
+NEW ir.model.constraint: l10n_latam_invoice_document.constraint_account_move_unique_name_latam [renamed from l10n_latam_account_sequence module]
+DEL ir.model.constraint: l10n_latam_account_sequence.constraint_account_move_unique_name [renamed to l10n_latam_invoice_document module]
+DEL ir.model.constraint: l10n_latam_account_sequence.constraint_account_move_unique_name_latam [renamed to l10n_latam_invoice_document module]
+# NOTHING TO DO: just moved from l10n_latam_account_sequence, but the code remains the same
