@@ -177,6 +177,7 @@ def _handle_outstanding_accounts(env):
                         "name": name,
                         "model": "account.account",
                         "res_id": account_id,
+                        "noupdate": True,
                     }
                 )
 
