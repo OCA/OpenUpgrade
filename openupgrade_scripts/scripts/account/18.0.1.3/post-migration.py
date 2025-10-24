@@ -153,11 +153,40 @@ def account_account_code_fields(env):
     )
 
 
+def _handle_outstanding_accounts(env):
+    """On version 17, the outstanding accounts were handled with 2 fields on each
+    res.company.
+
+    Now, they are handled putting specific XML-IDs on them, so we should create that
+    identifiers on the previous referenced accounts.
+    """
+    IMD = env["ir.model.data"]
+    for column in [
+        "account_journal_payment_debit_account_id",
+        "account_journal_payment_credit_account_id",
+    ]:
+        env.cr.execute(
+            f"SELECT id, {column} FROM res_company WHERE {column} IS NOT NULL"
+        )
+        for company_id, account_id in env.cr.fetchall():
+            name = f"{company_id}_{column}"
+            if not IMD.search([("module", "=", "account"), ("name", "=", name)]):
+                IMD.create(
+                    {
+                        "module": "account",
+                        "name": name,
+                        "model": "account.account",
+                        "res_id": account_id,
+                    }
+                )
+
+
 @openupgrade.migrate()
 def migrate(env, version):
     handle_lock_dates(env)
     link_payments_to_moves(env)
     account_account_code_fields(env)
+    _handle_outstanding_accounts(env)
     openupgrade.m2o_to_x2m(
         env.cr, env["account.account"], "account_account", "company_ids", "company_id"
     )
