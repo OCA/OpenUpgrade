@@ -211,7 +211,7 @@ account      / product.template         / property_account_income_id (many2one):
 
 account      / res.company              / account_journal_payment_credit_account_id (many2one): DEL relation: account.account
 account      / res.company              / account_journal_payment_debit_account_id (many2one): DEL relation: account.account
-# NOTHING TO DO
+# DONE: post-migration: Put corresponding XML-IDs to the pointed accounts
 
 account      / res.company              / account_price_include (selection): NEW required, selection_keys: ['tax_excluded', 'tax_included'], hasdefault: default
 account      / res.company              / autopost_bills (boolean)      : NEW hasdefault: default
