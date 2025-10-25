@@ -159,6 +159,11 @@ def _handle_outstanding_accounts(env):
 
     Now, they are handled putting specific XML-IDs on them, so we should create that
     identifiers on the previous referenced accounts.
+
+    Besides, now Odoo doesn't generate journal entries by default, unless there's an
+    outstanding account put on the payment method line on the journals, so let's keep
+    the previous behavior setting the same outstanding accounts on the lines that have
+    it empty.
     """
     IMD = env["ir.model.data"]
     for column in [
@@ -180,6 +185,25 @@ def _handle_outstanding_accounts(env):
                         "noupdate": True,
                     }
                 )
+            # Fill the outstanding account on journals
+            payment_type = (
+                "inbound"
+                if column == "account_journal_payment_debit_account_id"
+                else "outbound"
+            )
+            openupgrade.logged_query(
+                env.cr,
+                f"""UPDATE account_payment_method_line apml
+                SET payment_account_id = {account_id}
+                FROM account_journal aj, account_payment_method apm
+                WHERE aj.id = apml.journal_id
+                    AND apm.id = apml.payment_method_id
+                    AND aj.type IN ('bank', 'cash')
+                    AND apm.payment_type = '{payment_type}'
+                    AND apml.payment_account_id IS NULL
+                    AND aj.company_id = {company_id}
+                """,
+            )
 
 
 @openupgrade.migrate()
