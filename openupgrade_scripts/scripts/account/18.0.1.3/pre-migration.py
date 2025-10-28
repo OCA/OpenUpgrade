@@ -28,7 +28,7 @@ field_renames_l10n_dk_bookkeeping = [
 _new_columns = [
     ("account.bank.statement.line", "company_id", "many2one"),
     ("account.bank.statement.line", "journal_id", "many2one"),
-    ("account.journal", "autocheck_on_post", "boolean", False),
+    ("account.journal", "autocheck_on_post", "boolean", True),
     ("account.move", "amount_untaxed_in_currency_signed", "float"),
     ("account.move", "checked", "boolean"),
     ("account.move", "preferred_payment_method_line_id", "many2one"),

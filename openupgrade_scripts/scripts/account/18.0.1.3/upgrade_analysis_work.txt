@@ -60,7 +60,7 @@ account      / account.group            / parent_path (char)            : DEL
 # NOTHING TO DO
 
 account      / account.journal          / autocheck_on_post (boolean)   : NEW hasdefault: default
-# DONE: pre-migration: pre-created and filled with default=False for preserving previous behavior
+# DONE: pre-migration: pre-created and filled
 
 account      / account.journal          / sale_activity_note (text)     : DEL
 account      / account.journal          / sale_activity_type_id (many2one): DEL relation: mail.activity.type
