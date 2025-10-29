@@ -1,0 +1,290 @@
+---Models in module 'l10n_in'---
+---Fields in module 'l10n_in'---
+l10n_in      / account.account          / l10n_in_tcs_feature_enabled (boolean): NEW isfunction: function, stored
+l10n_in      / account.account          / l10n_in_tds_feature_enabled (boolean): NEW isfunction: function, stored
+l10n_in      / account.account          / l10n_in_tds_tcs_section_id (many2one): previously in module l10n_in_withholding
+l10n_in      / account.bank.statement.line / l10n_in_display_higher_tcs_button (boolean): previously in module l10n_in_withholding
+l10n_in      / account.bank.statement.line / l10n_in_gstin_verified_date (date): previously in module l10n_in_gstin_status
+l10n_in      / account.bank.statement.line / l10n_in_is_withholding (boolean): previously in module l10n_in_withholding
+l10n_in      / account.bank.statement.line / l10n_in_partner_gstin_status (boolean): previously in module l10n_in_gstin_status
+l10n_in      / account.bank.statement.line / l10n_in_show_gstin_status (boolean): previously in module l10n_in_gstin_status
+l10n_in      / account.bank.statement.line / l10n_in_total_withholding_amount (float): previously in module l10n_in_withholding
+l10n_in      / account.bank.statement.line / l10n_in_withhold_move_ids (one2many): previously in module l10n_in_withholding
+l10n_in      / account.bank.statement.line / l10n_in_withholding_line_ids (one2many): previously in module l10n_in_withholding
+l10n_in      / account.bank.statement.line / l10n_in_withholding_ref_move_id (many2one): previously in module l10n_in_withholding
+l10n_in      / account.bank.statement.line / l10n_in_withholding_ref_payment_id (many2one): previously in module l10n_in_withholding_payment
+l10n_in      / account.move             / l10n_in_display_higher_tcs_button (boolean): previously in module l10n_in_withholding
+l10n_in      / account.move             / l10n_in_gstin_verified_date (date): previously in module l10n_in_gstin_status
+l10n_in      / account.move             / l10n_in_is_withholding (boolean): previously in module l10n_in_withholding
+l10n_in      / account.move             / l10n_in_partner_gstin_status (boolean): previously in module l10n_in_gstin_status
+l10n_in      / account.move             / l10n_in_show_gstin_status (boolean): previously in module l10n_in_gstin_status
+l10n_in      / account.move             / l10n_in_total_withholding_amount (float): previously in module l10n_in_withholding
+l10n_in      / account.move             / l10n_in_withhold_move_ids (one2many): previously in module l10n_in_withholding
+l10n_in      / account.move             / l10n_in_withholding_line_ids (one2many): previously in module l10n_in_withholding
+l10n_in      / account.move             / l10n_in_withholding_ref_move_id (many2one): previously in module l10n_in_withholding
+l10n_in      / account.move             / l10n_in_withholding_ref_payment_id (many2one): previously in module l10n_in_withholding_payment
+l10n_in      / account.move.line        / l10n_in_gstr_section (selection): NEW selection_keys: ['purchase_b2b_rcm', 'purchase_b2b_regular', 'purchase_b2c_rcm', 'purchase_b2c_regular', 'purchase_cdnr_rcm', 'purchase_cdnr_regular', 'purchase_cdnur_rcm', 'purchase_cdnur_regular', 'purchase_exempt', 'purchase_imp_goods', 'purchase_imp_services', 'purchase_nil_rated', 'purchase_non_gst_supplies', 'purchase_out_of_scope', 'sale_b2b_rcm', 'sale_b2b_regular', 'sale_b2cl', 'sale_b2cs', 'sale_cdnr_deemed_export', 'sale_cdnr_rcm', 'sale_cdnr_regular', 'sale_cdnr_sez_wop', 'sale_cdnr_sez_wp', 'sale_cdnur_b2cl', 'sale_cdnur_exp_wop', 'sale_cdnur_exp_wp', 'sale_deemed_export', 'sale_eco_9_5', 'sale_exempt', 'sale_exp_wop', 'sale_exp_wp', 'sale_nil_rated', 'sale_non_gst_supplies', 'sale_out_of_scope', 'sale_sez_wop', 'sale_sez_wp']
+l10n_in      / account.move.line        / l10n_in_withhold_tax_amount (float): previously in module l10n_in_withholding
+l10n_in      / account.payment          / l10n_in_total_withholding_amount (float): previously in module l10n_in_withholding
+l10n_in      / account.payment          / l10n_in_withhold_move_ids (one2many): previously in module l10n_in_withholding
+l10n_in      / account.tax              / l10n_in_is_lut (boolean)      : NEW
+l10n_in      / account.tax              / l10n_in_section_id (many2one) : previously in module l10n_in_withholding
+l10n_in      / account.tax              / l10n_in_tax_type (selection)  : is now stored
+l10n_in      / account.tax              / l10n_in_tax_type (selection)  : not a function anymore
+l10n_in      / account.tax              / l10n_in_tax_type (selection)  : selection_keys added: [exempt, gst, nil_rated, non_gst, tcs, tds_purchase, tds_sale], removed: [cess, cgst, igst, sgst]
+l10n_in      / l10n_in.pan.entity       / activity_ids (one2many)       : NEW relation: mail.activity
+l10n_in      / l10n_in.pan.entity       / message_follower_ids (one2many): NEW relation: mail.followers
+l10n_in      / l10n_in.pan.entity       / message_ids (one2many)        : NEW relation: mail.message
+l10n_in      / l10n_in.pan.entity       / msme_number (char)            : NEW
+l10n_in      / l10n_in.pan.entity       / msme_type (selection)         : NEW selection_keys: ['medium', 'micro', 'small']
+l10n_in      / l10n_in.pan.entity       / name (char)                   : NEW required
+l10n_in      / l10n_in.pan.entity       / partner_ids (one2many)        : NEW relation: res.partner
+l10n_in      / l10n_in.pan.entity       / rating_ids (one2many)         : NEW relation: rating.rating
+l10n_in      / l10n_in.pan.entity       / tds_certificate (binary)      : NEW attachment: True
+l10n_in      / l10n_in.pan.entity       / tds_certificate_filename (char): NEW
+l10n_in      / l10n_in.pan.entity       / tds_deduction (selection)     : NEW selection_keys: ['higher', 'lower', 'no', 'normal'], hasdefault: default
+l10n_in      / l10n_in.pan.entity       / type (selection)              : NEW selection_keys: ['a', 'b', 'c', 'f', 'g', 'h', 'j', 'k', 'l', 'p', 't'], isfunction: function, stored
+l10n_in      / l10n_in.pan.entity       / website_message_ids (one2many): NEW relation: mail.message
+l10n_in      / l10n_in.section.alert    / _order                        : previously in module l10n_in_withholding
+l10n_in      / l10n_in.section.alert    / aggregate_limit (float)       : previously in module l10n_in_withholding
+l10n_in      / l10n_in.section.alert    / aggregate_period (selection)  : previously in module l10n_in_withholding
+l10n_in      / l10n_in.section.alert    / consider_amount (selection)   : previously in module l10n_in_withholding
+l10n_in      / l10n_in.section.alert    / display_name (char)           : previously in module l10n_in_withholding
+l10n_in      / l10n_in.section.alert    / is_aggregate_limit (boolean)  : previously in module l10n_in_withholding
+l10n_in      / l10n_in.section.alert    / is_per_transaction_limit (boolean): previously in module l10n_in_withholding
+l10n_in      / l10n_in.section.alert    / l10n_in_section_tax_ids (one2many): previously in module l10n_in_withholding
+l10n_in      / l10n_in.section.alert    / name (char)                   : previously in module l10n_in_withholding
+l10n_in      / l10n_in.section.alert    / per_transaction_limit (float) : previously in module l10n_in_withholding
+l10n_in      / l10n_in.section.alert    / tax_report_line_id (many2one) : NEW relation: account.report.line
+l10n_in      / l10n_in.section.alert    / tax_source_type (selection)   : previously in module l10n_in_withholding
+l10n_in      / res.company              / l10n_in_gstin_status_feature (boolean): NEW
+l10n_in      / res.company              / l10n_in_is_gst_registered (boolean): NEW isfunction: function, stored
+l10n_in      / res.company              / l10n_in_pan (char)            : DEL
+l10n_in      / res.company              / l10n_in_pan_entity_id (many2one): NEW relation: l10n_in.pan.entity, isrelated: related, stored
+l10n_in      / res.company              / l10n_in_pan_type (char)       : not a function anymore
+l10n_in      / res.company              / l10n_in_pan_type (char)       : now related
+l10n_in      / res.company              / l10n_in_pan_type (char)       : selection_keys is now 'function' ('False')
+l10n_in      / res.company              / l10n_in_pan_type (char)       : type is now 'selection' ('char')
+l10n_in      / res.company              / l10n_in_tcs_feature (boolean) : NEW isfunction: function, stored
+l10n_in      / res.company              / l10n_in_tds_feature (boolean) : NEW isfunction: function, stored
+l10n_in      / res.company              / l10n_in_withholding_account_id (many2one): previously in module l10n_in_withholding
+l10n_in      / res.company              / l10n_in_withholding_journal_id (many2one): previously in module l10n_in_withholding
+l10n_in      / res.partner              / l10n_in_gstin_verified_date (date): previously in module l10n_in_gstin_status
+l10n_in      / res.partner              / l10n_in_gstin_verified_status (boolean): previously in module l10n_in_gstin_status
+l10n_in      / res.partner              / l10n_in_pan (char)            : DEL
+l10n_in      / res.partner              / l10n_in_pan_entity_id (many2one): NEW relation: l10n_in.pan.entity
+l10n_in      / res.partner              / l10n_in_tan (char)            : NEW
+l10n_in      / res.users                / l10n_in_gstin_verified_date (date): previously in module l10n_in_gstin_status
+l10n_in      / res.users                / l10n_in_gstin_verified_status (boolean): previously in module l10n_in_gstin_status
+l10n_in_withholding / account.payment          / l10n_in_total_withholding_amount (float): not related anymore
+l10n_in_withholding / account.payment          / l10n_in_total_withholding_amount (float): now a function
+l10n_in_withholding / account.payment          / l10n_in_withhold_move_ids (one2many): is now stored
+l10n_in_withholding / account.payment          / l10n_in_withhold_move_ids (one2many): not related anymore
+---XML records in module 'l10n_in'---
+NEW account.account.tag: l10n_in.tax_tag_eco_9_5
+NEW account.account.tag: l10n_in.tax_tag_eco_tcs_52
+NEW account.account.tag: l10n_in.tax_tag_non_itc
+NEW account.account.tag: l10n_in.tax_tag_other_non_itc
+DEL account.account.tag: l10n_in.tax_tag_base_cess_rc
+DEL account.account.tag: l10n_in.tax_tag_base_cgst_rc
+DEL account.account.tag: l10n_in.tax_tag_base_igst_rc
+DEL account.account.tag: l10n_in.tax_tag_base_sgst_rc
+DEL account.account.tag: l10n_in.tax_tag_cess_rc
+DEL account.account.tag: l10n_in.tax_tag_cgst_rc
+DEL account.account.tag: l10n_in.tax_tag_exempt
+DEL account.account.tag: l10n_in.tax_tag_igst_rc
+DEL account.account.tag: l10n_in.tax_tag_nil_rated
+DEL account.account.tag: l10n_in.tax_tag_non_gst_supplies
+DEL account.account.tag: l10n_in.tax_tag_non_itc_base_cess
+DEL account.account.tag: l10n_in.tax_tag_non_itc_base_cgst
+DEL account.account.tag: l10n_in.tax_tag_non_itc_base_igst
+DEL account.account.tag: l10n_in.tax_tag_non_itc_base_sgst
+DEL account.account.tag: l10n_in.tax_tag_non_itc_cess
+DEL account.account.tag: l10n_in.tax_tag_non_itc_cess_rc
+DEL account.account.tag: l10n_in.tax_tag_non_itc_cgst
+DEL account.account.tag: l10n_in.tax_tag_non_itc_cgst_rc
+DEL account.account.tag: l10n_in.tax_tag_non_itc_igst
+DEL account.account.tag: l10n_in.tax_tag_non_itc_igst_rc
+DEL account.account.tag: l10n_in.tax_tag_non_itc_sgst
+DEL account.account.tag: l10n_in.tax_tag_non_itc_sgst_rc
+DEL account.account.tag: l10n_in.tax_tag_other_non_itc_base_cess
+DEL account.account.tag: l10n_in.tax_tag_other_non_itc_base_cgst
+DEL account.account.tag: l10n_in.tax_tag_other_non_itc_base_igst
+DEL account.account.tag: l10n_in.tax_tag_other_non_itc_base_sgst
+DEL account.account.tag: l10n_in.tax_tag_other_non_itc_cess
+DEL account.account.tag: l10n_in.tax_tag_other_non_itc_cess_rc
+DEL account.account.tag: l10n_in.tax_tag_other_non_itc_cgst
+DEL account.account.tag: l10n_in.tax_tag_other_non_itc_cgst_rc
+DEL account.account.tag: l10n_in.tax_tag_other_non_itc_igst
+DEL account.account.tag: l10n_in.tax_tag_other_non_itc_igst_rc
+DEL account.account.tag: l10n_in.tax_tag_other_non_itc_sgst
+DEL account.account.tag: l10n_in.tax_tag_other_non_itc_sgst_rc
+DEL account.account.tag: l10n_in.tax_tag_sgst_rc
+DEL account.account.tag: l10n_in.tax_tag_zero_rated
+NEW account.report: l10n_in.tcs_report [renamed from l10n_in_withholding module]
+NEW account.report: l10n_in.tds_report [renamed from l10n_in_withholding module]
+NEW account.report.column: l10n_in.tcs_report_balance [renamed from l10n_in_withholding module]
+NEW account.report.column: l10n_in.tds_report_balance [renamed from l10n_in_withholding module]
+NEW account.report.expression: l10n_in.tcs_report_line_section_206c_1_alfhc_tag [renamed from l10n_in_withholding module]
+NEW account.report.expression: l10n_in.tcs_report_line_section_206c_1_aofpnbtotl_tag [renamed from l10n_in_withholding module]
+NEW account.report.expression: l10n_in.tcs_report_line_section_206c_1_mbcoloio_tag [renamed from l10n_in_withholding module]
+NEW account.report.expression: l10n_in.tcs_report_line_section_206c_1_s_tag [renamed from l10n_in_withholding module]
+NEW account.report.expression: l10n_in.tcs_report_line_section_206c_1_tl_tag [renamed from l10n_in_withholding module]
+NEW account.report.expression: l10n_in.tcs_report_line_section_206c_1_tobaotuafl_tag [renamed from l10n_in_withholding module]
+NEW account.report.expression: l10n_in.tcs_report_line_section_206c_1_touafl_tag [renamed from l10n_in_withholding module]
+NEW account.report.expression: l10n_in.tcs_report_line_section_206c_1c_maq_tag [renamed from l10n_in_withholding module]
+NEW account.report.expression: l10n_in.tcs_report_line_section_206c_1c_pl_tag [renamed from l10n_in_withholding module]
+NEW account.report.expression: l10n_in.tcs_report_line_section_206c_1c_tp_tag [renamed from l10n_in_withholding module]
+NEW account.report.expression: l10n_in.tcs_report_line_section_206c_1f_mv_tag [renamed from l10n_in_withholding module]
+NEW account.report.expression: l10n_in.tcs_report_line_section_206c_1g_soaotpp_tag [renamed from l10n_in_withholding module]
+NEW account.report.expression: l10n_in.tcs_report_line_section_206c_1g_som_tag [renamed from l10n_in_withholding module]
+NEW account.report.expression: l10n_in.tcs_report_line_section_206c_1h_sog_tag [renamed from l10n_in_withholding module]
+NEW account.report.expression: l10n_in.tds_report_line_section_192_tag [renamed from l10n_in_withholding module]
+NEW account.report.expression: l10n_in.tds_report_line_section_192a_tag [renamed from l10n_in_withholding module]
+NEW account.report.expression: l10n_in.tds_report_line_section_193_tag [renamed from l10n_in_withholding module]
+NEW account.report.expression: l10n_in.tds_report_line_section_194_tag [renamed from l10n_in_withholding module]
+NEW account.report.expression: l10n_in.tds_report_line_section_194a_tag [renamed from l10n_in_withholding module]
+NEW account.report.expression: l10n_in.tds_report_line_section_194b_tag [renamed from l10n_in_withholding module]
+NEW account.report.expression: l10n_in.tds_report_line_section_194bb_tag [renamed from l10n_in_withholding module]
+NEW account.report.expression: l10n_in.tds_report_line_section_194c_tag [renamed from l10n_in_withholding module]
+NEW account.report.expression: l10n_in.tds_report_line_section_194d_tag [renamed from l10n_in_withholding module]
+NEW account.report.expression: l10n_in.tds_report_line_section_194da_tag [renamed from l10n_in_withholding module]
+NEW account.report.expression: l10n_in.tds_report_line_section_194e_tag [renamed from l10n_in_withholding module]
+NEW account.report.expression: l10n_in.tds_report_line_section_194ee_tag [renamed from l10n_in_withholding module]
+NEW account.report.expression: l10n_in.tds_report_line_section_194f_tag [renamed from l10n_in_withholding module]
+NEW account.report.expression: l10n_in.tds_report_line_section_194g_tag [renamed from l10n_in_withholding module]
+NEW account.report.expression: l10n_in.tds_report_line_section_194h_tag [renamed from l10n_in_withholding module]
+NEW account.report.expression: l10n_in.tds_report_line_section_194i_tag [renamed from l10n_in_withholding module]
+NEW account.report.expression: l10n_in.tds_report_line_section_194ia_tag [renamed from l10n_in_withholding module]
+NEW account.report.expression: l10n_in.tds_report_line_section_194ib_tag [renamed from l10n_in_withholding module]
+NEW account.report.expression: l10n_in.tds_report_line_section_194ic_tag [renamed from l10n_in_withholding module]
+NEW account.report.expression: l10n_in.tds_report_line_section_194j_tag [renamed from l10n_in_withholding module]
+NEW account.report.expression: l10n_in.tds_report_line_section_194k_tag [renamed from l10n_in_withholding module]
+NEW account.report.expression: l10n_in.tds_report_line_section_194la_tag [renamed from l10n_in_withholding module]
+NEW account.report.expression: l10n_in.tds_report_line_section_194lb_tag [renamed from l10n_in_withholding module]
+NEW account.report.expression: l10n_in.tds_report_line_section_194lba_tag [renamed from l10n_in_withholding module]
+NEW account.report.expression: l10n_in.tds_report_line_section_194lbb_tag [renamed from l10n_in_withholding module]
+NEW account.report.expression: l10n_in.tds_report_line_section_194lbc_tag [renamed from l10n_in_withholding module]
+NEW account.report.expression: l10n_in.tds_report_line_section_194m_tag [renamed from l10n_in_withholding module]
+NEW account.report.expression: l10n_in.tds_report_line_section_194n_tag [renamed from l10n_in_withholding module]
+NEW account.report.expression: l10n_in.tds_report_line_section_194o_tag [renamed from l10n_in_withholding module]
+NEW account.report.expression: l10n_in.tds_report_line_section_194q_tag [renamed from l10n_in_withholding module]
+NEW account.report.expression: l10n_in.tds_report_line_section_195_tag [renamed from l10n_in_withholding module]
+NEW account.report.line: l10n_in.tcs_report_line_section_206c_1_alfhc [renamed from l10n_in_withholding module]
+NEW account.report.line: l10n_in.tcs_report_line_section_206c_1_aofpnbtotl [renamed from l10n_in_withholding module]
+NEW account.report.line: l10n_in.tcs_report_line_section_206c_1_mbcoloio [renamed from l10n_in_withholding module]
+NEW account.report.line: l10n_in.tcs_report_line_section_206c_1_s [renamed from l10n_in_withholding module]
+NEW account.report.line: l10n_in.tcs_report_line_section_206c_1_tl [renamed from l10n_in_withholding module]
+NEW account.report.line: l10n_in.tcs_report_line_section_206c_1_tobaotuafl [renamed from l10n_in_withholding module]
+NEW account.report.line: l10n_in.tcs_report_line_section_206c_1_touafl [renamed from l10n_in_withholding module]
+NEW account.report.line: l10n_in.tcs_report_line_section_206c_1c_maq [renamed from l10n_in_withholding module]
+NEW account.report.line: l10n_in.tcs_report_line_section_206c_1c_pl [renamed from l10n_in_withholding module]
+NEW account.report.line: l10n_in.tcs_report_line_section_206c_1c_tp [renamed from l10n_in_withholding module]
+NEW account.report.line: l10n_in.tcs_report_line_section_206c_1f_mv [renamed from l10n_in_withholding module]
+NEW account.report.line: l10n_in.tcs_report_line_section_206c_1g_soaotpp [renamed from l10n_in_withholding module]
+NEW account.report.line: l10n_in.tcs_report_line_section_206c_1g_som [renamed from l10n_in_withholding module]
+NEW account.report.line: l10n_in.tcs_report_line_section_206c_1h_sog [renamed from l10n_in_withholding module]
+NEW account.report.line: l10n_in.tds_report_line_section_192 [renamed from l10n_in_withholding module]
+NEW account.report.line: l10n_in.tds_report_line_section_192a [renamed from l10n_in_withholding module]
+NEW account.report.line: l10n_in.tds_report_line_section_193 [renamed from l10n_in_withholding module]
+NEW account.report.line: l10n_in.tds_report_line_section_194 [renamed from l10n_in_withholding module]
+NEW account.report.line: l10n_in.tds_report_line_section_194a [renamed from l10n_in_withholding module]
+NEW account.report.line: l10n_in.tds_report_line_section_194b [renamed from l10n_in_withholding module]
+NEW account.report.line: l10n_in.tds_report_line_section_194bb [renamed from l10n_in_withholding module]
+NEW account.report.line: l10n_in.tds_report_line_section_194c [renamed from l10n_in_withholding module]
+NEW account.report.line: l10n_in.tds_report_line_section_194d [renamed from l10n_in_withholding module]
+NEW account.report.line: l10n_in.tds_report_line_section_194da [renamed from l10n_in_withholding module]
+NEW account.report.line: l10n_in.tds_report_line_section_194e [renamed from l10n_in_withholding module]
+NEW account.report.line: l10n_in.tds_report_line_section_194ee [renamed from l10n_in_withholding module]
+NEW account.report.line: l10n_in.tds_report_line_section_194f [renamed from l10n_in_withholding module]
+NEW account.report.line: l10n_in.tds_report_line_section_194g [renamed from l10n_in_withholding module]
+NEW account.report.line: l10n_in.tds_report_line_section_194h [renamed from l10n_in_withholding module]
+NEW account.report.line: l10n_in.tds_report_line_section_194i [renamed from l10n_in_withholding module]
+NEW account.report.line: l10n_in.tds_report_line_section_194ia [renamed from l10n_in_withholding module]
+NEW account.report.line: l10n_in.tds_report_line_section_194ib [renamed from l10n_in_withholding module]
+NEW account.report.line: l10n_in.tds_report_line_section_194ic [renamed from l10n_in_withholding module]
+NEW account.report.line: l10n_in.tds_report_line_section_194j [renamed from l10n_in_withholding module]
+NEW account.report.line: l10n_in.tds_report_line_section_194k [renamed from l10n_in_withholding module]
+NEW account.report.line: l10n_in.tds_report_line_section_194la [renamed from l10n_in_withholding module]
+NEW account.report.line: l10n_in.tds_report_line_section_194lb [renamed from l10n_in_withholding module]
+NEW account.report.line: l10n_in.tds_report_line_section_194lba [renamed from l10n_in_withholding module]
+NEW account.report.line: l10n_in.tds_report_line_section_194lbb [renamed from l10n_in_withholding module]
+NEW account.report.line: l10n_in.tds_report_line_section_194lbc [renamed from l10n_in_withholding module]
+NEW account.report.line: l10n_in.tds_report_line_section_194m [renamed from l10n_in_withholding module]
+NEW account.report.line: l10n_in.tds_report_line_section_194n [renamed from l10n_in_withholding module]
+NEW account.report.line: l10n_in.tds_report_line_section_194o [renamed from l10n_in_withholding module]
+NEW account.report.line: l10n_in.tds_report_line_section_194q [renamed from l10n_in_withholding module]
+NEW account.report.line: l10n_in.tds_report_line_section_195 [renamed from l10n_in_withholding module]
+NEW ir.actions.act_window: l10n_in.l10n_in_pan_entity_action
+NEW ir.actions.act_window: l10n_in.l10n_in_section_alert_action [renamed from l10n_in_withholding module]
+NEW ir.actions.act_window: l10n_in.l10n_in_withholding_entry_form_action [renamed from l10n_in_withholding module]
+NEW ir.model.access: l10n_in.access_l10n_in_pan_entity
+NEW ir.model.access: l10n_in.access_l10n_in_section_alert_account_manager [renamed from l10n_in_withholding module]
+NEW ir.model.access: l10n_in.access_l10n_in_section_alert_account_readonly [renamed from l10n_in_withholding module]
+NEW ir.model.access: l10n_in.access_l10n_in_withhold_wizard [renamed from l10n_in_withholding module]
+NEW ir.model.constraint: l10n_in.constraint_l10n_in_pan_entity_name_uniq
+NEW ir.model.constraint: l10n_in.constraint_l10n_in_section_alert_aggregate_limit [renamed from l10n_in_withholding module]
+NEW ir.model.constraint: l10n_in.constraint_l10n_in_section_alert_per_transaction_limit [renamed from l10n_in_withholding module]
+NEW ir.ui.menu: l10n_in.menu_l10n_in_pan_entity
+NEW ir.ui.view: l10n_in.account_account_tds_tcs_view_form_inherit
+NEW ir.ui.view: l10n_in.account_account_tds_tcs_view_tree_inherit
+NEW ir.ui.view: l10n_in.l10n_in_pan_entity_view_form
+NEW ir.ui.view: l10n_in.l10n_in_pan_entity_view_tree
+NEW ir.ui.view: l10n_in.l10n_in_section_alert_view_form
+NEW ir.ui.view: l10n_in.l10n_in_section_alert_view_tree
+NEW ir.ui.view: l10n_in.l10n_in_view_partner_base_vat_form
+NEW ir.ui.view: l10n_in.l10n_in_view_partner_tree
+NEW ir.ui.view: l10n_in.l10n_in_view_res_partner_filter
+NEW ir.ui.view: l10n_in.tds_entry_view_form
+NEW ir.ui.view: l10n_in.view_account_payment_form_inherit_l10n_in_withholding
+NEW ir.ui.view: l10n_in.view_move_line_list_l10n_in_withholding
+NEW ir.ui.view: l10n_in.view_move_line_tree_l10n_in
+DEL ir.ui.view: l10n_in.product_uom_categ_form_view_inherit_l10n_in
+NEW l10n_in.section.alert: l10n_in.tcs_section_206c1_alc [renamed from l10n_in_withholding module]
+NEW l10n_in.section.alert: l10n_in.tcs_section_206c1_fo [renamed from l10n_in_withholding module]
+NEW l10n_in.section.alert: l10n_in.tcs_section_206c1_min [renamed from l10n_in_withholding module]
+NEW l10n_in.section.alert: l10n_in.tcs_section_206c1_sc [renamed from l10n_in_withholding module]
+NEW l10n_in.section.alert: l10n_in.tcs_section_206c1_tim [renamed from l10n_in_withholding module]
+NEW l10n_in.section.alert: l10n_in.tcs_section_206c1_tim_o [renamed from l10n_in_withholding module]
+NEW l10n_in.section.alert: l10n_in.tcs_section_206c1_tl [renamed from l10n_in_withholding module]
+NEW l10n_in.section.alert: l10n_in.tcs_section_206c1c_mq [renamed from l10n_in_withholding module]
+NEW l10n_in.section.alert: l10n_in.tcs_section_206c1c_p [renamed from l10n_in_withholding module]
+NEW l10n_in.section.alert: l10n_in.tcs_section_206c1c_t [renamed from l10n_in_withholding module]
+NEW l10n_in.section.alert: l10n_in.tcs_section_206c1f_mv [renamed from l10n_in_withholding module]
+NEW l10n_in.section.alert: l10n_in.tcs_section_206c1g_ot [renamed from l10n_in_withholding module]
+NEW l10n_in.section.alert: l10n_in.tcs_section_206c1g_r [renamed from l10n_in_withholding module]
+NEW l10n_in.section.alert: l10n_in.tds_section_192 [renamed from l10n_in_withholding module]
+NEW l10n_in.section.alert: l10n_in.tds_section_192a [renamed from l10n_in_withholding module]
+NEW l10n_in.section.alert: l10n_in.tds_section_193 [renamed from l10n_in_withholding module]
+NEW l10n_in.section.alert: l10n_in.tds_section_194 [renamed from l10n_in_withholding module]
+NEW l10n_in.section.alert: l10n_in.tds_section_194a [renamed from l10n_in_withholding module]
+NEW l10n_in.section.alert: l10n_in.tds_section_194b [renamed from l10n_in_withholding module]
+NEW l10n_in.section.alert: l10n_in.tds_section_194ba [renamed from l10n_in_withholding module]
+NEW l10n_in.section.alert: l10n_in.tds_section_194bb [renamed from l10n_in_withholding module]
+NEW l10n_in.section.alert: l10n_in.tds_section_194c [renamed from l10n_in_withholding module]
+NEW l10n_in.section.alert: l10n_in.tds_section_194d [renamed from l10n_in_withholding module]
+NEW l10n_in.section.alert: l10n_in.tds_section_194da [renamed from l10n_in_withholding module]
+NEW l10n_in.section.alert: l10n_in.tds_section_194e [renamed from l10n_in_withholding module]
+NEW l10n_in.section.alert: l10n_in.tds_section_194ee [renamed from l10n_in_withholding module]
+NEW l10n_in.section.alert: l10n_in.tds_section_194f [renamed from l10n_in_withholding module]
+NEW l10n_in.section.alert: l10n_in.tds_section_194g [renamed from l10n_in_withholding module]
+NEW l10n_in.section.alert: l10n_in.tds_section_194h [renamed from l10n_in_withholding module]
+NEW l10n_in.section.alert: l10n_in.tds_section_194i [renamed from l10n_in_withholding module]
+NEW l10n_in.section.alert: l10n_in.tds_section_194ia [renamed from l10n_in_withholding module]
+NEW l10n_in.section.alert: l10n_in.tds_section_194ib [renamed from l10n_in_withholding module]
+NEW l10n_in.section.alert: l10n_in.tds_section_194ic [renamed from l10n_in_withholding module]
+NEW l10n_in.section.alert: l10n_in.tds_section_194j [renamed from l10n_in_withholding module]
+NEW l10n_in.section.alert: l10n_in.tds_section_194j_dir [renamed from l10n_in_withholding module]
+NEW l10n_in.section.alert: l10n_in.tds_section_194k [renamed from l10n_in_withholding module]
+NEW l10n_in.section.alert: l10n_in.tds_section_194la [renamed from l10n_in_withholding module]
+NEW l10n_in.section.alert: l10n_in.tds_section_194lb [renamed from l10n_in_withholding module]
+NEW l10n_in.section.alert: l10n_in.tds_section_194lba1 [renamed from l10n_in_withholding module]
+NEW l10n_in.section.alert: l10n_in.tds_section_194lbb [renamed from l10n_in_withholding module]
+NEW l10n_in.section.alert: l10n_in.tds_section_194lbc [renamed from l10n_in_withholding module]
+NEW l10n_in.section.alert: l10n_in.tds_section_194m [renamed from l10n_in_withholding module]
+NEW l10n_in.section.alert: l10n_in.tds_section_194n [renamed from l10n_in_withholding module]
+NEW l10n_in.section.alert: l10n_in.tds_section_194o [renamed from l10n_in_withholding module]
+NEW l10n_in.section.alert: l10n_in.tds_section_194o_huf [renamed from l10n_in_withholding module]
+NEW l10n_in.section.alert: l10n_in.tds_section_194q [renamed from l10n_in_withholding module]
+NEW l10n_in.section.alert: l10n_in.tds_section_195 [renamed from l10n_in_withholding module]
+NEW res.country.group: l10n_in.inter_state_group

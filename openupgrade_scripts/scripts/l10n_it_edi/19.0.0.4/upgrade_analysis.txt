@@ -1,0 +1,49 @@
+---Models in module 'l10n_it_edi'---
+---Fields in module 'l10n_it_edi'---
+l10n_it_edi  / account.bank.statement.line / l10n_it_document_type (many2one): previously in module l10n_it_edi_ndd
+l10n_it_edi  / account.bank.statement.line / l10n_it_payment_method (selection): previously in module l10n_it_edi_ndd
+l10n_it_edi  / account.move             / l10n_it_document_type (many2one): previously in module l10n_it_edi_ndd
+l10n_it_edi  / account.move             / l10n_it_edi_attachment_name (char): NEW
+l10n_it_edi  / account.move             / l10n_it_payment_method (selection): previously in module l10n_it_edi_ndd
+l10n_it_edi  / account.payment.method.line / l10n_it_payment_method (selection): previously in module l10n_it_edi_ndd
+l10n_it_edi  / account.tax              / l10n_it_pension_fund_type (selection): previously in module l10n_it_edi_withholding
+l10n_it_edi  / account.tax              / l10n_it_withholding_reason (selection): previously in module l10n_it_edi_withholding
+l10n_it_edi  / account.tax              / l10n_it_withholding_type (selection): previously in module l10n_it_edi_withholding
+l10n_it_edi  / l10n_it.document.type    / _order                        : previously in module l10n_it_edi_ndd
+l10n_it_edi  / l10n_it.document.type    / code (char)                   : previously in module l10n_it_edi_ndd
+l10n_it_edi  / l10n_it.document.type    / display_name (char)           : previously in module l10n_it_edi_ndd
+l10n_it_edi  / l10n_it.document.type    / name (char)                   : previously in module l10n_it_edi_ndd
+l10n_it_edi  / l10n_it.document.type    / type (selection)              : previously in module l10n_it_edi_ndd
+l10n_it_edi  / res.company              / l10n_it_edi_purchase_journal_id (many2one): NEW relation: account.journal, hasdefault: compute
+l10n_it_edi  / res.company              / l10n_it_edi_register (boolean): NEW hasdefault: default
+l10n_it_edi  / res.partner              / invoice_edi_format (False)    : selection_keys added: [pint_sg] (most likely nothing to do)
+---XML records in module 'l10n_it_edi'---
+NEW ir.model.access: l10n_it_edi.access_l10n_it_document_type [renamed from l10n_it_edi_ndd module]
+NEW ir.model.constraint: l10n_it_edi.constraint_account_edi_proxy_client_user_unique_identification_l10n_it_edi
+NEW ir.ui.view: l10n_it_edi.account_view_tax_form_l10n_it_edi_extended
+NEW ir.ui.view: l10n_it_edi.address_form_fields
+NEW ir.ui.view: l10n_it_edi.l10n_it_document_type_form
+NEW ir.ui.view: l10n_it_edi.l10n_it_document_type_tree
+NEW ir.ui.view: l10n_it_edi.view_account_journal_form_l10n_it
+NEW l10n_it.document.type: l10n_it_edi.l10n_it_document_type_01 [renamed from l10n_it_edi_ndd module]
+NEW l10n_it.document.type: l10n_it_edi.l10n_it_document_type_02 [renamed from l10n_it_edi_ndd module]
+NEW l10n_it.document.type: l10n_it_edi.l10n_it_document_type_03 [renamed from l10n_it_edi_ndd module]
+NEW l10n_it.document.type: l10n_it_edi.l10n_it_document_type_04 [renamed from l10n_it_edi_ndd module]
+NEW l10n_it.document.type: l10n_it_edi.l10n_it_document_type_05 [renamed from l10n_it_edi_ndd module]
+NEW l10n_it.document.type: l10n_it_edi.l10n_it_document_type_06 [renamed from l10n_it_edi_ndd module]
+NEW l10n_it.document.type: l10n_it_edi.l10n_it_document_type_07 [renamed from l10n_it_edi_ndd module]
+NEW l10n_it.document.type: l10n_it_edi.l10n_it_document_type_08 [renamed from l10n_it_edi_ndd module]
+NEW l10n_it.document.type: l10n_it_edi.l10n_it_document_type_09 [renamed from l10n_it_edi_ndd module]
+NEW l10n_it.document.type: l10n_it_edi.l10n_it_document_type_16 [renamed from l10n_it_edi_ndd module]
+NEW l10n_it.document.type: l10n_it_edi.l10n_it_document_type_17 [renamed from l10n_it_edi_ndd module]
+NEW l10n_it.document.type: l10n_it_edi.l10n_it_document_type_18 [renamed from l10n_it_edi_ndd module]
+NEW l10n_it.document.type: l10n_it_edi.l10n_it_document_type_19 [renamed from l10n_it_edi_ndd module]
+NEW l10n_it.document.type: l10n_it_edi.l10n_it_document_type_20 [renamed from l10n_it_edi_ndd module]
+NEW l10n_it.document.type: l10n_it_edi.l10n_it_document_type_21 [renamed from l10n_it_edi_ndd module]
+NEW l10n_it.document.type: l10n_it_edi.l10n_it_document_type_22 [renamed from l10n_it_edi_ndd module]
+NEW l10n_it.document.type: l10n_it_edi.l10n_it_document_type_23 [renamed from l10n_it_edi_ndd module]
+NEW l10n_it.document.type: l10n_it_edi.l10n_it_document_type_24 [renamed from l10n_it_edi_ndd module]
+NEW l10n_it.document.type: l10n_it_edi.l10n_it_document_type_25 [renamed from l10n_it_edi_ndd module]
+NEW l10n_it.document.type: l10n_it_edi.l10n_it_document_type_26 [renamed from l10n_it_edi_ndd module]
+NEW l10n_it.document.type: l10n_it_edi.l10n_it_document_type_27 [renamed from l10n_it_edi_ndd module]
+NEW l10n_it.document.type: l10n_it_edi.l10n_it_document_type_28 [renamed from l10n_it_edi_ndd module]

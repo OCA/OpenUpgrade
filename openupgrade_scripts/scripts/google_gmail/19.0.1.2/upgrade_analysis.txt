@@ -1,0 +1,7 @@
+---Models in module 'google_gmail'---
+---Fields in module 'google_gmail'---
+google_gmail / fetchmail.server         / google_gmail_authorization_code (char): DEL
+google_gmail / ir.mail_server           / google_gmail_authorization_code (char): DEL
+google_gmail / res.users                / outgoing_mail_server_type (False): NEW selection_keys: ['default', 'gmail'], mode: modify
+---XML records in module 'google_gmail'---
+NEW ir.ui.view: google_gmail.google_gmail_oauth_error

@@ -1,0 +1,14 @@
+---Models in module 'pos_viva_com'---
+---Fields in module 'pos_viva_com'---
+pos_viva_com / pos.payment              / viva_com_session_id (char)    : NEW
+pos_viva_com / pos.payment.method       / viva_com_api_key (char)       : NEW
+pos_viva_com / pos.payment.method       / viva_com_bearer_token (char)  : NEW hasdefault: default
+pos_viva_com / pos.payment.method       / viva_com_client_id (char)     : NEW
+pos_viva_com / pos.payment.method       / viva_com_client_secret (char) : NEW
+pos_viva_com / pos.payment.method       / viva_com_latest_response (json): NEW
+pos_viva_com / pos.payment.method       / viva_com_merchant_id (char)   : NEW
+pos_viva_com / pos.payment.method       / viva_com_terminal_id (char)   : NEW
+pos_viva_com / pos.payment.method       / viva_com_test_mode (boolean)  : NEW
+pos_viva_com / pos.payment.method       / viva_com_webhook_verification_key (char): NEW
+---XML records in module 'pos_viva_com'---
+NEW ir.ui.view: pos_viva_com.pos_payment_method_view_form_inherit_pos_viva_com

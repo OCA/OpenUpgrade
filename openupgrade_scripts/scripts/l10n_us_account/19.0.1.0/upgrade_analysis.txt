@@ -1,0 +1,8 @@
+---Models in module 'l10n_us_account'---
+---Fields in module 'l10n_us_account'---
+l10n_us_account / res.bank                 / intermediary_bank_id (many2one): NEW relation: res.bank
+---XML records in module 'l10n_us_account'---
+NEW account.report: l10n_us_account.tax_report
+NEW account.report.column: l10n_us_account.column_net
+NEW account.report.column: l10n_us_account.column_tax
+NEW ir.ui.view: l10n_us_account.res_bank_view_form

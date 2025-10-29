@@ -1,0 +1,17 @@
+---Models in module 'html_editor'---
+---Fields in module 'html_editor'---
+html_editor  / html_editor.converter.test / binary (binary)               : NEW attachment: False
+html_editor  / html_editor.converter.test / char (char)                   : NEW
+html_editor  / html_editor.converter.test / date (date)                   : NEW
+html_editor  / html_editor.converter.test / datetime (datetime)           : NEW
+html_editor  / html_editor.converter.test / float (float)                 : NEW
+html_editor  / html_editor.converter.test / html (html)                   : NEW
+html_editor  / html_editor.converter.test / integer (integer)             : NEW
+html_editor  / html_editor.converter.test / many2one (many2one)           : NEW relation: html_editor.converter.test.sub
+html_editor  / html_editor.converter.test / numeric (float)               : NEW
+html_editor  / html_editor.converter.test / selection_str (selection)     : NEW selection_keys: ['A', 'B', 'C', 'D']
+html_editor  / html_editor.converter.test / text (text)                   : NEW
+html_editor  / html_editor.converter.test.sub / name (char)                   : NEW
+---XML records in module 'html_editor'---
+NEW ir.model.access: html_editor.access_html_editor_converter_test
+NEW ir.model.access: html_editor.access_html_editor_converter_test_sub

@@ -1,0 +1,146 @@
+---Models in module 'hr_work_entry'---
+---Fields in module 'hr_work_entry'---
+hr_work_entry / hr.user.work.entry.employee / is_checked (boolean)          : NEW hasdefault: default
+hr_work_entry / hr.version               / date_generated_from (datetime): NEW required
+hr_work_entry / hr.version               / date_generated_to (datetime)  : NEW required
+hr_work_entry / hr.version               / last_generation_date (date)   : NEW
+hr_work_entry / hr.version               / work_entry_source (selection) : NEW required, selection_keys: ['calendar'], hasdefault: default
+hr_work_entry / hr.work.entry            / _order                        : _order is now 'create_date' ('conflict desc,state,date_start')
+hr_work_entry / hr.work.entry            / amount_rate (float)           : NEW
+hr_work_entry / hr.work.entry            / date (date)                   : NEW required
+hr_work_entry / hr.work.entry            / date_start (datetime)         : DEL required
+hr_work_entry / hr.work.entry            / date_stop (datetime)          : DEL
+hr_work_entry / hr.work.entry            / version_id (many2one)         : NEW relation: hr.version, required
+hr_work_entry / hr.work.entry            / work_entry_source (selection) : previously in module hr_work_entry_contract
+hr_work_entry / hr.work.entry.type       / amount_rate (float)           : NEW hasdefault: default
+hr_work_entry / hr.work.entry.type       / display_code (char)           : NEW translate
+hr_work_entry / hr.work.entry.type       / is_extra_hours (boolean)      : NEW
+hr_work_entry / hr.work.entry.type       / is_leave (boolean)            : previously in module hr_work_entry_contract
+---XML records in module 'hr_work_entry'---
+NEW hr.work.entry.type: hr_work_entry.hr_work_entry_type_out_of_contract
+NEW hr.work.entry.type: hr_work_entry.l10n_au_work_entry_type_cash_out
+NEW hr.work.entry.type: hr_work_entry.l10n_au_work_entry_type_compensation
+NEW hr.work.entry.type: hr_work_entry.l10n_au_work_entry_type_defence
+NEW hr.work.entry.type: hr_work_entry.l10n_au_work_entry_type_long_service_leave
+NEW hr.work.entry.type: hr_work_entry.l10n_au_work_entry_type_other
+NEW hr.work.entry.type: hr_work_entry.l10n_au_work_entry_type_overtime_pto
+NEW hr.work.entry.type: hr_work_entry.l10n_au_work_entry_type_overtime_regular
+NEW hr.work.entry.type: hr_work_entry.l10n_au_work_entry_type_overtime_saturday
+NEW hr.work.entry.type: hr_work_entry.l10n_au_work_entry_type_overtime_saturday_pto
+NEW hr.work.entry.type: hr_work_entry.l10n_au_work_entry_type_overtime_sunday
+NEW hr.work.entry.type: hr_work_entry.l10n_au_work_entry_type_overtime_sunday_pto
+NEW hr.work.entry.type: hr_work_entry.l10n_au_work_entry_type_paid_time_off
+NEW hr.work.entry.type: hr_work_entry.l10n_au_work_entry_type_parental
+NEW hr.work.entry.type: hr_work_entry.l10n_au_work_entry_type_personal_leave
+NEW hr.work.entry.type: hr_work_entry.l10n_au_work_entry_type_termination
+NEW hr.work.entry.type: hr_work_entry.l10n_be_work_entry_type_additional_paid
+NEW hr.work.entry.type: hr_work_entry.l10n_be_work_entry_type_bank_holiday
+NEW hr.work.entry.type: hr_work_entry.l10n_be_work_entry_type_breast_feeding
+NEW hr.work.entry.type: hr_work_entry.l10n_be_work_entry_type_corona
+NEW hr.work.entry.type: hr_work_entry.l10n_be_work_entry_type_credit_time
+NEW hr.work.entry.type: hr_work_entry.l10n_be_work_entry_type_economic_unemployment
+NEW hr.work.entry.type: hr_work_entry.l10n_be_work_entry_type_european
+NEW hr.work.entry.type: hr_work_entry.l10n_be_work_entry_type_extra_legal
+NEW hr.work.entry.type: hr_work_entry.l10n_be_work_entry_type_flemish_training_time_off
+NEW hr.work.entry.type: hr_work_entry.l10n_be_work_entry_type_long_sick
+NEW hr.work.entry.type: hr_work_entry.l10n_be_work_entry_type_maternity
+NEW hr.work.entry.type: hr_work_entry.l10n_be_work_entry_type_medical_assistance
+NEW hr.work.entry.type: hr_work_entry.l10n_be_work_entry_type_notice
+NEW hr.work.entry.type: hr_work_entry.l10n_be_work_entry_type_parental_time_off
+NEW hr.work.entry.type: hr_work_entry.l10n_be_work_entry_type_part_sick
+NEW hr.work.entry.type: hr_work_entry.l10n_be_work_entry_type_partial_incapacity
+NEW hr.work.entry.type: hr_work_entry.l10n_be_work_entry_type_paternity_company
+NEW hr.work.entry.type: hr_work_entry.l10n_be_work_entry_type_paternity_legal
+NEW hr.work.entry.type: hr_work_entry.l10n_be_work_entry_type_phc
+NEW hr.work.entry.type: hr_work_entry.l10n_be_work_entry_type_recovery
+NEW hr.work.entry.type: hr_work_entry.l10n_be_work_entry_type_recovery_additional
+NEW hr.work.entry.type: hr_work_entry.l10n_be_work_entry_type_simple_holiday_pay_variable_salary
+NEW hr.work.entry.type: hr_work_entry.l10n_be_work_entry_type_small_unemployment
+NEW hr.work.entry.type: hr_work_entry.l10n_be_work_entry_type_small_unemployment_birth
+NEW hr.work.entry.type: hr_work_entry.l10n_be_work_entry_type_solicitation_time_off
+NEW hr.work.entry.type: hr_work_entry.l10n_be_work_entry_type_strike
+NEW hr.work.entry.type: hr_work_entry.l10n_be_work_entry_type_training
+NEW hr.work.entry.type: hr_work_entry.l10n_be_work_entry_type_training_time_off
+NEW hr.work.entry.type: hr_work_entry.l10n_be_work_entry_type_unjustified_reason
+NEW hr.work.entry.type: hr_work_entry.l10n_be_work_entry_type_unpredictable
+NEW hr.work.entry.type: hr_work_entry.l10n_be_work_entry_type_work_accident
+NEW hr.work.entry.type: hr_work_entry.l10n_be_work_entry_type_youth_time_off
+NEW hr.work.entry.type: hr_work_entry.l10n_ch_swissdec_accident_wt
+NEW hr.work.entry.type: hr_work_entry.l10n_ch_swissdec_accident_wt_hourly
+NEW hr.work.entry.type: hr_work_entry.l10n_ch_swissdec_hourly_wt
+NEW hr.work.entry.type: hr_work_entry.l10n_ch_swissdec_illness_wt
+NEW hr.work.entry.type: hr_work_entry.l10n_ch_swissdec_illness_wt_hourly
+NEW hr.work.entry.type: hr_work_entry.l10n_ch_swissdec_interruption_wt
+NEW hr.work.entry.type: hr_work_entry.l10n_ch_swissdec_lesson_wt
+NEW hr.work.entry.type: hr_work_entry.l10n_ch_swissdec_maternity_wt
+NEW hr.work.entry.type: hr_work_entry.l10n_ch_swissdec_maternity_wt_hourly
+NEW hr.work.entry.type: hr_work_entry.l10n_ch_swissdec_military_wt
+NEW hr.work.entry.type: hr_work_entry.l10n_ch_swissdec_military_wt_hourly
+NEW hr.work.entry.type: hr_work_entry.l10n_ch_swissdec_monthly_wt
+NEW hr.work.entry.type: hr_work_entry.l10n_ch_swissdec_overtime_125_wt
+NEW hr.work.entry.type: hr_work_entry.l10n_ch_swissdec_overtime_wt
+NEW hr.work.entry.type: hr_work_entry.l10n_ch_swissdec_unpaid_wt
+NEW hr.work.entry.type: hr_work_entry.l10n_ch_work_entry_type_bank_holiday
+NEW hr.work.entry.type: hr_work_entry.l10n_eg_work_entry_type_paid_sick_leave
+NEW hr.work.entry.type: hr_work_entry.l10n_eg_work_entry_type_sick_leave_75
+NEW hr.work.entry.type: hr_work_entry.l10n_eg_work_entry_type_sick_leave_unpaid
+NEW hr.work.entry.type: hr_work_entry.l10n_hk_work_entry_type_compassionate_leave
+NEW hr.work.entry.type: hr_work_entry.l10n_hk_work_entry_type_examination_leave
+NEW hr.work.entry.type: hr_work_entry.l10n_hk_work_entry_type_marriage_leave
+NEW hr.work.entry.type: hr_work_entry.l10n_hk_work_entry_type_maternity_leave
+NEW hr.work.entry.type: hr_work_entry.l10n_hk_work_entry_type_maternity_leave_80
+NEW hr.work.entry.type: hr_work_entry.l10n_hk_work_entry_type_paternity_leave
+NEW hr.work.entry.type: hr_work_entry.l10n_hk_work_entry_type_paternity_leave_80
+NEW hr.work.entry.type: hr_work_entry.l10n_hk_work_entry_type_public_holiday
+NEW hr.work.entry.type: hr_work_entry.l10n_hk_work_entry_type_sick_leave_80
+NEW hr.work.entry.type: hr_work_entry.l10n_hk_work_entry_type_statutory_holiday
+NEW hr.work.entry.type: hr_work_entry.l10n_hk_work_entry_type_weekend
+NEW hr.work.entry.type: hr_work_entry.l10n_id_work_entry_type_bereavement_leave
+NEW hr.work.entry.type: hr_work_entry.l10n_id_work_entry_type_marriage_leave
+NEW hr.work.entry.type: hr_work_entry.l10n_id_work_entry_type_maternity_leave
+NEW hr.work.entry.type: hr_work_entry.l10n_id_work_entry_type_paternity_leave
+NEW hr.work.entry.type: hr_work_entry.l10n_id_work_entry_type_public_holiday
+NEW hr.work.entry.type: hr_work_entry.l10n_jo_work_entry_type_sick_leave_unpaid
+NEW hr.work.entry.type: hr_work_entry.l10n_lu_work_entry_type_situational_unemployment
+NEW hr.work.entry.type: hr_work_entry.l10n_mx_work_entry_type_care_children_with_cancer_imss
+NEW hr.work.entry.type: hr_work_entry.l10n_mx_work_entry_type_disability_due_to_illness_imss
+NEW hr.work.entry.type: hr_work_entry.l10n_mx_work_entry_type_maternity_imss
+NEW hr.work.entry.type: hr_work_entry.l10n_mx_work_entry_type_work_risk_imss
+NEW hr.work.entry.type: hr_work_entry.l10n_pl_work_entry_type_sick_leave
+NEW hr.work.entry.type: hr_work_entry.l10n_sa_work_entry_type_emergency
+NEW hr.work.entry.type: hr_work_entry.l10n_sa_work_entry_type_maternity
+NEW hr.work.entry.type: hr_work_entry.l10n_sa_work_entry_type_sick_leave_0
+NEW hr.work.entry.type: hr_work_entry.l10n_sa_work_entry_type_sick_leave_100
+NEW hr.work.entry.type: hr_work_entry.l10n_sa_work_entry_type_sick_leave_75
+NEW hr.work.entry.type: hr_work_entry.l10n_sk_work_entry_type_maternity
+NEW hr.work.entry.type: hr_work_entry.l10n_sk_work_entry_type_parental_time_off
+NEW hr.work.entry.type: hr_work_entry.l10n_sk_work_entry_type_sick_0
+NEW hr.work.entry.type: hr_work_entry.l10n_sk_work_entry_type_sick_25
+NEW hr.work.entry.type: hr_work_entry.l10n_sk_work_entry_type_sick_55
+NEW hr.work.entry.type: hr_work_entry.l10n_us_work_entry_type_double
+NEW hr.work.entry.type: hr_work_entry.l10n_us_work_entry_type_overtime
+NEW hr.work.entry.type: hr_work_entry.l10n_us_work_entry_type_retro_overtime
+NEW hr.work.entry.type: hr_work_entry.l10n_us_work_entry_type_retro_regular
+NEW hr.work.entry.type: hr_work_entry.uae_public_holiday_entry_type
+NEW hr.work.entry.type: hr_work_entry.uae_sick_leave_0_entry_type
+NEW hr.work.entry.type: hr_work_entry.uae_sick_leave_50_entry_type
+NEW hr.work.entry.type: hr_work_entry.work_entry_type_compensatory [renamed from hr_work_entry_contract module]
+NEW hr.work.entry.type: hr_work_entry.work_entry_type_home_working [renamed from hr_work_entry_contract module]
+NEW hr.work.entry.type: hr_work_entry.work_entry_type_leave [renamed from hr_work_entry_contract module]
+NEW hr.work.entry.type: hr_work_entry.work_entry_type_legal_leave [renamed from hr_work_entry_contract module]
+NEW hr.work.entry.type: hr_work_entry.work_entry_type_overtime
+NEW hr.work.entry.type: hr_work_entry.work_entry_type_sick_leave [renamed from hr_work_entry_contract module]
+NEW hr.work.entry.type: hr_work_entry.work_entry_type_unpaid_leave [renamed from hr_work_entry_contract module]
+DEL hr.work.entry.type: hr_work_entry.overtime_work_entry_type
+NEW ir.actions.act_window: hr_work_entry.hr_work_entry_regeneration_wizard_action [renamed from hr_work_entry_contract module]
+NEW ir.cron: hr_work_entry.ir_cron_generate_missing_work_entries [renamed from hr_work_entry_contract module]
+NEW ir.model.access: hr_work_entry.access_hr_work_entry_regeneration_wizard [renamed from hr_work_entry_contract module]
+NEW ir.model.constraint: hr_work_entry.constraint_hr_work_entry_contract_date_start_stop_idx
+DEL ir.model.constraint: hr_work_entry.constraint_hr_work_entry__work_entries_no_validated_conflict
+DEL ir.model.constraint: hr_work_entry.constraint_hr_work_entry__work_entry_has_end
+DEL ir.model.constraint: hr_work_entry.constraint_hr_work_entry__work_entry_start_before_end
+NEW ir.rule: hr_work_entry.ir_rule_hr_work_entry_multi_company [renamed from hr_work_entry_contract module]
+NEW ir.ui.view: hr_work_entry.hr_contract_template_view_form
+NEW ir.ui.view: hr_work_entry.hr_work_entry_calendar_gantt_view_form
+NEW ir.ui.view: hr_work_entry.hr_work_entry_regeneration_wizard
+NEW ir.ui.view: hr_work_entry.hr_work_entry_view_calendar_multi_create_form

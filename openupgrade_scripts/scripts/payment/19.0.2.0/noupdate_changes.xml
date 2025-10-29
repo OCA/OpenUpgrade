@@ -1,0 +1,489 @@
+<?xml version='1.0' encoding='utf-8' ?>
+<odoo>
+    <record id="payment_method_7eleven" model="payment.method">
+        <field name="support_manual_capture">none</field>
+    </record>
+    <record id="payment_method_ach_direct_debit" model="payment.method">
+        <field name="support_manual_capture">none</field>
+    </record>
+    <record id="payment_method_affirm" model="payment.method">
+        <field name="support_manual_capture">full_only</field>
+    </record>
+    <record id="payment_method_afterpay" model="payment.method">
+        <field name="support_manual_capture">partial</field>
+    </record>
+    <record id="payment_method_afterpay_riverty" model="payment.method">
+        <field name="support_manual_capture">partial</field>
+    </record>
+    <record id="payment_method_akulaku" model="payment.method">
+        <field name="support_manual_capture">none</field>
+    </record>
+    <record id="payment_method_alipay" model="payment.method">
+        <field name="support_manual_capture">none</field>
+    </record>
+    <record id="payment_method_alipay_hk" model="payment.method">
+        <field name="support_manual_capture">none</field>
+    </record>
+    <record id="payment_method_alipay_plus" model="payment.method">
+        <field name="support_manual_capture">none</field>
+    </record>
+    <record id="payment_method_alma" model="payment.method">
+        <field name="support_manual_capture">partial</field>
+    </record>
+    <record id="payment_method_amazon_pay" model="payment.method">
+        <field name="support_tokenization">True</field>
+        <field name="supported_country_ids" eval="[Command.clear()]" />
+        <field
+            name="supported_currency_ids"
+            eval="[Command.set([                          ref('base.AUD'),                          ref('base.CHF'),                          ref('base.DKK'),                          ref('base.EUR'),                          ref('base.GBP'),                          ref('base.HKD'),                          ref('base.JPY'),                          ref('base.NOK'),                          ref('base.NZD'),                          ref('base.SEK'),                          ref('base.USD'),                          ref('base.ZAR'),                      ])]"
+        />
+        <field name="support_manual_capture">partial</field>
+    </record>
+    <record id="payment_method_atome" model="payment.method">
+        <field name="support_manual_capture">none</field>
+    </record>
+    <record id="payment_method_bacs_direct_debit" model="payment.method">
+        <field name="support_manual_capture">none</field>
+    </record>
+    <record id="payment_method_bancnet" model="payment.method">
+        <field name="support_manual_capture">none</field>
+    </record>
+    <record id="payment_method_bancontact" model="payment.method">
+        <field name="support_manual_capture">none</field>
+    </record>
+    <record id="payment_method_bangkok_bank" model="payment.method">
+        <field name="support_manual_capture">none</field>
+    </record>
+    <record id="payment_method_bank_account" model="payment.method">
+        <field name="support_manual_capture">none</field>
+    </record>
+    <record id="payment_method_bank_bca" model="payment.method">
+        <field name="support_manual_capture">none</field>
+    </record>
+    <record id="payment_method_bank_of_ayudhya" model="payment.method">
+        <field name="support_manual_capture">none</field>
+    </record>
+    <record id="payment_method_bank_permata" model="payment.method">
+        <field name="support_manual_capture">none</field>
+    </record>
+    <record id="payment_method_bank_reference" model="payment.method">
+        <field name="support_manual_capture">none</field>
+    </record>
+    <record id="payment_method_bank_transfer" model="payment.method">
+        <field name="supported_currency_ids" />
+        <field name="support_manual_capture">none</field>
+    </record>
+    <record id="payment_method_becs_direct_debit" model="payment.method">
+        <field name="support_manual_capture">none</field>
+    </record>
+    <record id="payment_method_belfius" model="payment.method">
+        <field name="support_manual_capture">none</field>
+    </record>
+    <record id="payment_method_benefit" model="payment.method">
+        <field name="support_manual_capture">none</field>
+    </record>
+    <record id="payment_method_bharatqr" model="payment.method">
+        <field name="support_manual_capture">none</field>
+    </record>
+    <record id="payment_method_billease" model="payment.method">
+        <field name="support_manual_capture">none</field>
+    </record>
+    <record id="payment_method_billink" model="payment.method">
+        <field name="support_manual_capture">none</field>
+    </record>
+    <record id="payment_method_bizum" model="payment.method">
+        <field name="support_manual_capture">none</field>
+    </record>
+    <record id="payment_method_blik" model="payment.method">
+        <field name="support_manual_capture">none</field>
+    </record>
+    <record id="payment_method_bni" model="payment.method">
+        <field name="support_manual_capture">none</field>
+    </record>
+    <record id="payment_method_boleto" model="payment.method">
+        <field name="support_manual_capture">none</field>
+    </record>
+    <record id="payment_method_boost" model="payment.method">
+        <field name="support_manual_capture">none</field>
+    </record>
+    <record id="payment_method_bri" model="payment.method">
+        <field name="support_manual_capture">none</field>
+    </record>
+    <record id="payment_method_bsi" model="payment.method">
+        <field name="support_manual_capture">none</field>
+    </record>
+    <record id="payment_method_card" model="payment.method">
+        <field name="support_manual_capture">partial</field>
+    </record>
+    <record id="payment_method_cash_app_pay" model="payment.method">
+        <field name="support_manual_capture">partial</field>
+    </record>
+    <record id="payment_method_cashalo" model="payment.method">
+        <field name="support_manual_capture">none</field>
+    </record>
+    <record id="payment_method_cebuana" model="payment.method">
+        <field name="support_manual_capture">none</field>
+    </record>
+    <record id="payment_method_cimb_niaga" model="payment.method">
+        <field name="support_manual_capture">none</field>
+    </record>
+    <record id="payment_method_clearpay" model="payment.method">
+        <field name="support_manual_capture">partial</field>
+    </record>
+    <record id="payment_method_cofidis" model="payment.method">
+        <field name="support_manual_capture">none</field>
+    </record>
+    <record id="payment_method_dana" model="payment.method">
+        <field name="support_manual_capture">none</field>
+    </record>
+    <record id="payment_method_duitnow" model="payment.method">
+        <field name="support_manual_capture">none</field>
+    </record>
+    <record id="payment_method_emi_india" model="payment.method">
+        <field name="support_manual_capture">partial</field>
+    </record>
+    <record id="payment_method_enets" model="payment.method">
+        <field name="support_manual_capture">none</field>
+    </record>
+    <record id="payment_method_eps" model="payment.method">
+        <field name="support_manual_capture">none</field>
+    </record>
+    <record id="payment_method_floa_bank" model="payment.method">
+        <field name="support_manual_capture">none</field>
+    </record>
+    <record id="payment_method_fps" model="payment.method">
+        <field name="support_manual_capture">none</field>
+    </record>
+    <record id="payment_method_fpx" model="payment.method">
+        <field name="support_manual_capture">none</field>
+    </record>
+    <record id="payment_method_gcash" model="payment.method">
+        <field name="support_manual_capture">none</field>
+    </record>
+    <record id="payment_method_gopay" model="payment.method">
+        <field name="support_manual_capture">none</field>
+    </record>
+    <record id="payment_method_grabpay" model="payment.method">
+        <field name="support_manual_capture">none</field>
+    </record>
+    <record id="payment_method_hd" model="payment.method">
+        <field name="support_manual_capture">none</field>
+    </record>
+    <record id="payment_method_hoolah" model="payment.method">
+        <field name="support_manual_capture">none</field>
+    </record>
+    <record id="payment_method_humm" model="payment.method">
+        <field name="support_manual_capture">none</field>
+    </record>
+    <record id="payment_method_ideal" model="payment.method">
+        <field name="support_manual_capture">none</field>
+    </record>
+    <record id="payment_method_in3" model="payment.method">
+        <field name="support_manual_capture">none</field>
+    </record>
+    <record id="payment_method_jeniuspay" model="payment.method">
+        <field name="support_manual_capture">none</field>
+    </record>
+    <record id="payment_method_jkopay" model="payment.method">
+        <field name="support_manual_capture">none</field>
+    </record>
+    <record id="payment_method_kakaopay" model="payment.method">
+        <field name="support_manual_capture">none</field>
+    </record>
+    <record id="payment_method_kasikorn_bank" model="payment.method">
+        <field name="support_manual_capture">none</field>
+    </record>
+    <record id="payment_method_kbc_cbc" model="payment.method">
+        <field name="support_manual_capture">none</field>
+    </record>
+    <record id="payment_method_klarna" model="payment.method">
+        <field name="support_manual_capture">partial</field>
+    </record>
+    <record id="payment_method_klarna_pay_over_time" model="payment.method">
+        <field name="support_manual_capture">partial</field>
+    </record>
+    <record id="payment_method_klarna_paynow" model="payment.method">
+        <field name="support_manual_capture">partial</field>
+    </record>
+    <record id="payment_method_knet" model="payment.method">
+        <field name="support_manual_capture">none</field>
+    </record>
+    <record id="payment_method_kredivo" model="payment.method">
+        <field name="support_manual_capture">none</field>
+    </record>
+    <record id="payment_method_krungthai_bank" model="payment.method">
+        <field name="support_manual_capture">none</field>
+    </record>
+    <record id="payment_method_linepay" model="payment.method">
+        <field name="support_manual_capture">none</field>
+    </record>
+    <record id="payment_method_linkaja" model="payment.method">
+        <field name="support_manual_capture">none</field>
+    </record>
+    <record id="payment_method_mada" model="payment.method">
+        <field name="support_manual_capture">none</field>
+    </record>
+    <record id="payment_method_mandiri" model="payment.method">
+        <field name="support_manual_capture">none</field>
+    </record>
+    <record id="payment_method_maya" model="payment.method">
+        <field name="support_manual_capture">none</field>
+    </record>
+    <record id="payment_method_maybank" model="payment.method">
+        <field name="support_manual_capture">none</field>
+    </record>
+    <record id="payment_method_mbway" model="payment.method">
+        <field name="support_manual_capture">none</field>
+    </record>
+    <record id="payment_method_mobile_money" model="payment.method">
+        <field name="support_manual_capture">none</field>
+    </record>
+    <record id="payment_method_mobile_pay" model="payment.method">
+        <field name="support_manual_capture">partial</field>
+    </record>
+    <record id="payment_method_momo" model="payment.method">
+        <field name="support_manual_capture">none</field>
+    </record>
+    <record id="payment_method_mpesa" model="payment.method">
+        <field name="support_manual_capture">none</field>
+    </record>
+    <record id="payment_method_multibanco" model="payment.method">
+        <field name="support_manual_capture">none</field>
+    </record>
+    <record id="payment_method_mybank" model="payment.method">
+        <field name="support_manual_capture">none</field>
+    </record>
+    <record id="payment_method_napas_card" model="payment.method">
+        <field name="support_manual_capture">none</field>
+    </record>
+    <record id="payment_method_netbanking" model="payment.method">
+        <field name="support_manual_capture">partial</field>
+    </record>
+    <record id="payment_method_octopus" model="payment.method">
+        <field name="support_manual_capture">none</field>
+    </record>
+    <record id="payment_method_omannet" model="payment.method">
+        <field name="support_express_checkout">False</field>
+        <field name="support_manual_capture">none</field>
+        <field name="support_refund">none</field>
+        <field name="support_tokenization">False</field>
+        <field name="supported_country_ids" eval="[Command.set([ref('base.om')])]" />
+        <field name="supported_currency_ids" eval="[Command.set([ref('base.OMR')])]" />
+    </record>
+    <record id="payment_method_online_banking_czech_republic" model="payment.method">
+        <field name="support_manual_capture">none</field>
+    </record>
+    <record id="payment_method_online_banking_india" model="payment.method">
+        <field name="support_manual_capture">none</field>
+    </record>
+    <record id="payment_method_online_banking_slovakia" model="payment.method">
+        <field name="support_manual_capture">none</field>
+    </record>
+    <record id="payment_method_online_banking_thailand" model="payment.method">
+        <field name="support_manual_capture">none</field>
+    </record>
+    <record id="payment_method_open_banking" model="payment.method">
+        <field name="support_manual_capture">none</field>
+    </record>
+    <record id="payment_method_ovo" model="payment.method">
+        <field name="support_manual_capture">none</field>
+    </record>
+    <record id="payment_method_p24" model="payment.method">
+        <field name="support_manual_capture">none</field>
+    </record>
+    <record id="payment_method_pace" model="payment.method">
+        <field name="support_manual_capture">none</field>
+    </record>
+    <record id="payment_method_pay_id" model="payment.method">
+        <field name="support_manual_capture">none</field>
+    </record>
+    <record id="payment_method_paybright" model="payment.method">
+        <field name="support_manual_capture">partial</field>
+    </record>
+    <record id="payment_method_paylater_india" model="payment.method">
+        <field name="support_manual_capture">partial</field>
+    </record>
+    <record id="payment_method_payme" model="payment.method">
+        <field name="support_manual_capture">none</field>
+    </record>
+    <record id="payment_method_paynow" model="payment.method">
+        <field name="support_manual_capture">none</field>
+    </record>
+    <record id="payment_method_paypal" model="payment.method">
+        <field name="support_manual_capture">partial</field>
+    </record>
+    <record id="payment_method_paysafecard" model="payment.method">
+        <field name="support_manual_capture">none</field>
+    </record>
+    <record id="payment_method_paytm" model="payment.method">
+        <field name="support_manual_capture">none</field>
+    </record>
+    <record id="payment_method_paytrail" model="payment.method">
+        <field name="support_manual_capture">none</field>
+    </record>
+    <record id="payment_method_pix" model="payment.method">
+        <field name="support_manual_capture">none</field>
+    </record>
+    <record id="payment_method_poli" model="payment.method">
+        <field name="support_manual_capture">none</field>
+    </record>
+    <record id="payment_method_post_finance" model="payment.method">
+        <field name="support_manual_capture">none</field>
+    </record>
+    <record id="payment_method_poste_pay" model="payment.method">
+        <field name="support_manual_capture">none</field>
+    </record>
+    <record id="payment_method_pps" model="payment.method">
+        <field name="support_manual_capture">none</field>
+    </record>
+    <record id="payment_method_promptpay" model="payment.method">
+        <field name="support_manual_capture">none</field>
+    </record>
+    <record id="payment_method_pse" model="payment.method">
+        <field name="support_manual_capture">none</field>
+    </record>
+    <record id="payment_method_qris" model="payment.method">
+        <field name="support_manual_capture">none</field>
+    </record>
+    <record id="payment_method_rabbit_line_pay" model="payment.method">
+        <field name="support_manual_capture">none</field>
+    </record>
+    <record id="payment_method_ratepay" model="payment.method">
+        <field name="support_manual_capture">partial</field>
+    </record>
+    <record id="payment_method_revolut_pay" model="payment.method">
+        <field name="support_manual_capture">full_only</field>
+    </record>
+    <record id="payment_method_samsung_pay" model="payment.method">
+        <field name="support_manual_capture">partial</field>
+    </record>
+    <record id="payment_method_scb" model="payment.method">
+        <field name="support_manual_capture">none</field>
+    </record>
+    <record id="payment_method_sepa_direct_debit" model="payment.method">
+        <field name="support_manual_capture">none</field>
+    </record>
+    <record id="payment_method_shopback" model="payment.method">
+        <field name="support_manual_capture">none</field>
+    </record>
+    <record id="payment_method_shopeepay" model="payment.method">
+        <field name="support_manual_capture">none</field>
+    </record>
+    <record id="payment_method_sofort" model="payment.method">
+        <field name="support_manual_capture">none</field>
+    </record>
+    <record id="payment_method_swish" model="payment.method">
+        <field name="support_manual_capture">none</field>
+    </record>
+    <record id="payment_method_techcom" model="payment.method">
+        <field name="support_manual_capture">none</field>
+    </record>
+    <record id="payment_method_tendopay" model="payment.method">
+        <field name="support_manual_capture">none</field>
+    </record>
+    <record id="payment_method_tenpay" model="payment.method">
+        <field name="support_manual_capture">none</field>
+    </record>
+    <record id="payment_method_tienphong" model="payment.method">
+        <field name="support_manual_capture">none</field>
+    </record>
+    <record id="payment_method_tinka" model="payment.method">
+        <field name="support_manual_capture">none</field>
+    </record>
+    <record id="payment_method_tmb" model="payment.method">
+        <field name="support_manual_capture">none</field>
+    </record>
+    <record id="payment_method_touch_n_go" model="payment.method">
+        <field name="support_manual_capture">none</field>
+    </record>
+    <record id="payment_method_truemoney" model="payment.method">
+        <field name="support_manual_capture">none</field>
+    </record>
+    <record id="payment_method_trustly" model="payment.method">
+        <field name="support_manual_capture">none</field>
+    </record>
+    <record id="payment_method_ttb" model="payment.method">
+        <field name="support_manual_capture">none</field>
+    </record>
+    <record id="payment_method_twint" model="payment.method">
+        <field name="support_manual_capture">none</field>
+    </record>
+    <record id="payment_method_uatp" model="payment.method">
+        <field name="support_manual_capture">none</field>
+    </record>
+    <record id="payment_method_unknown" model="payment.method">
+        <field name="support_manual_capture">partial</field>
+    </record>
+    <record id="payment_method_uob" model="payment.method">
+        <field name="support_manual_capture">none</field>
+    </record>
+    <record id="payment_method_upi" model="payment.method">
+        <field name="support_manual_capture">none</field>
+    </record>
+    <record id="payment_method_ussd" model="payment.method">
+        <field name="support_manual_capture">none</field>
+    </record>
+    <record id="payment_method_venmo" model="payment.method">
+        <field name="support_manual_capture">none</field>
+    </record>
+    <record id="payment_method_vietcom" model="payment.method">
+        <field name="support_manual_capture">none</field>
+    </record>
+    <record id="payment_method_vipps" model="payment.method">
+        <field name="support_manual_capture">partial</field>
+    </record>
+    <record id="payment_method_vpay" model="payment.method">
+        <field name="support_manual_capture">none</field>
+    </record>
+    <record id="payment_method_wallets_india" model="payment.method">
+        <field name="support_manual_capture">none</field>
+    </record>
+    <record id="payment_method_walley" model="payment.method">
+        <field name="support_manual_capture">full_only</field>
+    </record>
+    <record id="payment_method_wechat_pay" model="payment.method">
+        <field name="support_manual_capture">none</field>
+    </record>
+    <record id="payment_method_welend" model="payment.method">
+        <field name="support_manual_capture">none</field>
+    </record>
+    <record id="payment_method_zip" model="payment.method">
+        <field name="support_manual_capture">none</field>
+    </record>
+    <record id="payment_provider_adyen" model="payment.provider">
+        <field
+            name="payment_method_ids"
+            eval="[Command.set([                          ref('payment.payment_method_ach_direct_debit'),                          ref('payment.payment_method_affirm'),                          ref('payment.payment_method_afterpay'),                          ref('payment.payment_method_alipay'),                          ref('payment.payment_method_alipay_hk'),                          ref('payment.payment_method_alma'),                          ref('payment.payment_method_bacs_direct_debit'),                          ref('payment.payment_method_bancontact'),                          ref('payment.payment_method_benefit'),                          ref('payment.payment_method_bizum'),                          ref('payment.payment_method_blik'),                          ref('payment.payment_method_card'),                          ref('payment.payment_method_cash_app_pay'),                          ref('payment.payment_method_clearpay'),                          ref('payment.payment_method_dana'),                          ref('payment.payment_method_duitnow'),                          ref('payment.payment_method_elo'),                          ref('payment.payment_method_eps'),                          ref('payment.payment_method_fpx'),                          ref('payment.payment_method_gcash'),                          ref('payment.payment_method_gopay'),                          ref('payment.payment_method_hipercard'),                          ref('payment.payment_method_ideal'),                          ref('payment.payment_method_kakaopay'),                          ref('payment.payment_method_klarna'),                          ref('payment.payment_method_klarna_paynow'),                          ref('payment.payment_method_klarna_pay_over_time'),                          ref('payment.payment_method_knet'),                          ref('payment.payment_method_mbway'),                          ref('payment.payment_method_mobile_pay'),                          ref('payment.payment_method_momo'),                          ref('payment.payment_method_multibanco'),                          ref('payment.payment_method_napas_card'),                          ref('payment.payment_method_online_banking_czech_republic'),                          ref('payment.payment_method_online_banking_india'),                          ref('payment.payment_method_online_banking_slovakia'),                          ref('payment.payment_method_online_banking_thailand'),                          ref('payment.payment_method_open_banking'),                          ref('payment.payment_method_p24'),                          ref('payment.payment_method_paybright'),                          ref('payment.payment_method_paysafecard'),                          ref('payment.payment_method_paynow'),                          ref('payment.payment_method_paypal'),                          ref('payment.payment_method_paytm'),                          ref('payment.payment_method_paytrail'),                          ref('payment.payment_method_pix'),                          ref('payment.payment_method_promptpay'),                          ref('payment.payment_method_ratepay'),                          ref('payment.payment_method_samsung_pay'),                          ref('payment.payment_method_sepa_direct_debit'),                          ref('payment.payment_method_sofort'),                          ref('payment.payment_method_swish'),                          ref('payment.payment_method_touch_n_go'),                          ref('payment.payment_method_trustly'),                          ref('payment.payment_method_twint'),                          ref('payment.payment_method_upi'),                          ref('payment.payment_method_vipps'),                          ref('payment.payment_method_wallets_india'),                          ref('payment.payment_method_walley'),                          ref('payment.payment_method_wechat_pay'),                          ref('payment.payment_method_zip'),                      ])]"
+        />
+    </record>
+    <record id="payment_provider_buckaroo" model="payment.provider">
+        <field
+            name="payment_method_ids"
+            eval="[Command.set([                          ref('payment.payment_method_bancontact'),                          ref('payment.payment_method_bank_reference'),                          ref('payment.payment_method_card'),                          ref('payment.payment_method_paypal'),                          ref('payment.payment_method_ideal'),                          ref('payment.payment_method_afterpay_riverty'),                          ref('payment.payment_method_sepa_direct_debit'),                          ref('payment.payment_method_alipay'),                          ref('payment.payment_method_wechat_pay'),                          ref('payment.payment_method_klarna'),                          ref('payment.payment_method_trustly'),                          ref('payment.payment_method_sofort'),                          ref('payment.payment_method_in3'),                          ref('payment.payment_method_tinka'),                          ref('payment.payment_method_billink'),                          ref('payment.payment_method_kbc_cbc'),                          ref('payment.payment_method_belfius'),                          ref('payment.payment_method_p24'),                          ref('payment.payment_method_poste_pay'),                          ref('payment.payment_method_eps'),                          ref('payment.payment_method_cartes_bancaires'),                      ])]"
+        />
+    </record>
+    <record id="payment_provider_mercado_pago" model="payment.provider">
+        <field
+            name="payment_method_ids"
+            eval="[Command.set([                          ref('payment.payment_method_bank_transfer'),                          ref('payment.payment_method_card'),                          ref('payment.payment_method_mercado_pago_wallet'),                      ])]"
+        />
+    </record>
+    <record id="payment_provider_mollie" model="payment.provider">
+        <field
+            name="payment_method_ids"
+            eval="[Command.set([                          ref('payment.payment_method_bancontact'),                          ref('payment.payment_method_bank_transfer'),                          ref('payment.payment_method_belfius'),                          ref('payment.payment_method_card'),                          ref('payment.payment_method_eps'),                          ref('payment.payment_method_ideal'),                          ref('payment.payment_method_kbc_cbc'),                          ref('payment.payment_method_paypal'),                          ref('payment.payment_method_paysafecard'),                          ref('payment.payment_method_p24'),                          ref('payment.payment_method_sofort'),                          ref('payment.payment_method_trustly'),                          ref('payment.payment_method_twint'),                      ])]"
+        />
+    </record>
+    <record id="payment_provider_razorpay" model="payment.provider">
+        <field
+            name="payment_method_ids"
+            eval="[Command.set([                          ref('payment.payment_method_card'),                          ref('payment.payment_method_emi_india'),                          ref('payment.payment_method_fpx'),                          ref('payment.payment_method_netbanking'),                          ref('payment.payment_method_paylater_india'),                          ref('payment.payment_method_paynow'),                          ref('payment.payment_method_upi'),                          ref('payment.payment_method_wallets_india'),                      ])]"
+        />
+    </record>
+    <record id="payment_provider_stripe" model="payment.provider">
+        <field
+            name="payment_method_ids"
+            eval="[Command.set([                          ref('payment.payment_method_ach_direct_debit'),                          ref('payment.payment_method_affirm'),                          ref('payment.payment_method_afterpay'),                          ref('payment.payment_method_alipay'),                          ref('payment.payment_method_amazon_pay'),                          ref('payment.payment_method_bacs_direct_debit'),                          ref('payment.payment_method_bancontact'),                          ref('payment.payment_method_becs_direct_debit'),                          ref('payment.payment_method_boleto'),                          ref('payment.payment_method_card'),                          ref('payment.payment_method_cash_app_pay'),                          ref('payment.payment_method_clearpay'),                          ref('payment.payment_method_eps'),                          ref('payment.payment_method_fpx'),                          ref('payment.payment_method_grabpay'),                          ref('payment.payment_method_ideal'),                          ref('payment.payment_method_klarna'),                          ref('payment.payment_method_mobile_pay'),                          ref('payment.payment_method_multibanco'),                          ref('payment.payment_method_p24'),                          ref('payment.payment_method_paynow'),                          ref('payment.payment_method_paypal'),                          ref('payment.payment_method_pix'),                          ref('payment.payment_method_promptpay'),                          ref('payment.payment_method_revolut_pay'),                          ref('payment.payment_method_sepa_direct_debit'),                          ref('payment.payment_method_sofort'),                          ref('payment.payment_method_twint'),                          ref('payment.payment_method_upi'),                          ref('payment.payment_method_wechat_pay'),                          ref('payment.payment_method_zip'),                      ])]"
+        />
+    </record>
+</odoo>

@@ -1,0 +1,8 @@
+---Models in module 'auth_totp_mail'---
+---Fields in module 'auth_totp_mail'---
+---XML records in module 'auth_totp_mail'---
+NEW ir.ui.view: auth_totp_mail.account_security_alert
+NEW ir.ui.view: auth_totp_mail.auth_totp_mail_form
+NEW ir.ui.view: auth_totp_mail.res_config_settings_view_form
+DEL ir.ui.view: auth_totp_mail.account_security_setting_update
+NEW mail.template: auth_totp_mail.mail_template_totp_mail_code [renamed from auth_totp_mail_enforce module]

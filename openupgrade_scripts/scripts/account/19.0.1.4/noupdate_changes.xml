@@ -1,0 +1,199 @@
+<?xml version='1.0' encoding='utf-8' ?>
+<odoo>
+    <record id="account_invoice_line_rule_portal" model="ir.rule">
+        <field
+            name="domain_force"
+        >[('parent_state', 'not in', ('cancel', 'draft')), ('move_id.move_type', 'in', ('out_invoice', 'out_refund', 'in_invoice', 'in_refund')), ('move_id.partner_id','child_of',[user.commercial_partner_id.id])]</field>
+    </record>
+    <record id="account_invoice_rule_portal" model="ir.rule">
+        <field
+            name="domain_force"
+        >[('state', 'not in', ('cancel', 'draft')), ('move_type', 'in', ('out_invoice', 'out_refund', 'in_invoice', 'in_refund')), ('partner_id','child_of',[user.commercial_partner_id.id])]</field>
+    </record>
+    <record
+        id="account_send_payment_receipt_by_email_action"
+        model="ir.actions.act_window"
+    >
+        <field name="group_ids" eval="[(4, ref('account.group_account_invoice'))]" />
+    </record>
+    <record
+        id="account_send_payment_receipt_by_email_action_multi"
+        model="ir.actions.act_window"
+    >
+        <field name="binding_view_types">list,kanban</field>
+        <field
+            name="context"
+            eval="{                 'mail_post_autofollow': True,                 'default_composition_mode': 'mass_mail',                 'default_template_id': ref('account.mail_template_data_payment_receipt'),                 'default_email_layout_xmlid': 'mail.mail_notification_light',             }"
+        />
+    </record>
+    <record id="action_account_resequence" model="ir.actions.act_window">
+        <field name="binding_view_types">list,kanban</field>
+        <field name="group_ids" eval="[(6, 0, [ref('base.group_no_one')])]" />
+    </record>
+    <record id="action_open_settings" model="ir.actions.act_window">
+        <field name="target" />
+    </record>
+    <record id="email_template_edi_credit_note" model="mail.template">
+        <field name="body_html" type="html">
+            <div style="margin: 0px; padding: 0px;">
+                <p style="margin: 0px; padding: 0px; font-size: 13px;">
+        Dear
+        <t t-if="object.partner_id.parent_id"><t
+                    t-out="object.partner_id.name or ''"
+                >Brandon Freeman</t> (<t
+                    t-out="object.partner_id.parent_id.name or ''"
+                >Azure Interior</t>),
+        </t>
+        <t t-else=""><t t-out="object.partner_id.name or ''">Brandon Freeman</t>,
+        </t>
+        <br /><br />
+        Here is your
+        <t t-if="object.name">
+            credit note <span
+                    style="font-weight:bold;"
+                    t-out="object.name or ''"
+                >RINV/2021/05/0001</span>
+        </t>
+        <t t-else="">
+            credit note
+        </t>
+        <t t-if="object.invoice_origin">
+            (with reference: <t t-out="object.invoice_origin or ''">SUB003</t>)
+        </t>
+        amounting in <span
+                    style="font-weight:bold;"
+                    t-out="format_amount(object.amount_total, object.currency_id) or ''"
+                >$ 143,750.00</span>
+        from <t t-out="object.company_id.name or ''">YourCompany</t>.
+        <br /><br />
+        Do not hesitate to contact us if you have any questions.
+        <t t-if="not is_html_empty(object.invoice_user_id.signature)">
+                    <br />
+                    <br />
+                    <div>--<br /><t
+                        t-out="object.invoice_user_id.signature or ''"
+                    >Mitchell Admin</t></div>
+                </t>
+    </p>
+            </div>
+        </field>
+        <field name="lang" />
+        <field name="partner_to" eval="False" />
+        <field name="use_default_to" eval="True" />
+    </record>
+    <record id="email_template_edi_invoice" model="mail.template">
+        <field name="body_html" type="html">
+            <div style="margin: 0px; padding: 0px;">
+                <p style="margin: 0px; padding: 0px; font-size: 13px;">
+        Dear
+        <t t-if="object.partner_id.parent_id">
+                    <t t-if="object.partner_id.name"><t
+                        t-out="object.partner_id.name"
+                    >Brandon Freeman</t> (<t
+                        t-out="object.partner_id.parent_id.name or ''"
+                    >Azure Interior</t>),
+            </t>
+                    <t t-else=""><t
+                        t-out="object.partner_id.parent_id.name or ''"
+                    >Azure Interior</t>,
+            </t>
+                </t>
+        <t t-else=""><t t-out="object.partner_id.name or ''">Brandon Freeman</t>,
+        </t>
+        <br /><br />
+        Here is your
+        <t t-if="object.name">
+            invoice <span
+                    style="font-weight:bold;"
+                    t-out="object.name or ''"
+                >INV/2021/05/0005</span>
+        </t>
+        <t t-else="">
+            invoice
+        </t>
+        <t t-if="object.invoice_origin">
+            (with reference: <t t-out="object.invoice_origin or ''">SUB003</t>)
+        </t>
+        amounting in <span
+                    style="font-weight:bold;"
+                    t-out="format_amount(object.amount_total, object.currency_id) or ''"
+                >$ 143,750.00</span>
+        from <t t-out="object.company_id.name or ''">YourCompany</t>.
+        <t t-if="object.payment_state in ('paid', 'in_payment')">
+            This invoice is already paid.
+        </t>
+        <t t-else="">
+            Please remit payment at your earliest convenience.
+            <t t-if="object.payment_reference"><br /><br />
+                Please use the following communication for your payment: <strong
+                    t-out="object.payment_reference or ''"
+                >INV/2021/05/0005</strong>
+                <t t-if="object.partner_bank_id">
+                    on the account <strong t-out="object.partner_bank_id.acc_number" />
+                </t>
+                .
+            </t>
+        </t>
+        <t t-if="hasattr(object, 'timesheet_count') and object.timesheet_count"><br
+                /><br />
+            PS: you can review your timesheets <a
+                    t-att-href="'/my/timesheets?search_in=invoice&amp;search=%s' % object.name"
+                >from the portal.</a>
+        </t>
+        <br /><br />
+        Do not hesitate to contact us if you have any questions.
+        <t t-if="not is_html_empty(object.invoice_user_id.signature)">
+                    <br />
+                    <br />
+                    <div>--<br /><t
+                        t-out="object.invoice_user_id.signature or ''"
+                    >Mitchell Admin</t></div>
+                </t>
+    </p>
+            </div>
+        </field>
+        <field name="lang" />
+        <field name="partner_to" eval="False" />
+        <field name="use_default_to" eval="True" />
+    </record>
+    <record id="mail_template_data_payment_receipt" model="mail.template">
+        <field name="body_html" type="html">
+            <div style="margin: 0px; padding: 0px;">
+                <p style="margin: 0px; padding: 0px; font-size: 13px;">
+        Dear <t t-out="object.partner_id.name or ''">Azure Interior</t><br /><br />
+        Thank you for your payment.
+        Here is your payment receipt <span
+                    style="font-weight:bold;"
+                    t-out="(object.name or '').replace('/','-') or ''"
+                >BNK1-2021-05-0002</span> amounting
+        to <span
+                    style="font-weight:bold;"
+                    t-out="format_amount(object.amount, object.currency_id) or ''"
+                >$ 10.00</span> from <t
+                    t-out="object.company_id.name or ''"
+                >YourCompany</t>.
+        <br /><br />
+        Do not hesitate to contact us if you have any questions.
+        <br /><br />
+        Best regards,
+        <t t-if="not is_html_empty(user.signature)">
+                    <br />
+                    <br />
+                    <div>--<br /><t
+                        t-out="user.signature or ''"
+                    >Mitchell Admin</t></div>
+                </t>
+    </p>
+            </div>
+        </field>
+        <field name="lang" />
+        <field name="partner_to" eval="False" />
+        <field name="use_default_to" eval="True" />
+    </record>
+    <record
+        id="onboarding_onboarding_step_chart_of_accounts"
+        model="onboarding.onboarding.step"
+    >
+        <field name="button_text">Review Accounts</field>
+    </record>
+</odoo>

@@ -1,0 +1,10 @@
+---Models in module 'payment_razorpay'---
+---Fields in module 'payment_razorpay'---
+payment_razorpay / payment.provider         / code (False)                  : selection_keys added: [dpo, iyzico, paymob] (most likely nothing to do)
+payment_razorpay / payment.provider         / razorpay_access_token (char)  : previously in module payment_razorpay_oauth
+payment_razorpay / payment.provider         / razorpay_access_token_expiry (datetime): previously in module payment_razorpay_oauth
+payment_razorpay / payment.provider         / razorpay_account_id (char)    : previously in module payment_razorpay_oauth
+payment_razorpay / payment.provider         / razorpay_public_token (char)  : previously in module payment_razorpay_oauth
+payment_razorpay / payment.provider         / razorpay_refresh_token (char) : previously in module payment_razorpay_oauth
+---XML records in module 'payment_razorpay'---
+NEW ir.ui.view: payment_razorpay.authorization_error

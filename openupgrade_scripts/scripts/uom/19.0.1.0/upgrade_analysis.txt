@@ -1,0 +1,38 @@
+---Models in module 'uom'---
+---Fields in module 'uom'---
+uom          / uom.category             / name (char)                   : DEL required
+uom          / uom.category             / reference_uom_id (many2one)   : DEL relation: uom.uom, stored: False
+uom          / uom.category             / uom_ids (one2many)            : DEL relation: uom.uom
+uom          / uom.uom                  / _order                        : _order is now 'sequence, relative_uom_id, id' ('factor DESC, id')
+uom          / uom.uom                  / category_id (many2one)        : DEL relation: uom.category, required
+uom          / uom.uom                  / factor (float)                : now a function
+uom          / uom.uom                  / parent_path (char)            : NEW
+uom          / uom.uom                  / related_uom_ids (one2many)    : NEW relation: uom.uom
+uom          / uom.uom                  / relative_factor (float)       : NEW required, hasdefault: default
+uom          / uom.uom                  / relative_uom_id (many2one)    : NEW relation: uom.uom
+uom          / uom.uom                  / rounding (float)              : not stored anymore
+uom          / uom.uom                  / rounding (float)              : now a function
+uom          / uom.uom                  / sequence (integer)            : NEW hasdefault: compute
+uom          / uom.uom                  / uom_type (selection)          : DEL required, selection_keys: ['bigger', 'reference', 'smaller']
+---XML records in module 'uom'---
+NEW decimal.precision: uom.decimal_product_uom [renamed from product module]
+DEL ir.actions.act_window: uom.product_uom_categ_form_action
+DEL ir.model.access: uom.access_uom_category_manager
+DEL ir.model.access: uom.access_uom_category_user
+DEL ir.model.constraint: uom.constraint_uom_uom_factor_reference_is_one
+DEL ir.model.constraint: uom.constraint_uom_uom_rounding_gt_zero
+DEL ir.ui.view: uom.product_uom_categ_form_view
+DEL ir.ui.view: uom.product_uom_categ_tree_view
+DEL ir.ui.view: uom.uom_categ_view_search
+DEL uom.category: uom.product_uom_categ_kgm
+DEL uom.category: uom.product_uom_categ_unit
+DEL uom.category: uom.product_uom_categ_vol
+DEL uom.category: uom.uom_categ_length
+DEL uom.category: uom.uom_categ_surface
+DEL uom.category: uom.uom_categ_wtime
+NEW uom.uom: uom.product_uom_milliliter
+NEW uom.uom: uom.product_uom_pack_6
+NEW uom.uom: uom.product_uom_square_foot
+NEW uom.uom: uom.product_uom_square_meter
+DEL uom.uom: uom.uom_square_foot
+DEL uom.uom: uom.uom_square_meter

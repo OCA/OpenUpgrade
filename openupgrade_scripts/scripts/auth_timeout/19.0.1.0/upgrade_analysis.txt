@@ -1,0 +1,15 @@
+---Models in module 'auth_timeout'---
+---Fields in module 'auth_timeout'---
+auth_timeout / res.groups               / has_lock_timeout (boolean)    : NEW hasdefault: compute, stored: False
+auth_timeout / res.groups               / has_lock_timeout_inactivity (boolean): NEW hasdefault: compute, stored: False
+auth_timeout / res.groups               / lock_timeout (integer)        : NEW
+auth_timeout / res.groups               / lock_timeout_delay_in_unit (integer): NEW hasdefault: compute, stored: False
+auth_timeout / res.groups               / lock_timeout_delay_unit (selection): NEW selection_keys: ['days', 'hours', 'minutes'], hasdefault: compute, stored: False
+auth_timeout / res.groups               / lock_timeout_inactivity (integer): NEW
+auth_timeout / res.groups               / lock_timeout_inactivity_delay_in_unit (integer): NEW hasdefault: compute, stored: False
+auth_timeout / res.groups               / lock_timeout_inactivity_delay_unit (selection): NEW selection_keys: ['days', 'hours', 'minutes'], hasdefault: compute, stored: False
+auth_timeout / res.groups               / lock_timeout_inactivity_mfa (boolean): NEW
+auth_timeout / res.groups               / lock_timeout_mfa (boolean)    : NEW
+---XML records in module 'auth_timeout'---
+NEW ir.ui.view: auth_timeout.auth_passkey_groups_form
+NEW ir.ui.view: auth_timeout.check_identity

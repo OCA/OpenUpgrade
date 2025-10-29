@@ -1,0 +1,13 @@
+<?xml version='1.0' encoding='utf-8' ?>
+<odoo>
+    <record id="rule_auth_passkey_key_user" model="ir.rule">
+        <field
+            name="groups"
+            eval="[             (4, ref('base.group_portal')),             (4, ref('base.group_user')),         ]"
+        />
+        <field name="perm_create" />
+        <field name="perm_read" />
+        <field name="perm_unlink" />
+        <field name="perm_write" />
+    </record>
+</odoo>

@@ -1,0 +1,315 @@
+<?xml version='1.0' encoding='utf-8' ?>
+<odoo>
+    <record id="burndown_chart_project_user_rule" model="ir.rule">
+        <field name="domain_force">[
+        '|',
+            ('project_id.privacy_visibility', 'in', ['employees', 'portal']),
+            '|',
+                ('project_id.message_partner_ids', 'in', [user.partner_id.id]),
+                ('user_ids', 'in', user.id),
+        ]</field>
+    </record>
+    <record id="ir_cron_rating_project" model="ir.cron">
+        <field name="model_id" ref="project.model_project_task_type" />
+        <field name="name">Project Stage: Send rating</field>
+    </record>
+    <record id="ir_rule_private_task" model="ir.rule">
+        <field name="domain_force">[
+            ('project_id.privacy_visibility', 'in', ['employees', 'portal']),
+            '|', '|', ('project_id', '!=', False),
+                      ('parent_id', '!=', False),
+                 ('user_ids', 'in', user.id),
+        ]</field>
+    </record>
+    <record id="mail_template_data_project_task" model="mail.template">
+        <field name="body_html" type="html">
+            <div>
+    Dear <t t-out="object.partner_id.name or 'customer'">Brandon Freeman</t>,<br /><br
+            />
+    Thank you for contacting us. We appreciate your interest in our products/services.<br
+            />
+    Our team is currently reviewing your inquiry and will respond to your email as soon as possible.<br
+            />
+    If you have any further questions or concerns in the meantime, please do not hesitate to let us know. We are here to help.<br
+            /><br />
+    Thank you for your patience.<br />
+    Best regards,
+    <t t-if="user.signature">
+                <br />
+                <div>--<br /><t t-out="user.signature or ''">Mitchell Admin</t></div>
+            </t>
+</div>
+        </field>
+        <field name="lang" />
+    </record>
+    <record id="milestone_visibility_rule" model="ir.rule">
+        <field name="domain_force">[
+        '|',
+            ('project_id.privacy_visibility', 'in', ['employees', 'portal']),
+            '|',
+                ('project_id.message_partner_ids', 'in', [user.partner_id.id]),
+                ('project_id.user_id', '=', user.id),
+        ]</field>
+    </record>
+    <record id="project_collaborator_rule_portal" model="ir.rule">
+        <field name="domain_force">[
+            ('project_id.privacy_visibility', 'in', ['invited_users', 'portal']),
+            ('partner_id', '=', user.partner_id.id),
+        ]</field>
+    </record>
+    <record id="project_milestone_rule_portal_project_sharing" model="ir.rule">
+        <field name="domain_force">[
+            ('project_id.privacy_visibility', 'in', ['invited_users', 'portal']),
+            ('project_id.collaborator_ids.partner_id', 'in', [user.partner_id.id]),
+        ]</field>
+    </record>
+    <record id="project_project_rule_portal" model="ir.rule">
+        <field name="domain_force">[
+            '&amp;',
+                ('privacy_visibility', 'in', ['invited_users', 'portal']),
+                ('message_partner_ids', 'child_of', [user.partner_id.commercial_partner_id.id]),
+        ]</field>
+    </record>
+    <record id="project_public_members_rule" model="ir.rule">
+        <field name="domain_force">['|',
+                                        ('privacy_visibility', 'in', ['employees', 'portal']),
+                                        ('message_partner_ids', 'in', [user.partner_id.id])
+                                    ]</field>
+    </record>
+    <record id="project_task_rule_portal" model="ir.rule">
+        <field name="domain_force">[
+            ('project_id.privacy_visibility', 'in', ['invited_users', 'portal']),
+            ('active', '=', True),
+            '|',
+                ('message_partner_ids', 'child_of', [user.partner_id.commercial_partner_id.id]),
+                ('project_id.collaborator_ids', 'any', [
+                    ('partner_id', '=', user.partner_id.id),
+                    ('limited_access', '=', False),
+                ]),
+        ]</field>
+    </record>
+    <record id="project_task_rule_portal_project_sharing" model="ir.rule">
+        <field name="domain_force">[
+            ('project_id.privacy_visibility', 'in', ['invited_users', 'portal']),
+            ('active', '=', True),
+            '|',
+                ('message_partner_ids', 'child_of', [user.partner_id.commercial_partner_id.id]),
+                ('project_id.collaborator_ids', 'any', [
+                    ('partner_id', '=', user.partner_id.id),
+                    ('limited_access', '=', False),
+                ]),
+        ]</field>
+    </record>
+    <record id="rating_project_request_email_template" model="mail.template">
+        <field name="body_html" type="html">
+            <div>
+                <t t-set="access_token" t-value="object._rating_get_access_token()" />
+                <t t-set="partner" t-value="object._rating_get_partner()" />
+                <table
+                    border="0"
+                    cellpadding="0"
+                    cellspacing="0"
+                    width="590"
+                    style="width:100%; margin:0px auto;"
+                >
+                    <tbody>
+                        <tr>
+                            <td valign="top" style="font-size: 13px;"><t
+                                t-if="partner.name"
+                            >
+                Hello <t t-out="partner.name or ''">Brandon Freeman</t>,<br /><br />
+            </t><t t-else="">
+                Hello,<br /><br />
+            </t>
+            Please take a moment to rate our services related to the <strong
+                                t-out="object.name or ''"
+                            >Planning and budget</strong> task
+            <t t-if="object._rating_get_operator().name">
+                assigned to <strong
+                                t-out="object._rating_get_operator().name or ''"
+                            >Mitchell Admin</strong>.<br />
+            </t>
+            <t t-else="">
+                .<br />
+            </t>
+        </td>
+                        </tr>
+                        <tr>
+                            <td style="text-align: center;">
+                                <table
+                                    border="0"
+                                    cellpadding="0"
+                                    cellspacing="0"
+                                    width="590"
+                                    style="width:100%; margin: 32px 0px 32px 0px; display: inline-table;"
+                                >
+                                    <tr>
+                                        <td style="font-size: 13px;text-align:center;">
+                                            <strong
+                                            >Tell us how you feel about our services</strong>
+                                            <br />
+                                            <span
+                                                style="font-size: 12px; opacity: 0.5; color: #454748;"
+                                            >(click on one of these smileys)</span>
+                                        </td>
+                                    </tr>
+                                    <tr>
+                                        <td style="font-size: 13px;">
+                                            <table
+                                                style="width:100%;text-align:center;margin-top:2rem;"
+                                            >
+                                                <tr>
+                                                    <td>
+                                                        <a
+                                                            t-attf-href="/rate/{{ access_token }}/5"
+                                                            t-att-class="'pe-none' if object._rating_get_operator() else ''"
+                                                        >
+                                                            <img
+                                                                alt="Happy"
+                                                                src="/rating/static/src/img/rating_5.png"
+                                                                title="Happy"
+                                                            />
+                                                        </a>
+                                                    </td>
+                                                    <td>
+                                                        <a
+                                                            t-attf-href="/rate/{{ access_token }}/3"
+                                                            t-att-class="'pe-none' if object._rating_get_operator() else ''"
+                                                        >
+                                                            <img
+                                                                alt="Neutral"
+                                                                src="/rating/static/src/img/rating_3.png"
+                                                                title="Neutral"
+                                                            />
+                                                        </a>
+                                                    </td>
+                                                    <td>
+                                                        <a
+                                                            t-attf-href="/rate/{{ access_token }}/1"
+                                                            t-att-class="'pe-none' if object._rating_get_operator() else ''"
+                                                        >
+                                                            <img
+                                                                alt="Unhappy"
+                                                                src="/rating/static/src/img/rating_1.png"
+                                                                title="Unhappy"
+                                                            />
+                                                        </a>
+                                                    </td>
+                                                </tr>
+                                            </table>
+                                        </td>
+                                    </tr>
+                                </table>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td valign="top" style="font-size: 13px;">
+            We appreciate your feedback. It helps us improve continuously.
+            <t t-if="object.stage_id.rating_status == 'stage'">
+                                <br />
+                                <span
+                                    style="margin: 0; font-size: 12px; opacity: 0.5; color: #454748;"
+                                >This satisfaction survey has been sent because your task has been moved to the <b
+                                    t-out="object.stage_id.name or ''"
+                                >In progress</b> stage</span>
+                            </t>
+            <t t-if="object.stage_id.rating_status == 'periodic'">
+                                <br />
+                                <span
+                                    style="margin: 0; font-size: 12px; opacity: 0.5; color: #454748;"
+                                >This satisfaction survey is sent <b
+                                    t-out="object.stage_id.rating_status_period or ''"
+                                >weekly</b> as long as the task is in the <b
+                                    t-out="object.stage_id.name or ''"
+                                >In progress</b> stage.</span>
+                            </t>
+        </td>
+                        </tr>
+                        <tr>
+                            <td><br />Best regards,</td>
+                        </tr>
+                        <tr>
+                            <td>
+                                <t
+                                    t-out="object.project_id.company_id.name or ''"
+                                >YourCompany</t>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td style="opacity: 0.5;">
+                                <t
+                                    t-out="object.project_id.company_id.phone or ''"
+                                >1 650-123-4567</t>
+                                <t t-if="object.project_id.company_id.email">
+                | <a
+                                    t-attf-href="mailto:{{ object.project_id.company_id.email }}"
+                                    style="text-decoration:none; color: #454748;"
+                                    t-out="object.project_id.company_id.email or ''"
+                                >info@yourcompany.com</a>
+            </t>
+                                <t t-if="object.project_id.company_id.website">
+                | <a
+                                    t-attf-href="{{ object.project_id.company_id.website }}"
+                                    style="text-decoration:none; color: #454748;"
+                                    t-out="object.project_id.company_id.website or ''"
+                                >http://www.example.com</a>
+            </t>
+                            </td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+        </field>
+        <field name="use_default_to" eval="False" />
+    </record>
+    <record id="report_project_task_user_rule" model="ir.rule">
+        <field name="domain_force">[
+        '|',
+            ('project_id.privacy_visibility', 'in', ['employees', 'portal']),
+            '|',
+                ('project_id.message_partner_ids', 'in', [user.partner_id.id]),
+                '|',
+                    ('task_id.message_partner_ids', 'in', [user.partner_id.id]),
+                    ('user_ids', 'in', user.id),
+        ]</field>
+    </record>
+    <record id="task_visibility_rule" model="ir.rule">
+        <field name="domain_force">[
+            '|',
+                '&amp;',
+                    ('project_id', '!=', False),
+                    '|',
+                        ('project_id.privacy_visibility', 'in', ['employees', 'portal']),
+                        ('project_id.message_partner_ids', 'in', [user.partner_id.id]),
+                '|',
+                    ('message_partner_ids', 'in', [user.partner_id.id]),
+                    # to subscribe check access to the record, follower is not enough at creation
+                    ('user_ids', 'in', user.id)
+        ]</field>
+    </record>
+    <record id="task_visibility_rule_project_user" model="ir.rule">
+        <field name="domain_force">[
+            '|',
+                '&amp;',
+                    ('project_id', '!=', False),
+                    '|',
+                        ('project_id.privacy_visibility', 'in', ['employees', 'portal']),
+                        ('project_id.message_partner_ids', 'in', [user.partner_id.id]),
+                '|',
+                    ('message_partner_ids', 'in', [user.partner_id.id]),
+                    # to subscribe check access to the record, follower is not enough at creation
+                    ('user_ids', 'in', user.id)
+        ]</field>
+    </record>
+    <record id="update_visibility_rule" model="ir.rule">
+        <field name="domain_force">[
+        '|',
+            ('project_id.privacy_visibility', 'in', ['employees', 'portal']),
+            '|',
+                ('project_id.message_partner_ids', 'in', [user.partner_id.id]),
+                '|',
+                    ('user_id', '=', user.id),
+                    ('project_id.user_id', '=', user.id)
+        ]</field>
+    </record>
+</odoo>

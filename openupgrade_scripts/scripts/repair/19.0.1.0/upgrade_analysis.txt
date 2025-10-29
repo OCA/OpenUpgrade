@@ -1,0 +1,15 @@
+---Models in module 'repair'---
+---Fields in module 'repair'---
+repair       / product.template         / create_repair (boolean)       : DEL
+repair       / product.template         / service_tracking (False)      : NEW selection_keys: ['event', 'no', 'partnership', 'repair'], mode: modify
+repair       / repair.order             / procurement_group_id (many2one): DEL relation: procurement.group
+repair       / repair.order             / product_uom (many2one)        : not a function anymore
+repair       / repair.order             / reference_ids (many2many)     : NEW relation: stock.reference
+repair       / stock.picking.type       / is_repairable (boolean)       : DEL
+repair       / stock.picking.type       / return_type_of_ids (one2many) : DEL relation: stock.picking.type
+---XML records in module 'repair'---
+DEL ir.actions.act_window: repair.action_repair_picking_type_kanban
+NEW ir.actions.server: repair.action_create_repair_order
+DEL ir.actions.server: repair.action_repair_overview
+DEL ir.ui.menu: repair.repair_picking_type_menu
+DEL ir.ui.view: repair.view_repair_tag_form

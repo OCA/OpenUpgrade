@@ -1,0 +1,11 @@
+---Models in module 'l10n_ee'---
+---Fields in module 'l10n_ee'---
+l10n_ee      / res.company              / l10n_ee_rounding_difference_loss_account_id (many2one): NEW relation: account.account
+l10n_ee      / res.company              / l10n_ee_rounding_difference_profit_account_id (many2one): NEW relation: account.account
+---XML records in module 'l10n_ee'---
+NEW account.report.expression: l10n_ee.tax_report_line_1_1_tag_purchase
+NEW account.report.expression: l10n_ee.tax_report_line_1_1_tag_sale
+NEW account.report.expression: l10n_ee.tax_report_line_1_24_tag_purchase
+NEW account.report.expression: l10n_ee.tax_report_line_1_24_tag_sale
+NEW account.report.expression: l10n_ee.tax_report_line_1_tag_purchase
+NEW account.report.expression: l10n_ee.tax_report_line_1_tag_sale

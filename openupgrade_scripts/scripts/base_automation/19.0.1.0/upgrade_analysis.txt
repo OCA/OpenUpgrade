@@ -1,0 +1,13 @@
+---Models in module 'base_automation'---
+---Fields in module 'base_automation'---
+base_automation / base.automation          / activity_ids (one2many)       : NEW relation: mail.activity
+base_automation / base.automation          / message_follower_ids (one2many): NEW relation: mail.followers
+base_automation / base.automation          / message_ids (one2many)        : NEW relation: mail.message
+base_automation / base.automation          / previous_domain (char)        : NEW hasdefault: default, stored: False
+base_automation / base.automation          / rating_ids (one2many)         : NEW relation: rating.rating
+base_automation / base.automation          / trg_date_range_mode (selection): NEW selection_keys: ['after', 'before'], hasdefault: compute
+base_automation / base.automation          / website_message_ids (one2many): NEW relation: mail.message
+base_automation / ir.actions.server        / name (False)                  : DEL mode: modify
+---XML records in module 'base_automation'---
+NEW ir.ui.view: base_automation.view_server_action_form
+DEL ir.ui.view: base_automation.ir_actions_server_view_form_automation

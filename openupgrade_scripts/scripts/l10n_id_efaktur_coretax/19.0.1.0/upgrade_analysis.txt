@@ -1,0 +1,20 @@
+---Models in module 'l10n_id_efaktur_coretax'---
+---Fields in module 'l10n_id_efaktur_coretax'---
+l10n_id_efaktur / account.move             / l10n_id_kode_transaksi (selection): selection_keys added: [10] (most likely nothing to do)
+l10n_id_efaktur / res.partner              / l10n_id_kode_transaksi (selection): selection_keys added: [10] (most likely nothing to do)
+l10n_id_efaktur_coretax / account.bank.statement.line / l10n_id_kode_transaksi (selection): previously in module l10n_id_efaktur
+l10n_id_efaktur_coretax / account.move             / l10n_id_coretax_custom_doc_month_year (date): NEW
+l10n_id_efaktur_coretax / account.move             / l10n_id_kode_transaksi (False): DEL selection_keys: ['01', '02', '03', '04', '05', '06', '07', '08', '09', '10'], mode: modify
+l10n_id_efaktur_coretax / account.move             / l10n_id_kode_transaksi (selection): previously in module l10n_id_efaktur
+l10n_id_efaktur_coretax / res.partner              / l10n_id_kode_transaksi (False): DEL selection_keys: ['01', '02', '03', '04', '05', '06', '07', '08', '09', '10'], mode: modify
+l10n_id_efaktur_coretax / res.partner              / l10n_id_kode_transaksi (selection): previously in module l10n_id_efaktur
+l10n_id_efaktur_coretax / res.partner              / l10n_id_nik (char)            : previously in module l10n_id_efaktur
+l10n_id_efaktur_coretax / res.partner              / l10n_id_pkp (boolean)         : previously in module l10n_id_efaktur
+l10n_id_efaktur_coretax / res.users                / l10n_id_kode_transaksi (selection): previously in module l10n_id_efaktur
+l10n_id_efaktur_coretax / res.users                / l10n_id_nik (char)            : previously in module l10n_id_efaktur
+l10n_id_efaktur_coretax / res.users                / l10n_id_pkp (boolean)         : previously in module l10n_id_efaktur
+---XML records in module 'l10n_id_efaktur_coretax'---
+NEW ir.actions.server: l10n_id_efaktur_coretax.dowload_efaktur_action [renamed from l10n_id_efaktur module]
+NEW ir.rule: l10n_id_efaktur_coretax.efaktur_document_multi_company [renamed from l10n_id_efaktur module]
+NEW ir.ui.view: l10n_id_efaktur_coretax.view_account_invoice_filter
+DEL ir.ui.view: l10n_id_efaktur_coretax.product_uom_categ_form_view_inherit_coretax
