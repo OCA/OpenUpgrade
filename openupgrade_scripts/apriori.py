@@ -36,6 +36,7 @@ renamed_modules = {
     "product_supplierinfo_for_customer_elaboration": "product_customerinfo_elaboration",
     "sale_product_set_sale_by_packaging": "product_set_sell_only_by_packaging",
     # OCA/stock-logistics-workflow
+    "stock_multi_warehouse_security": "stock_warehouse_security",
     "stock_picking_type_shipping_policy": "stock_picking_type_force_move_type",
     # OCA/web
     "web_widget_product_label_section_and_note": "web_widget_product_label_section_and_note_name_visibility",  # noqa: E501
