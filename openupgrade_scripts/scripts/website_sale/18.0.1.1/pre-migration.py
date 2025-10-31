@@ -15,3 +15,10 @@ def migrate(env, version):
     openupgrade.logged_query(
         env.cr, "UPDATE product_ribbon SET text_color='' WHERE text_color IS NULL"
     )
+    # If public_description exists, copy its content to description_ecommerce because
+    # this field has been deprecated in favor of description_ecommerce in 18.0
+    if openupgrade.column_exists(env.cr, "product_template", "public_description"):
+        openupgrade.logged_query(
+            env.cr,
+            "UPDATE product_template SET description_ecommerce=public_description",
+        )
