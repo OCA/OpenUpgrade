@@ -677,22 +677,22 @@ def fill_partial_reconcile_currency(env):
         env.cr,
         """
         UPDATE account_partial_reconcile apr
-        SET debit_currency_id = COALESCE(am.currency_id, rc.currency_id)
-        FROM account_move am,
+        SET debit_currency_id = COALESCE(aml.currency_id, rc.currency_id)
+        FROM account_move_line aml,
             res_company rc
-        WHERE am.id = apr.debit_move_id
-            AND rc.id = am.company_id
+        WHERE aml.id = apr.debit_move_id
+            AND rc.id = aml.company_id
         """,
     )
     openupgrade.logged_query(
         env.cr,
         """
         UPDATE account_partial_reconcile apr
-        SET credit_currency_id = COALESCE(am.currency_id, rc.currency_id)
-        FROM account_move am,
+        SET credit_currency_id = COALESCE(aml.currency_id, rc.currency_id)
+        FROM account_move_line aml,
             res_company rc
-        WHERE am.id = apr.credit_move_id
-            AND rc.id = am.company_id
+        WHERE aml.id = apr.credit_move_id
+            AND rc.id = aml.company_id
         """,
     )
 
