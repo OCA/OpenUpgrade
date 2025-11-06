@@ -19,6 +19,8 @@ renamed_modules = {
     "sale_commission": "sale_commission_oca",
     # OCA/edi
     "pdf_helper": "pdf_xml_attachment",
+    # OCA/l10n-italy
+    "account_vat_period_end_statement": "l10n_it_account_vat_period_end_settlement",
     # OCA/product-attribute
     "product_packaging_type_vendor": "product_packaging_level_vendor",
     "product_supplierinfo_for_customer": "product_customerinfo",
