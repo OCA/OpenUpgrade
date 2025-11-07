@@ -96,8 +96,10 @@ jobs:
           pip install -q -r odoo/requirements.txt
           pip install -r ./openupgrade/requirements.txt
           pip install -U git+https://github.com/oca/openupgradelib
-          # this is for v16 l10n_eg_edi_eta which crashes without it
+          # this is for v18 l10n_eg_edi_eta which crashes without it
           pip install asn1crypto
+          # required by v18
+          pip install decorator
           pip install coverage
           # this is for account_peppol
           pip install phonenumbers
