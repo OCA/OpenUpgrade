@@ -5,6 +5,7 @@ import logging
 
 from odoo import api
 from odoo.exceptions import ValidationError
+from odoo.modules.module import get_resource_from_path
 from odoo.tools import mute_logger
 
 from odoo.addons.base.models.ir_ui_view import IrUiView
@@ -70,9 +71,26 @@ def _check_field_paths(self, node, field_paths, model_name, use):
         pass
 
 
+def _inverse_arch(self):
+    """
+    Remove install_filename from context if it's from openupgrade_scripts.
+    Without this, arch_fs will point to openupgrade_scripts' file which most likely
+    won't exist when the migrated database is deployed, which breaks resetting views
+    """
+    if "install_filename" in self.env.context:
+        path_info = get_resource_from_path(self.env.context["install_filename"])
+        if path_info[0] == "openupgrade_scripts":
+            self = self.with_context(  # pylint: disable=context-overridden
+                {k: v for k, v in self.env.context.items() if k != "install_filename"}
+            )
+    return _inverse_arch._original_method(self)
+
+
 _check_xml._original_method = IrUiView._check_xml
 IrUiView._check_xml = _check_xml
 _raise_view_error._original_method = IrUiView._raise_view_error
 IrUiView._raise_view_error = _raise_view_error
 _check_field_paths._original_method = IrUiView._check_field_paths
 IrUiView._check_field_paths = _check_field_paths
+_inverse_arch._original_method = IrUiView._inverse_arch
+IrUiView._inverse_arch = _inverse_arch
