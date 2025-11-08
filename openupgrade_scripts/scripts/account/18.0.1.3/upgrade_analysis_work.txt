@@ -104,7 +104,7 @@ account      / account.move             / journal_group_id (many2one)   : NEW re
 # NOTHING TO DO: store = False
 
 account      / account.move             / made_sequence_gap (boolean)   : NEW isfunction: function, stored
-# NOTHING TO DO: will be computed by ORM
+# NOTHING TO DO: Created and filled pre-migration
 
 account      / account.move             / origin_payment_id (many2one)  : NEW relation: account.payment
 account      / account.move             / payment_id (many2one)         : DEL relation: account.payment

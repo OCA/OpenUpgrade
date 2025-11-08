@@ -39,6 +39,7 @@ _new_columns = [
     ("account.payment", "memo", "char"),
     ("account.payment", "state", "selection"),
     ("account.payment", "is_sent", "boolean"),
+    ("account.move", "made_sequence_gap", "boolean", True),
 ]
 
 
@@ -197,6 +198,21 @@ def fill_statement_line_fields(env):
     )
 
 
+def fill_account_move_made_sequence_gap(env):
+    openupgrade.logged_query(
+        env.cr,
+        """
+        UPDATE account_move am
+        SET made_sequence_gap = False
+        FROM account_move am2
+        WHERE am.journal_id = am2.journal_id
+            AND am.sequence_prefix = am2.sequence_prefix
+            AND am.sequence_number = am2.sequence_number + 1
+            AND am.sequence_number > 1
+        """,
+    )
+
+
 @openupgrade.migrate()
 def migrate(env, version):
     if openupgrade.column_exists(env.cr, "account_cash_rounding", "profit_account_id"):
@@ -249,3 +265,4 @@ def migrate(env, version):
             "account.action_account_unreconcile",
         ],
     )
+    fill_account_move_made_sequence_gap(env)
