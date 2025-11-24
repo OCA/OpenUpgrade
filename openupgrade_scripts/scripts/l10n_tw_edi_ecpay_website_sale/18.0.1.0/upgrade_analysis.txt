@@ -1,0 +1,12 @@
+---Models in module 'l10n_tw_edi_ecpay_website_sale'---
+---Fields in module 'l10n_tw_edi_ecpay_website_sale'---
+l10n_tw_edi_ecpay_website_sale / res.partner              / l10n_tw_edi_require_paper_format (boolean): NEW
+l10n_tw_edi_ecpay_website_sale / sale.order               / l10n_tw_edi_carrier_number (char): NEW
+l10n_tw_edi_ecpay_website_sale / sale.order               / l10n_tw_edi_carrier_number_2 (char): NEW
+l10n_tw_edi_ecpay_website_sale / sale.order               / l10n_tw_edi_carrier_type (selection): NEW selection_keys: ['1', '2', '3', '4', '5']
+l10n_tw_edi_ecpay_website_sale / sale.order               / l10n_tw_edi_is_print (boolean): NEW
+l10n_tw_edi_ecpay_website_sale / sale.order               / l10n_tw_edi_love_code (char)  : NEW
+---XML records in module 'l10n_tw_edi_ecpay_website_sale'---
+NEW ir.ui.view: l10n_tw_edi_ecpay_website_sale.address
+NEW ir.ui.view: l10n_tw_edi_ecpay_website_sale.l10n_tw_edi_invoicing_info
+NEW ir.ui.view: l10n_tw_edi_ecpay_website_sale.view_order_form
