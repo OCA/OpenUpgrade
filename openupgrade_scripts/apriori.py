@@ -10,6 +10,8 @@ renamed_modules = {
     # odoo/enterprise
     # OCA/delivery-carrier
     "delivery_carrier_customer_info": "partner_delivery_info",
+    # OCA/l10n-spain
+    "l10n_es_pos": "l10n_es_pos_oca",
     # OCA/social
     "mail_activity_unlink_log": "mail_activity_cancel_tracking",
 }
