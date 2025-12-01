@@ -29,8 +29,10 @@ hr_holidays  / hr.leave                 / mode_company_id (many2one)    : not a 
 # NOTHING TO DO: states removed only
 
 hr_holidays  / hr.leave                 / number_of_days (float)        : now a function
+# NOTHING TO DO
+
 hr_holidays  / hr.leave                 / number_of_hours (float)       : NEW isfunction: function, stored
-# NOTHING TO DO: computed fields
+# DONE: pre-migration: add column for avoiding the computation
 
 hr_holidays  / hr.leave                 / rating_ids (one2many)         : NEW relation: rating.rating
 hr_holidays  / hr.leave                 / resource_calendar_id (many2one): NEW relation: resource.calendar, hasdefault: compute
