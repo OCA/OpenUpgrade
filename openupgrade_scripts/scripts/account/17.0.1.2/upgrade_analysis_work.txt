@@ -167,7 +167,7 @@ account      / account.move.line        / display_type (selection)      : select
 # NOTHING TO DO: new feature "Discount allocation" https://github.com/odoo/odoo/pull/133286
 
 account      / account.move.line        / invoice_date (date)           : NEW isrelated: related, stored
-# NOTHING TO DO: ORM resolves by SQL this filling being a direct related field with 1 level depth.
+# DONE: pre-migration: Pre-create the column for avoiding triggering the compute and transfer data from account moves to all the account move lines.
 
 account      / account.move.line        / tax_audit (char)              : DEL
 # NOTHING TO DO: deprecated
