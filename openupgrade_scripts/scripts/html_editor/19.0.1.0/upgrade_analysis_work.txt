@@ -1,0 +1,36 @@
+---Models in module 'html_editor'---
+new model html_editor.converter.test (renamed from web_editor.converter.test in module web_editor)
+new model html_editor.converter.test.sub (renamed from web_editor.converter.test.sub in module web_editor)
+
+# NOTHING TO DO: test model
+
+model html.field.history.mixin (moved from web_editor) [abstract]
+
+# NOTHING TO DO: model entries will be taken care of by module merge
+
+---Fields in module 'html_editor'---
+html_editor  / web_editor.converter.test / _order                        : previously in module web_editor
+html_editor  / web_editor.converter.test / binary (binary)               : previously in module web_editor
+html_editor  / web_editor.converter.test / char (char)                   : previously in module web_editor
+html_editor  / web_editor.converter.test / date (date)                   : previously in module web_editor
+html_editor  / web_editor.converter.test / datetime (datetime)           : previously in module web_editor
+html_editor  / web_editor.converter.test / display_name (char)           : previously in module web_editor
+html_editor  / web_editor.converter.test / float (float)                 : previously in module web_editor
+html_editor  / web_editor.converter.test / html (html)                   : previously in module web_editor
+html_editor  / web_editor.converter.test / integer (integer)             : previously in module web_editor
+html_editor  / web_editor.converter.test / many2one (many2one)           : previously in module web_editor
+html_editor  / web_editor.converter.test / numeric (float)               : previously in module web_editor
+html_editor  / web_editor.converter.test / selection_str (selection)     : previously in module web_editor
+html_editor  / web_editor.converter.test / text (text)                   : previously in module web_editor
+html_editor  / web_editor.converter.test.sub / _order                        : previously in module web_editor
+html_editor  / web_editor.converter.test.sub / display_name (char)           : previously in module web_editor
+html_editor  / web_editor.converter.test.sub / name (char)                   : previously in module web_editor
+web_editor   / web_editor.converter.test / many2one (many2one)           : relation is now 'html_editor.converter.test.sub' ('web_editor.converter.test.sub') [nothing to do]
+
+# NOTHING TO DO: test model
+
+---XML records in module 'html_editor'---
+NEW ir.model.access: html_editor.access_html_editor_converter_test
+NEW ir.model.access: html_editor.access_html_editor_converter_test_sub
+
+# NOTHING TO DO
