@@ -1,0 +1,15 @@
+---Models in module 'cloud_storage_migration'---
+new model cloud.storage.migration.report [sql_view]
+---Fields in module 'cloud_storage_migration'---
+---XML records in module 'cloud_storage_migration'---
+NEW ir.actions.act_window: cloud_storage_migration.action_cloud_storage_migration_cron
+NEW ir.actions.act_window: cloud_storage_migration.action_cloud_storage_migration_report
+NEW ir.config_parameter: cloud_storage_migration.cloud_storage_migration_all_models (noupdate)
+NEW ir.config_parameter: cloud_storage_migration.cloud_storage_migration_max_batch_file_size (noupdate)
+NEW ir.config_parameter: cloud_storage_migration.cloud_storage_migration_max_file_size (noupdate)
+NEW ir.config_parameter: cloud_storage_migration.cloud_storage_migration_message_models (noupdate)
+NEW ir.config_parameter: cloud_storage_migration.cloud_storage_migration_min_attachment_id (noupdate)
+NEW ir.cron: cloud_storage_migration.ir_cron_manual_migrate_local_to_cloud_storage
+NEW ir.model.access: cloud_storage_migration.access_cloud_storage_migration_report
+NEW ir.ui.view: cloud_storage_migration.cloud_storage_migration_config_settings_view_form
+NEW ir.ui.view: cloud_storage_migration.view_cloud_storage_migration_report_list
