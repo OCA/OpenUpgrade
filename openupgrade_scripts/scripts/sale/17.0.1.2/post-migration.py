@@ -22,7 +22,15 @@ def _sale_order_populate_locked_field(env):
     )
 
 
+def _fill_res_company_deposit_default_product_id(env):
+    product_id = env["ir.config_parameter"].get_param("sale.default_deposit_product_id")
+    if product_id:
+        companies = env["res.company"].search([])
+        companies.write({"sale_down_payment_product_id": int(product_id)})
+
+
 @openupgrade.migrate()
 def migrate(env, version):
     openupgrade.load_data(env, "sale", "17.0.1.2/noupdate_changes.xml")
     _sale_order_populate_locked_field(env)
+    _fill_res_company_deposit_default_product_id(env)

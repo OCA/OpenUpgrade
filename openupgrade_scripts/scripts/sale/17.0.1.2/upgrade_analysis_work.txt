@@ -11,7 +11,11 @@ sale         / product.document         / attached_on (selection)       : NEW se
 
 sale         / res.company              / prepayment_percent (float)    : NEW hasdefault: default
 sale         / res.company              / sale_discount_product_id (many2one): NEW relation: product.product
+# NOTHING TO DO
+
 sale         / res.company              / sale_down_payment_product_id (many2one): NEW relation: product.product
+# DONE post-migration: migrate value from config parameter `sale.default_deposit_product_id`
+
 sale         / res.company              / sale_onboarding_order_confirmation_state (selection): DEL selection_keys: ['done', 'just_done', 'not_done']
 sale         / res.company              / sale_onboarding_sample_quotation_state (selection): DEL selection_keys: ['done', 'just_done', 'not_done']
 sale         / res.company              / sale_quotation_onboarding_state (selection): DEL selection_keys: ['closed', 'done', 'just_done', 'not_done']
