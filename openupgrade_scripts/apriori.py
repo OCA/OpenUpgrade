@@ -42,6 +42,8 @@ renamed_modules = {
     "stock_picking_type_shipping_policy": "stock_picking_type_force_move_type",
     # OCA/web
     "web_widget_product_label_section_and_note": "web_widget_product_label_section_and_note_name_visibility",  # noqa: E501
+    # OCA/edi-framework
+    "edi_oca": "edi_core_oca",
     # OCA/...
 }
 
