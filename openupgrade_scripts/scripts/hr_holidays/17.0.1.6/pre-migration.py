@@ -20,6 +20,18 @@ _column_renames = {
     ],
 }
 
+_field_add = [
+    (
+        "number_of_hours",
+        "hr.leave",
+        "hr_leave",
+        "float",
+        None,
+        "hr_holidays",
+        0.0,
+    ),
+]
+
 
 def _pre_create_accrual_plan_active(cr):
     """
@@ -156,6 +168,7 @@ def migrate(env, version):
     openupgrade.rename_models(env.cr, _model_renames)
     openupgrade.rename_tables(env.cr, _table_renames)
     openupgrade.rename_columns(env.cr, _column_renames)
+    openupgrade.add_fields(env, _field_add)
     _pre_create_accrual_plan_active(env.cr)
     _hr_leave_company_id(env.cr)
     _map_leave_accrual_level_action(env.cr)
