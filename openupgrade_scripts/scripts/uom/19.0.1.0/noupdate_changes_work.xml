@@ -1,0 +1,187 @@
+<?xml version='1.0' encoding='utf-8'?>
+<odoo>
+  <record id="product_uom_cm" model="uom.uom">
+    <!--
+    <field name="factor"/>
+    <field name="active" eval="False"/>
+    -->
+    <field name="relative_factor" eval="10"/>
+    <field name="relative_uom_id" ref="uom.product_uom_millimeter"/>
+  </record>
+  <record id="product_uom_cubic_foot" model="uom.uom">
+    <!--
+    <field name="active" eval="False"/>
+    -->
+    <field name="relative_factor" eval="1728"/>
+    <field name="relative_uom_id" ref="uom.product_uom_cubic_inch"/>
+  </record>
+  <record id="product_uom_cubic_inch" model="uom.uom">
+    <!--
+    <field name="factor"/>
+    <field name="active" eval="False"/>
+    -->
+    <field name="relative_factor" eval="0.0163871"/>
+    <field name="relative_uom_id" ref="uom.product_uom_litre"/>
+  </record>
+  <record id="product_uom_cubic_meter" model="uom.uom">
+    <!--
+    <field name="active" eval="False"/>
+    -->
+    <field name="relative_factor">1000</field>
+    <field name="relative_uom_id" ref="uom.product_uom_litre"/>
+  </record>
+  <record id="product_uom_day" model="uom.uom">
+    <!--
+    <field name="factor"/>
+    -->
+    <field name="relative_factor" eval="8.0"/>
+    <field name="relative_uom_id" ref="uom.product_uom_hour"/>
+  </record>
+  <record id="product_uom_dozen" model="uom.uom">
+    <!--
+    <field name="active" eval="False"/>
+    -->
+    <field name="relative_factor" eval="12"/>
+    <field name="relative_uom_id" ref="uom.product_uom_unit"/>
+  </record>
+  <record id="product_uom_floz" model="uom.uom">
+    <!--
+    <field name="factor"/>
+    <field name="active" eval="False"/>
+    -->
+    <field name="relative_factor" eval="0.0295735"/>
+    <field name="relative_uom_id" ref="uom.product_uom_litre"/>
+  </record>
+  <record id="product_uom_foot" model="uom.uom">
+    <!--
+    <field name="factor"/>
+    <field name="active" eval="False"/>
+    -->
+    <field name="relative_factor" eval="12"/>
+    <field name="relative_uom_id" ref="uom.product_uom_inch"/>
+  </record>
+  <record id="product_uom_gal" model="uom.uom">
+    <!--
+    <field name="active" eval="False"/>
+    -->
+    <field name="relative_factor" eval="4"/>
+    <field name="relative_uom_id" ref="uom.product_uom_qt"/>
+  </record>
+  <record id="product_uom_gram" model="uom.uom">
+    <!--
+    <field name="factor"/>
+    -->
+    <field name="relative_factor" eval="1"/>
+  </record>
+  <record id="product_uom_hour" model="uom.uom">
+    <!--
+    <field name="factor"/>
+    -->
+    <field name="relative_factor" eval="1"/>
+  </record>
+  <record id="product_uom_inch" model="uom.uom">
+    <!--
+    <field name="factor"/>
+    <field name="active" eval="False"/>
+    -->
+    <field name="relative_factor" eval="2.54"/>
+    <field name="relative_uom_id" ref="uom.product_uom_cm"/>
+  </record>
+  <record id="product_uom_kgm" model="uom.uom">
+    <!--
+    <field name="factor"/>
+    -->
+    <field name="relative_factor" eval="1000"/>
+    <field name="relative_uom_id" ref="uom.product_uom_gram"/>
+  </record>
+  <record id="product_uom_km" model="uom.uom">
+    <!--
+    <field name="active" eval="False"/>
+    -->
+    <field name="relative_factor" eval="1000"/>
+    <field name="relative_uom_id" ref="uom.product_uom_meter"/>
+  </record>
+  <record id="product_uom_kwh" model="uom.uom">
+    <!--
+    <field name="factor"/>
+    -->
+    <field name="relative_factor" eval="1.0"/>
+  </record>
+  <record id="product_uom_lb" model="uom.uom">
+    <!--
+    <field name="factor"/>
+    <field name="active" eval="False"/>
+    -->
+    <field name="relative_factor" eval="16"/>
+    <field name="relative_uom_id" ref="uom.product_uom_oz"/>
+  </record>
+  <record id="product_uom_litre" model="uom.uom">
+    <!--
+    <field name="factor"/>
+    -->
+    <field name="relative_factor">1000</field>
+    <field name="relative_uom_id" ref="uom.product_uom_milliliter"/>
+  </record>
+  <record id="product_uom_meter" model="uom.uom">
+    <!--
+    <field name="factor"/>
+    -->
+    <field name="relative_factor" eval="100.0"/>
+    <field name="relative_uom_id" ref="uom.product_uom_cm"/>
+  </record>
+  <record id="product_uom_mile" model="uom.uom">
+    <!--
+    <field name="active" eval="False"/>
+    -->
+    <field name="relative_factor" eval="1760"/>
+    <field name="relative_uom_id" ref="uom.product_uom_yard"/>
+  </record>
+  <record id="product_uom_millimeter" model="uom.uom">
+    <!--
+    <field name="factor"/>
+    -->
+    <field name="relative_factor" eval="1"/>
+  </record>
+  <record id="product_uom_minute" model="uom.uom">
+    <!--
+    <field name="factor"/>
+    -->
+    <field name="relative_factor" eval="0.0166667"/>
+    <field name="relative_uom_id" ref="uom.product_uom_hour"/>
+  </record>
+  <record id="product_uom_oz" model="uom.uom">
+    <!--
+    <field name="factor"/>
+    <field name="active" eval="False"/>
+    -->
+    <field name="relative_factor" eval="28.3495"/>
+    <field name="relative_uom_id" ref="uom.product_uom_gram"/>
+  </record>
+  <record id="product_uom_qt" model="uom.uom">
+    <!--
+    <field name="factor"/>
+    <field name="active" eval="False"/>
+    -->
+    <field name="relative_factor" eval="32"/>
+    <field name="relative_uom_id" ref="uom.product_uom_floz"/>
+  </record>
+  <record id="product_uom_ton" model="uom.uom">
+    <field name="name">Ton</field>
+    <field name="relative_factor" eval="1000"/>
+    <field name="relative_uom_id" ref="uom.product_uom_kgm"/>
+  </record>
+  <record id="product_uom_unit" model="uom.uom">
+    <!--
+    <field name="factor"/>
+    -->
+    <field name="relative_factor" eval="1.0"/>
+  </record>
+  <record id="product_uom_yard" model="uom.uom">
+    <!--
+    <field name="factor"/>
+    <field name="active" eval="False"/>
+    -->
+    <field name="relative_factor" eval="3"/>
+    <field name="relative_uom_id" ref="uom.product_uom_foot"/>
+  </record>
+</odoo>
