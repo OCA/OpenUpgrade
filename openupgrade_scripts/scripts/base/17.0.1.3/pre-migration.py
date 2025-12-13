@@ -222,6 +222,8 @@ def _handle_partner_private_type(cr):
     openupgrade.copy_columns(cr, _column_copies)
     # Change contact type and erase sensitive information
     query = "type = 'contact'"
+    # name of private contact may be null, which is forbidden by res_partner_check_name
+    query += ", name = COALESCE(name, '*****')"
     for field in [
         "street",
         "street2",
