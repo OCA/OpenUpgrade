@@ -154,7 +154,7 @@ def split_employee_leaves(env):
         leave_employees.extend(env.cr.fetchall())
         for table_id, holiday_type, employee_ids in leave_employees:
             employees = env["hr.employee"].browse(employee_ids).filtered("active")
-            if employee_ids:
+            if employees:
                 openupgrade.logged_query(
                     env.cr,
                     f"""
