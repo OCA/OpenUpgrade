@@ -8,7 +8,7 @@ from . import odoo_patch
 
 if not config.get("upgrade_path"):
     path = get_module_path("openupgrade_scripts", display_warning=False)
-    if path:
+    if path and os.path.isdir(os.path.join(path, "scripts")):
         logging.getLogger(__name__).info(
             "Setting upgrade_path to the scripts directory inside the module "
             "location of openupgrade_scripts"
