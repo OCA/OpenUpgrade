@@ -1,0 +1,172 @@
+# This workflow will install Python dependencies, run tests and lint with a
+# single version of Python. For more information see:
+# https://help.github.com/actions/language-and-framework-guides\
+# /using-python-with-github-actions
+
+name: Test OpenUpgrade migration
+
+on:
+  pull_request:
+    branches:
+      - "19.0*"
+  push:
+    branches:
+      - "19.0"
+      - "19.0-ocabot-*"
+
+jobs:
+  test:
+    runs-on: ubuntu-22.04
+    env:
+      DB: "openupgrade"
+      DB_HOST: "localhost"
+      DB_PASSWORD: "odoo"
+      DB_PORT: 5432
+      DB_USERNAME: "odoo"
+      DOWNLOADS: https://github.com/${{github.repository}}/releases/download/databases
+      ODOO: "./odoo/odoo-bin"
+      PGHOST: "localhost"
+      PGPASSWORD: "odoo"
+      PGUSER: "odoo"
+      OPENUPGRADE_USE_DEMO: "yes"
+    services:
+      postgres:
+        image: postgres:14.0
+        env:
+          POSTGRES_USER: odoo
+          POSTGRES_PASSWORD: odoo
+          POSTGRES_DB: odoo
+        ports:
+          - 5432:5432
+    steps:
+      - name: Set up Python
+        uses: actions/setup-python@v5
+        with:
+          python-version: '3.10'
+      - name: Sleep for 10 seconds
+        run: sleep 10s
+      - name: DB Creation
+        run: createdb $DB
+      - name: DB Restore
+        run: |
+          wget -q -O- $DOWNLOADS/18.0.psql | pg_restore -d $DB --no-owner
+          psql $DB -c "UPDATE ir_module_module SET demo=False"
+      - name: Check out Odoo
+        uses: actions/checkout@v4
+        with:
+          repository: odoo/odoo
+          ref: "19.0"
+          fetch-depth: 1
+          path: odoo
+      - name: Check out previous Odoo
+        uses: actions/checkout@v4
+        with:
+          repository: odoo/odoo
+          ref: "18.0"
+          fetch-depth: 1
+          path: odoo-old
+      - name: Check out OpenUpgrade
+        uses: actions/checkout@v4
+        with:
+          path: openupgrade
+      - name: Configuration
+        run: |
+          sudo apt update
+          sudo apt install \
+              expect \
+              expect-dev \
+              libevent-dev \
+              libldap2-dev \
+              libsasl2-dev \
+              libxml2-dev \
+              libxslt1-dev \
+              nodejs \
+              python3-lxml \
+              python3-passlib \
+              python3-psycopg2 \
+              python3-serial \
+              python3-simplejson \
+              python3-werkzeug \
+              python3-yaml \
+              unixodbc-dev
+      - name: Requirements Installation
+        run: |
+          sed -i -E "s/(gevent==)21\.8\.0( ; sys_platform != 'win32' and python_version == '3.10')/\122.10.2\2/;s/(greenlet==)1.1.2( ; sys_platform != 'win32' and python_version == '3.10')/\12.0.2\2/" odoo/requirements.txt
+          sed -i -E "s/(^cbor2==)5\.4\.2/\15.6.2/" odoo/requirements.txt
+          pip install -q -r odoo/requirements.txt
+          pip install -r ./openupgrade/requirements.txt
+          pip install -U git+https://github.com/oca/openupgradelib
+          # this is for v16 l10n_eg_edi_eta which crashes without it
+          pip install asn1crypto
+          pip install coverage
+          # this is for account_peppol
+          pip install phonenumbers
+      - name: Test data
+        run: |
+          if test -n "$(ls openupgrade/openupgrade_scripts/scripts/*/tests/data*.py 2> /dev/null)"; then
+             for snippet in openupgrade/openupgrade_scripts/scripts/*/tests/data*.py; do
+               odoo-old/odoo-bin shell -d $DB < $snippet
+             done
+          fi
+      - name: OpenUpgrade test
+        id: run_migration
+        run: |
+          # select modules and perform the upgrade
+          MODULES_OLD=$(\
+              sed -n '/^+========/,$p' \
+              openupgrade/docsource/modules180-190.rst \
+              | grep "Done\|Partial\|Nothing" \
+              | grep -v "theme_" \
+              | sed -rn 's/((^\| *\|del\| *)|^\| *)([0-9a-z_]*)[ \|].*/\3/g p' \
+              | sed '/^\s*$/d' \
+              | paste -d, -s)
+          MODULES_NEW=$(\
+              sed -n '/^+========/,$p' \
+              openupgrade/docsource/modules180-190.rst \
+              | grep "Done\|Partial\|Nothing" \
+              | grep -v "theme_" \
+              | sed -rn 's/((^\| *\|new\| *)|^\| *)([0-9a-z_]*)[ \|].*/\3/g p' \
+              | sed '/^\s*$/d' \
+              | paste -d, -s)
+          echo "modules_old=$MODULES_OLD" >> $GITHUB_OUTPUT
+          echo "modules_new=$MODULES_NEW" >> $GITHUB_OUTPUT
+          if [ -z "$MODULES_NEW" ]; then
+             echo "No modules to test yet"
+             exit
+          fi
+          REQUEST="update ir_module_module set state='uninstalled' \
+              where name not in ('$(echo $MODULES_OLD | sed -e "s/,/','/g")')"
+          echo Set the modules as not installable if they are not in the following list : $MODULES_OLD
+          echo Running $REQUEST
+          psql $DB -c "$REQUEST"
+          ADDONS_PATHS="\
+              $GITHUB_WORKSPACE/odoo/addons \
+              $GITHUB_WORKSPACE/odoo/odoo/addons \
+              $GITHUB_WORKSPACE/openupgrade"
+          echo Execution of Openupgrade with the update of the following modules : $MODULES_NEW
+          # Silence redundant logs from unlinking records (1 line is enough)
+          # to prevent log overflow
+          coverage run \
+              --source=$GITHUB_WORKSPACE/openupgrade/openupgrade_scripts/scripts \
+          $ODOO \
+              --addons-path=`echo $ADDONS_PATHS | awk -v OFS="," '$1=$1'` \
+              --database=$DB \
+              --db_host=$DB_HOST \
+              --db_password=$DB_PASSWORD \
+              --db_port=$DB_PORT \
+              --db_user=$DB_USERNAME \
+              --load=base,web,openupgrade_framework \
+              --test-enable \
+              --test-tags openupgrade \
+              --log-handler odoo.models.unlink:WARNING \
+              --stop-after-init \
+              --without-demo=$MODULES_NEW \
+              --update=$MODULES_NEW
+      - name: Generate coverage.xml
+        if: ${{ steps.run_migration.outputs.modules_new != '' }}
+        run: coverage xml
+      - uses: codecov/codecov-action@v4
+        if: ${{ steps.run_migration.outputs.modules_new != '' }}
+        with:
+          files: coverage.xml
+          token: ${{ secrets.CODECOV_TOKEN }}

@@ -1,0 +1,226 @@
+name: Generate analysis files
+
+on:
+  workflow_call:
+    inputs:
+      from_version:
+        required: true
+        type: string
+      from_version_requirements:
+        default: 'gevent==22.10.2 greenlet==2.0.2'
+        type: string
+      from_version_requirements_sed:
+        default: '/^gevent\>/d; /^greenlet\>/d'
+        type: string
+      to_version:
+        required: true
+        type: string
+      to_version_requirements:
+        default: 'gevent==22.10.2 greenlet==2.0.2'
+        type: string
+      to_version_requirements_sed:
+        default: '/^gevent\>/d; /^greenlet\>/d'
+        type: string
+      python_version:
+        default: "3.10"
+        type: string
+      postgres_version:
+        default: "14"
+        type: string
+
+jobs:
+  generate-analysis:
+    name: Generate analysis ${{ inputs.to_version }}
+    runs-on: ubuntu-latest
+    env:
+      PGHOST: "localhost"
+      PGPASSWORD: "odoo"
+      PGUSER: "odoo"
+      FROM_VERSION: "${{ inputs.from_version }}"
+      TO_VERSION: "${{ inputs.to_version }}"
+    services:
+      postgres:
+        image: postgres:${{ inputs.postgres_version }}
+        env:
+          POSTGRES_USER: odoo
+          POSTGRES_PASSWORD: odoo
+        ports:
+          - 5432:5432
+    steps:
+      - name: Set up Python
+        uses: actions/setup-python@v4
+        with:
+          python-version: "${{ inputs.python_version }}"
+      - name: Install required packages
+        run: |
+          sudo apt update
+          sudo apt install \
+              expect \
+              expect-dev \
+              libevent-dev \
+              libldap2-dev \
+              libsasl2-dev \
+              libxml2-dev \
+              libxslt1-dev \
+              nodejs \
+              python3-lxml \
+              python3-passlib \
+              python3-psycopg2 \
+              python3-serial \
+              python3-simplejson \
+              python3-werkzeug \
+              python3-yaml \
+              unixodbc-dev
+      - name: Checkout previous OpenUpgrade
+        uses: actions/checkout@v4
+        with:
+          ref: "${{ env.FROM_VERSION }}"
+          path: openupgrade-${{ env.FROM_VERSION }}
+      - name: Checkout OpenUpgrade from current branch
+        if: github.event_name != 'schedule' && startsWith(github.ref_name, env.TO_VERSION)
+        uses: actions/checkout@v4
+        with:
+          path: openupgrade-${{ env.TO_VERSION }}
+      - name: Checkout current OpenUpgrade
+        if: github.event_name == 'schedule' || !startsWith(github.ref_name, env.TO_VERSION)
+        uses: actions/checkout@v4
+        with:
+          ref: "${{ env.TO_VERSION }}"
+          path: openupgrade-${{ env.TO_VERSION }}
+      - name: Install previous Odoo
+        run: |
+          wget -q -O- https://github.com/oca/ocb/archive/refs/heads/$FROM_VERSION.tar.gz | tar -xz
+          wget -q -O- https://github.com/oca/server-tools/archive/refs/heads/$FROM_VERSION.tar.gz | tar -xz
+          python -mvenv env-$FROM_VERSION
+          . env-$FROM_VERSION/bin/activate
+          pip install ${{ inputs.from_version_requirements }}
+          sed -iE '${{ inputs.from_version_requirements_sed }}' OCB-$FROM_VERSION/requirements.txt
+          pip install -r OCB-$FROM_VERSION/requirements.txt
+          pip install ./OCB-$FROM_VERSION
+          pip install -r server-tools-$FROM_VERSION/requirements.txt
+          pip install -r openupgrade-$FROM_VERSION/requirements.txt
+          # this is for l10n_eg_edi_eta which crashes without it
+          pip install asn1crypto
+          odoo -s -c odoo-$FROM_VERSION.cfg --addons-path server-tools-$FROM_VERSION,openupgrade-$FROM_VERSION --stop-after-init
+      - name: Install current Odoo
+        run: |
+          wget -q -O- https://github.com/oca/ocb/archive/refs/heads/$TO_VERSION.tar.gz | tar -xz
+          wget -q -O- https://github.com/oca/server-tools/archive/refs/heads/$TO_VERSION.tar.gz | tar -xz
+          python -mvenv env-$TO_VERSION
+          . env-$TO_VERSION/bin/activate
+          pip install ${{ inputs.to_version_requirements }}
+          sed -iE '${{ inputs.to_version_requirements_sed }}' OCB-$TO_VERSION/requirements.txt
+          pip install -r OCB-$TO_VERSION/requirements.txt
+          pip install ./OCB-$TO_VERSION
+          pip install -r server-tools-$TO_VERSION/requirements.txt
+          pip install -r openupgrade-$TO_VERSION/requirements.txt
+          # this is for l10n_eg_edi_eta which crashes without it
+          pip install asn1crypto
+          odoo -s -c odoo-$TO_VERSION.cfg --addons-path server-tools-$TO_VERSION,openupgrade-$TO_VERSION --stop-after-init
+      - name: Create previous Odoo database
+        env:
+          ODOO: env-${{ env.FROM_VERSION }}/bin/odoo -c odoo-${{ env.FROM_VERSION }}.cfg -d ${{ env.FROM_VERSION }}
+          ODOO_SHELL: env-${{ env.FROM_VERSION }}/bin/odoo shell -c odoo-${{ env.FROM_VERSION }}.cfg -d ${{ env.FROM_VERSION }}
+        run: |
+          $ODOO --without-demo=all -i upgrade_analysis --stop-after-init
+          $ODOO_SHELL <<EOF
+          install_wizard = env['upgrade.install.wizard'].create({})
+          install_wizard.select_odoo_modules()
+          install_wizard.install_modules()
+          env.cr.commit()
+          EOF
+          $ODOO_SHELL <<EOF
+          env['upgrade.generate.record.wizard'].create({}).generate()
+          env.cr.commit()
+          EOF
+      - name: Create current Odoo database
+        env:
+          ODOO: env-${{ env.TO_VERSION }}/bin/odoo -c odoo-${{ env.TO_VERSION }}.cfg -d ${{ env.TO_VERSION }}
+          ODOO_SHELL: env-${{ env.TO_VERSION }}/bin/odoo shell -c odoo-${{ env.TO_VERSION }}.cfg -d ${{ env.TO_VERSION }}
+        run: |
+          $ODOO --without-demo=all -i upgrade_analysis --stop-after-init
+          $ODOO_SHELL <<EOF
+          install_wizard = env['upgrade.install.wizard'].create({})
+          install_wizard.select_odoo_modules()
+          install_wizard.install_modules()
+          env.cr.commit()
+          EOF
+          $ODOO_SHELL <<EOF
+          env['upgrade.generate.record.wizard'].create({}).generate()
+          env.cr.commit()
+          EOF
+      - name: Delete all files to be generated from repository
+        env:
+          OPENUPGRADE_DIR: openupgrade-${{ env.TO_VERSION }}
+        run: |
+          for file in $OPENUPGRADE_DIR/openupgrade_scripts/scripts/*/*/{noupdate_changes.xml,upgrade_analysis.txt}; do
+            if [ ! -f $file ]; then
+              continue
+            fi
+            git -C $OPENUPGRADE_DIR rm ${file#$OPENUPGRADE_DIR/}
+          done
+      - name: Create analysis
+        env:
+          FROM_ODOO: env-${{ env.FROM_VERSION }}/bin/odoo -c odoo-${{ env.FROM_VERSION }}.cfg -d ${{ env.FROM_VERSION }}
+          TO_ODOO_SHELL: env-${{ env.TO_VERSION }}/bin/odoo shell -c odoo-${{ env.TO_VERSION }}.cfg -d ${{ env.TO_VERSION }}
+        run: |
+          $FROM_ODOO --max-cron-threads=0 &
+          ODOO_PID=$!
+          $TO_ODOO_SHELL <<EOF
+          config = env['upgrade.comparison.config'].create({
+              'database': '${{ env.FROM_VERSION }}',
+          })
+          analysis_wizard = env['upgrade.analysis'].create({
+              'config_id': config.id,
+          })
+          analysis_wizard._compute_upgrade_path()
+          analysis_wizard.analyze()
+          env.cr.commit()
+          print(analysis_wizard.log)
+          EOF
+          kill -s KILL $ODOO_PID
+      - name: Determine changed addons
+        id: generate_body
+        env:
+          OPENUPGRADE_DIR: openupgrade-${{ env.TO_VERSION }}
+          PR_BODY: pr_body.txt
+        run: |
+          git -C $OPENUPGRADE_DIR add .
+
+          echo "Analysis or noupdate changes for modules marked as done:
+
+          " > "$PR_BODY"
+
+          for module in $(
+            git -C $OPENUPGRADE_DIR status --short | awk '{print $2}' | awk -F/ '{print $3}' | sort -u
+          ); do
+            if grep -qE "\<$module\>.*\<((Done)|(No))" $OPENUPGRADE_DIR/docsource/modules*; then
+              echo Done module $module was updated
+              echo "- $module" >> $PR_BODY
+            else
+              echo $module is not done yet
+            fi
+          done
+
+          if ! grep -q - $PR_BODY; then
+            echo None >> $PR_BODY
+          fi
+
+          echo "body-file=$PR_BODY" >> "$GITHUB_OUTPUT"
+      - name: Get number of milestone
+        id: get_milestone
+        run: |
+          echo "number=$(
+            wget -qO- https://api.github.com/repos/${{ github.repository }}/milestones|jq '.[] | select(.title=="${{ env.TO_VERSION }}") .number'
+          )" >> "$GITHUB_OUTPUT"
+      - name: Create PR
+        uses: peter-evans/create-pull-request@271a8d0340265f705b14b6d32b9829c1cb33d45e #v7
+        with:
+          base: "${{ env.TO_VERSION }}"
+          body-path: "${{ steps.generate_body.outputs.body-file }}"
+          branch: "${{ env.TO_VERSION }}-update-analysis-bot"
+          commit-message: "[IMP] Update analysis files"
+          delete-branch: true
+          milestone: "${{ steps.get_milestone.outputs.number }}"
+          path: "openupgrade-${{ env.TO_VERSION }}"
+          title: "[${{ env.TO_VERSION }}][IMP] Update analysis files"
