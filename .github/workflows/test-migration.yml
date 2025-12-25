@@ -109,6 +109,7 @@ jobs:
              done
           fi
       - name: OpenUpgrade test
+        id: run_migration
         run: |
           # select modules and perform the upgrade
           MODULES_OLD=$(\
@@ -127,6 +128,8 @@ jobs:
               | sed -rn 's/((^\| *\|new\| *)|^\| *)([0-9a-z_]*)[ \|].*/\3/g p' \
               | sed '/^\s*$/d' \
               | paste -d, -s)
+          echo "modules_old=$MODULES_OLD" >> $GITHUB_OUTPUT
+          echo "modules_new=$MODULES_NEW" >> $GITHUB_OUTPUT
           if [ -z "$MODULES_NEW" ]; then
              echo "No modules to test yet"
              exit
@@ -160,8 +163,10 @@ jobs:
               --without-demo=$MODULES_NEW \
               --update=$MODULES_NEW
       - name: Generate coverage.xml
+        if: ${{ steps.run_migration.outputs.modules_new != '' }}
         run: coverage xml
       - uses: codecov/codecov-action@v4
+        if: ${{ steps.run_migration.outputs.modules_new != '' }}
         with:
           files: coverage.xml
           token: ${{ secrets.CODECOV_TOKEN }}
