@@ -7,13 +7,10 @@ payment_sips / payment.provider         / sips_prod_url (char)          : DEL
 payment_sips / payment.provider         / sips_secret (char)            : DEL
 payment_sips / payment.provider         / sips_test_url (char)          : DEL
 payment_sips / payment.provider         / sips_version (char)           : DEL
-payment_worldline / payment.provider         / worldline_api_key (char)      : NEW
-payment_worldline / payment.provider         / worldline_api_secret (char)   : NEW
-payment_worldline / payment.provider         / worldline_pspid (char)        : NEW
-payment_worldline / payment.provider         / worldline_webhook_key (char)  : NEW
-payment_worldline / payment.provider         / worldline_webhook_secret (char): NEW
+payment_worldline / payment.provider         / code (False)                  : module is now 'payment_nuvei' ('payment_worldline')
 ---XML records in module 'payment_worldline'---
-NEW ir.ui.view: payment_worldline.payment_provider_form
-NEW ir.ui.view: payment_worldline.redirect_form
 DEL ir.ui.view: payment_sips.payment_provider_form
 DEL ir.ui.view: payment_sips.redirect_form
+DEL payment.method: payment_worldline.payment_method_alipay_plus [renamed to payment module] (noupdate)
+DEL payment.method: payment_worldline.payment_method_post_finance [renamed to payment module] (noupdate)
+DEL payment.provider: payment_worldline.payment_provider_worldline [renamed to payment module] (noupdate)

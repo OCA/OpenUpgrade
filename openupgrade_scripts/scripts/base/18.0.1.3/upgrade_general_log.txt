@@ -30,6 +30,7 @@ obsolete model stock.scheduler.compute [module stock]
 obsolete model website.twitter.tweet [module website_twitter]
 new model account.autopost.bills.wizard [module account]
 new model account.code.mapping [module account]
+new model account.edi.ubl [module account_edi_ubl_cii]
 new model account.edi.xml.oioubl_21 [module l10n_dk_nemhandel]
 new model account.lock_exception [module account]
 new model account.merge.wizard [module account]
@@ -127,13 +128,13 @@ new model website.custom_blocked_third_party_domains [module website]
 new model website.page.properties [module website]
 new model website.page.properties.base [module website]
 ---Fields in module 'general'---
-# 13472 fields matched,
-# Direct match: 13370
+# 13480 fields matched,
+# Direct match: 13377
 # Found in other module with different type: 0
-# Found in other module: 94
+# Found in other module: 95
 # Found with different type: 8
 # In obsolete models: 34
-# New columns: 1768
+# New columns: 1762
 # Not matched: 846
 ---XML records in module 'general'---
 ERROR: module not in list of installed modules:

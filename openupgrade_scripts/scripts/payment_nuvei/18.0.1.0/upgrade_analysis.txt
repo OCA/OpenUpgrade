@@ -1,9 +1,10 @@
 ---Models in module 'payment_nuvei'---
 ---Fields in module 'payment_nuvei'---
-payment_nuvei / payment.provider         / code (False)                  : NEW selection_keys: ['adyen', 'aps', 'asiapay', 'authorize', 'buckaroo', 'custom', 'demo', 'flutterwave', 'mercado_pago', 'mollie', 'none', 'nuvei'], mode: modify
+payment_nuvei / payment.provider         / code (False)                  : previously in module payment_worldline
 payment_nuvei / payment.provider         / nuvei_merchant_identifier (char): NEW
 payment_nuvei / payment.provider         / nuvei_secret_key (char)       : NEW
 payment_nuvei / payment.provider         / nuvei_site_identifier (char)  : NEW
+payment_worldline / payment.provider         / code (False)                  : selection_keys added: [nuvei], removed: [paypal, razorpay, sips, stripe, worldline]
 ---XML records in module 'payment_nuvei'---
 NEW ir.ui.view: payment_nuvei.payment_provider_form
 NEW ir.ui.view: payment_nuvei.redirect_form
