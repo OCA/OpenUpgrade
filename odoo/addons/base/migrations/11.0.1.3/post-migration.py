@@ -80,7 +80,8 @@ def fill_cron_action_server_post(env):
     }
     env.cr.execute("""
         SELECT ic.id, ic.create_uid, ic.create_date, ic.write_uid, ic.args,
-            ic.write_date, ic.name, im.id AS model_id, ic.function
+            ic.write_date, ic.name, im.id AS model_id, ic.function,
+            im.model as model_name
         FROM ir_cron AS ic,
             ir_model AS im
         WHERE
@@ -95,6 +96,7 @@ def fill_cron_action_server_post(env):
             'write_date': act['write_date'],
             'name': act['name'],
             'model_id': act['model_id'],
+            'model_name': act['model_name'],
             'code': 'model.%s%s' % (act['function'], act['args'] or '()'),
         })
         openupgrade.logged_query(
@@ -102,11 +104,11 @@ def fill_cron_action_server_post(env):
             INSERT INTO ir_act_server
               (create_uid, create_date, write_uid, write_date,
                code, state, type, usage, name, model_id,
-               binding_type, sequence)
+               model_name, binding_type, sequence)
             VALUES (
               %(create_uid)s, %(create_date)s, %(write_uid)s, %(write_date)s,
               %(code)s, %(state)s, %(type)s, %(usage)s, %(name)s, %(model_id)s,
-              %(binding_type)s, %(sequence)s
+              %(model_name)s, %(binding_type)s, %(sequence)s
             )
             RETURNING id""", vals,
         )
