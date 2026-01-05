@@ -32,6 +32,7 @@ new model account.autopost.bills.wizard [module account]
 new model account.code.mapping [module account]
 new model account.edi.ubl [module account_edi_ubl_cii]
 new model account.edi.xml.oioubl_21 [module l10n_dk_nemhandel]
+new model account.edi.xml.ubl_hr [module l10n_hr_edi]
 new model account.lock_exception [module account]
 new model account.merge.wizard [module account]
 new model account.merge.wizard.line [module account]
@@ -77,6 +78,10 @@ new model l10n_es_edi_tbai.document [module l10n_es_edi_tbai]
 new model l10n_fr.fec.export.wizard [module l10n_fr_account]
 new model l10n_gr_edi.document [module l10n_gr_edi]
 new model l10n_gr_edi.preferred_classification [module l10n_gr_edi]
+new model l10n_hr_edi.addendum [module l10n_hr_edi]
+new model l10n_hr_edi.mojeracun_reject_wizard [module l10n_hr_edi]
+new model l10n_hr.kpd.category [module l10n_hr_edi]
+new model l10n.hr.tax.category [module l10n_hr_edi]
 new model l10n_id_efaktur.document [module l10n_id_efaktur]
 new model l10n_id.qris.transaction [module l10n_id]
 new model l10n_in.section.alert [module l10n_in_withholding]
@@ -134,7 +139,7 @@ new model website.page.properties.base [module website]
 # Found in other module: 95
 # Found with different type: 8
 # In obsolete models: 34
-# New columns: 1762
+# New columns: 1853
 # Not matched: 846
 ---XML records in module 'general'---
 ERROR: module not in list of installed modules:

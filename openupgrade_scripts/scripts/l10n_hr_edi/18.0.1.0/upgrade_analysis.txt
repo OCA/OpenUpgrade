@@ -1,0 +1,90 @@
+---Models in module 'l10n_hr_edi'---
+new model account.edi.xml.ubl_hr [abstract]
+new model l10n_hr_edi.addendum
+new model l10n_hr_edi.mojeracun_reject_wizard [transient]
+new model l10n_hr.kpd.category
+new model l10n.hr.tax.category
+---Fields in module 'l10n_hr_edi'---
+l10n_hr_edi  / account.journal          / l10n_hr_business_premises_label (char): NEW required, hasdefault: default
+l10n_hr_edi  / account.journal          / l10n_hr_business_premises_label_refund (char): NEW required, hasdefault: default
+l10n_hr_edi  / account.journal          / l10n_hr_issuing_device_label (char): NEW required, hasdefault: default
+l10n_hr_edi  / account.journal          / l10n_hr_issuing_device_label_refund (char): NEW required, hasdefault: default
+l10n_hr_edi  / account.move             / l10n_hr_customer_defined_process_name (char): NEW
+l10n_hr_edi  / account.move             / l10n_hr_edi_addendum_id (one2many): NEW relation: l10n_hr_edi.addendum
+l10n_hr_edi  / account.move             / l10n_hr_fiscal_user_id (many2one): NEW relation: res.partner
+l10n_hr_edi  / account.move             / l10n_hr_process_type (selection): NEW selection_keys: ['P1', 'P10', 'P11', 'P12', 'P2', 'P3', 'P4', 'P5', 'P6', 'P7', 'P8', 'P9', 'P99'], hasdefault: compute
+l10n_hr_edi  / account.move.line        / l10n_hr_kpd_category_id (many2one): NEW relation: l10n_hr.kpd.category, hasdefault: compute
+l10n_hr_edi  / account.tax              / l10n_hr_tax_category_id (many2one): NEW relation: l10n.hr.tax.category
+l10n_hr_edi  / l10n.hr.tax.category     / category_name (char)          : NEW
+l10n_hr_edi  / l10n.hr.tax.category     / code_hr (char)                : NEW
+l10n_hr_edi  / l10n.hr.tax.category     / code_tax_scheme (char)        : NEW
+l10n_hr_edi  / l10n.hr.tax.category     / code_untdid (char)            : NEW
+l10n_hr_edi  / l10n.hr.tax.category     / description (char)            : NEW
+l10n_hr_edi  / l10n.hr.tax.category     / name (char)                   : NEW required
+l10n_hr_edi  / l10n_hr.kpd.category     / description (char)            : NEW
+l10n_hr_edi  / l10n_hr.kpd.category     / name (char)                   : NEW required
+l10n_hr_edi  / l10n_hr.kpd.category     / sector (char)                 : NEW
+l10n_hr_edi  / l10n_hr_edi.addendum     / business_document_status (selection): NEW selection_keys: ['0', '1', '2', '3', '4', '99', 'None']
+l10n_hr_edi  / l10n_hr_edi.addendum     / business_status_reason (char) : NEW hasdefault: default
+l10n_hr_edi  / l10n_hr_edi.addendum     / fiscalization_channel_type (selection): NEW selection_keys: ['0', '1']
+l10n_hr_edi  / l10n_hr_edi.addendum     / fiscalization_error (char)    : NEW hasdefault: default
+l10n_hr_edi  / l10n_hr_edi.addendum     / fiscalization_number (char)   : NEW
+l10n_hr_edi  / l10n_hr_edi.addendum     / fiscalization_request (char)  : NEW
+l10n_hr_edi  / l10n_hr_edi.addendum     / fiscalization_status (selection): NEW selection_keys: ['0', '1', '2']
+l10n_hr_edi  / l10n_hr_edi.addendum     / invoice_sending_time (datetime): NEW
+l10n_hr_edi  / l10n_hr_edi.addendum     / mer_document_eid (char)       : NEW
+l10n_hr_edi  / l10n_hr_edi.addendum     / mer_document_status (selection): NEW selection_keys: ['20', '30', '40', '45', '50', '70']
+l10n_hr_edi  / l10n_hr_edi.addendum     / mer_signed_xml_archived (boolean): NEW
+l10n_hr_edi  / l10n_hr_edi.addendum     / move_id (many2one)            : NEW relation: account.move, required
+l10n_hr_edi  / l10n_hr_edi.addendum     / payment_method_type (selection): NEW selection_keys: ['O', 'T', 'Z'], hasdefault: default
+l10n_hr_edi  / l10n_hr_edi.addendum     / payment_reported_amount (float): NEW hasdefault: default
+l10n_hr_edi  / product.template         / l10n_hr_kpd_category_id (many2one): NEW relation: l10n_hr.kpd.category
+l10n_hr_edi  / res.company              / l10n_hr_mer_company_ident (char): NEW
+l10n_hr_edi  / res.company              / l10n_hr_mer_connection_mode (selection): NEW selection_keys: ['demo', 'prod', 'test'], hasdefault: default
+l10n_hr_edi  / res.company              / l10n_hr_mer_connection_state (selection): NEW required, selection_keys: ['active', 'inactive'], isfunction: function, stored
+l10n_hr_edi  / res.company              / l10n_hr_mer_password (char)   : NEW
+l10n_hr_edi  / res.company              / l10n_hr_mer_purchase_journal_id (many2one): NEW relation: account.journal, hasdefault: compute
+l10n_hr_edi  / res.company              / l10n_hr_mer_software_ident (char): NEW hasdefault: default
+l10n_hr_edi  / res.company              / l10n_hr_mer_username (char)   : NEW
+l10n_hr_edi  / res.partner              / invoice_edi_format (False)    : NEW selection_keys: ['es_facturae', 'facturx', 'nlcius', 'oioubl_201', 'oioubl_21', 'pint_anz', 'pint_jp', 'pint_my', 'tw_ecpay', 'ubl_a_nz', 'ubl_bis3', 'ubl_hr', 'ubl_sg', 'ubl_tr', 'xrechnung'], mode: modify
+l10n_hr_edi  / res.partner              / invoice_sending_method (False): NEW selection_keys: ['email', 'manual', 'mojeracun', 'nemhandel', 'peppol', 'snailmail'], mode: modify
+l10n_hr_edi  / res.partner              / l10n_hr_business_unit_code (char): NEW
+l10n_hr_edi  / res.partner              / l10n_hr_personal_oib (char)   : NEW
+---XML records in module 'l10n_hr_edi'---
+NEW ir.cron: l10n_hr_edi.ir_cron_mer_archive_signed_xmls
+NEW ir.cron: l10n_hr_edi.ir_cron_mer_get_new_documents
+NEW ir.cron: l10n_hr_edi.ir_cron_mer_update_document_status
+NEW ir.model.access: l10n_hr_edi.l10n_hr_edi_addendum_invoice
+NEW ir.model.access: l10n_hr_edi.l10n_hr_edi_addendum_readonly
+NEW ir.model.access: l10n_hr_edi.l10n_hr_edi_mojeracun_reject_wizard
+NEW ir.model.access: l10n_hr_edi.l10n_hr_kpd_category
+NEW ir.model.access: l10n_hr_edi.l10n_hr_kpd_category_readonly
+NEW ir.model.access: l10n_hr_edi.l10n_hr_tax_category
+NEW ir.model.access: l10n_hr_edi.l10n_hr_tax_category_readonly
+NEW ir.ui.view: l10n_hr_edi.account_journal_dashboard_kanban_view
+NEW ir.ui.view: l10n_hr_edi.account_move_form_inherit
+NEW ir.ui.view: l10n_hr_edi.document_tax_totals_company_currency_template_inherit
+NEW ir.ui.view: l10n_hr_edi.l10n_hr_kpd_category_view_search
+NEW ir.ui.view: l10n_hr_edi.l10n_hr_kpd_category_view_tree
+NEW ir.ui.view: l10n_hr_edi.mojeracun_reject_wizard_form
+NEW ir.ui.view: l10n_hr_edi.product_template_form_view_inherit
+NEW ir.ui.view: l10n_hr_edi.report_invoice_document_inherit
+NEW ir.ui.view: l10n_hr_edi.res_config_settings_view_form
+NEW ir.ui.view: l10n_hr_edi.res_partner_view_form_inherit
+NEW ir.ui.view: l10n_hr_edi.view_account_invoice_filter_inherit
+NEW ir.ui.view: l10n_hr_edi.view_account_journal_form_inherit
+NEW ir.ui.view: l10n_hr_edi.view_invoice_tree_inherit
+NEW ir.ui.view: l10n_hr_edi.view_tax_form_inherit
+NEW l10n.hr.tax.category: l10n_hr_edi.vat_type_ae
+NEW l10n.hr.tax.category: l10n_hr_edi.vat_type_e
+NEW l10n.hr.tax.category: l10n_hr_edi.vat_type_g
+NEW l10n.hr.tax.category: l10n_hr_edi.vat_type_k
+NEW l10n.hr.tax.category: l10n_hr_edi.vat_type_n
+NEW l10n.hr.tax.category: l10n_hr_edi.vat_type_o
+NEW l10n.hr.tax.category: l10n_hr_edi.vat_type_pdv13
+NEW l10n.hr.tax.category: l10n_hr_edi.vat_type_pdv25
+NEW l10n.hr.tax.category: l10n_hr_edi.vat_type_pdv5
+NEW l10n.hr.tax.category: l10n_hr_edi.vat_type_povnak
+NEW l10n.hr.tax.category: l10n_hr_edi.vat_type_pp
+NEW l10n.hr.tax.category: l10n_hr_edi.vat_type_ppmv
+NEW l10n.hr.tax.category: l10n_hr_edi.vat_type_z
