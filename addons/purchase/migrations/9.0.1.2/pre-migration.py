@@ -76,8 +76,8 @@ def migrate_purchase_double_validation(env):
              'selection', False, 'purchase'),
         ],
     )
-    words = env.ref('purchase.trans_confirmed_double_gt').condition.split()
     try:
+        words = env.ref('purchase.trans_confirmed_double_gt').condition.split()
         limit = float(words[-1])
     except ValueError:
         limit = 5000.0
