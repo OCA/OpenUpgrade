@@ -12,3 +12,7 @@ def migrate(env, version):
     openupgrade.convert_field_to_html(
         env.cr, "repair_order", "quotation_notes", "quotation_notes"
     )
+    openupgrade.copy_columns(
+        env.cr,
+        {"repair_order": [("state", None, None)]},
+    )
