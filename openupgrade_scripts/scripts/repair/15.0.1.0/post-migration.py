@@ -14,7 +14,7 @@ def migrate(env, version):
     )
     openupgrade.map_values(
         env.cr,
-        "state",
+        openupgrade.get_legacy_name("state"),
         "state",
         [("invoice_except", "2binvoiced")],
         table="repair_order",
