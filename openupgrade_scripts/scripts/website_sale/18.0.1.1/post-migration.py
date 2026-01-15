@@ -66,14 +66,13 @@ def _website_sale_product_attachment(env):
         """,
     )
     new_attachment_ids = [x[0] for x in env.cr.fetchall()]
-    openupgrade.logged_query(
-        env.cr,
-        """
+    query = """
         INSERT INTO product_document (
             ir_attachment_id,
             sequence,
             active,
             shown_on_product_page,
+            attached_on_sale,
             create_uid,
             create_date,
             write_uid,
@@ -84,15 +83,18 @@ def _website_sale_product_attachment(env):
             10,
             true,
             true,
+            'hidden',
             a.create_uid,
             a.create_date,
             a.write_uid,
             a.write_date
         FROM ir_attachment a
-        WHERE a.id IN %s
-        """,
-        (tuple(new_attachment_ids),),
-    )
+        WHERE a.id IN %s"""
+    if openupgrade.column_exists(env.cr, "product_document", "attached_on_mrp"):
+        # Adapt it if mrp is installed
+        query = query.replace("attached_on_sale,", "attached_on_sale,attached_on_mrp,")
+        query = query.replace("'hidden',", "'hidden','hidden',")
+    openupgrade.logged_query(env.cr, query, (tuple(new_attachment_ids),))
 
 
 @openupgrade.migrate()
