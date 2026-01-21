@@ -20,7 +20,6 @@ def _update_from_database(self, *args, **kwargs) -> None:
 
     if os.environ.get("OPENUPGRADE_USE_DEMO", "") == "yes":
         return
-
     if (
         "base" in self._modules
         and self._modules["base"].demo
