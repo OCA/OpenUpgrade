@@ -3,7 +3,6 @@
 # License AGPL-3.0 or later (http://www.gnu.org/licenses/agpl).
 import logging
 
-from odoo import api
 from odoo.exceptions import ValidationError
 from odoo.modules.module import get_resource_from_path
 from odoo.tools import mute_logger
@@ -13,9 +12,8 @@ from odoo.addons.base.models.ir_ui_view import IrUiView
 _logger = logging.getLogger(__name__)
 
 
-@api.constrains("arch_db")
 def _check_xml(self):
-    """Don't raise or log exceptions in view validation unless explicitely
+    """Don't raise or log exceptions in view validation unless explicitly
     requested. Mute warnings about views which are common during migration."""
     with mute_logger("odoo.addons.base.models.ir_ui_view"):
         try:
@@ -35,7 +33,7 @@ def _check_xml(self):
 def _raise_view_error(
     self, message, node=None, *, from_exception=None, from_traceback=None
 ):
-    """Don't raise or log exceptions in view validation unless explicitely
+    """Don't raise or log exceptions in view validation unless explicitly
     requested
     """
     raise_exception = self.env.context.get("raise_view_error")
