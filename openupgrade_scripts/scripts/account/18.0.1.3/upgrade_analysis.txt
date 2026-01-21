@@ -49,6 +49,7 @@ account      / account.lock_exception   / user_id (many2one)            : NEW re
 account      / account.move             / amount_untaxed_in_currency_signed (float): NEW isfunction: function, stored
 account      / account.move             / audit_trail_message_ids (one2many): NEW relation: mail.message
 account      / account.move             / checked (boolean)             : NEW
+account      / account.move             / delivery_date (date)          : now a function
 account      / account.move             / invoice_currency_rate (float) : NEW hasdefault: compute
 account      / account.move             / is_manually_modified (boolean): NEW
 account      / account.move             / journal_group_id (many2one)   : NEW relation: account.journal.group, stored: False

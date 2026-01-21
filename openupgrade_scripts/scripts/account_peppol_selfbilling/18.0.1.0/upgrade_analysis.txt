@@ -1,0 +1,9 @@
+---Models in module 'account_peppol_selfbilling'---
+---Fields in module 'account_peppol_selfbilling'---
+account_peppol_selfbilling / account.journal          / is_self_billing (boolean)     : NEW
+---XML records in module 'account_peppol_selfbilling'---
+NEW ir.ui.view: account_peppol_selfbilling.account_move_form_inherit_self_billing
+NEW ir.ui.view: account_peppol_selfbilling.report_invoice_document
+NEW ir.ui.view: account_peppol_selfbilling.view_account_journal_form_inherited
+NEW mail.template: account_peppol_selfbilling.email_template_edi_self_billing_credit_note (noupdate)
+NEW mail.template: account_peppol_selfbilling.email_template_edi_self_billing_invoice (noupdate)
