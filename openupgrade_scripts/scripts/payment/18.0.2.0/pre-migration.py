@@ -5,6 +5,18 @@ from openupgradelib import openupgrade
 _xmlid_renames = [
     ("website_payment.action_activate_stripe", "payment.action_activate_stripe"),
     ("payment.payment_method_emi", "payment.payment_method_emi_india"),
+    (
+        "payment_worldline.payment_method_alipay_plus",
+        "payment.payment_method_alipay_plus",
+    ),
+    (
+        "payment_worldline.payment_method_post_finance",
+        "payment.payment_method_post_finance",
+    ),
+    (
+        "payment_worldline.payment_provider_worldline",
+        "payment.payment_provider_worldline",
+    ),
 ]
 
 
