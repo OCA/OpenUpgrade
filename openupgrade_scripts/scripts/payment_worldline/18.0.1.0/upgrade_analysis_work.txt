@@ -1,0 +1,23 @@
+---Models in module 'payment_worldline'---
+---Fields in module 'payment_worldline'---
+payment_sips / payment.provider         / code (False)                  : selection_keys added: [nuvei, stripe, worldline], removed: [sips]
+payment_worldline / payment.provider         / code (False)                  : module is now 'payment_nuvei' ('payment_worldline')
+# NOTHING TO DO
+
+payment_sips / payment.provider         / sips_key_version (integer)    : DEL
+payment_sips / payment.provider         / sips_merchant_id (char)       : DEL
+payment_sips / payment.provider         / sips_prod_url (char)          : DEL
+payment_sips / payment.provider         / sips_secret (char)            : DEL
+payment_sips / payment.provider         / sips_test_url (char)          : DEL
+payment_sips / payment.provider         / sips_version (char)           : DEL
+# NOTHING TO DO: wordline has other fields than need new data
+
+---XML records in module 'payment_worldline'---
+DEL ir.ui.view: payment_sips.payment_provider_form
+DEL ir.ui.view: payment_sips.redirect_form
+# NOTHING TO DO
+
+DEL payment.method: payment_worldline.payment_method_alipay_plus [renamed to payment module] (noupdate)
+DEL payment.method: payment_worldline.payment_method_post_finance [renamed to payment module] (noupdate)
+DEL payment.provider: payment_worldline.payment_provider_worldline [renamed to payment module] (noupdate)
+# NOTHING TO DO: handled in payment

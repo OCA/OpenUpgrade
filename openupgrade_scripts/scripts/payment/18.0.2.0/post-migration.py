@@ -37,6 +37,8 @@ def merge_ogone_sips_into_worldline(env):
             {"openupgrade_other_fields": "preserve"},
             delete=False,
         )
+    if worldline.code == "worldline":  # payment_worldline was installed in v17
+        openupgrade.load_data(env, "payment", "18.0.2.0/noupdate_changes_worldline.xml")
 
 
 @openupgrade.migrate()
@@ -45,7 +47,7 @@ def migrate(env, version):
     openupgrade.load_data(env, "payment", "18.0.2.0/noupdate_changes_manual.xml")
     openupgrade.load_data(env, "payment", "18.0.2.0/noupdate_changes.xml")
     imd = env["ir.model.data"].search(
-        [("module", "=", "payment_ogone"), ("name", "=", "payment_provider_ogone")]
+        [("module", "=", "payment_worldline"), ("name", "=", "payment_provider_ogone")]
     )
     if imd:
         imd.unlink()
