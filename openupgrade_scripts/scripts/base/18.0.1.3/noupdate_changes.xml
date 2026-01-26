@@ -507,6 +507,9 @@
   <record id="bn" model="res.country">
     <field eval="'%(street)s\n%(street2)s\n%(city)s %(zip)s\n%(country_name)s'" name="address_format"/>
   </record>
+  <record id="cw" model="res.country">
+    <field name="currency_id" ref="XCG"/>
+  </record>
   <record id="om" model="res.country">
     <field name="address_format" eval="'%(street)s\n%(street2)s\n%(city)s %(state_name)s %(zip)s\n%(country_name)s'"/>
   </record>
@@ -530,5 +533,8 @@
   </record>
   <record id="pk" model="res.country">
     <field name="vat_label">NTN</field>
+  </record>
+  <record id="sx" model="res.country">
+    <field name="currency_id" ref="XCG"/>
   </record>
 </odoo>

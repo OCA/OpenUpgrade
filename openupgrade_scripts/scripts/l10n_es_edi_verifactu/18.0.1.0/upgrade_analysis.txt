@@ -10,6 +10,7 @@ l10n_es_edi_verifactu / l10n_es_edi_verifactu.certificate / password (char)     
 l10n_es_edi_verifactu / res.company              / l10n_es_edi_verifactu_certificate_ids (one2many): relation is now 'certificate.certificate' ('l10n_es_edi_verifactu.certificate') [nothing to do]
 ---XML records in module 'l10n_es_edi_verifactu'---
 DEL ir.model.access: l10n_es_edi_verifactu.access_l10n_es_edi_verifactu_certificate
+DEL ir.rule: l10n_es_edi_verifactu.verifactu_digital_certificate (noupdate)
 NEW ir.ui.view: l10n_es_edi_verifactu.certificate_certificate_view_form
 NEW ir.ui.view: l10n_es_edi_verifactu.certificate_certificate_view_search
 DEL ir.ui.view: l10n_es_edi_verifactu.account_move_send_inherit_l10n_es_edi_verifactu
