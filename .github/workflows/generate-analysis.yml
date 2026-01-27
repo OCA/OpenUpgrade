@@ -101,6 +101,8 @@ jobs:
           pip install -r openupgrade-$FROM_VERSION/requirements.txt
           # this is for l10n_eg_edi_eta which crashes without it
           pip install asn1crypto
+          # this is for cloud_storage_google
+          pip install google-auth
           odoo -s -c odoo-$FROM_VERSION.cfg --addons-path server-tools-$FROM_VERSION,openupgrade-$FROM_VERSION --stop-after-init
       - name: Install current Odoo
         run: |
@@ -192,7 +194,9 @@ jobs:
           " > "$PR_BODY"
 
           for module in $(
-            git -C $OPENUPGRADE_DIR status --short | awk '{print $2}' | awk -F/ '{print $3}' | sort -u
+            git -C $OPENUPGRADE_DIR status --short | awk '{print $2}' |\
+            grep --invert-match upgrade_general_log.txt |\
+            awk -F/ '{print $3}' | sort -u
           ); do
             if grep -qE "\<$module\>.*\<((Done)|(No))" $OPENUPGRADE_DIR/docsource/modules*; then
               echo Done module $module was updated
