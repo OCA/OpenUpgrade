@@ -1,6 +1,14 @@
 Running the migration
 =====================
 
+The are several tools available that automate the below, use whichever best suits your
+needs:
+
+* https://gitlab.com/odoo-openupgrade-wizard/odoo-openupgrade-wizard advanced tool for
+  running migrations in custom environments
+* https://github.com/efatto/openupgrader upgrade your database from within Odoo
+* https://hbrunn.github.io/OpenUpgrade get started fast with standard migrations
+
 Check out the code manually and upgrade your database by calling odoo-bin,
 (or openerp-server) directly. You will want to do this when you are working on
 developing migration scripts for uncovered modules.
