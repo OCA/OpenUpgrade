@@ -1,0 +1,46 @@
+---Models in module 'l10n_id_efaktur_coretax'---
+obsolete model l10n_id_efaktur.document
+obsolete model l10n_id_efaktur.efaktur.range
+---Fields in module 'l10n_id_efaktur_coretax'---
+l10n_id_efaktur / account.move             / l10n_id_efaktur_document (many2one): DEL relation: l10n_id_efaktur.document
+l10n_id_efaktur / account.move             / l10n_id_efaktur_range (many2one): DEL relation: l10n_id_efaktur.efaktur.range
+l10n_id_efaktur / account.move             / l10n_id_kode_transaksi (selection): selection_keys added: [10] (most likely nothing to do)
+l10n_id_efaktur / account.move             / l10n_id_replace_invoice_id (many2one): DEL relation: account.move
+l10n_id_efaktur / account.move             / l10n_id_tax_number (char)     : DEL
+l10n_id_efaktur / l10n_id_efaktur.document / active (boolean)              : DEL
+l10n_id_efaktur / l10n_id_efaktur.document / activity_ids (one2many)       : DEL relation: mail.activity
+l10n_id_efaktur / l10n_id_efaktur.document / attachment_id (many2one)      : DEL relation: ir.attachment
+l10n_id_efaktur / l10n_id_efaktur.document / company_id (many2one)         : DEL relation: res.company, required
+l10n_id_efaktur / l10n_id_efaktur.document / invoice_ids (one2many)        : DEL relation: account.move
+l10n_id_efaktur / l10n_id_efaktur.document / message_follower_ids (one2many): DEL relation: mail.followers
+l10n_id_efaktur / l10n_id_efaktur.document / message_ids (one2many)        : DEL relation: mail.message
+l10n_id_efaktur / l10n_id_efaktur.document / name (char)                   : DEL required
+l10n_id_efaktur / l10n_id_efaktur.document / rating_ids (one2many)         : DEL relation: rating.rating
+l10n_id_efaktur / l10n_id_efaktur.document / website_message_ids (one2many): DEL relation: mail.message
+l10n_id_efaktur / l10n_id_efaktur.efaktur.range / available (integer)           : DEL
+l10n_id_efaktur / l10n_id_efaktur.efaktur.range / company_id (many2one)         : DEL relation: res.company, required
+l10n_id_efaktur / l10n_id_efaktur.efaktur.range / max (char)                    : DEL required
+l10n_id_efaktur / l10n_id_efaktur.efaktur.range / min (char)                    : DEL required
+l10n_id_efaktur / res.partner              / l10n_id_kode_transaksi (selection): selection_keys added: [10] (most likely nothing to do)
+l10n_id_efaktur_coretax / account.move             / l10n_id_coretax_custom_doc_month_year (date): NEW
+l10n_id_efaktur_coretax / account.move             / l10n_id_kode_transaksi (False): DEL selection_keys: ['01', '02', '03', '04', '05', '06', '07', '08', '09', '10'], mode: modify
+l10n_id_efaktur_coretax / res.partner              / l10n_id_kode_transaksi (False): DEL selection_keys: ['01', '02', '03', '04', '05', '06', '07', '08', '09', '10'], mode: modify
+---XML records in module 'l10n_id_efaktur_coretax'---
+DEL ir.actions.act_window: l10n_id_efaktur.efaktur_invoice_action
+NEW ir.actions.server: l10n_id_efaktur_coretax.dowload_efaktur_action [renamed from l10n_id_efaktur module]
+DEL ir.actions.server: l10n_id_efaktur.dowload_efaktur_action [renamed to l10n_id_efaktur_coretax module]
+DEL ir.model.access: l10n_id_efaktur.access_efaktur_document_user
+DEL ir.model.access: l10n_id_efaktur.access_efaktur_user
+NEW ir.rule: l10n_id_efaktur_coretax.efaktur_document_multi_company [renamed from l10n_id_efaktur module] (noupdate)
+DEL ir.rule: l10n_id_efaktur.efaktur_document_multi_company [renamed to l10n_id_efaktur_coretax module] (noupdate)
+NEW ir.ui.view: l10n_id_efaktur_coretax.view_account_invoice_filter
+DEL ir.ui.view: l10n_id_efaktur.account_move_efaktur_form_view
+DEL ir.ui.view: l10n_id_efaktur.account_move_efaktur_tree_view
+DEL ir.ui.view: l10n_id_efaktur.efaktur_tree_view
+DEL ir.ui.view: l10n_id_efaktur.l10n_id_efaktur_document_filter_view
+DEL ir.ui.view: l10n_id_efaktur.l10n_id_efaktur_document_form_view
+DEL ir.ui.view: l10n_id_efaktur.l10n_id_efaktur_document_list_view
+DEL ir.ui.view: l10n_id_efaktur.res_config_settings_view_form
+DEL ir.ui.view: l10n_id_efaktur.res_partner_tax_form_view
+DEL ir.ui.view: l10n_id_efaktur.view_account_invoice_filter
+DEL ir.ui.view: l10n_id_efaktur_coretax.product_uom_categ_form_view_inherit_coretax

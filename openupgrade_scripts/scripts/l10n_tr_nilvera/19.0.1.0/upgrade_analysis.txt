@@ -1,0 +1,9 @@
+---Models in module 'l10n_tr_nilvera'---
+---Fields in module 'l10n_tr_nilvera'---
+l10n_tr_nilvera / res.company              / l10n_tr_nilvera_environment (selection): DEL required, selection_keys: ['production', 'sandbox']
+l10n_tr_nilvera / res.company              / l10n_tr_nilvera_use_test_env (boolean): NEW required, hasdefault: default
+l10n_tr_nilvera / res.partner              / invoice_edi_format (False)    : selection_keys added: [pint_anz, pint_sg] (most likely nothing to do)
+l10n_tr_nilvera / res.partner              / l10n_tr_nilvera_customer_status (selection): not a function anymore
+---XML records in module 'l10n_tr_nilvera'---
+NEW ir.actions.server: l10n_tr_nilvera.action_account_reports_customer_statements_do_followup
+DEL uom.category: l10n_tr_nilvera.product_uom_categ_energy (noupdate)

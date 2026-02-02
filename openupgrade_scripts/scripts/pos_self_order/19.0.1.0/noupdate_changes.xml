@@ -1,0 +1,19 @@
+<?xml version='1.0' encoding='utf-8'?>
+<odoo>
+  <record id="pos_restaurant.pos_delivery_preset" model="pos.preset">
+    <field name="available_in_self">True</field>
+    <field name="image_512" type="base64" file="pos_self_order/static/img/delivery.jpg"/>
+    <field name="mail_template_id" ref="delivery_email_template"/>
+    <field name="service_at">delivery</field>
+  </record>
+  <record id="pos_restaurant.pos_takein_preset" model="pos.preset">
+    <field name="available_in_self">True</field>
+    <field name="image_512" type="base64" file="pos_self_order/static/img/dine_in.jpg"/>
+    <field name="service_at">table</field>
+  </record>
+  <record id="pos_restaurant.pos_takeout_preset" model="pos.preset">
+    <field name="available_in_self">True</field>
+    <field name="image_512" type="base64" file="pos_self_order/static/img/take_out.jpg"/>
+    <field name="mail_template_id" ref="takeout_email_template"/>
+  </record>
+</odoo>

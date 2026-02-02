@@ -1,0 +1,83 @@
+---Models in module 'l10n_in_ewaybill_stock'---
+model l10n.in.ewaybill (moved to l10n_in_ewaybill)
+model l10n.in.ewaybill.cancel (moved to l10n_in_ewaybill) [transient]
+---Fields in module 'l10n_in_ewaybill_stock'---
+l10n_in_ewaybill_stock / l10n.in.ewaybill         / _order                        : module is now 'l10n_in_ewaybill' ('l10n_in_ewaybill_stock')
+l10n_in_ewaybill_stock / l10n.in.ewaybill         / access_token (char)           : module is now 'l10n_in_ewaybill' ('l10n_in_ewaybill_stock')
+l10n_in_ewaybill_stock / l10n.in.ewaybill         / access_url (char)             : module is now 'l10n_in_ewaybill' ('l10n_in_ewaybill_stock')
+l10n_in_ewaybill_stock / l10n.in.ewaybill         / access_warning (text)         : module is now 'l10n_in_ewaybill' ('l10n_in_ewaybill_stock')
+l10n_in_ewaybill_stock / l10n.in.ewaybill         / activity_calendar_event_id (many2one): module is now 'l10n_in_ewaybill' ('l10n_in_ewaybill_stock')
+l10n_in_ewaybill_stock / l10n.in.ewaybill         / activity_date_deadline (date) : module is now 'l10n_in_ewaybill' ('l10n_in_ewaybill_stock')
+l10n_in_ewaybill_stock / l10n.in.ewaybill         / activity_exception_decoration (selection): module is now 'l10n_in_ewaybill' ('l10n_in_ewaybill_stock')
+l10n_in_ewaybill_stock / l10n.in.ewaybill         / activity_exception_icon (char): module is now 'l10n_in_ewaybill' ('l10n_in_ewaybill_stock')
+l10n_in_ewaybill_stock / l10n.in.ewaybill         / activity_ids (one2many)       : module is now 'l10n_in_ewaybill' ('l10n_in_ewaybill_stock')
+l10n_in_ewaybill_stock / l10n.in.ewaybill         / activity_state (selection)    : module is now 'l10n_in_ewaybill' ('l10n_in_ewaybill_stock')
+l10n_in_ewaybill_stock / l10n.in.ewaybill         / activity_summary (char)       : module is now 'l10n_in_ewaybill' ('l10n_in_ewaybill_stock')
+l10n_in_ewaybill_stock / l10n.in.ewaybill         / activity_type_icon (char)     : module is now 'l10n_in_ewaybill' ('l10n_in_ewaybill_stock')
+l10n_in_ewaybill_stock / l10n.in.ewaybill         / activity_type_id (many2one)   : module is now 'l10n_in_ewaybill' ('l10n_in_ewaybill_stock')
+l10n_in_ewaybill_stock / l10n.in.ewaybill         / activity_user_id (many2one)   : module is now 'l10n_in_ewaybill' ('l10n_in_ewaybill_stock')
+l10n_in_ewaybill_stock / l10n.in.ewaybill         / blocking_level (selection)    : module is now 'l10n_in_ewaybill' ('l10n_in_ewaybill_stock')
+l10n_in_ewaybill_stock / l10n.in.ewaybill         / cancel_reason (selection)     : module is now 'l10n_in_ewaybill' ('l10n_in_ewaybill_stock')
+l10n_in_ewaybill_stock / l10n.in.ewaybill         / cancel_remarks (char)         : module is now 'l10n_in_ewaybill' ('l10n_in_ewaybill_stock')
+l10n_in_ewaybill_stock / l10n.in.ewaybill         / company_currency_id (many2one): module is now 'l10n_in_ewaybill' ('l10n_in_ewaybill_stock')
+l10n_in_ewaybill_stock / l10n.in.ewaybill         / company_id (many2one)         : module is now 'l10n_in_ewaybill' ('l10n_in_ewaybill_stock')
+l10n_in_ewaybill_stock / l10n.in.ewaybill         / content (binary)              : module is now 'l10n_in_ewaybill' ('l10n_in_ewaybill_stock')
+l10n_in_ewaybill_stock / l10n.in.ewaybill         / display_name (char)           : module is now 'l10n_in_ewaybill' ('l10n_in_ewaybill_stock')
+l10n_in_ewaybill_stock / l10n.in.ewaybill         / distance (integer)            : module is now 'l10n_in_ewaybill' ('l10n_in_ewaybill_stock')
+l10n_in_ewaybill_stock / l10n.in.ewaybill         / document_date (datetime)      : module is now 'l10n_in_ewaybill' ('l10n_in_ewaybill_stock')
+l10n_in_ewaybill_stock / l10n.in.ewaybill         / document_number (char)        : module is now 'l10n_in_ewaybill' ('l10n_in_ewaybill_stock')
+l10n_in_ewaybill_stock / l10n.in.ewaybill         / error_message (html)          : module is now 'l10n_in_ewaybill' ('l10n_in_ewaybill_stock')
+l10n_in_ewaybill_stock / l10n.in.ewaybill         / ewaybill_date (date)          : module is now 'l10n_in_ewaybill' ('l10n_in_ewaybill_stock')
+l10n_in_ewaybill_stock / l10n.in.ewaybill         / ewaybill_expiry_date (date)   : module is now 'l10n_in_ewaybill' ('l10n_in_ewaybill_stock')
+l10n_in_ewaybill_stock / l10n.in.ewaybill         / has_message (boolean)         : module is now 'l10n_in_ewaybill' ('l10n_in_ewaybill_stock')
+l10n_in_ewaybill_stock / l10n.in.ewaybill         / is_bill_from_editable (boolean): module is now 'l10n_in_ewaybill' ('l10n_in_ewaybill_stock')
+l10n_in_ewaybill_stock / l10n.in.ewaybill         / is_bill_to_editable (boolean) : module is now 'l10n_in_ewaybill' ('l10n_in_ewaybill_stock')
+l10n_in_ewaybill_stock / l10n.in.ewaybill         / is_ship_from_editable (boolean): module is now 'l10n_in_ewaybill' ('l10n_in_ewaybill_stock')
+l10n_in_ewaybill_stock / l10n.in.ewaybill         / is_ship_to_editable (boolean) : module is now 'l10n_in_ewaybill' ('l10n_in_ewaybill_stock')
+l10n_in_ewaybill_stock / l10n.in.ewaybill         / message_attachment_count (integer): module is now 'l10n_in_ewaybill' ('l10n_in_ewaybill_stock')
+l10n_in_ewaybill_stock / l10n.in.ewaybill         / message_follower_ids (one2many): module is now 'l10n_in_ewaybill' ('l10n_in_ewaybill_stock')
+l10n_in_ewaybill_stock / l10n.in.ewaybill         / message_has_error (boolean)   : module is now 'l10n_in_ewaybill' ('l10n_in_ewaybill_stock')
+l10n_in_ewaybill_stock / l10n.in.ewaybill         / message_has_error_counter (integer): module is now 'l10n_in_ewaybill' ('l10n_in_ewaybill_stock')
+l10n_in_ewaybill_stock / l10n.in.ewaybill         / message_has_sms_error (boolean): module is now 'l10n_in_ewaybill' ('l10n_in_ewaybill_stock')
+l10n_in_ewaybill_stock / l10n.in.ewaybill         / message_ids (one2many)        : module is now 'l10n_in_ewaybill' ('l10n_in_ewaybill_stock')
+l10n_in_ewaybill_stock / l10n.in.ewaybill         / message_is_follower (boolean) : module is now 'l10n_in_ewaybill' ('l10n_in_ewaybill_stock')
+l10n_in_ewaybill_stock / l10n.in.ewaybill         / message_needaction (boolean)  : module is now 'l10n_in_ewaybill' ('l10n_in_ewaybill_stock')
+l10n_in_ewaybill_stock / l10n.in.ewaybill         / message_needaction_counter (integer): module is now 'l10n_in_ewaybill' ('l10n_in_ewaybill_stock')
+l10n_in_ewaybill_stock / l10n.in.ewaybill         / message_partner_ids (many2many): module is now 'l10n_in_ewaybill' ('l10n_in_ewaybill_stock')
+l10n_in_ewaybill_stock / l10n.in.ewaybill         / mode (selection)              : module is now 'l10n_in_ewaybill' ('l10n_in_ewaybill_stock')
+l10n_in_ewaybill_stock / l10n.in.ewaybill         / my_activity_date_deadline (date): module is now 'l10n_in_ewaybill' ('l10n_in_ewaybill_stock')
+l10n_in_ewaybill_stock / l10n.in.ewaybill         / name (char)                   : module is now 'l10n_in_ewaybill' ('l10n_in_ewaybill_stock')
+l10n_in_ewaybill_stock / l10n.in.ewaybill         / partner_bill_from_id (many2one): module is now 'l10n_in_ewaybill' ('l10n_in_ewaybill_stock')
+l10n_in_ewaybill_stock / l10n.in.ewaybill         / partner_bill_to_id (many2one) : module is now 'l10n_in_ewaybill' ('l10n_in_ewaybill_stock')
+l10n_in_ewaybill_stock / l10n.in.ewaybill         / partner_ship_from_id (many2one): module is now 'l10n_in_ewaybill' ('l10n_in_ewaybill_stock')
+l10n_in_ewaybill_stock / l10n.in.ewaybill         / partner_ship_to_id (many2one) : module is now 'l10n_in_ewaybill' ('l10n_in_ewaybill_stock')
+l10n_in_ewaybill_stock / l10n.in.ewaybill         / rating_ids (one2many)         : module is now 'l10n_in_ewaybill' ('l10n_in_ewaybill_stock')
+l10n_in_ewaybill_stock / l10n.in.ewaybill         / state (False)                 : NEW selection_keys: ['cancel', 'challan', 'generated', 'pending'], mode: modify
+l10n_in_ewaybill_stock / l10n.in.ewaybill         / state (selection)             : module is now 'l10n_in_ewaybill' ('l10n_in_ewaybill_stock')
+l10n_in_ewaybill_stock / l10n.in.ewaybill         / sub_type_code (char)          : module is now 'l10n_in_ewaybill' ('l10n_in_ewaybill_stock')
+l10n_in_ewaybill_stock / l10n.in.ewaybill         / supply_type (selection)       : module is now 'l10n_in_ewaybill' ('l10n_in_ewaybill_stock')
+l10n_in_ewaybill_stock / l10n.in.ewaybill         / transportation_doc_date (date): module is now 'l10n_in_ewaybill' ('l10n_in_ewaybill_stock')
+l10n_in_ewaybill_stock / l10n.in.ewaybill         / transportation_doc_no (char)  : module is now 'l10n_in_ewaybill' ('l10n_in_ewaybill_stock')
+l10n_in_ewaybill_stock / l10n.in.ewaybill         / transporter_id (many2one)     : module is now 'l10n_in_ewaybill' ('l10n_in_ewaybill_stock')
+l10n_in_ewaybill_stock / l10n.in.ewaybill         / type_id (many2one)            : module is now 'l10n_in_ewaybill' ('l10n_in_ewaybill_stock')
+l10n_in_ewaybill_stock / l10n.in.ewaybill         / vehicle_no (char)             : module is now 'l10n_in_ewaybill' ('l10n_in_ewaybill_stock')
+l10n_in_ewaybill_stock / l10n.in.ewaybill         / vehicle_type (selection)      : module is now 'l10n_in_ewaybill' ('l10n_in_ewaybill_stock')
+l10n_in_ewaybill_stock / l10n.in.ewaybill         / website_message_ids (one2many): module is now 'l10n_in_ewaybill' ('l10n_in_ewaybill_stock')
+l10n_in_ewaybill_stock / stock.move               / company_currency_id (many2one): module is now 'stock_account' ('l10n_in_ewaybill_stock')
+l10n_in_ewaybill_stock / stock.picking            / l10n_in_ewaybill_id (one2many): DEL relation: l10n.in.ewaybill
+l10n_in_ewaybill_stock / stock.picking            / l10n_in_ewaybill_ids (one2many): NEW relation: l10n.in.ewaybill
+---XML records in module 'l10n_in_ewaybill_stock'---
+DEL ir.actions.act_window: l10n_in_ewaybill_stock.l10n_in_ewaybill_form_action [renamed to l10n_in_ewaybill module]
+DEL ir.actions.report: l10n_in_ewaybill_stock.action_report_ewaybill [renamed to l10n_in_ewaybill module]
+NEW ir.model.access: l10n_in_ewaybill_stock.access_l10n_in_ewaybill_stock
+NEW ir.model.access: l10n_in_ewaybill_stock.access_l10n_in_ewaybill_stock_cancel
+DEL ir.model.access: l10n_in_ewaybill_stock.access_l10n_in_ewaybill [renamed to l10n_in_ewaybill module]
+DEL ir.model.access: l10n_in_ewaybill_stock.access_l10n_in_ewaybill_cancel [renamed to l10n_in_ewaybill module]
+DEL ir.rule: l10n_in_ewaybill_stock.l10n_in_ewaybill_comp_rule [renamed to l10n_in_ewaybill module] (noupdate)
+NEW ir.ui.view: l10n_in_ewaybill_stock.l10n_in_ewaybill_stock_inherit_report
+NEW ir.ui.view: l10n_in_ewaybill_stock.view_l10n_in_ewaybill_stock_inherit
+NEW ir.ui.view: l10n_in_ewaybill_stock.view_picking_list_inherit_ewaybill
+DEL ir.ui.view: l10n_in_ewaybill_stock.l10n_in_ewaybill_form_view
+DEL ir.ui.view: l10n_in_ewaybill_stock.report_ewaybill
+DEL ir.ui.view: l10n_in_ewaybill_stock.view_ewaybill_cancel_form
+DEL report.paperformat: l10n_in_ewaybill_stock.paperformat_ewaybill [renamed to l10n_in_ewaybill module]

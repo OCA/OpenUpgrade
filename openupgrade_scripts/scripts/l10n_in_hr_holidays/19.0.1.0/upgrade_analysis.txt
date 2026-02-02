@@ -1,0 +1,15 @@
+---Models in module 'l10n_in_hr_holidays'---
+new model l10n.in.hr.leave.optional.holiday
+---Fields in module 'l10n_in_hr_holidays'---
+l10n_in_hr_holidays / hr.leave.type            / l10n_in_is_limited_to_optional_days (boolean): NEW
+l10n_in_hr_holidays / l10n.in.hr.leave.optional.holiday / company_id (many2one)         : NEW relation: res.company, required, hasdefault: default
+l10n_in_hr_holidays / l10n.in.hr.leave.optional.holiday / date (date)                   : NEW required
+l10n_in_hr_holidays / l10n.in.hr.leave.optional.holiday / name (char)                   : NEW required
+---XML records in module 'l10n_in_hr_holidays'---
+NEW ir.actions.act_window: l10n_in_hr_holidays.l10n_in_hr_leave_optional_holiday_action
+NEW ir.model.access: l10n_in_hr_holidays.access_l10n_in_hr_leave_optional_holiday_manager
+NEW ir.model.access: l10n_in_hr_holidays.access_l10n_in_hr_leave_optional_holiday_user
+NEW ir.rule: l10n_in_hr_holidays.hr_leave_optional_holiday_rule_multi_company
+NEW ir.ui.menu: l10n_in_hr_holidays.l10n_in_menu_optional_holiday_configuration
+NEW ir.ui.view: l10n_in_hr_holidays.l10n_in_hr_leave_optional_holiday_view_list
+NEW ir.ui.view: l10n_in_hr_holidays.l10n_in_hr_leave_optional_holiday_view_search

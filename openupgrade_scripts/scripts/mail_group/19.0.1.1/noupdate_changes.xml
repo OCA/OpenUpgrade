@@ -1,0 +1,57 @@
+<?xml version='1.0' encoding='utf-8'?>
+<odoo>
+  <record id="mail_group_message_rule_public" model="ir.rule">
+    <field name="domain_force">[
+            '&amp;',
+                ('moderation_status', '=', 'accepted'),
+                '|',
+                '|',
+                '|',
+                    ('mail_group_id.moderator_ids', 'in', user.id),
+                    ('mail_group_id.access_mode', '=', 'public'),
+                    '&amp;',
+                        ('mail_group_id.access_mode', '=', 'groups'),
+                        ('mail_group_id.access_group_id', 'in', user.all_group_ids.ids),
+                    '&amp;',
+                        ('mail_group_id.access_mode', '=', 'members'),
+                        ('mail_group_id.member_partner_ids', 'in', [user.partner_id.id]),
+            ]
+        </field>
+  </record>
+  <record id="mail_group_message_rule_user" model="ir.rule">
+    <field name="domain_force">[
+                '&amp;',
+                    '|',
+                        ('moderation_status', '=', 'accepted'),
+                        ('mail_group_id.moderator_ids', 'in', user.id),
+                    '|',
+                    '|',
+                    '|',
+                        ('mail_group_id.moderator_ids', 'in', user.id),
+                        ('mail_group_id.access_mode', '=', 'public'),
+                        '&amp;',
+                            ('mail_group_id.access_mode', '=', 'groups'),
+                            ('mail_group_id.access_group_id', 'in', user.all_group_ids.ids),
+                        '&amp;',
+                            ('mail_group_id.access_mode', '=', 'members'),
+                            ('mail_group_id.member_partner_ids', 'in', [user.partner_id.id]),
+            ]
+        </field>
+  </record>
+  <record id="mail_group_rule_read_all" model="ir.rule">
+    <field name="domain_force">[
+            '|',
+            '|',
+            '|',
+                ('moderator_ids', 'in', user.id),
+                ('access_mode', '=', 'public'),
+                '&amp;',
+                    ('access_mode', '=', 'groups'),
+                    ('access_group_id', 'in', user.all_group_ids.ids),
+                '&amp;',
+                    ('access_mode', '=', 'members'),
+                    ('member_partner_ids', 'in', [user.partner_id.id]),
+            ]
+        </field>
+  </record>
+</odoo>

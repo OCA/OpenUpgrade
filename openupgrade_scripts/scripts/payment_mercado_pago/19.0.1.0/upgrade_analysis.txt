@@ -1,0 +1,12 @@
+---Models in module 'payment_mercado_pago'---
+---Fields in module 'payment_mercado_pago'---
+payment_mercado_pago / payment.provider         / code (False)                  : selection_keys added: [dpo, iyzico] (most likely nothing to do)
+payment_mercado_pago / payment.provider         / mercado_pago_access_token_expiry (datetime): NEW
+payment_mercado_pago / payment.provider         / mercado_pago_account_country_id (many2one): NEW relation: res.country
+payment_mercado_pago / payment.provider         / mercado_pago_public_key (char): NEW
+payment_mercado_pago / payment.provider         / mercado_pago_refresh_token (char): NEW
+payment_mercado_pago / payment.token            / mercado_pago_customer_id (char): NEW
+---XML records in module 'payment_mercado_pago'---
+NEW ir.ui.view: payment_mercado_pago.authorization_error
+NEW ir.ui.view: payment_mercado_pago.inline_form
+NEW ir.ui.view: payment_mercado_pago.method_form

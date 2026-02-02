@@ -1,0 +1,25 @@
+<?xml version='1.0' encoding='utf-8'?>
+<odoo>
+  <record id="hr_holidays_status_rule_multi_company" model="ir.rule">
+    <field name="domain_force">[
+            '|', 
+                ('company_id', 'in', company_ids),
+                '&amp;',
+                    ('company_id', '=', False),
+                    ('country_id', 'in', user.env.companies.country_id.ids + [False])
+        ]
+        </field>
+  </record>
+  <record id="mail_act_leave_allocation_approval" model="mail.activity.type">
+    <field name="summary">Allocation Approval</field>
+  </record>
+  <record id="mail_act_leave_allocation_second_approval" model="mail.activity.type">
+    <field name="summary">Allocation Second Approval</field>
+  </record>
+  <record id="mail_act_leave_approval" model="mail.activity.type">
+    <field name="summary">Time Off Approval</field>
+  </record>
+  <record id="mail_act_leave_second_approval" model="mail.activity.type">
+    <field name="summary">Time Off Second Approve</field>
+  </record>
+</odoo>

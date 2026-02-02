@@ -1,0 +1,104 @@
+---Models in module 'l10n_my_edi'---
+obsolete model l10n_my_edi.document.status.update [transient]
+model myinvois.consolidate.invoice.wizard (moved from l10n_my_edi_pos) [transient]
+model myinvois.document (moved from l10n_my_edi_pos)
+model myinvois.document.status.update.wizard (moved from l10n_my_edi_pos) [transient]
+---Fields in module 'l10n_my_edi'---
+l10n_my_edi  / account.move             / l10n_my_edi_document_ids (many2many): NEW relation: myinvois.document
+l10n_my_edi  / account.move             / l10n_my_edi_external_uuid (char): DEL
+l10n_my_edi  / account.move             / l10n_my_edi_file (binary)     : DEL attachment: True
+l10n_my_edi  / account.move             / l10n_my_edi_retry_at (char)   : DEL
+l10n_my_edi  / account.move             / l10n_my_edi_state (selection) : now a function
+l10n_my_edi  / account.move             / l10n_my_edi_submission_uid (char): DEL
+l10n_my_edi  / account.move             / l10n_my_edi_validation_time (datetime): DEL
+l10n_my_edi  / account.move             / l10n_my_error_document_hash (char): DEL
+l10n_my_edi  / account.tax              / l10n_my_tax_exemption_reason (char): previously in module l10n_my_edi_pos
+l10n_my_edi  / myinvois.document        / _order                        : previously in module l10n_my_edi_pos
+l10n_my_edi  / myinvois.document        / active (boolean)              : previously in module l10n_my_edi_pos
+l10n_my_edi  / myinvois.document        / activity_calendar_event_id (many2one): previously in module l10n_my_edi_pos
+l10n_my_edi  / myinvois.document        / activity_date_deadline (date) : previously in module l10n_my_edi_pos
+l10n_my_edi  / myinvois.document        / activity_exception_decoration (selection): previously in module l10n_my_edi_pos
+l10n_my_edi  / myinvois.document        / activity_exception_icon (char): previously in module l10n_my_edi_pos
+l10n_my_edi  / myinvois.document        / activity_ids (one2many)       : previously in module l10n_my_edi_pos
+l10n_my_edi  / myinvois.document        / activity_state (selection)    : previously in module l10n_my_edi_pos
+l10n_my_edi  / myinvois.document        / activity_summary (char)       : previously in module l10n_my_edi_pos
+l10n_my_edi  / myinvois.document        / activity_type_icon (char)     : previously in module l10n_my_edi_pos
+l10n_my_edi  / myinvois.document        / activity_type_id (many2one)   : previously in module l10n_my_edi_pos
+l10n_my_edi  / myinvois.document        / activity_user_id (many2one)   : previously in module l10n_my_edi_pos
+l10n_my_edi  / myinvois.document        / company_currency_id (many2one): previously in module l10n_my_edi_pos
+l10n_my_edi  / myinvois.document        / company_id (many2one)         : previously in module l10n_my_edi_pos
+l10n_my_edi  / myinvois.document        / currency_id (many2one)        : previously in module l10n_my_edi_pos
+l10n_my_edi  / myinvois.document        / display_name (char)           : previously in module l10n_my_edi_pos
+l10n_my_edi  / myinvois.document        / has_message (boolean)         : previously in module l10n_my_edi_pos
+l10n_my_edi  / myinvois.document        / invoice_ids (many2many)       : previously in module l10n_my_edi_pos
+l10n_my_edi  / myinvois.document        / message_attachment_count (integer): previously in module l10n_my_edi_pos
+l10n_my_edi  / myinvois.document        / message_follower_ids (one2many): previously in module l10n_my_edi_pos
+l10n_my_edi  / myinvois.document        / message_has_error (boolean)   : previously in module l10n_my_edi_pos
+l10n_my_edi  / myinvois.document        / message_has_error_counter (integer): previously in module l10n_my_edi_pos
+l10n_my_edi  / myinvois.document        / message_has_sms_error (boolean): previously in module l10n_my_edi_pos
+l10n_my_edi  / myinvois.document        / message_ids (one2many)        : previously in module l10n_my_edi_pos
+l10n_my_edi  / myinvois.document        / message_is_follower (boolean) : previously in module l10n_my_edi_pos
+l10n_my_edi  / myinvois.document        / message_needaction (boolean)  : previously in module l10n_my_edi_pos
+l10n_my_edi  / myinvois.document        / message_needaction_counter (integer): previously in module l10n_my_edi_pos
+l10n_my_edi  / myinvois.document        / message_partner_ids (many2many): previously in module l10n_my_edi_pos
+l10n_my_edi  / myinvois.document        / my_activity_date_deadline (date): previously in module l10n_my_edi_pos
+l10n_my_edi  / myinvois.document        / myinvois_custom_form_reference (char): previously in module l10n_my_edi_pos
+l10n_my_edi  / myinvois.document        / myinvois_document_long_id (char): previously in module l10n_my_edi_pos
+l10n_my_edi  / myinvois.document        / myinvois_error_document_hash (char): previously in module l10n_my_edi_pos
+l10n_my_edi  / myinvois.document        / myinvois_exemption_reason (char): previously in module l10n_my_edi_pos
+l10n_my_edi  / myinvois.document        / myinvois_external_uuid (char) : previously in module l10n_my_edi_pos
+l10n_my_edi  / myinvois.document        / myinvois_file (binary)        : previously in module l10n_my_edi_pos
+l10n_my_edi  / myinvois.document        / myinvois_file_id (many2one)   : previously in module l10n_my_edi_pos
+l10n_my_edi  / myinvois.document        / myinvois_issuance_date (date) : previously in module l10n_my_edi_pos
+l10n_my_edi  / myinvois.document        / myinvois_retry_at (char)      : previously in module l10n_my_edi_pos
+l10n_my_edi  / myinvois.document        / myinvois_state (selection)    : previously in module l10n_my_edi_pos
+l10n_my_edi  / myinvois.document        / myinvois_submission_uid (char): previously in module l10n_my_edi_pos
+l10n_my_edi  / myinvois.document        / myinvois_validation_time (datetime): previously in module l10n_my_edi_pos
+l10n_my_edi  / myinvois.document        / name (char)                   : previously in module l10n_my_edi_pos
+l10n_my_edi  / myinvois.document        / rating_ids (one2many)         : previously in module l10n_my_edi_pos
+l10n_my_edi  / myinvois.document        / sequence_number (integer)     : previously in module l10n_my_edi_pos
+l10n_my_edi  / myinvois.document        / sequence_prefix (char)        : previously in module l10n_my_edi_pos
+l10n_my_edi  / myinvois.document        / website_message_ids (one2many): previously in module l10n_my_edi_pos
+l10n_my_edi  / res.company              / l10n_my_edi_industrial_classification (many2one): not stored anymore
+l10n_my_edi  / res.company              / l10n_my_edi_industrial_classification (many2one): now related
+l10n_my_edi_extended / account.move             / l10n_my_edi_invoice_long_id (char): DEL
+---XML records in module 'l10n_my_edi'---
+NEW ir.actions.server: l10n_my_edi.action_generate_myinvois_document_file [renamed from l10n_my_edi_pos module]
+NEW ir.actions.server: l10n_my_edi.invoice_send_to_myinvois [renamed from l10n_my_edi_extended module]
+DEL ir.actions.server: l10n_my_edi_extended.invoice_send_to_myinvois [renamed to l10n_my_edi module]
+NEW ir.cron: l10n_my_edi.ir_cron_myinvois_document_sync [renamed from l10n_my_edi_pos module]
+DEL ir.cron: l10n_my_edi.ir_cron_myinvois_sync
+NEW ir.model.access: l10n_my_edi.access_myinvois_consolidate_invoice_wizard_user [renamed from l10n_my_edi_pos module]
+NEW ir.model.access: l10n_my_edi.access_myinvois_document_invoice
+NEW ir.model.access: l10n_my_edi.access_myinvois_document_readonly
+NEW ir.model.access: l10n_my_edi.access_myinvois_document_status_update_wizard_invoice
+DEL ir.model.access: l10n_my_edi.access_l10n_my_edi_document_status_update_invoice
+DEL ir.model.access: l10n_my_edi.access_l10n_my_edi_document_status_update_manager
+DEL ir.model.access: l10n_my_edi.access_l10n_my_edi_document_status_update_readonly
+NEW ir.rule: l10n_my_edi.myinvois_document_comp_rule [renamed from l10n_my_edi_pos module] (noupdate)
+NEW ir.ui.view: l10n_my_edi.myinvois_consolidate_invoice_wizard_form
+NEW ir.ui.view: l10n_my_edi.myinvois_document_form_view
+NEW ir.ui.view: l10n_my_edi.myinvois_document_list_view
+NEW ir.ui.view: l10n_my_edi.myinvois_document_status_update_form
+NEW ir.ui.view: l10n_my_edi.portal_my_details_fields
+NEW ir.ui.view: l10n_my_edi.report_invoice
+NEW ir.ui.view: l10n_my_edi.report_invoice_document
+DEL ir.ui.view: l10n_my_edi.l10n_my_edi_document_status_update_form
+DEL ir.ui.view: l10n_my_edi.ubl_20_DeliveryType_my
+DEL ir.ui.view: l10n_my_edi.ubl_20_InvoiceLineType_my
+DEL ir.ui.view: l10n_my_edi.ubl_21_InvoiceType_my
+DEL ir.ui.view: l10n_my_edi_extended.portal_my_details_fields
+DEL ir.ui.view: l10n_my_edi_extended.report_invoice
+DEL ir.ui.view: l10n_my_edi_extended.report_invoice_document
+DEL ir.ui.view: l10n_my_edi_extended.view_move_form_inherit_l10n_my_myinvois_extended
+DEL ir.ui.view: l10n_my_edi_extended.view_partner_form_inherit_l10n_my_myinvois_extended
+NEW l10n_my_edi.industry_classification: l10n_my_edi.class_16100
+NEW l10n_my_edi.industry_classification: l10n_my_edi.class_16212
+NEW l10n_my_edi.industry_classification: l10n_my_edi.class_47411
+NEW l10n_my_edi.industry_classification: l10n_my_edi.class_47520
+NEW l10n_my_edi.industry_classification: l10n_my_edi.class_47620
+NEW l10n_my_edi.industry_classification: l10n_my_edi.class_47892
+NEW l10n_my_edi.industry_classification: l10n_my_edi.class_47991
+NEW l10n_my_edi.industry_classification: l10n_my_edi.class_56101
+NEW l10n_my_edi.industry_classification: l10n_my_edi.class_56102
+DEL l10n_my_edi.industry_classification: l10n_my_edi.class_16221

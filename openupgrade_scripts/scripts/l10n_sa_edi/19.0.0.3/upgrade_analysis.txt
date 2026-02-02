@@ -1,0 +1,24 @@
+---Models in module 'l10n_sa_edi'---
+---Fields in module 'l10n_sa_edi'---
+l10n_sa_edi  / account.journal          / l10n_sa_serial_number (char)  : DEL
+l10n_sa_edi  / account.move             / l10n_sa_edi_chain_head_id (many2one): NEW relation: account.move
+l10n_sa_edi  / res.company              / l10n_sa_edi_is_production (boolean): NEW
+l10n_sa_edi  / res.partner              / l10n_sa_additional_identification_number (char): DEL
+l10n_sa_edi  / res.partner              / l10n_sa_additional_identification_scheme (selection): DEL selection_keys: ['700', 'CRN', 'GCC', 'IQA', 'MLS', 'MOM', 'NAT', 'OTH', 'PAS', 'SAG', 'TIN']
+l10n_sa_edi  / res.partner              / l10n_sa_edi_additional_identification_number (char): NEW
+l10n_sa_edi  / res.partner              / l10n_sa_edi_additional_identification_scheme (selection): NEW selection_keys: ['700', 'CRN', 'GCC', 'IQA', 'MLS', 'MOM', 'NAT', 'OTH', 'PAS', 'SAG', 'TIN'], hasdefault: default
+---XML records in module 'l10n_sa_edi'---
+NEW ir.ui.view: l10n_sa_edi.l10n_sa_edi_report_invoice_document
+NEW ir.ui.view: l10n_sa_edi.view_account_form_inherit
+DEL ir.ui.view: l10n_sa_edi.arabic_english_invoice
+DEL ir.ui.view: l10n_sa_edi.ubl_21_AddressType_zatca
+DEL ir.ui.view: l10n_sa_edi.ubl_21_CreditNoteLineType_zatca
+DEL ir.ui.view: l10n_sa_edi.ubl_21_CreditNoteType_zatca
+DEL ir.ui.view: l10n_sa_edi.ubl_21_DebitNoteLineType_zatca
+DEL ir.ui.view: l10n_sa_edi.ubl_21_DebitNoteType_zatca
+DEL ir.ui.view: l10n_sa_edi.ubl_21_InvoiceLineType_zatca
+DEL ir.ui.view: l10n_sa_edi.ubl_21_InvoiceType_zatca
+DEL ir.ui.view: l10n_sa_edi.ubl_21_PartyType_zatca
+DEL ir.ui.view: l10n_sa_edi.ubl_21_PaymentMeansType_zatca
+DEL ir.ui.view: l10n_sa_edi.ubl_21_TaxTotalType_zatca
+DEL ir.ui.view: l10n_sa_edi.view_account_move_reversal_inherit_l10n_sa_edi

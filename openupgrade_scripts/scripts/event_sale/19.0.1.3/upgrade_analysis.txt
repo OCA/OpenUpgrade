@@ -1,0 +1,11 @@
+---Models in module 'event_sale'---
+---Fields in module 'event_sale'---
+event_sale   / event.registration       / sale_status (selection)       : module is now 'event_product' ('event_sale')
+event_sale   / sale.order.line          / event_slot_id (many2one)      : NEW relation: event.slot, hasdefault: compute
+---XML records in module 'event_sale'---
+DEL ir.model.access: event_sale.access_product_product_event_manager
+DEL ir.model.access: event_sale.access_product_template_event_manager
+NEW ir.ui.view: event_sale.event_registration_change_exception
+DEL ir.ui.view: event_sale.event_registration_view_graph
+DEL ir.ui.view: event_sale.event_registration_view_kanban
+DEL ir.ui.view: event_sale.event_ticket_id_change_exception

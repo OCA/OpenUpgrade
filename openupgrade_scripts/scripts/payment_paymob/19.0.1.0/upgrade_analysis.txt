@@ -1,0 +1,11 @@
+---Models in module 'payment_paymob'---
+---Fields in module 'payment_paymob'---
+payment_paymob / payment.provider         / code (False)                  : NEW selection_keys: ['adyen', 'aps', 'asiapay', 'authorize', 'buckaroo', 'custom', 'demo', 'dpo', 'flutterwave', 'iyzico', 'mercado_pago', 'mollie', 'none', 'nuvei', 'paymob'], mode: modify
+payment_paymob / payment.provider         / paymob_account_country_id (many2one): NEW relation: res.country
+payment_paymob / payment.provider         / paymob_api_key (char)         : NEW
+payment_paymob / payment.provider         / paymob_hmac_key (char)        : NEW
+payment_paymob / payment.provider         / paymob_public_key (char)      : NEW
+payment_paymob / payment.provider         / paymob_secret_key (char)      : NEW
+---XML records in module 'payment_paymob'---
+NEW ir.ui.view: payment_paymob.payment_provider_form
+NEW ir.ui.view: payment_paymob.redirect_form

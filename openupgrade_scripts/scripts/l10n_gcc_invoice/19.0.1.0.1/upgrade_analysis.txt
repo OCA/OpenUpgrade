@@ -1,0 +1,9 @@
+---Models in module 'l10n_gcc_invoice'---
+---Fields in module 'l10n_gcc_invoice'---
+l10n_gcc_invoice / res.company              / l10n_gcc_dual_language_invoice (boolean): NEW
+---XML records in module 'l10n_gcc_invoice'---
+NEW ir.ui.view: l10n_gcc_invoice.l10n_gcc_document_tax_totals
+NEW ir.ui.view: l10n_gcc_invoice.l10n_gcc_document_tax_totals_company_currency_template
+NEW ir.ui.view: l10n_gcc_invoice.l10n_gcc_report_invoice_document
+NEW ir.ui.view: l10n_gcc_invoice.res_config_settings_view_form_inherit_l10n_gcc_invoice
+DEL ir.ui.view: l10n_gcc_invoice.arabic_english_invoice

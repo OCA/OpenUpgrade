@@ -1,0 +1,9 @@
+---Models in module 'website_event_exhibitor'---
+---Fields in module 'website_event_exhibitor'---
+website_event_exhibitor / event.sponsor            / chat_room_id (many2one)       : DEL relation: chat.room
+website_event_exhibitor / event.sponsor            / mobile (char)                 : DEL
+website_event_exhibitor / event.sponsor            / show_on_ticket (boolean)      : NEW hasdefault: default
+website_event_exhibitor / website.event.menu       / menu_type (False)             : selection_keys added: [other], removed: [location, track, track_proposal]
+---XML records in module 'website_event_exhibitor'---
+DEL ir.model.access: website_event_exhibitor.chat_room_access_event_manager
+DEL ir.ui.view: website_event_exhibitor.snippet_options

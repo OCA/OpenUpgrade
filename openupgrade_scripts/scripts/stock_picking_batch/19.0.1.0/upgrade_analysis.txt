@@ -1,0 +1,5 @@
+---Models in module 'stock_picking_batch'---
+---Fields in module 'stock_picking_batch'---
+stock_picking_batch / stock.move.line          / batch_id (many2one)           : not stored anymore
+---XML records in module 'stock_picking_batch'---
+NEW ir.actions.server: stock_picking_batch.action_merge_batch_picking

@@ -1,0 +1,6 @@
+<?xml version='1.0' encoding='utf-8'?>
+<odoo>
+  <record id="hr_attendance_rule_attendance_admin" model="ir.rule">
+    <field name="groups" eval="[(4, ref('hr_attendance.group_hr_attendance_user'))]"/>
+  </record>
+</odoo>

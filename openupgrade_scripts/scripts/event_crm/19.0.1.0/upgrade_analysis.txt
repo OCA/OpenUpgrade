@@ -1,0 +1,7 @@
+---Models in module 'event_crm'---
+---Fields in module 'event_crm'---
+event_crm    / event.lead.request       / event_lead_rule_ids (many2many): NEW relation: event.lead.rule
+---XML records in module 'event_crm'---
+NEW ir.actions.act_window: event_crm.event_lead_rule_answer_action
+NEW ir.actions.server: event_crm.action_generate_leads
+NEW ir.ui.view: event_crm.event_question_view_form

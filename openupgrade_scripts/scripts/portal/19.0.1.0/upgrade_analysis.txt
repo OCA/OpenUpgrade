@@ -1,0 +1,16 @@
+---Models in module 'portal'---
+---Fields in module 'portal'---
+portal       / gamification.badge.user  / website_message_ids (one2many): NEW relation: mail.message
+portal       / ir.actions.server        / website_message_ids (one2many): NEW relation: mail.message
+portal       / ir.cron                  / website_message_ids (one2many): NEW relation: mail.message
+portal       / maintenance.equipment.category / website_message_ids (one2many): DEL relation: mail.message
+portal       / maintenance.team         / website_message_ids (one2many): NEW relation: mail.message
+---XML records in module 'portal'---
+NEW ir.ui.view: portal.address_card
+NEW ir.ui.view: portal.address_footer
+NEW ir.ui.view: portal.address_form_fields
+NEW ir.ui.view: portal.address_list
+NEW ir.ui.view: portal.address_management
+NEW ir.ui.view: portal.my_addresses
+DEL ir.ui.view: portal.portal_my_details_fields
+DEL mail.template: portal.mail_template_data_portal_welcome (noupdate)

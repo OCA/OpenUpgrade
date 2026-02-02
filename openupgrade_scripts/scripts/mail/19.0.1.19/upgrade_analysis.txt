@@ -1,0 +1,177 @@
+---Models in module 'mail'---
+obsolete model mail.resend.message [transient]
+obsolete model mail.resend.partner [transient]
+obsolete model mail.wizard.invite (renamed to mail.followers.edit) [transient]
+new model discuss.call.history
+new model mail.activity.schedule.line [transient]
+new model mail.followers.edit (renamed from mail.wizard.invite) [transient]
+new model mail.message.link.preview
+new model mail.presence
+new model res.role
+---Fields in module 'mail'---
+mail         / bus.presence             / guest_id (many2one)           : DEL relation: mail.guest
+mail         / discuss.call.history     / channel_id (many2one)         : NEW relation: discuss.channel, required
+mail         / discuss.call.history     / end_dt (datetime)             : NEW
+mail         / discuss.call.history     / start_call_message_id (many2one): NEW relation: mail.message
+mail         / discuss.call.history     / start_dt (datetime)           : NEW required
+mail         / discuss.channel          / allow_public_upload (boolean) : DEL
+mail         / discuss.channel          / call_history_ids (one2many)   : NEW relation: discuss.call.history
+mail         / discuss.channel.member   / fold_state (selection)        : DEL selection_keys: ['closed', 'folded', 'open']
+mail         / discuss.channel.rtc.session / partner_id (many2one)         : is now stored
+mail         / fetchmail.server         / error_date (datetime)         : NEW
+mail         / fetchmail.server         / error_message (text)          : NEW
+mail         / ir.actions.server        / activity_ids (one2many)       : NEW relation: mail.activity
+mail         / ir.actions.server        / activity_summary (char)       : now related
+mail         / ir.actions.server        / activity_type_id (many2one)   : now related
+mail         / ir.actions.server        / followers_partner_field_name (char): NEW hasdefault: compute
+mail         / ir.actions.server        / followers_type (selection)    : NEW selection_keys: ['generic', 'specific'], hasdefault: compute
+mail         / ir.actions.server        / message_follower_ids (one2many): NEW relation: mail.followers
+mail         / ir.actions.server        / message_ids (one2many)        : NEW relation: mail.message
+mail         / ir.actions.server        / state (False)                 : selection_keys added: [object_copy] (most likely nothing to do)
+mail         / ir.attachment            / thumbnail (binary)            : NEW attachment: True
+mail         / ir.cron                  / activity_ids (one2many)       : NEW relation: mail.activity
+mail         / ir.cron                  / activity_user_id (many2one)   : not related anymore
+mail         / ir.cron                  / activity_user_id (many2one)   : now a function
+mail         / ir.cron                  / message_follower_ids (one2many): NEW relation: mail.followers
+mail         / ir.cron                  / message_ids (one2many)        : NEW relation: mail.message
+mail         / ir.mail_server           / owner_limit_count (integer)   : NEW
+mail         / ir.mail_server           / owner_limit_time (datetime)   : NEW
+mail         / ir.mail_server           / owner_user_id (many2one)      : NEW relation: res.users
+mail         / mail.activity            / feedback (text)               : NEW
+mail         / mail.activity            / request_partner_id (many2one) : module is now 'website_slides' ('mail')
+mail         / mail.activity.plan.template / _order                        : _order is now 'sequence, id' ('sequence,id')
+mail         / mail.activity.plan.template / next_activity_ids (many2many) : NEW relation: mail.activity.type, hasdefault: compute
+mail         / mail.activity.type       / keep_done (boolean)           : DEL
+mail         / mail.canned.response     / description (char)            : DEL
+mail         / mail.guest               / email (char)                  : NEW
+mail         / mail.guest               / presence_ids (one2many)       : NEW relation: mail.presence
+mail         / mail.link.preview        / is_hidden (boolean)           : DEL
+mail         / mail.link.preview        / message_id (many2one)         : DEL relation: mail.message
+mail         / mail.link.preview        / message_link_preview_ids (one2many): NEW relation: mail.message.link.preview
+mail         / mail.mail                / failure_type (selection)      : selection_keys added: [mail_spam] (most likely nothing to do)
+mail         / mail.message             / call_history_ids (one2many)   : NEW relation: discuss.call.history
+mail         / mail.message             / incoming_email_cc (char)      : NEW
+mail         / mail.message             / incoming_email_to (text)      : NEW
+mail         / mail.message             / link_preview_ids (one2many)   : DEL relation: mail.link.preview
+mail         / mail.message             / message_link_preview_ids (one2many): NEW relation: mail.message.link.preview
+mail         / mail.message             / message_type (selection)      : selection_keys added: [out_of_office] (most likely nothing to do)
+mail         / mail.message             / outgoing_email_to (char)      : NEW
+mail         / mail.message             / record_name (char)            : not stored anymore
+mail         / mail.message             / record_name (char)            : now a function
+mail         / mail.message.link.preview / is_hidden (boolean)           : NEW
+mail         / mail.message.link.preview / link_preview_id (many2one)    : NEW relation: mail.link.preview, required
+mail         / mail.message.link.preview / message_id (many2one)         : NEW relation: mail.message, required
+mail         / mail.message.link.preview / sequence (integer)            : NEW
+mail         / mail.notification        / failure_type (selection)      : selection_keys added: [mail_bl, mail_dup, mail_optout, mail_spam] (most likely nothing to do)
+mail         / mail.notification        / mail_email_address (char)     : NEW
+mail         / mail.presence            / guest_id (many2one)           : NEW relation: mail.guest
+mail         / mail.presence            / last_poll (datetime)          : NEW hasdefault: default
+mail         / mail.presence            / last_presence (datetime)      : NEW hasdefault: default
+mail         / mail.presence            / status (selection)            : NEW selection_keys: ['away', 'offline', 'online'], hasdefault: default
+mail         / mail.presence            / user_id (many2one)            : NEW relation: res.users
+mail         / mail.scheduled.message   / composition_comment_option (selection): NEW selection_keys: ['forward', 'reply_all']
+mail         / mail.scheduled.message   / send_context (json)           : NEW
+mail         / mail.template            / _order                        : _order is now 'user_id, name, id' ('user_id,name,id')
+mail         / res.company              / alias_domain_name (char)      : DEL
+mail         / res.partner              / channel_member_ids (one2many) : NEW relation: discuss.channel.member
+mail         / res.partner              / im_status (char)              : previously in module bus
+mail         / res.partner              / rtc_session_ids (one2many)    : NEW relation: discuss.channel.rtc.session
+mail         / res.partner              / starred_message_ids (many2many): DEL relation: mail.message
+mail         / res.role                 / name (char)                   : NEW required
+mail         / res.role                 / user_ids (many2many)          : NEW relation: res.users
+mail         / res.users                / im_status (char)              : previously in module bus
+mail         / res.users                / manual_im_status (selection)  : NEW selection_keys: ['away', 'busy', 'offline']
+mail         / res.users                / out_of_office_from (datetime) : NEW
+mail         / res.users                / out_of_office_message (html)  : NEW
+mail         / res.users                / out_of_office_to (datetime)   : NEW
+mail         / res.users                / presence_ids (one2many)       : NEW relation: mail.presence
+mail         / res.users                / role_ids (many2many)          : NEW relation: res.role
+mail         / res.users.settings       / mute_until_dt (datetime)      : DEL
+---XML records in module 'mail'---
+NEW ir.actions.act_window: mail.action_res_users_my_fullpage
+NEW ir.actions.act_window: mail.discuss_call_history_action
+NEW ir.actions.act_window: mail.discuss_channel_action
+NEW ir.actions.act_window: mail.res_role_action
+DEL ir.actions.act_window: mail.mail_resend_message_action
+DEL ir.actions.act_window: mail.mail_resend_partner_action
+NEW ir.actions.act_window.view: mail.action_res_users_my_fullpage_view
+NEW ir.actions.act_window.view: mail.mail_activity_action_my_view_calendar
+DEL ir.cron: mail.ir_cron_discuss_users_settings_unmute (noupdate)
+NEW ir.model.access: mail.access_discuss_call_history_portal
+NEW ir.model.access: mail.access_discuss_call_history_public
+NEW ir.model.access: mail.access_discuss_call_history_user
+NEW ir.model.access: mail.access_mail_activity_schedule_line_user
+NEW ir.model.access: mail.access_mail_followers_edit
+NEW ir.model.access: mail.access_mail_message_link_preview_erp_manager
+NEW ir.model.access: mail.access_mail_presence
+NEW ir.model.access: mail.access_res_role_admin
+NEW ir.model.access: mail.access_res_role_user
+DEL ir.model.access: mail.access_mail_resend_message
+DEL ir.model.access: mail.access_mail_resend_partner
+DEL ir.model.access: mail.access_mail_wizard_invite
+NEW ir.model.constraint: mail.constraint_discuss_call_history_channel_id_end_dt_idx
+NEW ir.model.constraint: mail.constraint_discuss_call_history_channel_id_not_null_constraint
+NEW ir.model.constraint: mail.constraint_discuss_call_history_message_id_unique_constraint
+NEW ir.model.constraint: mail.constraint_discuss_call_history_start_dt_is_not_null_constraint
+NEW ir.model.constraint: mail.constraint_discuss_channel_member_guest_unique
+NEW ir.model.constraint: mail.constraint_discuss_channel_member_partner_unique
+NEW ir.model.constraint: mail.constraint_discuss_channel_member_seen_message_id_idx
+NEW ir.model.constraint: mail.constraint_ir_mail_server_unique_owner_user_id
+NEW ir.model.constraint: mail.constraint_mail_activity_check_res_id_is_set_if_model
+NEW ir.model.constraint: mail.constraint_mail_activity_check_user_id_is_set_if_model
+NEW ir.model.constraint: mail.constraint_mail_alias_name_domain_unique
+NEW ir.model.constraint: mail.constraint_mail_link_preview_unique_source_url
+NEW ir.model.constraint: mail.constraint_mail_message_link_preview_unique_message_link_preview
+NEW ir.model.constraint: mail.constraint_mail_message_model_res_id_id_idx
+NEW ir.model.constraint: mail.constraint_mail_message_model_res_id_idx
+NEW ir.model.constraint: mail.constraint_mail_message_reaction_guest_unique
+NEW ir.model.constraint: mail.constraint_mail_message_reaction_partner_unique
+NEW ir.model.constraint: mail.constraint_mail_message_translation_unique
+NEW ir.model.constraint: mail.constraint_mail_notification_author_id_notification_status_failure
+NEW ir.model.constraint: mail.constraint_mail_notification_notification_partner_or_email_required
+ir.model.constraint: mail.constraint_mail_notification_notification_partner_required (changed definition: is now 'CHECK(notification_type != 'inbox' OR res_partner_id IS NOT NULL)' ('check(notification_type not in('email','inbox') or res_partner_id is not null)'))
+NEW ir.model.constraint: mail.constraint_mail_notification_res_partner_id_is_read_notification__e5e0b7fb
+NEW ir.model.constraint: mail.constraint_mail_notification_unique_mail_message_id_res_partner_id_
+NEW ir.model.constraint: mail.constraint_mail_presence_guest_unique
+NEW ir.model.constraint: mail.constraint_mail_presence_partner_or_guest_exists
+NEW ir.model.constraint: mail.constraint_mail_presence_user_unique
+NEW ir.model.constraint: mail.constraint_res_role_unique_name
+NEW ir.model.constraint: mail.constraint_res_users_settings_volumes_guest_unique
+NEW ir.model.constraint: mail.constraint_res_users_settings_volumes_partner_unique
+DEL ir.model.constraint: mail.constraint_bus_presence_partner_or_guest_exists
+DEL ir.model.constraint: mail.constraint_discuss_channel_sub_channel_no_group_public_id
+DEL ir.model.constraint: mail.constraint_mail_activity_check_res_id_is_set
+DEL ir.module.category: mail.module_category_canned_response (noupdate)
+NEW ir.rule: mail.ir_rule_discuss_call_history_read_all (noupdate)
+NEW ir.ui.menu: mail.discuss_call_history_menu
+NEW ir.ui.menu: mail.discuss_technical
+NEW ir.ui.menu: mail.main_menu_discuss
+NEW ir.ui.menu: mail.menu_channel
+NEW ir.ui.menu: mail.menu_roles
+NEW ir.ui.view: mail.account_security_alert
+NEW ir.ui.view: mail.discuss_call_history_view_form
+NEW ir.ui.view: mail.discuss_call_history_view_tree
+NEW ir.ui.view: mail.discuss_channel_invitation_template
+NEW ir.ui.view: mail.discuss_channel_view_list
+NEW ir.ui.view: mail.ir_cron_view_form
+NEW ir.ui.view: mail.ir_filters_view_form
+NEW ir.ui.view: mail.ir_filters_view_tree
+NEW ir.ui.view: mail.ir_mail_server_view_form
+NEW ir.ui.view: mail.mail_canned_response_view_kanban
+NEW ir.ui.view: mail.mail_followers_edit_form
+NEW ir.ui.view: mail.mail_followers_list_edit_form
+NEW ir.ui.view: mail.mail_notification_multi_invite
+NEW ir.ui.view: mail.message_link_preview_list
+NEW ir.ui.view: mail.message_notification_out_of_office
+NEW ir.ui.view: mail.res_role_view_form
+NEW ir.ui.view: mail.res_role_view_search
+NEW ir.ui.view: mail.res_role_view_tree
+NEW ir.ui.view: mail.view_ice_server_kanban
+NEW ir.ui.view: mail.view_ice_server_search
+DEL ir.ui.view: mail.account_security_setting_update
+DEL ir.ui.view: mail.mail_activity_type_form_inherit
+DEL ir.ui.view: mail.mail_resend_message_view_form
+DEL ir.ui.view: mail.mail_resend_partner_view_form
+DEL ir.ui.view: mail.mail_template_view_form_confirm_delete
+DEL ir.ui.view: mail.mail_wizard_invite_form
+NEW res.groups.privilege: mail.res_groups_privilege_canned_response (noupdate)

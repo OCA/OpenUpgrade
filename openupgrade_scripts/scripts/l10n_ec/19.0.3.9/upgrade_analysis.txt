@@ -1,0 +1,11 @@
+---Models in module 'l10n_ec'---
+---Fields in module 'l10n_ec'---
+l10n_ec      / l10n_ec.sri.payment      / _order                        : _order is now 'sequence, id' ('id')
+l10n_ec      / l10n_ec.sri.payment      / sequence (integer)            : NEW hasdefault: default
+---XML records in module 'l10n_ec'---
+NEW account.report: l10n_ec.tax_report_105
+NEW account.report.column: l10n_ec.tax_report_105_balance
+NEW account.report.expression: l10n_ec.tax_report_line_105_319_tag
+NEW account.report.expression: l10n_ec.tax_report_line_105_320_tag
+NEW account.report.line: l10n_ec.tax_report_line_105_319
+NEW account.report.line: l10n_ec.tax_report_line_105_320

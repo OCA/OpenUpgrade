@@ -1,0 +1,16 @@
+---Models in module 'pos_dpopay'---
+---Fields in module 'pos_dpopay'---
+pos_dpopay   / pos.payment              / dpopay_mobile_money_phone (char): NEW
+pos_dpopay   / pos.payment              / dpopay_rrn (char)             : NEW
+pos_dpopay   / pos.payment              / dpopay_transaction_ref (char) : NEW
+pos_dpopay   / pos.payment.method       / dpopay_bearer_token (char)    : NEW hasdefault: default
+pos_dpopay   / pos.payment.method       / dpopay_chain_id (char)        : NEW
+pos_dpopay   / pos.payment.method       / dpopay_client_id (char)       : NEW
+pos_dpopay   / pos.payment.method       / dpopay_client_secret (char)   : NEW
+pos_dpopay   / pos.payment.method       / dpopay_mid (char)             : NEW
+pos_dpopay   / pos.payment.method       / dpopay_payment_mode (selection): NEW selection_keys: ['card', 'momo'], hasdefault: default
+pos_dpopay   / pos.payment.method       / dpopay_test_mode (boolean)    : NEW
+pos_dpopay   / pos.payment.method       / dpopay_tid (char)             : NEW
+---XML records in module 'pos_dpopay'---
+NEW ir.ui.view: pos_dpopay.pos_payment_method_view_form_inherit_pos_dpopay
+NEW ir.ui.view: pos_dpopay.view_pos_payment_form_inherited_pos_dpopay

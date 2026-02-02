@@ -1,0 +1,16 @@
+---Models in module 'maintenance'---
+---Fields in module 'maintenance'---
+maintenance  / maintenance.equipment    / location (char)               : DEL
+maintenance  / maintenance.equipment    / match_serial (boolean)        : module is now 'stock_maintenance' ('maintenance')
+maintenance  / maintenance.equipment.category / _inherits                     : DEL _inherits: {'mail.alias': 'alias_id'}, stored: False
+maintenance  / maintenance.equipment.category / alias_id (many2one)           : DEL relation: mail.alias, required
+maintenance  / maintenance.equipment.category / message_follower_ids (one2many): DEL relation: mail.followers
+maintenance  / maintenance.equipment.category / message_ids (one2many)        : DEL relation: mail.message
+maintenance  / maintenance.request      / duration (float)              : now a function
+maintenance  / maintenance.request      / schedule_end (datetime)       : NEW hasdefault: compute
+maintenance  / maintenance.team         / _inherits                     : NEW _inherits: {'mail.alias': 'alias_id'}, stored: False
+maintenance  / maintenance.team         / alias_id (many2one)           : NEW relation: mail.alias, required
+maintenance  / maintenance.team         / message_follower_ids (one2many): NEW relation: mail.followers
+maintenance  / maintenance.team         / message_ids (one2many)        : NEW relation: mail.message
+---XML records in module 'maintenance'---
+NEW res.groups.privilege: maintenance.res_groups_privilege_maintenance

@@ -1,0 +1,117 @@
+<?xml version='1.0' encoding='utf-8'?>
+<odoo>
+  <record id="expense_product_communication" model="product.product">
+    <field name="purchase_ok" eval="True"/>
+    <field name="uom_id" ref="uom.product_uom_unit"/>
+    <field name="categ_id" eval="ref('product.product_category_expenses', raise_if_not_found=False)"/>
+  </record>
+  <record id="expense_product_gift" model="product.product">
+    <field name="purchase_ok" eval="True"/>
+    <field name="uom_id" ref="uom.product_uom_unit"/>
+    <field name="categ_id" eval="ref('product.product_category_expenses', raise_if_not_found=False)"/>
+  </record>
+  <record id="expense_product_meal" model="product.product">
+    <field name="purchase_ok" eval="True"/>
+    <field name="categ_id" eval="ref('product.product_category_expenses', raise_if_not_found=False)"/>
+  </record>
+  <record id="expense_product_mileage" model="product.product">
+    <field name="purchase_ok" eval="True"/>
+    <field name="categ_id" eval="ref('product.product_category_expenses', raise_if_not_found=False)"/>
+  </record>
+  <record id="expense_product_travel_accommodation" model="product.product">
+    <field name="purchase_ok" eval="True"/>
+    <field name="categ_id" eval="ref('product.product_category_expenses', raise_if_not_found=False)"/>
+  </record>
+  <record id="hr_expense_team_approver_account_move_rule" model="ir.rule">
+    <field name="domain_force">[('expense_ids', '!=', False)]</field>
+  </record>
+  <template id="hr_expense_template_refuse_reason">
+    <p>Your Expense <t t-out="name"/> has been refused</p>
+    <ul class="o_timeline_tracking_value_list">
+      <li>Reason: <t t-out="reason"/></li>
+    </ul>
+  </template>
+  <template id="hr_expense_template_register">
+    <p>Dear <t t-out="expense.employee_id.name"/>,</p>
+    <p>
+                Your expense has been successfully registered.
+                <t t-if="expense.employee_id.user_id">
+                    You can now submit it to the manager from the following link.
+                </t>
+            </p>
+    <p t-if="expense.product_id">
+                Category: <t t-out="expense.product_id.name"/>
+            </p>
+    <div t-else="">
+      <p>Category: not found</p>
+      <p>The first word of the email subject did not correspond to any category code. You'll have to set the category manually on the expense.</p>
+    </div>
+    <p>
+                Price: <t t-out="expense.price_unit"/><t t-out="expense.currency_id.symbol"/>
+            </p>
+    <p t-if="expense.employee_id.user_id">
+      <br/>
+      <a t-att-href="'/odoo/hr.expense/%s' % (expense.id)" class="o_expense_button_mail">View Expense</a>
+    </p>
+  </template>
+  <record id="ir_rule_hr_expense_approver" model="ir.rule">
+    <field name="domain_force">['|', '|', '|', '|',
+                ('employee_id.user_id', '=', user.id),
+                ('employee_id.department_id.manager_id.user_id', '=', user.id),
+                ('employee_id', 'child_of', user.employee_ids.ids),
+                ('employee_id.expense_manager_id', '=', user.id),
+                ('manager_id', '=', user.id)]</field>
+  </record>
+  <record id="ir_rule_hr_expense_employee" model="ir.rule">
+    <field name="domain_force">[
+                '|', '&amp;', ('employee_id.expense_manager_id', '=', user.id), ('state', 'in', ['draft', 'submitted', 'approved', 'refused']),
+                     '&amp;', ('employee_id.user_id', '=', user.id), ('state', '=', 'draft')
+            ]</field>
+  </record>
+  <record id="ir_rule_hr_expense_employee_not_draft" model="ir.rule">
+    <field name="domain_force">[
+                '|', '&amp;', ('employee_id.user_id', '=', user.id), ('state', '!=', 'draft'),
+                     '&amp;', ('employee_id.expense_manager_id', '=', user.id), ('state', 'in', ['submitted', 'approved', 'refused'])
+            ]</field>
+    <field name="name">Employees can't modify an expense that is not in draft state</field>
+  </record>
+  <record id="mail_act_expense_approval" model="mail.activity.type">
+    <field name="res_model">hr.expense</field>
+    <field name="summary">Expense Approval</field>
+  </record>
+  <record id="mt_expense_approved" model="mail.message.subtype">
+    <field name="default" eval="False"/>
+    <field name="description">Expense approved</field>
+    <field name="res_model">hr.expense</field>
+  </record>
+  <record id="mt_expense_entry_delete" model="mail.message.subtype">
+    <field name="default" eval="False"/>
+    <field name="res_model">hr.expense</field>
+  </record>
+  <record id="mt_expense_entry_draft" model="mail.message.subtype">
+    <field name="default" eval="False"/>
+    <field name="res_model">hr.expense</field>
+  </record>
+  <record id="mt_expense_paid" model="mail.message.subtype">
+    <field name="default" eval="False"/>
+    <field name="description">Expense paid</field>
+    <field name="res_model">hr.expense</field>
+  </record>
+  <record id="mt_expense_refused" model="mail.message.subtype">
+    <field name="default" eval="False"/>
+    <field name="description">Expense refused</field>
+    <field name="res_model">hr.expense</field>
+  </record>
+  <record id="mt_expense_reset" model="mail.message.subtype">
+    <field name="default" eval="False"/>
+    <field name="description">Expense reset to Draft</field>
+    <field name="res_model">hr.expense</field>
+  </record>
+  <record id="product_product_no_cost" model="product.product">
+    <field name="categ_id" eval="ref('product.product_category_expenses', raise_if_not_found=False)"/>
+    <field name="purchase_ok" eval="True"/>
+  </record>
+  <record id="uom.product_uom_km" model="uom.uom">
+    <field name="active" eval="True"/>
+  </record>
+</odoo>

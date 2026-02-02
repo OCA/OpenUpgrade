@@ -1,0 +1,8 @@
+---Models in module 'mrp_subcontracting_dropshipping'---
+---Fields in module 'mrp_subcontracting_dropshipping'---
+mrp_subcontracting_dropshipping / purchase.order           / default_location_dest_id_is_subcontracting_loc (boolean): not related anymore
+mrp_subcontracting_dropshipping / purchase.order           / default_location_dest_id_is_subcontracting_loc (boolean): now a function
+mrp_subcontracting_dropshipping / stock.warehouse          / subcontracting_dropshipping_to_resupply (boolean): DEL
+---XML records in module 'mrp_subcontracting_dropshipping'---
+DEL ir.ui.view: mrp_subcontracting_dropshipping.view_warehouse_inherit_mrp_subcontracting_dropshipping
+DEL stock.route: mrp_subcontracting_dropshipping.route_subcontracting_dropshipping (noupdate)

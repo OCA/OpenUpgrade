@@ -1,0 +1,40 @@
+<?xml version='1.0' encoding='utf-8'?>
+<odoo>
+  <record id="ir_cron_scheduler_action" model="ir.cron" forcecreate="True">
+    <field name="model_id" ref="model_stock_rule"/>
+  </record>
+  <record id="mail_template_data_delivery_confirmation" model="mail.template">
+    <field name="body_html" type="html">
+      <div style="margin: 0px; padding: 0px;">
+        <p style="margin: 0px; padding: 0px; font-size: 13px;">
+        Hello <t t-out="object.partner_id.name or ''">Brandon Freeman</t>,<br/><br/>
+        We are glad to inform you that your order has been shipped.
+        <t t-if="hasattr(object, 'carrier_tracking_ref') and object.carrier_tracking_ref">
+            Your tracking reference is
+            <strong><t t-if="object.carrier_tracking_url"><t t-set="multiple_carrier_tracking" t-value="object.get_multiple_carrier_tracking()"/><t t-if="multiple_carrier_tracking"><t t-foreach="multiple_carrier_tracking" t-as="line"><br/><a t-att-href="line[1]" target="_blank" t-out="line[0] or ''"/></t></t><t t-else=""><a t-attf-href="{{ object.carrier_tracking_url }}" target="_blank" t-out="object.carrier_tracking_ref or ''"/>.
+                </t></t><t t-else=""><t t-out="object.carrier_tracking_ref or ''"/>.
+            </t></strong>
+        </t>
+        <br/><br/>
+        Please find your delivery order attached for more details.<br/><br/>
+        Thank you,
+        <t t-if="user.signature"><br/><div>--<br/><t t-out="user.signature or ''">Mitchell Admin</t></div></t>
+    </p>
+      </div>
+    </field>
+    <field name="lang"/>
+    <field name="use_default_to" eval="False"/>
+  </record>
+  <record id="route_warehouse0_mto" model="stock.route">
+    <field name="product_categ_selectable" eval="True"/>
+  </record>
+  <record id="stock_location_customers" model="stock.location">
+    <field name="location_id"/>
+  </record>
+  <record id="stock_location_inter_company" model="stock.location">
+    <field name="location_id"/>
+  </record>
+  <record id="stock_location_suppliers" model="stock.location">
+    <field name="location_id"/>
+  </record>
+</odoo>

@@ -1,0 +1,9 @@
+---Models in module 'stock_fleet'---
+---Fields in module 'stock_fleet'---
+stock_fleet  / stock.location           / is_a_dock (boolean)           : DEL
+stock_fleet  / stock.picking.batch      / end_date (datetime)           : now a function
+stock_fleet  / stock.picking.type       / dispatch_management (boolean) : NEW
+stock_fleet  / stock.picking.type       / dock_ids (many2many)          : NEW relation: stock.location, hasdefault: compute
+---XML records in module 'stock_fleet'---
+NEW ir.ui.view: stock_fleet.view_picking_type_form
+DEL ir.ui.view: stock_fleet.stock_location_tree_stock_fleet

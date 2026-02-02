@@ -1,0 +1,21 @@
+<?xml version='1.0' encoding='utf-8'?>
+<odoo>
+  <record id="mailing_contact_view_form_split_name" model="ir.ui.view">
+    <field name="arch" type="xml">
+      <xpath expr="//field[@name='name']" position="attributes">
+        <attribute name="readonly">1</attribute>
+        <attribute name="invisible">not name</attribute>
+      </xpath>
+      <xpath expr="//field[@name='name']" position="after">
+        <!-- simulate the placeholder on the readonly field -->
+        <span class="opacity-50" invisible="name">e.g. "John Smith"</span>
+      </xpath>
+      <xpath expr="//group/label[@for='email']" position="before">
+        <field name="first_name" placeholder="e.g. &quot;John&quot;"/>
+      </xpath>
+      <xpath expr="//group/field[@name='create_date']" position="before">
+        <field name="last_name" placeholder="e.g. &quot;Smith&quot;"/>
+      </xpath>
+    </field>
+  </record>
+</odoo>

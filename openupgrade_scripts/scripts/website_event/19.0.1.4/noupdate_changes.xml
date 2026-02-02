@@ -1,0 +1,9 @@
+<?xml version='1.0' encoding='utf-8'?>
+<odoo>
+  <record id="ir_rule_event_question_answer_published" model="ir.rule">
+    <field name="domain_force">[('question_id.event_ids', 'any', [('is_published', '=', True)])]</field>
+  </record>
+  <record id="ir_rule_event_question_published" model="ir.rule">
+    <field name="domain_force">[('event_ids', 'any', [('is_published', '=', True)])]</field>
+  </record>
+</odoo>

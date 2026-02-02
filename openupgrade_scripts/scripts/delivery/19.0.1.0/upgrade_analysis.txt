@@ -1,0 +1,12 @@
+---Models in module 'delivery'---
+---Fields in module 'delivery'---
+delivery     / delivery.carrier         / allow_cash_on_delivery (boolean): NEW
+delivery     / payment.provider         / custom_mode (False)           : NEW selection_keys: ['cash_on_delivery', 'wire_transfer'], mode: modify
+delivery     / res.partner              / is_pickup_location (boolean)  : NEW
+---XML records in module 'delivery'---
+NEW ir.ui.view: delivery.delivery_provider_module_kanban
+NEW ir.ui.view: delivery.delivery_provider_module_list
+NEW ir.ui.view: delivery.delivery_submit_button
+NEW ir.ui.view: delivery.payment_provider_form
+NEW payment.method: delivery.payment_method_cash_on_delivery (noupdate)
+NEW payment.provider: delivery.payment_provider_cod (noupdate)

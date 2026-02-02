@@ -1,0 +1,28 @@
+<?xml version='1.0' encoding='utf-8'?>
+<odoo>
+  <record id="ir_cron_generate_missing_work_entries" model="ir.cron">
+    <field name="model_id" ref="hr.model_hr_version"/>
+  </record>
+  <record id="work_entry_type_attendance" model="hr.work.entry.type">
+    <field name="display_code">A</field>
+    <field name="is_leave">False</field>
+  </record>
+  <record id="work_entry_type_compensatory" model="hr.work.entry.type">
+    <field name="display_code">CTO</field>
+  </record>
+  <record id="work_entry_type_home_working" model="hr.work.entry.type">
+    <field name="display_code">HW</field>
+  </record>
+  <record id="work_entry_type_leave" model="hr.work.entry.type">
+    <field name="display_code">GTO</field>
+  </record>
+  <record id="work_entry_type_legal_leave" model="hr.work.entry.type">
+    <field name="display_code">PTO</field>
+  </record>
+  <record id="work_entry_type_sick_leave" model="hr.work.entry.type">
+    <field name="display_code">STO</field>
+  </record>
+  <record id="work_entry_type_unpaid_leave" model="hr.work.entry.type">
+    <field name="display_code">UN</field>
+  </record>
+</odoo>

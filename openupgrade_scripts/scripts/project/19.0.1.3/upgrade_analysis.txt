@@ -1,0 +1,90 @@
+---Models in module 'project'---
+new model project.role
+new model project.template.create.wizard [transient]
+new model project.template.role.to.users.map [transient]
+new model task.share.wizard [transient]
+---Fields in module 'project'---
+project      / project.milestone        / _order                        : _order is now 'sequence, deadline, is_reached desc, name' ('deadline, is_reached desc, name')
+project      / project.milestone        / sequence (integer)            : NEW hasdefault: default
+project      / project.project          / allow_recurring_tasks (boolean): NEW
+project      / project.project          / is_template (boolean)         : NEW
+project      / project.project          / privacy_visibility (selection): selection_keys added: [invited_users] (most likely nothing to do)
+project      / project.project          / rating_active (boolean)       : DEL
+project      / project.project          / rating_request_deadline (datetime): DEL
+project      / project.project          / rating_status (selection)     : DEL required, selection_keys: ['periodic', 'stage']
+project      / project.project          / rating_status_period (selection): DEL required, selection_keys: ['bimonthly', 'daily', 'monthly', 'quarterly', 'weekly', 'yearly']
+project      / project.project.stage    / color (integer)               : NEW
+project      / project.role             / active (boolean)              : NEW hasdefault: default
+project      / project.role             / color (integer)               : NEW hasdefault: default
+project      / project.role             / name (char)                   : NEW required, translate
+project      / project.role             / sequence (integer)            : NEW
+project      / project.task             / display_in_project (boolean)  : now a function
+project      / project.task             / email_from (char)             : previously in module website_project
+project      / project.task             / has_template_ancestor (boolean): NEW isfunction: function, stored
+project      / project.task             / is_template (boolean)         : NEW
+project      / project.task             / partner_phone (char)          : previously in module website_project
+project      / project.task             / personal_stage_type_id (many2one): not a function anymore
+project      / project.task             / personal_stage_type_id (many2one): now related
+project      / project.task             / priority (selection)          : selection_keys added: [2, 3] (most likely nothing to do)
+project      / project.task             / role_ids (many2many)          : NEW relation: project.role
+project      / project.task.type        / color (integer)               : NEW
+project      / project.task.type        / rating_active (boolean)       : NEW
+project      / project.task.type        / rating_request_deadline (datetime): NEW isfunction: function, stored
+project      / project.task.type        / rating_status (selection)     : NEW required, selection_keys: ['periodic', 'stage'], hasdefault: default
+project      / project.task.type        / rating_status_period (selection): NEW required, selection_keys: ['bimonthly', 'daily', 'monthly', 'quarterly', 'weekly', 'yearly'], hasdefault: default
+project      / project.task.type        / rotting_threshold_days (integer): NEW hasdefault: default
+project      / res.users                / favorite_project_ids (many2many): NEW relation: project.project
+---XML records in module 'project'---
+NEW ir.actions.act_window: project.mail_followers_edit_action_from_task
+NEW ir.actions.act_window: project.project_milestone_action
+NEW ir.actions.act_window: project.project_milestone_action_view_tasks
+NEW ir.actions.act_window: project.project_roles_action
+NEW ir.actions.act_window.view: project.action_view_project_milestone_form
+NEW ir.actions.act_window.view: project.action_view_project_milestone_kanban
+NEW ir.actions.act_window.view: project.action_view_project_milestone_list
+NEW ir.actions.act_window.view: project.project_milestone_action_view_graph
+NEW ir.actions.act_window.view: project.project_milestone_action_view_pivot
+NEW ir.actions.act_window.view: project.project_milestone_action_view_tasks_calendar
+NEW ir.actions.act_window.view: project.project_milestone_action_view_tasks_kanban
+NEW ir.actions.act_window.view: project.project_milestone_action_view_tasks_list
+NEW ir.actions.act_window.view: project.project_roles_action_kanban
+NEW ir.actions.act_window.view: project.project_roles_action_list
+NEW ir.actions.server: project.action_server_convert_project_to_template
+NEW ir.actions.server: project.action_server_convert_to_template
+DEL ir.actions.server: project.action_server_view_my_task
+NEW ir.embedded.actions: project.project_embedded_action_project_milestones
+NEW ir.embedded.actions: project.project_embedded_action_update_milestones
+NEW ir.model.access: project.access_project_role_manager
+NEW ir.model.access: project.access_project_role_user
+NEW ir.model.access: project.access_project_task_share_manager
+NEW ir.model.access: project.access_project_task_share_user
+NEW ir.model.access: project.access_project_template_create_wizard_manager
+NEW ir.model.access: project.access_project_template_create_wizard_user
+NEW ir.model.access: project.access_project_template_role_to_users_map_manager
+NEW ir.model.access: project.access_project_template_role_to_users_map_user
+NEW ir.model.constraint: project.constraint_mail_message_date_res_id_id_for_burndown_chart
+NEW ir.model.constraint: project.constraint_project_task_is_template_idx
+NEW ir.ui.menu: project.project_menu_config_project_roles
+NEW ir.ui.view: project.portal_my_tasks_badge_widget_template
+NEW ir.ui.view: project.portal_task_share_wizard
+NEW ir.ui.view: project.project_milestone_view_kanban
+NEW ir.ui.view: project.project_project_view_form_simplified_template
+NEW ir.ui.view: project.project_role_view_form
+NEW ir.ui.view: project.project_role_view_kanban
+NEW ir.ui.view: project.project_role_view_list
+NEW ir.ui.view: project.project_role_view_search
+NEW ir.ui.view: project.project_task_graph_view_project_milestone
+NEW ir.ui.view: project.project_task_kanban_view_project_milestone
+NEW ir.ui.view: project.project_task_pivot_view_project_milestone
+NEW ir.ui.view: project.project_task_templates_kanban
+NEW ir.ui.view: project.project_task_templates_list
+NEW ir.ui.view: project.project_task_tree_view_project_milestone
+NEW ir.ui.view: project.project_templates_view_form
+NEW ir.ui.view: project.project_templates_view_kanban
+NEW ir.ui.view: project.project_templates_view_list
+NEW ir.ui.view: project.view_task_template_search_form
+DEL ir.ui.view: project.project_sharing
+DEL ir.ui.view: project.project_sharing_embed
+DEL ir.ui.view: project.rating_rating_project_view_kanban
+DEL res.groups: project.group_project_rating
+NEW res.groups.privilege: project.res_groups_privilege_project

@@ -1,0 +1,14 @@
+---Models in module 'survey_crm'---
+---Fields in module 'survey_crm'---
+survey_crm   / crm.lead                 / origin_survey_id (many2one)   : NEW relation: survey.survey
+survey_crm   / crm.team                 / origin_survey_ids (one2many)  : NEW relation: survey.survey
+survey_crm   / survey.question.answer   / generate_lead (boolean)       : NEW
+survey_crm   / survey.survey            / generate_lead (boolean)       : NEW isfunction: function, stored
+survey_crm   / survey.survey            / lead_ids (one2many)           : NEW relation: crm.lead
+survey_crm   / survey.survey            / team_id (many2one)            : NEW relation: crm.team
+survey_crm   / survey.user_input        / lead_id (many2one)            : NEW relation: crm.lead
+---XML records in module 'survey_crm'---
+NEW ir.ui.view: survey_crm.survey_question_view_form
+NEW ir.ui.view: survey_crm.survey_survey_view_form
+NEW ir.ui.view: survey_crm.survey_survey_view_kanban
+NEW ir.ui.view: survey_crm.survey_user_input_view_form
