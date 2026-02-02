@@ -6,6 +6,7 @@ needs:
 
 * https://gitlab.com/odoo-openupgrade-wizard/odoo-openupgrade-wizard advanced tool for
   running migrations in custom environments
+* https://github.com/onesteinbv/odoo-upgrader advanced tool for running migrations based on Kubernetes and Argo Workflows
 * https://github.com/efatto/openupgrader upgrade your database from within Odoo
 * https://hbrunn.github.io/OpenUpgrade get started fast with standard migrations
 
