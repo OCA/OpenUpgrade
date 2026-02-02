@@ -19,6 +19,7 @@ website_sale_product_configurator / website                  / add_to_cart_actio
 ---XML records in module 'website_sale'---
 NEW ir.actions.act_window: website_sale.product_ribbon_action
 DEL ir.actions.server: website_sale.ir_actions_server_sale_cart_recovery_email
+NEW ir.model.access: website_sale.access_product_public_category_designer
 NEW ir.ui.menu: website_sale.menu_product_combos
 NEW ir.ui.menu: website_sale.product_catalog_product_ribbons
 NEW ir.ui.view: website_sale.accordion_more_information
