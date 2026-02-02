@@ -124,7 +124,7 @@ def drop_obsolete_fk_constraints(env):
     """We remove the constraints on wizard_multi_charts_accounts
     to avoid not null error if account chart changed and account template has
     been removed.
-    For exemple l10n_fr.pcg_58 has been removed between 11.0 and 12.0
+    For exemple, l10n_fr.pcg_58 has been removed between 11.0 and 12.0
     and is used as default transfer_account_id.
     Note : wizard_multi_charts_accounts is an obsolete table. Model
     has been removed in V12.0
