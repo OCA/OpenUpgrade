@@ -1,0 +1,7 @@
+---Models in module 'stock_maintenance'---
+---Fields in module 'stock_maintenance'---
+stock_maintenance / maintenance.equipment    / location_id (many2one)        : NEW relation: stock.location
+stock_maintenance / maintenance.equipment    / match_serial (boolean)        : previously in module maintenance
+---XML records in module 'stock_maintenance'---
+NEW ir.ui.view: stock_maintenance.maintenance_stock_equipment_view_form
+NEW ir.ui.view: stock_maintenance.stock_location_form_maintenance_equipments

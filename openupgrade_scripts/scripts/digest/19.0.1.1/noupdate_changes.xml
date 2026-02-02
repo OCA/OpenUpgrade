@@ -1,0 +1,172 @@
+<?xml version='1.0' encoding='utf-8'?>
+<odoo>
+  <template id="digest_mail_main">
+    <table cellspacing="0" cellpadding="0" style="width: 100%;background-color: #F9FAFB;" align="center">
+      <tbody>
+        <tr>
+          <td id="header_background" align="center">
+            <table cellspacing="0" cellpadding="0" border="0" id="header" class="global_layout">
+              <tbody>
+                <tr>
+                  <td style="padding: 20px 20px 5px 20px;" class="p0">
+                    <p t-field="company.name" class="company_name"/>
+                  </td>
+                  <td align="right" style="padding: 20px 20px 5px 0px;" class="p0">
+                    <table>
+                      <tbody>
+                        <tr>
+                          <td class="td_button td_button_connect" style="height: 29px;padding: 3px 10px;">
+                            <a t-att-href="top_button_url" target="_blank">
+                              <span t-esc="top_button_label" class="button" id="button_connect"/>
+                            </a>
+                          </td>
+                        </tr>
+                      </tbody>
+                    </table>
+                  </td>
+                </tr>
+                <tr>
+                  <td style="padding-left: 20px" class="p0" colspan="2">
+                    <div class="header_title">
+                      <p t-esc="title"/>
+                      <p t-if="sub_title" t-esc="sub_title"/>
+                    </div>
+                  </td>
+                </tr>
+                <tr>
+                  <td style="padding: 10px 0px 20px 20px;" class="p0" colspan="2">
+                    <span t-esc="formatted_date" class="header_date"/>
+                  </td>
+                </tr>
+              </tbody>
+            </table>
+          </td>
+        </tr>
+      </tbody>
+    </table>
+    <table cellspacing="0" cellpadding="0" border="0" style="width: 100%;background-color: #F9FAFB;">
+      <tbody>
+        <tr>
+          <td align="center">
+            <table cellspacing="0" cellpadding="0" border="0" class="global_layout">
+              <tbody>
+                <tr t-if="tips" t-foreach="tips" t-as="tip">
+                  <td colspan="3" style="width: 100%;padding: 20px;border: 1px solid #F9FAFB;">
+                    <table>
+                      <tbody>
+                        <tr>
+                          <td t-out="tip"/>
+                        </tr>
+                      </tbody>
+                    </table>
+                  </td>
+                </tr>
+                <tr t-if="kpi_data">
+                  <td style="padding: 20px 20px 0px 20px;" class="global_td">
+                    <table t-foreach="kpi_data" t-as="kpi_info" style="width: 100%;" cellspacing="0" cellpadding="0">
+                      <tr>
+                        <td style="padding-bottom: 20px;">
+                          <table t-if="kpi_info.get('kpi_col1') or kpi_info.get('kpi_col2') or kpi_info.get('kpi_col3')" t-att-data-field="kpi_info['kpi_name']" cellspacing="0" cellpadding="10" style="width: 100%;margin-bottom: 5px;">
+                            <tr class="kpi_header">
+                              <td colspan="2" style="padding: 0px 0px 5px 0px;">
+                                <span style="text-transform: uppercase;" t-esc="kpi_info['kpi_fullname']"/>
+                              </td>
+                              <td t-if="kpi_info['kpi_action']" align="right" style="padding: 0px 0px 5px 0px;">
+                                <table>
+                                  <tbody>
+                                    <tr>
+                                      <td class="td_button td_button_open_report" style="padding: 1px 5px;height: 24px;">
+                                        <a t-att-href="'/odoo/action-%s' % kpi_info['kpi_action']">
+                                          <span class="button" id="button_open_report">➔ Open Report</span>
+                                        </a>
+                                      </td>
+                                    </tr>
+                                  </tbody>
+                                </table>
+                              </td>
+                            </tr>
+                            <tr style="vertical-align: top;">
+                              <td t-if="kpi_info.get('kpi_col1')" class="kpi_cell" style="padding-top: 10px; border-top: 1px solid #e6e6e6;">
+                                <div>
+                                  <t t-call="digest.digest_tool_kpi" kpi_value="kpi_info['kpi_col1']['value']" kpi_margin="kpi_info['kpi_col1'].get('margin')" kpi_subtitle="kpi_info['kpi_col1']['col_subtitle']"/>
+                                </div>
+                              </td>
+                              <td t-if="kpi_info.get('kpi_col2')" class="kpi_cell" style="padding-top: 10px; border-top: 1px solid #e6e6e6;">
+                                <div>
+                                  <t t-call="digest.digest_tool_kpi" kpi_value="kpi_info['kpi_col2']['value']" kpi_margin="kpi_info['kpi_col2'].get('margin')" kpi_subtitle="kpi_info['kpi_col2']['col_subtitle']"/>
+                                </div>
+                              </td>
+                              <td t-if="kpi_info.get('kpi_col3')" class="kpi_cell" style="padding-top: 10px; border-top: 1px solid #e6e6e6;">
+                                <div>
+                                  <t t-call="digest.digest_tool_kpi" kpi_value="kpi_info['kpi_col3']['value']" kpi_margin="kpi_info['kpi_col3'].get('margin')" kpi_subtitle="kpi_info['kpi_col3']['col_subtitle']"/>
+                                </div>
+                              </td>
+                            </tr>
+                          </table>
+                        </td>
+                      </tr>
+                    </table>
+                  </td>
+                </tr>
+                <tr t-if="body">
+                  <td style="padding: 20px 20px 0px 20px;" class="global_td">
+                    <t t-out="body"/>
+                  </td>
+                </tr>
+              </tbody>
+              <tfoot>
+                <tr>
+                  <td style="padding: 20px; border-bottom: 1px solid #d8dadd;">
+                    <table border="0" width="100%">
+                      <tbody>
+                        <tr style="background-color: #F9FAFB;">
+                          <td align="center" colspan="3" valign="center" style="padding: 15px;">
+                            <div t-if="preferences" t-foreach="preferences" t-as="preference" class="preference">
+                              <t t-out="preference"/>
+                            </div>
+                            <div class="by_odoo" style="margin-bottom: 15px;">
+                                                    Sent by <a href="https://www.odoo.com" target="_blank"><span class="odoo_link_text">Odoo</span></a>
+                                                    <t t-if="unsubscribe_token">
+                                                        –
+                                                        <a t-attf-href="/digest/#{object.id}/unsubscribe?token=#{unsubscribe_token}&amp;user_id=#{user.id}" target="_blank" style="text-decoration: none;"><span style="color: #878d97;">Unsubscribe</span></a>
+                                                    </t>
+                                                    <t t-elif="object and object._name == 'digest.digest'">
+                                                        –
+                                                        <a t-att-href="'/odoo/digest.digest/%s' % object.id" target="_blank" style="text-decoration: none;"><span style="color: #878d97;">Unsubscribe</span></a>
+                                                    </t>
+                                                </div>
+                          </td>
+                        </tr>
+                      </tbody>
+                    </table>
+                  </td>
+                </tr>
+                <tr t-if="display_mobile_banner">
+                  <t t-call="digest.digest_section_mobile"/>
+                </tr>
+              </tfoot>
+            </table>
+          </td>
+        </tr>
+      </tbody>
+      <tfoot>
+        <tr>
+          <td align="center" style="padding: 20px 0px 0px 0px;">
+            <table align="center">
+              <tbody>
+                <tr>
+                  <div id="footer">
+                    <p style="font-weight: bold;" t-esc="company.name"/>
+                    <p class="by_odoo" id="powered">
+                                    Powered by <a href="https://www.odoo.com" target="_blank" class="odoo_link"><span class="odoo_link_text">Odoo</span></a>
+                                </p>
+                  </div>
+                </tr>
+              </tbody>
+            </table>
+          </td>
+        </tr>
+      </tfoot>
+    </table>
+  </template>
+</odoo>

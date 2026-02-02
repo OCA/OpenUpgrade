@@ -1,0 +1,7 @@
+---Models in module 'auth_totp'---
+model auth.totp.rate.limit.log (moved from auth_totp_mail_enforce) [transient]
+---Fields in module 'auth_totp'---
+auth_totp    / res.users                / totp_last_counter (integer)   : NEW
+---XML records in module 'auth_totp'---
+NEW ir.model.access: auth_totp.access_auth_totp_rate_limit_log [renamed from auth_totp_mail_enforce module]
+NEW ir.model.constraint: auth_totp.constraint_auth_totp_rate_limit_log_user_id_limit_type_create_date_idx

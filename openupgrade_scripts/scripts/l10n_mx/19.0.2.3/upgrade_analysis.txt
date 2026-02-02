@@ -1,0 +1,9 @@
+---Models in module 'l10n_mx'---
+---Fields in module 'l10n_mx'---
+l10n_mx      / res.company              / l10n_mx_income_re_invoicing_account_id (many2one): NEW relation: account.account
+l10n_mx      / res.company              / l10n_mx_income_return_discount_account_id (many2one): NEW relation: account.account
+---XML records in module 'l10n_mx'---
+NEW ir.ui.view: l10n_mx.res_config_settings_view_form
+NEW ir.ui.view: l10n_mx.view_res_partner_bank_inherit_l10n_mx_edi_bank
+DEL ir.ui.view: l10n_mx.view_res_partner_inherit_l10n_mx_edi_bank
+DEL uom.category: l10n_mx.product_uom_categ_service (noupdate)

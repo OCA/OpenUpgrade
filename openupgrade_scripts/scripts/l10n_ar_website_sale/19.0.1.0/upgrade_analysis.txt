@@ -1,0 +1,10 @@
+---Models in module 'l10n_ar_website_sale'---
+---Fields in module 'l10n_ar_website_sale'---
+l10n_ar_website_sale / website                  / l10n_ar_website_sale_show_both_prices (boolean): NEW hasdefault: compute
+---XML records in module 'l10n_ar_website_sale'---
+NEW ir.ui.view: l10n_ar_website_sale.l10n_ar_website_sale_product_price_inherit
+NEW ir.ui.view: l10n_ar_website_sale.l10n_ar_website_sale_products_item_inherit
+NEW ir.ui.view: l10n_ar_website_sale.res_config_settings_view_form
+DEL ir.ui.view: l10n_ar_website_sale.address
+DEL ir.ui.view: l10n_ar_website_sale.partner_info
+DEL ir.ui.view: l10n_ar_website_sale.portal_my_details_fields

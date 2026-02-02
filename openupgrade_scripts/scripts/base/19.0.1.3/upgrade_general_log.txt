@@ -1,0 +1,275 @@
+---Models in module 'general'---
+obsolete model account.fiscal.position.tax [module account]
+obsolete model account_peppol.service.wizard (renamed to peppol.config.wizard) [module account_peppol]
+obsolete model account.reconcile.model.partner.mapping [module account]
+obsolete model bus.presence [module bus]
+obsolete model candidate.send.mail [module hr_recruitment]
+obsolete model chat.room [module website_jitsi]
+obsolete model chat.room.mixin [module website_jitsi]
+obsolete model choose.delivery.package [module stock_delivery]
+obsolete model event.meeting.room [module website_event_meet]
+obsolete model hr.attendance.overtime (renamed to hr.attendance.overtime.line) [module hr_attendance]
+obsolete model hr.candidate (merged to hr.applicant) [module hr_recruitment]
+obsolete model hr.candidate.skill (renamed to hr.applicant.skill) [module hr_recruitment_skills]
+obsolete model hr.contract (renamed to hr.version) [module hr]
+obsolete model hr.contract.history [module hr]
+obsolete model hr.employee.base [module hr]
+obsolete model hr.employee.skill.log [module hr_skills]
+obsolete model hr.expense.sheet [module hr_expense]
+obsolete model im_livechat.report.operator [module im_livechat]
+obsolete model l10n_id_efaktur.document [module l10n_id_efaktur_coretax]
+obsolete model l10n_id_efaktur.efaktur.range [module l10n_id_efaktur_coretax]
+obsolete model l10n_in.withhold.wizard.line [module l10n_in]
+obsolete model l10n_my_edi.document.status.update [module l10n_my_edi]
+obsolete model mail.resend.message [module mail]
+obsolete model mail.resend.partner [module mail]
+obsolete model mail.wizard.invite (renamed to mail.followers.edit) [module mail]
+obsolete model membership.invoice [module partnership]
+obsolete model membership.membership_line [module partnership]
+obsolete model mrp.batch.produce (renamed to mrp.production.serials) [module mrp]
+obsolete model payment.provider.onboarding.wizard [module payment]
+obsolete model procurement.group (renamed to stock.reference) [module stock]
+obsolete model product.fetch.image.wizard [module product_images]
+obsolete model product.packaging (renamed to product.uom) [module product]
+obsolete model project.create.invoice [module sale_timesheet]
+obsolete model report.membership [module partnership]
+obsolete model report.pos_hr.multi_employee_sales_report [module pos_hr]
+obsolete model res.partner.autocomplete.sync [module partner_autocomplete]
+obsolete model res.partner.title [module base]
+obsolete model sale.edi.common [module sale_edi_ubl]
+obsolete model sale.order.cancel [module sale]
+obsolete model sale.order.option [module sale_management]
+obsolete model sale.order.template.option [module sale_management]
+obsolete model sale.payment.provider.onboarding.wizard [module sale]
+obsolete model sms.resend [module sms]
+obsolete model sms.resend.recipient [module sms]
+obsolete model snailmail.letter.format.error [module snailmail]
+obsolete model snailmail.letter.missing.required.fields [module snailmail]
+obsolete model stock.change.product.qty [module stock]
+obsolete model stock.lot.report [module stock]
+obsolete model stock.package_level (renamed to stock.package.history) [module stock]
+obsolete model stock.quant.package (renamed to stock.package) [module stock]
+obsolete model stock.track.confirmation [module stock]
+obsolete model stock.track.line [module stock]
+obsolete model stock.valuation.layer [module stock_account]
+obsolete model stock.valuation.layer.revaluation [module stock_account]
+obsolete model uom.category [module uom]
+obsolete model web_editor.assets (renamed to website.assets) [module html_builder]
+obsolete model web_editor.converter.test (renamed to html_editor.converter.test) [module html_builder]
+obsolete model web_editor.converter.test.sub (renamed to html_editor.converter.test.sub) [module html_builder]
+new model account.analytic.line.calendar.employee [module hr_timesheet]
+new model account.document.import.mixin [module account]
+new model discuss.call.history [module mail]
+new model event.mail.slot [module event]
+new model event.slot [module event]
+new model fleet.vehicle.odometer.report [module fleet]
+new model hr.applicant.skill (renamed from hr.candidate.skill) [module hr_recruitment_skills]
+new model hr.attendance.overtime.line (renamed from hr.attendance.overtime) [module hr_attendance]
+new model hr.attendance.overtime.rule [module hr_attendance]
+new model hr.attendance.overtime.ruleset [module hr_attendance]
+new model hr.bank.account.allocation.wizard [module hr]
+new model hr.bank.account.allocation.wizard.line [module hr]
+new model hr.employee.certification.report [module hr_skills]
+new model hr.employee.skill.history.report [module hr_skills]
+new model hr.expense.post.wizard [module hr_expense]
+new model hr.individual.skill.mixin [module hr_skills]
+new model hr.job.skill [module hr_skills]
+new model hr.leave.attendance.report [module hr_holidays_attendance]
+new model hr.mixin [module hr]
+new model hr.talent.pool [module hr_recruitment]
+new model hr.version (renamed from hr.contract) [module hr]
+new model hr.version.wizard [module hr]
+new model html_editor.converter.test (renamed from web_editor.converter.test) [module html_editor]
+new model html_editor.converter.test.sub (renamed from web_editor.converter.test.sub) [module html_editor]
+new model im_livechat.channel.member.history [module im_livechat]
+new model im_livechat.conversation.tag [module im_livechat]
+new model im_livechat.expertise [module im_livechat]
+new model ir.actions.server.history [module base]
+new model job.add.applicants [module hr_recruitment]
+new model l10n_cz.tax_office [module l10n_cz]
+new model l10n_in_edi.cancel [module l10n_in_edi]
+new model l10n.in.hr.leave.optional.holiday [module l10n_in_hr_holidays]
+new model l10n_in.pan.entity [module l10n_in]
+new model mail.activity.schedule.line [module mail]
+new model mail.followers.edit (renamed from mail.wizard.invite) [module mail]
+new model mail.message.link.preview [module mail]
+new model mail.presence [module mail]
+new model mrp.production.group [module mrp]
+new model mrp.production.serials (renamed from mrp.batch.produce) [module mrp]
+new model peppol.config.wizard (renamed from account_peppol.service.wizard) [module account_peppol]
+new model pos.confirmation.wizard [module point_of_sale]
+new model pos.make.invoice [module point_of_sale]
+new model pos.preset [module point_of_sale]
+new model product.feed [module website_sale]
+new model product.uom (renamed from product.packaging) [module product]
+new model product.value [module stock_account]
+new model project.role [module project]
+new model project.template.create.wizard [module project]
+new model project.template.role.to.users.map [module project]
+new model properties.base.definition [module base]
+new model properties.base.definition.mixin [module base]
+new model res.groups.privilege [module base]
+new model res.role [module mail]
+new model res.users.settings.embedded.action [module web]
+new model restaurant.order.course [module pos_restaurant]
+new model server.action.history.wizard [module base]
+new model stock_account.stock.valuation.report [module stock_account]
+new model stock.avco.report [module stock_account]
+new model stock.package (renamed from stock.quant.package) [module stock]
+new model stock.package.history (renamed from stock.package_level) [module stock]
+new model stock.put.in.pack [module stock]
+new model stock.reference (renamed from procurement.group) [module stock]
+new model talent.pool.add.applicants [module hr_recruitment]
+new model task.share.wizard [module project]
+new model website.assets (renamed from web_editor.assets) [module website]
+new model website.checkout.step [module website_sale]
+new model website.html.text.processor [module website]
+new model website.page_options.mixin [module website]
+new model website.page_visibility_options.mixin [module website]
+new model website.technical.page [module website]
+---Fields in module 'general'---
+# 14358 fields matched,
+# Direct match: 14167
+# Found in other module with different type: 0
+# Found in other module: 159
+# Found with different type: 32
+# In obsolete models: 231
+# New columns: 1748
+# Not matched: 1009
+---XML records in module 'general'---
+---Probably obsolete module l10n_in_ewaybill_port---
+---Models in module 'l10n_in_ewaybill_port'---
+---Fields in module 'l10n_in_ewaybill_port'---
+l10n_in_ewaybill_port / account.move             / l10n_in_ewaybill_port_partner_id (many2one): DEL relation: res.partner
+---XML records in module 'l10n_in_ewaybill_port'---
+DEL ir.ui.view: l10n_in_ewaybill_port.invoice_form_inherit_l10n_in_ewaybill_port
+---Probably obsolete module l10n_in_purchase---
+---Models in module 'l10n_in_purchase'---
+---Fields in module 'l10n_in_purchase'---
+l10n_in_purchase / purchase.order           / l10n_in_gst_treatment (selection): DEL selection_keys: ['composition', 'consumer', 'deemed_export', 'overseas', 'regular', 'special_economic_zone', 'uin_holders', 'unregistered']
+---XML records in module 'l10n_in_purchase'---
+DEL ir.ui.view: l10n_in_purchase.gst_report_purchaseorder_document_inherit
+DEL ir.ui.view: l10n_in_purchase.gst_report_purchasequotation_document_inherit
+DEL ir.ui.view: l10n_in_purchase.view_purchase_order_form_inherit_l10n_in_purchase
+---Probably obsolete module l10n_mx_hr---
+---Models in module 'l10n_mx_hr'---
+---Fields in module 'l10n_mx_hr'---
+l10n_mx_hr   / hr.employee              / l10n_mx_curp (char)           : DEL
+l10n_mx_hr   / hr.employee              / l10n_mx_rfc (char)            : DEL
+---XML records in module 'l10n_mx_hr'---
+DEL ir.ui.view: l10n_mx_hr.hr_employee_form
+---Probably obsolete module l10n_uy_website_sale---
+---Models in module 'l10n_uy_website_sale'---
+---Fields in module 'l10n_uy_website_sale'---
+---XML records in module 'l10n_uy_website_sale'---
+DEL ir.ui.view: l10n_uy_website_sale.address
+DEL ir.ui.view: l10n_uy_website_sale.partner_info
+DEL ir.ui.view: l10n_uy_website_sale.portal_my_details_fields
+---Probably obsolete module pos_paytm---
+---Models in module 'pos_paytm'---
+---Fields in module 'pos_paytm'---
+pos_paytm    / pos.payment.method       / accept_payment (selection)    : DEL selection_keys: ['auto', 'manual']
+pos_paytm    / pos.payment.method       / allowed_payment_modes (selection): DEL selection_keys: ['all', 'card', 'qr']
+pos_paytm    / pos.payment.method       / channel_id (char)             : DEL
+pos_paytm    / pos.payment.method       / paytm_merchant_key (char)     : DEL
+pos_paytm    / pos.payment.method       / paytm_mid (char)              : DEL
+pos_paytm    / pos.payment.method       / paytm_test_mode (boolean)     : DEL
+pos_paytm    / pos.payment.method       / paytm_tid (char)              : DEL
+---XML records in module 'pos_paytm'---
+DEL ir.ui.view: pos_paytm.pos_payment_method_view_form_inherit_pos_paytm
+---Probably obsolete module pos_six---
+---Models in module 'pos_six'---
+---Fields in module 'pos_six'---
+pos_six      / pos.payment.method       / six_terminal_ip (char)        : DEL
+---XML records in module 'pos_six'---
+DEL ir.ui.view: pos_six.pos_payment_method_view_form_inherit_pos_adyen
+---Probably obsolete module product_images---
+---Models in module 'product_images'---
+obsolete model product.fetch.image.wizard [transient]
+---Fields in module 'product_images'---
+product_images / product.product          / image_fetch_pending (boolean) : DEL
+---XML records in module 'product_images'---
+DEL ir.actions.act_window: product_images.product_product_action_get_pic_with_barcode
+DEL ir.actions.act_window: product_images.product_template_action_get_pic_with_barcode
+DEL ir.cron: product_images.ir_cron_fetch_image
+DEL ir.model.access: product_images.access_product_get_pic_barcode_manager
+DEL ir.rule: product_images.product_images_product_fetch_image_wizard_rule (noupdate)
+DEL ir.ui.view: product_images.product_fetch_image_wizard_view_form
+DEL ir.ui.view: product_images.res_config_settings_view_form
+---Probably obsolete module website_event_jitsi---
+---Models in module 'website_event_jitsi'---
+---Fields in module 'website_event_jitsi'---
+---XML records in module 'website_event_jitsi'---
+DEL ir.ui.view: website_event_jitsi.res_config_settings_view_form
+---Probably obsolete module website_event_meet---
+---Models in module 'website_event_meet'---
+obsolete model event.meeting.room
+---Fields in module 'website_event_meet'---
+website_event_meet / event.event              / meeting_room_allow_creation (boolean): DEL
+website_event_meet / event.event              / meeting_room_ids (one2many)   : DEL relation: event.meeting.room
+website_event_meet / event.meeting.room       / active (boolean)              : DEL
+website_event_meet / event.meeting.room       / chat_room_id (many2one)       : DEL relation: chat.room, required
+website_event_meet / event.meeting.room       / event_id (many2one)           : DEL relation: event.event, required
+website_event_meet / event.meeting.room       / is_pinned (boolean)           : DEL
+website_event_meet / event.meeting.room       / is_published (boolean)        : DEL
+website_event_meet / event.meeting.room       / name (char)                   : DEL required
+website_event_meet / event.meeting.room       / summary (char)                : DEL
+website_event_meet / event.meeting.room       / target_audience (char)        : DEL
+website_event_meet / event.type               / meeting_room_allow_creation (boolean): DEL
+website_event_meet / website.event.menu       / menu_type (False)             : DEL selection_keys: ['booth', 'community', 'exhibitor', 'introduction', 'location', 'meeting_room', 'register', 'track', 'track_proposal'], mode: modify
+---XML records in module 'website_event_meet'---
+DEL ir.actions.act_window: website_event_meet.action_meeting_room_from_event
+DEL ir.actions.act_window: website_event_meet.event_meeting_room_action
+DEL ir.model.access: website_event_meet.access_chat_room_registration
+DEL ir.model.access: website_event_meet.access_chat_room_user
+DEL ir.model.access: website_event_meet.access_event_meeting_room_employee
+DEL ir.model.access: website_event_meet.access_event_meeting_room_portal
+DEL ir.model.access: website_event_meet.access_event_meeting_room_public
+DEL ir.model.access: website_event_meet.access_event_meeting_room_user
+DEL ir.rule: website_event_meet.event_meeting_room_rule_share (noupdate)
+DEL ir.ui.view: website_event_meet.community_aside
+DEL ir.ui.view: website_event_meet.community_main
+DEL ir.ui.view: website_event_meet.event_event_view_form
+DEL ir.ui.view: website_event_meet.event_meet
+DEL ir.ui.view: website_event_meet.event_meet_main
+DEL ir.ui.view: website_event_meet.event_meeting_room_view_form
+DEL ir.ui.view: website_event_meet.event_meeting_room_view_search
+DEL ir.ui.view: website_event_meet.event_meeting_room_view_tree
+DEL ir.ui.view: website_event_meet.event_type_view_form
+DEL ir.ui.view: website_event_meet.meeting_room_aside
+DEL ir.ui.view: website_event_meet.meeting_room_card
+DEL ir.ui.view: website_event_meet.meeting_room_main
+DEL ir.ui.view: website_event_meet.snippet_options
+---Probably obsolete module website_event_meet_quiz---
+---Models in module 'website_event_meet_quiz'---
+---Fields in module 'website_event_meet_quiz'---
+---XML records in module 'website_event_meet_quiz'---
+DEL ir.ui.view: website_event_meet_quiz.community_aside
+DEL ir.ui.view: website_event_meet_quiz.community_leaderboard_small
+DEL ir.ui.view: website_event_meet_quiz.visitor_quiz_points_card
+---Probably obsolete module website_jitsi---
+---Models in module 'website_jitsi'---
+obsolete model chat.room
+obsolete model chat.room.mixin [abstract]
+---Fields in module 'website_jitsi'---
+website_jitsi / chat.room                / lang_id (many2one)            : DEL relation: res.lang
+website_jitsi / chat.room                / last_activity (datetime)      : DEL
+website_jitsi / chat.room                / max_capacity (selection)      : DEL required, selection_keys: ['12', '16', '20', '4', '8', 'no_limit']
+website_jitsi / chat.room                / max_participant_reached (integer): DEL
+website_jitsi / chat.room                / name (char)                   : DEL required
+website_jitsi / chat.room                / participant_count (integer)   : DEL
+---XML records in module 'website_jitsi'---
+DEL ir.actions.act_window: website_jitsi.chat_room_action
+DEL ir.model.access: website_jitsi.access_chat_room_all
+DEL ir.model.access: website_jitsi.access_chat_room_system
+DEL ir.model.access: website_jitsi.access_chat_room_user
+DEL ir.ui.menu: website_jitsi.chat_room_menu
+DEL ir.ui.view: website_jitsi.chat_room_join_button
+DEL ir.ui.view: website_jitsi.chat_room_view_form
+DEL ir.ui.view: website_jitsi.chat_room_view_search
+DEL ir.ui.view: website_jitsi.chat_room_view_tree
+---Probably obsolete module website_payment_authorize---
+---Models in module 'website_payment_authorize'---
+---Fields in module 'website_payment_authorize'---
+---XML records in module 'website_payment_authorize'---
+DEL ir.ui.view: website_payment_authorize.res_config_settings_view_form

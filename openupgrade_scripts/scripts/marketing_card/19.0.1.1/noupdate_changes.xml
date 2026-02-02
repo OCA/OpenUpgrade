@@ -1,0 +1,12 @@
+<?xml version='1.0' encoding='utf-8'?>
+<odoo>
+  <record id="marketing_card_group_manager" model="res.groups">
+    <field name="privilege_id" ref="res_groups_privilege_marketing_card"/>
+    <field name="sequence">20</field>
+    <field name="user_ids" eval="[(4, ref('base.user_root')), (4, ref('base.user_admin'))]"/>
+  </record>
+  <record id="marketing_card_group_user" model="res.groups">
+    <field name="privilege_id" ref="res_groups_privilege_marketing_card"/>
+    <field name="sequence">10</field>
+  </record>
+</odoo>

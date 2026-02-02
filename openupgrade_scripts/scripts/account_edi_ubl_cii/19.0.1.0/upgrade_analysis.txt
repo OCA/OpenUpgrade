@@ -1,0 +1,39 @@
+---Models in module 'account_edi_ubl_cii'---
+---Fields in module 'account_edi_ubl_cii'---
+account_edi_ubl_cii_tax_extension / account.tax              / ubl_cii_tax_exemption_reason_code (selection): selection_keys added: [VATEX-EU-AE, VATEX-EU-D, VATEX-EU-F, VATEX-EU-G, VATEX-EU-I, VATEX-EU-IC, VATEX-EU-J, VATEX-EU-O, VATEX-FR-CNWVAT, VATEX-FR-FRANCHISE], removed: [VATEX_EU_AE, VATEX_EU_D, VATEX_EU_F, VATEX_EU_G, VATEX_EU_I, VATEX_EU_IC, VATEX_EU_J, VATEX_EU_O, VATEX_FR-CNWVAT, VATEX_FR-FRANCHISE]
+---XML records in module 'account_edi_ubl_cii'---
+NEW ir.ui.view: account_edi_ubl_cii.view_account_invoice_form_inherit
+DEL ir.ui.view: account_edi_ubl_cii.ubl_20_AddressType
+DEL ir.ui.view: account_edi_ubl_cii.ubl_20_AllowanceChargeType
+DEL ir.ui.view: account_edi_ubl_cii.ubl_20_CommonLineType
+DEL ir.ui.view: account_edi_ubl_cii.ubl_20_CommonType
+DEL ir.ui.view: account_edi_ubl_cii.ubl_20_CreditNote
+DEL ir.ui.view: account_edi_ubl_cii.ubl_20_CreditNoteLineType
+DEL ir.ui.view: account_edi_ubl_cii.ubl_20_CreditNoteType
+DEL ir.ui.view: account_edi_ubl_cii.ubl_20_DebitNote
+DEL ir.ui.view: account_edi_ubl_cii.ubl_20_DebitNoteLineType
+DEL ir.ui.view: account_edi_ubl_cii.ubl_20_DebitNoteType
+DEL ir.ui.view: account_edi_ubl_cii.ubl_20_DeliveryType
+DEL ir.ui.view: account_edi_ubl_cii.ubl_20_ExchangeRateType
+DEL ir.ui.view: account_edi_ubl_cii.ubl_20_Invoice
+DEL ir.ui.view: account_edi_ubl_cii.ubl_20_InvoiceLineType
+DEL ir.ui.view: account_edi_ubl_cii.ubl_20_InvoicePeriodType
+DEL ir.ui.view: account_edi_ubl_cii.ubl_20_InvoiceType
+DEL ir.ui.view: account_edi_ubl_cii.ubl_20_MonetaryTotalType
+DEL ir.ui.view: account_edi_ubl_cii.ubl_20_PartyType
+DEL ir.ui.view: account_edi_ubl_cii.ubl_20_PaymentMeansType
+DEL ir.ui.view: account_edi_ubl_cii.ubl_20_PaymentTermsType
+DEL ir.ui.view: account_edi_ubl_cii.ubl_20_ResponseType
+DEL ir.ui.view: account_edi_ubl_cii.ubl_20_SignatureType
+DEL ir.ui.view: account_edi_ubl_cii.ubl_20_TaxCategoryType
+DEL ir.ui.view: account_edi_ubl_cii.ubl_20_TaxTotalType
+DEL ir.ui.view: account_edi_ubl_cii.ubl_21_AddressType
+DEL ir.ui.view: account_edi_ubl_cii.ubl_21_CreditNoteLineType
+DEL ir.ui.view: account_edi_ubl_cii.ubl_21_CreditNoteType
+DEL ir.ui.view: account_edi_ubl_cii.ubl_21_DebitNoteLineType
+DEL ir.ui.view: account_edi_ubl_cii.ubl_21_DebitNoteType
+DEL ir.ui.view: account_edi_ubl_cii.ubl_21_InvoiceLineType
+DEL ir.ui.view: account_edi_ubl_cii.ubl_21_InvoiceType
+DEL ir.ui.view: account_edi_ubl_cii.ubl_21_PartyType
+DEL ir.ui.view: account_edi_ubl_cii.ubl_21_PaymentTermsType
+DEL ir.ui.view: account_edi_ubl_cii_tax_extension.view_account_invoice_form_inherit

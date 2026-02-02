@@ -1,0 +1,9 @@
+---Models in module 'spreadsheet_dashboard'---
+---Fields in module 'spreadsheet_dashboard'---
+spreadsheet_dashboard / spreadsheet.dashboard    / company_id (many2one)         : DEL relation: res.company
+spreadsheet_dashboard / spreadsheet.dashboard    / company_ids (many2many)       : NEW relation: res.company
+spreadsheet_dashboard / spreadsheet.dashboard    / favorite_user_ids (many2many) : NEW relation: res.users
+---XML records in module 'spreadsheet_dashboard'---
+NEW ir.rule: spreadsheet_dashboard.spreadsheet_dashboard_rule_manager
+NEW ir.ui.view: spreadsheet_dashboard.spreadsheet_dashboard_view_kanban
+NEW res.groups.privilege: spreadsheet_dashboard.res_groups_privilege_dashboard

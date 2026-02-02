@@ -1,0 +1,405 @@
+<?xml version='1.0' encoding='utf-8'?>
+<odoo>
+  <record id="account_tag_accounts_payable" model="account.account.tag">
+    <field name="name@fi">Tase: Ostovelat</field>
+  </record>
+  <record id="account_tag_accounts_payable-current" model="account.account.tag">
+    <field name="name@fi">Tase: Ostovelat pitkäaikaiset</field>
+  </record>
+  <record id="account_tag_accounts_receivable" model="account.account.tag">
+    <field name="name@fi">Tase: Myyntisaamiset</field>
+  </record>
+  <record id="account_tag_accounts_receivable_from_associated_companies" model="account.account.tag">
+    <field name="name@fi">Tase: Myyntisaamiset omistusyhteysyritykset</field>
+  </record>
+  <record id="account_tag_accrued_liabilities_short-term" model="account.account.tag">
+    <field name="name@fi">Tase: Siirtovelat lyhytaikaiset</field>
+  </record>
+  <record id="account_tag_accrued_long-term" model="account.account.tag">
+    <field name="name@fi">Tase: Siirtovelat pitkäaikaiset</field>
+  </record>
+  <record id="account_tag_administrative_services" model="account.account.tag">
+    <field name="name@fi">Tulos: Hallintopalvelut</field>
+  </record>
+  <record id="account_tag_advance_payments_for_property" model="account.account.tag">
+    <field name="name@fi">Tase: Ennakkomaksut vaihto-omaisuus</field>
+  </record>
+  <record id="account_tag_advance_payments_intangible" model="account.account.tag">
+    <field name="name@fi">Tase: Ennakkomaksut aineettomat</field>
+  </record>
+  <record id="account_tag_advances_received_long-term" model="account.account.tag">
+    <field name="name@fi">Tase: Saadut ennakot pitkäaikaiset</field>
+  </record>
+  <record id="account_tag_advances_received_short-term" model="account.account.tag">
+    <field name="name@fi">Tase: Saadut ennakot lyhytaikaiset</field>
+  </record>
+  <record id="account_tag_bills_of_long-term" model="account.account.tag">
+    <field name="name@fi">Tase: Rahoitusvekselit pitkäaikaiset</field>
+  </record>
+  <record id="account_tag_bills_of_short-term" model="account.account.tag">
+    <field name="name@fi">Tase: Rahoitusvekselit lyhytaikaiset</field>
+  </record>
+  <record id="account_tag_bonds_are_long-term" model="account.account.tag">
+    <field name="name@fi">Tase: Joukkovelkakirjalainat pitkäaikaiset</field>
+  </record>
+  <record id="account_tag_bonds_short-term" model="account.account.tag">
+    <field name="name@fi">Tase: Joukkovelkakirjalainat lyhytaikaiset</field>
+  </record>
+  <record id="account_tag_building_leases" model="account.account.tag">
+    <field name="name@fi">Tase: Rakennukset vuokraoikeudet</field>
+  </record>
+  <record id="account_tag_buildings_owned" model="account.account.tag">
+    <field name="name@fi">Tase: Rakennukset omistetut</field>
+  </record>
+  <record id="account_tag_capital_loans_are_short-term" model="account.account.tag">
+    <field name="name@fi">Tase: Pääomalainat lyhytaikaiset</field>
+  </record>
+  <record id="account_tag_change_in_depreciation_difference" model="account.account.tag">
+    <field name="name@fi">Tulos: Poistoeron muutos</field>
+  </record>
+  <record id="account_tag_change_in_inventories" model="account.account.tag">
+    <field name="name@fi">Tulos: Varastojen muutos</field>
+  </record>
+  <record id="account_tag_change_in_provisions" model="account.account.tag">
+    <field name="name@fi">Tulos: Varausten muutos</field>
+  </record>
+  <record id="account_tag_consolidated_long-term_liabilities" model="account.account.tag">
+    <field name="name@fi">Tase: Velat konserni pitkäaikaiset</field>
+  </record>
+  <record id="account_tag_convertible_bonds_long-term" model="account.account.tag">
+    <field name="name@fi">Tase: Vaihtovelkakirjalainat pitkäaikaiset</field>
+  </record>
+  <record id="account_tag_convertible_bonds_short-term" model="account.account.tag">
+    <field name="name@fi">Tase: Vaihtovelkakirjalainat lyhytaikaiset</field>
+  </record>
+  <record id="account_tag_deferred_tax_assets" model="account.account.tag">
+    <field name="name@fi">Tase: Laskennalliset verosaamiset</field>
+  </record>
+  <record id="account_tag_deferred_tax_assets_are_long-term" model="account.account.tag">
+    <field name="name@fi">Tase: Laskennalliset verosaamiset pitkäaikaiset</field>
+  </record>
+  <record id="account_tag_deferred_tax_liabilities_are_long-term" model="account.account.tag">
+    <field name="name@fi">Tase: Laskennalliset verovelat pitkäaikaiset</field>
+  </record>
+  <record id="account_tag_deferred_tax_liabilities_are_short-term" model="account.account.tag">
+    <field name="name@fi">Tase: Laskennalliset verovelat lyhytaikaiset</field>
+  </record>
+  <record id="account_tag_deferred_taxes" model="account.account.tag">
+    <field name="name@fi">Tulos: Laskennalliset verot</field>
+  </record>
+  <record id="account_tag_depreciation_according_to_plan" model="account.account.tag">
+    <field name="name@fi">Tulos: Suunnitelman mukaiset poistot</field>
+  </record>
+  <record id="account_tag_depreciation_difference" model="account.account.tag">
+    <field name="name@fi">Tase: Poistoero</field>
+  </record>
+  <record id="account_tag_development_costs" model="account.account.tag">
+    <field name="name@fi">Tase: Kehittämismenot</field>
+  </record>
+  <record id="account_tag_external_services" model="account.account.tag">
+    <field name="name@fi">Tulos: Ulkopuoliset palvelut</field>
+  </record>
+  <record id="account_tag_financial_expenses_group" model="account.account.tag">
+    <field name="name@fi">Tulos: Rahoituskulut konserni</field>
+  </record>
+  <record id="account_tag_finished_goods_inventories" model="account.account.tag">
+    <field name="name@fi">Tase: Valmiit tuotteet ja tavarat vaihto-omaisuus</field>
+  </record>
+  <record id="account_tag_goods_in_transit" model="account.account.tag">
+    <field name="name@fi">Tase: Matkalla olevat tavarat</field>
+  </record>
+  <record id="account_tag_goodwill" model="account.account.tag">
+    <field name="name@fi">Tase: Liikearvo</field>
+  </record>
+  <record id="account_tag_group_contribution" model="account.account.tag">
+    <field name="name@fi">Tulos: Konserniavustus</field>
+  </record>
+  <record id="account_tag_group_short-term_liabilities" model="account.account.tag">
+    <field name="name@fi">Tase: Velat konserni lyhytaikaiset</field>
+  </record>
+  <record id="account_tag_immaterial_rights" model="account.account.tag">
+    <field name="name@fi">Tase: Aineettomat oikeudet</field>
+  </record>
+  <record id="account_tag_impairment_losses_financial_assets_current_assets" model="account.account.tag">
+    <field name="name@fi">Tulos: Arvonalentumiset rahoitusarvopaperit vaihtuvat vastaavat</field>
+  </record>
+  <record id="account_tag_impairment_losses_on_investments_in_fixed_assets" model="account.account.tag">
+    <field name="name@fi">Tulos: Arvonalentumiset sijoitukset pysyvät vastaavat</field>
+  </record>
+  <record id="account_tag_impairment_of_fixed_assets" model="account.account.tag">
+    <field name="name@fi">Tulos: Arvonalentumiset pysyvät vastaavat</field>
+  </record>
+  <record id="account_tag_in_machinery_and_equipment_expenses" model="account.account.tag">
+    <field name="name@fi">Tulos: Kone- ja kalustokulut</field>
+  </record>
+  <record id="account_tag_income_from_associated_company" model="account.account.tag">
+    <field name="name@fi">Tulos: Tuotot osuuksista omistusyhteysyritys</field>
+  </record>
+  <record id="account_tag_income_from_shares_in_group" model="account.account.tag">
+    <field name="name@fi">Tulos: Tuotot osuuksista konserni</field>
+  </record>
+  <record id="account_tag_income_other" model="account.account.tag">
+    <field name="name@fi">Tulos: Liiketoiminnan muut tuotot</field>
+  </record>
+  <record id="account_tag_interest_and_financial_income_from_group" model="account.account.tag">
+    <field name="name@fi">Tulos: Korko ja rahoitustuotot konserni</field>
+  </record>
+  <record id="account_tag_investment_income_other_current_assets_group" model="account.account.tag">
+    <field name="name@fi">Tulos: Sijoitustuotot muut pysyvät vastaavat konserni</field>
+  </record>
+  <record id="account_tag_it_expenses" model="account.account.tag">
+    <field name="name@fi">Tulos: IT-kulut</field>
+  </record>
+  <record id="account_tag_land_and_water_areas_owned" model="account.account.tag">
+    <field name="name@fi">Tase: Maa- ja vesialueet omistetut</field>
+  </record>
+  <record id="account_tag_land_and_water_rights_lease" model="account.account.tag">
+    <field name="name@fi">Tase: Maa- ja vesialueet vuokraoikeudet</field>
+  </record>
+  <record id="account_tag_liquidity" model="account.account.tag">
+    <field name="name@fi">Tase: Rahat ja pankkisaamiset</field>
+  </record>
+  <record id="account_tag_loan_receivables_long-term" model="account.account.tag">
+    <field name="name@fi">Tase: Lainasaamiset pitkäaikaiset</field>
+  </record>
+  <record id="account_tag_loans" model="account.account.tag">
+    <field name="name@fi">Tase: Lainasaamiset</field>
+  </record>
+  <record id="account_tag_loans_from_financial_institutions_long-term" model="account.account.tag">
+    <field name="name@fi">Tase: Lainat rahoituslaitoksilta pitkäaikaiset</field>
+  </record>
+  <record id="account_tag_loans_from_financial_institutions_short-term" model="account.account.tag">
+    <field name="name@fi">Tase: Lainat rahoituslaitoksilta lyhytaikaiset</field>
+  </record>
+  <record id="account_tag_machines_and_hardware" model="account.account.tag">
+    <field name="name@fi">Tase: Koneet ja kalusto</field>
+  </record>
+  <record id="account_tag_manufacturing_own_use" model="account.account.tag">
+    <field name="name@fi">Tulos: Valmistus omaan käyttöön</field>
+  </record>
+  <record id="account_tag_manufacturing_warehouse_change" model="account.account.tag">
+    <field name="name@fi">Tulos: Valmiiden ja keskeneräisten tuotteiden varastojen muutos</field>
+  </record>
+  <record id="account_tag_marketing_expenses" model="account.account.tag">
+    <field name="name@fi">Tulos: Markkinointikulut</field>
+  </record>
+  <record id="account_tag_materials_and_supplies_inventories" model="account.account.tag">
+    <field name="name@fi">Tase: Aineet ja tarvikkeet vaihto-omaisuus</field>
+  </record>
+  <record id="account_tag_other_additional_expenses_other" model="account.account.tag">
+    <field name="name@fi">Tulos: Muut sivukulut muut</field>
+  </record>
+  <record id="account_tag_other_additional_expenses_production" model="account.account.tag">
+    <field name="name@fi">Tulos: Muut sivukulut tuotanto</field>
+  </record>
+  <record id="account_tag_other_administrative_expenses" model="account.account.tag">
+    <field name="name@fi">Tulos: Muut hallintokulut</field>
+  </record>
+  <record id="account_tag_other_current_assets" model="account.account.tag">
+    <field name="name@fi">Tase: Muu vaihto-omaisuus</field>
+  </record>
+  <record id="account_tag_other_financial_assets" model="account.account.tag">
+    <field name="name@fi">Tase: Muut rahoitusarvopaperit</field>
+  </record>
+  <record id="account_tag_other_financial_expenses" model="account.account.tag">
+    <field name="name@fi">Tulos: Rahoituskulut muut</field>
+  </record>
+  <record id="account_tag_other_fixed_costs" model="account.account.tag">
+    <field name="name@fi">Tulos: Muut kiinteät kulut</field>
+  </record>
+  <record id="account_tag_other_interest_and_financial_income" model="account.account.tag">
+    <field name="name@fi">Tulos: Muut korko ja rahoitustuotot</field>
+  </record>
+  <record id="account_tag_other_investment_income_from_fixed_assets" model="account.account.tag">
+    <field name="name@fi">Tulos: Muut sijoitustuotot pysyvät vastaavat</field>
+  </record>
+  <record id="account_tag_other_long-term_liabilities" model="account.account.tag">
+    <field name="name@fi">Tase: Muut velat pitkäaikaiset</field>
+  </record>
+  <record id="account_tag_other_long-term_receivables" model="account.account.tag">
+    <field name="name@fi">Tase: Muut saamiset pitkäaikaiset</field>
+  </record>
+  <record id="account_tag_other_long_term_expenses" model="account.account.tag">
+    <field name="name@fi">Tase: Muut pitkävaikutteiset menot</field>
+  </record>
+  <record id="account_tag_other_provisions" model="account.account.tag">
+    <field name="name@fi">Tase: Muut pakolliset varaukset</field>
+  </record>
+  <record id="account_tag_other_receivables" model="account.account.tag">
+    <field name="name@fi">Tase: Muut saamiset</field>
+  </record>
+  <record id="account_tag_other_receivables_investments" model="account.account.tag">
+    <field name="name@fi">Tase: Muut saamiset sijoitukset</field>
+  </record>
+  <record id="account_tag_other_reserves" model="account.account.tag">
+    <field name="name@fi">Tase: Muut rahastot</field>
+  </record>
+  <record id="account_tag_other_shares_and_marketable_securities" model="account.account.tag">
+    <field name="name@fi">Tase: Muut osakkeet ja osuudet rahoitusarvopaperit</field>
+  </record>
+  <record id="account_tag_other_shares_and_participations" model="account.account.tag">
+    <field name="name@fi">Tase: Muut osakkeet ja osuudet</field>
+  </record>
+  <record id="account_tag_other_short-term_liabilities" model="account.account.tag">
+    <field name="name@fi">Tase: Muut velat lyhytaikaiset</field>
+  </record>
+  <record id="account_tag_other_tangible_assets" model="account.account.tag">
+    <field name="name@fi">Tase: Muut aineelliset hyödykkeet</field>
+  </record>
+  <record id="account_tag_other_tax" model="account.account.tag">
+    <field name="name@fi">Tulos: Muut välittömät verot</field>
+  </record>
+  <record id="account_tag_payables_to_associated_companies" model="account.account.tag">
+    <field name="name@fi">Tase: Velat omistusyhteysyritykset</field>
+  </record>
+  <record id="account_tag_payables_to_associated_companies_non-current" model="account.account.tag">
+    <field name="name@fi">Tase: Velat omistusyhteysyritykset pitkäaikaiset</field>
+  </record>
+  <record id="account_tag_payments_on_account_tangible" model="account.account.tag">
+    <field name="name@fi">Tase: Ennakkomaksut aineelliset</field>
+  </record>
+  <record id="account_tag_pension_costs_of_production" model="account.account.tag">
+    <field name="name@fi">Tulos: Eläkekulut tuotanto</field>
+  </record>
+  <record id="account_tag_pension_costs_other" model="account.account.tag">
+    <field name="name@fi">Tulos: Eläkekulut muut</field>
+  </record>
+  <record id="account_tag_pension_loans_long-term" model="account.account.tag">
+    <field name="name@fi">Tase: Eläkelainat pitkäaikaiset</field>
+  </record>
+  <record id="account_tag_pension_loans_short-term" model="account.account.tag">
+    <field name="name@fi">Tase: Eläkelainat lyhytaikaiset</field>
+  </record>
+  <record id="account_tag_personnel_other" model="account.account.tag">
+    <field name="name@fi">Tulos: Henkilöstö muut</field>
+  </record>
+  <record id="account_tag_premises_costs" model="account.account.tag">
+    <field name="name@fi">Tulos: Toimitilakulut</field>
+  </record>
+  <record id="account_tag_prepaid_expenses_and_long-term" model="account.account.tag">
+    <field name="name@fi">Tase: Siirtosaamiset pitkäaikaiset</field>
+  </record>
+  <record id="account_tag_prepayments_and_accrued_income" model="account.account.tag">
+    <field name="name@fi">Tase: Siirtosaamiset</field>
+  </record>
+  <record id="account_tag_profit_for_the_period" model="account.account.tag">
+    <field name="name@fi">Tase: Tilikauden tulos</field>
+  </record>
+  <record id="account_tag_provisions_for_pensions" model="account.account.tag">
+    <field name="name@fi">Tase: Eläkevaraukset</field>
+  </record>
+  <record id="account_tag_purchases" model="account.account.tag">
+    <field name="name@fi">Tulos: Ostot</field>
+  </record>
+  <record id="account_tag_purchases_adjustment_items" model="account.account.tag">
+    <field name="name@fi">Tulos: Ostojen oikaisuerät</field>
+  </record>
+  <record id="account_tag_receivables_from_associated_companies" model="account.account.tag">
+    <field name="name@fi">Tase: Saamiset omistusyhteysyritykset</field>
+  </record>
+  <record id="account_tag_receivables_from_associated_companies_investments" model="account.account.tag">
+    <field name="name@fi">Tase: Saamiset omistusyhteysyrityksiltä sijoitukset</field>
+  </record>
+  <record id="account_tag_receivables_from_associated_companies_non-current" model="account.account.tag">
+    <field name="name@fi">Tase: Saamiset omistusyhteysyritykset pitkäaikaiset</field>
+  </record>
+  <record id="account_tag_receivables_from_group" model="account.account.tag">
+    <field name="name@fi">Tase: Saamiset konserni</field>
+  </record>
+  <record id="account_tag_receivables_from_group_long-term" model="account.account.tag">
+    <field name="name@fi">Tase: Saamiset konserni pitkäaikaiset</field>
+  </record>
+  <record id="account_tag_representation" model="account.account.tag">
+    <field name="name@fi">Tulos: Edustus</field>
+  </record>
+  <record id="account_tag_research_and_development" model="account.account.tag">
+    <field name="name@fi">Tulos: Tutkimus ja kehitys</field>
+  </record>
+  <record id="account_tag_reserve" model="account.account.tag">
+    <field name="name@fi">Tase: Vararahasto</field>
+  </record>
+  <record id="account_tag_retained_earnings" model="account.account.tag">
+    <field name="name@fi">Tase: Edellisten tilikausien tulos</field>
+  </record>
+  <record id="account_tag_revaluation_reserve" model="account.account.tag">
+    <field name="name@fi">Tase: Arvonkorotusrahasto</field>
+  </record>
+  <record id="account_tag_sales" model="account.account.tag">
+    <field name="name@fi">Tulos: Myynti</field>
+  </record>
+  <record id="account_tag_sales_adjustment_items" model="account.account.tag">
+    <field name="name@fi">Tulos: Myynnin oikaisuerät</field>
+  </record>
+  <record id="account_tag_selling_expenses" model="account.account.tag">
+    <field name="name@fi">Tulos: Myyntikulut</field>
+  </record>
+  <record id="account_tag_share_premium_account" model="account.account.tag">
+    <field name="name@fi">Tase: Ylikurssirahasto</field>
+  </record>
+  <record id="account_tag_shares_in_associated_companies" model="account.account.tag">
+    <field name="name@fi">Tase: Osuudet omistusyhteysyrityksissä</field>
+  </record>
+  <record id="account_tag_shares_in_group_companies" model="account.account.tag">
+    <field name="name@fi">Tase: Osuudet saman konsernin yrityksissä</field>
+  </record>
+  <record id="account_tag_shares_in_the_consolidated_financial_securities" model="account.account.tag">
+    <field name="name@fi">Tase: Osuudet konserni rahoitusarvopaperit</field>
+  </record>
+  <record id="account_tag_stock_capital" model="account.account.tag">
+    <field name="name@fi">Tase: Osake-, osuus- tai muu vastaava pääoma</field>
+  </record>
+  <record id="account_tag_subordinated_loans_long-term" model="account.account.tag">
+    <field name="name@fi">Tase: Pääomalainat pitkäaikaiset</field>
+  </record>
+  <record id="account_tag_tax_based_reservations" model="account.account.tag">
+    <field name="name@fi">Tase: Verotusperäiset varaukset</field>
+  </record>
+  <record id="account_tag_tax_provisions" model="account.account.tag">
+    <field name="name@fi">Tase: Verovaraukset</field>
+  </record>
+  <record id="account_tag_taxes_for_the_period" model="account.account.tag">
+    <field name="name@fi">Tulos: Tilikauden verot</field>
+  </record>
+  <record id="account_tag_the_articles_of_association_or_fund_under_the_rules" model="account.account.tag">
+    <field name="name@fi">Tase: Yhtiöjärjestyksen tai sääntöjen mukainen rahasto</field>
+  </record>
+  <record id="account_tag_the_fair_value_reserve" model="account.account.tag">
+    <field name="name@fi">Tase: Käyvän arvon rahasto</field>
+  </record>
+  <record id="account_tag_the_invested_unrestricted_equity_fund" model="account.account.tag">
+    <field name="name@fi">Tase: Sijoitetun vapaan oman pääoman rahasto</field>
+  </record>
+  <record id="account_tag_trade_group" model="account.account.tag">
+    <field name="name@fi">Tase: Myyntisaamiset konserni</field>
+  </record>
+  <record id="account_tag_trade_payables_to_associated_companies" model="account.account.tag">
+    <field name="name@fi">Tase: Ostovelat omistusyhteysyritykset</field>
+  </record>
+  <record id="account_tag_trade_payables_to_group" model="account.account.tag">
+    <field name="name@fi">Tase: Ostovelat konserni</field>
+  </record>
+  <record id="account_tag_trade_receivables_long-term" model="account.account.tag">
+    <field name="name@fi">Tase: Myyntisaamiset pitkäaikaiset</field>
+  </record>
+  <record id="account_tag_travelling" model="account.account.tag">
+    <field name="name@fi">Tulos: Matkat</field>
+  </record>
+  <record id="account_tag_unpaid_contributions" model="account.account.tag">
+    <field name="name@fi">Tase: Maksamattomat osuudet</field>
+  </record>
+  <record id="account_tag_unpaid_shares_of_long-term" model="account.account.tag">
+    <field name="name@fi">Tase: Maksamattomat osuudet pitkäaikaiset</field>
+  </record>
+  <record id="account_tag_vehicle_expenses" model="account.account.tag">
+    <field name="name@fi">Tulos: Ajoneuvokulut</field>
+  </record>
+  <record id="account_tag_wages_and_salaries_in_production" model="account.account.tag">
+    <field name="name@fi">Tulos: Palkat ja palkkiot tuotanto</field>
+  </record>
+  <record id="account_tag_wages_and_salaries_other" model="account.account.tag">
+    <field name="name@fi">Tulos: Palkat ja palkkiot muut</field>
+  </record>
+  <record id="account_tag_work_in_progress" model="account.account.tag">
+    <field name="name@fi">Tase: Keskeneräiset tuotteet</field>
+  </record>
+</odoo>

@@ -1,0 +1,15 @@
+---Models in module 'l10n_jo_edi'---
+---Fields in module 'l10n_jo_edi'---
+l10n_jo_edi  / account.move             / l10n_jo_edi_state (selection) : selection_keys added: [demo] (most likely nothing to do)
+l10n_jo_edi_extended / account.move             / l10n_jo_edi_state (False)     : DEL selection_keys: ['demo', 'sent', 'to_send'], mode: modify
+---XML records in module 'l10n_jo_edi'---
+DEL ir.ui.view: l10n_jo_edi.ubl_jo_Invoice
+DEL ir.ui.view: l10n_jo_edi.ubl_jo_InvoiceLineType
+DEL ir.ui.view: l10n_jo_edi.ubl_jo_InvoiceType
+DEL ir.ui.view: l10n_jo_edi.ubl_jo_PaymentMeansType
+DEL ir.ui.view: l10n_jo_edi.ubl_jo_TaxTotalType
+DEL ir.ui.view: l10n_jo_edi_extended.res_config_settings_view_form
+DEL ir.ui.view: l10n_jo_edi_extended.view_account_invoice_filter
+DEL ir.ui.view: l10n_jo_edi_extended.view_move_form
+DEL ir.ui.view: l10n_jo_edi_extended.view_out_credit_note_tree
+DEL ir.ui.view: l10n_jo_edi_extended.view_out_invoice_tree

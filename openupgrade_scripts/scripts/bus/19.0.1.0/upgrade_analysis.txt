@@ -1,0 +1,12 @@
+---Models in module 'bus'---
+obsolete model bus.presence
+---Fields in module 'bus'---
+bus          / bus.presence             / last_poll (datetime)          : DEL
+bus          / bus.presence             / last_presence (datetime)      : DEL
+bus          / bus.presence             / status (selection)            : DEL selection_keys: ['away', 'offline', 'online']
+bus          / bus.presence             / user_id (many2one)            : DEL relation: res.users
+bus          / res.partner              / im_status (char)              : module is now 'mail' ('bus')
+bus          / res.users                / im_status (char)              : module is now 'mail' ('bus')
+---XML records in module 'bus'---
+DEL ir.model.access: bus.access_bus_presence
+DEL ir.model.access: bus.access_bus_presence_portal

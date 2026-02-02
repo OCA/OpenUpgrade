@@ -1,0 +1,9 @@
+---Models in module 'payment_redsys'---
+---Fields in module 'payment_redsys'---
+payment_redsys / payment.provider         / code (False)                  : NEW selection_keys: ['adyen', 'aps', 'asiapay', 'authorize', 'buckaroo', 'custom', 'demo', 'dpo', 'flutterwave', 'iyzico', 'mercado_pago', 'mollie', 'none', 'nuvei', 'paymob', 'paypal', 'razorpay', 'redsys'], mode: modify
+payment_redsys / payment.provider         / redsys_merchant_code (char)   : NEW
+payment_redsys / payment.provider         / redsys_merchant_terminal (char): NEW
+payment_redsys / payment.provider         / redsys_secret_key (char)      : NEW
+---XML records in module 'payment_redsys'---
+NEW ir.ui.view: payment_redsys.payment_provider_form
+NEW ir.ui.view: payment_redsys.redirect_form

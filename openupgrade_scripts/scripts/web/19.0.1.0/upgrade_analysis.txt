@@ -1,0 +1,21 @@
+---Models in module 'web'---
+new model res.users.settings.embedded.action
+---Fields in module 'web'---
+web          / res.users.settings       / embedded_actions_config_ids (one2many): NEW relation: res.users.settings.embedded.action
+web          / res.users.settings.embedded.action / action_id (many2one)          : NEW relation: ir.actions.act_window, required
+web          / res.users.settings.embedded.action / embedded_actions_order (char) : NEW
+web          / res.users.settings.embedded.action / embedded_actions_visibility (char): NEW
+web          / res.users.settings.embedded.action / embedded_visibility (boolean) : NEW
+web          / res.users.settings.embedded.action / res_id (integer)              : NEW
+web          / res.users.settings.embedded.action / res_model (char)              : NEW required
+web          / res.users.settings.embedded.action / user_setting_id (many2one)    : NEW relation: res.users.settings, required
+---XML records in module 'web'---
+NEW ir.model.access: web.access_res_users_settings_embedded_action_user
+NEW ir.model.constraint: web.constraint_res_users_settings_embedded_action_res_user_settings_e_91890fa3
+NEW ir.rule: web.res_users_settings_embedded_action_rule_admin (noupdate)
+NEW ir.rule: web.res_users_settings_embedded_action_rule_user (noupdate)
+NEW ir.ui.view: web.config_speedscope_index
+NEW ir.ui.view: web.login_oauth
+NEW ir.ui.view: web.view_memory
+NEW ir.ui.view: web.view_view_form_inherit_view
+DEL ir.ui.view: web.qunit_mobile_suite

@@ -1,0 +1,103 @@
+<?xml version='1.0' encoding='utf-8'?>
+<odoo>
+  <record id="group_mail_canned_response_admin" model="res.groups">
+    <field name="privilege_id" ref="res_groups_privilege_canned_response"/>
+  </record>
+  <record id="ir_cron_delete_notification" model="ir.cron">
+    <field name="interval_type">months</field>
+    <field name="name">Notification: Delete Notifications older than 6 Months</field>
+  </record>
+  <record id="ir_rule_discuss_channel_all" model="ir.rule">
+    <field name="domain_force">
+                [
+                    "|",
+                        "&amp;",
+                            ("channel_type", "!=", "channel"),
+                            "|",
+                                ("is_member", "=", True),
+                                ("parent_channel_id.is_member", "=", True),
+                        "&amp;",
+                            ("channel_type", "=", "channel"),
+                            "|",
+                                ("group_public_id", "=", False),
+                                ("group_public_id", "in", user.all_group_ids.ids),
+                ]
+            </field>
+  </record>
+  <record id="ir_rule_discuss_channel_member_create_is_group_matching_all" model="ir.rule">
+    <field name="domain_force">
+                [
+                    ('is_self', '=', True),
+                    ('channel_id.channel_type', '=', 'channel'),
+                    '|',
+                        ('channel_id.group_public_id', '=', False),
+                        ('channel_id.group_public_id', 'in', user.all_group_ids.ids)
+                ]
+            </field>
+  </record>
+  <record id="ir_rule_discuss_channel_member_create_is_group_matching_group_user" model="ir.rule">
+    <field name="domain_force">
+                [
+                    ('is_self', '=', False),
+                    ('channel_id.channel_type', '=', 'channel'),
+                    '|',
+                        ('channel_id.group_public_id', '=', False),
+                        ('channel_id.group_public_id', 'in', user.all_group_ids.ids)
+                ]
+            </field>
+  </record>
+  <record id="ir_rule_discuss_channel_member_is_self_all" model="ir.rule">
+    <field name="domain_force">
+                [
+                    ('is_self', '=', True),
+                    "|",
+                        ("channel_id.channel_type", "!=", "channel"),
+                        "|",
+                            ("channel_id.group_public_id", "=", False),
+                            ("channel_id.group_public_id", "in", user.all_group_ids.ids),
+                ]
+            </field>
+  </record>
+  <record id="ir_rule_discuss_channel_member_read_all" model="ir.rule">
+    <field name="domain_force">
+                [
+                    "|",
+                        "&amp;",
+                            ("channel_id.channel_type", "!=", "channel"),
+                            "|",
+                                ("channel_id.is_member", "=", True),
+                                ("channel_id.parent_channel_id.is_member", "=", True),
+                        "&amp;",
+                            ("channel_id.channel_type", "=", "channel"),
+                            "|",
+                                ("channel_id.group_public_id", "=", False),
+                                ("channel_id.group_public_id", "in", user.all_group_ids.ids),
+                ]
+            </field>
+  </record>
+  <record id="ir_rule_mail_canned_response_admin" model="ir.rule">
+    <field name="domain_force">[('is_shared', '=', True)]</field>
+    <field name="name">Canned response: admin has all access on shared canned response</field>
+    <field name="perm_create" eval="False"/>
+  </record>
+  <record id="ir_rule_mail_canned_response_user_read" model="ir.rule">
+    <field name="domain_force">['|', ('create_uid', '=', user.id), ('group_ids', 'in', user.all_group_ids.ids)]</field>
+  </record>
+  <record id="mail_activity_data_call" model="mail.activity.type">
+    <field name="summary">Call</field>
+  </record>
+  <record id="mail_activity_data_email" model="mail.activity.type">
+    <field name="summary">Email</field>
+  </record>
+  <record id="mail_activity_data_meeting" model="mail.activity.type">
+    <field name="summary">Meeting</field>
+  </record>
+  <record id="mail_activity_data_todo" model="mail.activity.type">
+    <field name="sequence">2</field>
+    <field name="summary">To-Do</field>
+  </record>
+  <record id="mail_activity_data_upload_document" model="mail.activity.type">
+    <field name="name">Document</field>
+    <field name="summary">Document</field>
+  </record>
+</odoo>

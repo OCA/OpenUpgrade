@@ -1,0 +1,9 @@
+<?xml version='1.0' encoding='utf-8'?>
+<odoo>
+  <record id="barcode_rule_gs1_314y" model="barcode.rule">
+    <field name="associated_uom_id" ref="uom.product_uom_square_meter"/>
+  </record>
+  <record id="barcode_rule_gs1_351y" model="barcode.rule">
+    <field name="associated_uom_id" ref="uom.product_uom_square_foot"/>
+  </record>
+</odoo>

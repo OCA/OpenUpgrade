@@ -1,0 +1,14 @@
+---Models in module 'l10n_in_edi'---
+new model l10n_in_edi.cancel [transient]
+---Fields in module 'l10n_in_edi'---
+l10n_in_edi  / account.move             / l10n_in_edi_attachment_file (binary): NEW attachment: True
+l10n_in_edi  / account.move             / l10n_in_edi_error (html)      : NEW
+l10n_in_edi  / account.move             / l10n_in_edi_status (selection): NEW selection_keys: ['cancelled', 'sent', 'to_send']
+l10n_in_edi  / res.company              / l10n_in_edi_feature (boolean) : NEW
+---XML records in module 'l10n_in_edi'---
+DEL account.edi.format: l10n_in_edi.edi_in_einvoice_json_1_03
+NEW ir.model.access: l10n_in_edi.access_l10n_in_edi_cancel
+NEW ir.ui.view: l10n_in_edi.l10n_in_edi_inherit_account_move_search_view
+NEW ir.ui.view: l10n_in_edi.view_ewaybill_cancel_form
+NEW ir.ui.view: l10n_in_edi.view_out_credit_note_tree_inherit_l10n_in_edi
+NEW ir.ui.view: l10n_in_edi.view_out_invoice_tree_inherit_l10n_in_edi

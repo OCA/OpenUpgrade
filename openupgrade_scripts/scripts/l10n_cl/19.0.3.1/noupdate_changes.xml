@@ -1,0 +1,16 @@
+<?xml version='1.0' encoding='utf-8'?>
+<odoo>
+  <record id="OTR" model="res.currency">
+    <field name="l10n_cl_currency_code@es_419">900</field>
+    <field name="l10n_cl_short_name@es_419">OTR</field>
+  </record>
+  <record id="UF" model="res.currency">
+    <field name="l10n_cl_short_name@es_419">Unidad de Fomento</field>
+  </record>
+  <record id="UTM" model="res.currency">
+    <field name="l10n_cl_short_name@es_419">Unidad Tributaria Mensual</field>
+  </record>
+  <record id="product_product_ad_valorem" model="product.product">
+    <field name="categ_id" ref="product.product_category_services"/>
+  </record>
+</odoo>

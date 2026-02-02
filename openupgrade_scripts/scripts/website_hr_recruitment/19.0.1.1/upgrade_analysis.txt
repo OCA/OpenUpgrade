@@ -1,0 +1,10 @@
+---Models in module 'website_hr_recruitment'---
+---Fields in module 'website_hr_recruitment'---
+website_hr_recruitment / hr.job                   / is_seo_optimized (boolean)    : is now stored
+---XML records in module 'website_hr_recruitment'---
+NEW ir.ui.view: website_hr_recruitment.job_filter_base
+NEW ir.ui.view: website_hr_recruitment.job_filter_base_mobile
+NEW ir.ui.view: website_hr_recruitment.job_filter_by_industries
+NEW ir.ui.view: website_hr_recruitment.job_reset_filters
+DEL ir.ui.view: website_hr_recruitment.jobs_searchbar_input_snippet_options
+DEL ir.ui.view: website_hr_recruitment.snippet_options

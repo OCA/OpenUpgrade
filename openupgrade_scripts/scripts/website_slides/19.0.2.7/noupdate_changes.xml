@@ -1,0 +1,200 @@
+<?xml version='1.0' encoding='utf-8'?>
+<odoo>
+  <template id="mail_notification_channel_invite">
+    <table border="0" cellpadding="0" cellspacing="0" style="padding-top: 16px; background-color: #F1F1F1; font-family:Verdana, Arial,sans-serif; color: #454748; width: 100%; border-collapse:separate;">
+      <tr>
+        <td align="center">
+          <table border="0" cellpadding="0" cellspacing="0" width="590" style="padding: 24px; background-color: white; color: #454748; border-collapse:separate;">
+            <tbody>
+              <!-- HEADER -->
+              <tr>
+                <td align="center" style="min-width: 590px;">
+                  <table border="0" cellpadding="0" cellspacing="0" width="100%" style="background-color: white; padding: 0; border-collapse:separate;">
+                    <tr>
+                      <td valign="middle">
+                        <span style="font-size: 10px;">Your <t t-out="model_description or 'document'"/></span>
+                        <br/>
+                        <span style="font-size: 20px; font-weight: bold;">
+                          <t t-out="(record_name or message.record_name or '').replace('/','-')"/>
+                        </span>
+                      </td>
+                      <td valign="middle" align="right" t-if="company and not company.uses_default_logo">
+                        <img t-att-src="'/logo.png?company=%s' % company.id" style="padding: 0px; margin: 0px; height: 48px;" t-att-alt="'%s' % company.name"/>
+                      </td>
+                    </tr>
+                    <tr>
+                      <td colspan="2" style="text-align:center;">
+                        <hr width="100%" style="background-color:rgb(204,204,204);border:medium none;clear:both;display:block;font-size:0px;min-height:1px;line-height:0; margin:4px 0px 32px 0px;"/>
+                      </td>
+                    </tr>
+                  </table>
+                </td>
+              </tr>
+              <!-- CONTENT -->
+              <tr>
+                <td style="min-width: 590px;">
+                  <t t-out="message.body"/>
+                  <div style="margin: 32px 0px 32px 0px; text-align: center;">
+                    <a t-att-href="record.invitation_link" t-attf-style="background-color: {{company.email_secondary_color or '#875A7B'}}; padding: 8px 16px 8px 16px; text-decoration: none; color: {{company.email_primary_color or '#FFFFFF'}}; border-radius: 5px; font-size:13px;">
+                      <t t-if="enroll_mode"> Click here to start the course </t>
+                      <t t-else=""> Click here to get started </t>
+                    </a>
+                  </div>
+                  <div style="margin: 0px; padding: 0px; font-size:13px;">
+                Enjoy this exclusive content!
+            </div>
+                  <div>&amp;nbsp;</div>
+                  <div t-if="signature" style="font-size: 13px;">
+                    <div t-out="signature"/>
+                  </div>
+                </td>
+              </tr>
+              <!-- FOOTER -->
+              <tr>
+                <td align="center" style="min-width: 590px; padding: 0 8px 0 8px; font-size:11px;">
+                  <hr width="100%" style="background-color:rgb(204,204,204);border:medium none;clear:both;display:block;font-size:0px;min-height:1px;line-height:0; margin: 16px 0px 4px 0px;"/>
+                  <b t-out="company.name"/>
+                  <br/>
+                  <div style="color: #999999;">
+                    <t t-out="company.phone"/>
+                    <t t-if="company.email"> |
+                    <a t-att-href="'mailto:%s' % company.email" style="text-decoration:none; color: #999999;"><t t-out="company.email"/></a>
+                </t>
+                    <t t-if="company.website"> |
+                    <a t-att-href="'%s' % company.website" style="text-decoration:none; color: #999999;"><t t-out="company.website"/></a>
+                </t>
+                  </div>
+                </td>
+              </tr>
+            </tbody>
+          </table>
+        </td>
+      </tr>
+      <!-- POWERED BY -->
+      <tr>
+        <td align="center" style="min-width: 590px;">
+        Powered by <a target="_blank" href="https://www.odoo.com?utm_source=db&amp;utm_medium=email" t-attf-style="color: {{company.email_secondary_color or '#875A7B'}};">Odoo</a>
+</td>
+      </tr>
+    </table>
+  </template>
+  <record id="mail_template_channel_completed" model="mail.template">
+    <field name="body_html" type="html">
+      <div style="margin: 0px; padding: 0px;">
+        <div style="margin: 0px; padding: 0px; font-size: 13px;"><p style="margin: 0px;">Hello <t t-out="object.partner_id.name or ''">Brandon Freeman</t>,</p><br/><p><b>Congratulations!</b></p><p>You've completed the course <b t-out="object.channel_id.name or ''">Basics of Gardening</b></p><p>Check out the other available courses.</p><br/><div style="padding: 16px 8px 16px 8px; text-align: center;"><a href="/slides" t-attf-style="background-color: {{object.channel_id.user_id.company_id.email_secondary_color or '#875A7B'}}; padding: 8px 16px 8px 16px; text-decoration: none; color: {{object.channel_id.user_id.company_id.email_primary_color or '#FFFFFF'}}; border-radius: 5px;">
+                                Explore courses
+                            </a></div>
+                        Enjoy this exclusive content!
+                        <t t-if="object.channel_id.user_id.signature"><br/><div>--<br/><t t-out="object.channel_id.user_id.signature or ''">Mitchell Admin</t></div></t>
+                    </div>
+      </div>
+    </field>
+    <field name="lang"/>
+    <field name="partner_to" eval="False"/>
+    <field name="use_default_to" eval="True"/>
+  </record>
+  <record id="mail_template_channel_shared" model="mail.template">
+    <field name="body_html" type="html">
+      <div style="margin: 0px; padding: 0px;">
+        <p style="margin: 0px; padding: 0px; font-size: 13px;">
+                        Hello<br/><br/>
+                        <t t-out="user.name or ''">Mitchell Admin</t> shared the <strong t-out="object.name or ''">document</strong> with you!
+                        <div style="margin: 16px 8px 16px 8px; text-align: center;"><a t-att-href="object.website_absolute_url"><img t-att-alt="object.name" t-attf-src="{{ ctx.get('base_url') }}/web/image/slide.channel/{{ object.id }}/image_256" style="height:auto; width:150px; margin: 16px;"/></a></div>
+                        <div style="padding: 16px 8px 16px 8px; text-align: center;"><a t-att-href="object.website_absolute_url" t-attf-style="background-color: {{user.company_id.email_secondary_color or '#875A7B'}}; padding: 8px 16px 8px 16px;                                 text-decoration: none; color: {{user.company_id.email_primary_color or '#FFFFFF'}}; border-radius: 5px;">
+                                View <strong t-out="object.name or ''">Document</strong></a></div>
+                        <t t-if="user.signature"><br/><div>--<br/><t t-out="user.signature or ''">Mitchell Admin</t></div></t>
+                    </p>
+      </div>
+    </field>
+    <field name="use_default_to" eval="False"/>
+  </record>
+  <record id="mail_template_slide_channel_enroll" model="mail.template">
+    <field name="lang"/>
+  </record>
+  <record id="mail_template_slide_channel_invite" model="mail.template">
+    <field name="lang"/>
+  </record>
+  <record id="rule_slide_channel_visibility_public_user" model="ir.rule">
+    <field name="domain_force">[('website_published', '=', True), ('visibility', 'in', ['public', 'link'])]</field>
+    <field name="name">Channel: public: restricted to public/link-based and published</field>
+  </record>
+  <record id="rule_slide_channel_visibility_signed_in_user" model="ir.rule">
+    <field name="domain_force">[
+                '&amp;',
+                    ('website_published', '=', True),
+                    '|',
+                        ('visibility', 'in', ('public', 'connected', 'link')),
+                        '|',
+                            ('is_member_invited', '=', True),
+                            ('is_member', '=', True),
+                ]
+            </field>
+    <field name="name">Channel: portal/user: restricted to published, public or (invited) attendee or link-based, connected user</field>
+  </record>
+  <record id="rule_slide_slide_public_user" model="ir.rule">
+    <field name="domain_force">[
+                    ('channel_id.website_published', '=', True),
+                    ('website_published', '=', True),
+                    ('channel_id.visibility', 'in', ['public', 'link']),
+                    '|',
+                        ('is_category','=', True),
+                        ('is_preview', '=', True),
+                ]
+            </field>
+    <field name="name">Slide: public: restricted to published or public/link-based channel &amp; (category or previewable)</field>
+  </record>
+  <record id="rule_slide_slide_signed_in_user" model="ir.rule">
+    <field name="domain_force">[
+                '&amp;',
+                    '|',
+                        ('user_id', '=', user.id),
+                        '&amp;',
+                            ('website_published', '=', True),
+                            ('channel_id.website_published', '=', True),
+                    '|',
+                        '&amp;',
+                            '|',
+                                ('channel_id.visibility', 'in', ('public', 'connected',  'link')),
+                                ('channel_id.is_member_invited', '=', True),
+                            '|',
+                                ('is_category', '=', True),
+                                ('is_preview', '=', True),
+                        ('channel_id.is_member', '=', True),
+                ]
+            </field>
+    <field name="name">Slide: portal/user: restricted to published and connected user, (invited) attendee or link-based, if course visible to attendees only</field>
+  </record>
+  <record id="slide_channel_tag_group_level" model="slide.channel.tag.group">
+    <field name="name">Level</field>
+  </record>
+  <record id="slide_template_published" model="mail.template">
+    <field name="body_html" type="html">
+      <div style="margin: 0px; padding: 0px;">
+        <p style="margin: 0px; padding: 0px; font-size: 13px;">
+                        Hello<br/><br/>
+                        There is something new in the course <strong t-out="object.channel_id.name or ''">Trees, Wood and Gardens</strong> you are following:<br/><br/>
+                        <center><strong t-out="object.name or ''">Trees</strong></center>
+                        <t t-if="object.image_1024"><div style="padding: 16px 8px 16px 8px; text-align: center;"><a t-att-href="object.website_share_url"><img t-att-alt="object.name" t-attf-src="{{ ctx.get('base_url') }}/web/image/slide.slide/{{ object.id }}/image_1024" style="height:auto; width:150px; margin: 16px;"/></a></div></t>
+                        <div style="padding: 16px 8px 16px 8px; text-align: center;"><a t-att-href="object.website_share_url" t-attf-style="background-color: {{object.user_id.company_id.email_secondary_color or '#875A7B'}}; padding: 8px 16px 8px 16px; text-decoration: none; color: {{object.user_id.company_id.email_primary_color or '#FFFFFF'}}; border-radius: 5px;">View content</a></div>
+                        Enjoy this exclusive content!
+                        <t t-if="user.signature"><br/><div>--<br/><t t-out="user.signature or ''">Mitchell Admin</t></div></t>
+                    </p>
+      </div>
+    </field>
+    <field name="use_default_to" eval="False"/>
+  </record>
+  <record id="slide_template_shared" model="mail.template">
+    <field name="body_html" type="html">
+      <div style="margin: 0px; padding: 0px;">
+        <p style="margin: 0px; padding: 0px; font-size: 13px;">
+                        Hello<br/><br/>
+                        <t t-out="user.name or ''">Mitchell Admin</t> shared the <t t-out="object.slide_category or ''">document</t> <strong t-out="object.name or ''">Trees</strong> with you!
+                        <div style="margin: 16px 8px 16px 8px; text-align: center;"><a t-att-href="(object.website_share_url + '?fullscreen=1') if ctx.get('fullscreen') else object.website_share_url"><img t-att-alt="object.name" t-attf-src="{{ ctx.get('base_url') }}/web/image/slide.slide/{{ object.id }}/image_1024" style="height:auto; width:150px; margin: 16px;"/></a></div>
+                        <div style="padding: 16px 8px 16px 8px; text-align: center;"><a t-att-href="(object.website_share_url + '?fullscreen=1') if ctx.get('fullscreen') else object.website_share_url" t-attf-style="background-color: {{user.company_id.email_secondary_color or '#875A7B'}}; padding: 8px 16px 8px 16px; text-decoration: none; color: {{user.company_id.email_primary_color or '#FFFFFF'}}; border-radius: 5px;">View <strong t-out="object.name or ''">Trees</strong></a></div>
+                        <t t-if="user.signature"><br/><div>--<br/><t t-out="user.signature or ''">Mitchell Admin</t></div></t>
+                    </p>
+      </div>
+    </field>
+    <field name="use_default_to" eval="False"/>
+  </record>
+</odoo>

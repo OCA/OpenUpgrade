@@ -1,0 +1,14 @@
+---Models in module 'website_forum'---
+---Fields in module 'website_forum'---
+website_forum / forum.forum              / is_seo_optimized (boolean)    : is now stored
+website_forum / forum.forum              / teaser (text)                 : DEL
+website_forum / forum.post               / is_seo_optimized (boolean)    : is now stored
+website_forum / forum.tag                / is_seo_optimized (boolean)    : is now stored
+---XML records in module 'website_forum'---
+DEL ir.model.access: website_forum.access_forum_post_vote_public
+NEW ir.rule: website_forum.website_forum_post_vote_all (noupdate)
+NEW ir.rule: website_forum.website_forum_post_vote_own (noupdate)
+DEL ir.ui.view: website_forum.forum_searchbar_input_snippet_options
+DEL ir.ui.view: website_forum.snippet_options
+DEL ir.ui.view: website_forum.user_profile_sub_nav
+DEL ir.ui.view: website_forum.view_users_form_forum

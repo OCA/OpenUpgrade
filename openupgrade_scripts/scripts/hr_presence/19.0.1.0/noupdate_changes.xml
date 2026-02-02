@@ -1,0 +1,7 @@
+<?xml version='1.0' encoding='utf-8'?>
+<odoo>
+  <record id="mail_template_presence" model="mail.template">
+    <field name="email_to" eval="False"/>
+    <field name="use_default_to" eval="True"/>
+  </record>
+</odoo>

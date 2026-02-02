@@ -1,0 +1,8 @@
+---Models in module 'payment_dpo'---
+---Fields in module 'payment_dpo'---
+payment_dpo  / payment.provider         / code (False)                  : NEW selection_keys: ['adyen', 'aps', 'asiapay', 'authorize', 'buckaroo', 'custom', 'demo', 'dpo', 'none'], mode: modify
+payment_dpo  / payment.provider         / dpo_company_token (char)      : NEW
+payment_dpo  / payment.provider         / dpo_service_ref (char)        : NEW
+---XML records in module 'payment_dpo'---
+NEW ir.ui.view: payment_dpo.payment_provider_form
+NEW ir.ui.view: payment_dpo.redirect_form

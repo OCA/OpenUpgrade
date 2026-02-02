@@ -1,0 +1,18 @@
+---Models in module 'l10n_ar_stock'---
+---Fields in module 'l10n_ar_stock'---
+l10n_ar_stock / stock.picking            / l10n_ar_cai_data (json)       : NEW
+l10n_ar_stock / stock.picking            / l10n_ar_delivery_guide_number (char): NEW
+l10n_ar_stock / stock.picking.type       / l10n_ar_cai_authorization_code (char): NEW
+l10n_ar_stock / stock.picking.type       / l10n_ar_cai_expiration_date (date): NEW
+l10n_ar_stock / stock.picking.type       / l10n_ar_document_type_id (many2one): NEW relation: l10n_latam.document.type
+l10n_ar_stock / stock.picking.type       / l10n_ar_sequence_id (many2one): NEW relation: ir.sequence
+l10n_ar_stock / stock.picking.type       / l10n_ar_sequence_number_end (char): NEW
+l10n_ar_stock / stock.picking.type       / l10n_ar_sequence_number_start (char): NEW
+---XML records in module 'l10n_ar_stock'---
+NEW ir.actions.report: l10n_ar_stock.action_delivery_guide_report_pdf
+NEW ir.ui.view: l10n_ar_stock.custom_header
+NEW ir.ui.view: l10n_ar_stock.report_delivery_document
+NEW ir.ui.view: l10n_ar_stock.report_delivery_guide
+NEW ir.ui.view: l10n_ar_stock.stock_picking_form_inherit_l10n_ar_stock
+NEW ir.ui.view: l10n_ar_stock.view_picking_type_form_inherit_l10n_ar_stock
+NEW mail.template: l10n_ar_stock.email_template_ar_remitos_delivery_guide (noupdate)

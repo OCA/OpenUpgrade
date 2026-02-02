@@ -1,0 +1,9 @@
+<?xml version='1.0' encoding='utf-8'?>
+<odoo>
+  <record id="route_warehouse0_manufacture" model="stock.route">
+    <field name="sequence">5</field>
+    <field name="product_selectable" eval="False"/>
+    <field name="warehouse_ids" eval="[(4, ref('stock.warehouse0'))]"/>
+    <field name="warehouse_selectable" eval="True"/>
+  </record>
+</odoo>

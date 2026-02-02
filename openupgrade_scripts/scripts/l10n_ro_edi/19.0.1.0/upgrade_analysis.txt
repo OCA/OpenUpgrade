@@ -1,0 +1,16 @@
+---Models in module 'l10n_ro_edi'---
+---Fields in module 'l10n_ro_edi'---
+l10n_ro_edi  / account.move             / l10n_ro_edi_attachment_id (many2one): DEL relation: ir.attachment
+l10n_ro_edi  / account.move             / l10n_ro_edi_state (selection) : selection_keys added: [invoice_not_indexed, invoice_refused] (most likely nothing to do)
+l10n_ro_edi  / l10n_ro_edi.document     / attachment (binary)           : NEW attachment: True
+l10n_ro_edi  / l10n_ro_edi.document     / attachment_id (many2one)      : DEL relation: ir.attachment
+l10n_ro_edi  / l10n_ro_edi.document     / key_download (char)           : NEW
+l10n_ro_edi  / l10n_ro_edi.document     / key_loading (char)            : DEL
+l10n_ro_edi  / l10n_ro_edi.document     / state (selection)             : selection_keys added: [invoice_refused], removed: [invoice_sending_failed]
+l10n_ro_edi  / res.company              / l10n_ro_edi_oauth_error (char): DEL
+l10n_ro_edi  / res.partner              / invoice_edi_format (False)    : selection_keys added: [pint_sg] (most likely nothing to do)
+---XML records in module 'l10n_ro_edi'---
+NEW ir.cron: l10n_ro_edi.ir_cron_l10n_ro_edi_synchronize_invoices [renamed from l10n_ro_efactura_synchronize module] (noupdate switched)
+DEL ir.cron: l10n_ro_efactura_synchronize.ir_cron_l10n_ro_edi_synchronize_invoices [renamed to l10n_ro_edi module] (noupdate)
+DEL ir.ui.view: l10n_ro_efactura_synchronize.account_move_form_inherit_l10n_ro_synchronize
+DEL ir.ui.view: l10n_ro_efactura_synchronize.res_config_settings_form_inherit_l10n_ro_synchronize

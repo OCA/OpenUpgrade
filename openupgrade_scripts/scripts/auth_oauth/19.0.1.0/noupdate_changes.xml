@@ -1,0 +1,15 @@
+<?xml version='1.0' encoding='utf-8'?>
+<odoo>
+  <record id="provider_facebook" model="auth.oauth.provider">
+    <field name="body">Sign in with Facebook</field>
+    <field name="css_class">o_auth_oauth_provider_icon o_facebook_provider</field>
+  </record>
+  <record id="provider_google" model="auth.oauth.provider">
+    <field name="body">Sign in with Google</field>
+    <field name="css_class">o_auth_oauth_provider_icon o_google_provider</field>
+  </record>
+  <record id="provider_openerp" model="auth.oauth.provider">
+    <field name="body">Sign in with Odoo.com</field>
+    <field name="css_class">o_auth_oauth_provider_icon o_odoo_provider</field>
+  </record>
+</odoo>

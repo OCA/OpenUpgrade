@@ -1,0 +1,77 @@
+---Models in module 'l10n_it_edi'---
+---Fields in module 'l10n_it_edi'---
+l10n_it_edi  / account.move             / l10n_it_edi_attachment_name (char): NEW
+l10n_it_edi  / res.company              / l10n_it_edi_purchase_journal_id (many2one): NEW relation: account.journal, hasdefault: compute
+l10n_it_edi  / res.company              / l10n_it_edi_register (boolean): NEW hasdefault: default
+l10n_it_edi  / res.partner              / invoice_edi_format (False)    : selection_keys added: [pint_sg] (most likely nothing to do)
+---XML records in module 'l10n_it_edi'---
+DEL account.report: l10n_it_edi_withholding.withh_tax_report_it [renamed to l10n_it module]
+DEL account.report.column: l10n_it_edi_withholding.withh_tax_report_balance [renamed to l10n_it module]
+DEL account.report.expression: l10n_it_edi_withholding.enasarco_purchase_tax_report_it_line_tag [renamed to l10n_it module]
+DEL account.report.expression: l10n_it_edi_withholding.enasarco_sale_tax_report_it_line_tag [renamed to l10n_it module]
+DEL account.report.expression: l10n_it_edi_withholding.withh_purchase_tax_report_it_line_tag [renamed to l10n_it module]
+DEL account.report.expression: l10n_it_edi_withholding.withh_sale_tax_report_it_line_tag [renamed to l10n_it module]
+DEL account.report.line: l10n_it_edi_withholding.enasarco_purchase_tax_report_it_line [renamed to l10n_it module]
+DEL account.report.line: l10n_it_edi_withholding.enasarco_sale_tax_report_it_line [renamed to l10n_it module]
+DEL account.report.line: l10n_it_edi_withholding.withh_purchase_tax_report_it_line [renamed to l10n_it module]
+DEL account.report.line: l10n_it_edi_withholding.withh_sale_tax_report_it_line [renamed to l10n_it module]
+NEW ir.model.access: l10n_it_edi.access_l10n_it_document_type [renamed from l10n_it_edi_ndd module]
+DEL ir.model.access: l10n_it_edi_ndd.access_l10n_it_document_type [renamed to l10n_it_edi module]
+NEW ir.ui.view: l10n_it_edi.account_view_tax_form_l10n_it_edi_extended
+NEW ir.ui.view: l10n_it_edi.address_form_fields
+NEW ir.ui.view: l10n_it_edi.l10n_it_document_type_form
+NEW ir.ui.view: l10n_it_edi.l10n_it_document_type_tree
+NEW ir.ui.view: l10n_it_edi.view_account_journal_form_l10n_it
+DEL ir.ui.view: l10n_it_edi_ndd.account_invoice_form_l10n_it
+DEL ir.ui.view: l10n_it_edi_ndd.l10n_it_document_type_form
+DEL ir.ui.view: l10n_it_edi_ndd.l10n_it_document_type_tree
+DEL ir.ui.view: l10n_it_edi_ndd.view_account_journal_form_l10n_it
+DEL ir.ui.view: l10n_it_edi_ndd_account_dn.account_invoice_it_FatturaPA_export_debit_note
+DEL ir.ui.view: l10n_it_edi_website_sale.address
+DEL ir.ui.view: l10n_it_edi_withholding.account_invoice_it_FatturaPA_export_withholding
+DEL ir.ui.view: l10n_it_edi_withholding.account_view_tax_form_l10n_it_edi_extended
+DEL ir.ui.view: l10n_it_edi_withholding.view_invoice_tree_l10n_it_edi_extended
+NEW l10n_it.document.type: l10n_it_edi.l10n_it_document_type_01 [renamed from l10n_it_edi_ndd module]
+NEW l10n_it.document.type: l10n_it_edi.l10n_it_document_type_02 [renamed from l10n_it_edi_ndd module]
+NEW l10n_it.document.type: l10n_it_edi.l10n_it_document_type_03 [renamed from l10n_it_edi_ndd module]
+NEW l10n_it.document.type: l10n_it_edi.l10n_it_document_type_04 [renamed from l10n_it_edi_ndd module]
+NEW l10n_it.document.type: l10n_it_edi.l10n_it_document_type_05 [renamed from l10n_it_edi_ndd module]
+NEW l10n_it.document.type: l10n_it_edi.l10n_it_document_type_06 [renamed from l10n_it_edi_ndd module]
+NEW l10n_it.document.type: l10n_it_edi.l10n_it_document_type_07 [renamed from l10n_it_edi_ndd module]
+NEW l10n_it.document.type: l10n_it_edi.l10n_it_document_type_08 [renamed from l10n_it_edi_ndd module]
+NEW l10n_it.document.type: l10n_it_edi.l10n_it_document_type_09 [renamed from l10n_it_edi_ndd module]
+NEW l10n_it.document.type: l10n_it_edi.l10n_it_document_type_16 [renamed from l10n_it_edi_ndd module]
+NEW l10n_it.document.type: l10n_it_edi.l10n_it_document_type_17 [renamed from l10n_it_edi_ndd module]
+NEW l10n_it.document.type: l10n_it_edi.l10n_it_document_type_18 [renamed from l10n_it_edi_ndd module]
+NEW l10n_it.document.type: l10n_it_edi.l10n_it_document_type_19 [renamed from l10n_it_edi_ndd module]
+NEW l10n_it.document.type: l10n_it_edi.l10n_it_document_type_20 [renamed from l10n_it_edi_ndd module]
+NEW l10n_it.document.type: l10n_it_edi.l10n_it_document_type_21 [renamed from l10n_it_edi_ndd module]
+NEW l10n_it.document.type: l10n_it_edi.l10n_it_document_type_22 [renamed from l10n_it_edi_ndd module]
+NEW l10n_it.document.type: l10n_it_edi.l10n_it_document_type_23 [renamed from l10n_it_edi_ndd module]
+NEW l10n_it.document.type: l10n_it_edi.l10n_it_document_type_24 [renamed from l10n_it_edi_ndd module]
+NEW l10n_it.document.type: l10n_it_edi.l10n_it_document_type_25 [renamed from l10n_it_edi_ndd module]
+NEW l10n_it.document.type: l10n_it_edi.l10n_it_document_type_26 [renamed from l10n_it_edi_ndd module]
+NEW l10n_it.document.type: l10n_it_edi.l10n_it_document_type_27 [renamed from l10n_it_edi_ndd module]
+NEW l10n_it.document.type: l10n_it_edi.l10n_it_document_type_28 [renamed from l10n_it_edi_ndd module]
+DEL l10n_it.document.type: l10n_it_edi_ndd.l10n_it_document_type_01 [renamed to l10n_it_edi module]
+DEL l10n_it.document.type: l10n_it_edi_ndd.l10n_it_document_type_02 [renamed to l10n_it_edi module]
+DEL l10n_it.document.type: l10n_it_edi_ndd.l10n_it_document_type_03 [renamed to l10n_it_edi module]
+DEL l10n_it.document.type: l10n_it_edi_ndd.l10n_it_document_type_04 [renamed to l10n_it_edi module]
+DEL l10n_it.document.type: l10n_it_edi_ndd.l10n_it_document_type_05 [renamed to l10n_it_edi module]
+DEL l10n_it.document.type: l10n_it_edi_ndd.l10n_it_document_type_06 [renamed to l10n_it_edi module]
+DEL l10n_it.document.type: l10n_it_edi_ndd.l10n_it_document_type_07 [renamed to l10n_it_edi module]
+DEL l10n_it.document.type: l10n_it_edi_ndd.l10n_it_document_type_08 [renamed to l10n_it_edi module]
+DEL l10n_it.document.type: l10n_it_edi_ndd.l10n_it_document_type_09 [renamed to l10n_it_edi module]
+DEL l10n_it.document.type: l10n_it_edi_ndd.l10n_it_document_type_16 [renamed to l10n_it_edi module]
+DEL l10n_it.document.type: l10n_it_edi_ndd.l10n_it_document_type_17 [renamed to l10n_it_edi module]
+DEL l10n_it.document.type: l10n_it_edi_ndd.l10n_it_document_type_18 [renamed to l10n_it_edi module]
+DEL l10n_it.document.type: l10n_it_edi_ndd.l10n_it_document_type_19 [renamed to l10n_it_edi module]
+DEL l10n_it.document.type: l10n_it_edi_ndd.l10n_it_document_type_20 [renamed to l10n_it_edi module]
+DEL l10n_it.document.type: l10n_it_edi_ndd.l10n_it_document_type_21 [renamed to l10n_it_edi module]
+DEL l10n_it.document.type: l10n_it_edi_ndd.l10n_it_document_type_22 [renamed to l10n_it_edi module]
+DEL l10n_it.document.type: l10n_it_edi_ndd.l10n_it_document_type_23 [renamed to l10n_it_edi module]
+DEL l10n_it.document.type: l10n_it_edi_ndd.l10n_it_document_type_24 [renamed to l10n_it_edi module]
+DEL l10n_it.document.type: l10n_it_edi_ndd.l10n_it_document_type_25 [renamed to l10n_it_edi module]
+DEL l10n_it.document.type: l10n_it_edi_ndd.l10n_it_document_type_26 [renamed to l10n_it_edi module]
+DEL l10n_it.document.type: l10n_it_edi_ndd.l10n_it_document_type_27 [renamed to l10n_it_edi module]
+DEL l10n_it.document.type: l10n_it_edi_ndd.l10n_it_document_type_28 [renamed to l10n_it_edi module]

@@ -1,0 +1,11 @@
+---Models in module 'account_peppol_advanced_fields'---
+---Fields in module 'account_peppol_advanced_fields'---
+account_peppol_advanced_fields / account.move             / peppol_accounting_cost (char) : NEW
+account_peppol_advanced_fields / account.move             / peppol_additional_document_reference (char): NEW
+account_peppol_advanced_fields / account.move             / peppol_contract_document_reference (char): NEW
+account_peppol_advanced_fields / account.move             / peppol_delivery_location_id (char): NEW
+account_peppol_advanced_fields / account.move             / peppol_despatch_document_reference (char): NEW
+account_peppol_advanced_fields / account.move             / peppol_originator_document_reference (char): NEW
+account_peppol_advanced_fields / account.move             / peppol_project_reference (char): NEW
+---XML records in module 'account_peppol_advanced_fields'---
+NEW ir.ui.view: account_peppol_advanced_fields.view_move_form_inherit_peppol

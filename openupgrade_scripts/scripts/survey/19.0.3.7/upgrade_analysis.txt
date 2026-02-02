@@ -1,0 +1,8 @@
+---Models in module 'survey'---
+---Fields in module 'survey'---
+survey       / survey.survey            / lang_ids (many2many)          : NEW relation: res.lang, hasdefault: default
+survey       / survey.user_input        / lang_id (many2one)            : NEW relation: res.lang
+survey       / survey.user_input.line   / answer_is_correct (boolean)   : now a function
+survey       / survey.user_input.line   / answer_score (float)          : now a function
+---XML records in module 'survey'---
+NEW res.groups.privilege: survey.res_groups_privilege_surveys (noupdate)

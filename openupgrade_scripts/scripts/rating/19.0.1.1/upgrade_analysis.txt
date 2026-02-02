@@ -1,0 +1,12 @@
+---Models in module 'rating'---
+---Fields in module 'rating'---
+rating       / gamification.badge.user  / rating_ids (one2many)         : NEW relation: rating.rating
+rating       / ir.actions.server        / rating_ids (one2many)         : NEW relation: rating.rating
+rating       / ir.cron                  / rating_ids (one2many)         : NEW relation: rating.rating
+rating       / maintenance.equipment.category / rating_ids (one2many)         : DEL relation: rating.rating
+rating       / maintenance.team         / rating_ids (one2many)         : NEW relation: rating.rating
+rating       / rating.rating            / rated_on (datetime)           : NEW
+---XML records in module 'rating'---
+NEW ir.model.constraint: rating.constraint_rating_rating_consumed_idx
+NEW ir.model.constraint: rating.constraint_rating_rating_parent_consumed_idx
+DEL ir.ui.view: rating.rating_rating_view_form_complete

@@ -1,0 +1,18 @@
+<?xml version='1.0' encoding='utf-8'?>
+<odoo>
+  <record id="crm_pls_fields_param" model="ir.config_parameter">
+    <field name="value">phone_state,email_state,state_id,country_id,source_id,lang_id,tag_ids</field>
+  </record>
+  <record id="stage_lead1" model="crm.stage" forcecreate="False">
+    <field name="color">11</field>
+  </record>
+  <record id="stage_lead2" model="crm.stage" forcecreate="False">
+    <field name="color">5</field>
+  </record>
+  <record id="stage_lead3" model="crm.stage" forcecreate="False">
+    <field name="color">8</field>
+  </record>
+  <record id="stage_lead4" model="crm.stage" forcecreate="False">
+    <field name="color">10</field>
+  </record>
+</odoo>

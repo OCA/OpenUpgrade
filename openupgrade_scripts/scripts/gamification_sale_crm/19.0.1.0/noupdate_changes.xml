@@ -1,0 +1,9 @@
+<?xml version='1.0' encoding='utf-8'?>
+<odoo>
+  <record id="challenge_crm_marketing" model="gamification.challenge">
+    <field name="user_domain" eval="str([('all_group_ids', 'in', [ref('sales_team.group_sale_salesman')])])"/>
+  </record>
+  <record id="challenge_crm_sale" model="gamification.challenge">
+    <field name="user_domain" eval="str([('all_group_ids', 'in', [ref('sales_team.group_sale_salesman')])])"/>
+  </record>
+</odoo>

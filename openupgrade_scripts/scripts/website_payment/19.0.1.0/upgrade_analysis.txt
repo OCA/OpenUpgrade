@@ -1,0 +1,9 @@
+---Models in module 'website_payment'---
+---Fields in module 'website_payment'---
+---XML records in module 'website_payment'---
+NEW ir.asset: website_payment.s_supported_payment_methods_OOO_edit_xml
+NEW ir.asset: website_payment.s_supported_payment_methods_OOO_xml
+DEL ir.asset: website_payment.s_donation_000_js
+NEW ir.ui.view: website_payment.s_supported_payment_methods
+DEL ir.ui.view: website_payment.s_donation_options
+DEL mail.template: website_payment.mail_template_donation (noupdate)

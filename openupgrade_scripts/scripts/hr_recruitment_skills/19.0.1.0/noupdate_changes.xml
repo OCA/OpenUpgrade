@@ -1,0 +1,14 @@
+<?xml version='1.0' encoding='utf-8'?>
+<odoo>
+  <record id="hr_applicant_skill_interviewer_rule" model="ir.rule">
+    <field name="domain_force">[
+            '|',
+                ('applicant_id.job_id.interviewer_ids', 'in', user.id),
+                ('applicant_id.interviewer_ids', 'in', user.id),
+        ]</field>
+    <field name="model_id" ref="model_hr_applicant_skill"/>
+  </record>
+  <record id="hr_applicant_skill_officer_rule" model="ir.rule">
+    <field name="model_id" ref="model_hr_applicant_skill"/>
+  </record>
+</odoo>
