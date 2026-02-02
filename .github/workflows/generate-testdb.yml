@@ -45,7 +45,7 @@ jobs:
           # this is for l10n_eg_edi_eta which crashes without it
           pip install asn1crypto
           # this is for cloud_storage_google
-          pip install google-auth
+          pip install "google-auth<2.48.0"
           # this is for account_peppol
           pip install phonenumbers
           # for pushing release

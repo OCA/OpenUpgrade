@@ -104,7 +104,7 @@ jobs:
           # this is for l10n_eg_edi_eta which crashes without it
           pip install asn1crypto
           # this is for cloud_storage_google
-          pip install google-auth
+          pip install "google-auth<2.48.0"
           odoo -s -c odoo-$FROM_VERSION.cfg --addons-path server-tools-$FROM_VERSION,openupgrade-$FROM_VERSION --stop-after-init
       - name: Install current Odoo
         run: |
@@ -122,6 +122,8 @@ jobs:
           pip install -r openupgrade-$TO_VERSION/requirements.txt
           # this is for l10n_eg_edi_eta which crashes without it
           pip install asn1crypto
+          # this is for cloud_storage_google
+          pip install "google-auth<2.48.0"
           odoo -s -c odoo-$TO_VERSION.cfg --addons-path server-tools-$TO_VERSION,openupgrade-$TO_VERSION --stop-after-init
       - name: Create previous Odoo database
         env:
