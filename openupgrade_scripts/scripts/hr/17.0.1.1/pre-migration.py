@@ -57,13 +57,14 @@ def _hr_plan_sync_to_mail_activity_plan(env):
         INSERT INTO mail_activity_plan_template (
             activity_type_id, responsible_id, plan_id, responsible_type,
             summary, note, create_uid, write_uid, create_date,
-            write_date, hr_plan_activity_type_legacy_id
+            write_date, hr_plan_activity_type_legacy_id, delay_count
         )
         SELECT
             hpat.activity_type_id, hpat.responsible_id, map.id, hpat.responsible,
             hpat.summary, hpat.note, hpat.create_uid, hpat.write_uid, hpat.create_date,
-            hpat.write_date, hpat.id
+            hpat.write_date, hpat.id, mat.delay_count
         FROM hr_plan_activity_type hpat
+        JOIN mail_activity_type mat ON hpat.activity_type_id = mat.id
         JOIN mail_activity_plan map ON hpat.plan_id = map.hr_plan_legacy_id
         """
     openupgrade.logged_query(env.cr, hr_plan_activity_type_query)
