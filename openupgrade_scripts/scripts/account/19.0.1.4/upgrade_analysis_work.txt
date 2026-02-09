@@ -1,0 +1,386 @@
+---Models in module 'account'---
+obsolete model account.fiscal.position.tax
+
+# NOTHING TO DO: handled by migration of account.fiscal.position#tax_ids, account.tax#original_tax_ids
+
+obsolete model account.reconcile.model.partner.mapping
+
+# DONE: merged into account.reconcile.model.line
+
+new model account.document.import.mixin [abstract]
+---Fields in module 'account'---
+account      / account.account          / account_type (selection)      : selection_keys added: [expense_other] (most likely nothing to do)
+
+# NOTHING TO DO
+
+account      / account.account          / active (boolean)              : NEW hasdefault: default
+
+# DONE: set from deprecated
+
+account      / account.account          / activity_ids (one2many)       : NEW relation: mail.activity
+account      / account.account          / allowed_journal_ids (many2many): DEL relation: account.journal
+
+# NOTHING TO DO
+
+account      / account.account          / deprecated (boolean)          : DEL
+
+# NOTHING TO DO
+
+account      / account.account          / description (text)            : NEW translate
+
+# NOTHING TO DO: ORM will handle conversion
+
+account      / account.account.tag      / tax_negate (boolean)          : DEL
+
+# NOTHING TO DO
+
+account      / account.bank.statement   / currency_id (many2one)        : is now stored
+
+# NOTHING TO DO: ORM will compute value
+
+account      / account.bank.statement   / date (date)                   : not a function anymore
+
+# NOTHING TO DO
+
+account      / account.bank.statement.line / taxable_supply_date (date)    : previously in module l10n_cz
+
+# DONE: see account.move#taxable_supply_date
+
+account      / account.fiscal.position  / is_domestic (boolean)         : NEW isfunction: function, stored
+
+# NOTHING TO DO
+
+account      / account.fiscal.position  / tax_ids (one2many)            : relation is now 'account.tax' ('account.fiscal.position.tax') [nothing to do]
+account      / account.fiscal.position  / tax_ids (one2many)            : table is now 'account_fiscal_position_account_tax_rel' ('False')
+account      / account.fiscal.position  / tax_ids (one2many)            : type is now 'many2many' ('one2many')
+
+# DONE: filled from account_fiscal_position_tax in post-migration
+
+account      / account.fiscal.position.tax / company_id (many2one)         : DEL relation: res.company
+account      / account.fiscal.position.tax / position_id (many2one)        : DEL relation: account.fiscal.position, required
+account      / account.fiscal.position.tax / tax_dest_id (many2one)        : DEL relation: account.tax
+account      / account.fiscal.position.tax / tax_src_id (many2one)         : DEL relation: account.tax, required
+
+# NOTHING TO DO: handled by migration of account.fiscal.position#tax_ids, account.tax#original_tax_ids
+
+account      / account.full.reconcile   / exchange_move_id (many2one)   : DEL relation: account.move
+
+# DONE: create noop partial reconciliation and attach exchange move to it
+
+account      / account.journal          / account_control_ids (many2many): DEL relation: account.account
+
+# NOTHING TO DO: lost functionality
+
+account      / account.journal          / autocheck_on_post (boolean)   : DEL
+
+# NOTHING TO DO: this now happens by default
+
+account      / account.journal          / display_invoice_template_pdf_report_id (boolean): NEW hasdefault: default, stored: False
+
+# NOTHING TO DO: computed from available_invoice_template_pdf_report_ids
+
+account      / account.journal          / incoming_einvoice_notification_email (char): NEW
+
+# NOTHING TO DO
+
+account      / account.journal          / invoice_reference_model (selection): selection_keys added: [number] (most likely nothing to do)
+
+# NOTHING TO DO
+
+account      / account.journal          / invoice_reference_type (selection): selection_keys removed: [none]
+
+# DONE: mapped to 'invoice'
+
+account      / account.journal          / invoice_template_pdf_report_id (many2one): NEW relation: ir.actions.report
+account      / account.journal          / is_self_billing (boolean)     : previously in module account_peppol_selfbilling
+account      / account.journal          / non_deductible_account_id (many2one): NEW relation: account.account
+
+# NOTHING TO DO
+
+account      / account.move             / adjusting_entries_move_ids (many2many): NEW relation: account.move
+account      / account.move             / adjusting_entry_origin_move_ids (many2many): NEW relation: account.move
+
+# NOTHING TO DO
+
+account      / account.move             / exchange_diff_partial_ids (one2many): NEW relation: account.partial.reconcile
+
+# NOTHING TO DO
+
+account      / account.move             / is_storno (boolean)           : not stored anymore
+account      / account.move             / is_storno (boolean)           : now a function
+account      / account.move             / journal_line_ids (one2many)   : NEW relation: account.move.line
+
+# NOTHING TO DO
+
+account      / account.move             / status_in_payment (selection) : selection_keys added: [posted, sent] (most likely nothing to do)
+
+# NOTHING TO DO, field isn't stored
+
+account      / account.move             / taxable_supply_date (date)    : previously in module l10n_cz
+
+# DONE: added in pre-migration
+
+account      / account.move.line        / collapse_composition (boolean): NEW
+account      / account.move.line        / collapse_prices (boolean)     : NEW
+
+# NOTHING TO DO
+
+account      / account.move.line        / deductible_amount (float)     : NEW hasdefault: default
+
+# DONE: added in pre-migration
+
+account      / account.move.line        / display_type (selection)      : selection_keys added: [line_subsection, non_deductible_product, non_deductible_product_total, non_deductible_tax] (most likely nothing to do)
+account      / account.move.line        / extra_tax_data (json)         : NEW
+
+# NOTHING TO DO
+
+account      / account.move.line        / is_storno (boolean)           : is now stored
+account      / account.move.line        / is_storno (boolean)           : not related anymore
+
+# DONE: added in pre-migration, call compute function only if res.company#account_storno is activated in post-migration
+
+account      / account.move.line        / no_followup (boolean)         : NEW isfunction: function, stored
+
+# DONE: added in pre-migration, adjusted in post-migration for general journals
+
+account      / account.move.line        / search_account_id (many2one)  : NEW relation: account.account, stored: False
+
+# NOTHING TO DO: virtual search field
+
+account      / account.move.line        / tax_tag_invert (boolean)      : DEL
+account      / account.partial.reconcile / draft_caba_move_vals (json)   : NEW
+account      / account.reconcile.model  / allow_payment_tolerance (boolean): DEL
+
+# NOTHING TO DO
+
+account      / account.reconcile.model  / auto_reconcile (boolean)      : DEL
+
+# DONE: used to set trigger = 'auto_reconcile'
+
+account      / account.reconcile.model  / can_be_proposed (boolean)     : NEW isfunction: function, stored
+account      / account.reconcile.model  / counterpart_type (selection)  : DEL selection_keys: ['general', 'purchase', 'sale']
+account      / account.reconcile.model  / decimal_separator (char)      : DEL
+
+# NOTHING TO DO
+
+account      / account.reconcile.model  / mapped_partner_id (many2one)  : NEW relation: res.partner, isfunction: function, stored
+
+# DONE: see account.reconcile.model.line
+
+account      / account.reconcile.model  / match_nature (selection)      : DEL required, selection_keys: ['amount_paid', 'amount_received', 'both']
+account      / account.reconcile.model  / match_note (selection)        : DEL selection_keys: ['contains', 'match_regex', 'not_contains']
+account      / account.reconcile.model  / match_note_param (char)       : DEL
+account      / account.reconcile.model  / match_partner (boolean)       : DEL
+account      / account.reconcile.model  / match_partner_category_ids (many2many): DEL relation: res.partner.category
+account      / account.reconcile.model  / match_same_currency (boolean) : DEL
+account      / account.reconcile.model  / match_text_location_label (boolean): DEL
+account      / account.reconcile.model  / match_text_location_note (boolean): DEL
+account      / account.reconcile.model  / match_text_location_reference (boolean): DEL
+account      / account.reconcile.model  / match_transaction_type (selection): DEL selection_keys: ['contains', 'match_regex', 'not_contains']
+account      / account.reconcile.model  / match_transaction_type_param (char): DEL
+account      / account.reconcile.model  / matching_order (selection)    : DEL required, selection_keys: ['new_first', 'old_first']
+
+# NOTHING TO DO: account_reconcile_model_oca will have to bring them back, so we just leave the columns untouched
+
+account      / account.reconcile.model  / next_activity_type_id (many2one): NEW relation: mail.activity.type
+
+
+account      / account.reconcile.model  / partner_mapping_line_ids (one2many): DEL relation: account.reconcile.model.partner.mapping
+
+# DONE: create new model for every mapping with regexes merged into label regex
+
+account      / account.reconcile.model  / past_months_limit (integer)   : DEL
+account      / account.reconcile.model  / payment_tolerance_param (float): DEL
+account      / account.reconcile.model  / payment_tolerance_type (selection): DEL required, selection_keys: ['fixed_amount', 'percentage']
+account      / account.reconcile.model  / rule_type (selection)         : DEL required, selection_keys: ['invoice_matching', 'writeoff_button', 'writeoff_suggestion']
+account      / account.reconcile.model  / to_check (boolean)            : DEL
+
+# NOTHING TO DO
+
+account      / account.reconcile.model  / trigger (selection)           : NEW required, selection_keys: ['auto_reconcile', 'manual'], hasdefault: default
+
+# DONE: set to 'auto_reconcile' if auto_reconcile was set in v18
+
+account      / account.reconcile.model.line / force_tax_included (boolean)  : DEL
+account      / account.reconcile.model.line / journal_id (many2one)         : DEL relation: account.journal
+account      / account.reconcile.model.line / partner_id (many2one)         : NEW relation: res.partner
+
+# NOTHING TO DO
+
+account      / account.reconcile.model.partner.mapping / model_id (many2one)           : DEL relation: account.reconcile.model, required
+account      / account.reconcile.model.partner.mapping / narration_regex (char)        : DEL
+account      / account.reconcile.model.partner.mapping / partner_id (many2one)         : DEL relation: res.partner, required
+account      / account.reconcile.model.partner.mapping / payment_ref_regex (char)      : DEL
+
+# DONE: see above for account.reconcile.model#partner_mapping_line_ids
+
+account      / account.report           / allow_foreign_vat (boolean)   : NEW hasdefault: compute
+
+# DONE: added in pre-migration
+
+account      / account.report           / default_opening_date_filter (selection): selection_keys added: [previous_return_period, this_return_period], removed: [previous_tax_period, this_tax_period]
+
+# DONE: mapped in pre-migration
+
+account      / account.report           / filter_fiscal_position (boolean): DEL
+
+# NOTHING TO DO
+
+account      / account.report           / filter_multi_company (selection): selection_keys removed: [disabled]
+
+# DONE: mapped to None in pre-migration
+
+account      / account.report.expression / date_scope (selection)        : selection_keys added: [previous_return_period], removed: [previous_tax_period]
+
+# DONE: mapped in pre-migration
+
+account      / account.report.external.value / foreign_vat_fiscal_position_id (many2one): DEL relation: account.fiscal.position
+
+# NOTHING TO DO
+
+account      / account.tax              / fiscal_position_ids (many2many): NEW relation: account.fiscal.position
+
+# DONE: see account.fiscal.position#tax_ids
+
+account      / account.tax              / invoice_legal_notes (html)    : now translatable
+
+# NOTHING TO DO
+
+account      / account.tax              / is_domestic (boolean)         : NEW isfunction: function, stored
+
+# NOTHING TO DO: computed by ORM
+
+account      / account.tax              / name_searchable (char)        : DEL stored: False
+
+# NOTHING TO DO
+
+account      / account.tax              / original_tax_ids (many2many)  : NEW relation: account.tax
+account      / account.tax              / replacing_tax_ids (many2many) : NEW relation: account.tax
+
+# DONE: set in post-migration from account.fiscal.position.tax
+
+account      / res.company              / account_purchase_receipt_fiscal_position_id (many2one): NEW relation: account.fiscal.position
+
+# NOTHING TO DO
+
+account      / res.company              / check_account_audit_trail (boolean): DEL
+
+# DONE: renamed to restrictive_audit_trail
+
+account      / res.company              / company_registry_placeholder (char): module is now 'base' ('account')
+
+# NOTHING TO DO
+
+account      / res.company              / domestic_fiscal_position_id (many2one): NEW relation: account.fiscal.position, isfunction: function, stored
+
+# NOTHING TO DO: will be computed by ORM, causes recomputation of account.tax#is_domestic
+
+account      / res.company              / expense_account_id (many2one) : NEW relation: account.account
+account      / res.company              / income_account_id (many2one)  : NEW relation: account.account
+
+# DONE: set from chart template in end-migration
+
+account      / res.company              / link_qr_code (boolean)        : NEW
+
+# NOTHING TO DO
+
+account      / res.company              / price_difference_account_id (many2one): NEW relation: account.account
+
+# DONE: set from chart template in end-migration
+
+account      / res.company              / restrictive_audit_trail (boolean): NEW
+
+# DONE: renamed from check_account_audit_trail
+
+account      / res.country.group        / exclude_state_ids (many2many) : NEW relation: res.country.state
+account      / res.partner              / debit_limit (float)           : DEL
+account      / res.partner              / invoice_warn (selection)      : DEL selection_keys: ['block', 'no-message', 'warning']
+account      / res.partner              / invoice_warn_msg (text)       : DEL
+account      / res.partner              / is_coa_installed (boolean)    : DEL stored: False
+
+# NOTHING TO DO
+
+---XML records in module 'account'---
+NEW ir.actions.act_window: account.action_account_moves_email_preview
+NEW ir.actions.act_window: account.action_move_out_refund_type_non_legacy
+DEL ir.actions.act_window: account.action_move_in_receipt_type
+DEL ir.actions.act_window: account.action_move_out_receipt_type
+DEL ir.actions.act_window: account.action_validate_account_move
+NEW ir.actions.server: account.accountant_confirm_entries_action
+NEW ir.actions.server: account.action_validate_account_moves
+DEL ir.actions.server: account.action_new_bank_setting
+DEL ir.model.access: account.access_account_fiscal_position_tax
+DEL ir.model.access: account.access_account_fiscal_position_tax_product_manager
+DEL ir.model.access: account.access_account_reconcile_model_partner_mapping
+DEL ir.model.access: account.access_account_reconcile_model_partner_mapping_billing
+DEL ir.model.access: account.access_account_reconcile_model_partner_mapping_readonly
+DEL ir.model.access: account.access_product_product_account_manager
+DEL ir.model.access: account.access_product_template_account_manager
+NEW ir.model.constraint: account.constraint_account_bank_statement_first_line_index_idx
+NEW ir.model.constraint: account.constraint_account_bank_statement_journal_id_date_desc_id_desc_idx
+NEW ir.model.constraint: account.constraint_account_bank_statement_line_main_idx
+NEW ir.model.constraint: account.constraint_account_bank_statement_line_orphan_idx
+NEW ir.model.constraint: account.constraint_account_bank_statement_line_unreconciled_idx
+NEW ir.model.constraint: account.constraint_account_lock_exception_company_id_end_datetime_idx
+NEW ir.model.constraint: account.constraint_account_move_checked_idx
+NEW ir.model.constraint: account.constraint_account_move_duplicate_bills_idx
+NEW ir.model.constraint: account.constraint_account_move_journal_id_company_id_idx
+NEW ir.model.constraint: account.constraint_account_move_line_account_id_date_idx
+ir.model.constraint: account.constraint_account_move_line_check_accountable_required_fields (changed definition: is now 'CHECK(display_type IN ('line_section', 'line_subsection', 'line_note') OR account_id IS NOT NULL)' ('check(display_type in('line_section','line_note') or account_id is not null)'))
+ir.model.constraint: account.constraint_account_move_line_check_amount_currency_balance_sign (changed definition: is now 'CHECK(    display_type IN ('line_section', 'line_subsection', 'line_note')    OR (    (balance <= 0 AND amount_currency <= 0)    OR    (balance >= 0 AND amount_currency >= 0)    )   )' ('check(    display_type in('line_section','line_note')    or(    (balance <= 0 and amount_currency <= 0)    or    (balance >= 0 and amount_currency >= 0)    )   )'))
+ir.model.constraint: account.constraint_account_move_line_check_credit_debit (changed definition: is now 'CHECK(display_type IN ('line_section', 'line_subsection', 'line_note') OR credit * debit=0)' ('check(display_type in('line_section','line_note') or credit * debit=0)'))
+ir.model.constraint: account.constraint_account_move_line_check_non_accountable_fields_null (changed definition: is now 'CHECK(display_type NOT IN ('line_section', 'line_subsection', 'line_note') OR (amount_currency = 0 AND debit = 0 AND credit = 0 AND account_id IS NULL))' ('check(display_type not in('line_section','line_note') or(amount_currency = 0 and debit = 0 and credit = 0 and account_id is null))'))
+NEW ir.model.constraint: account.constraint_account_move_line_date_name_id_idx
+NEW ir.model.constraint: account.constraint_account_move_line_journal_id_neg_amnt_residual_idx
+NEW ir.model.constraint: account.constraint_account_move_line_partner_id_ref_idx
+NEW ir.model.constraint: account.constraint_account_move_line_unreconciled_index
+NEW ir.model.constraint: account.constraint_account_move_made_gaps
+NEW ir.model.constraint: account.constraint_account_move_payment_idx
+NEW ir.model.constraint: account.constraint_account_payment_journal_id_company_id_idx
+NEW ir.model.constraint: account.constraint_account_payment_unmatched_idx
+DEL ir.model.constraint: account.constraint_account_fiscal_position_tax_tax_src_dest_uniq
+DEL ir.model.constraint: account.constraint_account_reconcile_model_name_unique
+DEL ir.module.category: account.module_category_accounting_bank
+NEW ir.ui.menu: account.account_audit_control_menu
+NEW ir.ui.menu: account.account_audit_menu
+NEW ir.ui.menu: account.account_closing_menu
+NEW ir.ui.menu: account.account_logs_menu
+NEW ir.ui.menu: account.account_reports_taxes_and_fiscal_menu
+NEW ir.ui.menu: account.account_transactions_menu
+DEL ir.ui.menu: account.account_banks_menu
+DEL ir.ui.menu: account.account_management_menu
+DEL ir.ui.menu: account.action_account_reconcile_model_menu
+DEL ir.ui.menu: account.menu_action_account_bank_journal_form
+DEL ir.ui.menu: account.menu_action_move_in_receipt_type
+DEL ir.ui.menu: account.menu_action_move_out_receipt_type
+NEW ir.ui.view: account.account_tax_fiscal_position_view_tree
+NEW ir.ui.view: account.country_group_form_inherit_account
+NEW ir.ui.view: account.portal_my_details
+NEW ir.ui.view: account.portal_my_journal_mail_notifications
+NEW ir.ui.view: account.product_template_list_view_purchasable_inherit
+NEW ir.ui.view: account.product_template_list_view_sellable_inherit
+NEW ir.ui.view: account.setup_credit_card_account_wizard
+DEL ir.ui.view: account.portal_my_details_fields
+DEL ir.ui.view: account.product_template_view_tree
+DEL ir.ui.view: account.view_account_reconcile_model_line_form
+DEL ir.ui.view: account.view_in_invoice_receipt_tree
+
+# NOTHING TO DO
+
+NEW mail.template: account.email_template_edi_self_billing_credit_note [renamed from account_peppol_selfbilling module] (noupdate)
+NEW mail.template: account.email_template_edi_self_billing_invoice [renamed from account_peppol_selfbilling module] (noupdate)
+
+# DONE: renamed in pre-migration
+
+NEW mail.template: account.mail_template_einvoice_notification (noupdate)
+NEW mail.template: account.mail_template_invoice_subscriber (noupdate)
+NEW res.country.group: account.europe_vat (noupdate)
+NEW res.country.group: account.intrastat (noupdate)
+NEW res.groups: account.group_partial_purchase_deductibility
+DEL res.groups: account.group_purchase_receipts
+DEL res.groups: account.group_sale_receipts
+DEL res.groups: account.group_warning_account
+NEW res.groups.privilege: account.res_group_privilege_accounting_bank
+NEW res.groups.privilege: account.res_groups_privilege_accounting
+
+# NOTHING TO DO
