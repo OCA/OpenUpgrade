@@ -1,0 +1,653 @@
+---Models in module 'base'---
+obsolete model res.partner.title
+
+# NOTHING TO DO: possibly some oca module will pick this up again
+
+new model ir.actions.server.history
+
+# NOTHING TO DO: new functionality
+
+new model properties.base.definition
+new model properties.base.definition.mixin [abstract]
+
+# NOTHING TO DO: handled by orm
+
+new model res.groups.privilege
+new model server.action.history.wizard [transient]
+
+# NOTHING TO DO: new functionality
+
+---Fields in module 'base'---
+account      / res.company              / company_registry_placeholder (char): not a function anymore
+account      / res.company              / company_registry_placeholder (char): now related
+base         / ir.actions.act_url       / _order                        : _order is now 'name, id' ('name')
+base         / ir.actions.act_window    / _order                        : _order is now 'name, id' ('name')
+base         / ir.actions.act_window    / cache (boolean)               : NEW hasdefault: default
+
+# NOTHING TO DO
+
+base         / ir.actions.act_window    / group_ids (many2many)         : NEW relation: res.groups
+base         / ir.actions.act_window    / groups_id (many2many)         : DEL relation: res.groups
+
+# DONE: renamed groups_id to group_ids in pre-migration
+
+base         / ir.actions.act_window    / target (selection)            : selection_keys removed: [inline]
+
+# DONE: set to 'current' in post-migration
+
+base         / ir.actions.act_window_close / _order                        : _order is now 'name, id' ('name')
+base         / ir.actions.actions       / _order                        : _order is now 'name, id' ('name')
+base         / ir.actions.client        / _order                        : _order is now 'name, id' ('name')
+
+# NOTHING TO DO
+
+base         / ir.actions.report        / group_ids (many2many)         : NEW relation: res.groups
+base         / ir.actions.report        / groups_id (many2many)         : DEL relation: res.groups
+
+# DONE: renamed groups_id to group_ids in pre-migration
+
+base         / ir.actions.server        / _order                        : _order is now 'sequence,name,id' ('sequence,name')
+base         / ir.actions.server        / automated_name (char)         : NEW isfunction: function, stored
+
+# NOTHING TO DO
+
+base         / ir.actions.server        / child_ids (many2many)         : table is now 'False' ('rel_server_actions')
+base         / ir.actions.server        / child_ids (many2many)         : type is now 'one2many' ('many2many')
+
+# DONE: set from m2m table in post-migration
+
+base         / ir.actions.server        / crud_model_id (many2one)      : now a function
+
+# NOTHING TO DO: same computation function
+
+base         / ir.actions.server        / evaluation_type (selection)   : selection_keys added: [sequence] (most likely nothing to do)
+
+# NOTHING TO DO
+
+base         / ir.actions.server        / group_ids (many2many)         : NEW relation: res.groups
+base         / ir.actions.server        / groups_id (many2many)         : DEL relation: res.groups
+
+# DONE: renamed groups_id to group_ids in pre-migration
+
+base         / ir.actions.server        / html_value (html)             : NEW
+
+# DONE: filled from value in post-migration
+
+base         / ir.actions.server        / ir_cron_ids (one2many)        : NEW relation: ir.cron
+
+# NOTHING TO DO: inverse of ir.cron#ir_actions_server_id
+
+base         / ir.actions.server        / model_name (char)             : not stored anymore
+
+# NOTHING TO DO
+
+base         / ir.actions.server        / parent_id (many2one)          : NEW relation: ir.actions.server
+
+# DONE: see above for child_ids
+
+base         / ir.actions.server        / sequence_id (many2one)        : NEW relation: ir.sequence
+
+# NOTHING TO DO: new field for evaluation_type == 'sequence'
+
+base         / ir.actions.server        / state (selection)             : selection_keys added: [object_copy] (most likely nothing to do)
+base         / ir.actions.server        / value_field_to_show (selection): selection_keys added: [html_value, sequence_id] (most likely nothing to do)
+
+# NOTHING TO DO
+
+base         / ir.actions.server.history / action_id (many2one)          : NEW relation: ir.actions.server, required
+base         / ir.actions.server.history / code (text)                   : NEW
+
+# NOTHING TO DO: v19 keeps a history of code changes
+
+base         / ir.cron                  / _order                        : _order is now 'cron_name, id' ('cron_name')
+
+# NOTHING TO DO
+
+base         / ir.cron                  / child_ids (many2many)         : type is now 'one2many' ('many2many')
+
+# NOTHING TO DO: inherited from ir.actions.server, handled there
+
+base         / ir.cron.trigger          / call_at (datetime)            : now required
+base         / ir.cron.trigger          / cron_id (many2one)            : now required
+
+# NOTHING TO DO: old records with missing fields will be cleaned up eventually
+
+base         / ir.exports               / _order                        : _order is now 'name, id' ('name')
+
+# NOTHING TO DO
+
+base         / ir.filters               / user_id (many2one)            : DEL relation: res.users
+base         / ir.filters               / user_ids (many2many)          : NEW relation: res.users
+
+# DONE: openupgrade.m2o_to_x2m in post-migration
+
+base         / ir.mail_server           / smtp_encryption (selection)   : selection_keys added: [ssl_strict, starttls_strict] (most likely nothing to do)
+
+# NOTHING TO DO
+
+base         / ir.model                 / abstract (boolean)            : NEW
+base         / ir.model                 / fold_name (char)              : NEW
+
+# NOTHING TO DO: filled by orm
+
+base         / ir.model.fields          / _order                        : _order is now 'name, id' ('name')
+base         / ir.model.fields          / complete_name (char)          : DEL
+
+# NOTHING TO DO
+
+base         / ir.model.fields          / translate (boolean)           : selection_keys is now '['html_translate', 'standard', 'xml_translate']' ('False')
+base         / ir.model.fields          / translate (boolean)           : type is now 'selection' ('boolean')
+
+# DONE: set column to NULL where it was FALSE in openupgrade_framework, because migration scripts are too late for it
+
+base         / ir.module.category       / _order                        : _order is now 'sequence, name, id' ('name')
+
+# NOTHING TO DO: we want to have the ordering by sequence as provided by Odoo
+
+base         / ir.module.category       / privilege_ids (one2many)      : NEW relation: res.groups.privilege
+
+# NOTHING TO DO: new concept
+
+base         / ir.profile               / cpu_duration (float)          : NEW
+base         / ir.profile               / others (text)                 : NEW
+
+# NOTHING TO DO: new funcitonality, no way of generating this data
+
+base         / ir.sequence              / _order                        : _order is now 'name, id' ('name')
+
+# NOTHING TO DO
+
+base         / ir.ui.menu               / group_ids (many2many)         : NEW relation: res.groups
+base         / ir.ui.menu               / groups_id (many2many)         : DEL relation: res.groups
+base         / ir.ui.view               / group_ids (many2many)         : NEW relation: res.groups
+base         / ir.ui.view               / groups_id (many2many)         : DEL relation: res.groups
+
+# DONE: renamed groups_id to group_ids in pre-migration
+
+base         / ir.ui.view.custom        / _order                        : _order is now 'create_date desc, id desc' ('create_date desc')
+
+# NOTHING TO DO
+
+base         / properties.base.definition / properties_definition (properties_definition): NEW
+base         / properties.base.definition / properties_field_id (many2one): NEW relation: ir.model.fields, required
+
+# NOTHING TO DO: filled by orm
+
+base         / report.layout            / _order                        : _order is now 'sequence, id' ('sequence')
+base         / res.bank                 / _order                        : _order is now 'name, id' ('name')
+base         / res.company              / company_registry_placeholder (char): previously in module account
+
+# NOTHING TO DO
+
+base         / res.company              / mobile (char)                 : DEL
+
+# NOTHING TO DO: possibly some oca module will pick this up again
+
+base         / res.country              / _order                        : _order is now 'name, id' ('name')
+
+# NOTHING TO DO: possibly some oca module will pick this up again
+
+base         / res.country.group        / code (char)                   : NEW
+
+# NOTHING TO DO: filled in noupdate_changes.xml
+
+base         / res.country.state        / _order                        : _order is now 'code, id' ('code')
+base         / res.currency.rate        / _order                        : _order is now 'name desc, id' ('name desc')
+base         / res.groups               / _order                        : _order is now 'privilege_id, sequence, name, id' ('name')
+
+# NOTHING TO DO
+
+base         / res.groups               / category_id (many2one)        : DEL relation: ir.module.category
+
+# NOTHING TO DO: code provided groups will set their own privilege if applicable, manually created ones will have to be assigned to whatever privilege makes sense
+
+base         / res.groups               / color (integer)               : DEL
+
+# NOTHING TO DO
+
+base         / res.groups               / implied_by_ids (many2many)    : NEW relation: res.groups
+
+# NOTHING TO DO: inverse of existing relation
+
+base         / res.groups               / privilege_id (many2one)       : NEW relation: res.groups.privilege
+
+# NOTHING TO DO: new concept
+
+base         / res.groups               / sequence (integer)            : NEW
+
+# NOTHING TO DO
+
+base         / res.groups               / user_ids (many2many)          : NEW relation: res.users
+base         / res.groups               / users (many2many)             : DEL relation: res.users
+
+# DONE: renamed field in pre-migration
+
+base         / res.groups.privilege     / category_id (many2one)        : NEW relation: ir.module.category
+base         / res.groups.privilege     / description (text)            : NEW
+base         / res.groups.privilege     / group_ids (one2many)          : NEW relation: res.groups
+base         / res.groups.privilege     / name (char)                   : NEW required, translate
+base         / res.groups.privilege     / placeholder (char)            : NEW hasdefault: default
+base         / res.groups.privilege     / sequence (integer)            : NEW hasdefault: default
+
+# NOTHING TO DO: new concept
+
+base         / res.lang                 / date_format (char)            : selection_keys is now 'function' ('False')
+base         / res.lang                 / date_format (char)            : type is now 'selection' ('char')
+base         / res.lang                 / grouping (char)               : selection_keys is now '['[3,0]', '[3,2,0]']' ('False')
+base         / res.lang                 / grouping (char)               : type is now 'selection' ('char')
+base         / res.lang                 / short_time_format (char)      : DEL required
+base         / res.lang                 / time_format (char)            : selection_keys is now '['%H:%M:%S', '%I:%M:%S %p']' ('False')
+base         / res.lang                 / time_format (char)            : type is now 'selection' ('char')
+
+# DONE: copy original values to legacy column, map values not in selection to default value
+
+base         / res.partner              / mobile (char)                 : DEL
+
+# NOTHING TO DO: possibly some oca module will pick this up again
+
+base         / res.partner              / properties (properties)       : NEW hasdefault: compute
+
+# NOTHING TO DO: new functionality
+
+base         / res.partner              / title (many2one)              : DEL relation: res.partner.title
+
+# NOTHING TO DO: possibly some oca module will pick this up again
+
+base         / res.partner.bank         / clearing_number (char)        : NEW
+base         / res.partner.bank         / note (text)                   : NEW
+
+# NOTHING TO DO: new functionality
+
+base         / res.partner.category     / _order                        : _order is now 'name, id' ('name')
+base         / res.partner.industry     / _order                        : _order is now 'name, id' ('name')
+
+# NOTHING TO DO
+
+base         / res.partner.title        / name (char)                   : DEL required
+base         / res.partner.title        / shortcut (char)               : DEL
+
+# NOTHING TO DO: obsolete model
+
+base         / res.users                / group_ids (many2many)         : NEW relation: res.groups, hasdefault: default
+base         / res.users                / groups_id (many2many)         : DEL relation: res.groups
+
+# DONE: renamed groups_id to group_ids in pre-migration
+
+base         / res.users                / role (selection)              : NEW selection_keys: ['group_system', 'group_user'], hasdefault: compute, stored: False
+base         / res.users                / view_group_hierarchy (json)   : NEW hasdefault: default, stored: False
+
+# NOTHING TO DO: nonstored
+
+---XML records in module 'base'---
+NEW ir.actions.act_window: base.action_res_groups_privilege
+DEL ir.actions.act_window: base.action_partner_title_contact
+NEW ir.model.access: base.access_ir_actions_server_history_group_system
+NEW ir.model.access: base.access_properties_base_definition_group_system
+NEW ir.model.access: base.access_res_groups_privilege_group_erp_manager
+NEW ir.model.access: base.access_res_groups_privilege_group_user
+NEW ir.model.access: base.access_server_action_history_wizard
+DEL ir.model.access: base.access_res_partner_title_group_partner_manager
+DEL ir.model.access: base.access_res_partner_title_group_user
+NEW ir.model.constraint: base.constraint_ir_act_window_view_unique_mode_per_action
+NEW ir.model.constraint: base.constraint_ir_attachment_res_idx
+NEW ir.model.constraint: base.constraint_ir_filters_get_filters_index
+NEW ir.model.constraint: base.constraint_ir_model_data_model_res_id_index
+NEW ir.model.constraint: base.constraint_ir_model_data_module_name_uniq_index
+NEW ir.model.constraint: base.constraint_ir_ui_view_custom_user_id_ref_id
+NEW ir.model.constraint: base.constraint_ir_ui_view_model_type_inherit_id
+NEW ir.model.constraint: base.constraint_properties_base_definition_unique_properties_field_id
+NEW ir.model.constraint: base.constraint_res_country_group_check_code_uniq
+NEW ir.model.constraint: base.constraint_res_device_composite_idx
+NEW ir.model.constraint: base.constraint_res_device_log_composite_idx
+NEW ir.model.constraint: base.constraint_res_device_log_revoked_idx
+NEW ir.model.constraint: base.constraint_res_device_revoked_idx
+ir.model.constraint: base.constraint_res_groups_name_uniq (changed definition: is now 'UNIQUE (privilege_id, name)' ('unique(category_id,name)'))
+DEL ir.model.constraint: base.constraint_ir_filters_name_model_uid_unique
+NEW ir.module.category: base.module_category_esg
+NEW ir.module.category: base.module_category_human_resources_referrals
+NEW ir.module.category: base.module_category_internet_of_things_(iot)
+NEW ir.module.category: base.module_category_master_data
+NEW ir.module.category: base.module_category_shipping_connectors (noupdate)
+NEW ir.module.category: base.module_category_supply_chain (noupdate)
+
+# NOTHING TO DO
+
+DEL ir.module.category: base.module_category_inventory (noupdate)
+DEL ir.module.category: base.module_category_manufacturing (noupdate)
+
+# DONE: merged into base.module_category_supply_chain
+
+DEL ir.module.category: base.module_category_usability
+DEL ir.module.category: base.module_category_user_type
+NEW ir.rule: base.properties_base_definition_rule_admin (noupdate)
+NEW ir.rule: base.res_users_rule_portal (noupdate)
+
+# NOTHING TO DO
+
+DEL ir.rule: base.ir_filters_delete_own_rule (noupdate)
+
+# DONE: deleted in post-migration
+
+NEW ir.ui.menu: base.menu_action_res_groups_privilege
+NEW ir.ui.view: base.ir_filters_view_edit_form
+NEW ir.ui.view: base.res_users_apikeys_view_kanban
+NEW ir.ui.view: base.server_action_history_wizard_view
+NEW ir.ui.view: base.view_default_groups_form
+NEW ir.ui.view: base.view_groups_list
+NEW ir.ui.view: base.view_res_groups_privilege_form
+NEW ir.ui.view: base.view_res_groups_privilege_list
+NEW ir.ui.view: base.view_server_action_kanban
+DEL ir.ui.view: base.res_partner_view_form_private
+DEL ir.ui.view: base.user_groups_view
+DEL ir.ui.view: base.view_partner_title_form
+DEL ir.ui.view: base.view_partner_title_tree
+NEW res.country: base.xi (noupdate)
+NEW res.country.group: base.dom-tom [renamed from l10n_fr module] (noupdate) (noupdate switched)
+NEW res.country.group: base.europe_prefix (noupdate)
+
+# NOTHING TO DO
+
+NEW res.country.state: base.state_at_1 [renamed from l10n_at module]
+NEW res.country.state: base.state_at_2 [renamed from l10n_at module]
+NEW res.country.state: base.state_at_3 [renamed from l10n_at module]
+NEW res.country.state: base.state_at_4 [renamed from l10n_at module]
+NEW res.country.state: base.state_at_5 [renamed from l10n_at module]
+NEW res.country.state: base.state_at_6 [renamed from l10n_at module]
+NEW res.country.state: base.state_at_7 [renamed from l10n_at module]
+NEW res.country.state: base.state_at_8 [renamed from l10n_at module]
+NEW res.country.state: base.state_at_9 [renamed from l10n_at module]
+NEW res.country.state: base.state_bd_a [renamed from l10n_bd module]
+NEW res.country.state: base.state_bd_b [renamed from l10n_bd module]
+NEW res.country.state: base.state_bd_c [renamed from l10n_bd module]
+NEW res.country.state: base.state_bd_d [renamed from l10n_bd module]
+NEW res.country.state: base.state_bd_e [renamed from l10n_bd module]
+NEW res.country.state: base.state_bd_f [renamed from l10n_bd module]
+NEW res.country.state: base.state_bd_g [renamed from l10n_bd module]
+NEW res.country.state: base.state_bd_h [renamed from l10n_bd module]
+
+# DONE: renamed from l10n module
+
+NEW res.country.state: base.state_id_pe
+
+# DONE: renamed from base.state_id_pp
+
+NEW res.country.state: base.state_iq_01 [renamed from l10n_iq module]
+NEW res.country.state: base.state_iq_01_ar [renamed from l10n_iq module]
+NEW res.country.state: base.state_iq_02 [renamed from l10n_iq module]
+NEW res.country.state: base.state_iq_02_ar [renamed from l10n_iq module]
+NEW res.country.state: base.state_iq_03 [renamed from l10n_iq module]
+NEW res.country.state: base.state_iq_03_ar [renamed from l10n_iq module]
+NEW res.country.state: base.state_iq_04 [renamed from l10n_iq module]
+NEW res.country.state: base.state_iq_04_ar [renamed from l10n_iq module]
+NEW res.country.state: base.state_iq_05 [renamed from l10n_iq module]
+NEW res.country.state: base.state_iq_05_ar [renamed from l10n_iq module]
+NEW res.country.state: base.state_iq_06 [renamed from l10n_iq module]
+NEW res.country.state: base.state_iq_06_ar [renamed from l10n_iq module]
+NEW res.country.state: base.state_iq_07 [renamed from l10n_iq module]
+NEW res.country.state: base.state_iq_07_ar [renamed from l10n_iq module]
+NEW res.country.state: base.state_iq_08 [renamed from l10n_iq module]
+NEW res.country.state: base.state_iq_08_ar [renamed from l10n_iq module]
+NEW res.country.state: base.state_iq_09 [renamed from l10n_iq module]
+NEW res.country.state: base.state_iq_09_ar [renamed from l10n_iq module]
+NEW res.country.state: base.state_iq_10 [renamed from l10n_iq module]
+NEW res.country.state: base.state_iq_10_ar [renamed from l10n_iq module]
+NEW res.country.state: base.state_iq_11 [renamed from l10n_iq module]
+NEW res.country.state: base.state_iq_11_ar [renamed from l10n_iq module]
+NEW res.country.state: base.state_iq_12 [renamed from l10n_iq module]
+NEW res.country.state: base.state_iq_12_ar [renamed from l10n_iq module]
+NEW res.country.state: base.state_iq_13 [renamed from l10n_iq module]
+NEW res.country.state: base.state_iq_13_ar [renamed from l10n_iq module]
+NEW res.country.state: base.state_iq_14 [renamed from l10n_iq module]
+NEW res.country.state: base.state_iq_14_ar [renamed from l10n_iq module]
+NEW res.country.state: base.state_iq_15 [renamed from l10n_iq module]
+NEW res.country.state: base.state_iq_15_ar [renamed from l10n_iq module]
+NEW res.country.state: base.state_iq_16 [renamed from l10n_iq module]
+NEW res.country.state: base.state_iq_16_ar [renamed from l10n_iq module]
+NEW res.country.state: base.state_iq_17 [renamed from l10n_iq module]
+NEW res.country.state: base.state_iq_17_ar [renamed from l10n_iq module]
+NEW res.country.state: base.state_iq_18 [renamed from l10n_iq module]
+NEW res.country.state: base.state_iq_18_ar [renamed from l10n_iq module]
+
+# DONE: renamed from l10n module
+
+NEW res.country.state: base.state_ng_ab
+NEW res.country.state: base.state_ng_ad
+NEW res.country.state: base.state_ng_ak
+NEW res.country.state: base.state_ng_an
+NEW res.country.state: base.state_ng_ba
+NEW res.country.state: base.state_ng_be
+NEW res.country.state: base.state_ng_bo
+NEW res.country.state: base.state_ng_by
+NEW res.country.state: base.state_ng_cr
+NEW res.country.state: base.state_ng_de
+NEW res.country.state: base.state_ng_eb
+NEW res.country.state: base.state_ng_ed
+NEW res.country.state: base.state_ng_ek
+NEW res.country.state: base.state_ng_en
+NEW res.country.state: base.state_ng_fc
+NEW res.country.state: base.state_ng_go
+NEW res.country.state: base.state_ng_im
+NEW res.country.state: base.state_ng_ji
+NEW res.country.state: base.state_ng_ka
+NEW res.country.state: base.state_ng_ke
+NEW res.country.state: base.state_ng_kn
+NEW res.country.state: base.state_ng_ko
+NEW res.country.state: base.state_ng_kt
+NEW res.country.state: base.state_ng_kw
+NEW res.country.state: base.state_ng_la
+NEW res.country.state: base.state_ng_na
+NEW res.country.state: base.state_ng_ni
+NEW res.country.state: base.state_ng_og
+NEW res.country.state: base.state_ng_on
+NEW res.country.state: base.state_ng_os
+NEW res.country.state: base.state_ng_oy
+NEW res.country.state: base.state_ng_pl
+NEW res.country.state: base.state_ng_ri
+NEW res.country.state: base.state_ng_so
+NEW res.country.state: base.state_ng_ta
+NEW res.country.state: base.state_ng_yo
+NEW res.country.state: base.state_ng_za
+NEW res.country.state: base.state_ph_01
+NEW res.country.state: base.state_ph_02
+NEW res.country.state: base.state_ph_03
+NEW res.country.state: base.state_ph_04
+NEW res.country.state: base.state_ph_05
+NEW res.country.state: base.state_ph_06
+NEW res.country.state: base.state_ph_07
+NEW res.country.state: base.state_ph_08
+NEW res.country.state: base.state_ph_09
+NEW res.country.state: base.state_ph_10
+NEW res.country.state: base.state_ph_11
+NEW res.country.state: base.state_ph_12
+NEW res.country.state: base.state_ph_13
+NEW res.country.state: base.state_ph_14
+NEW res.country.state: base.state_ph_15
+NEW res.country.state: base.state_ph_16
+NEW res.country.state: base.state_ph_17
+NEW res.country.state: base.state_ph_18
+NEW res.country.state: base.state_ph_19
+NEW res.country.state: base.state_ph_20
+NEW res.country.state: base.state_ph_21
+NEW res.country.state: base.state_ph_22
+NEW res.country.state: base.state_ph_23
+NEW res.country.state: base.state_ph_24
+NEW res.country.state: base.state_ph_25
+NEW res.country.state: base.state_ph_26
+NEW res.country.state: base.state_ph_27
+NEW res.country.state: base.state_ph_28
+NEW res.country.state: base.state_ph_29
+NEW res.country.state: base.state_ph_30
+NEW res.country.state: base.state_ph_31
+NEW res.country.state: base.state_ph_32
+NEW res.country.state: base.state_ph_33
+NEW res.country.state: base.state_ph_34
+NEW res.country.state: base.state_ph_35
+NEW res.country.state: base.state_ph_36
+NEW res.country.state: base.state_ph_37
+NEW res.country.state: base.state_ph_38
+NEW res.country.state: base.state_ph_39
+NEW res.country.state: base.state_ph_40
+NEW res.country.state: base.state_ph_41
+NEW res.country.state: base.state_ph_42
+NEW res.country.state: base.state_ph_43
+NEW res.country.state: base.state_ph_44
+NEW res.country.state: base.state_ph_45
+NEW res.country.state: base.state_ph_46
+NEW res.country.state: base.state_ph_47
+NEW res.country.state: base.state_ph_48
+NEW res.country.state: base.state_ph_49
+NEW res.country.state: base.state_ph_50
+NEW res.country.state: base.state_ph_51
+NEW res.country.state: base.state_ph_52
+NEW res.country.state: base.state_ph_53
+NEW res.country.state: base.state_ph_54
+NEW res.country.state: base.state_ph_55
+NEW res.country.state: base.state_ph_56
+NEW res.country.state: base.state_ph_57
+NEW res.country.state: base.state_ph_58
+NEW res.country.state: base.state_ph_59
+NEW res.country.state: base.state_ph_60
+NEW res.country.state: base.state_ph_61
+NEW res.country.state: base.state_ph_62
+NEW res.country.state: base.state_ph_63
+NEW res.country.state: base.state_ph_64
+NEW res.country.state: base.state_ph_65
+NEW res.country.state: base.state_ph_66
+NEW res.country.state: base.state_ph_67
+NEW res.country.state: base.state_ph_68
+NEW res.country.state: base.state_ph_69
+NEW res.country.state: base.state_ph_70
+NEW res.country.state: base.state_ph_71
+NEW res.country.state: base.state_ph_72
+NEW res.country.state: base.state_ph_73
+NEW res.country.state: base.state_ph_74
+NEW res.country.state: base.state_ph_75
+NEW res.country.state: base.state_ph_76
+NEW res.country.state: base.state_ph_77
+NEW res.country.state: base.state_ph_78
+NEW res.country.state: base.state_ph_79
+NEW res.country.state: base.state_ph_80
+NEW res.country.state: base.state_ph_81
+NEW res.country.state: base.state_ph_82
+NEW res.country.state: base.state_ph_83
+
+# NOTHING TO DO
+
+NEW res.country.state: base.state_pk_ajk [renamed from l10n_pk module]
+NEW res.country.state: base.state_pk_ba [renamed from l10n_pk module]
+NEW res.country.state: base.state_pk_gb [renamed from l10n_pk module]
+NEW res.country.state: base.state_pk_is [renamed from l10n_pk module]
+NEW res.country.state: base.state_pk_kp [renamed from l10n_pk module]
+NEW res.country.state: base.state_pk_pb [renamed from l10n_pk module]
+NEW res.country.state: base.state_pk_sd [renamed from l10n_pk module]
+NEW res.country.state: base.state_pl_ds [renamed from l10n_pl module]
+NEW res.country.state: base.state_pl_kp [renamed from l10n_pl module]
+NEW res.country.state: base.state_pl_lb [renamed from l10n_pl module]
+NEW res.country.state: base.state_pl_ld [renamed from l10n_pl module]
+NEW res.country.state: base.state_pl_ls [renamed from l10n_pl module]
+NEW res.country.state: base.state_pl_mp [renamed from l10n_pl module]
+NEW res.country.state: base.state_pl_mz [renamed from l10n_pl module]
+NEW res.country.state: base.state_pl_op [renamed from l10n_pl module]
+NEW res.country.state: base.state_pl_pk [renamed from l10n_pl module]
+NEW res.country.state: base.state_pl_pl [renamed from l10n_pl module]
+NEW res.country.state: base.state_pl_pm [renamed from l10n_pl module]
+NEW res.country.state: base.state_pl_sk [renamed from l10n_pl module]
+NEW res.country.state: base.state_pl_sl [renamed from l10n_pl module]
+NEW res.country.state: base.state_pl_wm [renamed from l10n_pl module]
+NEW res.country.state: base.state_pl_wp [renamed from l10n_pl module]
+NEW res.country.state: base.state_pl_zp [renamed from l10n_pl module]
+
+# DONE: renamed from l10n module
+
+NEW res.country.state: base.state_so_1
+NEW res.country.state: base.state_so_2
+NEW res.country.state: base.state_so_3
+NEW res.country.state: base.state_so_4
+NEW res.country.state: base.state_so_5
+NEW res.country.state: base.state_so_6
+NEW res.country.state: base.state_so_7
+NEW res.country.state: base.state_so_8
+
+# NOTHING TO DO
+
+NEW res.country.state: base.state_tw_chh [renamed from l10n_tw module]
+NEW res.country.state: base.state_tw_cic [renamed from l10n_tw module]
+NEW res.country.state: base.state_tw_cih [renamed from l10n_tw module]
+NEW res.country.state: base.state_tw_hch [renamed from l10n_tw module]
+NEW res.country.state: base.state_tw_hct [renamed from l10n_tw module]
+NEW res.country.state: base.state_tw_hlh [renamed from l10n_tw module]
+NEW res.country.state: base.state_tw_ilh [renamed from l10n_tw module]
+NEW res.country.state: base.state_tw_khc [renamed from l10n_tw module]
+NEW res.country.state: base.state_tw_klc [renamed from l10n_tw module]
+NEW res.country.state: base.state_tw_kmc [renamed from l10n_tw module]
+NEW res.country.state: base.state_tw_lcc [renamed from l10n_tw module]
+NEW res.country.state: base.state_tw_mlh [renamed from l10n_tw module]
+NEW res.country.state: base.state_tw_ntc [renamed from l10n_tw module]
+NEW res.country.state: base.state_tw_ntpc [renamed from l10n_tw module]
+NEW res.country.state: base.state_tw_phc [renamed from l10n_tw module]
+NEW res.country.state: base.state_tw_pth [renamed from l10n_tw module]
+NEW res.country.state: base.state_tw_tcc [renamed from l10n_tw module]
+NEW res.country.state: base.state_tw_tnh [renamed from l10n_tw module]
+NEW res.country.state: base.state_tw_tpc [renamed from l10n_tw module]
+NEW res.country.state: base.state_tw_tth [renamed from l10n_tw module]
+NEW res.country.state: base.state_tw_tyc [renamed from l10n_tw module]
+NEW res.country.state: base.state_tw_ylh [renamed from l10n_tw module]
+
+# DONE: renamed from l10n module
+
+DEL res.country.state: base.state_id_pp
+
+# DONE: renamed to base.state_id_pe
+
+DEL res.country.state: base.state_vn_VN-03
+DEL res.country.state: base.state_vn_VN-06
+DEL res.country.state: base.state_vn_VN-14
+DEL res.country.state: base.state_vn_VN-20
+DEL res.country.state: base.state_vn_VN-24
+DEL res.country.state: base.state_vn_VN-27
+DEL res.country.state: base.state_vn_VN-28
+DEL res.country.state: base.state_vn_VN-31
+DEL res.country.state: base.state_vn_VN-32
+DEL res.country.state: base.state_vn_VN-36
+DEL res.country.state: base.state_vn_VN-40
+DEL res.country.state: base.state_vn_VN-41
+DEL res.country.state: base.state_vn_VN-43
+DEL res.country.state: base.state_vn_VN-46
+DEL res.country.state: base.state_vn_VN-47
+DEL res.country.state: base.state_vn_VN-50
+DEL res.country.state: base.state_vn_VN-51
+DEL res.country.state: base.state_vn_VN-52
+DEL res.country.state: base.state_vn_VN-53
+DEL res.country.state: base.state_vn_VN-54
+DEL res.country.state: base.state_vn_VN-55
+DEL res.country.state: base.state_vn_VN-57
+DEL res.country.state: base.state_vn_VN-58
+DEL res.country.state: base.state_vn_VN-61
+DEL res.country.state: base.state_vn_VN-63
+DEL res.country.state: base.state_vn_VN-67
+DEL res.country.state: base.state_vn_VN-70
+DEL res.country.state: base.state_vn_VN-72
+DEL res.country.state: base.state_vn_VN-73
+
+# NOTHING TO DO
+
+NEW res.groups: base.default_user_group (noupdate)
+
+# DONE: set implied_ids from base.default_user in post_migration
+
+NEW res.groups.privilege: base.res_groups_privilege_contact
+NEW res.groups.privilege: base.res_groups_privilege_export
+
+# NOTHING TO DO
+
+DEL res.partner.title: base.res_partner_title_doctor (noupdate)
+DEL res.partner.title: base.res_partner_title_madam (noupdate)
+DEL res.partner.title: base.res_partner_title_miss (noupdate)
+DEL res.partner.title: base.res_partner_title_mister (noupdate)
+DEL res.partner.title: base.res_partner_title_prof (noupdate)
+
+# NOTHING TO DO: will be cleaned by database_cleanup
+
+DEL res.users: base.default_user (noupdate)
+
+# DONE: see above for base.default_user_group
