@@ -1,0 +1,33 @@
+---Models in module 'resource'---
+---Fields in module 'resource'---
+resource     / resource.calendar        / duration_based (boolean)      : NEW
+
+# NOTHING TO DO: new feature
+
+resource     / resource.calendar        / flexible_hours (boolean)      : now a function
+
+# NOTHING TO DO
+
+resource     / resource.calendar        / hours_per_week (float)        : NEW hasdefault: compute
+
+# NOTHING TO DO: computed by ORM
+
+resource     / resource.calendar        / schedule_type (selection)     : NEW required, selection_keys: ['flexible', 'fully_fixed'], hasdefault: default
+
+# DONE: computed from flexible_hours in post_migration
+
+resource     / resource.calendar.attendance / date_from (date)              : DEL
+resource     / resource.calendar.attendance / date_to (date)                : DEL
+resource     / resource.calendar.attendance / day_period (selection)        : selection_keys added: [full_day] (most likely nothing to do)
+
+# NOTHING TO DO
+
+resource     / resource.calendar.attendance / duration_hours (float)        : is now stored
+
+# NOTHING TO DO: computed by ORM
+
+resource     / resource.calendar.attendance / resource_id (many2one)        : DEL relation: resource.resource
+
+# NOTHING TO DO
+
+---XML records in module 'resource'---
