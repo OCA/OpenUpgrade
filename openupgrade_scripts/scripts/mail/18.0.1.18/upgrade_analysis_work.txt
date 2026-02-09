@@ -53,7 +53,7 @@ mail         / mail.activity            / user_tz (selection)           : NEW se
 mail         / mail.activity.plan.template / delay_count (integer)         : NEW hasdefault: default
 mail         / mail.activity.plan.template / delay_from (selection)        : NEW required, selection_keys: ['after_plan_date', 'before_plan_date'], hasdefault: default
 mail         / mail.activity.plan.template / delay_unit (selection)        : NEW required, selection_keys: ['days', 'months', 'weeks'], hasdefault: default
-# NOTHING TO DO: new functionality
+# DONE: Define the appropriate value based on the value of mail_activity_type
 
 mail         / mail.canned.response     / description (char)            : NEW
 mail         / mail.canned.response     / group_ids (many2many)         : NEW relation: res.groups
