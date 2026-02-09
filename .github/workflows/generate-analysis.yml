@@ -93,6 +93,8 @@ jobs:
           wget -q -O- https://github.com/oca/server-tools/archive/refs/heads/$FROM_VERSION.tar.gz | tar -xz
           python -mvenv env-$FROM_VERSION
           . env-$FROM_VERSION/bin/activate
+          export PIP_CONSTRAINT=pip-constraint.txt
+          echo 'setuptools < 82.0.0' > pip-constraint.txt
           pip install ${{ inputs.from_version_requirements }}
           sed -iE '${{ inputs.from_version_requirements_sed }}' OCB-$FROM_VERSION/requirements.txt
           pip install -r OCB-$FROM_VERSION/requirements.txt
@@ -110,6 +112,8 @@ jobs:
           wget -q -O- https://github.com/oca/server-tools/archive/refs/heads/$TO_VERSION.tar.gz | tar -xz
           python -mvenv env-$TO_VERSION
           . env-$TO_VERSION/bin/activate
+          export PIP_CONSTRAINT=pip-constraint.txt
+          echo 'setuptools < 82.0.0' > pip-constraint.txt
           pip install ${{ inputs.to_version_requirements }}
           sed -iE '${{ inputs.to_version_requirements_sed }}' OCB-$TO_VERSION/requirements.txt
           pip install -r OCB-$TO_VERSION/requirements.txt
