@@ -9,7 +9,6 @@ renamed_modules = {
     "l10n_in_edi_ewaybill": "l10n_in_ewaybill",
     "membership": "partnership",
     "pos_viva_wallet": "pos_viva_com",
-    "web_editor": "html_builder",
     # odoo/enterprise
     # OCA/...
 }
@@ -43,6 +42,7 @@ merged_modules = {
     "pos_self_order_epson_printer": "pos_self_order",
     "sale_async_emails": "sale",
     "website_membership": "website_crm_partner_assign",
+    "web_editor": "html_editor",
     # odoo/enterprise
     # OCA/...
 }
