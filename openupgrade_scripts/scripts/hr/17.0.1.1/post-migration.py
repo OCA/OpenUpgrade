@@ -28,7 +28,9 @@ def _transfer_employee_private_data(env):
                 he.private_country_id, rpp.country_id, rp.country_id
             ),
             private_email = COALESCE(he.private_email, rpp.email, rp.email),
-            private_phone = COALESCE(he.private_phone, rpp.phone, rp.phone),
+            private_phone = COALESCE(
+                he.private_phone, rpp.phone, rpp.mobile, rp.phone, rp.mobile
+            ),
             private_state_id = COALESCE(he.private_state_id, rpp.state_id, rp.state_id),
             private_street = COALESCE(he.private_street, rpp.street, rp.street),
             private_street2 = COALESCE(he.private_street2, rpp.street2, rp.street2),
