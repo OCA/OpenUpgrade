@@ -147,8 +147,10 @@ def account_account_code_fields(env):
     """
     env.cr.execute(
         """
-        UPDATE account_account
-        SET code_store=json_build_object(company_id, code)
+        UPDATE account_account aa
+        SET code_store=json_build_object(split_part(rc.parent_path, '/', 1), aa.code)
+        FROM res_company rc
+        WHERE aa.company_id = rc.id
         """
     )
 
