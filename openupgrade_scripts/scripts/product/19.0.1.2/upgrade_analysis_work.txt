@@ -1,0 +1,127 @@
+---Models in module 'product'---
+obsolete model product.packaging (renamed to product.uom)
+new model product.uom (renamed from product.packaging)
+
+# DONE: packagings are folded into UOMs, with product.uom linking products to the UOM that used to be a packaging
+
+---Fields in module 'product'---
+product      / product.attribute        / display_type (selection)      : selection_keys added: [image] (most likely nothing to do)
+
+# NOTHING TO DO
+
+product      / product.packaging        / _order                        : _order is now 'id' ('product_id, sequence, id')
+product      / product.packaging        / barcode (char)                : now required
+product      / product.packaging        / name (char)                   : DEL required
+product      / product.packaging        / qty (float)                   : DEL
+product      / product.packaging        / sequence (integer)            : DEL
+
+# DONE: table is renamed to product_uom in pre-migration and matching UOMs created in post-migration
+
+product      / product.pricelist.item   / company_id (many2one)         : not related anymore
+product      / product.pricelist.item   / company_id (many2one)         : now a function
+product      / product.pricelist.item   / currency_id (many2one)        : not related anymore
+product      / product.pricelist.item   / currency_id (many2one)        : now a function
+
+# NOTHING TO DO: related field was stored before
+
+product      / product.product          / _order                        : _order is now 'default_code, name, id' ('is_favorite desc, default_code, name, id')
+
+# NOTHING TO DO
+
+product      / product.product          / is_favorite (boolean)         : is now stored
+
+# DONE: pre-created in pre-migration and filled from product_template
+
+product      / product.product          / is_in_selected_section_of_order (boolean): NEW
+
+# NOTHING TO DO: virtual field only used for searching
+
+product      / product.product          / packaging_ids (one2many)      : DEL relation: product.packaging
+product      / product.product          / product_uom_ids (one2many)    : NEW relation: product.uom
+
+# DONE: renamed in pre-migration, also see above at product.packaging
+
+product      / product.supplierinfo     / product_tmpl_id (many2one)    : now required
+product      / product.supplierinfo     / product_uom_id (many2one)     : NEW relation: uom.uom, required, hasdefault: compute
+
+# DONE: filled from product_id
+
+product      / product.tag              / image (binary)                : previously in module website_sale
+
+# NOTHING TO DO
+
+product      / product.tag              / visible_to_customers (boolean): NEW hasdefault: default
+
+# NOTHING TO DO
+
+product      / product.template         / pricelist_rule_ids (one2many) : NEW relation: product.pricelist.item
+
+# NOTHING TO DO
+
+product      / product.template         / uom_ids (many2many)           : NEW relation: uom.uom
+product      / product.template         / uom_po_id (many2one)          : DEL relation: uom.uom, required
+
+# NOTHING TO DO
+
+product      / product.uom              / uom_id (many2one)             : NEW relation: uom.uom, required
+product      / uom.uom                  / product_uom_ids (one2many)    : NEW relation: product.uom
+
+# DONE: see above at product.packaging
+
+---XML records in module 'product'---
+DEL decimal.precision: product.decimal_product_uom [renamed to uom module] (noupdate)
+
+# DONE: in uom migration
+
+DEL ir.actions.act_window: product.action_packaging_view
+NEW ir.actions.server: product.action_product_print_labels
+NEW ir.actions.server: product.action_product_template_print_labels
+NEW ir.model.access: product.access_product_document_manager
+NEW ir.model.access: product.access_product_uom_manager
+NEW ir.model.access: product.access_product_uom_user
+NEW ir.model.access: product.access_uom_uom_product_manager
+DEL ir.model.access: product.access_product_packaging_manager
+DEL ir.model.access: product.access_product_packaging_user
+
+# NOTHING TO DO
+
+NEW ir.model.constraint: product.constraint_product_product_combination_unique
+NEW ir.model.constraint: product.constraint_product_product_is_favorite_index
+NEW ir.model.constraint: product.constraint_product_template_is_favorite_index
+NEW ir.model.constraint: product.constraint_product_uom_barcode_uniq
+DEL ir.model.constraint: product.constraint_product_packaging_barcode_uniq
+
+# NOTHING TO DO
+
+DEL ir.model.constraint: product.constraint_product_packaging_positive_qty
+DEL ir.rule: product.product_packaging_comp_rule (noupdate)
+
+# DONE: deleted in pre-migration
+
+NEW ir.ui.view: product.product_pricelist_item_product_product_form_view
+NEW ir.ui.view: product.product_pricelist_item_product_template_form_view
+NEW ir.ui.view: product.product_template_list_view_purchasable
+NEW ir.ui.view: product.product_template_list_view_sellable
+NEW ir.ui.view: product.product_uom_list_view
+NEW ir.ui.view: product.uom_uom_form_view_inherit
+DEL ir.ui.view: product.product_packaging_form_view
+DEL ir.ui.view: product.product_packaging_form_view2
+DEL ir.ui.view: product.product_packaging_search_view
+DEL ir.ui.view: product.product_packaging_tree_view
+DEL ir.ui.view: product.product_packaging_tree_view2
+
+# NOTHING TO DO
+
+NEW product.category: product.product_category_expenses (noupdate)
+NEW product.category: product.product_category_goods (noupdate)
+NEW product.category: product.product_category_services (noupdate)
+DEL product.category: product.cat_expense (noupdate)
+DEL product.category: product.product_category_1 (noupdate)
+DEL product.category: product.product_category_all (noupdate)
+
+# DONE: renamed in pre-migration
+
+DEL res.groups: product.group_stock_packaging
+NEW res.groups.privilege: product.res_groups_privilege_product
+
+# NOTHING TO DO
