@@ -54,9 +54,9 @@ obsolete model stock.track.line [module stock]
 obsolete model stock.valuation.layer [module stock_account]
 obsolete model stock.valuation.layer.revaluation [module stock_account]
 obsolete model uom.category [module uom]
-obsolete model web_editor.assets (renamed to website.assets) [module html_builder]
-obsolete model web_editor.converter.test (renamed to html_editor.converter.test) [module html_builder]
-obsolete model web_editor.converter.test.sub (renamed to html_editor.converter.test.sub) [module html_builder]
+obsolete model web_editor.assets (renamed to website.assets) [module html_editor]
+obsolete model web_editor.converter.test (renamed to html_editor.converter.test) [module html_editor]
+obsolete model web_editor.converter.test.sub (renamed to html_editor.converter.test.sub) [module html_editor]
 new model account.analytic.line.calendar.employee [module hr_timesheet]
 new model account.document.import.mixin [module account]
 new model discuss.call.history [module mail]
@@ -128,10 +128,10 @@ new model website.page_options.mixin [module website]
 new model website.page_visibility_options.mixin [module website]
 new model website.technical.page [module website]
 ---Fields in module 'general'---
-# 14358 fields matched,
-# Direct match: 14167
+# 14364 fields matched,
+# Direct match: 14189
 # Found in other module with different type: 0
-# Found in other module: 159
+# Found in other module: 143
 # Found with different type: 32
 # In obsolete models: 231
 # New columns: 1748
