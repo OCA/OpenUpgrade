@@ -152,6 +152,7 @@ DEL ir.model.access: stock.access_stock_track_confirmation
 DEL ir.model.access: stock.access_stock_track_line
 DEL ir.model.access: stock.access_uom_category_stock_manager
 DEL ir.model.access: stock.access_uom_uom_stock_manager
+NEW ir.model.constraint: stock.constraint_stock_location_parent_path_id_idx
 NEW ir.model.constraint: stock.constraint_stock_move_line_free_reservation_index
 NEW ir.model.constraint: stock.constraint_stock_move_product_location_index
 DEL ir.model.constraint: stock.constraint_stock_warehouse_orderpoint_qty_multiple_check

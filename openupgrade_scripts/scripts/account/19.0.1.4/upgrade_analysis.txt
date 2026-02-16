@@ -25,7 +25,7 @@ account      / account.full.reconcile   / exchange_move_id (many2one)   : DEL re
 account      / account.journal          / account_control_ids (many2many): DEL relation: account.account
 account      / account.journal          / autocheck_on_post (boolean)   : DEL
 account      / account.journal          / display_invoice_template_pdf_report_id (boolean): NEW hasdefault: default, stored: False
-account      / account.journal          / incoming_einvoice_notification_email (char): NEW hasdefault: compute
+account      / account.journal          / incoming_einvoice_notification_email (char): NEW
 account      / account.journal          / invoice_reference_model (selection): selection_keys added: [number] (most likely nothing to do)
 account      / account.journal          / invoice_reference_type (selection): selection_keys removed: [none]
 account      / account.journal          / invoice_template_pdf_report_id (many2one): NEW relation: ir.actions.report
