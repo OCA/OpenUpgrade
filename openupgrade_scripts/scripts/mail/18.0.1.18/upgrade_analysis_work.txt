@@ -51,9 +51,11 @@ mail         / mail.activity            / user_tz (selection)           : NEW se
 # NOTHING TO DO: change comes from base
 
 mail         / mail.activity.plan.template / delay_count (integer)         : NEW hasdefault: default
-mail         / mail.activity.plan.template / delay_from (selection)        : NEW required, selection_keys: ['after_plan_date', 'before_plan_date'], hasdefault: default
 mail         / mail.activity.plan.template / delay_unit (selection)        : NEW required, selection_keys: ['days', 'months', 'weeks'], hasdefault: default
 # DONE: Define the appropriate value based on the value of mail_activity_type
+
+mail         / mail.activity.plan.template / delay_from (selection)        : NEW required, selection_keys: ['after_plan_date', 'before_plan_date'], hasdefault: default
+# DONE: All records are defined with delay_from=after_plan_date because that was the behavior up to v17
 
 mail         / mail.canned.response     / description (char)            : NEW
 mail         / mail.canned.response     / group_ids (many2many)         : NEW relation: res.groups
