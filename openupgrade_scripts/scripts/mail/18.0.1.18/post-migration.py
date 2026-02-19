@@ -71,12 +71,17 @@ def mail_activity_plan_template_delay(env):
     """
     Define the appropriate values for delay_count and delay_unit as
     defined in mail_activity_type to have the same behavior as in v17.
+    All records are defined with delay_from=after_plan_date because
+    that was the behavior up to v17.
     """
     openupgrade.logged_query(
         env.cr,
         """
         UPDATE mail_activity_plan_template t
-        SET delay_count = at.delay_count, delay_unit = at.delay_unit
+        SET
+            delay_count = at.delay_count,
+            delay_unit = at.delay_unit,
+            delay_from = 'after_plan_date'
         FROM mail_activity_type at
         WHERE t.activity_type_id = at.id;
         """,
