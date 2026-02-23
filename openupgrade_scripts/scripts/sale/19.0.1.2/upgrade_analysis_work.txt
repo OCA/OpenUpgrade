@@ -1,0 +1,133 @@
+---Models in module 'sale'---
+obsolete model sale.order.cancel [transient]
+obsolete model sale.payment.provider.onboarding.wizard [transient]
+
+# NOTHING TO DO
+
+---Fields in module 'sale'---
+sale         / product.category         / property_account_downpayment_categ_id (many2one): DEL relation: account.account
+
+# DONE: used to set res.company#downpayment_account_id
+
+sale         / product.packaging        / sales (boolean)               : DEL
+sale         / product.template         / sale_line_warn (selection)    : DEL required, selection_keys: ['block', 'no-message', 'warning']
+
+# NOTHING TO DO
+
+sale         / res.company              / downpayment_account_id (many2one): NEW relation: account.account
+
+# DONE: set from product.category#property_account_downpayment_categ_id
+
+sale         / res.partner              / sale_warn (selection)         : DEL selection_keys: ['block', 'no-message', 'warning']
+
+# NOTHING TO DO
+
+sale         / sale.order               / preferred_payment_method_line_id (many2one): NEW relation: account.payment.method.line, hasdefault: compute
+
+# NOTHING TO DO: computed by ORM
+
+sale         / sale.order.line          / collapse_composition (boolean): NEW hasdefault: default
+sale         / sale.order.line          / collapse_prices (boolean)     : NEW hasdefault: default
+
+# DONE: created in pre-migration with default False
+
+sale         / sale.order.line          / display_type (selection)      : selection_keys added: [line_subsection] (most likely nothing to do)
+sale         / sale.order.line          / extra_tax_data (json)         : NEW
+sale         / sale.order.line          / product_packaging_id (many2one): DEL relation: product.packaging
+sale         / sale.order.line          / product_packaging_qty (float) : DEL
+
+# NOTHING TO DO
+
+sale         / sale.order.line          / product_uom (many2one)        : DEL relation: uom.uom
+sale         / sale.order.line          / product_uom_id (many2one)     : NEW relation: uom.uom, hasdefault: compute
+sale         / sale.order.line          / tax_id (many2many)            : DEL relation: account.tax
+sale         / sale.order.line          / tax_ids (many2many)           : NEW relation: account.tax, hasdefault: compute
+
+# DONE: renamed in pre-migration
+
+---XML records in module 'sale'---
+NEW ir.actions.act_window: sale.action_accrued_revenue_entry_sale_order_line
+
+# NOTHING TO DO
+
+ir.actions.act_window: sale.action_orders (deleted domain)
+
+# DONE: unset in pre-migration
+
+NEW ir.actions.act_window: sale.mail_followers_edit_action_from_sale
+
+# NOTHING TO DO
+
+NEW ir.config_parameter: sale.async_emails [renamed from sale_async_emails module] (noupdate)
+DEL ir.config_parameter: sale_async_emails.async_emails [renamed to sale module] (noupdate)
+NEW ir.cron: sale.send_pending_emails_cron (noupdate)
+DEL ir.cron: sale_async_emails.cron (noupdate)
+
+# DONE: renamed in pre-migration
+
+NEW ir.model.access: sale.access_product_document_sale_manager
+DEL ir.model.access: sale.access_product_attribute_sale_manager
+DEL ir.model.access: sale.access_product_attribute_value_sale_manager
+DEL ir.model.access: sale.access_product_category_sale_manager
+DEL ir.model.access: sale.access_product_product_attribute_sale_manager
+DEL ir.model.access: sale.access_product_product_sale_manager
+DEL ir.model.access: sale.access_product_product_sale_user
+DEL ir.model.access: sale.access_product_supplierinfo_sale_manager
+DEL ir.model.access: sale.access_product_supplierinfo_user
+DEL ir.model.access: sale.access_product_tag_sale_manager
+DEL ir.model.access: sale.access_product_template_attribute_exclusion_sale_manager
+DEL ir.model.access: sale.access_product_template_attribute_line_sale_manager
+DEL ir.model.access: sale.access_product_template_sale_manager
+DEL ir.model.access: sale.access_product_template_sale_user
+DEL ir.model.access: sale.access_sale_order_cancel
+DEL ir.model.access: sale.access_sale_payment_provider_onboarding_wizard
+DEL ir.model.access: sale.access_uom_category_sale_manager
+DEL ir.model.access: sale.access_uom_uom_sale_manager
+DEL ir.model.access: sale.access_update_product_attribute_value_sale_manager
+NEW ir.model.constraint: sale.constraint_sale_order_date_order_id_idx
+ir.model.constraint: sale.constraint_sale_order_line_accountable_required_fields (changed definition: is now 'CHECK(display_type IS NOT NULL OR is_downpayment OR (product_id IS NOT NULL AND product_uom_id IS NOT NULL))' ('check(display_type is not null or is_downpayment or(product_id is not null and product_uom is not null))'))
+ir.model.constraint: sale.constraint_sale_order_line_non_accountable_null_fields (changed definition: is now 'CHECK(display_type IS NULL OR (product_id IS NULL AND price_unit = 0 AND product_uom_qty = 0 AND product_uom_id IS NULL AND customer_lead = 0))' ('check(display_type is null or(product_id is null and price_unit = 0 and product_uom_qty = 0 and product_uom is null and customer_lead = 0))'))
+
+# NOTHING TO DO
+
+DEL ir.rule: sale.sale_order_cancel_rule (noupdate)
+DEL ir.rule: sale.sale_payment_provider_onboarding_wizard_rule (noupdate)
+
+# DONE: deleted in pre-migration
+
+DEL ir.ui.menu: sale.menu_product_uom_categ_form_action
+DEL ir.ui.menu: sale.next_id_16
+NEW ir.ui.view: sale.product_pricelist_item_form
+NEW ir.ui.view: sale.res_config_settings_view_form_sale_inherit
+NEW ir.ui.view: sale.sale_order_portal_pay_modal
+NEW ir.ui.view: sale.sale_order_portal_pay_modal_amount_selector
+NEW ir.ui.view: sale.sale_order_portal_sign_modal
+DEL ir.ui.view: sale.crm_lead_partner_kanban_view
+DEL ir.ui.view: sale.product_packaging_form_view_sale
+DEL ir.ui.view: sale.product_packaging_tree_view_sale
+DEL ir.ui.view: sale.sale_order_cancel_view_form
+DEL ir.ui.view: sale.view_category_property_form
+
+# NOTHING TO DO
+
+DEL mail.activity.type: sale.mail_act_sale_upsell (noupdate)
+
+# DONE: deleted in pre-migration
+
+NEW mail.message.subtype: sale.mt_salesteam_invoice_paid (noupdate)
+NEW mail.message.subtype: sale.mt_salesteam_invoice_posted (noupdate)
+
+# NOTHING TO DO
+
+DEL mail.message.subtype: sale.mt_salesteam_invoice_confirmed (noupdate)
+DEL mail.message.subtype: sale.mt_salesteam_invoice_created (noupdate)
+
+# NOTHING TO DO: don't delete subtypes because then messages end up without one
+
+NEW mail.template: sale.email_template_proforma (noupdate)
+
+# NOTHING TO DO
+
+DEL mail.template: sale.mail_template_sale_cancellation (noupdate)
+
+# DONE: deleted in pre-migration
