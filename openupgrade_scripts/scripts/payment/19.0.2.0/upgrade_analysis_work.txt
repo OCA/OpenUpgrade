@@ -1,0 +1,79 @@
+---Models in module 'payment'---
+obsolete model payment.provider.onboarding.wizard [transient]
+
+# NOTHING TO DO
+
+---Fields in module 'payment'---
+payment      / payment.method           / support_manual_capture (selection): NEW required, selection_keys: ['full_only', 'none', 'partial'], hasdefault: default
+
+# DONE: set in noupdate_changes.xml
+
+payment      / payment.transaction      / is_live (boolean)             : NEW
+
+# DONE: set to True in pre-migration
+
+payment      / res.company              / payment_onboarding_payment_method (selection): DEL selection_keys: ['manual', 'other', 'paypal', 'stripe']
+
+# NOTHING TO DO
+
+---XML records in module 'payment'---
+NEW ir.actions.server: payment.action_start_payment_onboarding
+DEL ir.actions.server: payment.action_activate_stripe
+DEL ir.model.access: payment.payment_provider_onboarding_wizard
+NEW ir.ui.view: payment.payment_transaction_graph
+NEW ir.ui.view: payment.payment_transaction_pivot
+DEL ir.ui.view: payment.payment_provider_onboarding_wizard_form
+
+# NOTHING TO DO
+
+DEL onboarding.onboarding.step: payment.onboarding_onboarding_step_payment_provider (noupdate)
+
+# DONE: deleted in post-migration
+
+NEW payment.method: payment.payment_method_aman (noupdate)
+NEW payment.method: payment.payment_method_contact (noupdate)
+NEW payment.method: payment.payment_method_dpo (noupdate)
+NEW payment.method: payment.payment_method_easypaisa (noupdate)
+NEW payment.method: payment.payment_method_forsa (noupdate)
+NEW payment.method: payment.payment_method_halan (noupdate)
+NEW payment.method: payment.payment_method_installments_eg (noupdate)
+NEW payment.method: payment.payment_method_jazzcash (noupdate)
+NEW payment.method: payment.payment_method_kiosk (noupdate)
+NEW payment.method: payment.payment_method_mercado_pago_wallet (noupdate)
+NEW payment.method: payment.payment_method_mobile_wallet_eg (noupdate)
+NEW payment.method: payment.payment_method_premium_card (noupdate)
+NEW payment.method: payment.payment_method_souhoola (noupdate)
+NEW payment.method: payment.payment_method_stcpay (noupdate)
+NEW payment.method: payment.payment_method_sympl (noupdate)
+NEW payment.method: payment.payment_method_tabby (noupdate)
+NEW payment.method: payment.payment_method_tamara (noupdate)
+NEW payment.method: payment.payment_method_troy (noupdate)
+NEW payment.method: payment.payment_method_valu (noupdate)
+
+# NOTHING TO DO
+
+DEL payment.method: payment.payment_method_axis (noupdate)
+DEL payment.method: payment.payment_method_bancomat_pay (noupdate)
+DEL payment.method: payment.payment_method_bpi (noupdate)
+DEL payment.method: payment.payment_method_brankas (noupdate)
+DEL payment.method: payment.payment_method_dolfin (noupdate)
+DEL payment.method: payment.payment_method_frafinance (noupdate)
+DEL payment.method: payment.payment_method_giropay (noupdate)
+DEL payment.method: payment.payment_method_gsb (noupdate)
+DEL payment.method: payment.payment_method_lydia (noupdate)
+DEL payment.method: payment.payment_method_lyfpay (noupdate)
+DEL payment.method: payment.payment_method_naver_pay (noupdate)
+DEL payment.method: payment.payment_method_pay_easy (noupdate)
+DEL payment.method: payment.payment_method_paylib (noupdate)
+DEL payment.method: payment.payment_method_paypay (noupdate)
+DEL payment.method: payment.payment_method_payu (noupdate)
+DEL payment.method: payment.payment_method_toss_pay (noupdate)
+
+# DONE: deleted in post-migration
+
+NEW payment.provider: payment.payment_provider_dpo (noupdate)
+NEW payment.provider: payment.payment_provider_iyzico (noupdate)
+NEW payment.provider: payment.payment_provider_paymob (noupdate)
+NEW payment.provider: payment.payment_provider_redsys (noupdate)
+
+# NOTHING TO DO

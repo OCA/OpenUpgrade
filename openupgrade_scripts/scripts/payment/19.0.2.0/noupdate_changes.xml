@@ -67,7 +67,7 @@
     <field name="support_manual_capture">none</field>
   </record>
   <record id="payment_method_bank_transfer" model="payment.method">
-    <field name="supported_currency_ids"/>
+    <field name="supported_currency_ids" eval="None"/>
     <field name="support_manual_capture">none</field>
   </record>
   <record id="payment_method_becs_direct_debit" model="payment.method">
