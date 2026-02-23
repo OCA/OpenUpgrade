@@ -3,6 +3,8 @@ obsolete model choose.delivery.package [transient]
 ---Fields in module 'stock_delivery'---
 stock_delivery / stock.move.line          / carrier_id (many2one)         : not stored anymore
 ---XML records in module 'stock_delivery'---
+NEW ir.model.access: stock_delivery.access_delivery_price_rule_stock_user
+NEW ir.model.access: stock_delivery.access_delivery_zip_prefix_stock_user
 DEL ir.model.access: stock_delivery.access_choose_delivery_package
 NEW ir.ui.view: stock_delivery.alternative_zpl_label
 NEW ir.ui.view: stock_delivery.normal_zpl_label

@@ -6,7 +6,7 @@ new model job.add.applicants [transient]
 new model talent.pool.add.applicants [transient]
 ---Fields in module 'hr_recruitment'---
 hr_recruitment / calendar.event           / candidate_id (many2one)       : DEL relation: hr.candidate
-hr_recruitment / hr.applicant             / _order                        : _order is now 'sequence' ('priority desc, id desc')
+hr_recruitment / hr.applicant             / _order                        : _order is now 'priority desc, sequence, id desc' ('priority desc, id desc')
 hr_recruitment / hr.applicant             / availability (date)           : is now stored
 hr_recruitment / hr.applicant             / availability (date)           : not related anymore
 hr_recruitment / hr.applicant             / candidate_id (many2one)       : DEL relation: hr.candidate, required

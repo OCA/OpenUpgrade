@@ -9,6 +9,7 @@ sale_stock   / stock.reference          / sale_ids (many2many)          : NEW re
 ---XML records in module 'sale_stock'---
 DEL ir.model.access: sale_stock.access_product_packaging_sale_manager
 DEL ir.model.access: sale_stock.access_product_packaging_user
+NEW ir.rule: sale_stock.sale_order_line_rule_stock_user (noupdate)
 NEW ir.ui.view: sale_stock.portal_my_orders
 NEW ir.ui.view: sale_stock.sale_stock_sale_order_view_search_inherit
 NEW ir.ui.view: sale_stock.stock_reference_sale_view_form
