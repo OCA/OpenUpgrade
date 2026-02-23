@@ -1,0 +1,18 @@
+---Models in module 'l10n_jo_edi_pos'---
+new model pos.edi.xml.ubl_21.jo [abstract]
+---Fields in module 'l10n_jo_edi_pos'---
+l10n_jo_edi_pos / pos.order                / l10n_jo_edi_pos_error (text)  : NEW
+l10n_jo_edi_pos / pos.order                / l10n_jo_edi_pos_qr (char)     : NEW
+l10n_jo_edi_pos / pos.order                / l10n_jo_edi_pos_return_reason (char): NEW
+l10n_jo_edi_pos / pos.order                / l10n_jo_edi_pos_state (selection): NEW selection_keys: ['demo', 'sent', 'to_send']
+l10n_jo_edi_pos / pos.order                / l10n_jo_edi_pos_uuid (char)   : NEW isfunction: function, stored
+l10n_jo_edi_pos / pos.order                / l10n_jo_edi_pos_xml_attachment_id (many2one): NEW relation: ir.attachment
+l10n_jo_edi_pos / pos.payment.method       / l10n_jo_edi_pos_is_cash (boolean): NEW hasdefault: compute
+l10n_jo_edi_pos / res.company              / l10n_jo_edi_pos_enabled (boolean): NEW
+l10n_jo_edi_pos / res.company              / l10n_jo_edi_pos_testing_mode (boolean): NEW
+---XML records in module 'l10n_jo_edi_pos'---
+NEW ir.ui.view: l10n_jo_edi_pos.pos_payment_method_view_form
+NEW ir.ui.view: l10n_jo_edi_pos.res_config_settings_view_form
+NEW ir.ui.view: l10n_jo_edi_pos.view_pos_order_filter
+NEW ir.ui.view: l10n_jo_edi_pos.view_pos_order_tree
+NEW ir.ui.view: l10n_jo_edi_pos.view_pos_pos_form

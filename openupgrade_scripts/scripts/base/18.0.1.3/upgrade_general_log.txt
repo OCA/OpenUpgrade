@@ -106,6 +106,8 @@ new model myinvois.document.status.update.wizard [module l10n_my_edi_pos]
 new model nemhandel.registration [module l10n_dk_nemhandel]
 new model peppol.registration [module account_peppol]
 new model pos.bus.mixin [module point_of_sale]
+new model pos.edi.xml.ubl_21 [module pos_edi_ubl]
+new model pos.edi.xml.ubl_21.jo [module l10n_jo_edi_pos]
 new model pos.load.mixin [module point_of_sale]
 new model pos.note [module point_of_sale]
 new model product.combo (renamed from pos.combo) [module product]
@@ -139,7 +141,7 @@ new model website.page.properties.base [module website]
 # Found in other module: 95
 # Found with different type: 8
 # In obsolete models: 34
-# New columns: 1887
+# New columns: 1899
 # Not matched: 846
 ---XML records in module 'general'---
 ERROR: module not in list of installed modules:
