@@ -1,0 +1,41 @@
+---Models in module 'sale_management'---
+obsolete model sale.order.option
+obsolete model sale.order.template.option
+
+# DONE: moved to sale.order.line/sale.order.template.line
+
+---Fields in module 'sale_management'---
+sale_management / sale.order               / sale_order_option_ids (one2many): DEL relation: sale.order.option
+sale_management / sale.order.line          / is_optional (boolean)         : NEW hasdefault: default
+sale_management / sale.order.line          / sale_order_option_ids (one2many): DEL relation: sale.order.option
+sale_management / sale.order.option        / discount (float)              : DEL
+sale_management / sale.order.option        / line_id (many2one)            : DEL relation: sale.order.line
+sale_management / sale.order.option        / name (text)                   : DEL required
+sale_management / sale.order.option        / order_id (many2one)           : DEL relation: sale.order
+sale_management / sale.order.option        / price_unit (float)            : DEL required
+sale_management / sale.order.option        / product_id (many2one)         : DEL relation: product.product, required
+sale_management / sale.order.option        / quantity (float)              : DEL required
+sale_management / sale.order.option        / sequence (integer)            : DEL
+sale_management / sale.order.option        / uom_id (many2one)             : DEL relation: uom.uom, required
+sale_management / sale.order.template      / sale_order_template_option_ids (one2many): DEL relation: sale.order.template.option
+sale_management / sale.order.template.line / display_type (selection)      : selection_keys added: [line_subsection] (most likely nothing to do)
+sale_management / sale.order.template.line / is_optional (boolean)         : NEW hasdefault: default
+sale_management / sale.order.template.option / company_id (many2one)         : DEL relation: res.company
+sale_management / sale.order.template.option / name (text)                   : DEL required
+sale_management / sale.order.template.option / product_id (many2one)         : DEL relation: product.product, required
+sale_management / sale.order.template.option / quantity (float)              : DEL required
+sale_management / sale.order.template.option / sale_order_template_id (many2one): DEL relation: sale.order.template, required
+sale_management / sale.order.template.option / uom_id (many2one)             : DEL relation: uom.uom, required
+
+# DONE: create optional lines / template lines from former options
+
+---XML records in module 'sale_management'---
+DEL ir.model.access: sale_management.access_sale_order_option
+DEL ir.model.access: sale_management.access_sale_order_option_invoice
+DEL ir.model.access: sale_management.access_sale_order_option_readonly
+DEL ir.model.access: sale_management.access_sale_order_template_option
+DEL ir.model.access: sale_management.access_sale_order_template_option_manager
+NEW ir.ui.view: sale_management.sale_order_portal_optional_product_quantity
+DEL ir.ui.view: sale_management.report_saleorder_document_inherit_sale_management
+
+# NOTHING TO DO
