@@ -11,7 +11,7 @@ def _disable_obsolete_taxes(env):
                 ("name", "=like", f"%_{xmlid}"),
             ]
         )
-        taxes = env["account.tax"].browse(imds.mapped("record_id"))
+        taxes = env["account.tax"].browse(imds.mapped("res_id"))
         taxes.active = False
 
 
