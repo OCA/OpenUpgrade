@@ -1,0 +1,14 @@
+---Accounting template data---
+l10n_pe / account.tax-pe.csv / sale_tax_igv_18_included: DEL
+l10n_pe / account.tax-pe.csv / purchase_tax_igv_18_included: DEL
+# DONE: Archive existing taxes
+
+---Models in module 'l10n_pe'---
+---Fields in module 'l10n_pe'---
+l10n_pe      / account.move.line        / l10n_pe_group_id (many2one)   : DEL relation: account.group
+l10n_pe      / res.bank                 / l10n_pe_edi_code (char)       : NEW
+# NOTHING TO DO
+
+---XML records in module 'l10n_pe'---
+NEW ir.ui.view: l10n_pe.view_res_bank_inherit_l10n_pe_bank
+# NOTHING TO DO
