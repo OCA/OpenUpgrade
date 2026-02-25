@@ -76,6 +76,7 @@ merged_modules = {
     # OCA/social
     "mail_activity_plan": "mail",
     "mass_mailing_custom_unsubscribe_event": "mass_mailing",
+    "mail_template_multi_attachment": "mail",
     # OCA/stock-logistics-warehouse
     "stock_lot_filter_available": "stock",
     # OCA/web
