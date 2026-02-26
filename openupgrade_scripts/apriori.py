@@ -90,6 +90,8 @@ merged_modules = {
     "sale_order_qty_change_no_recompute": "sale",
     # OCA/server-brand
     "hr_expense_remove_mobile_link": "hr_expense",
+    # OCA/stock-logistics-workflow
+    "stock_move_line_auto_fill": "stock",
     # OCA/...
 }
 
