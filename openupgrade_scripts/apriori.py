@@ -100,6 +100,8 @@ merged_modules = {
     "stock_account_product_cost_security": "product_cost_security",
     # OCA/server-tools
     "base_jsonify": "jsonifier",
+    # OCA/server-ux
+    "mass_operation_abstract": "base",
     # OCA/stock-logistics-reporting
     "stock_inventory_valuation_pivot": "stock_account",
     # OCA/stock-logistics-warehouse
