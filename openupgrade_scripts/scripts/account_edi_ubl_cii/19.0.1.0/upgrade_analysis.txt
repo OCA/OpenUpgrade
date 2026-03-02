@@ -2,6 +2,7 @@
 ---Fields in module 'account_edi_ubl_cii'---
 account_edi_ubl_cii_tax_extension / account.tax              / ubl_cii_tax_exemption_reason_code (selection): selection_keys added: [VATEX-EU-AE, VATEX-EU-D, VATEX-EU-F, VATEX-EU-G, VATEX-EU-I, VATEX-EU-IC, VATEX-EU-J, VATEX-EU-O, VATEX-FR-CNWVAT, VATEX-FR-FRANCHISE], removed: [VATEX_EU_AE, VATEX_EU_D, VATEX_EU_F, VATEX_EU_G, VATEX_EU_I, VATEX_EU_IC, VATEX_EU_J, VATEX_EU_O, VATEX_FR-CNWVAT, VATEX_FR-FRANCHISE]
 ---XML records in module 'account_edi_ubl_cii'---
+DEL ir.actions.server: account_edi_ubl_cii.action_group_ungroup_lines_by_tax
 NEW ir.ui.view: account_edi_ubl_cii.view_account_invoice_form_inherit
 DEL ir.ui.view: account_edi_ubl_cii.ubl_20_AddressType
 DEL ir.ui.view: account_edi_ubl_cii.ubl_20_AllowanceChargeType
