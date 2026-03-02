@@ -5,11 +5,10 @@ account_edi_ubl_cii / res.company              / invoice_is_ubl_cii (boolean)  :
 account_edi_ubl_cii / res.partner              / invoice_edi_format (False)    : NEW selection_keys: ['facturx', 'nlcius', 'ubl_a_nz', 'ubl_bis3', 'ubl_sg', 'xrechnung'], mode: modify
 account_edi_ubl_cii / res.partner              / is_peppol_edi_format (boolean): previously in module account_peppol
 account_edi_ubl_cii / res.partner              / peppol_eas (selection)        : selection_keys removed: [0212, 0215, 9901]
-account_edi_ubl_cii / res.partner              / ubl_cii_format (selection)    : DEL selection_keys: ['facturx', 'nlcius', 'ubl_a_nz', 'ubl_bis3', 'ubl_sg', 'xrechnung']
+account_edi_ubl_cii / res.partner              / ubl_cii_format (selection)    : DEL selection_keys: ['facturx', 'nlcius', 'ubl_a_nz', 'ubl_bis3', 'ubl_sg', 'xrechnung', 'zugferd']
 account_edi_ubl_cii / res.users                / is_peppol_edi_format (boolean): previously in module account_peppol
 ---XML records in module 'account_edi_ubl_cii'---
 NEW ir.actions.report: account_edi_ubl_cii.action_report_account_invoices_generated_by_odoo
-DEL ir.actions.server: account_edi_ubl_cii.action_group_ungroup_lines_by_tax
 NEW ir.ui.view: account_edi_ubl_cii.account_invoices_generated_by_odoo
 NEW ir.ui.view: account_edi_ubl_cii.external_layout_with_context
 NEW ir.ui.view: account_edi_ubl_cii.report_invoice_document
