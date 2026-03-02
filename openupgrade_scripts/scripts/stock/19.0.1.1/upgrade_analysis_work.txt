@@ -1,0 +1,367 @@
+---Models in module 'stock'---
+obsolete model procurement.group (renamed to stock.reference)
+
+# DONE: renamed in pre-migration
+
+obsolete model stock.change.product.qty [transient]
+obsolete model stock.lot.report [sql_view]
+
+# NOTHING TO DO
+
+obsolete model stock.package_level (renamed to stock.package.history)
+obsolete model stock.quant.package (renamed to stock.package)
+
+# DONE: renamed in pre-migration
+
+obsolete model stock.track.confirmation [transient]
+obsolete model stock.track.line [transient]
+
+# NOTHING TO DO
+
+new model stock.package (renamed from stock.quant.package)
+new model stock.package.history (renamed from stock.package_level)
+
+# DONE: renamed in pre-migration
+
+new model stock.put.in.pack [transient]
+
+# NOTHING TO DO
+
+new model stock.reference (renamed from procurement.group)
+
+# DONE: renamed in pre-migration
+
+---Fields in module 'stock'---
+stock        / procurement.group        / _order                        : _order is now 'id' ('id desc')
+stock        / procurement.group        / move_type (selection)         : DEL selection_keys: ['direct', 'one']
+stock        / procurement.group        / partner_id (many2one)         : DEL relation: res.partner
+
+# NOTHING TO DO
+
+stock        / procurement.group        / stock_move_ids (one2many)     : DEL relation: stock.move
+
+# DONE: renamed to move_ids in pre-migration
+
+stock        / product.packaging        / package_type_id (many2one)    : DEL relation: stock.package.type
+
+# DONE: set package_type_id of corresponding uom
+
+stock        / product.packaging        / route_ids (many2many)         : DEL relation: stock.route
+
+# DONE: used to set stock.package.type#route_ids
+
+stock        / product.template         / lot_sequence_id (many2one)    : NEW relation: ir.sequence, hasdefault: default
+stock        / res.company              / horizon_days (float)          : NEW required, hasdefault: default
+stock        / res.company              / stock_confirmation_type (selection): NEW selection_keys: ['sms'], hasdefault: default
+stock        / res.company              / stock_text_confirmation (boolean): NEW
+
+# NOTHING TO DO: default is fine
+
+stock        / res.partner              / picking_warn (selection)      : DEL selection_keys: ['block', 'no-message', 'warning']
+stock        / stock.location           / comment (html)                : DEL
+stock        / stock.location           / posx (integer)                : DEL
+stock        / stock.location           / posy (integer)                : DEL
+stock        / stock.location           / posz (integer)                : DEL
+stock        / stock.location           / scrap_location (boolean)      : DEL
+stock        / stock.lot                / product_uom_id (many2one)     : not stored anymore
+stock        / stock.move               / description_picking (text)    : not stored anymore
+stock        / stock.move               / description_picking (text)    : now a function
+stock        / stock.move               / description_picking_manual (text): NEW
+
+# NOTHING TO DO
+
+stock        / stock.move               / group_id (many2one)           : DEL relation: procurement.group
+
+# DONE: used to fill reference_ids in post-migration
+
+stock        / stock.move               / inventory_name (char)         : NEW
+stock        / stock.move               / name (char)                   : DEL required
+stock        / stock.move               / package_level_id (many2one)   : DEL relation: stock.package_level
+
+# NOTHING TO DO
+
+stock        / stock.move               / packaging_uom_id (many2one)   : NEW relation: uom.uom, isfunction: function, stored
+
+# DONE: filled from product_packaging_id in post-migration
+
+stock        / stock.move               / packaging_uom_qty (float)     : NEW isfunction: function, stored
+stock        / stock.move               / procurement_values (json)     : NEW stored: False
+
+# NOTHING TO DO
+
+stock        / stock.move               / product_packaging_id (many2one): DEL relation: product.packaging
+
+# DONE: used to fill packaging_uom_id in post-migration
+
+stock        / stock.move               / reference_ids (many2many)     : NEW relation: stock.reference
+
+# DONE: filled from group_id in post-migration
+
+stock        / stock.move               / scrapped (boolean)            : DEL
+stock        / stock.move.line          / description_picking (text)    : not stored anymore
+stock        / stock.move.line          / description_picking (text)    : now related
+
+# NOTHING TO DO
+
+stock        / stock.move.line          / is_entire_pack (boolean)      : NEW
+
+# DONE: computed for pending pickings in end-migration
+
+stock        / stock.move.line          / package_history_id (many2one) : NEW relation: stock.package.history
+
+# DONE: renamed from package_level_id in pre-migration
+
+stock        / stock.move.line          / package_id (many2one)         : relation is now 'stock.package' ('stock.quant.package') [nothing to do]
+
+# NOTHING TO DO
+
+stock        / stock.move.line          / package_level_id (many2one)   : DEL relation: stock.package_level
+
+# DONE: renamed to package_history_id in pre-migration
+
+stock        / stock.move.line          / reference (char)              : not stored anymore
+stock        / stock.move.line          / result_package_id (many2one)  : relation is now 'stock.package' ('stock.quant.package') [nothing to do]
+
+# NOTHING TO DO
+
+stock        / stock.package            / child_package_dest_ids (one2many): NEW relation: stock.package
+stock        / stock.package            / child_package_ids (one2many)  : NEW relation: stock.package
+stock        / stock.package            / complete_name (char)          : NEW isfunction: function, stored
+stock        / stock.package            / package_dest_id (many2one)    : NEW relation: stock.package
+stock        / stock.package            / parent_package_id (many2one)  : NEW relation: stock.package
+stock        / stock.package            / parent_path (char)            : NEW
+stock        / stock.package.history    / outermost_dest_id (many2one)  : NEW relation: stock.package
+
+# NOTHING TO DO: new feature
+
+stock        / stock.package.history    / package_name (char)           : NEW required
+
+# DONE: set from package_id.name in post-migration
+
+stock        / stock.package.history    / parent_dest_id (many2one)     : NEW relation: stock.package
+stock        / stock.package.history    / parent_dest_name (char)       : NEW
+stock        / stock.package.history    / parent_orig_id (many2one)     : NEW relation: stock.package
+stock        / stock.package.history    / parent_orig_name (char)       : NEW
+
+# NOTHING TO DO: new feature
+
+stock        / stock.package.history    / picking_ids (many2many)       : NEW relation: stock.picking
+
+# DONE: set from stock.package_level#picking_id
+
+stock        / stock.package.type       / package_use (selection)       : NEW required, selection_keys: ['disposable', 'reusable'], hasdefault: default
+
+# DONE: set to reusable if all previous stock.quant.package had this use
+
+stock        / stock.package.type       / route_ids (many2many)         : NEW relation: stock.route
+
+# DONE: set from stock.packaging#route_ids
+
+stock        / stock.package.type       / sequence_id (many2one)        : NEW relation: ir.sequence
+stock        / stock.package_level      / location_id (many2one)        : is now stored
+stock        / stock.package_level      / location_id (many2one)        : not a function anymore
+stock        / stock.package_level      / move_ids (one2many)           : DEL relation: stock.move
+stock        / stock.package_level      / move_line_ids (one2many)      : now required
+stock        / stock.package_level      / package_id (many2one)         : relation is now 'stock.package' ('stock.quant.package') [nothing to do]
+
+# NOTHING TO DO
+
+stock        / stock.package_level      / picking_id (many2one)         : DEL relation: stock.picking
+
+# DONE: see stock.package.history#picking_ids
+
+stock        / stock.picking            / date (datetime)               : DEL
+stock        / stock.picking            / group_id (many2one)           : DEL relation: procurement.group
+stock        / stock.picking            / move_ids_without_package (one2many): DEL relation: stock.move
+stock        / stock.picking            / move_line_ids_without_package (one2many): DEL relation: stock.move.line
+
+# NOTHING TO DO
+
+stock        / stock.picking            / package_history_ids (many2many): NEW relation: stock.package.history
+stock        / stock.picking            / package_level_ids (one2many)  : DEL relation: stock.package_level
+
+# DONE: renamed in pre-migration
+
+stock        / stock.picking            / package_level_ids_details (one2many): DEL relation: stock.package_level
+stock        / stock.picking            / shipping_weight (float)       : is now stored
+stock        / stock.picking.type       / set_package_type (boolean)    : NEW hasdefault: default
+stock        / stock.quant              / package_id (many2one)         : relation is now 'stock.package' ('stock.quant.package') [nothing to do]
+stock        / stock.quant              / storage_category_id (many2one): not stored anymore
+stock        / stock.quant.package      / _order                        : _order is now 'name, id' ('name')
+
+# NOTHING TO DO
+
+stock        / stock.quant.package      / package_use (selection)       : DEL required, selection_keys: ['disposable', 'reusable']
+
+# DONE: used to set stock.package.type#package_use
+
+stock        / stock.reference          / move_ids (many2many)          : NEW relation: stock.move
+
+# DONE: renamed from stock_move_ids in pre-migration
+
+stock        / stock.route              / package_type_selectable (boolean): NEW
+
+# DONE: renamed from packaging_selectable
+
+stock        / stock.route              / packaging_ids (many2many)     : DEL relation: product.packaging
+
+# DONE: used to set stock.package.type#route_ids
+
+stock        / stock.route              / packaging_selectable (boolean): DEL
+
+# DONE: renamed to package_type_selectable
+
+stock        / stock.rule               / group_id (many2one)           : DEL relation: procurement.group
+stock        / stock.rule               / group_propagation_option (selection): DEL selection_keys: ['fixed', 'none', 'propagate']
+stock        / stock.rule               / picking_type_code_domain (char): type is now 'json' ('char')
+stock        / stock.rule               / propagate_warehouse_id (many2one): DEL relation: stock.warehouse
+stock        / stock.scrap              / package_id (many2one)         : relation is now 'stock.package' ('stock.quant.package') [nothing to do]
+stock        / stock.warehouse          / crossdock_route_id (many2one) : DEL relation: stock.route
+stock        / stock.warehouse.orderpoint / deadline_date (date)          : NEW isfunction: function, stored
+stock        / stock.warehouse.orderpoint / group_id (many2one)           : DEL relation: procurement.group
+stock        / stock.warehouse.orderpoint / product_category_id (many2one): not stored anymore
+stock        / stock.warehouse.orderpoint / qty_multiple (float)          : DEL required
+stock        / stock.warehouse.orderpoint / qty_to_order_computed (float) : is now stored
+stock        / stock.warehouse.orderpoint / replenishment_uom_id (many2one): NEW relation: uom.uom
+
+# NOTHING TO DO
+
+stock        / uom.uom                  / package_type_id (many2one)    : NEW relation: stock.package.type
+
+# NOTHING TO DO: see above for product.packaging
+
+---XML records in module 'stock'---
+NEW ir.actions.act_window: stock.action_put_in_pack_wizard
+NEW ir.actions.act_window: stock.action_stock_reference
+NEW ir.actions.act_window: stock.stock_quant_action
+DEL ir.actions.act_window: stock.action_change_product_quantity
+DEL ir.actions.act_window: stock.action_lot_report
+DEL ir.actions.act_window: stock.dashboard_open_quants
+DEL ir.actions.act_window: stock.do_view_pickings
+DEL ir.actions.act_window: stock.location_open_quants
+NEW ir.actions.report: stock.action_report_package_barcode
+NEW ir.actions.report: stock.action_report_package_barcode_small
+NEW ir.actions.report: stock.action_report_package_history_barcode
+NEW ir.actions.report: stock.action_report_package_history_barcode_small
+NEW ir.actions.report: stock.label_package_history_template
+NEW ir.actions.report: stock.label_packaging_barcode
+DEL ir.actions.report: stock.action_report_quant_package_barcode
+DEL ir.actions.report: stock.action_report_quant_package_barcode_small
+DEL ir.actions.report: stock.label_product_packaging
+NEW ir.actions.server: stock.action_product_replenishment
+NEW ir.actions.server: stock.action_product_template_replenishment
+NEW ir.actions.server: stock.action_stock_quant_relocate
+NEW ir.model.access: stock.access_stock_package_all
+NEW ir.model.access: stock.access_stock_package_history_user
+NEW ir.model.access: stock.access_stock_package_stock_manager
+NEW ir.model.access: stock.access_stock_package_stock_user
+NEW ir.model.access: stock.access_stock_put_in_pack_user
+NEW ir.model.access: stock.access_stock_reference
+DEL ir.model.access: stock.access_procurement_group
+DEL ir.model.access: stock.access_product_category_stock_manager
+DEL ir.model.access: stock.access_product_packaging_stock_manager
+DEL ir.model.access: stock.access_product_pricelist_item_stock_manager
+DEL ir.model.access: stock.access_product_product_attribute_manager
+DEL ir.model.access: stock.access_product_product_stock_manager
+DEL ir.model.access: stock.access_product_supplierinfo_stock_manager
+DEL ir.model.access: stock.access_product_tag_stock_manager
+DEL ir.model.access: stock.access_product_template_attribute_exclusion_manager
+DEL ir.model.access: stock.access_product_template_attribute_line_manager
+DEL ir.model.access: stock.access_product_template_stock_manager
+DEL ir.model.access: stock.access_stock_change_product_qty
+DEL ir.model.access: stock.access_stock_location_user
+DEL ir.model.access: stock.access_stock_lot_report
+DEL ir.model.access: stock.access_stock_package_level_all
+DEL ir.model.access: stock.access_stock_package_level_stock_manager
+DEL ir.model.access: stock.access_stock_package_level_stock_user
+DEL ir.model.access: stock.access_stock_quant_package_all
+DEL ir.model.access: stock.access_stock_quant_package_stock_manager
+DEL ir.model.access: stock.access_stock_quant_package_stock_user
+DEL ir.model.access: stock.access_stock_track_confirmation
+DEL ir.model.access: stock.access_stock_track_line
+DEL ir.model.access: stock.access_uom_category_stock_manager
+DEL ir.model.access: stock.access_uom_uom_stock_manager
+NEW ir.model.constraint: stock.constraint_stock_location_parent_path_id_idx
+NEW ir.model.constraint: stock.constraint_stock_move_line_free_reservation_index
+NEW ir.model.constraint: stock.constraint_stock_move_product_location_index
+
+# NOTHING TO DO
+
+DEL ir.model.constraint: stock.constraint_stock_warehouse_orderpoint_qty_multiple_check
+
+# DONE: deleted in pre-migration
+
+NEW ir.rule: stock.stock_package_comp_rule (noupdate)
+
+# NOTHING TO DO
+
+DEL ir.rule: stock.stock_quant_package_comp_rule (noupdate)
+
+# DONE: deleted in pre-migration
+
+NEW ir.sequence: stock.seq_package (noupdate)
+DEL ir.sequence: stock.seq_quant_package (noupdate)
+
+# DONE: renamed in pre-migration
+
+DEL ir.sequence: stock.sequence_proc_group (noupdate)
+
+# DONE: deleted in pre-migration
+
+NEW ir.ui.menu: stock.menu_stock_references
+DEL ir.ui.menu: stock.menu_product_packagings
+DEL ir.ui.menu: stock.menu_stock_unit_measure_stock
+DEL ir.ui.menu: stock.menu_stock_uom_categ_form_action
+DEL ir.ui.menu: stock.product_uom_menu
+NEW ir.ui.view: stock.alternative_zpl_label
+NEW ir.ui.view: stock.jewelry_zpl_label
+NEW ir.ui.view: stock.label_package_history_template_view
+NEW ir.ui.view: stock.label_packaging_barcode_view
+NEW ir.ui.view: stock.normal_zpl_label
+NEW ir.ui.view: stock.package_history_search_view
+NEW ir.ui.view: stock.product_label_layout_form_stock
+NEW ir.ui.view: stock.product_uom_form_view_inherit
+NEW ir.ui.view: stock.product_uom_tree_view_inherit
+NEW ir.ui.view: stock.report_package_barcode_content
+NEW ir.ui.view: stock.report_package_history_barcode
+NEW ir.ui.view: stock.report_package_history_barcode_small
+NEW ir.ui.view: stock.report_return_document
+NEW ir.ui.view: stock.small_zpl_label
+NEW ir.ui.view: stock.stock_package_view_add_list
+NEW ir.ui.view: stock.stock_package_view_form
+NEW ir.ui.view: stock.stock_package_view_kanban
+NEW ir.ui.view: stock.stock_package_view_list
+NEW ir.ui.view: stock.stock_package_view_list_editable
+NEW ir.ui.view: stock.stock_package_view_search
+NEW ir.ui.view: stock.stock_put_in_pack_form
+NEW ir.ui.view: stock.stock_reference_form_view
+NEW ir.ui.view: stock.stock_reference_search_view
+NEW ir.ui.view: stock.stock_reference_tree_view
+NEW ir.ui.view: stock.view_stock_package_history_list
+NEW ir.ui.view: stock.view_warehouse_orderpoint_tree_editable_show_trigger
+DEL ir.ui.view: stock.duplicated_sn_warning
+DEL ir.ui.view: stock.label_product_packaging_view
+DEL ir.ui.view: stock.package_level_form_edit_view
+DEL ir.ui.view: stock.package_level_form_view
+DEL ir.ui.view: stock.package_level_tree_view_picking
+DEL ir.ui.view: stock.procurement_group_form_view
+DEL ir.ui.view: stock.product_packaging_form_view
+DEL ir.ui.view: stock.product_packaging_tree_view
+DEL ir.ui.view: stock.product_product_view_form_easy_inherit_stock
+DEL ir.ui.view: stock.quant_package_search_view
+DEL ir.ui.view: stock.search_customer_lot_filter
+DEL ir.ui.view: stock.stock_lot_customer_report_view_list
+DEL ir.ui.view: stock.view_change_product_quantity
+DEL ir.ui.view: stock.view_quant_package_form
+DEL ir.ui.view: stock.view_quant_package_kanban
+DEL ir.ui.view: stock.view_quant_package_tree
+DEL ir.ui.view: stock.view_stock_track_confirmation
+NEW res.groups.privilege: stock.res_groups_privilege_inventory
+
+# NOTHING TO DO
+
+DEL stock.location: stock.stock_location_locations (noupdate)
+DEL stock.location: stock.stock_location_locations_partner (noupdate)
+DEL stock.location: stock.stock_location_locations_virtual (noupdate)
+
+# DONE: deleted in post-migration
