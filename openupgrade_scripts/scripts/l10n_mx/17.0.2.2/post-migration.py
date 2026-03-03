@@ -21,17 +21,29 @@ def _compute_new_tax_type(env):
 
 def _delete_analytic_tags(env):
     l10n_mx_xmlids = [
+        "tag_iva",
+        "tag_isr",
+        "tag_ieps",
         "tag_diot_0",
+        "tag_diot_16_refund",
         "tag_diot_16",
         "tag_diot_16_imp",
+        "tag_diot_16_imp_non_cre",
+        "tag_diot_16_imp_refund",
         "tag_diot_16_non_cre",
         "tag_diot_8",
         "tag_diot_8_non_cre",
-        "tag_diot_exento",
+        "tag_diot_8_refund",
+        "tag_diot_8_south",
+        "tag_diot_8_south_non_cre",
+        "tag_diot_8_south_refund",
+        "tag_diot_16_imp_int",
+        "tag_diot_16_imp_int_non_cre",
+        "tag_diot_16_imp_int_refund",
         "tag_diot_ret",
-        "tag_ieps",
-        "tag_isr",
-        "tag_iva",
+        "tag_diot_exento",
+        "tag_diot_exento_imp",
+        "tag_diot_no_obj",
     ]
     openupgrade.delete_records_safely_by_xml_id(
         env, [f"l10n_mx.{x}" for x in l10n_mx_xmlids]
