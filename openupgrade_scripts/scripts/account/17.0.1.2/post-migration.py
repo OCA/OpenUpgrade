@@ -117,6 +117,7 @@ def _am_update_invoice_pdf_report_file(env):
             res_id = am.id
         FROM account_move am
         WHERE am.message_main_attachment_id = ia.id
+        AND am.move_type IN ('out_invoice', 'out_refund')
         """,
     )
 
