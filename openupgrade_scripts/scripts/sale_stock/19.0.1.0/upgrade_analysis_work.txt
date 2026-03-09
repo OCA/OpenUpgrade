@@ -1,0 +1,31 @@
+---Models in module 'sale_stock'---
+---Fields in module 'sale_stock'---
+sale_stock   / procurement.group        / sale_id (many2one)            : DEL relation: sale.order
+
+# DONE: see sale.order#stock_reference_ids
+
+sale_stock   / sale.order               / procurement_group_id (many2one): DEL relation: procurement.group
+sale_stock   / sale.order               / stock_reference_ids (many2many): NEW relation: stock.reference
+
+# DONE: m2o_to_x2m conversion
+
+sale_stock   / sale.order.line          / route_id (many2one)           : DEL relation: stock.route
+sale_stock   / sale.order.line          / route_ids (many2many)         : NEW relation: stock.route
+
+# DONE: m2o_to_x2m conversion
+
+sale_stock   / stock.reference          / sale_ids (many2many)          : NEW relation: sale.order
+
+# DONE: see sale.order#stock_reference_ids
+
+---XML records in module 'sale_stock'---
+DEL ir.model.access: sale_stock.access_product_packaging_sale_manager
+DEL ir.model.access: sale_stock.access_product_packaging_user
+NEW ir.rule: sale_stock.sale_order_line_rule_stock_user (noupdate)
+NEW ir.ui.view: sale_stock.portal_my_orders
+NEW ir.ui.view: sale_stock.sale_stock_sale_order_view_search_inherit
+NEW ir.ui.view: sale_stock.stock_reference_sale_view_form
+DEL ir.ui.view: sale_stock.sale_order_cancel_view_form_inherit
+DEL ir.ui.view: sale_stock.view_order_form_inherit_sale_stock_qty
+
+# NOTHING TO DO
