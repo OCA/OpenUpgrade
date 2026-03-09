@@ -4,8 +4,6 @@ sale_stock   / res.users                / property_warehouse_id (many2one): need
 sale_stock   / sale.order.line          / warehouse_id (many2one)       : is now stored
 sale_stock   / sale.order.line          / warehouse_id (many2one)       : not related anymore
 sale_stock   / sale.order.line          / warehouse_id (many2one)       : now a function
-sale_stock   / stock.picking            / sale_id (many2one)            : not related anymore
-sale_stock   / stock.picking            / sale_id (many2one)            : now a function
 ---XML records in module 'sale_stock'---
 NEW ir.ui.view: sale_stock.sale_stock_help_message_template
 NEW ir.ui.view: sale_stock.view_picking_form
