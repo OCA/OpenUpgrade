@@ -60,6 +60,7 @@ renamed_models = {
     "product.packaging": "product.uom",
     "stock.package_level": "stock.package.history",
     "stock.quant.package": "stock.package",
+    "stock.valuation.layer": "product.value",
     "web_editor.assets": "website.assets",
     "web_editor.converter.test": "html_editor.converter.test",
     "web_editor.converter.test.sub": "html_editor.converter.test.sub",

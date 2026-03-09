@@ -1,0 +1,222 @@
+---Models in module 'stock_account'---
+obsolete model stock.valuation.layer
+
+# DONE: renamed to product.value
+
+obsolete model stock.valuation.layer.revaluation [transient]
+
+# NOTHING TO DO
+
+new model product.value
+
+# DONE: renamed from stock.valuation.layer
+
+new model stock_account.stock.valuation.report [abstract]
+new model stock.avco.report [abstract]
+
+# NOTHING TO DO
+
+---Fields in module 'stock_account'---
+stock_account / account.account          / account_stock_expense_id (many2one): NEW relation: account.account
+stock_account / account.account          / account_stock_variation_id (many2one): NEW relation: account.account
+
+# DONE: set in end-migration
+
+stock_account / account.move             / stock_move_id (many2one)      : DEL relation: stock.move
+stock_account / account.move             / stock_move_ids (one2many)     : NEW relation: stock.move
+
+# DONE: filled from account.move#stock_move_id
+
+stock_account / account.move             / stock_valuation_layer_ids (one2many): DEL relation: stock.valuation.layer
+stock_account / account.move.line        / stock_valuation_layer_ids (one2many): DEL relation: stock.valuation.layer
+
+# NOTHING TO DO
+
+stock_account / product.category         / property_price_difference_account_id (many2one): NEW relation: account.account
+stock_account / product.category         / property_stock_account_input_categ_id (many2one): DEL relation: account.account
+stock_account / product.category         / property_stock_account_output_categ_id (many2one): DEL relation: account.account
+
+# NOTHING TO DO
+
+stock_account / product.category         / property_valuation (selection): selection_keys added: [periodic], removed: [manual_periodic]
+
+# DONE: changed 'manual_periodic' to 'periodoc'
+
+stock_account / product.product          / stock_valuation_layer_ids (one2many): DEL relation: stock.valuation.layer
+
+# NOTHING TO DO
+
+stock_account / product.template         / cost_method (selection)       : not related anymore
+stock_account / product.template         / cost_method (selection)       : now a function
+stock_account / product.template         / cost_method (selection)       : selection_keys is now '['average', 'fifo', 'standard']' ('function')
+
+# NOTHING TO DO: non-stored
+
+stock_account / product.template         / property_price_difference_account_id (many2one): NEW relation: account.account
+
+# NOTHING TO DO: seems unused on products anyways
+
+stock_account / product.template         / valuation (selection)         : not related anymore
+stock_account / product.template         / valuation (selection)         : now a function
+stock_account / product.template         / valuation (selection)         : selection_keys is now '['periodic', 'real_time']' ('function')
+
+# NOTHING TO DO: non-stored
+
+stock_account / product.value            / company_id (many2one)         : NEW relation: res.company, required, hasdefault: compute
+
+# NOTHING TO DO
+
+stock_account / product.value            / date (datetime)               : NEW required, hasdefault: default
+
+# DONE: set from create_date
+
+stock_account / product.value            / description (char)            : NEW
+stock_account / product.value            / lot_id (many2one)             : NEW relation: stock.lot
+
+# NOTHING TO DO
+
+stock_account / product.value            / move_id (many2one)            : NEW relation: stock.move
+
+# DONE: renamed from stock_move_id
+
+stock_account / product.value            / product_id (many2one)         : NEW relation: product.product
+
+# DONE: set from move_id
+
+stock_account / product.value            / user_id (many2one)            : NEW relation: res.users, required, hasdefault: default
+
+# DONE: set from create_uid
+
+stock_account / product.value            / value (float)                 : NEW required
+
+# NOTHING TO DO
+
+stock_account / res.company              / account_stock_journal_id (many2one): NEW relation: account.journal
+stock_account / res.company              / account_stock_valuation_id (many2one): NEW relation: account.account
+
+# DONE: set in end-migration
+
+stock_account / res.company              / cost_method (selection)       : NEW required, selection_keys: ['average', 'fifo', 'standard'], hasdefault: default
+stock_account / res.company              / inventory_period (selection)  : NEW required, selection_keys: ['daily', 'manual', 'monthly'], hasdefault: default
+stock_account / res.company              / inventory_valuation (selection): NEW selection_keys: ['periodic', 'real_time'], hasdefault: default
+
+# NOTHING TO DO: defaults are fine or won't matter for a migrated db
+
+stock_account / stock.location           / valuation_account_id (many2one): NEW relation: account.account
+
+# DONE: set from valuation_in_account_id and valuation_out_account_id
+
+stock_account / stock.location           / valuation_in_account_id (many2one): DEL relation: account.account
+stock_account / stock.location           / valuation_out_account_id (many2one): DEL relation: account.account
+
+# NOTHING TO DO
+
+stock_account / stock.lot                / avg_cost (float)              : is now stored
+
+# DONE: delayed computation to end-migration
+
+stock_account / stock.lot                / stock_valuation_layer_ids (one2many): DEL relation: stock.valuation.layer
+
+# NOTHING TO DO
+
+stock_account / stock.move               / account_move_id (many2one)    : NEW relation: account.move
+
+# DONE: filled from account.move#stock_move_id
+
+stock_account / stock.move               / account_move_ids (one2many)   : DEL relation: account.move
+stock_account / stock.move               / company_currency_id (many2one): previously in module l10n_in_ewaybill_stock
+
+# NOTHING TO DO
+
+stock_account / stock.move               / is_dropship (boolean)         : NEW isfunction: function, stored
+stock_account / stock.move               / is_in (boolean)               : NEW isfunction: function, stored
+stock_account / stock.move               / is_out (boolean)              : NEW isfunction: function, stored
+
+# DONE: delayed computation to end-migration
+
+stock_account / stock.move               / stock_valuation_layer_ids (one2many): DEL relation: stock.valuation.layer
+
+# NOTHING TO DO
+
+stock_account / stock.move               / value (float)                 : NEW
+
+# DONE: computed from product.value#value
+
+stock_account / stock.quant              / cost_method (selection)       : not related anymore
+stock_account / stock.quant              / cost_method (selection)       : now a function
+stock_account / stock.quant              / cost_method (selection)       : selection_keys is now '['average', 'fifo', 'standard']' ('function')
+stock_account / stock.quant              / currency_id (many2one)        : not a function anymore
+stock_account / stock.quant              / currency_id (many2one)        : now related
+
+# NOTHING TO DO: non-stored
+
+stock_account / stock.valuation.layer    / account_move_id (many2one)    : DEL relation: account.move
+stock_account / stock.valuation.layer    / account_move_line_id (many2one): DEL relation: account.move.line
+stock_account / stock.valuation.layer    / categ_id (many2one)           : DEL relation: product.category
+stock_account / stock.valuation.layer    / company_id (many2one)         : DEL relation: res.company, required
+stock_account / stock.valuation.layer    / description (char)            : DEL
+stock_account / stock.valuation.layer    / lot_id (many2one)             : DEL relation: stock.lot
+stock_account / stock.valuation.layer    / price_diff_value (float)      : DEL
+stock_account / stock.valuation.layer    / product_id (many2one)         : DEL relation: product.product, required
+stock_account / stock.valuation.layer    / quantity (float)              : DEL
+stock_account / stock.valuation.layer    / remaining_qty (float)         : DEL
+stock_account / stock.valuation.layer    / remaining_value (float)       : DEL
+stock_account / stock.valuation.layer    / stock_move_id (many2one)      : DEL relation: stock.move
+stock_account / stock.valuation.layer    / stock_valuation_layer_id (many2one): DEL relation: stock.valuation.layer
+stock_account / stock.valuation.layer    / stock_valuation_layer_ids (one2many): DEL relation: stock.valuation.layer
+stock_account / stock.valuation.layer    / unit_cost (float)             : DEL
+stock_account / stock.valuation.layer    / value (float)                 : DEL
+
+# DONE: see product.value
+
+---XML records in module 'stock_account'---
+NEW ir.actions.act_window: stock_account.product_value_action
+NEW ir.actions.act_window: stock_account.stock_avco_report_action
+NEW ir.actions.act_window: stock_account.stock_move_valuation_action
+DEL ir.actions.act_window: stock_account.action_revalue_layers
+DEL ir.actions.act_window: stock_account.stock_valuation_layer_action
+DEL ir.actions.act_window: stock_account.stock_valuation_layer_report_action
+NEW ir.actions.client: stock_account.action_report_stock_valuation
+NEW ir.actions.server: stock_account.stock_move_action_adjust_valuation
+NEW ir.cron: stock_account.ir_cron_post_stock_valuation (noupdate)
+NEW ir.model.access: stock_account.access_stock_avco_report_account_readonly
+NEW ir.model.access: stock_account.access_stock_avco_report_stock_manager
+NEW ir.model.access: stock_account.access_stock_product_value
+DEL ir.model.access: stock_account.access_stock_valuation_layer
+DEL ir.model.access: stock_account.access_stock_valuation_layer_revaluation
+NEW ir.rule: stock_account.product_value_rule (noupdate)
+NEW ir.rule: stock_account.stock_avco_report_rule (noupdate)
+
+# NOTHING TO DO
+
+DEL ir.rule: stock_account.stock_valuation_layer_company_rule (noupdate)
+
+# DONE: deleted in pre-migration
+
+DEL ir.ui.menu: stock_account.menu_valuation
+NEW ir.ui.view: stock_account.product_product_view_list_at_date
+NEW ir.ui.view: stock_account.product_value_form_view
+NEW ir.ui.view: stock_account.stock_avco_report_view_list
+NEW ir.ui.view: stock_account.stock_inventory_adjustment_name_form_view_inherit_stock_account
+NEW ir.ui.view: stock_account.stock_move_view_list
+NEW ir.ui.view: stock_account.stock_move_view_list_valuation
+NEW ir.ui.view: stock_account.view_account_form
+NEW ir.ui.view: stock_account.view_move_search
+DEL ir.ui.view: stock_account.stock_inventory_request_count_form_view_inherit_stock_account
+DEL ir.ui.view: stock_account.stock_valuation_layer_form
+DEL ir.ui.view: stock_account.stock_valuation_layer_graph
+DEL ir.ui.view: stock_account.stock_valuation_layer_picking
+DEL ir.ui.view: stock_account.stock_valuation_layer_pivot
+DEL ir.ui.view: stock_account.stock_valuation_layer_report_tree
+DEL ir.ui.view: stock_account.stock_valuation_layer_revaluation_form_view
+DEL ir.ui.view: stock_account.stock_valuation_layer_tree
+DEL ir.ui.view: stock_account.stock_valuation_layer_valuation_at_date_tree_inherited
+DEL ir.ui.view: stock_account.view_inventory_valuation_search
+DEL ir.ui.view: stock_account.view_move_form_inherit
+DEL ir.ui.view: stock_account.view_stock_quantity_history_inherit_stock_account
+
+# NOTHING TO DO
+
+DEL res.groups: stock_account.group_stock_accounting_automatic (noupdate)
+
+# DONE: deleted in pre-migration
