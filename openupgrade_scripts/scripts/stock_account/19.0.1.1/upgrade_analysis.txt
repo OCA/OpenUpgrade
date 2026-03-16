@@ -1,7 +1,7 @@
 ---Models in module 'stock_account'---
-obsolete model stock.valuation.layer
+obsolete model stock.valuation.layer (renamed to product.value)
 obsolete model stock.valuation.layer.revaluation [transient]
-new model product.value
+new model product.value (renamed from stock.valuation.layer)
 new model stock_account.stock.valuation.report [abstract]
 new model stock.avco.report [abstract]
 ---Fields in module 'stock_account'---
@@ -23,14 +23,9 @@ stock_account / product.template         / property_price_difference_account_id 
 stock_account / product.template         / valuation (selection)         : not related anymore
 stock_account / product.template         / valuation (selection)         : now a function
 stock_account / product.template         / valuation (selection)         : selection_keys is now '['periodic', 'real_time']' ('function')
-stock_account / product.value            / company_id (many2one)         : NEW relation: res.company, required, hasdefault: compute
 stock_account / product.value            / date (datetime)               : NEW required, hasdefault: default
-stock_account / product.value            / description (char)            : NEW
-stock_account / product.value            / lot_id (many2one)             : NEW relation: stock.lot
 stock_account / product.value            / move_id (many2one)            : NEW relation: stock.move
-stock_account / product.value            / product_id (many2one)         : NEW relation: product.product
 stock_account / product.value            / user_id (many2one)            : NEW relation: res.users, required, hasdefault: default
-stock_account / product.value            / value (float)                 : NEW required
 stock_account / res.company              / account_stock_journal_id (many2one): NEW relation: account.journal
 stock_account / res.company              / account_stock_valuation_id (many2one): NEW relation: account.account
 stock_account / res.company              / cost_method (selection)       : NEW required, selection_keys: ['average', 'fifo', 'standard'], hasdefault: default
@@ -39,7 +34,6 @@ stock_account / res.company              / inventory_valuation (selection): NEW 
 stock_account / stock.location           / valuation_account_id (many2one): NEW relation: account.account
 stock_account / stock.location           / valuation_in_account_id (many2one): DEL relation: account.account
 stock_account / stock.location           / valuation_out_account_id (many2one): DEL relation: account.account
-stock_account / stock.lot                / avg_cost (float)              : is now stored
 stock_account / stock.lot                / stock_valuation_layer_ids (one2many): DEL relation: stock.valuation.layer
 stock_account / stock.move               / account_move_id (many2one)    : NEW relation: account.move
 stock_account / stock.move               / account_move_ids (one2many)   : DEL relation: account.move
@@ -54,14 +48,11 @@ stock_account / stock.quant              / cost_method (selection)       : now a
 stock_account / stock.quant              / cost_method (selection)       : selection_keys is now '['average', 'fifo', 'standard']' ('function')
 stock_account / stock.quant              / currency_id (many2one)        : not a function anymore
 stock_account / stock.quant              / currency_id (many2one)        : now related
+stock_account / stock.valuation.layer    / _order                        : _order is now 'id' ('create_date, id')
 stock_account / stock.valuation.layer    / account_move_id (many2one)    : DEL relation: account.move
 stock_account / stock.valuation.layer    / account_move_line_id (many2one): DEL relation: account.move.line
 stock_account / stock.valuation.layer    / categ_id (many2one)           : DEL relation: product.category
-stock_account / stock.valuation.layer    / company_id (many2one)         : DEL relation: res.company, required
-stock_account / stock.valuation.layer    / description (char)            : DEL
-stock_account / stock.valuation.layer    / lot_id (many2one)             : DEL relation: stock.lot
 stock_account / stock.valuation.layer    / price_diff_value (float)      : DEL
-stock_account / stock.valuation.layer    / product_id (many2one)         : DEL relation: product.product, required
 stock_account / stock.valuation.layer    / quantity (float)              : DEL
 stock_account / stock.valuation.layer    / remaining_qty (float)         : DEL
 stock_account / stock.valuation.layer    / remaining_value (float)       : DEL
@@ -69,7 +60,7 @@ stock_account / stock.valuation.layer    / stock_move_id (many2one)      : DEL r
 stock_account / stock.valuation.layer    / stock_valuation_layer_id (many2one): DEL relation: stock.valuation.layer
 stock_account / stock.valuation.layer    / stock_valuation_layer_ids (one2many): DEL relation: stock.valuation.layer
 stock_account / stock.valuation.layer    / unit_cost (float)             : DEL
-stock_account / stock.valuation.layer    / value (float)                 : DEL
+stock_account / stock.valuation.layer    / value (float)                 : now required
 ---XML records in module 'stock_account'---
 NEW ir.actions.act_window: stock_account.product_value_action
 NEW ir.actions.act_window: stock_account.stock_avco_report_action

@@ -117,6 +117,7 @@ DEL ir.actions.act_window: account.action_move_out_receipt_type
 DEL ir.actions.act_window: account.action_validate_account_move
 NEW ir.actions.server: account.accountant_confirm_entries_action
 NEW ir.actions.server: account.action_validate_account_moves
+DEL ir.actions.server: account.action_move_export_zip
 DEL ir.actions.server: account.action_new_bank_setting
 DEL ir.model.access: account.access_account_fiscal_position_tax
 DEL ir.model.access: account.access_account_fiscal_position_tax_product_manager

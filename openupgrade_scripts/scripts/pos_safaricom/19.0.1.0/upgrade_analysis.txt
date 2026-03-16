@@ -1,0 +1,17 @@
+---Models in module 'pos_safaricom'---
+new model transaction.lipa.na.mpesa
+---Fields in module 'pos_safaricom'---
+pos_safaricom / pos.payment.method       / business_short_code (char)    : NEW
+pos_safaricom / pos.payment.method       / consumer_key (char)           : NEW
+pos_safaricom / pos.payment.method       / consumer_secret (char)        : NEW
+pos_safaricom / pos.payment.method       / passkey (char)                : NEW
+pos_safaricom / pos.payment.method       / safaricom_payment_type (selection): NEW selection_keys: ['lipa_na_mpesa', 'mpesa_express'], hasdefault: default
+pos_safaricom / pos.payment.method       / safaricom_test_mode (boolean) : NEW hasdefault: default
+pos_safaricom / transaction.lipa.na.mpesa / amount (integer)              : NEW
+pos_safaricom / transaction.lipa.na.mpesa / name (char)                   : NEW
+pos_safaricom / transaction.lipa.na.mpesa / number (char)                 : NEW
+pos_safaricom / transaction.lipa.na.mpesa / received_at (datetime)        : NEW
+pos_safaricom / transaction.lipa.na.mpesa / trans_id (char)               : NEW
+---XML records in module 'pos_safaricom'---
+NEW ir.model.access: pos_safaricom.access_transaction_lipa_na_mpesa_pos
+NEW ir.ui.view: pos_safaricom.pos_payment_method_view_form_inherit_pos_safaricom
