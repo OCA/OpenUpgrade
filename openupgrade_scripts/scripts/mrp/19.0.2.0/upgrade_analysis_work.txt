@@ -1,0 +1,145 @@
+---Models in module 'mrp'---
+obsolete model mrp.batch.produce (renamed to mrp.production.serials) [transient]
+
+# NOTHING TO DO
+
+new model mrp.production.group
+
+# DONE: created from procurement groups
+
+new model mrp.production.serials (renamed from mrp.batch.produce) [transient]
+
+# NOTHING TO DO
+
+---Fields in module 'mrp'---
+mrp          / mrp.bom                  / batch_size (float)            : NEW hasdefault: default
+mrp          / mrp.bom                  / enable_batch_size (boolean)   : NEW hasdefault: default
+
+# NOTHING TO DO: new feature, defaults keep previous behavior
+
+mrp          / mrp.bom.line             / manual_consumption (boolean)  : DEL
+mrp          / mrp.production           / date_deadline (datetime)      : not a function anymore
+
+# NOTHING TO DO
+
+mrp          / mrp.production           / lot_producing_id (many2one)   : DEL relation: stock.lot
+mrp          / mrp.production           / lot_producing_ids (many2many) : NEW relation: stock.lot
+
+# DONE: m2o_to_x2m
+
+mrp          / mrp.production           / procurement_group_id (many2one): DEL relation: procurement.group
+
+# DONE: m2o_to_x2m
+
+mrp          / mrp.production           / production_group_id (many2one): NEW relation: mrp.production.group
+
+# DONE: created from procurement_group_id in post-migration
+
+mrp          / mrp.production           / reference_ids (many2many)     : NEW relation: stock.reference
+
+# DONE: m2o_to_x2m
+
+mrp          / mrp.production.group     / child_ids (many2many)         : NEW relation: mrp.production.group
+mrp          / mrp.production.group     / name (char)                   : NEW required
+mrp          / mrp.production.group     / parent_ids (many2many)        : NEW relation: mrp.production.group
+
+# NOTHING TO DO
+
+mrp          / mrp.production.group     / production_ids (one2many)     : NEW relation: mrp.production
+
+# DONE: see mrp.production#production_group_id
+
+mrp          / mrp.routing.workcenter   / cost_mode (selection)         : NEW selection_keys: ['actual', 'estimated'], hasdefault: default
+mrp          / mrp.routing.workcenter   / note (html)                   : DEL
+mrp          / mrp.routing.workcenter   / worksheet (binary)            : DEL attachment: True
+mrp          / mrp.routing.workcenter   / worksheet_google_slide (char) : DEL
+mrp          / mrp.routing.workcenter   / worksheet_type (selection)    : DEL selection_keys: ['google_slide', 'pdf', 'text']
+mrp          / mrp.unbuild              / lot_id (many2one)             : not a function anymore
+mrp          / mrp.workcenter           / default_capacity (float)      : DEL
+
+# NOTHING TO DO
+
+mrp          / mrp.workcenter.capacity  / product_uom_id (many2one)     : is now stored
+mrp          / mrp.workcenter.capacity  / product_uom_id (many2one)     : not related anymore
+mrp          / mrp.workcenter.capacity  / product_uom_id (many2one)     : now required
+
+# DONE: precreated and filled from product_id
+
+mrp          / mrp.workcenter.productivity / loss_type (selection)         : not stored anymore
+mrp          / mrp.workcenter.productivity.loss / loss_type (selection)         : not stored anymore
+mrp          / mrp.workorder            / cost_mode (selection)         : NEW selection_keys: ['actual', 'estimated'], hasdefault: default
+
+# NOTHING TO DO
+
+mrp          / mrp.workorder            / last_working_user_id (one2many): type is now 'many2one' ('one2many')
+
+# NOTHING TO DO: nonstored
+
+mrp          / mrp.workorder            / product_id (many2one)         : not stored anymore
+mrp          / mrp.workorder            / product_uom_id (many2one)     : not stored anymore
+mrp          / mrp.workorder            / product_uom_id (many2one)     : now related
+
+# NOTHING TO DO
+
+mrp          / mrp.workorder            / state (selection)             : selection_keys added: [blocked], removed: [pending, waiting]
+
+# DONE: pending, waiting mapped to blocked
+
+mrp          / procurement.group        / mrp_production_ids (one2many) : DEL relation: mrp.production
+
+# DONE: see mrp.production#procurement_group_id
+
+mrp          / res.company              / manufacturing_lead (float)    : DEL required
+mrp          / stock.move               / is_done (boolean)             : DEL
+mrp          / stock.move               / order_finished_lot_id (many2one): DEL relation: stock.lot
+mrp          / stock.move               / production_group_id (many2one): NEW relation: mrp.production.group
+
+# DONE: set to production group created for mrp.production#procurement_group_id
+
+mrp          / stock.picking            / production_ids (many2many)    : not a function anymore
+mrp          / stock.picking            / production_ids (many2many)    : now related
+mrp          / stock.picking            / production_ids (many2many)    : type is now 'one2many' ('many2many')
+
+# NOTHING TO DO: set by setting stock.move#production_group_id
+
+mrp          / stock.reference          / production_ids (many2many)    : NEW relation: mrp.production
+
+# DONE: see mrp.production#reference_ids
+
+mrp          / stock.warehouse          / manufacture_to_resupply (boolean): not stored anymore
+mrp          / stock.warehouse          / manufacture_to_resupply (boolean): now a function
+mrp          / stock.warehouse.orderpoint / manufacturing_visibility_days (float): DEL
+
+# NOTHING TO DO
+
+---XML records in module 'mrp'---
+NEW ir.actions.act_window: mrp.action_assign_serial_numbers
+DEL ir.actions.act_window: mrp.act_product_mrp_production_workcenter
+DEL ir.actions.act_window: mrp.action_mrp_batch_produce
+NEW ir.model.access: mrp.access_mrp_production_group
+NEW ir.model.access: mrp.access_mrp_production_serials
+DEL ir.model.access: mrp.access_mrp_batch_produce
+DEL ir.model.access: mrp.access_mrp_document_mrp_user
+DEL ir.model.access: mrp.access_product_category_mrp_manager
+DEL ir.model.access: mrp.access_product_packaging_mrp_manager
+DEL ir.model.access: mrp.access_product_pricelist_mrp_manager
+DEL ir.model.access: mrp.access_product_product_mrp_manager
+DEL ir.model.access: mrp.access_product_supplierinfo_user
+DEL ir.model.access: mrp.access_product_tag_mrp_manager
+DEL ir.model.access: mrp.access_product_template_mrp_manager
+DEL ir.model.access: mrp.access_uom_category
+DEL ir.model.access: mrp.access_uom_category_mrp_manager
+DEL ir.model.access: mrp.access_uom_uom_mrp_manager
+ir.model.constraint: mrp.constraint_mrp_workcenter_capacity_positive_capacity (changed definition: is now 'CHECK(capacity >= 0)' ('check(capacity > 0)'))
+NEW ir.model.constraint: mrp.constraint_mrp_workcenter_capacity_workcenter_product_product_uom_unique
+DEL ir.model.constraint: mrp.constraint_mrp_workcenter_capacity_unique_product
+NEW ir.ui.view: mrp.mrp_bom_replenishment_tree_view
+NEW ir.ui.view: mrp.mrp_routing_workcenter_kanban_view
+NEW ir.ui.view: mrp.view_move_line_tree
+NEW ir.ui.view: mrp.view_mrp_production_serials_form
+NEW ir.ui.view: mrp.view_stock_replenishment_info_stock_mrp_inherit
+DEL ir.ui.view: mrp.view_mrp_batch_produce_form
+DEL ir.ui.view: mrp.view_stock_move_line_detailed_operation_tree_mrp
+NEW res.groups.privilege: mrp.res_groups_privilege_manufacturing
+
+# NOTHING TO DO
