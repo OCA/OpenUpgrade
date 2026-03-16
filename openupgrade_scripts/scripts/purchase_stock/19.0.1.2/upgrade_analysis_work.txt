@@ -1,0 +1,35 @@
+---Models in module 'purchase_stock'---
+---Fields in module 'purchase_stock'---
+purchase_stock / procurement.group        / purchase_line_ids (one2many)  : DEL relation: purchase.order.line
+purchase_stock / product.category         / property_account_creditor_price_difference_categ (many2one): DEL relation: account.account
+purchase_stock / product.template         / property_account_creditor_price_difference (many2one): DEL relation: account.account
+purchase_stock / product.template         / route_ids (False)             : DEL mode: modify
+
+# NOTHING TO DO
+
+purchase_stock / purchase.order           / group_id (many2one)           : DEL relation: procurement.group
+purchase_stock / purchase.order           / reference_ids (many2many)     : NEW relation: stock.reference
+
+# DONE: filled from group_id
+
+purchase_stock / purchase.order.line      / group_id (many2one)           : DEL relation: procurement.group
+purchase_stock / res.partner              / group_on (selection)          : NEW required, selection_keys: ['1', '2', '3', '4', '5', '6', '7', 'default'], hasdefault: default
+purchase_stock / res.partner              / group_rfq (selection)         : NEW required, selection_keys: ['all', 'day', 'default', 'week'], hasdefault: default
+purchase_stock / res.partner              / suggest_based_on (char)       : NEW hasdefault: default
+purchase_stock / res.partner              / suggest_days (integer)        : NEW hasdefault: default
+purchase_stock / res.partner              / suggest_percent (integer)     : NEW hasdefault: default
+purchase_stock / stock.reference          / purchase_ids (many2many)      : NEW relation: purchase.order
+purchase_stock / stock.warehouse          / buy_to_resupply (boolean)     : not stored anymore
+purchase_stock / stock.warehouse          / buy_to_resupply (boolean)     : now a function
+purchase_stock / stock.warehouse.orderpoint / available_vendor (many2one)   : NEW relation: res.partner, stored: False
+purchase_stock / stock.warehouse.orderpoint / product_supplier_id (many2one): DEL relation: res.partner
+purchase_stock / stock.warehouse.orderpoint / purchase_visibility_days (float): DEL
+purchase_stock / stock.warehouse.orderpoint / vendor_id (many2one)          : DEL relation: res.partner
+---XML records in module 'purchase_stock'---
+NEW ir.ui.view: purchase_stock.product_view_search_catalog
+NEW ir.ui.view: purchase_stock.stock_reference_purchase_view_form
+DEL ir.ui.view: purchase_stock.product_template_form_view
+DEL ir.ui.view: purchase_stock.stock_reorder_report_search_inherited_purchase_stock
+DEL ir.ui.view: purchase_stock.view_category_property_form
+
+# NOTHING TO DO
