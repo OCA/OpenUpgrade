@@ -18,7 +18,7 @@
     <field name="group_ids" eval="[(6, 0, [ref('base.group_no_one')])]"/>
   </record>
   <record id="action_open_settings" model="ir.actions.act_window">
-    <field name="target"/>
+    <field name="target" eval="None"/>
   </record>
   <record id="email_template_edi_credit_note" model="mail.template">
     <field name="body_html" type="html">

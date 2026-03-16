@@ -39,8 +39,6 @@ mrp          / res.company              / manufacturing_lead (float)    : DEL re
 mrp          / stock.move               / is_done (boolean)             : DEL
 mrp          / stock.move               / order_finished_lot_id (many2one): DEL relation: stock.lot
 mrp          / stock.move               / production_group_id (many2one): NEW relation: mrp.production.group
-mrp          / stock.picking            / production_ids (many2many)    : not a function anymore
-mrp          / stock.picking            / production_ids (many2many)    : now related
 mrp          / stock.picking            / production_ids (many2many)    : type is now 'one2many' ('many2many')
 mrp          / stock.reference          / production_ids (many2many)    : NEW relation: mrp.production
 mrp          / stock.warehouse          / manufacture_to_resupply (boolean): not stored anymore

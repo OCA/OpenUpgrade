@@ -51,7 +51,7 @@ obsolete model stock.package_level (renamed to stock.package.history) [module st
 obsolete model stock.quant.package (renamed to stock.package) [module stock]
 obsolete model stock.track.confirmation [module stock]
 obsolete model stock.track.line [module stock]
-obsolete model stock.valuation.layer [module stock_account]
+obsolete model stock.valuation.layer (renamed to product.value) [module stock_account]
 obsolete model stock.valuation.layer.revaluation [module stock_account]
 obsolete model uom.category [module uom]
 obsolete model web_editor.assets (renamed to website.assets) [module html_editor]
@@ -102,7 +102,7 @@ new model pos.make.invoice [module point_of_sale]
 new model pos.preset [module point_of_sale]
 new model product.feed [module website_sale]
 new model product.uom (renamed from product.packaging) [module product]
-new model product.value [module stock_account]
+new model product.value (renamed from stock.valuation.layer) [module stock_account]
 new model project.role [module project]
 new model project.template.create.wizard [module project]
 new model project.template.role.to.users.map [module project]
@@ -121,6 +121,7 @@ new model stock.put.in.pack [module stock]
 new model stock.reference (renamed from procurement.group) [module stock]
 new model talent.pool.add.applicants [module hr_recruitment]
 new model task.share.wizard [module project]
+new model transaction.lipa.na.mpesa [module pos_safaricom]
 new model website.assets (renamed from web_editor.assets) [module website]
 new model website.checkout.step [module website_sale]
 new model website.html.text.processor [module website]
@@ -128,14 +129,14 @@ new model website.page_options.mixin [module website]
 new model website.page_visibility_options.mixin [module website]
 new model website.technical.page [module website]
 ---Fields in module 'general'---
-# 14376 fields matched,
-# Direct match: 14201
+# 14386 fields matched,
+# Direct match: 14211
 # Found in other module with different type: 0
 # Found in other module: 143
 # Found with different type: 32
-# In obsolete models: 231
-# New columns: 1755
-# Not matched: 1009
+# In obsolete models: 207
+# New columns: 1762
+# Not matched: 1001
 ---XML records in module 'general'---
 ---Probably obsolete module l10n_in_ewaybill_port---
 ---Models in module 'l10n_in_ewaybill_port'---

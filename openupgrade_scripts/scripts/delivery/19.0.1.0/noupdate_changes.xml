@@ -1,6 +1,6 @@
 <?xml version='1.0' encoding='utf-8'?>
 <odoo>
   <record id="product_category_deliveries" model="product.category">
-    <field name="parent_id"/>
+    <field name="parent_id" eval="None"/>
   </record>
 </odoo>

@@ -1,15 +1,15 @@
 <?xml version='1.0' encoding='utf-8'?>
 <odoo>
   <record id="product_uom_activity" model="uom.uom">
-    <field name="factor"/>
+    <field name="factor" eval="0.0"/>
     <field name="relative_factor" eval="1"/>
   </record>
   <record id="product_uom_job" model="uom.uom">
-    <field name="factor"/>
+    <field name="factor" eval="0.0"/>
     <field name="relative_factor" eval="1"/>
   </record>
   <record id="product_uom_service_unit" model="uom.uom">
-    <field name="factor"/>
+    <field name="factor" eval="0.0"/>
     <field name="relative_factor" eval="1"/>
   </record>
 </odoo>

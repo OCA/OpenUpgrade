@@ -1,5 +1,5 @@
 ---Models in module 'product_expiry'---
 ---Fields in module 'product_expiry'---
-product_expiry / stock.move.line          / removal_date (datetime)       : NEW isfunction: function, stored
+product_expiry / stock.move.line          / removal_date (datetime)       : NEW hasdefault: compute
 ---XML records in module 'product_expiry'---
 DEL mail.activity.type: product_expiry.mail_activity_type_alert_date_reached
