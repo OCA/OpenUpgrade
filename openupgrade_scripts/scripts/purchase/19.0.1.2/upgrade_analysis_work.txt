@@ -1,0 +1,99 @@
+---Models in module 'purchase'---
+---Fields in module 'purchase'---
+purchase     / product.packaging        / purchase (boolean)            : DEL
+purchase     / product.template         / purchase_line_warn (selection): DEL required, selection_keys: ['block', 'no-message', 'warning']
+
+# NOTHING TO DO
+
+purchase     / purchase.order           / acknowledged (boolean)        : NEW
+
+# DONE: set to True for state == purchase
+
+purchase     / purchase.order           / is_late (boolean)             : NEW stored: False
+
+# NOTHING TO DO
+
+purchase     / purchase.order           / locked (boolean)              : NEW hasdefault: default
+
+# DONE: precreated in pre-migration, set in post-migration
+
+purchase     / purchase.order           / mail_reception_confirmed (boolean): DEL
+purchase     / purchase.order           / mail_reception_declined (boolean): DEL
+purchase     / purchase.order           / mail_reminder_confirmed (boolean): DEL
+
+# NOTHING TO DO
+
+purchase     / purchase.order           / note (html)                   : NEW
+purchase     / purchase.order           / notes (html)                  : DEL
+
+# DONE: renamed in pre-migration
+
+purchase     / purchase.order           / receipt_reminder_email (boolean): is now stored
+purchase     / purchase.order           / receipt_reminder_email (boolean): not a function anymore
+purchase     / purchase.order           / reminder_date_before_receipt (integer): is now stored
+purchase     / purchase.order           / reminder_date_before_receipt (integer): not a function anymore
+
+# NOTHING TO DO: will be recomputed by the ORM
+
+purchase     / purchase.order           / state (selection)             : selection_keys removed: [done]
+
+# DONE: mapped done to purchase
+
+purchase     / purchase.order.line      / currency_id (many2one)        : not stored anymore
+purchase     / purchase.order.line      / display_type (selection)      : selection_keys added: [line_subsection] (most likely nothing to do)
+purchase     / purchase.order.line      / product_packaging_id (many2one): DEL relation: product.packaging
+purchase     / purchase.order.line      / product_packaging_qty (float) : DEL
+
+# NOTHING TO DO
+
+purchase     / purchase.order.line      / product_uom (many2one)        : DEL relation: uom.uom
+purchase     / purchase.order.line      / product_uom_id (many2one)     : NEW relation: uom.uom
+
+# DONE: renamed in pre-migration
+
+purchase     / purchase.order.line      / state (selection)             : not stored anymore
+
+# NOTHING TO DO
+
+purchase     / purchase.order.line      / tax_ids (many2many)           : NEW relation: account.tax
+purchase     / purchase.order.line      / taxes_id (many2many)          : DEL relation: account.tax
+
+# DONE: renamed in pre-migration
+
+purchase     / purchase.order.line      / technical_price_unit (float)  : NEW
+
+# DONE: precreated and set to price_unit
+
+purchase     / res.company              / po_lead (float)               : DEL required
+purchase     / res.partner              / purchase_warn (selection)     : DEL selection_keys: ['block', 'no-message', 'warning']
+
+# NOTHING TO DO
+
+---XML records in module 'purchase'---
+NEW ir.actions.act_window: purchase.mail_followers_edit_action_from_purchase
+DEL ir.actions.server: purchase.action_purchase_batch_bills
+DEL ir.model.access: purchase.access_product_category_purchase_manager
+DEL ir.model.access: purchase.access_product_packaging_purchase_manager
+DEL ir.model.access: purchase.access_product_product_purchase_manager
+DEL ir.model.access: purchase.access_product_tag_purchase_manager
+DEL ir.model.access: purchase.access_product_template_purchase_manager
+DEL ir.model.access: purchase.access_uom_category_purchase_manager
+DEL ir.model.access: purchase.access_uom_uom_purchase_manager
+ir.model.constraint: purchase.constraint_purchase_order_line_accountable_required_fields (changed definition: is now 'CHECK(display_type IS NOT NULL OR is_downpayment OR (product_id IS NOT NULL AND product_uom_id IS NOT NULL AND date_planned IS NOT NULL))' ('check(display_type is not null or is_downpayment or(product_id is not null and product_uom is not null and date_planned is not null))'))
+ir.model.constraint: purchase.constraint_purchase_order_line_non_accountable_null_fields (changed definition: is now 'CHECK(display_type IS NULL OR (product_id IS NULL AND price_unit = 0 AND product_uom_qty = 0 AND product_uom_id IS NULL AND date_planned is NULL))' ('check(display_type is null or(product_id is null and price_unit = 0 and product_uom_qty = 0 and product_uom is null and date_planned is null))'))
+DEL ir.ui.menu: purchase.menu_purchase_uom_categ_form_action
+DEL ir.ui.menu: purchase.menu_unit_of_measure_in_config_purchase
+DEL ir.ui.view: purchase.product_packaging_form_view_purchase
+DEL ir.ui.view: purchase.product_packaging_tree_view_purchase
+DEL ir.ui.view: purchase.purchase_partner_kanban_view
+DEL ir.ui.view: purchase.res_partner_view_purchase_account_buttons
+
+# NOTHING TO DO
+
+DEL mail.message.subtype: purchase.mt_rfq_done (noupdate)
+
+# NOTHING TO DO: don't delete subtypes because then messages end up without one
+
+NEW res.groups.privilege: purchase.res_groups_privilege_purchase
+
+# NOTHING TO DO
