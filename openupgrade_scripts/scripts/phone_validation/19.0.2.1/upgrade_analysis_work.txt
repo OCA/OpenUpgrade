@@ -1,0 +1,17 @@
+---Models in module 'phone_validation'---
+---Fields in module 'phone_validation'---
+phone_validation / res.partner              / phone_blacklisted (boolean)   : previously in module sms
+phone_validation / res.partner              / phone_mobile_search (char)    : previously in module sms
+phone_validation / res.partner              / phone_sanitized (char)        : previously in module sms
+phone_validation / res.partner              / phone_sanitized_blacklisted (boolean): previously in module sms
+phone_validation / res.users                / phone_blacklisted (boolean)   : previously in module sms
+phone_validation / res.users                / phone_mobile_search (char)    : previously in module sms
+phone_validation / res.users                / phone_sanitized (char)        : previously in module sms
+phone_validation / res.users                / phone_sanitized_blacklisted (boolean): previously in module sms
+
+# NOTHING TO DO: if sms is installed, fields are reused, otherwise they are new anyways
+
+---XML records in module 'phone_validation'---
+NEW ir.ui.view: phone_validation.res_partner_view_search
+
+# NOTHING TO DO
