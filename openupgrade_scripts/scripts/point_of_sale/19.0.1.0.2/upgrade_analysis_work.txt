@@ -1,0 +1,255 @@
+---Models in module 'point_of_sale'---
+new model pos.confirmation.wizard [transient]
+new model pos.make.invoice [transient]
+
+# NOTHING TO DO
+
+new model pos.preset
+
+# NOTHING TO DO: new feature
+
+---Fields in module 'point_of_sale'---
+point_of_sale / pos.bill                 / for_all_config (boolean)      : DEL
+point_of_sale / pos.category             / hour_after (float)            : previously in module pos_self_order
+point_of_sale / pos.category             / hour_until (float)            : previously in module pos_self_order
+
+# NOTHING TO DO
+
+point_of_sale / pos.category             / image_128 (binary)            : now related
+point_of_sale / pos.category             / image_512 (binary)            : NEW attachment: True
+
+# DONE: rename image_128 to image_512 attachment
+
+point_of_sale / pos.config               / available_preset_ids (many2many): NEW relation: pos.preset
+
+# NOTHING TO DO: new feature
+
+point_of_sale / pos.config               / currency_id (many2one)        : is now stored
+
+# NOTHING TO DO: computed by ORM
+
+point_of_sale / pos.config               / customer_display_type (selection): DEL selection_keys: function
+
+# NOTHING TO DO
+
+point_of_sale / pos.config               / default_preset_id (many2one)  : NEW relation: pos.preset
+
+# NOTHING TO DO: new feature
+
+point_of_sale / pos.config               / device_seq_id (many2one)      : NEW relation: ir.sequence
+
+# DONE: created in post-migration
+
+point_of_sale / pos.config               / fallback_nomenclature_id (many2one): NEW relation: barcode.nomenclature
+point_of_sale / pos.config               / fast_payment_method_ids (many2many): NEW relation: pos.payment.method, hasdefault: compute
+point_of_sale / pos.config               / iface_group_by_categ (boolean): NEW
+point_of_sale / pos.config               / last_data_change (datetime)   : NEW isfunction: function, stored
+point_of_sale / pos.config               / module_pos_appointment (boolean): NEW
+
+# NOTHING TO DO
+
+point_of_sale / pos.config               / order_backend_seq_id (many2one): NEW relation: ir.sequence
+
+# DONE: created in post-migration
+
+point_of_sale / pos.config               / order_line_seq_id (many2one)  : NEW relation: ir.sequence
+point_of_sale / pos.config               / order_seq_id (many2one)       : NEW relation: ir.sequence
+
+# DONE: renamed from sequence_{,line}_id
+
+point_of_sale / pos.config               / orderlines_sequence_in_cart_by_category (boolean): DEL
+
+# NOTHING TO DO
+
+point_of_sale / pos.config               / sequence_id (many2one)        : DEL relation: ir.sequence
+point_of_sale / pos.config               / sequence_line_id (many2one)   : DEL relation: ir.sequence
+
+# DONE: renamed to order_{,line}_seq_id
+
+point_of_sale / pos.config               / use_fast_payment (boolean)    : NEW
+point_of_sale / pos.config               / use_presets (boolean)         : NEW
+point_of_sale / pos.note                 / color (integer)               : NEW
+point_of_sale / pos.order                / config_id (many2one)          : not related anymore
+
+# NOTHING TO DO
+
+point_of_sale / pos.order                / general_customer_note (text)  : NEW
+point_of_sale / pos.order                / general_note (text)           : DEL
+
+# DONE: renamed general_note to general_customer_note
+
+point_of_sale / pos.order                / internal_note (text)          : NEW
+
+# NOTHING TO DO
+
+point_of_sale / pos.order                / is_refund (boolean)           : NEW
+
+# NOTHING TO DO: we need to keep existing negative orders as is_refund=False because otherwise computations are wrong
+
+point_of_sale / pos.order                / preset_id (many2one)          : NEW relation: pos.preset
+point_of_sale / pos.order                / preset_time (datetime)        : NEW
+
+# NOTHING TO DO
+
+point_of_sale / pos.order                / procurement_group_id (many2one): DEL relation: procurement.group
+
+# DONE: used to fill stock_reference_ids
+
+point_of_sale / pos.order                / reversed_move_ids (one2many)  : NEW relation: account.move
+
+# NOTHING TO DO: inverse of existing field
+
+point_of_sale / pos.order                / source (selection)            : NEW selection_keys: ['pos'], hasdefault: default
+
+# NOTHING TO DO
+
+point_of_sale / pos.order                / state (selection)             : selection_keys removed: [invoiced]
+
+# DONE: mapped 'invoiced' to 'done'
+
+point_of_sale / pos.order                / stock_reference_ids (many2many): NEW relation: stock.reference
+
+# DONE: filled from procurement_group_id
+
+point_of_sale / pos.order                / tracking_number (char)        : is now stored
+point_of_sale / pos.order                / tracking_number (char)        : not a function anymore
+point_of_sale / pos.order.line           / extra_tax_data (json)         : NEW
+point_of_sale / pos.order.line           / skip_change (boolean)         : DEL
+
+# NOTHING TO DO
+
+point_of_sale / pos.preset               / color (integer)               : NEW hasdefault: default
+point_of_sale / pos.preset               / fiscal_position_id (many2one) : NEW relation: account.fiscal.position
+point_of_sale / pos.preset               / identification (selection)    : NEW required, selection_keys: ['address', 'name', 'none'], hasdefault: default
+point_of_sale / pos.preset               / image_128 (binary)            : NEW attachment: True, isrelated: related, stored
+point_of_sale / pos.preset               / image_512 (binary)            : NEW attachment: True
+point_of_sale / pos.preset               / interval_time (integer)       : NEW hasdefault: default
+point_of_sale / pos.preset               / is_return (boolean)           : NEW hasdefault: default
+point_of_sale / pos.preset               / name (char)                   : NEW required, translate
+point_of_sale / pos.preset               / pricelist_id (many2one)       : NEW relation: product.pricelist
+point_of_sale / pos.preset               / resource_calendar_id (many2one): NEW relation: resource.calendar
+point_of_sale / pos.preset               / slots_per_interval (integer)  : NEW hasdefault: default
+point_of_sale / pos.preset               / use_timing (boolean)          : NEW hasdefault: default
+
+# NOTHING TO DO: new model
+
+point_of_sale / pos.printer              / pos_config_ids (many2many)    : NEW relation: pos.config
+point_of_sale / pos.printer              / printer_type (selection)      : selection_keys added: [epson_epos] (most likely nothing to do)
+point_of_sale / pos.session              / login_number (integer)        : DEL
+point_of_sale / pos.session              / sequence_number (integer)     : DEL
+
+# NOTHING TO DO
+
+point_of_sale / procurement.group        / pos_order_id (many2one)       : DEL relation: pos.order
+
+# NOTHING TO DO: handled in pos.order#stock_reference_ids
+
+point_of_sale / product.combo            / qty_free (integer)            : NEW hasdefault: default
+point_of_sale / product.combo            / qty_max (integer)             : NEW hasdefault: default
+
+# NOTHING TO DO
+
+point_of_sale / product.tag              / pos_description (html)        : NEW translate
+
+# NOTHING TO DO: ORM handles transition
+
+point_of_sale / product.template         / pos_optional_product_ids (many2many): NEW relation: product.template
+point_of_sale / product.template         / pos_sequence (integer)        : NEW hasdefault: default
+
+# NOTHING TO DO
+
+point_of_sale / stock.reference          / pos_order_ids (many2many)     : NEW relation: pos.order
+
+# NOTHING TO DO: handled in pos.order#stock_reference_ids
+
+point_of_sale / uom.category             / is_pos_groupable (boolean)    : DEL
+point_of_sale / uom.uom                  / is_pos_groupable (boolean)    : is now stored
+point_of_sale / uom.uom                  / is_pos_groupable (boolean)    : not related anymore
+
+# DONE: set from category
+
+pos_epson_printer / pos.printer              / printer_type (False)          : DEL selection_keys: ['epson_epos', 'iot'], mode: modify
+
+# NOTHING TO DO
+
+---XML records in module 'point_of_sale'---
+NEW ir.actions.act_window: point_of_sale.action_confirm_action_wizard
+NEW ir.actions.act_window: point_of_sale.action_pos_preset_form
+NEW ir.actions.act_window: point_of_sale.product_template_action_add_pos
+NEW ir.actions.act_window: point_of_sale.product_template_action_edit_pos
+DEL ir.actions.act_window: point_of_sale.product_product_action_add_pos
+DEL ir.actions.act_window: point_of_sale.product_product_action_edit_pos
+NEW ir.actions.server: point_of_sale.model_pos_order_send_mail
+DEL ir.actions.server: point_of_sale.action_send_mail
+NEW ir.model.access: point_of_sale.access_pos_confirmation_wizard
+NEW ir.model.access: point_of_sale.access_pos_confirmation_wizard_manager
+NEW ir.model.access: point_of_sale.access_pos_make_invoice
+NEW ir.model.access: point_of_sale.access_pos_make_invoice_manager
+NEW ir.model.access: point_of_sale.access_pos_preset
+NEW ir.model.access: point_of_sale.access_pos_preset_manager
+DEL ir.model.access: point_of_sale.access_product_attribute_custom_value_pos_manager
+DEL ir.model.access: point_of_sale.access_product_attribute_pos_manager
+DEL ir.model.access: point_of_sale.access_product_attribute_value_pos_manager
+DEL ir.model.access: point_of_sale.access_product_category_manager
+DEL ir.model.access: point_of_sale.access_product_combo_item_pos_manager
+DEL ir.model.access: point_of_sale.access_product_combo_pos_manager
+DEL ir.model.access: point_of_sale.access_product_product_attribute_pos_manager
+DEL ir.model.access: point_of_sale.access_product_product_packaging_user
+DEL ir.model.access: point_of_sale.access_product_product_pos_manager
+DEL ir.model.access: point_of_sale.access_product_tag_pos_manager
+DEL ir.model.access: point_of_sale.access_product_template_attribute_exclusion_pos_manager
+DEL ir.model.access: point_of_sale.access_product_template_attribute_line_pos_manager
+DEL ir.model.access: point_of_sale.access_product_template_pos_manager
+DEL ir.model.access: point_of_sale.access_uom_uom_manager
+DEL ir.model.access: point_of_sale.access_update_product_attribute_value_pos_manager
+
+# NOTHING TO DO
+
+NEW ir.model.constraint: point_of_sale.constraint_pos_order_line_unique_uuid
+NEW ir.model.constraint: point_of_sale.constraint_pos_order_unique_uuid
+NEW ir.model.constraint: point_of_sale.constraint_pos_payment_unique_uuid
+DEL ir.model.constraint: point_of_sale.constraint_pos_order_line_uuid_unique
+DEL ir.model.constraint: point_of_sale.constraint_pos_order_uuid_unique
+DEL ir.model.constraint: point_of_sale.constraint_pos_payment_uuid_unique
+
+# DONE: renamed in pre-migration
+
+DEL ir.model.constraint: point_of_sale.constraint_pos_session_uniq_name
+NEW ir.ui.menu: point_of_sale.menu_pos_preset
+NEW ir.ui.menu: point_of_sale.pos_menu_products_tag_action
+NEW ir.ui.view: point_of_sale.product_tag_form_view_inherit_point_of_sale
+NEW ir.ui.view: point_of_sale.product_template_tree_view_point_of_sale
+NEW ir.ui.view: point_of_sale.product_template_view_form_normalized_pos
+NEW ir.ui.view: point_of_sale.product_uom_form_view_inherit
+NEW ir.ui.view: point_of_sale.stock_reference_pos_view_form
+NEW ir.ui.view: point_of_sale.view_confirm_action_wizard
+NEW ir.ui.view: point_of_sale.view_pos_make_invoice
+NEW ir.ui.view: point_of_sale.view_pos_preset_form
+NEW ir.ui.view: point_of_sale.view_pos_preset_tree
+DEL ir.ui.view: point_of_sale.product_product_view_form_normalized_pos
+DEL ir.ui.view: point_of_sale.product_uom_categ_form_view
+DEL ir.ui.view: point_of_sale.product_uom_categ_tree_view
+DEL ir.ui.view: point_of_sale.view_partner_pos_kanban
+DEL ir.ui.view: pos_epson_printer.pos_iot_config_view_form
+DEL ir.ui.view: pos_epson_printer.res_config_settings_view_form
+DEL ir.ui.view: pos_epson_printer.view_pos_printer_form
+NEW mail.template: point_of_sale.email_template_pos_receipt (noupdate)
+
+# NOTHING TO DO
+
+DEL mail.template: point_of_sale.pos_email_marketing_template (noupdate)
+
+# DONE: deleted in pre-migration
+
+NEW product.category: point_of_sale.product_category_food (noupdate)
+
+# NOTHING TO DO
+
+DEL product.category: point_of_sale.product_category_pos (noupdate)
+
+# DONE: deleted in pre-migration
+
+NEW res.groups: point_of_sale.group_pos_preset
+NEW res.groups.privilege: point_of_sale.res_groups_privilege_point_of_sale
+
+# NOTHING TO DO
