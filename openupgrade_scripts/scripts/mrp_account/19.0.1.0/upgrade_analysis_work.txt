@@ -1,0 +1,14 @@
+---Models in module 'mrp_account'---
+---Fields in module 'mrp_account'---
+mrp_account  / account.move             / wip_production_ids (many2many): column1 is now 'move_id' ('account_move_id') [account_move_mrp_production_rel]
+mrp_account  / account.move             / wip_production_ids (many2many): column2 is now 'production_id' ('mrp_production_id') [account_move_mrp_production_rel]
+mrp_account  / account.move             / wip_production_ids (many2many): table is now 'wip_move_production_rel' ('account_move_mrp_production_rel')
+
+# DONE: renamed in pre-migration
+
+mrp_account  / mrp.production           / wip_move_ids (many2many)      : NEW relation: account.move
+
+# NOTHING TO DO
+
+---XML records in module 'mrp_account'---
+DEL ir.ui.view: mrp_account.view_category_property_form
