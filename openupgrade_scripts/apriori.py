@@ -43,6 +43,7 @@ renamed_modules = {
     # OCA/stock-logistics-workflow
     "stock_picking_type_shipping_policy": "stock_picking_type_force_move_type",
     "stock_picking_batch_extended_account": "stock_picking_batch_account",
+    "stock_picking_batch_extended_account_sale_type": "stock_picking_batch_account_sale_type",  # noqa: E501
     # OCA/web
     "web_widget_product_label_section_and_note": "web_widget_product_label_section_and_note_name_visibility",  # noqa: E501
     # OCA/...
