@@ -9,7 +9,7 @@ def migrate(env, version):
         env.cr,
         """
         UPDATE payment_provider
-        SET state = 'disabled'
+        SET state = 'disabled', redirect_form_view_id = NULL
         WHERE code = 'paypal'
         """,
     )
