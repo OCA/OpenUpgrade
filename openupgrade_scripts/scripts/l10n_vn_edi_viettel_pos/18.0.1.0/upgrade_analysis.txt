@@ -1,0 +1,11 @@
+---Models in module 'l10n_vn_edi_viettel_pos'---
+---Fields in module 'l10n_vn_edi_viettel_pos'---
+l10n_vn_edi_viettel_pos / pos.config               / l10n_vn_auto_send_to_sinvoice (boolean): NEW hasdefault: default
+l10n_vn_edi_viettel_pos / pos.config               / l10n_vn_pos_symbol (many2one) : NEW relation: l10n_vn_edi_viettel.sinvoice.symbol, hasdefault: compute
+l10n_vn_edi_viettel_pos / pos.order                / l10n_vn_credit_note_reason (char): NEW
+l10n_vn_edi_viettel_pos / res.company              / l10n_vn_pos_default_symbol (many2one): NEW relation: l10n_vn_edi_viettel.sinvoice.symbol
+---XML records in module 'l10n_vn_edi_viettel_pos'---
+NEW ir.actions.server: l10n_vn_edi_viettel_pos.l10n_vn_edi_pos_fetch_tax_invoice
+NEW ir.ui.view: l10n_vn_edi_viettel_pos.res_config_settings_view_form_inherit_l10n_vn_edi_pos_account
+NEW ir.ui.view: l10n_vn_edi_viettel_pos.res_config_settings_view_form_inherit_l10n_vn_edi_pos_pos
+NEW res.partner: l10n_vn_edi_viettel_pos.partner_walk_in_customer

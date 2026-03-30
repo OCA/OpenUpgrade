@@ -14,8 +14,12 @@ l10n_in_withholding / l10n_in.section.alert    / per_transaction_limit (float) :
 l10n_in_withholding / l10n_in.section.alert    / tax_source_type (selection)   : NEW selection_keys: ['tcs', 'tds']
 ---XML records in module 'l10n_in_withholding'---
 NEW account.report: l10n_in_withholding.tcs_report [renamed from l10n_in module]
+NEW account.report: l10n_in_withholding.tcs_report_it_act_25
 NEW account.report: l10n_in_withholding.tds_report [renamed from l10n_in module]
+NEW account.report: l10n_in_withholding.tds_report_it_act_25
+NEW account.report.column: l10n_in_withholding.tcs_report_25_balance
 NEW account.report.column: l10n_in_withholding.tcs_report_balance [renamed from l10n_in module]
+NEW account.report.column: l10n_in_withholding.tds_report_25_balance
 NEW account.report.column: l10n_in_withholding.tds_report_balance [renamed from l10n_in module]
 NEW account.report.expression: l10n_in_withholding.tcs_report_line_section_206c_1_alfhc_tag [renamed from l10n_in module]
 NEW account.report.expression: l10n_in_withholding.tcs_report_line_section_206c_1_aofpnbtotl_tag [renamed from l10n_in module]
@@ -31,6 +35,16 @@ NEW account.report.expression: l10n_in_withholding.tcs_report_line_section_206c_
 NEW account.report.expression: l10n_in_withholding.tcs_report_line_section_206c_1g_soaotpp_tag [renamed from l10n_in module]
 NEW account.report.expression: l10n_in_withholding.tcs_report_line_section_206c_1g_som_tag [renamed from l10n_in module]
 NEW account.report.expression: l10n_in_withholding.tcs_report_line_section_206c_1h_sog_tag [renamed from l10n_in module]
+NEW account.report.expression: l10n_in_withholding.tcs_report_line_section_394_1_1_tag
+NEW account.report.expression: l10n_in_withholding.tcs_report_line_section_394_1_2_tag
+NEW account.report.expression: l10n_in_withholding.tcs_report_line_section_394_1_3_tag
+NEW account.report.expression: l10n_in_withholding.tcs_report_line_section_394_1_4_tag
+NEW account.report.expression: l10n_in_withholding.tcs_report_line_section_394_1_5_tag
+NEW account.report.expression: l10n_in_withholding.tcs_report_line_section_394_1_6_a_tag
+NEW account.report.expression: l10n_in_withholding.tcs_report_line_section_394_1_6_b_tag
+NEW account.report.expression: l10n_in_withholding.tcs_report_line_section_394_1_7_a_tag
+NEW account.report.expression: l10n_in_withholding.tcs_report_line_section_394_1_7_b_tag
+NEW account.report.expression: l10n_in_withholding.tcs_report_line_section_394_1_9_tag
 NEW account.report.expression: l10n_in_withholding.tds_report_line_section_192_tag [renamed from l10n_in module]
 NEW account.report.expression: l10n_in_withholding.tds_report_line_section_192a_tag [renamed from l10n_in module]
 NEW account.report.expression: l10n_in_withholding.tds_report_line_section_193_tag [renamed from l10n_in module]
@@ -62,6 +76,57 @@ NEW account.report.expression: l10n_in_withholding.tds_report_line_section_194n_
 NEW account.report.expression: l10n_in_withholding.tds_report_line_section_194o_tag [renamed from l10n_in module]
 NEW account.report.expression: l10n_in_withholding.tds_report_line_section_194q_tag [renamed from l10n_in module]
 NEW account.report.expression: l10n_in_withholding.tds_report_line_section_195_tag [renamed from l10n_in module]
+NEW account.report.expression: l10n_in_withholding.tds_report_line_section_392_1_tag
+NEW account.report.expression: l10n_in_withholding.tds_report_line_section_393_1_1_i_tag
+NEW account.report.expression: l10n_in_withholding.tds_report_line_section_393_1_1_ii_tag
+NEW account.report.expression: l10n_in_withholding.tds_report_line_section_393_1_2_i_tag
+NEW account.report.expression: l10n_in_withholding.tds_report_line_section_393_1_2_ii_a_tag
+NEW account.report.expression: l10n_in_withholding.tds_report_line_section_393_1_2_ii_b_tag
+NEW account.report.expression: l10n_in_withholding.tds_report_line_section_393_1_3_i_tag
+NEW account.report.expression: l10n_in_withholding.tds_report_line_section_393_1_3_ii_tag
+NEW account.report.expression: l10n_in_withholding.tds_report_line_section_393_1_3_iii_tag
+NEW account.report.expression: l10n_in_withholding.tds_report_line_section_393_1_4_i_tag
+NEW account.report.expression: l10n_in_withholding.tds_report_line_section_393_1_4_ii_tag
+NEW account.report.expression: l10n_in_withholding.tds_report_line_section_393_1_4_iii_tag
+NEW account.report.expression: l10n_in_withholding.tds_report_line_section_393_1_4_iv_tag
+NEW account.report.expression: l10n_in_withholding.tds_report_line_section_393_1_6_i_a_tag
+NEW account.report.expression: l10n_in_withholding.tds_report_line_section_393_1_6_i_b_tag
+NEW account.report.expression: l10n_in_withholding.tds_report_line_section_393_1_6_ii_tag
+NEW account.report.expression: l10n_in_withholding.tds_report_line_section_393_1_6_iii_a_tag
+NEW account.report.expression: l10n_in_withholding.tds_report_line_section_393_1_6_iii_b_tag
+NEW account.report.expression: l10n_in_withholding.tds_report_line_section_393_1_7_tag
+NEW account.report.expression: l10n_in_withholding.tds_report_line_section_393_1_8_i_tag
+NEW account.report.expression: l10n_in_withholding.tds_report_line_section_393_1_8_ii_tag
+NEW account.report.expression: l10n_in_withholding.tds_report_line_section_393_1_8_iv_tag
+NEW account.report.expression: l10n_in_withholding.tds_report_line_section_393_1_8_v_tag
+NEW account.report.expression: l10n_in_withholding.tds_report_line_section_393_1_8_vi_tag
+NEW account.report.expression: l10n_in_withholding.tds_report_line_section_393_2_10_tag
+NEW account.report.expression: l10n_in_withholding.tds_report_line_section_393_2_11_tag
+NEW account.report.expression: l10n_in_withholding.tds_report_line_section_393_2_12_tag
+NEW account.report.expression: l10n_in_withholding.tds_report_line_section_393_2_13_tag
+NEW account.report.expression: l10n_in_withholding.tds_report_line_section_393_2_14_tag
+NEW account.report.expression: l10n_in_withholding.tds_report_line_section_393_2_15_tag
+NEW account.report.expression: l10n_in_withholding.tds_report_line_section_393_2_16_tag
+NEW account.report.expression: l10n_in_withholding.tds_report_line_section_393_2_17_tag
+NEW account.report.expression: l10n_in_withholding.tds_report_line_section_393_2_1_tag
+NEW account.report.expression: l10n_in_withholding.tds_report_line_section_393_2_2_tag
+NEW account.report.expression: l10n_in_withholding.tds_report_line_section_393_2_3_tag
+NEW account.report.expression: l10n_in_withholding.tds_report_line_section_393_2_4_a_tag
+NEW account.report.expression: l10n_in_withholding.tds_report_line_section_393_2_4_b_tag
+NEW account.report.expression: l10n_in_withholding.tds_report_line_section_393_2_5_tag
+NEW account.report.expression: l10n_in_withholding.tds_report_line_section_393_2_6_a_tag
+NEW account.report.expression: l10n_in_withholding.tds_report_line_section_393_2_6_b_tag
+NEW account.report.expression: l10n_in_withholding.tds_report_line_section_393_2_7_tag
+NEW account.report.expression: l10n_in_withholding.tds_report_line_section_393_2_8_tag
+NEW account.report.expression: l10n_in_withholding.tds_report_line_section_393_2_9_tag
+NEW account.report.expression: l10n_in_withholding.tds_report_line_section_393_3_1_tag
+NEW account.report.expression: l10n_in_withholding.tds_report_line_section_393_3_2_tag
+NEW account.report.expression: l10n_in_withholding.tds_report_line_section_393_3_3_tag
+NEW account.report.expression: l10n_in_withholding.tds_report_line_section_393_3_4_tag
+NEW account.report.expression: l10n_in_withholding.tds_report_line_section_393_3_5_a_tag
+NEW account.report.expression: l10n_in_withholding.tds_report_line_section_393_3_5_b_tag
+NEW account.report.expression: l10n_in_withholding.tds_report_line_section_393_3_6_tag
+NEW account.report.expression: l10n_in_withholding.tds_report_line_section_393_3_7_tag
 NEW account.report.line: l10n_in_withholding.tcs_report_line_section_206c_1_alfhc [renamed from l10n_in module]
 NEW account.report.line: l10n_in_withholding.tcs_report_line_section_206c_1_aofpnbtotl [renamed from l10n_in module]
 NEW account.report.line: l10n_in_withholding.tcs_report_line_section_206c_1_mbcoloio [renamed from l10n_in module]
@@ -76,6 +141,16 @@ NEW account.report.line: l10n_in_withholding.tcs_report_line_section_206c_1f_mv 
 NEW account.report.line: l10n_in_withholding.tcs_report_line_section_206c_1g_soaotpp [renamed from l10n_in module]
 NEW account.report.line: l10n_in_withholding.tcs_report_line_section_206c_1g_som [renamed from l10n_in module]
 NEW account.report.line: l10n_in_withholding.tcs_report_line_section_206c_1h_sog [renamed from l10n_in module]
+NEW account.report.line: l10n_in_withholding.tcs_report_line_section_394_1_1
+NEW account.report.line: l10n_in_withholding.tcs_report_line_section_394_1_2
+NEW account.report.line: l10n_in_withholding.tcs_report_line_section_394_1_3
+NEW account.report.line: l10n_in_withholding.tcs_report_line_section_394_1_4
+NEW account.report.line: l10n_in_withholding.tcs_report_line_section_394_1_5
+NEW account.report.line: l10n_in_withholding.tcs_report_line_section_394_1_6_a
+NEW account.report.line: l10n_in_withholding.tcs_report_line_section_394_1_6_b
+NEW account.report.line: l10n_in_withholding.tcs_report_line_section_394_1_7_a
+NEW account.report.line: l10n_in_withholding.tcs_report_line_section_394_1_7_b
+NEW account.report.line: l10n_in_withholding.tcs_report_line_section_394_1_9
 NEW account.report.line: l10n_in_withholding.tds_report_line_section_192 [renamed from l10n_in module]
 NEW account.report.line: l10n_in_withholding.tds_report_line_section_192a [renamed from l10n_in module]
 NEW account.report.line: l10n_in_withholding.tds_report_line_section_193 [renamed from l10n_in module]
@@ -107,6 +182,57 @@ NEW account.report.line: l10n_in_withholding.tds_report_line_section_194n [renam
 NEW account.report.line: l10n_in_withholding.tds_report_line_section_194o [renamed from l10n_in module]
 NEW account.report.line: l10n_in_withholding.tds_report_line_section_194q [renamed from l10n_in module]
 NEW account.report.line: l10n_in_withholding.tds_report_line_section_195 [renamed from l10n_in module]
+NEW account.report.line: l10n_in_withholding.tds_report_line_section_392_1
+NEW account.report.line: l10n_in_withholding.tds_report_line_section_393_1_1_i
+NEW account.report.line: l10n_in_withholding.tds_report_line_section_393_1_1_ii
+NEW account.report.line: l10n_in_withholding.tds_report_line_section_393_1_2_i
+NEW account.report.line: l10n_in_withholding.tds_report_line_section_393_1_2_ii_a
+NEW account.report.line: l10n_in_withholding.tds_report_line_section_393_1_2_ii_b
+NEW account.report.line: l10n_in_withholding.tds_report_line_section_393_1_3_i
+NEW account.report.line: l10n_in_withholding.tds_report_line_section_393_1_3_ii
+NEW account.report.line: l10n_in_withholding.tds_report_line_section_393_1_3_iii
+NEW account.report.line: l10n_in_withholding.tds_report_line_section_393_1_4_i
+NEW account.report.line: l10n_in_withholding.tds_report_line_section_393_1_4_ii
+NEW account.report.line: l10n_in_withholding.tds_report_line_section_393_1_4_iii
+NEW account.report.line: l10n_in_withholding.tds_report_line_section_393_1_4_iv
+NEW account.report.line: l10n_in_withholding.tds_report_line_section_393_1_6_i_a
+NEW account.report.line: l10n_in_withholding.tds_report_line_section_393_1_6_i_b
+NEW account.report.line: l10n_in_withholding.tds_report_line_section_393_1_6_ii
+NEW account.report.line: l10n_in_withholding.tds_report_line_section_393_1_6_iii_a
+NEW account.report.line: l10n_in_withholding.tds_report_line_section_393_1_6_iii_b
+NEW account.report.line: l10n_in_withholding.tds_report_line_section_393_1_7
+NEW account.report.line: l10n_in_withholding.tds_report_line_section_393_1_8_i
+NEW account.report.line: l10n_in_withholding.tds_report_line_section_393_1_8_ii
+NEW account.report.line: l10n_in_withholding.tds_report_line_section_393_1_8_iv
+NEW account.report.line: l10n_in_withholding.tds_report_line_section_393_1_8_v
+NEW account.report.line: l10n_in_withholding.tds_report_line_section_393_1_8_vi
+NEW account.report.line: l10n_in_withholding.tds_report_line_section_393_2_1
+NEW account.report.line: l10n_in_withholding.tds_report_line_section_393_2_10
+NEW account.report.line: l10n_in_withholding.tds_report_line_section_393_2_11
+NEW account.report.line: l10n_in_withholding.tds_report_line_section_393_2_12
+NEW account.report.line: l10n_in_withholding.tds_report_line_section_393_2_13
+NEW account.report.line: l10n_in_withholding.tds_report_line_section_393_2_14
+NEW account.report.line: l10n_in_withholding.tds_report_line_section_393_2_15
+NEW account.report.line: l10n_in_withholding.tds_report_line_section_393_2_16
+NEW account.report.line: l10n_in_withholding.tds_report_line_section_393_2_17
+NEW account.report.line: l10n_in_withholding.tds_report_line_section_393_2_2
+NEW account.report.line: l10n_in_withholding.tds_report_line_section_393_2_3
+NEW account.report.line: l10n_in_withholding.tds_report_line_section_393_2_4_a
+NEW account.report.line: l10n_in_withholding.tds_report_line_section_393_2_4_b
+NEW account.report.line: l10n_in_withholding.tds_report_line_section_393_2_5
+NEW account.report.line: l10n_in_withholding.tds_report_line_section_393_2_6_a
+NEW account.report.line: l10n_in_withholding.tds_report_line_section_393_2_6_b
+NEW account.report.line: l10n_in_withholding.tds_report_line_section_393_2_7
+NEW account.report.line: l10n_in_withholding.tds_report_line_section_393_2_8
+NEW account.report.line: l10n_in_withholding.tds_report_line_section_393_2_9
+NEW account.report.line: l10n_in_withholding.tds_report_line_section_393_3_1
+NEW account.report.line: l10n_in_withholding.tds_report_line_section_393_3_2
+NEW account.report.line: l10n_in_withholding.tds_report_line_section_393_3_3
+NEW account.report.line: l10n_in_withholding.tds_report_line_section_393_3_4
+NEW account.report.line: l10n_in_withholding.tds_report_line_section_393_3_5_a
+NEW account.report.line: l10n_in_withholding.tds_report_line_section_393_3_5_b
+NEW account.report.line: l10n_in_withholding.tds_report_line_section_393_3_6
+NEW account.report.line: l10n_in_withholding.tds_report_line_section_393_3_7
 NEW ir.actions.act_window: l10n_in_withholding.l10n_in_section_alert_action
 NEW ir.model.access: l10n_in_withholding.access_l10n_in_section_alert_account_manager
 NEW ir.model.access: l10n_in_withholding.access_l10n_in_section_alert_account_readonly
@@ -131,6 +257,16 @@ NEW l10n_in.section.alert: l10n_in_withholding.tcs_section_206c1c_t
 NEW l10n_in.section.alert: l10n_in_withholding.tcs_section_206c1f_mv
 NEW l10n_in.section.alert: l10n_in_withholding.tcs_section_206c1g_ot
 NEW l10n_in.section.alert: l10n_in_withholding.tcs_section_206c1g_r
+NEW l10n_in.section.alert: l10n_in_withholding.tcs_section_394_1_1_liq
+NEW l10n_in.section.alert: l10n_in_withholding.tcs_section_394_1_2_tendu
+NEW l10n_in.section.alert: l10n_in_withholding.tcs_section_394_1_3_timber
+NEW l10n_in.section.alert: l10n_in_withholding.tcs_section_394_1_4_sc
+NEW l10n_in.section.alert: l10n_in_withholding.tcs_section_394_1_5_min
+NEW l10n_in.section.alert: l10n_in_withholding.tcs_section_394_1_6_a_mv
+NEW l10n_in.section.alert: l10n_in_withholding.tcs_section_394_1_6_b_ng
+NEW l10n_in.section.alert: l10n_in_withholding.tcs_section_394_1_7_a_lrs_edu
+NEW l10n_in.section.alert: l10n_in_withholding.tcs_section_394_1_7_b_lrs_oth
+NEW l10n_in.section.alert: l10n_in_withholding.tcs_section_394_1_9_parking
 NEW l10n_in.section.alert: l10n_in_withholding.tds_section_192
 NEW l10n_in.section.alert: l10n_in_withholding.tds_section_192a
 NEW l10n_in.section.alert: l10n_in_withholding.tds_section_193
@@ -165,3 +301,14 @@ NEW l10n_in.section.alert: l10n_in_withholding.tds_section_194o
 NEW l10n_in.section.alert: l10n_in_withholding.tds_section_194o_huf
 NEW l10n_in.section.alert: l10n_in_withholding.tds_section_194q
 NEW l10n_in.section.alert: l10n_in_withholding.tds_section_195
+NEW l10n_in.section.alert: l10n_in_withholding.tds_section_393_1_1_i_insu_comm
+NEW l10n_in.section.alert: l10n_in_withholding.tds_section_393_1_1_ii_comm
+NEW l10n_in.section.alert: l10n_in_withholding.tds_section_393_1_2_i_rent
+NEW l10n_in.section.alert: l10n_in_withholding.tds_section_393_1_2_ii_a_rent_mach
+NEW l10n_in.section.alert: l10n_in_withholding.tds_section_393_1_2_ii_b_rent_land
+NEW l10n_in.section.alert: l10n_in_withholding.tds_section_393_1_3_i_imp
+NEW l10n_in.section.alert: l10n_in_withholding.tds_section_393_1_3_iii_comp_acq
+NEW l10n_in.section.alert: l10n_in_withholding.tds_section_393_1_6_i_a_contr_ind_huf
+NEW l10n_in.section.alert: l10n_in_withholding.tds_section_393_1_6_i_b_contr_non_ind_huf
+NEW l10n_in.section.alert: l10n_in_withholding.tds_section_393_1_6_iii_a_tech
+NEW l10n_in.section.alert: l10n_in_withholding.tds_section_393_1_6_iii_b_prof
