@@ -40,6 +40,9 @@ new model account.move.send.batch.wizard [module account]
 new model account.move.send.wizard [module account]
 new model account.payment.register.withholding.line [module l10n_account_withholding_tax]
 new model account.payment.withholding.line [module l10n_account_withholding_tax]
+new model account.peppol.clarification [module account_peppol_response]
+new model account.peppol.rejection.wizard [module account_peppol_response]
+new model account.peppol.response [module account_peppol_response]
 new model account_peppol.service [module account_peppol]
 new model account_peppol.service.wizard [module account_peppol]
 new model account.secure.entries.wizard [module account]
@@ -104,6 +107,8 @@ new model myinvois.consolidate.invoice.wizard [module l10n_my_edi_pos]
 new model myinvois.document [module l10n_my_edi_pos]
 new model myinvois.document.status.update.wizard [module l10n_my_edi_pos]
 new model nemhandel.registration [module l10n_dk_nemhandel]
+new model nemhandel.rejection.wizard [module l10n_dk_nemhandel_response]
+new model nemhandel.response [module l10n_dk_nemhandel_response]
 new model peppol.registration [module account_peppol]
 new model pos.bus.mixin [module point_of_sale]
 new model pos.edi.xml.ubl_21 [module pos_edi_ubl]
@@ -141,7 +146,7 @@ new model website.page.properties.base [module website]
 # Found in other module: 95
 # Found with different type: 8
 # In obsolete models: 34
-# New columns: 1904
+# New columns: 1942
 # Not matched: 847
 ---XML records in module 'general'---
 ERROR: module not in list of installed modules:
