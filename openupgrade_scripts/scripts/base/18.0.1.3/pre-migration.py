@@ -75,6 +75,18 @@ def migrate(cr, version):
     openupgrade.update_module_names(cr, merged_modules.items(), merge_modules=True)
     openupgrade.clean_transient_models(cr)
     openupgrade.rename_xmlids(cr, _renamed_xmlids)
+    openupgrade.copy_columns(
+        cr,
+        {"ir_act_window_view": [("view_mode", None, None)]},
+    )
+    old_column = openupgrade.get_legacy_name("view_mode")
+    openupgrade.map_values(
+        cr,
+        old_column,
+        "view_mode",
+        [("tree", "list")],
+        table="ir_act_window_view",
+    )
     _fix_list_view_type(cr)
     _fix_list_view_mode(cr)
     _fix_serbian_res_lang_record(cr)

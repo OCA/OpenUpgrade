@@ -12,7 +12,6 @@ new model res.device.log
 ---Fields in module 'base'---
 base         / ir.actions.act_url       / path (char)                   : NEW
 base         / ir.actions.act_window    / path (char)                   : NEW
-base         / ir.actions.act_window.view / view_mode (selection)         : selection_keys is now '['calendar', 'form', 'graph', 'kanban', 'list', 'pivot']' ('['calendar', 'form', 'gantt', 'graph', 'kanban', 'pivot', 'tree']')
 base         / ir.actions.act_window_close / path (char)                   : NEW
 base         / ir.actions.actions       / path (char)                   : NEW
 base         / ir.actions.client        / path (char)                   : NEW
@@ -21,6 +20,9 @@ base         / ir.actions.report        / path (char)                   : NEW
 base         / ir.actions.server        / path (char)                   : NEW
 
 # NOTHING TO DO: new functionality
+
+base         / ir.actions.act_window.view / view_mode (selection)         : selection_keys is now '['calendar', 'form', 'graph', 'kanban', 'list', 'pivot']' ('['calendar', 'form', 'gantt', 'graph', 'kanban', 'pivot', 'tree']')
+# DONE: pre-migration: copied column for preservation and mapped values: tree -> list
 
 base         / ir.cron                  / doall (boolean)               : DEL
 
