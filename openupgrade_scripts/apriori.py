@@ -82,6 +82,8 @@ merged_modules = {
     "website_sale_filter_product_brand": "website_sale_product_brand",
     # OCA/hr-attendance
     "hr_attendance_autoclose": "hr_attendance",
+    # OCA/hr-expense
+    "hr_expense_employee_analytic_default": "hr_expense",
     # OCA/knowledge
     "document_page_group": "document_page_access_group",
     # OCA/l10n-france
