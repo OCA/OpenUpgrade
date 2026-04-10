@@ -15,7 +15,11 @@ def migrate(env, version):
             (
                 "sale.sale_order_action_view_quotation_kanban",
                 "sale.action_quotations_kanban",
-            )
+            ),
+            (
+                "sale.sale_order_action_view_quotation_tree",
+                "sale.action_quotations_tree",
+            ),
         ],
     )
     openupgrade.add_columns(
