@@ -1,0 +1,19 @@
+---Models in module 'l10n_dk_nemhandel_response'---
+new model nemhandel.rejection.wizard [transient]
+new model nemhandel.response
+---Fields in module 'l10n_dk_nemhandel_response'---
+l10n_dk_nemhandel_response / account.move             / nemhandel_move_state (False)  : NEW selection_keys: ['BusinessAccept', 'BusinessReject', 'done', 'error', 'processing', 'ready', 'to_send'], mode: modify
+l10n_dk_nemhandel_response / account.move             / nemhandel_response_ids (one2many): NEW relation: nemhandel.response
+l10n_dk_nemhandel_response / nemhandel.response       / move_id (many2one)            : NEW relation: account.move
+l10n_dk_nemhandel_response / nemhandel.response       / nemhandel_message_uuid (char) : NEW
+l10n_dk_nemhandel_response / nemhandel.response       / nemhandel_state (selection)   : NEW selection_keys: ['done', 'error', 'not_serviced', 'processing']
+l10n_dk_nemhandel_response / nemhandel.response       / response_code (selection)     : NEW required, selection_keys: ['BusinessAccept', 'BusinessReject']
+l10n_dk_nemhandel_response / res.partner              / nemhandel_supported_documents (json): NEW
+---XML records in module 'l10n_dk_nemhandel_response'---
+NEW ir.model.access: l10n_dk_nemhandel_response.nemhandel_rejection_wizard
+NEW ir.model.access: l10n_dk_nemhandel_response.nemhandel_response
+NEW ir.ui.view: l10n_dk_nemhandel_response.nemhandel_rejection_wizard_view_form
+NEW ir.ui.view: l10n_dk_nemhandel_response.nemhandel_response_view_form
+NEW ir.ui.view: l10n_dk_nemhandel_response.nemhandel_response_view_list
+NEW ir.ui.view: l10n_dk_nemhandel_response.nemhandel_response_view_move_form
+NEW ir.ui.view: l10n_dk_nemhandel_response.res_partner_form_l10n_dk_nemhandel_response
