@@ -40,6 +40,10 @@ def _fix_list_view_mode(cr):
         WHERE view_mode ~ '(^|,)tree(,|$)'
         """,
     )
+    openupgrade.logged_query(
+        cr,
+        "UPDATE ir_act_window_view SET view_mode = 'list' WHERE view_mode = 'tree'",
+    )
 
 
 def _fix_serbian_res_lang_record(cr):
