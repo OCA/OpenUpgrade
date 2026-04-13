@@ -21,9 +21,9 @@
         ]</field>
   </record>
   <record id="offboarding_plan" model="mail.activity.plan">
-    <field name="company_id" eval="False"/>
+    <field name="company_id" ref="base.main_company"/>
   </record>
   <record id="onboarding_plan" model="mail.activity.plan">
-    <field name="company_id" eval="False"/>
+    <field name="company_id" ref="base.main_company"/>
   </record>
 </odoo>
