@@ -58,6 +58,7 @@ NEW ir.actions.act_window: hr_attendance.hr_attendance_overtime_ruleset_action
 DEL ir.actions.act_window: hr_attendance.hr_attendance_overtime_action
 DEL ir.actions.client: hr_attendance.hr_attendance_action_install_kiosk_pwa
 NEW ir.model.access: hr_attendance.access_hr_attendance_overtime_line_officer
+NEW ir.model.access: hr_attendance.access_hr_attendance_overtime_line_own_reader
 NEW ir.model.access: hr_attendance.access_hr_attendance_overtime_rule_admin
 NEW ir.model.access: hr_attendance.access_hr_attendance_overtime_rule_officer
 NEW ir.model.access: hr_attendance.access_hr_attendance_overtime_rule_user
@@ -70,6 +71,10 @@ DEL ir.model.access: hr_attendance.access_hr_attendance_overtime_user
 NEW ir.model.constraint: hr_attendance.constraint_hr_attendance_overtime_line_overtime_start_before_end
 NEW ir.model.constraint: hr_attendance.constraint_hr_attendance_overtime_rule_timing_start_is_hour
 NEW ir.model.constraint: hr_attendance.constraint_hr_attendance_overtime_rule_timing_stop_is_hour
+NEW ir.rule: hr_attendance.hr_attendance_overtime_line_rule_admin (noupdate)
+NEW ir.rule: hr_attendance.hr_attendance_overtime_line_rule_employee_company (noupdate)
+NEW ir.rule: hr_attendance.hr_attendance_overtime_line_rule_officer (noupdate)
+NEW ir.rule: hr_attendance.hr_attendance_overtime_line_rule_own_reader (noupdate)
 NEW ir.rule: hr_attendance.hr_attendance_overtime_ruleset_rule (noupdate)
 NEW ir.rule: hr_attendance.hr_attendance_overtime_ruleset_rule_group_hr_attendance_manager (noupdate)
 DEL ir.rule: hr_attendance.hr_attendance_overtime_rule_employee_company (noupdate)
