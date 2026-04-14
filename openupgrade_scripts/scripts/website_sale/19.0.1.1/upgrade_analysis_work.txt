@@ -1,0 +1,263 @@
+---Models in module 'website_sale'---
+new model product.feed
+
+# NOTHING TO DO: new feature
+
+new model website.checkout.step
+
+# DONE: create default checkout steps in post-migration
+
+---Fields in module 'website_sale'---
+website_sale / product.attribute        / is_thumbnail_visible (boolean): NEW
+website_sale / product.attribute        / preview_variants (selection)  : NEW selection_keys: ['hidden', 'hover', 'visible'], hasdefault: default
+
+# NOTHING TO DO: defaults are fine
+
+website_sale / product.feed             / access_token (char)           : NEW required
+website_sale / product.feed             / cache_expiry (datetime)       : NEW required
+website_sale / product.feed             / feed_cache (binary)           : NEW attachment: True, isfunction: function, stored
+website_sale / product.feed             / lang_id (many2one)            : NEW relation: res.lang, required, hasdefault: compute
+website_sale / product.feed             / last_notification_date (date) : NEW
+website_sale / product.feed             / message_follower_ids (one2many): NEW relation: mail.followers
+website_sale / product.feed             / message_ids (one2many)        : NEW relation: mail.message
+website_sale / product.feed             / name (char)                   : NEW required
+website_sale / product.feed             / pricelist_id (many2one)       : NEW relation: product.pricelist
+website_sale / product.feed             / product_category_ids (many2many): NEW relation: product.public.category
+website_sale / product.feed             / rating_ids (one2many)         : NEW relation: rating.rating
+website_sale / product.feed             / target (selection)            : NEW required, selection_keys: ['gmc'], hasdefault: default
+website_sale / product.feed             / website_id (many2one)         : NEW relation: website, required
+website_sale / product.feed             / website_message_ids (one2many): NEW relation: mail.message
+
+# NOTHING TO DO: new feature
+
+website_sale / product.public.category  / align_category_content (boolean): NEW hasdefault: default
+website_sale / product.public.category  / cover_image (binary)          : NEW attachment: True
+website_sale / product.public.category  / is_seo_optimized (boolean)    : is now stored
+website_sale / product.public.category  / show_category_description (boolean): NEW hasdefault: default
+website_sale / product.public.category  / show_category_title (boolean) : NEW hasdefault: default
+
+# NOTHING TO DO: defaults retain previous behavior
+
+website_sale / product.ribbon           / _order                        : _order is now 'sequence ASC, id' ('id')
+
+# DONE: set custom ribbons' sequence to id
+
+website_sale / product.ribbon           / assign (selection)            : NEW required, selection_keys: ['manual', 'new', 'sale'], hasdefault: default
+
+# NOTHING TO DO: defaults to previous behavior
+
+website_sale / product.ribbon           / new_period (integer)          : NEW hasdefault: default
+
+# NOTHING TO DO: new feature
+
+website_sale / product.ribbon           / sequence (integer)            : NEW hasdefault: default
+
+# DONE: see _order
+
+website_sale / product.ribbon           / style (selection)             : NEW required, selection_keys: ['ribbon', 'tag'], hasdefault: default
+
+# NOTHING TO DO: defaults to previous behavior
+
+website_sale / product.tag              / image (binary)                : module is now 'product' ('website_sale')
+website_sale / product.tag              / visible_on_ecommerce (boolean): DEL
+
+# NOTHING TO DO
+
+website_sale / product.template         / is_seo_optimized (boolean)    : is now stored
+website_sale / product.template         / publish_date (datetime)       : NEW required, isfunction: function, stored
+website_sale / product.template         / variants_default_code (char)  : NEW isfunction: function, stored
+
+# NOTHING TO DO
+
+website_sale / website                  / add_to_cart_action (selection): selection_keys removed: [force_dialog]
+
+# DONE: mapped force_dialog to stay
+
+website_sale / website                  / all_pricelist_ids (one2many)  : DEL relation: product.pricelist
+
+# NOTHING TO DO
+
+website_sale / website                  / confirmation_email_template_id (many2one): NEW relation: mail.template, hasdefault: default
+website_sale / website                  / enabled_gmc_src (boolean)     : NEW hasdefault: default
+
+# NOTHING TO DO: default is fine
+
+website_sale / website                  / enabled_portal_reorder_button (boolean): DEL
+website_sale / website                  / prevent_zero_price_sale_text (char): DEL
+
+# NOTHING TO DO
+
+website_sale / website                  / product_page_cols_order (selection): NEW selection_keys: ['inverse', 'regular'], hasdefault: default
+website_sale / website                  / product_page_container (selection): NEW selection_keys: ['fluid', 'regular', 'unset'], hasdefault: default
+website_sale / website                  / product_page_image_ratio (selection): NEW required, selection_keys: ['16_9', '1_1', '21_9', '2_3', '4_3', '4_5', '6_5', 'auto'], hasdefault: default
+website_sale / website                  / product_page_image_ratio_mobile (selection): NEW required, selection_keys: ['16_9', '1_1', '21_9', '2_3', '4_3', '4_5', '6_5', 'auto'], hasdefault: default
+website_sale / website                  / product_page_image_roundness (selection): NEW required, selection_keys: ['big', 'medium', 'none', 'small'], hasdefault: default
+
+# NOTHING TO DO: defaults are fine
+
+website_sale / website                  / product_page_image_width (selection): selection_keys added: [33_pc] (most likely nothing to do)
+website_sale / website                  / send_abandoned_cart_email_activation_time (datetime): NEW isfunction: function, stored
+
+# NOTHING TO DO
+
+website_sale / website                  / shop_opt_products_design_classes (char): NEW hasdefault: default
+website_sale / website                  / shop_page_container (selection): NEW selection_keys: ['fluid', 'regular'], hasdefault: default
+
+# NOTHING TO DO: defaults to previous behavior
+
+website_sale / website.checkout.step    / back_button_label (char)      : NEW translate
+website_sale / website.checkout.step    / is_published (boolean)        : NEW hasdefault: default
+website_sale / website.checkout.step    / main_button_label (char)      : NEW translate
+website_sale / website.checkout.step    / name (char)                   : NEW required, translate
+website_sale / website.checkout.step    / sequence (integer)            : NEW
+website_sale / website.checkout.step    / step_href (char)              : NEW required
+website_sale / website.checkout.step    / website_id (many2one)         : NEW relation: website
+
+# NOTHING TO DO
+
+---XML records in module 'website_sale'---
+NEW ir.actions.act_window: website_sale.action_product_feeds
+NEW ir.actions.server: website_sale.action_invalidate_cache
+NEW ir.actions.server: website_sale.dynamic_snippet_category_list
+DEL ir.asset: website_sale.s_add_to_cart_000_js
+DEL ir.asset: website_sale.s_dynamic_snippet_products_000_js
+DEL ir.asset: website_sale.s_popup_000_js
+NEW ir.model.access: website_sale.access_product_feed_base_group_system
+NEW ir.model.access: website_sale.access_product_feed_website_group_website_designer
+NEW ir.model.access: website_sale.access_product_ribbon_public_employee
+NEW ir.model.access: website_sale.access_product_ribbon_public_portal
+NEW ir.model.access: website_sale.access_product_ribbon_public_public
+NEW ir.model.access: website_sale.access_uom_portal
+NEW ir.model.access: website_sale.access_uom_public
+NEW ir.model.access: website_sale.access_website_checkout_step_website_designer
+DEL ir.model.access: website_sale.access_product_ribbon_public
+NEW ir.model.constraint: website_sale.constraint_product_template_default_code_gist_idx
+NEW ir.model.constraint: website_sale.constraint_product_template_description_gist_idx
+NEW ir.model.constraint: website_sale.constraint_product_template_description_sale_gist_idx
+NEW ir.model.constraint: website_sale.constraint_product_template_name_gist_idx
+NEW ir.rule: website_sale.empty_public_categories_rule (noupdate)
+NEW ir.ui.menu: website_sale.menu_product_feeds
+NEW ir.ui.view: website_sale.address_card
+NEW ir.ui.view: website_sale.address_edit_button
+NEW ir.ui.view: website_sale.address_form_fields
+NEW ir.ui.view: website_sale.address_list
+NEW ir.ui.view: website_sale.address_on_checkout
+NEW ir.ui.view: website_sale.all_products_link_name
+NEW ir.ui.view: website_sale.billing_address_list
+NEW ir.ui.view: website_sale.cart_lines_price
+NEW ir.ui.view: website_sale.cart_lines_quantity
+NEW ir.ui.view: website_sale.cart_summary_content
+NEW ir.ui.view: website_sale.cta_separator
+NEW ir.ui.view: website_sale.cta_wrapper
+NEW ir.ui.view: website_sale.cta_wrapper_boxed
+NEW ir.ui.view: website_sale.cta_wrapper_large
+NEW ir.ui.view: website_sale.delivery_address_list
+NEW ir.ui.view: website_sale.dynamic_filter_template_product_product_products_item
+NEW ir.ui.view: website_sale.dynamic_filter_template_product_public_category_clickable_items
+NEW ir.ui.view: website_sale.dynamic_filter_template_product_public_category_default
+NEW ir.ui.view: website_sale.editor_previews
+NEW ir.ui.view: website_sale.empty_cart_svg
+NEW ir.ui.view: website_sale.filmstrip_categories_bordered
+NEW ir.ui.view: website_sale.filmstrip_categories_grid
+NEW ir.ui.view: website_sale.filmstrip_categories_images
+NEW ir.ui.view: website_sale.filmstrip_categories_large_images
+NEW ir.ui.view: website_sale.filmstrip_categories_pills
+NEW ir.ui.view: website_sale.filmstrip_categories_tabs
+NEW ir.ui.view: website_sale.filter_color_attributes
+NEW ir.ui.view: website_sale.filter_image_attributes
+NEW ir.ui.view: website_sale.filter_pills_attributes
+NEW ir.ui.view: website_sale.filter_radio_and_multi_attributes
+NEW ir.ui.view: website_sale.filter_select_attributes
+NEW ir.ui.view: website_sale.floating_bar
+NEW ir.ui.view: website_sale.gmc_xml
+NEW ir.ui.view: website_sale.packaging_title
+NEW ir.ui.view: website_sale.product_attribute_filters_form
+NEW ir.ui.view: website_sale.product_buy_now_large
+NEW ir.ui.view: website_sale.product_feed_form
+NEW ir.ui.view: website_sale.product_feed_list
+NEW ir.ui.view: website_sale.product_feed_search
+NEW ir.ui.view: website_sale.product_pricelist_item_form
+NEW ir.ui.view: website_sale.product_quantity_large
+NEW ir.ui.view: website_sale.product_search
+NEW ir.ui.view: website_sale.product_terms_and_conditions
+NEW ir.ui.view: website_sale.product_tile_element_visibility
+NEW ir.ui.view: website_sale.product_title
+NEW ir.ui.view: website_sale.product_variant_preview
+NEW ir.ui.view: website_sale.products_mobile_cols_single
+NEW ir.ui.view: website_sale.products_shop_title
+NEW ir.ui.view: website_sale.products_shop_title_align
+NEW ir.ui.view: website_sale.quick_reorder_button
+NEW ir.ui.view: website_sale.quick_reorder_history
+NEW ir.ui.view: website_sale.quick_reorder_sidebar
+NEW ir.ui.view: website_sale.s_dynamic_snippet_category_list
+NEW ir.ui.view: website_sale.s_dynamic_snippet_category_preview_data
+NEW ir.ui.view: website_sale.s_dynamic_snippet_category_template
+NEW ir.ui.view: website_sale.shop_product_buttons
+NEW ir.ui.view: website_sale.shorter_cart_summary
+NEW ir.ui.view: website_sale.sidebar_dropzone_at_bottom
+NEW ir.ui.view: website_sale.sidebar_dropzone_at_top
+NEW ir.ui.view: website_sale.template_footer_website_sale
+NEW ir.ui.view: website_sale.website_sale_layout
+DEL ir.ui.view: website_sale.add_grid_or_list_option
+DEL ir.ui.view: website_sale.add_to_cart_redirect
+DEL ir.ui.view: website_sale.address_kanban
+DEL ir.ui.view: website_sale.address_on_payment
+DEL ir.ui.view: website_sale.address_row
+DEL ir.ui.view: website_sale.billing_address_row
+DEL ir.ui.view: website_sale.crm_team_view_kanban_dashboard
+DEL ir.ui.view: website_sale.delivery_address_row
+DEL ir.ui.view: website_sale.dynamic_filter_template_product_product_add_to_cart
+DEL ir.ui.view: website_sale.dynamic_filter_template_product_product_banner
+DEL ir.ui.view: website_sale.dynamic_filter_template_product_product_borderless_1
+DEL ir.ui.view: website_sale.dynamic_filter_template_product_product_borderless_2
+DEL ir.ui.view: website_sale.dynamic_filter_template_product_product_card_group
+DEL ir.ui.view: website_sale.dynamic_filter_template_product_product_centered
+DEL ir.ui.view: website_sale.dynamic_filter_template_product_product_horizontal_card
+DEL ir.ui.view: website_sale.dynamic_filter_template_product_product_horizontal_card_2
+DEL ir.ui.view: website_sale.dynamic_filter_template_product_product_mini_image
+DEL ir.ui.view: website_sale.dynamic_filter_template_product_product_mini_name
+DEL ir.ui.view: website_sale.dynamic_filter_template_product_product_mini_price
+DEL ir.ui.view: website_sale.dynamic_filter_template_product_product_view_detail
+DEL ir.ui.view: website_sale.o_wsale_offcanvas_color_attribute
+DEL ir.ui.view: website_sale.product_custom_text
+DEL ir.ui.view: website_sale.product_picture_magnify_both
+DEL ir.ui.view: website_sale.product_picture_magnify_hover
+DEL ir.ui.view: website_sale.product_searchbar_input_snippet_options
+DEL ir.ui.view: website_sale.product_share_buttons
+DEL ir.ui.view: website_sale.product_tag_form_view_inherit_website_sale
+DEL ir.ui.view: website_sale.product_tag_tree_view_inherit_website_sale
+DEL ir.ui.view: website_sale.product_variants
+DEL ir.ui.view: website_sale.products_add_to_cart
+DEL ir.ui.view: website_sale.products_carousel_16x9
+DEL ir.ui.view: website_sale.products_carousel_21x9
+DEL ir.ui.view: website_sale.products_carousel_4x3
+DEL ir.ui.view: website_sale.products_carousel_4x5
+DEL ir.ui.view: website_sale.products_description
+DEL ir.ui.view: website_sale.products_design_card
+DEL ir.ui.view: website_sale.products_design_grid
+DEL ir.ui.view: website_sale.products_design_thumbs
+DEL ir.ui.view: website_sale.products_thumb_2_3
+DEL ir.ui.view: website_sale.products_thumb_4_3
+DEL ir.ui.view: website_sale.products_thumb_4_5
+DEL ir.ui.view: website_sale.products_thumb_cover
+DEL ir.ui.view: website_sale.s_add_to_cart_options
+DEL ir.ui.view: website_sale.s_dynamic_snippet_products_options
+DEL ir.ui.view: website_sale.s_dynamic_snippet_products_template_options
+DEL ir.ui.view: website_sale.sale_order_view_form_cart_recovery
+DEL ir.ui.view: website_sale.snippet_options
+DEL ir.ui.view: website_sale.snippets_options_web_editor
+
+# NOTHING TO DO
+
+DEL product.attribute: website_sale.product_attribute_brand (noupdate)
+
+# DONE: deleted in post-migration
+
+NEW res.groups: website_sale.group_product_feed (noupdate)
+NEW website.checkout.step: website_sale.checkout_step_cart (noupdate)
+NEW website.checkout.step: website_sale.checkout_step_delivery (noupdate)
+NEW website.checkout.step: website_sale.checkout_step_extra (noupdate)
+NEW website.checkout.step: website_sale.checkout_step_payment (noupdate)
+NEW website.snippet.filter: website_sale.dynamic_filter_category_list
+
+# NOTHING TO DO
