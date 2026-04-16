@@ -46,7 +46,8 @@ merged_modules = {
     # odoo/enterprise
     # OCA/project
     "project_task_add_very_high": "project",
-    # OCA/...
+    # OCA/sale-workflow
+    "sale_order_warn_message": "sale",
 }
 
 # only used here for upgrade_analysis
