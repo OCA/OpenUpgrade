@@ -12,6 +12,8 @@ renamed_modules = {
     "delivery_carrier_customer_info": "partner_delivery_info",
     # OCA/l10n-spain
     "l10n_es_pos": "l10n_es_pos_oca",
+    # OCA/server-tools
+    "mail_template_attachment_i18n": "mail_template_attachment_per_lang",
     # OCA/social
     "mail_activity_unlink_log": "mail_activity_cancel_tracking",
 }
