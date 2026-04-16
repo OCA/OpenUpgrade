@@ -42,6 +42,8 @@ renamed_modules = {
     "product_supplierinfo_for_customer_sale": "product_customerinfo_sale",
     "product_supplierinfo_for_customer_elaboration": "product_customerinfo_elaboration",
     "sale_product_set_sale_by_packaging": "product_set_sell_only_by_packaging",
+    # OCA/server-tools
+    "mail_template_attachment_i18n": "mail_template_attachment_per_lang",
     # OCA/stock-logistics-workflow
     "stock_picking_type_shipping_policy": "stock_picking_type_force_move_type",
     # OCA/web
