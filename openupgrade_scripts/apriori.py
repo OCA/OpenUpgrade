@@ -46,6 +46,8 @@ merged_modules = {
     # odoo/enterprise
     # OCA/project
     "project_task_add_very_high": "project",
+    # OCA/purchase-workflow
+    "purchase_order_qty_change_no_recompute": "purchase",
     # OCA/sale-workflow
     "sale_order_warn_message": "sale",
 }
