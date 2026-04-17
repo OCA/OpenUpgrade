@@ -44,6 +44,8 @@ merged_modules = {
     "website_membership": "website_crm_partner_assign",
     "web_editor": "html_editor",
     # odoo/enterprise
+    # OCA/partner-contact
+    "partner_contact_lang": "base",
     # OCA/project
     "project_task_add_very_high": "project",
     # OCA/purchase-workflow
