@@ -1,0 +1,16 @@
+---Models in module 'pos_hr'---
+obsolete model report.pos_hr.multi_employee_sales_report [abstract]
+
+# NOTHING TO DO
+
+---Fields in module 'pos_hr'---
+pos_hr       / pos.config               / minimal_employee_ids (many2many): NEW relation: hr.employee
+
+# NOTHING TO DO
+
+---XML records in module 'pos_hr'---
+DEL ir.actions.report: pos_hr.multi_employee_sales_report_action
+NEW ir.ui.view: pos_hr.report_salesdetails_with_employee_reports
+DEL ir.ui.view: pos_hr.multi_employee_sales_report
+
+# NOTHING TO DO
