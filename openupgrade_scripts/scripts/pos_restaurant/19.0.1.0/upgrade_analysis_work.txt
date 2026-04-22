@@ -1,0 +1,35 @@
+---Models in module 'pos_restaurant'---
+new model restaurant.order.course
+
+# NOTHING TO DO: new feature
+
+---Fields in module 'pos_restaurant'---
+pos_restaurant / pos.config               / default_screen (selection)    : NEW selection_keys: ['register', 'tables'], hasdefault: default
+
+# NOTHING TO DO: default is fine
+
+pos_restaurant / pos.config               / module_pos_restaurant_appointment (boolean): DEL
+pos_restaurant / pos.config               / takeaway (boolean)            : DEL
+pos_restaurant / pos.config               / takeaway_fp_id (many2one)     : DEL relation: account.fiscal.position
+pos_restaurant / pos.order                / course_ids (one2many)         : NEW relation: restaurant.order.course
+pos_restaurant / pos.order                / takeaway (boolean)            : DEL
+pos_restaurant / pos.order.line           / course_id (many2one)          : NEW relation: restaurant.order.course
+pos_restaurant / pos.preset               / use_guest (boolean)           : NEW hasdefault: default
+pos_restaurant / restaurant.order.course  / fired (boolean)               : NEW hasdefault: default
+pos_restaurant / restaurant.order.course  / fired_date (datetime)         : NEW
+pos_restaurant / restaurant.order.course  / index (integer)               : NEW hasdefault: default
+pos_restaurant / restaurant.order.course  / line_ids (one2many)           : NEW relation: pos.order.line
+pos_restaurant / restaurant.order.course  / order_id (many2one)           : NEW relation: pos.order, required
+pos_restaurant / restaurant.order.course  / uuid (char)                   : NEW
+
+# NOTHING TO DO
+
+---XML records in module 'pos_restaurant'---
+NEW ir.model.access: pos_restaurant.access_restaurant_order_course
+NEW ir.ui.view: pos_restaurant.view_pos_preset_form_inherit_pos_restaurant
+NEW pos.preset: pos_restaurant.pos_delivery_preset (noupdate)
+NEW pos.preset: pos_restaurant.pos_takein_preset (noupdate)
+NEW pos.preset: pos_restaurant.pos_takeout_preset (noupdate)
+NEW resource.calendar: pos_restaurant.pos_resource_preset (noupdate)
+
+# NOTHING TO DO
