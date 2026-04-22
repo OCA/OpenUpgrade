@@ -1,0 +1,265 @@
+---Models in module 'hr_holidays'---
+---Fields in module 'hr_holidays'---
+hr_holidays  / hr.leave                 / leave_type_increases_duration (boolean): type is now 'char' ('boolean')
+
+# NOTHING TO DO: nonstored function field
+
+hr_holidays  / hr.leave                 / manager_id (many2one)         : DEL relation: hr.employee
+
+# NOTHING TO DO
+
+hr_holidays  / hr.leave                 / request_date_to_period (selection): NEW selection_keys: ['am', 'pm'], hasdefault: default
+
+# DONE: added in pre-migration script, computed from hour_to
+
+hr_holidays  / hr.leave                 / request_unit_half (boolean)   : now a function
+hr_holidays  / hr.leave                 / request_unit_hours (boolean)  : now a function
+
+# NOTHING TO DO: field was stored before too
+
+hr_holidays  / hr.leave.accrual.level   / action_with_unused_accruals (selection): now a function
+hr_holidays  / hr.leave.accrual.level   / action_with_unused_accruals (selection): selection_keys removed: [maximum]
+
+# DONE: map 'maximum' to 'all', set carryover_options to 'limited'
+
+hr_holidays  / hr.leave.accrual.level   / added_value_type (selection)  : now a function
+
+# NOTHING TO DO: has been stored before
+
+hr_holidays  / hr.leave.accrual.level   / carryover_options (selection) : NEW required, selection_keys: ['limited', 'unlimited'], hasdefault: default
+
+# DONE: set to 'unlimited' for action_with_unused_accruals == 'all', limited for action_with_unused_accruals == 'maximum'
+
+hr_holidays  / hr.leave.accrual.level   / first_day (integer)           : selection_keys is now 'function' ('False')
+hr_holidays  / hr.leave.accrual.level   / first_day (integer)           : type is now 'selection' ('integer')
+
+# NOTHING TO DO: auto-converted to char, selection keys are same as int values
+
+hr_holidays  / hr.leave.accrual.level   / first_month (selection)       : selection_keys added: [1, 2, 3, 4, 5, 6], removed: [apr, feb, jan, jun, mar, may]
+
+# DONE:  mapped month names to integers
+
+hr_holidays  / hr.leave.accrual.level   / first_month_day (integer)     : selection_keys is now 'function' ('False')
+hr_holidays  / hr.leave.accrual.level   / first_month_day (integer)     : type is now 'selection' ('integer')
+
+# NOTHING TO DO: auto-converted to char, selection keys are same as int values
+
+hr_holidays  / hr.leave.accrual.level   / milestone_date (selection)    : NEW required, selection_keys: ['after', 'creation'], isfunction: function, stored
+
+# NOTHING TO DO: computed by ORM
+
+hr_holidays  / hr.leave.accrual.level   / second_day (integer)          : selection_keys is now 'function' ('False')
+hr_holidays  / hr.leave.accrual.level   / second_day (integer)          : type is now 'selection' ('integer')
+h
+
+# NOTHING TO DO: auto-converted to char, selection keys are same as int values
+
+r_holidays  / hr.leave.accrual.level   / second_month (selection)      : selection_keys added: [10, 11, 12, 7, 8, 9], removed: [aug, dec, jul, nov, oct, sep]
+
+# DONE:  mapped month names to integers
+
+hr_holidays  / hr.leave.accrual.level   / second_month_day (integer)    : selection_keys is now 'function' ('False')
+hr_holidays  / hr.leave.accrual.level   / second_month_day (integer)    : type is now 'selection' ('integer')
+
+# NOTHING TO DO: auto-converted to char, selection keys are same as int values
+
+hr_holidays  / hr.leave.accrual.level   / week_day (selection)          : selection_keys added: [0, 1, 2, 3, 4, 5, 6], removed: [fri, mon, sat, sun, thu, tue, wed]
+
+# DONE:  mapped day names to integers
+
+hr_holidays  / hr.leave.accrual.level   / yearly_day (integer)          : selection_keys is now 'function' ('False')
+hr_holidays  / hr.leave.accrual.level   / yearly_day (integer)          : type is now 'selection' ('integer')
+
+# NOTHING TO DO: auto-converted to char, selection keys are same as int values
+
+hr_holidays  / hr.leave.accrual.level   / yearly_month (selection)      : selection_keys added: [1, 10, 11, 12, 2, 3, 4, 5, 6, 7, 8, 9], removed: [apr, aug, dec, feb, jan, jul, jun, mar, may, nov, oct, sep]
+
+# DONE:  mapped month names to integers
+
+hr_holidays  / hr.leave.accrual.plan    / added_value_type (selection)  : not a function anymore
+
+# NOTHING TO DO: was stored before
+
+hr_holidays  / hr.leave.accrual.plan    / can_be_carryover (boolean)    : NEW
+
+# NOTHING TO DO
+
+hr_holidays  / hr.leave.accrual.plan    / carryover_day (integer)       : selection_keys is now 'function' ('False')
+hr_holidays  / hr.leave.accrual.plan    / carryover_day (integer)       : type is now 'selection' ('integer')
+
+# NOTHING TO DO: auto-converted to char, selection keys are same as int values
+
+hr_holidays  / hr.leave.accrual.plan    / carryover_month (selection)   : selection_keys added: [1, 10, 11, 12, 2, 3, 4, 5, 6, 7, 8, 9], removed: [apr, aug, dec, feb, jan, jul, jun, mar, may, nov, oct, sep]
+
+# DONE:  mapped month names to integers
+
+hr_holidays  / hr.leave.mandatory.day   / job_ids (many2many)           : NEW relation: hr.job
+hr_holidays  / hr.leave.type            / allow_request_on_top (boolean): NEW hasdefault: default
+hr_holidays  / hr.leave.type            / country_id (many2one)         : is now stored
+hr_holidays  / hr.leave.type            / country_id (many2one)         : not related anymore
+hr_holidays  / hr.leave.type            / country_id (many2one)         : now a function
+hr_holidays  / hr.leave.type            / elligible_for_accrual_rate (boolean): NEW hasdefault: compute
+
+# NOTHING TO DO
+
+hr_holidays  / hr.leave.type            / employee_requests (selection) : selection_keys is now 'False' ('['no', 'yes']')
+hr_holidays  / hr.leave.type            / employee_requests (selection) : type is now 'boolean' ('selection')
+
+# DONE: mapped char values to boolean
+
+hr_holidays  / hr.leave.type            / hide_on_dashboard (boolean)   : NEW hasdefault: default
+
+# DONE: set from show_on_dashboard
+
+hr_holidays  / hr.leave.type            / requires_allocation (selection): selection_keys is now 'False' ('['no', 'yes']')
+hr_holidays  / hr.leave.type            / requires_allocation (selection): type is now 'boolean' ('selection')
+
+# DONE: mapped char values to boolean
+
+hr_holidays  / hr.leave.type            / show_on_dashboard (boolean)   : DEL
+
+# DONE: used to set from hide_on_dashboard
+
+hr_holidays  / resource.calendar.leaves / elligible_for_accrual_rate (boolean): NEW hasdefault: default
+
+# NOTHING TO DO
+
+---XML records in module 'hr_holidays'---
+NEW hr.leave.type: hr_holidays.holiday_status_eto (noupdate)
+
+# NOTHING TO DO
+
+NEW hr.leave.type: hr_holidays.holiday_status_extra_hours [renamed from hr_holidays_attendance module] (noupdate)
+
+# DONE: rename xmlid if module is installed
+
+NEW hr.leave.type: hr_holidays.l10n_ae_leave_type_sick_leave_0 (noupdate)
+NEW hr.leave.type: hr_holidays.l10n_ae_leave_type_sick_leave_50 (noupdate)
+NEW hr.leave.type: hr_holidays.l10n_be_leave_type_credit_time (noupdate)
+NEW hr.leave.type: hr_holidays.l10n_be_leave_type_european (noupdate)
+NEW hr.leave.type: hr_holidays.l10n_be_leave_type_extra_legal (noupdate)
+NEW hr.leave.type: hr_holidays.l10n_be_leave_type_maternity (noupdate)
+NEW hr.leave.type: hr_holidays.l10n_be_leave_type_recovery (noupdate)
+NEW hr.leave.type: hr_holidays.l10n_be_leave_type_sick_leave_without_certificate (noupdate)
+NEW hr.leave.type: hr_holidays.l10n_be_leave_type_small_unemployment (noupdate)
+NEW hr.leave.type: hr_holidays.l10n_be_leave_type_small_unemployment_birth (noupdate)
+NEW hr.leave.type: hr_holidays.l10n_be_leave_type_strike (noupdate)
+NEW hr.leave.type: hr_holidays.l10n_be_leave_type_training (noupdate)
+NEW hr.leave.type: hr_holidays.l10n_be_leave_type_unpredictable (noupdate)
+NEW hr.leave.type: hr_holidays.l10n_be_leave_type_work_accident (noupdate)
+NEW hr.leave.type: hr_holidays.l10n_ch_swissdec_accident_lt (noupdate)
+NEW hr.leave.type: hr_holidays.l10n_ch_swissdec_illness_lt (noupdate)
+NEW hr.leave.type: hr_holidays.l10n_ch_swissdec_interruption_of_work_lt (noupdate)
+NEW hr.leave.type: hr_holidays.l10n_ch_swissdec_maternity_lt (noupdate)
+NEW hr.leave.type: hr_holidays.l10n_ch_swissdec_military_lt (noupdate)
+NEW hr.leave.type: hr_holidays.l10n_ch_swissdec_unpaid_lt (noupdate)
+NEW hr.leave.type: hr_holidays.l10n_eg_leave_type_death (noupdate)
+NEW hr.leave.type: hr_holidays.l10n_eg_leave_type_hajj (noupdate)
+NEW hr.leave.type: hr_holidays.l10n_eg_leave_type_marriage (noupdate)
+NEW hr.leave.type: hr_holidays.l10n_eg_leave_type_maternity (noupdate)
+NEW hr.leave.type: hr_holidays.l10n_eg_leave_type_paid_sick_time_off (noupdate)
+NEW hr.leave.type: hr_holidays.l10n_eg_leave_type_sick_leave_75 (noupdate)
+NEW hr.leave.type: hr_holidays.l10n_eg_leave_type_sick_leave_unpaid (noupdate)
+NEW hr.leave.type: hr_holidays.l10n_hk_leave_type_annual_leave (noupdate)
+NEW hr.leave.type: hr_holidays.l10n_hk_leave_type_compassionate_leave (noupdate)
+NEW hr.leave.type: hr_holidays.l10n_hk_leave_type_compensation_leave (noupdate)
+NEW hr.leave.type: hr_holidays.l10n_hk_leave_type_examination_leave (noupdate)
+NEW hr.leave.type: hr_holidays.l10n_hk_leave_type_marriage_leave (noupdate)
+NEW hr.leave.type: hr_holidays.l10n_hk_leave_type_maternity_leave (noupdate)
+NEW hr.leave.type: hr_holidays.l10n_hk_leave_type_maternity_leave_80 (noupdate)
+NEW hr.leave.type: hr_holidays.l10n_hk_leave_type_paternity_leave (noupdate)
+NEW hr.leave.type: hr_holidays.l10n_hk_leave_type_paternity_leave_80 (noupdate)
+NEW hr.leave.type: hr_holidays.l10n_hk_leave_type_sick_leave (noupdate)
+NEW hr.leave.type: hr_holidays.l10n_hk_leave_type_sick_leave_80 (noupdate)
+NEW hr.leave.type: hr_holidays.l10n_hk_leave_type_unpaid_leave (noupdate)
+NEW hr.leave.type: hr_holidays.l10n_id_leave_type_annual_leave (noupdate)
+NEW hr.leave.type: hr_holidays.l10n_id_leave_type_bereavement_leave (noupdate)
+NEW hr.leave.type: hr_holidays.l10n_id_leave_type_marriage_leave (noupdate)
+NEW hr.leave.type: hr_holidays.l10n_id_leave_type_maternity_leave (noupdate)
+NEW hr.leave.type: hr_holidays.l10n_id_leave_type_paternity_leave (noupdate)
+NEW hr.leave.type: hr_holidays.l10n_id_leave_type_sick_leave (noupdate)
+NEW hr.leave.type: hr_holidays.l10n_id_leave_type_unpaid_leave (noupdate)
+NEW hr.leave.type: hr_holidays.l10n_jo_leave_type_maternity (noupdate)
+NEW hr.leave.type: hr_holidays.l10n_jo_leave_type_paternity (noupdate)
+NEW hr.leave.type: hr_holidays.l10n_jo_leave_type_pilgrimage (noupdate)
+NEW hr.leave.type: hr_holidays.l10n_jo_leave_type_study (noupdate)
+NEW hr.leave.type: hr_holidays.l10n_jo_leave_type_unpaid_sick (noupdate)
+NEW hr.leave.type: hr_holidays.l10n_lu_leave_type_situational_unemployment (noupdate)
+NEW hr.leave.type: hr_holidays.l10n_mx_leave_type_disability_due_to_illness_imss (noupdate)
+NEW hr.leave.type: hr_holidays.l10n_mx_leave_type_maternity_imss (noupdate)
+NEW hr.leave.type: hr_holidays.l10n_mx_leave_type_work_risk_imss (noupdate)
+NEW hr.leave.type: hr_holidays.l10n_pl_leave_type_sick_leave (noupdate)
+NEW hr.leave.type: hr_holidays.l10n_sa_leave_type_emergency (noupdate)
+NEW hr.leave.type: hr_holidays.l10n_sa_leave_type_hajj (noupdate)
+NEW hr.leave.type: hr_holidays.l10n_sa_leave_type_iddah (noupdate)
+NEW hr.leave.type: hr_holidays.l10n_sa_leave_type_marriage (noupdate)
+NEW hr.leave.type: hr_holidays.l10n_sa_leave_type_maternity (noupdate)
+NEW hr.leave.type: hr_holidays.l10n_sa_leave_type_paternity (noupdate)
+NEW hr.leave.type: hr_holidays.l10n_sa_leave_type_sick_leave_0 (noupdate)
+NEW hr.leave.type: hr_holidays.l10n_sa_leave_type_sick_leave_100 (noupdate)
+NEW hr.leave.type: hr_holidays.l10n_sa_leave_type_sick_leave_75 (noupdate)
+NEW hr.leave.type: hr_holidays.l10n_sa_leave_type_study (noupdate)
+NEW hr.leave.type: hr_holidays.l10n_sk_leave_type_maternity (noupdate)
+
+# NOTHING TO DO
+
+NEW hr.leave.type: hr_holidays.leave_type_compensatory_days (noupdate)
+NEW hr.leave.type: hr_holidays.leave_type_paid_time_off (noupdate)
+NEW hr.leave.type: hr_holidays.leave_type_sick_time_off (noupdate)
+NEW hr.leave.type: hr_holidays.leave_type_unpaid (noupdate)
+DEL hr.leave.type: hr_holidays.holiday_status_cl (noupdate)
+DEL hr.leave.type: hr_holidays.holiday_status_comp (noupdate)
+DEL hr.leave.type: hr_holidays.holiday_status_sl (noupdate)
+DEL hr.leave.type: hr_holidays.holiday_status_unpaid (noupdate)
+
+# DONE: renamed xmlids
+
+NEW ir.actions.act_window: hr_holidays.action_my_days_off_dashboard_calendar
+NEW ir.actions.act_window: hr_holidays.hr_leave_allocation_action_form
+NEW ir.actions.act_window.view: hr_holidays.action_window_leave_pivot
+DEL ir.actions.server: hr_holidays.action_hr_approval
+DEL ir.actions.server: hr_holidays.action_manager_approval
+DEL ir.actions.server: hr_holidays.ir_actions_server_approve_allocations
+DEL ir.attachment: hr_holidays.icon_10
+DEL ir.attachment: hr_holidays.icon_11
+DEL ir.attachment: hr_holidays.icon_12
+DEL ir.attachment: hr_holidays.icon_13
+DEL ir.attachment: hr_holidays.icon_15
+DEL ir.attachment: hr_holidays.icon_16
+DEL ir.attachment: hr_holidays.icon_18
+DEL ir.attachment: hr_holidays.icon_2
+DEL ir.attachment: hr_holidays.icon_20
+DEL ir.attachment: hr_holidays.icon_22
+DEL ir.attachment: hr_holidays.icon_23
+DEL ir.attachment: hr_holidays.icon_24
+DEL ir.attachment: hr_holidays.icon_25
+DEL ir.attachment: hr_holidays.icon_27
+DEL ir.attachment: hr_holidays.icon_29
+DEL ir.attachment: hr_holidays.icon_3
+DEL ir.attachment: hr_holidays.icon_30
+DEL ir.attachment: hr_holidays.icon_31
+DEL ir.attachment: hr_holidays.icon_5
+DEL ir.attachment: hr_holidays.icon_6
+DEL ir.attachment: hr_holidays.icon_7
+DEL ir.attachment: hr_holidays.icon_8
+DEL ir.attachment: hr_holidays.icon_9
+ir.model.constraint: hr_holidays.constraint_hr_leave_accrual_level_start_count_check (changed definition: is now 'CHECK((start_count > 0 AND milestone_date = 'after') OR (start_count = 0 AND milestone_date = 'creation'))' ('check( start_count >= 0 )'))
+NEW ir.model.constraint: hr_holidays.constraint_hr_leave_accrual_level_valid_accrual_validity_value
+NEW ir.model.constraint: hr_holidays.constraint_hr_leave_accrual_level_valid_postpone_max_days_value
+NEW ir.model.constraint: hr_holidays.constraint_hr_leave_date_to_date_from_index
+
+# NOTHING TO DO
+
+DEL ir.model.constraint: hr_holidays.constraint_hr_leave_accrual_level_check_dates
+
+# DONE: deleted in pre-migration
+
+NEW ir.rule: hr_holidays.hr_leave_allocation_rule_responsible_update (noupdate)
+NEW ir.ui.view: hr_holidays.hr_leave_report_calendar_year_view
+NEW ir.ui.view: hr_holidays.hr_leave_view_form_dashboard_manager_new_time_off
+NEW ir.ui.view: hr_holidays.resource_calendar_view_tree
+DEL ir.ui.view: hr_holidays.hr_leave_view_kanban_approve_department
+DEL ir.ui.view: hr_holidays.res_users_view_form
+NEW res.groups.privilege: hr_holidays.res_groups_privilege_time_off
+
+# NOTHING TO DO
