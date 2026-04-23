@@ -35,8 +35,8 @@ def fix_move_line_quantity(env):
         """,
     )
 
-def prefill_picked(env):
 
+def prefill_picked(env):
     """
     Pre-fill picked for done stock moves and their move lines
     to reduce ORM recomputation during migration.
@@ -79,7 +79,6 @@ def prefill_picked(env):
           AND (picked IS DISTINCT FROM TRUE)
         """,
     )
-
 
 
 @openupgrade.migrate()
