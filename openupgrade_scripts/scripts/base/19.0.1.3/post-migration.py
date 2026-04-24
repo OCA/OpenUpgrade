@@ -99,6 +99,7 @@ def _init_default_user_group(env):
 @openupgrade.migrate()
 def migrate(env, version):
     openupgrade.load_data(env, "base", "19.0.1.3/noupdate_changes_work.xml")
+    _init_default_user_group(env)
     openupgrade.delete_records_safely_by_xml_id(
         env,
         ["base.ir_filters_delete_own_rule", "base.default_user"],
@@ -108,4 +109,3 @@ def migrate(env, version):
     _ir_actions_server_html_value(env)
     _ir_filters_user_ids(env)
     _res_lang(env)
-    _init_default_user_group(env)
