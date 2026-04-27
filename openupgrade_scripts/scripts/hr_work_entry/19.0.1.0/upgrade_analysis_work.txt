@@ -1,0 +1,208 @@
+---Models in module 'hr_work_entry'---
+---Fields in module 'hr_work_entry'---
+hr_work_entry / hr.user.work.entry.employee / is_checked (boolean)          : NEW hasdefault: default
+hr_work_entry / hr.work.entry            / _order                        : _order is now 'create_date' ('conflict desc,state,date_start')
+
+# NOTHING TO DO
+
+hr_work_entry / hr.work.entry            / amount_rate (float)           : NEW
+
+# DONE: pre-created with value 1
+
+hr_work_entry / hr.work.entry            / date (date)                   : NEW required
+hr_work_entry / hr.work.entry            / date_start (datetime)         : DEL required
+hr_work_entry / hr.work.entry            / date_stop (datetime)          : DEL
+
+# DONE: pre-created date and set from date_start
+
+hr_work_entry / hr.work.entry            / version_id (many2one)         : NEW relation: hr.version, required
+
+# DONE: pre-created and filled from legacy column in hr_version
+
+hr_work_entry / hr.work.entry.type       / amount_rate (float)           : NEW hasdefault: default
+hr_work_entry / hr.work.entry.type       / display_code (char)           : NEW translate
+hr_work_entry / hr.work.entry.type       / is_extra_hours (boolean)      : NEW
+
+# NOTHING TO DO
+
+hr_work_entry_contract / hr.work.entry            / contract_id (many2one)        : DEL relation: hr.contract, required
+
+# DONE: used to fill version_id
+
+---XML records in module 'hr_work_entry'---
+NEW hr.work.entry.type: hr_work_entry.hr_work_entry_type_out_of_contract (noupdate)
+NEW hr.work.entry.type: hr_work_entry.l10n_au_work_entry_type_cash_out (noupdate)
+NEW hr.work.entry.type: hr_work_entry.l10n_au_work_entry_type_compensation (noupdate)
+NEW hr.work.entry.type: hr_work_entry.l10n_au_work_entry_type_defence (noupdate)
+NEW hr.work.entry.type: hr_work_entry.l10n_au_work_entry_type_long_service_leave (noupdate)
+NEW hr.work.entry.type: hr_work_entry.l10n_au_work_entry_type_other (noupdate)
+NEW hr.work.entry.type: hr_work_entry.l10n_au_work_entry_type_overtime_pto (noupdate)
+NEW hr.work.entry.type: hr_work_entry.l10n_au_work_entry_type_overtime_regular (noupdate)
+NEW hr.work.entry.type: hr_work_entry.l10n_au_work_entry_type_overtime_saturday (noupdate)
+NEW hr.work.entry.type: hr_work_entry.l10n_au_work_entry_type_overtime_saturday_pto (noupdate)
+NEW hr.work.entry.type: hr_work_entry.l10n_au_work_entry_type_overtime_sunday (noupdate)
+NEW hr.work.entry.type: hr_work_entry.l10n_au_work_entry_type_overtime_sunday_pto (noupdate)
+NEW hr.work.entry.type: hr_work_entry.l10n_au_work_entry_type_paid_time_off (noupdate)
+NEW hr.work.entry.type: hr_work_entry.l10n_au_work_entry_type_parental (noupdate)
+NEW hr.work.entry.type: hr_work_entry.l10n_au_work_entry_type_personal_leave (noupdate)
+NEW hr.work.entry.type: hr_work_entry.l10n_au_work_entry_type_termination (noupdate)
+NEW hr.work.entry.type: hr_work_entry.l10n_be_work_entry_type_additional_paid (noupdate)
+NEW hr.work.entry.type: hr_work_entry.l10n_be_work_entry_type_bank_holiday (noupdate)
+NEW hr.work.entry.type: hr_work_entry.l10n_be_work_entry_type_breast_feeding (noupdate)
+NEW hr.work.entry.type: hr_work_entry.l10n_be_work_entry_type_corona (noupdate)
+NEW hr.work.entry.type: hr_work_entry.l10n_be_work_entry_type_credit_time (noupdate)
+NEW hr.work.entry.type: hr_work_entry.l10n_be_work_entry_type_economic_unemployment (noupdate)
+NEW hr.work.entry.type: hr_work_entry.l10n_be_work_entry_type_european (noupdate)
+NEW hr.work.entry.type: hr_work_entry.l10n_be_work_entry_type_extra_legal (noupdate)
+NEW hr.work.entry.type: hr_work_entry.l10n_be_work_entry_type_flemish_training_time_off (noupdate)
+NEW hr.work.entry.type: hr_work_entry.l10n_be_work_entry_type_long_sick (noupdate)
+NEW hr.work.entry.type: hr_work_entry.l10n_be_work_entry_type_maternity (noupdate)
+NEW hr.work.entry.type: hr_work_entry.l10n_be_work_entry_type_medical_assistance (noupdate)
+NEW hr.work.entry.type: hr_work_entry.l10n_be_work_entry_type_notice (noupdate)
+NEW hr.work.entry.type: hr_work_entry.l10n_be_work_entry_type_parental_time_off (noupdate)
+NEW hr.work.entry.type: hr_work_entry.l10n_be_work_entry_type_part_sick (noupdate)
+NEW hr.work.entry.type: hr_work_entry.l10n_be_work_entry_type_partial_incapacity (noupdate)
+NEW hr.work.entry.type: hr_work_entry.l10n_be_work_entry_type_paternity_company (noupdate)
+NEW hr.work.entry.type: hr_work_entry.l10n_be_work_entry_type_paternity_legal (noupdate)
+NEW hr.work.entry.type: hr_work_entry.l10n_be_work_entry_type_phc (noupdate)
+NEW hr.work.entry.type: hr_work_entry.l10n_be_work_entry_type_recovery (noupdate)
+NEW hr.work.entry.type: hr_work_entry.l10n_be_work_entry_type_recovery_additional (noupdate)
+NEW hr.work.entry.type: hr_work_entry.l10n_be_work_entry_type_simple_holiday_pay_variable_salary (noupdate)
+NEW hr.work.entry.type: hr_work_entry.l10n_be_work_entry_type_small_unemployment (noupdate)
+NEW hr.work.entry.type: hr_work_entry.l10n_be_work_entry_type_small_unemployment_birth (noupdate)
+NEW hr.work.entry.type: hr_work_entry.l10n_be_work_entry_type_solicitation_time_off (noupdate)
+NEW hr.work.entry.type: hr_work_entry.l10n_be_work_entry_type_strike (noupdate)
+NEW hr.work.entry.type: hr_work_entry.l10n_be_work_entry_type_training (noupdate)
+NEW hr.work.entry.type: hr_work_entry.l10n_be_work_entry_type_training_time_off (noupdate)
+NEW hr.work.entry.type: hr_work_entry.l10n_be_work_entry_type_unjustified_reason (noupdate)
+NEW hr.work.entry.type: hr_work_entry.l10n_be_work_entry_type_unpredictable (noupdate)
+NEW hr.work.entry.type: hr_work_entry.l10n_be_work_entry_type_work_accident (noupdate)
+NEW hr.work.entry.type: hr_work_entry.l10n_be_work_entry_type_youth_time_off (noupdate)
+NEW hr.work.entry.type: hr_work_entry.l10n_ch_swissdec_accident_wt (noupdate)
+NEW hr.work.entry.type: hr_work_entry.l10n_ch_swissdec_accident_wt_hourly (noupdate)
+NEW hr.work.entry.type: hr_work_entry.l10n_ch_swissdec_hourly_wt (noupdate)
+NEW hr.work.entry.type: hr_work_entry.l10n_ch_swissdec_illness_wt (noupdate)
+NEW hr.work.entry.type: hr_work_entry.l10n_ch_swissdec_illness_wt_hourly (noupdate)
+NEW hr.work.entry.type: hr_work_entry.l10n_ch_swissdec_interruption_wt (noupdate)
+NEW hr.work.entry.type: hr_work_entry.l10n_ch_swissdec_lesson_wt (noupdate)
+NEW hr.work.entry.type: hr_work_entry.l10n_ch_swissdec_maternity_wt (noupdate)
+NEW hr.work.entry.type: hr_work_entry.l10n_ch_swissdec_maternity_wt_hourly (noupdate)
+NEW hr.work.entry.type: hr_work_entry.l10n_ch_swissdec_military_wt (noupdate)
+NEW hr.work.entry.type: hr_work_entry.l10n_ch_swissdec_military_wt_hourly (noupdate)
+NEW hr.work.entry.type: hr_work_entry.l10n_ch_swissdec_monthly_wt (noupdate)
+NEW hr.work.entry.type: hr_work_entry.l10n_ch_swissdec_overtime_125_wt (noupdate)
+NEW hr.work.entry.type: hr_work_entry.l10n_ch_swissdec_overtime_wt (noupdate)
+NEW hr.work.entry.type: hr_work_entry.l10n_ch_swissdec_unpaid_wt (noupdate)
+NEW hr.work.entry.type: hr_work_entry.l10n_ch_work_entry_type_bank_holiday (noupdate)
+NEW hr.work.entry.type: hr_work_entry.l10n_eg_work_entry_type_paid_sick_leave (noupdate)
+NEW hr.work.entry.type: hr_work_entry.l10n_eg_work_entry_type_sick_leave_75 (noupdate)
+NEW hr.work.entry.type: hr_work_entry.l10n_eg_work_entry_type_sick_leave_unpaid (noupdate)
+NEW hr.work.entry.type: hr_work_entry.l10n_hk_work_entry_type_compassionate_leave (noupdate)
+NEW hr.work.entry.type: hr_work_entry.l10n_hk_work_entry_type_examination_leave (noupdate)
+NEW hr.work.entry.type: hr_work_entry.l10n_hk_work_entry_type_marriage_leave (noupdate)
+NEW hr.work.entry.type: hr_work_entry.l10n_hk_work_entry_type_maternity_leave (noupdate)
+NEW hr.work.entry.type: hr_work_entry.l10n_hk_work_entry_type_maternity_leave_80 (noupdate)
+NEW hr.work.entry.type: hr_work_entry.l10n_hk_work_entry_type_paternity_leave (noupdate)
+NEW hr.work.entry.type: hr_work_entry.l10n_hk_work_entry_type_paternity_leave_80 (noupdate)
+NEW hr.work.entry.type: hr_work_entry.l10n_hk_work_entry_type_public_holiday (noupdate)
+NEW hr.work.entry.type: hr_work_entry.l10n_hk_work_entry_type_sick_leave_80 (noupdate)
+NEW hr.work.entry.type: hr_work_entry.l10n_hk_work_entry_type_statutory_holiday (noupdate)
+NEW hr.work.entry.type: hr_work_entry.l10n_hk_work_entry_type_weekend (noupdate)
+NEW hr.work.entry.type: hr_work_entry.l10n_id_work_entry_type_bereavement_leave (noupdate)
+NEW hr.work.entry.type: hr_work_entry.l10n_id_work_entry_type_marriage_leave (noupdate)
+NEW hr.work.entry.type: hr_work_entry.l10n_id_work_entry_type_maternity_leave (noupdate)
+NEW hr.work.entry.type: hr_work_entry.l10n_id_work_entry_type_paternity_leave (noupdate)
+NEW hr.work.entry.type: hr_work_entry.l10n_id_work_entry_type_public_holiday (noupdate)
+NEW hr.work.entry.type: hr_work_entry.l10n_jo_work_entry_type_sick_leave_unpaid (noupdate)
+NEW hr.work.entry.type: hr_work_entry.l10n_lu_work_entry_type_situational_unemployment (noupdate)
+NEW hr.work.entry.type: hr_work_entry.l10n_mx_work_entry_type_care_children_with_cancer_imss (noupdate)
+NEW hr.work.entry.type: hr_work_entry.l10n_mx_work_entry_type_disability_due_to_illness_imss (noupdate)
+NEW hr.work.entry.type: hr_work_entry.l10n_mx_work_entry_type_maternity_imss (noupdate)
+NEW hr.work.entry.type: hr_work_entry.l10n_mx_work_entry_type_work_risk_imss (noupdate)
+NEW hr.work.entry.type: hr_work_entry.l10n_pl_work_entry_type_sick_leave (noupdate)
+NEW hr.work.entry.type: hr_work_entry.l10n_sa_work_entry_type_emergency (noupdate)
+NEW hr.work.entry.type: hr_work_entry.l10n_sa_work_entry_type_maternity (noupdate)
+NEW hr.work.entry.type: hr_work_entry.l10n_sa_work_entry_type_sick_leave_0 (noupdate)
+NEW hr.work.entry.type: hr_work_entry.l10n_sa_work_entry_type_sick_leave_100 (noupdate)
+NEW hr.work.entry.type: hr_work_entry.l10n_sa_work_entry_type_sick_leave_75 (noupdate)
+NEW hr.work.entry.type: hr_work_entry.l10n_sk_work_entry_type_maternity (noupdate)
+NEW hr.work.entry.type: hr_work_entry.l10n_sk_work_entry_type_parental_time_off (noupdate)
+NEW hr.work.entry.type: hr_work_entry.l10n_sk_work_entry_type_sick_0 (noupdate)
+NEW hr.work.entry.type: hr_work_entry.l10n_sk_work_entry_type_sick_25 (noupdate)
+NEW hr.work.entry.type: hr_work_entry.l10n_sk_work_entry_type_sick_55 (noupdate)
+NEW hr.work.entry.type: hr_work_entry.l10n_us_work_entry_type_double (noupdate)
+NEW hr.work.entry.type: hr_work_entry.l10n_us_work_entry_type_overtime (noupdate)
+NEW hr.work.entry.type: hr_work_entry.l10n_us_work_entry_type_retro_overtime (noupdate)
+NEW hr.work.entry.type: hr_work_entry.l10n_us_work_entry_type_retro_regular (noupdate)
+NEW hr.work.entry.type: hr_work_entry.uae_public_holiday_entry_type (noupdate)
+NEW hr.work.entry.type: hr_work_entry.uae_sick_leave_0_entry_type (noupdate)
+NEW hr.work.entry.type: hr_work_entry.uae_sick_leave_50_entry_type (noupdate)
+
+# NOTHING TO DO
+
+hr.work.entry.type: hr_work_entry.work_entry_type_attendance (noupdate) (noupdate switched)
+NEW hr.work.entry.type: hr_work_entry.work_entry_type_compensatory [renamed from hr_work_entry_contract module] (noupdate) (noupdate switched)
+NEW hr.work.entry.type: hr_work_entry.work_entry_type_home_working [renamed from hr_work_entry_contract module] (noupdate) (noupdate switched)
+NEW hr.work.entry.type: hr_work_entry.work_entry_type_leave [renamed from hr_work_entry_contract module] (noupdate) (noupdate switched)
+NEW hr.work.entry.type: hr_work_entry.work_entry_type_legal_leave [renamed from hr_work_entry_contract module] (noupdate) (noupdate switched)
+
+# DONE: set noupdate flag in pre-migration
+
+NEW hr.work.entry.type: hr_work_entry.work_entry_type_overtime (noupdate)
+
+# DONE: renamed from hr_work_entry.overtime_work_entry_type
+
+NEW hr.work.entry.type: hr_work_entry.work_entry_type_sick_leave [renamed from hr_work_entry_contract module] (noupdate) (noupdate switched)
+NEW hr.work.entry.type: hr_work_entry.work_entry_type_unpaid_leave [renamed from hr_work_entry_contract module] (noupdate) (noupdate switched)
+
+# DONE: set noupdate flag in pre-migration
+
+DEL hr.work.entry.type: hr_work_entry.overtime_work_entry_type
+
+# DONE: renamed to hr_work_entry.work_entry_type_overtime
+
+DEL hr.work.entry.type: hr_work_entry_contract.work_entry_type_compensatory [renamed to hr_work_entry module]
+DEL hr.work.entry.type: hr_work_entry_contract.work_entry_type_home_working [renamed to hr_work_entry module]
+DEL hr.work.entry.type: hr_work_entry_contract.work_entry_type_leave [renamed to hr_work_entry module]
+DEL hr.work.entry.type: hr_work_entry_contract.work_entry_type_legal_leave [renamed to hr_work_entry module]
+DEL hr.work.entry.type: hr_work_entry_contract.work_entry_type_sick_leave [renamed to hr_work_entry module]
+DEL hr.work.entry.type: hr_work_entry_contract.work_entry_type_unpaid_leave [renamed to hr_work_entry module]
+NEW ir.actions.act_window: hr_work_entry.hr_work_entry_regeneration_wizard_action [renamed from hr_work_entry_contract module]
+DEL ir.actions.act_window: hr_work_entry_contract.hr_work_entry_regeneration_wizard_action [renamed to hr_work_entry module]
+NEW ir.actions.server: hr_work_entry.action_hr_work_entry_set_to_draft
+
+# NOTHING TO DO
+
+NEW ir.cron: hr_work_entry.ir_cron_generate_missing_work_entries [renamed from hr_work_entry_contract module] (noupdate)
+DEL ir.cron: hr_work_entry_contract.ir_cron_generate_missing_work_entries [renamed to hr_work_entry module] (noupdate)
+
+# NOTHING TO DO: taken care of by merging
+
+NEW ir.model.access: hr_work_entry.access_hr_work_entry_regeneration_wizard [renamed from hr_work_entry_contract module]
+DEL ir.model.access: hr_work_entry_contract.access_hr_work_entry_regeneration_wizard [renamed to hr_work_entry module]
+NEW ir.model.constraint: hr_work_entry.constraint_hr_work_entry_contract_date_start_stop_idx
+
+# NOTHING TO DO
+
+DEL ir.model.constraint: hr_work_entry.constraint_hr_work_entry__work_entries_no_validated_conflict
+DEL ir.model.constraint: hr_work_entry.constraint_hr_work_entry__work_entry_has_end
+DEL ir.model.constraint: hr_work_entry.constraint_hr_work_entry__work_entry_start_before_end
+
+# DONE: deleted in pre-migration
+
+NEW ir.rule: hr_work_entry.ir_rule_hr_work_entry_multi_company [renamed from hr_work_entry_contract module] (noupdate)
+DEL ir.rule: hr_work_entry_contract.ir_rule_hr_work_entry_multi_company [renamed to hr_work_entry module] (noupdate)
+
+# NOTHING TO DO: taken care of by merging
+
+NEW ir.ui.view: hr_work_entry.hr_contract_template_view_form
+NEW ir.ui.view: hr_work_entry.hr_work_entry_calendar_gantt_view_form
+NEW ir.ui.view: hr_work_entry.hr_work_entry_regeneration_wizard
+NEW ir.ui.view: hr_work_entry.hr_work_entry_view_calendar_multi_create_form
+DEL ir.ui.view: hr_work_entry_contract.hr_contract_view_form_inherit_work_entry
+DEL ir.ui.view: hr_work_entry_contract.hr_work_entry_contract_type_view_form_inherit
+DEL ir.ui.view: hr_work_entry_contract.hr_work_entry_contract_view_calendar_inherit
+DEL ir.ui.view: hr_work_entry_contract.hr_work_entry_contract_view_form_inherit
+DEL ir.ui.view: hr_work_entry_contract.hr_work_entry_regeneration_wizard
+
+# NOTHING TO DO
