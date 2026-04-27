@@ -4,7 +4,7 @@ new model account_peppol.service.wizard [transient]
 new model peppol.registration [transient]
 ---Fields in module 'account_peppol'---
 account_peppol / account.move             / peppol_move_state (selection) : selection_keys removed: [canceled]
-account_peppol / res.company              / account_peppol_proxy_state (selection): selection_keys added: [in_verification, receiver, sender, smp_registration], removed: [active, canceled, not_verified, pending, sent_verification]
+account_peppol / res.company              / account_peppol_proxy_state (selection): selection_keys added: [in_verification, receiver, smp_registration], removed: [active, canceled, not_verified, pending, sent_verification]
 account_peppol / res.company              / is_account_peppol_participant (boolean): DEL
 account_peppol / res.partner              / account_peppol_is_endpoint_valid (boolean): DEL
 account_peppol / res.partner              / account_peppol_validity_last_check (date): DEL
