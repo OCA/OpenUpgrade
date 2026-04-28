@@ -36,8 +36,46 @@ def fix_move_line_quantity(env):
     )
 
 
+def prefill_picked(env):
+    """
+    Pre-fill picked for stock moves and move lines to reduce ORM
+    recomputation during migration.
+    """
+    openupgrade.add_columns(
+        env,
+        [
+            ("stock.move", "picked", "boolean", True, "stock_move"),
+            ("stock.move.line", "picked", "boolean", True, "stock_move_line"),
+        ],
+    )
+    openupgrade.logged_query(
+        env.cr,
+        """
+        UPDATE stock_move_line sml
+        SET picked = FALSE
+        FROM stock_move sm
+        WHERE sml.move_id = sm.id
+          AND sm.state != 'done'
+        """,
+    )
+    openupgrade.logged_query(
+        env.cr,
+        """
+        UPDATE stock_move sm
+        SET picked = False
+        FROM stock_move sm2
+        LEFT JOIN stock_move_line sml
+            ON sml.move_id = sm2.id
+        WHERE sm.state NOT IN ('done', 'cancel')
+            AND sml.id IS NULL
+            AND sm.id = sm2.id
+        """,
+    )
+
+
 @openupgrade.migrate()
 def migrate(env, version):
     openupgrade.rename_fields(env, _field_renames)
     openupgrade.copy_columns(env.cr, _column_copies)
     fix_move_line_quantity(env)
+    prefill_picked(env)
