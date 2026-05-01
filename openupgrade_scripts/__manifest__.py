@@ -6,7 +6,7 @@
         and scripts for migrate Odoo SA modules.""",
     "author": "Odoo Community Association (OCA)",
     "maintainers": ["MiquelRForgeFlow", "StefanRijnhart", "pedrobaeza"],
-    "website": "https://github.com/OCA/openupgrade",
+    "website": "https://github.com/OCA/OpenUpgrade",
     "category": "Migration",
     "version": "14.0.1.0.1",
     "license": "AGPL-3",
