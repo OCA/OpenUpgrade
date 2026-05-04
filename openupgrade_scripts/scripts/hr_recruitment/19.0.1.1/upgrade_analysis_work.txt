@@ -1,0 +1,260 @@
+---Models in module 'hr_recruitment'---
+obsolete model candidate.send.mail [transient]
+
+# NOTHING TO DO
+
+obsolete model hr.candidate (merged to hr.applicant)
+
+# DONE: merge models in pre-migration, adapt data in post
+
+new model hr.talent.pool
+new model job.add.applicants [transient]
+new model talent.pool.add.applicants [transient]
+
+# NOTHING TO DO
+
+---Fields in module 'hr_recruitment'---
+hr_recruitment / calendar.event           / candidate_id (many2one)       : DEL relation: hr.candidate
+hr_recruitment / hr.applicant             / _order                        : _order is now 'priority desc, sequence, id desc' ('priority desc, id desc')
+
+# NOTHING TO DO
+
+hr_recruitment / hr.applicant             / availability (date)           : is now stored
+hr_recruitment / hr.applicant             / availability (date)           : not related anymore
+
+# DONE: copied from hr.candidate
+
+hr_recruitment / hr.applicant             / candidate_id (many2one)       : DEL relation: hr.candidate, required
+
+# DONE: not null constraint lifted
+
+hr_recruitment / hr.applicant             / color (integer)               : is now stored
+hr_recruitment / hr.applicant             / color (integer)               : not related anymore
+hr_recruitment / hr.applicant             / email_from (char)             : is now stored
+hr_recruitment / hr.applicant             / email_from (char)             : not related anymore
+hr_recruitment / hr.applicant             / email_from (char)             : now a function
+hr_recruitment / hr.applicant             / email_normalized (char)       : is now stored
+hr_recruitment / hr.applicant             / email_normalized (char)       : not related anymore
+hr_recruitment / hr.applicant             / email_normalized (char)       : now a function
+hr_recruitment / hr.applicant             / employee_id (many2one)        : is now stored
+hr_recruitment / hr.applicant             / employee_id (many2one)        : not related anymore
+
+# DONE: copied from hr.candidate
+
+hr_recruitment / hr.applicant             / kanban_state (selection)      : selection_keys added: [waiting] (most likely nothing to do)
+
+# NOTHING TO DO
+
+hr_recruitment / hr.applicant             / linkedin_profile (char)       : is now stored
+hr_recruitment / hr.applicant             / linkedin_profile (char)       : not related anymore
+
+# DONE: copied from hr.candidate
+
+hr_recruitment / hr.applicant             / message_bounce (integer)      : NEW hasdefault: default
+
+# NOTHING TO DO
+
+hr_recruitment / hr.applicant             / partner_id (many2one)         : is now stored
+hr_recruitment / hr.applicant             / partner_id (many2one)         : not related anymore
+hr_recruitment / hr.applicant             / partner_name (char)           : is now stored
+hr_recruitment / hr.applicant             / partner_name (char)           : not a function anymore
+hr_recruitment / hr.applicant             / partner_phone (char)          : is now stored
+hr_recruitment / hr.applicant             / partner_phone (char)          : not related anymore
+hr_recruitment / hr.applicant             / partner_phone (char)          : now a function
+hr_recruitment / hr.applicant             / partner_phone_sanitized (char): is now stored
+hr_recruitment / hr.applicant             / partner_phone_sanitized (char): not related anymore
+hr_recruitment / hr.applicant             / partner_phone_sanitized (char): now a function
+
+# DONE: copied from hr.candidate
+
+hr_recruitment / hr.applicant             / phone_mobile_search (char)    : NEW stored: False
+
+# NOTHING TO DO
+
+hr_recruitment / hr.applicant             / phone_sanitized (char)        : NEW isfunction: function, stored
+
+# DONE: set from hr.candidate#partner_phone_sanitized
+
+hr_recruitment / hr.applicant             / pool_applicant_id (many2one)  : NEW relation: hr.applicant
+hr_recruitment / hr.applicant             / sequence (integer)            : NEW hasdefault: default
+hr_recruitment / hr.applicant             / talent_pool_ids (many2many)   : NEW relation: hr.talent.pool
+
+# NOTHING TO DO
+
+hr_recruitment / hr.applicant             / type_id (many2one)            : is now stored
+hr_recruitment / hr.applicant             / type_id (many2one)            : not related anymore
+
+# DONE: copied from hr.candidate
+
+hr_recruitment / hr.candidate             / active (boolean)              : DEL
+
+# NOTHING TO DO
+
+hr_recruitment / hr.candidate             / activity_ids (one2many)       : DEL relation: mail.activity
+
+# DONE: updated by merge_model
+
+hr_recruitment / hr.candidate             / applicant_ids (one2many)      : DEL relation: hr.applicant
+
+# NOTHING TO DO
+
+hr_recruitment / hr.candidate             / attachment_ids (one2many)     : DEL relation: ir.attachment
+
+# DONE: updated by merge_model
+
+hr_recruitment / hr.candidate             / availability (date)           : DEL
+
+# DONE: copied to hr.applicant
+
+hr_recruitment / hr.candidate             / candidate_properties (properties): DEL
+
+# DONE: merged into hr.applicant#applicant_properties
+
+hr_recruitment / hr.candidate             / categ_ids (many2many)         : DEL relation: hr.applicant.category
+
+# NOTHING TO DO
+
+hr_recruitment / hr.candidate             / color (integer)               : DEL
+
+# DONE: copied to hr.applicant
+
+hr_recruitment / hr.candidate             / company_id (many2one)         : DEL relation: res.company
+hr_recruitment / hr.candidate             / email_cc (char)               : DEL
+
+# NOTHING TO DO
+
+hr_recruitment / hr.candidate             / email_from (char)             : DEL
+hr_recruitment / hr.candidate             / email_normalized (char)       : DEL
+hr_recruitment / hr.candidate             / employee_id (many2one)        : DEL relation: hr.employee
+hr_recruitment / hr.candidate             / linkedin_profile (char)       : DEL
+
+# DONE: copied to hr.applicant
+
+hr_recruitment / hr.candidate             / meeting_ids (one2many)        : DEL relation: calendar.event
+
+# NOTHING TO DO
+
+hr_recruitment / hr.candidate             / message_bounce (integer)      : DEL
+
+# DONE: copied to hr.applicant
+
+hr_recruitment / hr.candidate             / message_follower_ids (one2many): DEL relation: mail.followers
+hr_recruitment / hr.candidate             / message_ids (one2many)        : DEL relation: mail.message
+
+# DONE: updated by merge_model
+
+hr_recruitment / hr.candidate             / message_main_attachment_id (many2one): DEL relation: ir.attachment
+
+# NOTHING TO DO: hr.applicant has its own main attachment
+
+hr_recruitment / hr.candidate             / partner_id (many2one)         : DEL relation: res.partner
+hr_recruitment / hr.candidate             / partner_name (char)           : DEL
+hr_recruitment / hr.candidate             / partner_phone (char)          : DEL
+hr_recruitment / hr.candidate             / partner_phone_sanitized (char): DEL
+hr_recruitment / hr.candidate             / phone_mobile_search (char)    : DEL stored: False
+hr_recruitment / hr.candidate             / phone_sanitized (char)        : DEL
+
+# DONE: copied to hr.applicant
+
+hr_recruitment / hr.candidate             / priority (selection)          : DEL selection_keys: ['0', '1', '2', '3']
+hr_recruitment / hr.candidate             / rating_ids (one2many)         : DEL relation: rating.rating
+
+# NOTHING TO DO
+
+hr_recruitment / hr.candidate             / type_id (many2one)            : DEL relation: hr.recruitment.degree
+
+# DONE: copied to hr.applicant
+
+hr_recruitment / hr.candidate             / user_id (many2one)            : DEL relation: res.users
+hr_recruitment / hr.candidate             / website_message_ids (one2many): DEL relation: mail.message
+
+# NOTHING TO DO
+
+hr_recruitment / hr.employee              / applicant_ids (one2many)      : NEW relation: hr.applicant
+
+# NOTHING TO DO: hr.applicant#employee_id is filled from hr.candidate
+
+hr_recruitment / hr.employee              / candidate_id (one2many)       : DEL relation: hr.candidate
+hr_recruitment / hr.job                   / activity_ids (one2many)       : NEW relation: mail.activity
+hr_recruitment / hr.job                   / allowed_user_ids (many2many)  : module is now 'hr' ('hr_recruitment')
+hr_recruitment / hr.job                   / date_from (date)              : DEL
+hr_recruitment / hr.job                   / date_to (date)                : DEL
+hr_recruitment / hr.job                   / expected_degree (many2one)    : NEW relation: hr.recruitment.degree
+hr_recruitment / hr.job                   / job_source_ids (one2many)     : NEW relation: hr.recruitment.source
+hr_recruitment / hr.job                   / user_id (many2one)            : module is now 'hr' ('hr_recruitment')
+hr_recruitment / hr.recruitment.degree    / score (float)                 : NEW required, hasdefault: default
+hr_recruitment / hr.recruitment.source    / campaign_id (many2one)        : NEW relation: utm.campaign
+hr_recruitment / hr.recruitment.stage     / legend_waiting (char)         : NEW required, hasdefault: default, translate
+hr_recruitment / hr.recruitment.stage     / rotting_threshold_days (integer): NEW hasdefault: default
+hr_recruitment / hr.talent.pool           / active (boolean)              : NEW hasdefault: default
+hr_recruitment / hr.talent.pool           / categ_ids (many2many)         : NEW relation: hr.applicant.category
+hr_recruitment / hr.talent.pool           / color (integer)               : NEW hasdefault: default
+hr_recruitment / hr.talent.pool           / company_id (many2one)         : NEW relation: res.company, hasdefault: default
+hr_recruitment / hr.talent.pool           / description (html)            : NEW
+hr_recruitment / hr.talent.pool           / message_follower_ids (one2many): NEW relation: mail.followers
+hr_recruitment / hr.talent.pool           / message_ids (one2many)        : NEW relation: mail.message
+hr_recruitment / hr.talent.pool           / name (char)                   : NEW required, translate
+hr_recruitment / hr.talent.pool           / pool_manager (many2one)       : NEW relation: res.users, hasdefault: default
+hr_recruitment / hr.talent.pool           / rating_ids (one2many)         : NEW relation: rating.rating
+hr_recruitment / hr.talent.pool           / talent_ids (many2many)        : NEW relation: hr.applicant
+hr_recruitment / hr.talent.pool           / website_message_ids (one2many): NEW relation: mail.message
+
+# NOTHING TO DO
+
+hr_recruitment / res.company              / candidate_properties_definition (properties_definition): DEL
+
+# DONE: merged into hr.job#applicant_properties_definition
+
+hr_recruitment / res.partner              / applicant_ids (one2many)      : NEW relation: hr.applicant
+
+# NOTHING TO DO
+
+---XML records in module 'hr_recruitment'---
+NEW ir.actions.act_window: hr_recruitment.action_hr_talent_pool
+NEW ir.actions.act_window: hr_recruitment.action_hr_talent_pool_applications
+NEW ir.actions.act_window: hr_recruitment.mail_followers_edit_action_from_hr_recruitment
+DEL ir.actions.act_window: hr_recruitment.action_hr_candidate
+DEL ir.actions.server: hr_recruitment.action_candidate_send_mail
+DEL ir.actions.server: hr_recruitment.ir_actions_server_refuse_applicant
+NEW ir.model.access: hr_recruitment.access_hr_talent_pool
+NEW ir.model.access: hr_recruitment.access_hr_talent_pool_interviewer
+NEW ir.model.access: hr_recruitment.access_job_add_applicants
+NEW ir.model.access: hr_recruitment.access_job_add_applicants_interviewer
+NEW ir.model.access: hr_recruitment.access_talent_pool_add_applicants
+NEW ir.model.access: hr_recruitment.access_talent_pool_add_applicants_interviewer
+DEL ir.model.access: hr_recruitment.access_candidate_send_mail
+DEL ir.model.access: hr_recruitment.access_candidate_send_mail_interviewer
+DEL ir.model.access: hr_recruitment.access_hr_candidate_interviewer
+DEL ir.model.access: hr_recruitment.access_hr_candidate_user
+NEW ir.model.constraint: hr_recruitment.constraint_hr_applicant_job_id_stage_id_idx
+NEW ir.model.constraint: hr_recruitment.constraint_hr_recruitment_degree_score_range
+NEW ir.rule: hr_recruitment.hr_talent_pool_user_rule (noupdate)
+
+# NOTHING TO DO
+
+DEL ir.rule: hr_recruitment.hr_candidate_comp_rule (noupdate)
+DEL ir.rule: hr_recruitment.hr_candidate_interviewer_rule (noupdate)
+DEL ir.rule: hr_recruitment.hr_candidate_user_rule (noupdate)
+
+# DONE: deleted in post-migration
+
+NEW ir.ui.menu: hr_recruitment.menu_hr_talent_pools
+DEL ir.ui.menu: hr_recruitment.menu_hr_candidate
+NEW ir.ui.view: hr_recruitment.applicant_hired_template (noupdate)
+NEW ir.ui.view: hr_recruitment.hr_kanban_view_applicant_talent_pool
+NEW ir.ui.view: hr_recruitment.hr_talent_pool_view_form
+NEW ir.ui.view: hr_recruitment.hr_talent_pool_view_kanban
+NEW ir.ui.view: hr_recruitment.hr_talent_pool_view_list
+NEW ir.ui.view: hr_recruitment.job_add_applicants_view_form
+NEW ir.ui.view: hr_recruitment.talent_pool_add_applicants_view_form
+DEL ir.ui.view: hr_recruitment.candidate_hired_template (noupdate)
+DEL ir.ui.view: hr_recruitment.candidate_send_mail_view_form
+DEL ir.ui.view: hr_recruitment.hr_candidate_view_calendar
+DEL ir.ui.view: hr_recruitment.hr_candidate_view_form
+DEL ir.ui.view: hr_recruitment.hr_candidate_view_kanban
+DEL ir.ui.view: hr_recruitment.hr_candidate_view_search
+DEL ir.ui.view: hr_recruitment.hr_candidate_view_tree
+NEW mail.message.subtype: hr_recruitment.mt_talent_new (noupdate)
+NEW res.groups.privilege: hr_recruitment.res_groups_privilege_recruitment (noupdate)
+
+# NOTHING TO DO
