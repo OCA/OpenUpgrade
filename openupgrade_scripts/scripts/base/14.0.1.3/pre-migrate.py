@@ -10,6 +10,7 @@ from odoo import tools
 _logger = logging.getLogger(__name__)
 
 try:
+    # pylint: disable=odoo-addons-relative-import
     from odoo.addons.openupgrade_scripts.apriori import merged_modules, renamed_modules
 except ImportError:
     renamed_modules = {}
