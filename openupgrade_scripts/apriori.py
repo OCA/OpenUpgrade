@@ -44,6 +44,8 @@ merged_modules = {
     "website_membership": "website_crm_partner_assign",
     "web_editor": "html_editor",
     # odoo/enterprise
+    # OCA/account-invoicing
+    "account_tax_legal_notes_translate": "account",
     # OCA/partner-contact
     "partner_contact_lang": "base",
     # OCA/project
