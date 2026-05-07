@@ -54,6 +54,8 @@ merged_modules = {
     "purchase_order_qty_change_no_recompute": "purchase",
     # OCA/sale-workflow
     "sale_order_warn_message": "sale",
+    # OCA/stock-logistics-workflow
+    "stock_picking_show_return": "stock",
 }
 
 # only used here for upgrade_analysis
