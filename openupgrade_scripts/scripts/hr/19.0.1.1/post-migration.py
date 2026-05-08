@@ -68,12 +68,12 @@ def fill_hr_version(env):
         f"""
         INSERT INTO hr_version
         (
-            employee_id, date_version,
+            employee_id, date_version, contract_date_start,
             last_modified_uid, last_modified_date, hr_responsible_id,
             {", ".join(fields)}
         )
         SELECT
-            id, create_date,
+            id, create_date, create_date,
             write_uid, write_date, {env.ref("base.user_admin").id},
             {", ".join(fields)}
         FROM hr_employee
