@@ -1,0 +1,16 @@
+---Models in module 'l10n_pl_bank_verification'---
+new model l10n_pl.bank.account.verification
+---Fields in module 'l10n_pl_bank_verification'---
+l10n_pl_bank_verification / account.payment          / l10n_pl_verification_id (many2one): NEW relation: l10n_pl.bank.account.verification, isfunction: function, stored
+l10n_pl_bank_verification / l10n_pl.bank.account.verification / partner_bank_account_number (char): NEW isfunction: function, stored
+l10n_pl_bank_verification / l10n_pl.bank.account.verification / partner_bank_id (many2one)    : NEW relation: res.partner.bank
+l10n_pl_bank_verification / l10n_pl.bank.account.verification / partner_id (many2one)         : NEW relation: res.partner
+l10n_pl_bank_verification / l10n_pl.bank.account.verification / partner_vat (char)            : NEW isfunction: function, stored
+l10n_pl_bank_verification / l10n_pl.bank.account.verification / verification_date (date)      : NEW isfunction: function, stored
+l10n_pl_bank_verification / l10n_pl.bank.account.verification / verification_request_id (char): NEW
+l10n_pl_bank_verification / l10n_pl.bank.account.verification / verification_status (selection): NEW required, selection_keys: ['error', 'incomplete_partner', 'invalid', 'not_found_partner', 'valid']
+l10n_pl_bank_verification / l10n_pl.bank.account.verification / verification_timestamp (datetime): NEW
+---XML records in module 'l10n_pl_bank_verification'---
+NEW ir.model.access: l10n_pl_bank_verification.access_l10n_pl_bank_account_verification
+NEW ir.ui.view: l10n_pl_bank_verification.l10n_pl_view_account_payment_register_form
+NEW ir.ui.view: l10n_pl_bank_verification.view_account_payment_form_inherit_l10n_pl
