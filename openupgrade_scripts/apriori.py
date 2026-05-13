@@ -24,7 +24,6 @@ renamed_modules = {
     "pdf_helper": "pdf_xml_attachment",
     # OCA/l10n-italy
     "account_vat_period_end_statement": "l10n_it_account_vat_period_end_settlement",
-    "l10n_it_riba": "l10n_it_riba_oca",
     "l10n_it_vat_statement_communication": "l10n_it_vat_settlement_communication",
     # OCA/product-attribute
     "product_packaging_type_vendor": "product_packaging_level_vendor",
