@@ -1,7 +1,17 @@
 # Copyright 2025 ForgeFlow S.L. (https://www.forgeflow.com)
 # License AGPL-3.0 or later (https://www.gnu.org/licenses/agpl).
 
+from uuid import uuid4
+
 from openupgradelib import openupgrade
+
+
+def fill_pos_config_token(env):
+    """Set the access_token to an appropriate value, thereby preventing all records
+    from having the same value and causing unexpected consequences.
+    """
+    for config in env["pos.config"].search([]):
+        config.access_token = uuid4().hex[:16]
 
 
 def fill_pos_order_reversed_pos_order_id(env):
@@ -109,6 +119,7 @@ def update_res_company_point_of_sale_ticket_portal_url_display_mode(env):
 def migrate(env, version):
     fill_pos_order_reversed_pos_order_id(env)
     fill_pos_config_customer_display_type(env)
+    fill_pos_config_token(env)
     fill_pos_uuid(env)
     update_pos_config_show_images(env)
     update_res_company_point_of_sale_ticket_portal_url_display_mode(env)
