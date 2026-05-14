@@ -37,6 +37,7 @@ account      / account.move             / exchange_diff_partial_ids (one2many): 
 account      / account.move             / is_storno (boolean)           : not stored anymore
 account      / account.move             / is_storno (boolean)           : now a function
 account      / account.move             / journal_line_ids (one2many)   : NEW relation: account.move.line
+account      / account.move             / made_sequence_gap (boolean)   : not a function anymore
 account      / account.move             / status_in_payment (selection) : selection_keys added: [posted, sent] (most likely nothing to do)
 account      / account.move             / taxable_supply_date (date)    : previously in module l10n_cz
 account      / account.move.line        / collapse_composition (boolean): NEW

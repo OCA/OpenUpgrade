@@ -22,6 +22,9 @@
   <record id="europe" model="res.country.group">
     <field name="code">EU</field>
   </record>
+  <record id="ge" model="res.country">
+    <field eval="'%(street)s\n%(street2)s\n%(city)s %(state_name)s %(zip)s\n%(country_name)s'" name="address_format"/>
+  </record>
   <record id="gulf_cooperation_council" model="res.country.group">
     <field name="code">GCC</field>
   </record>

@@ -8,6 +8,13 @@ l10n_sa_edi  / res.partner              / l10n_sa_additional_identification_sche
 l10n_sa_edi  / res.partner              / l10n_sa_edi_additional_identification_number (char): NEW
 l10n_sa_edi  / res.partner              / l10n_sa_edi_additional_identification_scheme (selection): NEW selection_keys: ['700', 'CRN', 'GCC', 'IQA', 'MLS', 'MOM', 'NAT', 'OTH', 'PAS', 'SAG', 'TIN'], hasdefault: default
 ---XML records in module 'l10n_sa_edi'---
+NEW ir.ui.view: l10n_sa_edi.l10n_sa_edi_external_layout_bold
+NEW ir.ui.view: l10n_sa_edi.l10n_sa_edi_external_layout_boxed
+NEW ir.ui.view: l10n_sa_edi.l10n_sa_edi_external_layout_bubble
+NEW ir.ui.view: l10n_sa_edi.l10n_sa_edi_external_layout_folder
+NEW ir.ui.view: l10n_sa_edi.l10n_sa_edi_external_layout_standard
+NEW ir.ui.view: l10n_sa_edi.l10n_sa_edi_external_layout_striped
+NEW ir.ui.view: l10n_sa_edi.l10n_sa_edi_external_layout_wave
 NEW ir.ui.view: l10n_sa_edi.l10n_sa_edi_report_invoice_document
 NEW ir.ui.view: l10n_sa_edi.view_account_form_inherit
 DEL ir.ui.view: l10n_sa_edi.arabic_english_invoice
