@@ -90,6 +90,7 @@ new model l10n_id.qris.transaction [module l10n_id]
 new model l10n_in.section.alert [module l10n_in_withholding]
 new model l10n_latam.check [module l10n_latam_check]
 new model l10n_latam.payment.register.check [module l10n_latam_check]
+new model l10n_pl.bank.account.verification [module l10n_pl_bank_verification]
 new model l10n_tr_nilvera_einvoice_extended.account.tax.code [module l10n_tr_nilvera_einvoice_extended]
 new model l10n_tr_nilvera_einvoice_extended.tax.office [module l10n_tr_nilvera_einvoice_extended]
 new model l10n_tw_edi.invoice.cancel [module l10n_tw_edi_ecpay]
@@ -146,7 +147,7 @@ new model website.page.properties.base [module website]
 # Found in other module: 95
 # Found with different type: 8
 # In obsolete models: 34
-# New columns: 1944
+# New columns: 1958
 # Not matched: 847
 ---XML records in module 'general'---
 ERROR: module not in list of installed modules:
