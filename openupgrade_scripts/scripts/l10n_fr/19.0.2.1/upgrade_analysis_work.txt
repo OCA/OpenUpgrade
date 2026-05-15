@@ -1,0 +1,31 @@
+---Models in module 'l10n_fr'---
+
+# NOTHING TO DO
+
+---Fields in module 'l10n_fr'---
+l10n_fr      / res.partner              / siret (char)                  : DEL
+
+# DONE: stale ir_model_fields row and the orphan inheritance view
+# (res_partner_form_l10n_fr, referenced under XML records below) are
+# deleted in pre-migration via cleanup_obsolete_l10n_fr_siret. Without
+# this, the rows survive the standard upgrade and trip cross-cutting
+# view validation when later modules' data XML loads (reproduced on
+# l10n_ae/data/account_tax_report_data.xml:3 with the error
+# 'Field "siret" does not exist in model "res.partner"').
+
+---XML records in module 'l10n_fr'---
+NEW ir.ui.view: l10n_fr.view_partner_form_inherit_l10n_fr
+
+# NOTHING TO DO: created by the 19.0 module on install/upgrade
+
+DEL ir.ui.view: l10n_fr.res_partner_form_l10n_fr
+
+# DONE: explicitly deleted in pre-migration (see field cleanup above).
+
+res.country.group: l10n_fr.fr_and_mc (noupdate) (noupdate switched)
+
+# NOTHING TO DO: noupdate flag flip is handled by the standard upgrade
+
+DEL res.country.group: l10n_fr.dom-tom [renamed to base module]
+
+# NOTHING TO DO: rename handled in apriori (or follow-up if not)
