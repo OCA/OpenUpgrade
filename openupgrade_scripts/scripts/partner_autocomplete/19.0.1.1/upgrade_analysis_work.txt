@@ -1,0 +1,38 @@
+---Models in module 'partner_autocomplete'---
+obsolete model res.partner.autocomplete.sync
+
+# NOTHING TO DO: standard module-removal flow handles the table drop
+
+---Fields in module 'partner_autocomplete'---
+partner_autocomplete / res.company              / partner_gid (integer)         : DEL
+partner_autocomplete / res.partner              / additional_info (char)        : DEL
+partner_autocomplete / res.partner              / partner_gid (integer)         : DEL
+
+# DONE: stale ir_model_fields rows and the orphan inheritance views
+# (referenced under XML records below) are deleted in pre-migration
+# via cleanup_obsolete_partner_autocomplete_records. Without this, the
+# rows survive the standard module upgrade and trip cross-cutting view
+# validation when later modules' data XML loads (reproduced on
+# l10n_ae/data/account_tax_report_data.xml:3 with the error
+# 'Field partner_gid does not exist in model res.partner').
+
+partner_autocomplete / res.partner.autocomplete.sync / partner_id (many2one)         : DEL relation: res.partner
+partner_autocomplete / res.partner.autocomplete.sync / synched (boolean)             : DEL
+
+# NOTHING TO DO: covered by the obsolete-model removal above
+
+---XML records in module 'partner_autocomplete'---
+DEL ir.cron: partner_autocomplete.ir_cron_partner_autocomplete
+DEL ir.model.access: partner_autocomplete.access_partner_autocomplete_sync_portal
+DEL ir.model.access: partner_autocomplete.access_partner_autocomplete_sync_system
+DEL ir.model.access: partner_autocomplete.access_partner_autocomplete_sync_user
+
+# NOTHING TO DO: deleted by standard module upgrade
+
+DEL ir.ui.view: partner_autocomplete.view_partner_simple_form_inherit_partner_autocomplete
+DEL ir.ui.view: partner_autocomplete.view_res_partner_form_inherit_partner_autocomplete
+
+# DONE: explicitly deleted in pre-migration. Without this, the views
+# survive the standard upgrade (Odoo only deletes views whose xml_id
+# is in the noupdate-cleanup queue, and these were noupdate=False) and
+# their arch_db retains stale field references that block later loads.
