@@ -258,7 +258,15 @@ hr_contract  / hr.employee              / contract_warning (boolean)    : DEL
 hr_contract  / hr.employee              / first_contract_date (date)    : DEL
 hr_contract  / hr.employee              / vehicle (char)                : DEL
 
-# NOTHING TO DO
+# DONE: stale ir_model_fields rows and orphan ir_ui_view records cleaned
+# up in pre-migration (cleanup_obsolete_hr_employee_fields). The
+# "nothing to do" assumption — that Odoo's standard registry rebuild
+# would prune these — does not hold when the donor module is merged via
+# apriori; the stale records survive and trip cross-cutting view
+# validation when later modules' data XML loads (reproduced with
+# l10n_ae). Five additional stale fields not flagged by the analyzer
+# (contract_template_id, contract_type_id, contract_wage, contracts_count,
+# is_in_contract) are also covered by the same helper.
 
 ---XML records in module 'hr'---
 NEW hr.contract.type: hr.contract_type_interim (noupdate)

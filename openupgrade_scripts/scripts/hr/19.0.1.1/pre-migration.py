@@ -67,6 +67,115 @@ def res_partner_employee(env):
     )
 
 
+# Fields added to hr.employee by the 18.0 hr_contract module that no longer
+# exist anywhere in 19.0 (verified: not defined on hr.employee, hr.version,
+# hr.employee.public, or any hr* module). They're listed in
+# upgrade_analysis_work.txt under the hr_contract → hr.employee DEL block
+# (lines 256-259) which is annotated "# NOTHING TO DO" — but in practice the
+# stale ir_model_fields rows + ir_ui_view records referencing these fields
+# trip cross-cutting view validation when later modules' data loads
+# (reproduced on `l10n_ae/data/account_tax_report_data.xml:3` with the error
+# `Field 'first_contract_date' does not exist in model 'hr.employee'`).
+# The analysis underreported the DELs — it listed 5 of the 10 stale fields.
+_obsolete_hr_employee_fields = (
+    "contract_id",
+    "contract_ids",
+    "contract_template_id",
+    "contract_type_id",
+    "contract_wage",
+    "contract_warning",
+    "contracts_count",
+    "first_contract_date",
+    "is_in_contract",
+    "vehicle",
+)
+
+
+def cleanup_obsolete_hr_employee_fields(env):
+    """
+    Delete stale ir_model_fields rows + orphan views for fields the 18.0
+    hr_contract module added to hr.employee/hr.employee.public that are
+    removed in 19.0. The migration framework does not sweep these
+    automatically when the donor module is merged via apriori.
+    """
+    # Build the list of xml_ids for the obsolete field metadata on both
+    # hr.employee and hr.employee.public.
+    field_xmlids = [
+        f"hr.field_hr_employee__{name}" for name in _obsolete_hr_employee_fields
+    ] + [
+        f"hr.field_hr_employee_public__{name}" for name in _obsolete_hr_employee_fields
+    ]
+
+    # Delete orphan views (on hr.employee and hr.employee.public) whose
+    # arch_db references any of these field names with the standard
+    # <field name="X"/> pattern. Done before the field rows themselves so
+    # the migration data load can re-create the proper 19.0 views.
+    patterns = "|".join(
+        f'name=\\\\"{name}\\\\"' for name in _obsolete_hr_employee_fields
+    )
+    env.cr.execute(
+        """
+        DELETE FROM ir_model_data
+        WHERE model = 'ir.ui.view'
+        AND res_id IN (
+            SELECT v.id FROM ir_ui_view v
+            WHERE v.model IN ('hr.employee', 'hr.employee.public')
+              AND v.arch_db::text ~ %s
+        )
+        """,
+        (patterns,),
+    )
+    env.cr.execute(
+        """
+        DELETE FROM ir_ui_view
+        WHERE model IN ('hr.employee', 'hr.employee.public')
+          AND arch_db::text ~ %s
+        """,
+        (patterns,),
+    )
+
+    # Delete the stale field xml_ids + their underlying ir_model_fields rows.
+    openupgrade.delete_records_safely_by_xml_id(env, field_xmlids)
+
+
+def cleanup_openupgrade_renamed_hr_views(env):
+    """
+    Delete orphan ir_ui_view records that openupgradelib renamed with an
+    `_openupgrade_<id>` suffix during the hr_contract → hr apriori merge
+    (openupgradelib.openupgrade.update_module_names auto-renames xml_ids
+    that would otherwise collide when changing module ownership).
+
+    The renamed views are guaranteed orphans because their original
+    18.0 xml_id no longer has a matching source XML in 19.0 hr — they're
+    leftovers from views that 19.0 has either dropped or rewritten under
+    a different xml_id. Their arch_db still references 18.0-only fields
+    or xpath targets (e.g. //block[@name='employee_rights_setting_container']
+    in res.config.settings) and trips view-inheritance resolution when
+    later modules' data XML loads (reproduced on
+    l10n_ae/data/account_tax_report_data.xml:3 with the error
+    'Element ... cannot be located in parent view').
+    """
+    env.cr.execute(
+        """
+        DELETE FROM ir_ui_view
+        WHERE id IN (
+            SELECT res_id FROM ir_model_data
+            WHERE module = 'hr'
+              AND model = 'ir.ui.view'
+              AND name LIKE '%%_openupgrade_%%'
+        )
+        """
+    )
+    env.cr.execute(
+        """
+        DELETE FROM ir_model_data
+        WHERE module = 'hr'
+          AND model = 'ir.ui.view'
+          AND name LIKE '%%_openupgrade_%%'
+        """
+    )
+
+
 @openupgrade.migrate()
 def migrate(env, version):
     openupgrade.rename_fields(env, renamed_fields)
@@ -78,4 +187,6 @@ def migrate(env, version):
         openupgrade.rename_fields(env, renamed_fields_hr_contract)
         openupgrade.rename_tables(env.cr, renamed_tables_hr_contract)
         openupgrade.rename_models(env.cr, renamed_models)
+    cleanup_obsolete_hr_employee_fields(env)
+    cleanup_openupgrade_renamed_hr_views(env)
     res_partner_employee(env)
