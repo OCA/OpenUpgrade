@@ -1,0 +1,29 @@
+---Models in module 'sms'---
+obsolete model sms.resend [transient]
+obsolete model sms.resend.recipient [transient]
+
+# NOTHING TO DO
+
+---Fields in module 'sms'---
+sms          / ir.actions.server        / state (False)                 : selection_keys added: [object_copy] (most likely nothing to do)
+sms          / mail.message             / message_type (False)          : selection_keys added: [out_of_office] (most likely nothing to do)
+sms          / mail.notification        / failure_type (False)          : selection_keys added: [mail_bl, mail_dup, mail_optout, mail_spam] (most likely nothing to do)
+sms          / res.partner              / phone_blacklisted (boolean)   : module is now 'phone_validation' ('sms')
+sms          / res.partner              / phone_mobile_search (char)    : module is now 'phone_validation' ('sms')
+sms          / res.partner              / phone_sanitized (char)        : module is now 'phone_validation' ('sms')
+sms          / res.partner              / phone_sanitized_blacklisted (boolean): module is now 'phone_validation' ('sms')
+sms          / res.users                / phone_blacklisted (boolean)   : module is now 'phone_validation' ('sms')
+sms          / res.users                / phone_mobile_search (char)    : module is now 'phone_validation' ('sms')
+sms          / res.users                / phone_sanitized (char)        : module is now 'phone_validation' ('sms')
+sms          / res.users                / phone_sanitized_blacklisted (boolean): module is now 'phone_validation' ('sms')
+
+# NOTHING TO DO
+
+---XML records in module 'sms'---
+DEL ir.actions.act_window: sms.sms_resend_action
+DEL ir.model.access: sms.access_sms_resend
+DEL ir.model.access: sms.access_sms_resend_recipient
+DEL ir.ui.view: sms.mail_resend_message_view_form
+DEL ir.ui.view: sms.res_partner_view_search
+
+# NOTHING TO DO
