@@ -1,0 +1,17 @@
+---Models in module 'pos_qfpay'---
+
+# NOTHING TO DO
+
+---Fields in module 'pos_qfpay'---
+pos_qfpay    / pos.payment.method       / qfpay_latest_response (char)  : NEW
+pos_qfpay    / pos.payment.method       / qfpay_notification_key (char) : NEW
+pos_qfpay    / pos.payment.method       / qfpay_payment_type (selection): NEW selection_keys: ['alipay', 'amex_card', 'card_payment', 'fps', 'octopus', 'payme', 'union', 'unionpay_card', 'wx']
+pos_qfpay    / pos.payment.method       / qfpay_pos_key (char)          : NEW
+pos_qfpay    / pos.payment.method       / qfpay_terminal_ip_address (char): NEW
+
+# NOTHING TO DO
+
+---XML records in module 'pos_qfpay'---
+NEW ir.ui.view: pos_qfpay.pos_payment_method_view_form
+
+# NOTHING TO DO

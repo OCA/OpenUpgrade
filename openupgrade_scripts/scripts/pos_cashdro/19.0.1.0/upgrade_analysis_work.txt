@@ -1,0 +1,16 @@
+---Models in module 'pos_cashdro'---
+
+# NOTHING TO DO
+
+---Fields in module 'pos_cashdro'---
+pos_cashdro  / pos.payment.method       / cashdro_ip (char)             : NEW
+pos_cashdro  / pos.payment.method       / cashdro_password (char)       : NEW
+pos_cashdro  / pos.payment.method       / cashdro_use_lna (boolean)     : NEW
+pos_cashdro  / pos.payment.method       / cashdro_username (char)       : NEW
+
+# NOTHING TO DO
+
+---XML records in module 'pos_cashdro'---
+NEW ir.ui.view: pos_cashdro.pos_payment_method_view_form_inherit_pos_cashdro
+
+# NOTHING TO DO

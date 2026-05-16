@@ -1,0 +1,14 @@
+---Models in module 'pos_mollie'---
+
+# NOTHING TO DO
+
+---Fields in module 'pos_mollie'---
+pos_mollie   / pos.payment.method       / mollie_payment_provider_id (many2one): NEW relation: payment.provider
+pos_mollie   / pos.payment.method       / mollie_terminal_id (char)     : NEW
+
+# NOTHING TO DO
+
+---XML records in module 'pos_mollie'---
+NEW ir.ui.view: pos_mollie.pos_payment_method_view_form_inherit_pos_mollie
+
+# NOTHING TO DO
