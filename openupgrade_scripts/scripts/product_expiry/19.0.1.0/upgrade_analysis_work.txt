@@ -1,0 +1,13 @@
+---Models in module 'product_expiry'---
+
+# NOTHING TO DO
+
+---Fields in module 'product_expiry'---
+product_expiry / stock.move.line          / removal_date (datetime)       : NEW hasdefault: compute
+
+# NOTHING TO DO
+
+---XML records in module 'product_expiry'---
+DEL mail.activity.type: product_expiry.mail_activity_type_alert_date_reached
+
+# NOTHING TO DO
