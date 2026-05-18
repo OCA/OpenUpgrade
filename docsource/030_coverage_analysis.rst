@@ -15,6 +15,7 @@ Refer to the :doc:`080_migration_script_development` documentation to add the mi
 .. toctree::
    :maxdepth: 1
 
+   coverage_analysis/modules180-190
    coverage_analysis/modules170-180
    coverage_analysis/modules160-170
    coverage_analysis/modules150-160
