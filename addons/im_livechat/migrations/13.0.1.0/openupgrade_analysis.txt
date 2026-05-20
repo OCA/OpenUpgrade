@@ -9,7 +9,7 @@ im_livechat  / mail.channel             / country_id (many2one)         : NEW re
 im_livechat  / mail.channel             / livechat_operator_id (many2one): NEW relation: res.partner
 im_livechat  / res.users                / livechat_username (char)      : NEW
 ---XML records in module 'im_livechat'---
-NEW im_livechat.channel: im_livechat.im_livechat_channel_data
+NEW im_livechat.channel: im_livechat.im_livechat_channel_data (noupdate)
 NEW ir.rule: im_livechat.im_livechat_rule_manager_read_all_mail_channel
 NEW ir.ui.view: im_livechat.im_livechat_channel_view_search
 NEW ir.ui.view: im_livechat.livechat_email_template (noupdate)

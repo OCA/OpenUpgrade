@@ -1,0 +1,16 @@
+---Models in module 'l10n_it_stock_ddt'---
+---Fields in module 'l10n_it_stock_ddt'---
+l10n_it_stock_ddt / stock.picking            / l10n_it_ddt_number (char)     : NEW
+l10n_it_stock_ddt / stock.picking            / l10n_it_parcels (integer)     : NEW hasdefault
+l10n_it_stock_ddt / stock.picking            / l10n_it_transport_method (selection): NEW selection_keys: ['courier', 'recipient', 'sender'], hasdefault
+l10n_it_stock_ddt / stock.picking            / l10n_it_transport_method_details (char): NEW
+l10n_it_stock_ddt / stock.picking            / l10n_it_transport_reason (selection): NEW selection_keys: ['attemped_sale', 'evaluation', 'gift', 'loaned_use', 'outsourcing', 'repair', 'sale', 'substitution', 'transfer'], hasdefault
+l10n_it_stock_ddt / stock.picking.type       / l10n_it_ddt_sequence_id (many2one): NEW relation: ir.sequence
+---XML records in module 'l10n_it_stock_ddt'---
+NEW ir.actions.report: l10n_it_stock_ddt.action_report_ddt
+NEW ir.ui.view: l10n_it_stock_ddt.account_invoice_view_form_inherit_ddt
+NEW ir.ui.view: l10n_it_stock_ddt.my_view_name
+NEW ir.ui.view: l10n_it_stock_ddt.report_ddt_view
+NEW ir.ui.view: l10n_it_stock_ddt.view_picking_form_inherit_l10n_it_ddt
+NEW ir.ui.view: l10n_it_stock_ddt.view_picking_search_inherit_l10n_it_ddt
+NEW ir.ui.view: l10n_it_stock_ddt.view_picking_tree_inherit_l10n_it_ddt

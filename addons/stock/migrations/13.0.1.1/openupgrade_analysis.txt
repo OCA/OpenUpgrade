@@ -35,6 +35,7 @@ stock        / stock.inventory.line     / categ_id (many2one)           : NEW re
 stock        / stock.inventory.line     / inventory_date (datetime)     : NEW hasdefault
 stock        / stock.inventory.line     / is_editable (boolean)         : NEW
 stock        / stock.inventory.line     / theoretical_qty (float)       : not a function anymore
+stock        / stock.location           / _order                        : _order is now 'complete_name, id' ('complete_name')
 stock        / stock.location           / partner_id (many2one)         : DEL relation: res.partner
 stock        / stock.location           / putaway_rule_ids (one2many)   : NEW relation: stock.putaway.rule
 stock        / stock.location           / putaway_strategy_id (many2one): DEL relation: product.putaway
@@ -59,6 +60,7 @@ stock        / stock.picking            / move_line_nosuggest_ids (one2many): NE
 stock        / stock.picking            / user_id (many2one)            : NEW relation: res.users, hasdefault
 stock        / stock.picking.type       / company_id (many2one)         : NEW relation: res.company, required, req_default: function, hasdefault
 stock        / stock.picking.type       / sequence_code (char)          : NEW required
+stock        / stock.production.lot     / _order                        : _order is now 'name, id' ('id')
 stock        / stock.production.lot     / company_id (many2one)         : NEW relation: res.company, required
 stock        / stock.production.lot     / note (html)                   : NEW
 stock        / stock.putaway.rule       / company_id (many2one)         : NEW relation: res.company, required, req_default: function, hasdefault
@@ -122,6 +124,7 @@ DEL ir.actions.report: stock_zebra.label_transfer_template
 NEW ir.actions.server: stock.action_view_quants
 NEW ir.actions.server: stock.model_stock_inventory_line_action_recompute_quantity
 NEW ir.actions.server: stock.model_stock_inventory_line_action_reset_product_qty
+NEW ir.actions.server: stock.stock_quant_stock_move_line_desynchronization
 NEW ir.model.access: stock.access_report_stock_quantity
 NEW ir.model.access: stock.access_stock_putaway_all
 NEW ir.model.access: stock.access_stock_putaway_manager

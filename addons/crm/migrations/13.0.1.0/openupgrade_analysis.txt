@@ -60,6 +60,8 @@ NEW ir.config_parameter: crm.crm_pls_start_date_param (noupdate)
 NEW ir.cron: crm.website_crm_score_cron
 NEW ir.model.access: crm.access_crm_lead_scoring_frequency
 NEW ir.model.access: crm.access_crm_lead_scoring_frequency_field
+NEW ir.model.access: crm.access_crm_lead_scoring_frequency_field_system
+NEW ir.model.access: crm.access_crm_lead_scoring_frequency_system
 NEW ir.rule: crm.crm_activity_report_rule_multi_company (noupdate)
 DEL ir.ui.menu: crm.menu_crm_leads
 NEW ir.ui.view: crm.assets_tests

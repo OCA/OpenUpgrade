@@ -68,6 +68,7 @@ mrp          / stock.warehouse          / manufacture_mto_pull_id (many2one): NE
 mrp_byproduct / mrp.bom                  / sub_products (one2many)       : DEL relation: mrp.subproduct
 mrp_byproduct / stock.move               / subproduct_id (many2one)      : DEL relation: mrp.subproduct
 ---XML records in module 'mrp'---
+ir.actions.act_window: mrp.action_mrp_workorder_workcenter (deleted domain)
 NEW ir.actions.report: mrp.label_manufacture_template
 NEW ir.model.access: mrp.access_mrp_bom_byproduct_manager
 NEW ir.model.access: mrp.access_mrp_bom_byproduct_user
@@ -89,6 +90,7 @@ NEW ir.ui.view: mrp.label_production_view
 NEW ir.ui.view: mrp.mrp_bom_byproduct_form_view
 NEW ir.ui.view: mrp.mrp_product_produce_line_form
 NEW ir.ui.view: mrp.mrp_product_produce_line_kanban
+NEW ir.ui.view: mrp.stock_move_line_view_search
 NEW ir.ui.view: mrp.view_move_kanban_inherit_mrp
 NEW ir.ui.view: mrp.view_stock_move_raw_tree
 DEL ir.ui.view: mrp_byproduct.mrp_subproduct_view

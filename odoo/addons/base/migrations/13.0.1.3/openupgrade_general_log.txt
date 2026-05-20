@@ -15,23 +15,23 @@ obsolete model crm.reveal.industry (renamed to crm.iap.lead.industry) [module cr
 obsolete model crm.reveal.role (renamed to crm.iap.lead.role) [module crm_iap_lead]
 obsolete model crm.reveal.seniority (renamed to crm.iap.lead.seniority) [module crm_iap_lead]
 obsolete model decimal.precision.test [module base]
-obsolete model hr.contract.advantage.template [module hr_payroll]
+obsolete model hr.contract.advantage.template [module payroll]
 obsolete model hr.contract.type [module hr_contract]
-obsolete model hr.contribution.register [module hr_payroll]
+obsolete model hr.contribution.register [module payroll]
 obsolete model hr.holidays.summary.dept [module hr_holidays]
 obsolete model hr.payroll.advice [module l10n_in_hr_payroll]
 obsolete model hr.payroll.advice.line [module l10n_in_hr_payroll]
-obsolete model hr.payroll.structure [module hr_payroll]
-obsolete model hr.payslip [module hr_payroll]
-obsolete model hr.payslip.employees [module hr_payroll]
-obsolete model hr.payslip.input [module hr_payroll]
-obsolete model hr.payslip.line [module hr_payroll]
-obsolete model hr.payslip.run [module hr_payroll]
-obsolete model hr.payslip.worked_days [module hr_payroll]
-obsolete model hr.rule.input [module hr_payroll]
+obsolete model hr.payroll.structure [module payroll]
+obsolete model hr.payslip [module payroll]
+obsolete model hr.payslip.employees [module payroll]
+obsolete model hr.payslip.input [module payroll]
+obsolete model hr.payslip.line [module payroll]
+obsolete model hr.payslip.run [module payroll]
+obsolete model hr.payslip.worked_days [module payroll]
+obsolete model hr.rule.input [module payroll]
 obsolete model hr.salary.employee.month [module l10n_in_hr_payroll]
-obsolete model hr.salary.rule [module hr_payroll]
-obsolete model hr.salary.rule.category [module hr_payroll]
+obsolete model hr.salary.rule [module payroll]
+obsolete model hr.salary.rule.category [module payroll]
 obsolete model lunch.order.line (renamed to lunch.order) [module lunch]
 obsolete model lunch.order.line.lucky [module lunch]
 obsolete model mail.blacklist.mixin (renamed to mail.thread.blacklist) [module mail]
@@ -49,14 +49,14 @@ obsolete model mass.mailing.list.merge (renamed to mailing.list.merge) [module m
 obsolete model mass.mailing.schedule.date (renamed to mailing.mailing.schedule.date) [module mass_mailing]
 obsolete model mrp.subproduct (renamed to mrp.bom.byproduct) [module mrp]
 obsolete model payment.advice.report [module l10n_in_hr_payroll]
-obsolete model payslip.lines.contribution.register [module hr_payroll]
+obsolete model payslip.lines.contribution.register [module payroll]
 obsolete model payslip.report [module l10n_in_hr_payroll]
 obsolete model pos.open.statement [module point_of_sale]
 obsolete model product.price.history [module product]
 obsolete model product.putaway [module stock]
 obsolete model project.task.assign.sale [module sale_timesheet]
-obsolete model report.hr_payroll.report_contributionregister [module hr_payroll]
-obsolete model report.hr_payroll.report_payslipdetails [module hr_payroll]
+obsolete model report.hr_payroll.report_contributionregister [module payroll]
+obsolete model report.hr_payroll.report_payslipdetails [module payroll]
 obsolete model report.l10n_in_hr_payroll.report_hrsalarybymonth [module l10n_in_hr_payroll]
 obsolete model report.l10n_in_hr_payroll.report_hryearlysalary [module l10n_in_hr_payroll]
 obsolete model report.l10n_in_hr_payroll.report_payrolladvice [module l10n_in_hr_payroll]
@@ -138,10 +138,13 @@ new model lunch.topping [module lunch]
 new model mail.address.mixin [module mail]
 new model mail.test.cc [module test_mail]
 new model mail.test.gateway [module test_mail]
+new model mail.test.gateway.groups [module test_mail]
 new model mail.test.multi.company [module test_mail]
+new model mail.test.portal [module test_mail_full]
 new model mail.test.sms [module test_mail_full]
 new model mail.test.sms.bl [module test_mail_full]
 new model mail.test.sms.partner [module test_mail_full]
+new model mail.test.track.selection [module test_mail]
 new model mail.thread.blacklist (renamed from mail.blacklist.mixin) [module mail]
 new model mail.thread.cc [module mail]
 new model mail.thread.phone [module phone_validation]
@@ -153,6 +156,7 @@ new model mailing.mailing (renamed from mail.mass_mailing) [module mass_mailing]
 new model mailing.mailing.schedule.date (renamed from mass.mailing.schedule.date) [module mass_mailing]
 new model mailing.mailing.test (renamed from mail.mass_mailing.test) [module mass_mailing]
 new model mailing.sms.test [module mass_mailing_sms]
+new model mailing.test.partner.unstored [module test_mass_mailing]
 new model mailing.trace (renamed from mail.mail.statistics) [module mass_mailing]
 new model mailing.trace.report (renamed from mail.statistics.report) [module mass_mailing]
 new model mrp.abstract.workorder [module mrp]
@@ -210,12 +214,12 @@ new model website.route [module website]
 new model website.track [module website]
 new model website.visitor [module website]
 ---Fields in module 'general'---
-# 7943 fields matched,
-# Direct match: 7837
+# 7992 fields matched,
+# Direct match: 7886
 # Found in other module: 106
 # Found with different type: 0
 # In obsolete models: 235
-# New columns: 2431
+# New columns: 2555
 # Not matched: 1005
 ---XML records in module 'general'---
 ERROR: module not in list of installed modules:
@@ -231,262 +235,14 @@ DEL ir.ui.view: crm_project.crm_lead_convert2task_view_form
 DEL ir.ui.view: crm_project.crm_lead_view_form
 ERROR: module not in list of installed modules:
 ---Models in module 'hr_payroll'---
-obsolete model hr.contract.advantage.template
-obsolete model hr.contribution.register
-obsolete model hr.payroll.structure
-obsolete model hr.payslip
-obsolete model hr.payslip.employees [transient]
-obsolete model hr.payslip.input
-obsolete model hr.payslip.line
-obsolete model hr.payslip.run
-obsolete model hr.payslip.worked_days
-obsolete model hr.rule.input
-obsolete model hr.salary.rule
-obsolete model hr.salary.rule.category
-obsolete model payslip.lines.contribution.register [transient]
-obsolete model report.hr_payroll.report_contributionregister [abstract]
-obsolete model report.hr_payroll.report_payslipdetails [abstract]
 ---Fields in module 'hr_payroll'---
-hr_payroll   / hr.contract              / resource_calendar_id (False)  : DEL required, req_default: function, mode: modify
-hr_payroll   / hr.contract              / schedule_pay (selection)      : DEL selection_keys: ['annually', 'bi-monthly', 'bi-weekly', 'monthly', 'quarterly', 'semi-annually', 'weekly']
-hr_payroll   / hr.contract              / struct_id (many2one)          : DEL relation: hr.payroll.structure
-hr_payroll   / hr.contract.advantage.template / code (char)                   : DEL required
-hr_payroll   / hr.contract.advantage.template / default_value (float)         : DEL
-hr_payroll   / hr.contract.advantage.template / lower_bound (float)           : DEL
-hr_payroll   / hr.contract.advantage.template / name (char)                   : DEL required
-hr_payroll   / hr.contract.advantage.template / upper_bound (float)           : DEL
-hr_payroll   / hr.contribution.register / company_id (many2one)         : DEL relation: res.company
-hr_payroll   / hr.contribution.register / name (char)                   : DEL required
-hr_payroll   / hr.contribution.register / note (text)                   : DEL
-hr_payroll   / hr.contribution.register / partner_id (many2one)         : DEL relation: res.partner
-hr_payroll   / hr.contribution.register / register_line_ids (one2many)  : DEL relation: hr.payslip.line
-hr_payroll   / hr.employee              / slip_ids (one2many)           : DEL relation: hr.payslip
-hr_payroll   / hr.payroll.structure     / children_ids (one2many)       : DEL relation: hr.payroll.structure
-hr_payroll   / hr.payroll.structure     / code (char)                   : DEL required
-hr_payroll   / hr.payroll.structure     / company_id (many2one)         : DEL relation: res.company, required, req_default: function
-hr_payroll   / hr.payroll.structure     / name (char)                   : DEL required
-hr_payroll   / hr.payroll.structure     / note (text)                   : DEL
-hr_payroll   / hr.payroll.structure     / parent_id (many2one)          : DEL relation: hr.payroll.structure
-hr_payroll   / hr.payroll.structure     / rule_ids (many2many)          : DEL relation: hr.salary.rule
-hr_payroll   / hr.payslip               / company_id (many2one)         : DEL relation: res.company
-hr_payroll   / hr.payslip               / contract_id (many2one)        : DEL relation: hr.contract
-hr_payroll   / hr.payslip               / credit_note (boolean)         : DEL
-hr_payroll   / hr.payslip               / date_from (date)              : DEL required, req_default: function
-hr_payroll   / hr.payslip               / date_to (date)                : DEL required, req_default: function
-hr_payroll   / hr.payslip               / employee_id (many2one)        : DEL relation: hr.employee, required
-hr_payroll   / hr.payslip               / input_line_ids (one2many)     : DEL relation: hr.payslip.input
-hr_payroll   / hr.payslip               / line_ids (one2many)           : DEL relation: hr.payslip.line
-hr_payroll   / hr.payslip               / name (char)                   : DEL
-hr_payroll   / hr.payslip               / note (text)                   : DEL
-hr_payroll   / hr.payslip               / number (char)                 : DEL
-hr_payroll   / hr.payslip               / paid (boolean)                : DEL
-hr_payroll   / hr.payslip               / payslip_run_id (many2one)     : DEL relation: hr.payslip.run
-hr_payroll   / hr.payslip               / state (selection)             : DEL selection_keys: ['cancel', 'done', 'draft', 'verify']
-hr_payroll   / hr.payslip               / struct_id (many2one)          : DEL relation: hr.payroll.structure
-hr_payroll   / hr.payslip               / worked_days_line_ids (one2many): DEL relation: hr.payslip.worked_days
-hr_payroll   / hr.payslip.input         / amount (float)                : DEL
-hr_payroll   / hr.payslip.input         / code (char)                   : DEL required
-hr_payroll   / hr.payslip.input         / contract_id (many2one)        : DEL relation: hr.contract, required
-hr_payroll   / hr.payslip.input         / name (char)                   : DEL required
-hr_payroll   / hr.payslip.input         / payslip_id (many2one)         : DEL relation: hr.payslip, required
-hr_payroll   / hr.payslip.input         / sequence (integer)            : DEL required, req_default: function
-hr_payroll   / hr.payslip.line          / active (boolean)              : DEL
-hr_payroll   / hr.payslip.line          / amount (float)                : DEL
-hr_payroll   / hr.payslip.line          / amount_fix (float)            : DEL
-hr_payroll   / hr.payslip.line          / amount_percentage (float)     : DEL
-hr_payroll   / hr.payslip.line          / amount_percentage_base (char) : DEL
-hr_payroll   / hr.payslip.line          / amount_python_compute (text)  : DEL
-hr_payroll   / hr.payslip.line          / amount_select (selection)     : DEL required, selection_keys: ['code', 'fix', 'percentage'], req_default: function
-hr_payroll   / hr.payslip.line          / appears_on_payslip (boolean)  : DEL
-hr_payroll   / hr.payslip.line          / category_id (many2one)        : DEL relation: hr.salary.rule.category, required
-hr_payroll   / hr.payslip.line          / child_ids (one2many)          : DEL relation: hr.salary.rule
-hr_payroll   / hr.payslip.line          / code (char)                   : DEL required
-hr_payroll   / hr.payslip.line          / company_id (many2one)         : DEL relation: res.company
-hr_payroll   / hr.payslip.line          / condition_python (text)       : DEL required, req_default: function
-hr_payroll   / hr.payslip.line          / condition_range (char)        : DEL
-hr_payroll   / hr.payslip.line          / condition_range_max (float)   : DEL
-hr_payroll   / hr.payslip.line          / condition_range_min (float)   : DEL
-hr_payroll   / hr.payslip.line          / condition_select (selection)  : DEL required, selection_keys: ['none', 'python', 'range'], req_default: function
-hr_payroll   / hr.payslip.line          / contract_id (many2one)        : DEL relation: hr.contract, required
-hr_payroll   / hr.payslip.line          / employee_id (many2one)        : DEL relation: hr.employee, required
-hr_payroll   / hr.payslip.line          / input_ids (one2many)          : DEL relation: hr.rule.input
-hr_payroll   / hr.payslip.line          / name (char)                   : DEL required
-hr_payroll   / hr.payslip.line          / note (text)                   : DEL
-hr_payroll   / hr.payslip.line          / parent_rule_id (many2one)     : DEL relation: hr.salary.rule
-hr_payroll   / hr.payslip.line          / quantity (float)              : DEL
-hr_payroll   / hr.payslip.line          / rate (float)                  : DEL
-hr_payroll   / hr.payslip.line          / register_id (many2one)        : DEL relation: hr.contribution.register
-hr_payroll   / hr.payslip.line          / salary_rule_id (many2one)     : DEL relation: hr.salary.rule, required
-hr_payroll   / hr.payslip.line          / sequence (integer)            : DEL required, req_default: function
-hr_payroll   / hr.payslip.line          / slip_id (many2one)            : DEL relation: hr.payslip, required
-hr_payroll   / hr.payslip.line          / total (float)                 : DEL
-hr_payroll   / hr.payslip.run           / credit_note (boolean)         : DEL
-hr_payroll   / hr.payslip.run           / date_end (date)               : DEL required, req_default: function
-hr_payroll   / hr.payslip.run           / date_start (date)             : DEL required, req_default: function
-hr_payroll   / hr.payslip.run           / name (char)                   : DEL required
-hr_payroll   / hr.payslip.run           / slip_ids (one2many)           : DEL relation: hr.payslip
-hr_payroll   / hr.payslip.run           / state (selection)             : DEL selection_keys: ['close', 'draft']
-hr_payroll   / hr.payslip.worked_days   / code (char)                   : DEL required
-hr_payroll   / hr.payslip.worked_days   / contract_id (many2one)        : DEL relation: hr.contract, required
-hr_payroll   / hr.payslip.worked_days   / name (char)                   : DEL required
-hr_payroll   / hr.payslip.worked_days   / number_of_days (float)        : DEL
-hr_payroll   / hr.payslip.worked_days   / number_of_hours (float)       : DEL
-hr_payroll   / hr.payslip.worked_days   / payslip_id (many2one)         : DEL relation: hr.payslip, required
-hr_payroll   / hr.payslip.worked_days   / sequence (integer)            : DEL required, req_default: function
-hr_payroll   / hr.rule.input            / code (char)                   : DEL required
-hr_payroll   / hr.rule.input            / input_id (many2one)           : DEL relation: hr.salary.rule, required
-hr_payroll   / hr.rule.input            / name (char)                   : DEL required
-hr_payroll   / hr.salary.rule           / active (boolean)              : DEL
-hr_payroll   / hr.salary.rule           / amount_fix (float)            : DEL
-hr_payroll   / hr.salary.rule           / amount_percentage (float)     : DEL
-hr_payroll   / hr.salary.rule           / amount_percentage_base (char) : DEL
-hr_payroll   / hr.salary.rule           / amount_python_compute (text)  : DEL
-hr_payroll   / hr.salary.rule           / amount_select (selection)     : DEL required, selection_keys: ['code', 'fix', 'percentage'], req_default: function
-hr_payroll   / hr.salary.rule           / appears_on_payslip (boolean)  : DEL
-hr_payroll   / hr.salary.rule           / category_id (many2one)        : DEL relation: hr.salary.rule.category, required
-hr_payroll   / hr.salary.rule           / child_ids (one2many)          : DEL relation: hr.salary.rule
-hr_payroll   / hr.salary.rule           / code (char)                   : DEL required
-hr_payroll   / hr.salary.rule           / company_id (many2one)         : DEL relation: res.company
-hr_payroll   / hr.salary.rule           / condition_python (text)       : DEL required, req_default: function
-hr_payroll   / hr.salary.rule           / condition_range (char)        : DEL
-hr_payroll   / hr.salary.rule           / condition_range_max (float)   : DEL
-hr_payroll   / hr.salary.rule           / condition_range_min (float)   : DEL
-hr_payroll   / hr.salary.rule           / condition_select (selection)  : DEL required, selection_keys: ['none', 'python', 'range'], req_default: function
-hr_payroll   / hr.salary.rule           / input_ids (one2many)          : DEL relation: hr.rule.input
-hr_payroll   / hr.salary.rule           / name (char)                   : DEL required
-hr_payroll   / hr.salary.rule           / note (text)                   : DEL
-hr_payroll   / hr.salary.rule           / parent_rule_id (many2one)     : DEL relation: hr.salary.rule
-hr_payroll   / hr.salary.rule           / quantity (char)               : DEL
-hr_payroll   / hr.salary.rule           / register_id (many2one)        : DEL relation: hr.contribution.register
-hr_payroll   / hr.salary.rule           / sequence (integer)            : DEL required, req_default: function
-hr_payroll   / hr.salary.rule.category  / children_ids (one2many)       : DEL relation: hr.salary.rule.category
-hr_payroll   / hr.salary.rule.category  / code (char)                   : DEL required
-hr_payroll   / hr.salary.rule.category  / company_id (many2one)         : DEL relation: res.company
-hr_payroll   / hr.salary.rule.category  / name (char)                   : DEL required
-hr_payroll   / hr.salary.rule.category  / note (text)                   : DEL
-hr_payroll   / hr.salary.rule.category  / parent_id (many2one)          : DEL relation: hr.salary.rule.category
 ---XML records in module 'hr_payroll'---
-DEL decimal.precision: hr_payroll.decimal_payroll
-DEL decimal.precision: hr_payroll.decimal_payroll_rate
-DEL hr.contribution.register: hr_payroll.contrib_register_employees
-DEL hr.payroll.structure: hr_payroll.structure_base
-DEL hr.salary.rule: hr_payroll.hr_rule_basic
-DEL hr.salary.rule: hr_payroll.hr_rule_net
-DEL hr.salary.rule: hr_payroll.hr_rule_taxable
-DEL hr.salary.rule.category: hr_payroll.ALW
-DEL hr.salary.rule.category: hr_payroll.BASIC
-DEL hr.salary.rule.category: hr_payroll.COMP
-DEL hr.salary.rule.category: hr_payroll.DED
-DEL hr.salary.rule.category: hr_payroll.GROSS
-DEL hr.salary.rule.category: hr_payroll.NET
-DEL ir.actions.act_window: hr_payroll.act_children_salary_rules
-DEL ir.actions.act_window: hr_payroll.act_contribution_reg_payslip_lines
-DEL ir.actions.act_window: hr_payroll.act_hr_employee_payslip_list
-DEL ir.actions.act_window: hr_payroll.act_payslip_lines
-DEL ir.actions.act_window: hr_payroll.action_contribution_register_form
-DEL ir.actions.act_window: hr_payroll.action_hr_payroll_configuration
-DEL ir.actions.act_window: hr_payroll.action_hr_payslip_by_employees
-DEL ir.actions.act_window: hr_payroll.action_hr_payslip_run_tree
-DEL ir.actions.act_window: hr_payroll.action_hr_salary_rule_category
-DEL ir.actions.act_window: hr_payroll.action_payslip_lines_contribution_register
-DEL ir.actions.act_window: hr_payroll.action_salary_rule_form
-DEL ir.actions.act_window: hr_payroll.action_view_hr_payroll_structure_list_form
-DEL ir.actions.act_window: hr_payroll.action_view_hr_payslip_form
-DEL ir.actions.act_window: hr_payroll.hr_contract_advantage_template_action
-DEL ir.actions.act_window: hr_payroll.open_payroll_modules
-DEL ir.actions.report: hr_payroll.action_contribution_register
-DEL ir.actions.report: hr_payroll.action_report_payslip
-DEL ir.actions.report: hr_payroll.payslip_details_report
-DEL ir.model.access: hr_payroll.access_hr_contract_advantage_template
-DEL ir.model.access: hr_payroll.access_hr_contract_advantage_template_hr_user
-DEL ir.model.access: hr_payroll.access_hr_contribution_register
-DEL ir.model.access: hr_payroll.access_hr_payroll_structure
-DEL ir.model.access: hr_payroll.access_hr_payroll_structure_hr_user
-DEL ir.model.access: hr_payroll.access_hr_payslip
-DEL ir.model.access: hr_payroll.access_hr_payslip_input_user
-DEL ir.model.access: hr_payroll.access_hr_payslip_line
-DEL ir.model.access: hr_payroll.access_hr_payslip_run
-DEL ir.model.access: hr_payroll.access_hr_payslip_worked_days_officer
-DEL ir.model.access: hr_payroll.access_hr_rule_input_officer
-DEL ir.model.access: hr_payroll.access_hr_salary_rule_category
-DEL ir.model.access: hr_payroll.access_hr_salary_rule_user
-DEL ir.rule: hr_payroll.hr_payroll_rule_officer (noupdate)
-DEL ir.rule: hr_payroll.hr_payslip_rule_manager (noupdate)
-DEL ir.sequence: hr_payroll.seq_salary_slip (noupdate)
-DEL ir.ui.menu: hr_payroll.hr_contract_advantage_template_menu_action
-DEL ir.ui.menu: hr_payroll.menu_action_hr_contribution_register_form
-DEL ir.ui.menu: hr_payroll.menu_action_hr_salary_rule_form
-DEL ir.ui.menu: hr_payroll.menu_department_tree
-DEL ir.ui.menu: hr_payroll.menu_hr_payroll_configuration
-DEL ir.ui.menu: hr_payroll.menu_hr_payroll_global_settings
-DEL ir.ui.menu: hr_payroll.menu_hr_payroll_root
-DEL ir.ui.menu: hr_payroll.menu_hr_payroll_structure_view
-DEL ir.ui.menu: hr_payroll.menu_hr_payslip_run
-DEL ir.ui.menu: hr_payroll.menu_hr_salary_rule_category
-DEL ir.ui.view: hr_payroll.hr_contract_advantage_template_view_form
-DEL ir.ui.view: hr_payroll.hr_contract_advantage_template_view_tree
-DEL ir.ui.view: hr_payroll.hr_contract_form_inherit
-DEL ir.ui.view: hr_payroll.hr_contribution_register_filter
-DEL ir.ui.view: hr_payroll.hr_contribution_register_form
-DEL ir.ui.view: hr_payroll.hr_contribution_register_tree
-DEL ir.ui.view: hr_payroll.hr_contribution_register_view_kanban
-DEL ir.ui.view: hr_payroll.hr_payroll_structure_view_kanban
-DEL ir.ui.view: hr_payroll.hr_payslip_run_filter
-DEL ir.ui.view: hr_payroll.hr_payslip_run_form
-DEL ir.ui.view: hr_payroll.hr_payslip_run_tree
-DEL ir.ui.view: hr_payroll.hr_payslip_run_view_kanban
-DEL ir.ui.view: hr_payroll.hr_payslip_view_kanban
-DEL ir.ui.view: hr_payroll.hr_salary_rule_category_form
-DEL ir.ui.view: hr_payroll.hr_salary_rule_category_tree
-DEL ir.ui.view: hr_payroll.hr_salary_rule_form
-DEL ir.ui.view: hr_payroll.hr_salary_rule_list
-DEL ir.ui.view: hr_payroll.hr_salary_rule_tree
-DEL ir.ui.view: hr_payroll.hr_salary_rule_view_kanban
-DEL ir.ui.view: hr_payroll.payroll_hr_employee_view_form
-DEL ir.ui.view: hr_payroll.report_contributionregister
-DEL ir.ui.view: hr_payroll.report_payslip
-DEL ir.ui.view: hr_payroll.report_payslipdetails
-DEL ir.ui.view: hr_payroll.res_config_settings_view_form
-DEL ir.ui.view: hr_payroll.view_hr_employee_grade_form
-DEL ir.ui.view: hr_payroll.view_hr_payroll_structure_filter
-DEL ir.ui.view: hr_payroll.view_hr_payroll_structure_list_view
-DEL ir.ui.view: hr_payroll.view_hr_payroll_structure_tree
-DEL ir.ui.view: hr_payroll.view_hr_payslip_by_employees
-DEL ir.ui.view: hr_payroll.view_hr_payslip_filter
-DEL ir.ui.view: hr_payroll.view_hr_payslip_form
-DEL ir.ui.view: hr_payroll.view_hr_payslip_line_filter
-DEL ir.ui.view: hr_payroll.view_hr_payslip_line_form
-DEL ir.ui.view: hr_payroll.view_hr_payslip_line_tree
-DEL ir.ui.view: hr_payroll.view_hr_payslip_tree
-DEL ir.ui.view: hr_payroll.view_hr_rule_filter
-DEL ir.ui.view: hr_payroll.view_hr_salary_rule_category_filter
-DEL ir.ui.view: hr_payroll.view_payslip_lines_contribution_register
-DEL res.groups: hr_payroll.group_hr_payroll_manager (noupdate)
-DEL res.groups: hr_payroll.group_hr_payroll_user (noupdate)
+---nothing has changed in this module--
 ERROR: module not in list of installed modules:
 ---Models in module 'hr_payroll_account'---
 ---Fields in module 'hr_payroll_account'---
-hr_payroll_account / hr.contract              / analytic_account_id (many2one): DEL relation: account.analytic.account
-hr_payroll_account / hr.contract              / journal_id (many2one)         : DEL relation: account.journal
-hr_payroll_account / hr.payslip               / date (date)                   : DEL
-hr_payroll_account / hr.payslip               / journal_id (many2one)         : DEL relation: account.journal, required, req_default: function
-hr_payroll_account / hr.payslip               / move_id (many2one)            : DEL relation: account.move
-hr_payroll_account / hr.payslip.line          / account_credit (many2one)     : DEL relation: account.account
-hr_payroll_account / hr.payslip.line          / account_debit (many2one)      : DEL relation: account.account
-hr_payroll_account / hr.payslip.line          / account_tax_id (many2one)     : DEL relation: account.tax
-hr_payroll_account / hr.payslip.line          / analytic_account_id (many2one): DEL relation: account.analytic.account
-hr_payroll_account / hr.payslip.run           / journal_id (many2one)         : DEL relation: account.journal, required, req_default: function
-hr_payroll_account / hr.salary.rule           / account_credit (many2one)     : DEL relation: account.account
-hr_payroll_account / hr.salary.rule           / account_debit (many2one)      : DEL relation: account.account
-hr_payroll_account / hr.salary.rule           / account_tax_id (many2one)     : DEL relation: account.tax
-hr_payroll_account / hr.salary.rule           / analytic_account_id (many2one): DEL relation: account.analytic.account
 ---XML records in module 'hr_payroll_account'---
-DEL ir.ui.view: hr_payroll_account.hr_contract_form_inherit
-DEL ir.ui.view: hr_payroll_account.hr_payslip_run_form_inherit
-DEL ir.ui.view: hr_payroll_account.hr_payslip_run_search_inherit
-DEL ir.ui.view: hr_payroll_account.hr_payslip_run_tree_inherit
-DEL ir.ui.view: hr_payroll_account.hr_salary_rule_form_inherit
-DEL ir.ui.view: hr_payroll_account.view_hr_payslip_inherit_form
+---nothing has changed in this module--
 ERROR: module not in list of installed modules:
 ---Models in module 'l10n_be_hr_payroll'---
 ---Fields in module 'l10n_be_hr_payroll'---

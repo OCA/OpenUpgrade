@@ -126,6 +126,8 @@ account      / account.invoice.tax      / name (char)                   : DEL re
 account      / account.invoice.tax      / sequence (integer)            : DEL
 account      / account.invoice.tax      / tax_id (many2one)             : DEL relation: account.tax
 account      / account.journal          / activity_ids (one2many)       : NEW relation: mail.activity
+account      / account.journal          / alias_name (char)             : not related anymore
+account      / account.journal          / alias_name (char)             : now a function
 account      / account.journal          / group_invoice_lines (boolean) : DEL
 account      / account.journal          / invoice_reference_model (selection): NEW required, selection_keys: ['euro', 'odoo'], req_default: function, hasdefault
 account      / account.journal          / invoice_reference_type (selection): NEW required, selection_keys: ['invoice', 'none', 'partner'], req_default: function, hasdefault
@@ -158,6 +160,8 @@ account      / account.move             / amount_untaxed_signed (float) : NEW is
 account      / account.move             / auto_post (boolean)           : NEW hasdefault
 account      / account.move             / auto_reverse (boolean)        : DEL
 account      / account.move             / commercial_partner_id (many2one): NEW relation: res.partner, isfunction: function, stored
+account      / account.move             / company_id (many2one)         : not related anymore
+account      / account.move             / company_id (many2one)         : now a function
 account      / account.move             / currency_id (many2one)        : not a function anymore
 account      / account.move             / currency_id (many2one)        : now required, req_default: function
 account      / account.move             / fiscal_position_id (many2one) : NEW relation: account.fiscal.position
@@ -168,7 +172,7 @@ account      / account.move             / invoice_date_due (date)       : NEW
 account      / account.move             / invoice_incoterm_id (many2one): NEW relation: account.incoterms, hasdefault
 account      / account.move             / invoice_line_ids (one2many)   : NEW relation: account.move.line
 account      / account.move             / invoice_origin (char)         : NEW
-account      / account.move             / invoice_partner_bank_id (many2one): NEW relation: res.partner.bank
+account      / account.move             / invoice_partner_bank_id (many2one): NEW relation: res.partner.bank, isfunction: function, stored
 account      / account.move             / invoice_partner_display_name (char): NEW isfunction: function, stored
 account      / account.move             / invoice_payment_ref (char)    : NEW
 account      / account.move             / invoice_payment_state (selection): NEW selection_keys: ['in_payment', 'not_paid', 'paid'], isfunction: function, stored

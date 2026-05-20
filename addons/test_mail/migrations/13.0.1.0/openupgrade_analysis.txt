@@ -1,7 +1,9 @@
 ---Models in module 'test_mail'---
 new model mail.test.cc
 new model mail.test.gateway
+new model mail.test.gateway.groups
 new model mail.test.multi.company
+new model mail.test.track.selection
 ---Fields in module 'test_mail'---
 test_mail    / mail.test.cc             / email_cc (char)               : NEW
 test_mail    / mail.test.cc             / message_follower_ids (one2many): NEW relation: mail.followers
@@ -18,17 +20,39 @@ test_mail    / mail.test.gateway        / message_ids (one2many)        : NEW re
 test_mail    / mail.test.gateway        / message_main_attachment_id (many2one): NEW relation: ir.attachment
 test_mail    / mail.test.gateway        / name (char)                   : NEW
 test_mail    / mail.test.gateway        / website_message_ids (one2many): NEW relation: mail.message
+test_mail    / mail.test.gateway.groups / _inherits                     : NEW _inherits: {'mail.alias': 'alias_id'}
+test_mail    / mail.test.gateway.groups / alias_id (many2one)           : NEW relation: mail.alias, required
+test_mail    / mail.test.gateway.groups / custom_field (char)           : NEW
+test_mail    / mail.test.gateway.groups / customer_id (many2one)        : NEW relation: res.partner
+test_mail    / mail.test.gateway.groups / email_from (char)             : NEW
+test_mail    / mail.test.gateway.groups / email_normalized (char)       : NEW isfunction: function, stored
+test_mail    / mail.test.gateway.groups / message_bounce (integer)      : NEW hasdefault
+test_mail    / mail.test.gateway.groups / message_follower_ids (one2many): NEW relation: mail.followers
+test_mail    / mail.test.gateway.groups / message_ids (one2many)        : NEW relation: mail.message
+test_mail    / mail.test.gateway.groups / message_main_attachment_id (many2one): NEW relation: ir.attachment
+test_mail    / mail.test.gateway.groups / name (char)                   : NEW
+test_mail    / mail.test.gateway.groups / website_message_ids (one2many): NEW relation: mail.message
 test_mail    / mail.test.multi.company  / company_id (many2one)         : NEW relation: res.company
 test_mail    / mail.test.multi.company  / message_follower_ids (one2many): NEW relation: mail.followers
 test_mail    / mail.test.multi.company  / message_ids (one2many)        : NEW relation: mail.message
 test_mail    / mail.test.multi.company  / message_main_attachment_id (many2one): NEW relation: ir.attachment
 test_mail    / mail.test.multi.company  / name (char)                   : NEW
 test_mail    / mail.test.multi.company  / website_message_ids (one2many): NEW relation: mail.message
+test_mail    / mail.test.track.selection / message_follower_ids (one2many): NEW relation: mail.followers
+test_mail    / mail.test.track.selection / message_ids (one2many)        : NEW relation: mail.message
+test_mail    / mail.test.track.selection / message_main_attachment_id (many2one): NEW relation: ir.attachment
+test_mail    / mail.test.track.selection / name (char)                   : NEW
+test_mail    / mail.test.track.selection / type (selection)              : NEW selection_keys: ['first', 'second']
+test_mail    / mail.test.track.selection / website_message_ids (one2many): NEW relation: mail.message
 ---XML records in module 'test_mail'---
 NEW ir.model.access: test_mail.access_mail_test_cc_portal
 NEW ir.model.access: test_mail.access_mail_test_cc_user
+NEW ir.model.access: test_mail.access_mail_test_gateway_groups_portal
+NEW ir.model.access: test_mail.access_mail_test_gateway_groups_user
 NEW ir.model.access: test_mail.access_mail_test_gateway_portal
 NEW ir.model.access: test_mail.access_mail_test_gateway_user
 NEW ir.model.access: test_mail.access_mail_test_multi_company_portal
 NEW ir.model.access: test_mail.access_mail_test_multi_company_user
+NEW ir.model.access: test_mail.access_mail_test_track_selection_portal
+NEW ir.model.access: test_mail.access_mail_test_track_selection_user
 NEW ir.rule: test_mail.mail_test_multi_company_rule (noupdate)
