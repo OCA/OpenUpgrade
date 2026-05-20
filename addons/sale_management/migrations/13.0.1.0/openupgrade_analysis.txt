@@ -4,6 +4,7 @@ sale_management / sale.order.template      / company_id (many2one)         : NEW
 sale_management / sale.order.template.line / company_id (many2one)         : NEW relation: res.company, isrelated: related, stored
 sale_management / sale.order.template.option / company_id (many2one)         : NEW relation: res.company, isrelated: related, stored
 ---XML records in module 'sale_management'---
+NEW ir.model.access: sale_management.access_sale_order_template_system
 NEW ir.rule: sale_management.sale_order_template_rule_company
 DEL ir.ui.menu: sale_management.menu_catalog_variants_action
 DEL ir.ui.menu: sale_management.menu_product_settings

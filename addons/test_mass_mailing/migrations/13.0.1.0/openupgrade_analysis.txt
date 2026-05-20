@@ -1,6 +1,17 @@
 ---Models in module 'test_mass_mailing'---
+new model mailing.test.partner.unstored
 ---Fields in module 'test_mass_mailing'---
+test_mass_mailing / mailing.test.partner.unstored / email_from (char)             : NEW
+test_mass_mailing / mailing.test.partner.unstored / email_normalized (char)       : NEW isfunction: function, stored
+test_mass_mailing / mailing.test.partner.unstored / message_bounce (integer)      : NEW hasdefault
+test_mass_mailing / mailing.test.partner.unstored / message_follower_ids (one2many): NEW relation: mail.followers
+test_mass_mailing / mailing.test.partner.unstored / message_ids (one2many)        : NEW relation: mail.message
+test_mass_mailing / mailing.test.partner.unstored / message_main_attachment_id (many2one): NEW relation: ir.attachment
+test_mass_mailing / mailing.test.partner.unstored / name (char)                   : NEW
+test_mass_mailing / mailing.test.partner.unstored / website_message_ids (one2many): NEW relation: mail.message
 test_mass_mailing / mass.mail.test           / email_normalized (char)       : NEW isfunction: function, stored
 test_mass_mailing / mass.mail.test.bl        / email_normalized (char)       : NEW isfunction: function, stored
 test_mass_mailing / mass.mail.test.bl        / message_bounce (integer)      : NEW hasdefault
 ---XML records in module 'test_mass_mailing'---
+NEW ir.model.access: test_mass_mailing.access_mailing_test_partner_unstored_all
+NEW ir.model.access: test_mass_mailing.access_mailing_test_partner_unstored_user

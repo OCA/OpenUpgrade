@@ -58,6 +58,7 @@ NEW ir.actions.act_window: sale_coupon.sale_coupon_program_action_coupon_program
 NEW ir.actions.act_window: sale_coupon.sale_coupon_program_action_promo_program
 NEW ir.actions.act_window: sale_coupon.sale_order_action
 NEW ir.actions.report: sale_coupon.report_coupon_code
+NEW ir.cron: sale_coupon.expire_coupon_cron (noupdate)
 NEW ir.model.access: sale_coupon.access_applicability_manager
 NEW ir.model.access: sale_coupon.access_applicability_salesman
 NEW ir.model.access: sale_coupon.access_coupon_manager

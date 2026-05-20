@@ -1,8 +1,16 @@
 ---Models in module 'test_mail_full'---
+new model mail.test.portal
 new model mail.test.sms
 new model mail.test.sms.bl
 new model mail.test.sms.partner
 ---Fields in module 'test_mail_full'---
+test_mail_full / mail.test.portal         / access_token (char)           : NEW
+test_mail_full / mail.test.portal         / message_follower_ids (one2many): NEW relation: mail.followers
+test_mail_full / mail.test.portal         / message_ids (one2many)        : NEW relation: mail.message
+test_mail_full / mail.test.portal         / message_main_attachment_id (many2one): NEW relation: ir.attachment
+test_mail_full / mail.test.portal         / name (char)                   : NEW
+test_mail_full / mail.test.portal         / partner_id (many2one)         : NEW relation: res.partner
+test_mail_full / mail.test.portal         / website_message_ids (one2many): NEW relation: mail.message
 test_mail_full / mail.test.sms            / customer_id (many2one)        : NEW relation: res.partner
 test_mail_full / mail.test.sms            / email_from (char)             : NEW
 test_mail_full / mail.test.sms            / message_follower_ids (one2many): NEW relation: mail.followers
@@ -31,6 +39,8 @@ test_mail_full / mail.test.sms.partner    / name (char)                   : NEW
 test_mail_full / mail.test.sms.partner    / partner_id (many2one)         : NEW relation: res.partner
 test_mail_full / mail.test.sms.partner    / website_message_ids (one2many): NEW relation: mail.message
 ---XML records in module 'test_mail_full'---
+NEW ir.model.access: test_mail_full.access_mail_test_portal_all
+NEW ir.model.access: test_mail_full.access_mail_test_portal_user
 NEW ir.model.access: test_mail_full.access_mail_test_sms_all
 NEW ir.model.access: test_mail_full.access_mail_test_sms_bl_all
 NEW ir.model.access: test_mail_full.access_mail_test_sms_bl_user

@@ -6,7 +6,6 @@ project      / project.project          / analytic_account_id (many2one): previo
 project      / project.project          / percentage_satisfaction_project (integer): DEL
 project      / project.project          / percentage_satisfaction_task (integer): DEL
 project      / project.project          / rating_ids (one2many)         : NEW relation: rating.rating
-project      / project.task             / company_id (many2one)         : now required, req_default: function
 project      / project.task             / date_start (datetime)         : DEL
 project      / project.task             / notes (text)                  : DEL
 project      / project.task.type        / legend_priority (char)        : DEL

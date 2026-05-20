@@ -33,6 +33,8 @@ DEL account.account.tag: l10n_ch.vat_tag_410
 DEL account.account.tag: l10n_ch.vat_tag_415
 DEL account.account.tag: l10n_ch.vat_tag_420
 DEL account.account.tag: l10n_ch.vat_tag_dedouanement
+DEL account.account.tag: l10n_ch.vat_tag_other_movements_900
+DEL account.account.tag: l10n_ch.vat_tag_other_movements_910
 NEW account.account.template: l10n_ch.ch_coa_1101
 account.chart.template: l10n_ch.l10nch_chart_template (noupdate switched)
 NEW account.fiscal.position.template: l10n_ch.fiscal_position_template_1 (noupdate)
@@ -74,9 +76,8 @@ NEW account.tax.report.line: l10n_ch.account_tax_report_line_chtax_910
 NEW account.tax.report.line: l10n_ch.account_tax_report_line_chtax_autres_mouv
 NEW account.tax.report.line: l10n_ch.account_tax_report_line_chtax_solde
 NEW account.tax.template: l10n_ch.vat_100_import_invest
-NEW account.tax.template: l10n_ch.vat_other_movements_900
-NEW account.tax.template: l10n_ch.vat_other_movements_910
 NEW ir.ui.view: l10n_ch.isr_partner_bank_tree
 NEW ir.ui.view: l10n_ch.isr_partner_property_bank_tree
+NEW ir.ui.view: l10n_ch.minimal_layout_with_report_attribute
 NEW ir.ui.view: l10n_ch.setup_bank_account_wizard_inherit
 DEL ir.ui.view: l10n_ch.isr_res_bank_form
