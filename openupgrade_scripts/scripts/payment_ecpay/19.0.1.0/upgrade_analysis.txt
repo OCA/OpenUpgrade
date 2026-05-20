@@ -1,0 +1,9 @@
+---Models in module 'payment_ecpay'---
+---Fields in module 'payment_ecpay'---
+payment_ecpay / payment.provider         / code (False)                  : NEW selection_keys: ['adyen', 'aps', 'asiapay', 'authorize', 'buckaroo', 'custom', 'demo', 'dpo', 'ecpay', 'none'], mode: modify
+payment_ecpay / payment.provider         / ecpay_hash_iv (char)          : NEW
+payment_ecpay / payment.provider         / ecpay_hash_key (char)         : NEW
+payment_ecpay / payment.provider         / ecpay_merchant_id (char)      : NEW
+---XML records in module 'payment_ecpay'---
+NEW ir.ui.view: payment_ecpay.payment_provider_form
+NEW ir.ui.view: payment_ecpay.redirect_form
