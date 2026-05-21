@@ -1,0 +1,45 @@
+---Models in module 'website_blog'---
+
+# NOTHING TO DO
+
+---Fields in module 'website_blog'---
+website_blog / blog.blog                / is_seo_optimized (boolean)    : is now stored
+website_blog / blog.blog                / sequence (integer)            : NEW hasdefault: default
+website_blog / blog.post                / footer_visible (boolean)      : NEW hasdefault: default
+website_blog / blog.post                / header_visible (boolean)      : NEW hasdefault: default
+website_blog / blog.post                / is_seo_optimized (boolean)    : is now stored
+website_blog / blog.tag                 / is_seo_optimized (boolean)    : is now stored
+
+# NOTHING TO DO
+
+---XML records in module 'website_blog'---
+DEL ir.asset: website_blog.s_blog_posts_000_js
+NEW ir.ui.view: website_blog.blog_post_info
+NEW ir.ui.view: website_blog.dynamic_filter_template_blog_post_single_aside
+NEW ir.ui.view: website_blog.dynamic_filter_template_blog_post_single_badge
+NEW ir.ui.view: website_blog.dynamic_filter_template_blog_post_single_circle
+NEW ir.ui.view: website_blog.dynamic_filter_template_blog_post_single_full
+NEW ir.ui.view: website_blog.s_blog_posts_big_picture
+NEW ir.ui.view: website_blog.s_blog_posts_card
+NEW ir.ui.view: website_blog.s_blog_posts_horizontal
+NEW ir.ui.view: website_blog.s_blog_posts_list
+NEW ir.ui.view: website_blog.s_blog_posts_single_aside
+NEW ir.ui.view: website_blog.s_blog_posts_single_badge
+NEW ir.ui.view: website_blog.s_blog_posts_single_circle
+NEW ir.ui.view: website_blog.s_blog_posts_single_full
+NEW ir.ui.view: website_blog.s_dynamic_snippet_blog_posts_card_preview_data
+NEW ir.ui.view: website_blog.s_dynamic_snippet_blog_posts_horizontal_preview_data
+NEW ir.ui.view: website_blog.s_dynamic_snippet_blog_posts_list_preview_data
+NEW ir.ui.view: website_blog.s_dynamic_snippet_blog_posts_single_aside_preview_data
+NEW ir.ui.view: website_blog.s_dynamic_snippet_blog_posts_single_badge_preview_data
+NEW ir.ui.view: website_blog.s_dynamic_snippet_blog_posts_single_circle_preview_data
+NEW ir.ui.view: website_blog.s_dynamic_snippet_blog_posts_single_full_preview_data
+NEW ir.ui.view: website_blog.s_dynamic_snippet_template_category
+DEL ir.ui.view: website_blog.blog_searchbar_input_snippet_options
+DEL ir.ui.view: website_blog.opt_blog_post_select_to_comment
+DEL ir.ui.view: website_blog.opt_blog_post_select_to_tweet
+DEL ir.ui.view: website_blog.s_blog_posts_options
+DEL ir.ui.view: website_blog.s_dynamic_snippet_options_template
+DEL ir.ui.view: website_blog.snippet_options
+
+# NOTHING TO DO

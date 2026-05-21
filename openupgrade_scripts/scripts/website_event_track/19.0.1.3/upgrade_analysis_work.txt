@@ -1,0 +1,19 @@
+---Models in module 'website_event_track'---
+
+# NOTHING TO DO
+
+---Fields in module 'website_event_track'---
+website_event_track / event.track              / _order                        : _order is now 'priority desc, date' ('priority, date')
+website_event_track / event.track              / date (datetime)               : now a function
+website_event_track / event.track              / is_seo_optimized (boolean)    : is now stored
+website_event_track / website.event.menu       / menu_type (False)             : selection_keys added: [exhibitor, other], removed: [location]
+
+# NOTHING TO DO
+
+---XML records in module 'website_event_track'---
+NEW ir.asset: website_event_track.s_searchbar_000_xml
+NEW ir.ui.view: website_event_track.track_list_item
+DEL ir.ui.view: website_event_track.snippet_options
+NEW mail.template: website_event_track.mail_template_data_track_reminder (noupdate)
+
+# NOTHING TO DO
