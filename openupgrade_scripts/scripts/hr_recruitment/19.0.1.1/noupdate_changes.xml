@@ -39,9 +39,11 @@
     <t t-if="object.job_id.address_id.street"><t t-out="object.job_id.address_id.street or ''">Puerto Madero 9710</t><br/><t t-set="location" t-value="object.job_id.address_id.street"/></t>
     <t t-if="object.job_id.address_id.street2"><t t-out="object.job_id.address_id.street2 or ''">Of A15, Santiago (RM)</t><br/><t t-set="location" t-value="'%s, %s' % (location, object.job_id.address_id.street2)"/></t>
     <t t-if="object.job_id.address_id.city"><t t-out="object.job_id.address_id.city or ''">Pudahuel</t>,
-        <t t-set="location" t-value="'%s, %s' % (location, object.job_id.address_id.city)"/></t>
+        <t t-set="location" t-value="'%s, %s' % (location, object.job_id.address_id.city)"/>
+    </t>
     <t t-if="object.job_id.address_id.state_id.name"><t t-out="object.job_id.address_id.state_id.name or ''">C1</t>,
-        <t t-set="location" t-value="'%s, %s' % (location, object.job_id.address_id.state_id.name)"/></t>
+        <t t-set="location" t-value="'%s, %s' % (location, object.job_id.address_id.state_id.name)"/>
+    </t>
     <t t-if="object.job_id.address_id.zip"><t t-out="object.job_id.address_id.zip or ''">98450</t><t t-set="location" t-value="'%s, %s' % (location, object.job_id.address_id.zip)"/></t>
     <br/>
     <t t-if="object.job_id.address_id.country_id.name"><t t-out="object.job_id.address_id.country_id.name or ''">Argentina</t><br/><t t-set="location" t-value="'%s, %s' % (location, object.job_id.address_id.country_id.name)"/></t>
@@ -101,9 +103,11 @@
         <t t-if="object.job_id.address_id.street"><t t-out="object.job_id.address_id.street or ''">Puerto Madero 9710</t><br/><t t-set="location" t-value="object.job_id.address_id.street"/></t>
         <t t-if="object.job_id.address_id.street2"><t t-out="object.job_id.address_id.street2 or ''">Of A15, Santiago (RM)</t><br/><t t-set="location" t-value="'%s, %s' % (location, object.job_id.address_id.street2)"/></t>
         <t t-if="object.job_id.address_id.city"><t t-out="object.job_id.address_id.city or ''">Pudahuel</t>,
-            <t t-set="location" t-value="'%s, %s' % (location, object.job_id.address_id.city)"/></t>
+            <t t-set="location" t-value="'%s, %s' % (location, object.job_id.address_id.city)"/>
+        </t>
         <t t-if="object.job_id.address_id.state_id.name"><t t-out="object.job_id.address_id.state_id.name or ''">C1</t>,
-            <t t-set="location" t-value="'%s, %s' % (location, object.job_id.address_id.state_id.name)"/></t>
+            <t t-set="location" t-value="'%s, %s' % (location, object.job_id.address_id.state_id.name)"/>
+        </t>
         <t t-if="object.job_id.address_id.zip"><t t-out="object.job_id.address_id.zip or ''">98450</t><t t-set="location" t-value="'%s, %s' % (location, object.job_id.address_id.zip)"/></t>
         <br/>
         <t t-if="object.job_id.address_id.country_id.name"><t t-out="object.job_id.address_id.country_id.name or ''">Argentina</t><br/><t t-set="location" t-value="'%s, %s' % (location, object.job_id.address_id.country_id.name)"/></t>
