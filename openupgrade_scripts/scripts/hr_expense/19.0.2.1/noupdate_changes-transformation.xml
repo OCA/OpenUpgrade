@@ -1,0 +1,14 @@
+<odoo>
+    <!--
+    Don't update UOM ids of products
+    -->
+    <xpath
+        expr=
+        "//record[@id='expense_product_communication']/field[@name='uom_id']"
+        position="replace"
+    />
+    <xpath
+        expr="//record[@id='expense_product_gift']/field[@name='uom_id']"
+        position="replace"
+    />
+</odoo>
