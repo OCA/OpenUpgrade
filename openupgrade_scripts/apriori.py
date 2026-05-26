@@ -91,6 +91,7 @@ merged_modules = {
     "l10n_fr_pos_cert_update_draft_order_line": "l10n_fr_pos_cert",
     # OCA/sale-workflow
     "sale_order_qty_change_no_recompute": "sale",
+    "sale_partner_shipping_invoice_domain": "sale_commercial_partner",
     # OCA/server-brand
     "hr_expense_remove_mobile_link": "hr_expense",
     # OCA/stock-logistics-workflow
