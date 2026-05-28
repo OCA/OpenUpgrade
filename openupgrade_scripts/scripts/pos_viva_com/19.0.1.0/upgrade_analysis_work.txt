@@ -1,0 +1,29 @@
+---Models in module 'pos_viva_com'---
+---Fields in module 'pos_viva_com'---
+pos_viva_com / pos.payment              / viva_com_session_id (char)    : NEW
+pos_viva_com / pos.payment.method       / viva_com_api_key (char)       : NEW
+pos_viva_com / pos.payment.method       / viva_com_bearer_token (char)  : NEW hasdefault: default
+pos_viva_com / pos.payment.method       / viva_com_client_id (char)     : NEW
+pos_viva_com / pos.payment.method       / viva_com_client_secret (char) : NEW
+pos_viva_com / pos.payment.method       / viva_com_latest_response (json): NEW
+pos_viva_com / pos.payment.method       / viva_com_merchant_id (char)   : NEW
+pos_viva_com / pos.payment.method       / viva_com_terminal_id (char)   : NEW
+pos_viva_com / pos.payment.method       / viva_com_test_mode (boolean)  : NEW
+pos_viva_com / pos.payment.method       / viva_com_webhook_verification_key (char): NEW
+pos_viva_wallet / pos.payment.method       / viva_wallet_api_key (char)    : DEL
+pos_viva_wallet / pos.payment.method       / viva_wallet_bearer_token (char): DEL
+pos_viva_wallet / pos.payment.method       / viva_wallet_client_id (char)  : DEL
+pos_viva_wallet / pos.payment.method       / viva_wallet_client_secret (char): DEL
+pos_viva_wallet / pos.payment.method       / viva_wallet_latest_response (json): DEL
+pos_viva_wallet / pos.payment.method       / viva_wallet_merchant_id (char): DEL
+pos_viva_wallet / pos.payment.method       / viva_wallet_terminal_id (char): DEL
+pos_viva_wallet / pos.payment.method       / viva_wallet_test_mode (boolean): DEL
+pos_viva_wallet / pos.payment.method       / viva_wallet_webhook_verification_key (char): DEL
+
+# DONE: pre-migration: rename fields
+
+---XML records in module 'pos_viva_com'---
+NEW ir.ui.view: pos_viva_com.pos_payment_method_view_form_inherit_pos_viva_com
+DEL ir.ui.view: pos_viva_wallet.pos_payment_method_view_form_inherit_pos_viva_wallet
+
+# NOTHING TO DO
