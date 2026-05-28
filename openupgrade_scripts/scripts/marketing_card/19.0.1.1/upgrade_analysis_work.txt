@@ -1,0 +1,11 @@
+---Models in module 'marketing_card'---
+---Fields in module 'marketing_card'---
+marketing_card / card.template            / name (char)                   : now translatable
+
+# NOTHING TO DO
+
+---XML records in module 'marketing_card'---
+DEL ir.module.category: marketing_card.module_category_marketing_card (noupdate)
+NEW res.groups.privilege: marketing_card.res_groups_privilege_marketing_card (noupdate)
+
+# DONE: res.groups rewired to the new privilege via noupdate_changes.xml; obsolete category left for database_cleanup
