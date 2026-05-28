@@ -1,0 +1,25 @@
+---Models in module 'crm'---
+---Fields in module 'crm'---
+crm          / crm.lead                 / commercial_partner_id (many2one): NEW relation: res.partner, hasdefault: compute, stored: False
+crm          / crm.lead                 / mobile (char)                 : DEL
+crm          / crm.lead                 / title (many2one)              : DEL relation: res.partner.title
+crm          / crm.lead                 / won_status (selection)        : NEW selection_keys: ['lost', 'pending', 'won'], isfunction: function, stored
+crm          / crm.lead.scoring.frequency.field / color (integer)               : NEW hasdefault: default
+crm          / crm.stage                / color (integer)               : NEW
+crm          / crm.stage                / rotting_threshold_days (integer): NEW hasdefault: default
+crm          / crm.stage                / team_id (many2one)            : DEL relation: crm.team
+crm          / crm.stage                / team_ids (many2many)          : NEW relation: crm.team
+crm          / crm.team.member          / assignment_domain_preferred (char): NEW
+crm          / res.users                / target_sales_done (integer)   : DEL
+crm          / res.users                / target_sales_won (integer)    : DEL
+
+# DONE: crm.stage.team_id m2o→m2m via pre-migration rename + post-migration m2o_to_x2m
+
+---XML records in module 'crm'---
+NEW ir.actions.act_window: crm.mail_followers_edit_action_from_lead
+NEW ir.model.constraint: crm.constraint_crm_lead_create_date_team_id_idx
+NEW ir.model.constraint: crm.constraint_crm_lead_default_order_idx
+NEW ir.model.constraint: crm.constraint_crm_lead_user_id_team_id_type_index
+DEL ir.ui.view: crm.crm_lead_partner_kanban_view
+
+# NOTHING TO DO
