@@ -1,0 +1,12 @@
+---Models in module 'hr_calendar'---
+
+---Fields in module 'hr_calendar'---
+hr_calendar  / calendar.event           / unavailable_partner_ids (many2many): module is now 'calendar' ('hr_calendar')
+
+# NOTHING TO DO
+
+---XML records in module 'hr_calendar'---
+DEL ir.ui.view: hr_calendar.view_calendar_event_form
+DEL ir.ui.view: hr_calendar.view_calendar_event_form_quick_create
+
+# NOTHING TO DO

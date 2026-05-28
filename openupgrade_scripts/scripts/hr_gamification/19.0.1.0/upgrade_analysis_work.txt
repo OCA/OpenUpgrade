@@ -1,0 +1,12 @@
+---Models in module 'hr_gamification'---
+
+---Fields in module 'hr_gamification'---
+
+---XML records in module 'hr_gamification'---
+NEW ir.model.access: hr_gamification.badge_base_user
+NEW ir.rule: hr_gamification.hr_gamification_badge_base_user_not_owned_access (noupdate)
+NEW ir.rule: hr_gamification.hr_gamification_badge_base_user_owned_access (noupdate)
+NEW ir.rule: hr_gamification.hr_gamification_badge_group_hr_user_access (noupdate)
+NEW ir.ui.view: hr_gamification.view_current_badge_form
+
+# NOTHING TO DO
