@@ -1,0 +1,117 @@
+---Models in module 'event'---
+new model event.mail.slot
+new model event.slot
+
+# NOTHING TO DO
+
+---Fields in module 'event'---
+event        / event.event              / badge_format (selection)      : selection_keys removed: [96x134, 96x82]
+event        / event.event              / event_slot_ids (one2many)     : NEW relation: event.slot
+event        / event.event              / event_url (char)              : NEW hasdefault: compute
+
+# NOTHING TO DO
+
+event        / event.event              / general_question_ids (one2many): table is now 'event_event_event_question_rel' ('False')
+event        / event.event              / general_question_ids (one2many): type is now 'many2many' ('one2many')
+
+# DONE: reverse side of event.question.event_id m2o->m2m promotion — reads from event_event_event_question_rel populated in post-migration
+
+event        / event.event              / is_multi_slots (boolean)      : NEW
+event        / event.event              / kanban_state (selection)      : selection_keys added: [cancel] (most likely nothing to do)
+event        / event.event              / kanban_state_label (char)     : DEL
+
+# NOTHING TO DO
+
+event        / event.event              / question_ids (one2many)       : table is now 'event_event_event_question_rel' ('False')
+event        / event.event              / question_ids (one2many)       : type is now 'many2many' ('one2many')
+event        / event.event              / specific_question_ids (one2many): table is now 'event_event_event_question_rel' ('False')
+event        / event.event              / specific_question_ids (one2many): type is now 'many2many' ('one2many')
+
+# DONE: same reverse side as general_question_ids — m2m table populated in post-migration
+
+event        / event.event.ticket       / limit_max_per_order (integer) : NEW hasdefault: default
+event        / event.mail               / error_datetime (datetime)     : NEW
+event        / event.mail               / interval_type (selection)     : selection_keys added: [after_event_start, before_event_end] (most likely nothing to do)
+event        / event.mail               / mail_slot_ids (one2many)      : NEW relation: event.mail.slot
+event        / event.mail               / mail_state (selection)        : selection_keys added: [cancelled, error] (most likely nothing to do)
+event        / event.mail.slot          / event_slot_id (many2one)      : NEW relation: event.slot, required
+event        / event.mail.slot          / last_registration_id (many2one): NEW relation: event.registration
+event        / event.mail.slot          / mail_count_done (integer)     : NEW
+event        / event.mail.slot          / mail_done (boolean)           : NEW
+event        / event.mail.slot          / scheduled_date (datetime)     : NEW isfunction: function, stored
+event        / event.mail.slot          / scheduler_id (many2one)       : NEW relation: event.mail, required
+event        / event.question           / active (boolean)              : NEW hasdefault: default
+
+# NOTHING TO DO
+
+event        / event.question           / event_id (many2one)           : DEL relation: event.event
+event        / event.question           / event_ids (many2many)         : NEW relation: event.event
+event        / event.question           / event_type_id (many2one)      : DEL relation: event.type
+event        / event.question           / event_type_ids (many2many)    : NEW relation: event.type
+
+# DONE: post-migration: m2o_to_x2m promotes event_id->event_ids and event_type_id->event_type_ids
+
+event        / event.question           / is_default (boolean)          : NEW
+event        / event.question           / is_reusable (boolean)         : NEW isfunction: function, stored
+event        / event.registration       / event_begin_date (datetime)   : not related anymore
+event        / event.registration       / event_begin_date (datetime)   : now a function
+event        / event.registration       / event_end_date (datetime)     : not related anymore
+event        / event.registration       / event_end_date (datetime)     : now a function
+event        / event.registration       / event_slot_id (many2one)      : NEW relation: event.slot
+event        / event.slot               / color (integer)               : NEW hasdefault: default
+event        / event.slot               / date (date)                   : NEW required
+event        / event.slot               / end_datetime (datetime)       : NEW isfunction: function, stored
+event        / event.slot               / end_hour (float)              : NEW required
+event        / event.slot               / event_id (many2one)           : NEW relation: event.event, required
+event        / event.slot               / registration_ids (one2many)   : NEW relation: event.registration
+event        / event.slot               / start_datetime (datetime)     : NEW isfunction: function, stored
+event        / event.slot               / start_hour (float)            : NEW required
+event        / event.stage              / legend_blocked (char)         : DEL required
+event        / event.stage              / legend_done (char)            : DEL required
+event        / event.stage              / legend_normal (char)          : DEL required
+
+# NOTHING TO DO
+
+event        / event.type               / question_ids (one2many)       : table is now 'event_question_event_type_rel' ('False')
+event        / event.type               / question_ids (one2many)       : type is now 'many2many' ('one2many')
+
+# DONE: reverse side of event.question.event_type_id m2o->m2m promotion — reads from event_question_event_type_rel populated in post-migration
+
+event        / event.type.mail          / interval_type (selection)     : selection_keys added: [after_event_start, before_event_end] (most likely nothing to do)
+
+# NOTHING TO DO
+
+---XML records in module 'event'---
+NEW event.question: event.event_question_email (noupdate)
+NEW event.question: event.event_question_name (noupdate)
+NEW event.question: event.event_question_phone (noupdate)
+
+# NOTHING TO DO
+
+DEL event.stage: event.event_stage_cancelled (noupdate)
+
+# DONE: pre-migration: delete noupdate stage record (won't be removed by standard module update)
+
+NEW ir.actions.act_window: event.event_question_action
+NEW ir.actions.act_window: event.event_slot_action_from_event
+DEL ir.actions.client: event.event_action_install_kiosk_pwa
+DEL ir.actions.report: event.action_report_event_registration_badge_96x134
+DEL ir.actions.report: event.action_report_event_registration_badge_96x82
+NEW ir.model.access: event.access_event_mail_slot_manager
+NEW ir.model.access: event.access_event_mail_slot_registration
+NEW ir.model.access: event.access_event_slot_registration
+NEW ir.model.access: event.access_event_slot_user
+NEW ir.model.constraint: event.constraint_event_question_check_default_question_is_reusable
+NEW ir.ui.menu: event.event_question_menu
+NEW ir.ui.view: event.event_question_view_list
+NEW ir.ui.view: event.event_question_view_list_add
+NEW ir.ui.view: event.event_question_view_search
+NEW ir.ui.view: event.view_event_slot_calendar
+NEW ir.ui.view: event.view_event_slot_form
+NEW ir.ui.view: event.view_event_slot_multi_create_form
+NEW ir.ui.view: event.view_event_slot_tree
+DEL ir.ui.view: event.event_report_template_esc_label_96x134_badge
+DEL ir.ui.view: event.event_report_template_esc_label_96x82_badge
+NEW res.groups.privilege: event.res_groups_privilege_events
+
+# NOTHING TO DO
