@@ -67,6 +67,23 @@ def res_partner_employee(env):
     )
 
 
+def fill_hr_employee_audit_dates(env):
+    env.cr.execute(
+        """
+        UPDATE hr_employee
+        SET create_date = COALESCE(create_date, write_date, TIMESTAMP '2000-01-01')
+        WHERE create_date IS NULL
+        """
+    )
+    env.cr.execute(
+        """
+        UPDATE hr_employee
+        SET write_date = COALESCE(write_date, create_date, TIMESTAMP '2000-01-01')
+        WHERE write_date IS NULL
+        """
+    )
+
+
 @openupgrade.migrate()
 def migrate(env, version):
     openupgrade.rename_fields(env, renamed_fields)
@@ -78,4 +95,5 @@ def migrate(env, version):
         openupgrade.rename_fields(env, renamed_fields_hr_contract)
         openupgrade.rename_tables(env.cr, renamed_tables_hr_contract)
         openupgrade.rename_models(env.cr, renamed_models)
+    fill_hr_employee_audit_dates(env)
     res_partner_employee(env)
