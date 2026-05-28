@@ -1,0 +1,56 @@
+<?xml version='1.0' encoding='utf-8'?>
+<odoo>
+  <record id="rule_slide_channel_visibility_public_user" model="ir.rule">
+    <field name="domain_force">[('website_published', '=', True), ('visibility', 'in', ['public', 'link'])]</field>
+    <field name="name">Channel: public: restricted to public/link-based and published</field>
+  </record>
+  <record id="rule_slide_channel_visibility_signed_in_user" model="ir.rule">
+    <field name="domain_force">[
+                '&amp;',
+                    ('website_published', '=', True),
+                    '|',
+                        ('visibility', 'in', ('public', 'connected', 'link')),
+                        '|',
+                            ('is_member_invited', '=', True),
+                            ('is_member', '=', True),
+                ]
+            </field>
+    <field name="name">Channel: portal/user: restricted to published, public or (invited) attendee or link-based, connected user</field>
+  </record>
+  <record id="rule_slide_slide_public_user" model="ir.rule">
+    <field name="domain_force">[
+                    ('channel_id.website_published', '=', True),
+                    ('website_published', '=', True),
+                    ('channel_id.visibility', 'in', ['public', 'link']),
+                    '|',
+                        ('is_category','=', True),
+                        ('is_preview', '=', True),
+                ]
+            </field>
+    <field name="name">Slide: public: restricted to published or public/link-based channel &amp; (category or previewable)</field>
+  </record>
+  <record id="rule_slide_slide_signed_in_user" model="ir.rule">
+    <field name="domain_force">[
+                '&amp;',
+                    '|',
+                        ('user_id', '=', user.id),
+                        '&amp;',
+                            ('website_published', '=', True),
+                            ('channel_id.website_published', '=', True),
+                    '|',
+                        '&amp;',
+                            '|',
+                                ('channel_id.visibility', 'in', ('public', 'connected',  'link')),
+                                ('channel_id.is_member_invited', '=', True),
+                            '|',
+                                ('is_category', '=', True),
+                                ('is_preview', '=', True),
+                        ('channel_id.is_member', '=', True),
+                ]
+            </field>
+    <field name="name">Slide: portal/user: restricted to published and connected user, (invited) attendee or link-based, if course visible to attendees only</field>
+  </record>
+  <record id="slide_channel_tag_group_level" model="slide.channel.tag.group">
+    <field name="name">Level</field>
+  </record>
+</odoo>
