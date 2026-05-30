@@ -98,7 +98,7 @@ Basically, this is the happening during the step when you try to run the upgrade
 described in :doc:`040_run_migration`:
 
 - [A] get the copy of your database in old version as `db-upgrade`, it is
-  easy to do through the database manager of your old odoo
+  easy to do through the database manager of your old Odoo
   `http://localhost:8069/web/database/manager`
 - [B] run ``odoo -d db-upgrade -u all --stop-after-init``
 - [C] In case of error, fix the error adding or editing migration

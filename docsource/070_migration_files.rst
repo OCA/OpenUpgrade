@@ -1,7 +1,7 @@
 Migration Files
 ===============
 
-For each odoo module, a **migration directory** contains the analysis of
+For each Odoo module, a **migration directory** contains the analysis of
 the differences between the previous version and the current version
 and the migration scripts developed to ensure the migration
 of this module runs properly.
@@ -94,9 +94,9 @@ The change description flags the following types of change:
 
     * The field is now required. The upgrade script might apply the default for
       this field, if it is encoded in the model, or any value that you might see
-      fit (see the openupgrade library
+      fit (see the OpenUpgrade library
       function :meth:`~openupgrade.set_defaults`). If any empty values remain,
-      these can be reported by the openupgrade report module (TODO).
+      these can be reported by the OpenUpgrade report module (TODO).
       If the field is a function field after the upgrade, this changes the cause
       for action. See below.
 

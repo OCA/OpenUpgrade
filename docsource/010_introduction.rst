@@ -30,7 +30,7 @@ and that the OpenUpgrade logo includes the ant present in the *OpenERP* logo.
 Migration from one version to the next
 --------------------------------------
 
-In the following, **Openupgrade X** will be understood as the tool used
+In the following, **OpenUpgrade X** will be understood as the tool used
 to migrate a database **from version X-1 to version X**.
 For example, if you want to migrate from version 14.0 to 15.0:
 
@@ -46,17 +46,17 @@ should perform two Upgrades via OpenUpgrade 15.0, then OpenUpgrade 16.0:
 
 .. image:: images/migration-14-16.png
 
-Openupgrade design
+OpenUpgrade design
 ------------------
 
-* From Openupgrade 5.0 to Openupgrade 13.0, the branches
+* From OpenUpgrade 5.0 to OpenUpgrade 13.0, the branches
   in https://github.com/OCA/OpenUpgrade contain copies (or forks in Git terminology)
   of the Odoo main project, but with extra commits that include the framework,
   and the analysis and the migration scripts for each module.
 
-* Since Openupgrade 14.0, the branches contain
+* Since OpenUpgrade 14.0, the branches contain
 
-    * a module ``openupgrade_framework`` which brings together all the patches of odoo
+    * a module ``openupgrade_framework`` which brings together all the patches of Odoo
     * a module named ``openupgrade_scripts`` which contains analysis and migration scripts.
 
 Why migrate to a more recent major version
@@ -91,7 +91,7 @@ In short, not migrating your Odoo instance to a recent version means increasing
 
 For more information, see `OCA presentations <https://www.youtube.com/watch?v=WF-BaukCGPs&list=PLRaJ_rIFxm3t6nLStE89Selv597xgvybW>`_ on the benefits of migration and how to manage upgrades.
 
-Alternative to Openupgrade
+Alternative to OpenUpgrade
 --------------------------
 
 To migrate from one major version to another, there are alternatives to using OpenUpgrade :

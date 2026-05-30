@@ -1,13 +1,13 @@
 Required Knowledge
 ==================
 
-To Use Openupgrade
+To Use OpenUpgrade
 ------------------
 
 * you should be able to launch an instance of Odoo on your local PC,
   or on your server, **for each version of your migration**.
 * You should know how to get `openupgradelib`, obtained from the source repository, installed in your Python environment that is going to run the instance.
-* You should know how to invoke the odoo executable, injecting arguments for loading server wide modules and migrations path.
+* You should know how to invoke the Odoo executable, injecting arguments for loading server wide modules and migrations path.
   For example, if you're migrating from version 12.0 to 16.0,
   you should be able to launch Odoo versions 13.0, 14.0, 15.0 and 16.0.
 
@@ -17,7 +17,7 @@ To Use Openupgrade
   In this case, using the `gitaggregate <https://pypi.org/project/git-aggregator>`_
   tool greatly facilitates the management of these numerous pull requests.
 
-To develop Openupgrade Scripts
+To develop OpenUpgrade Scripts
 ------------------------------
 
 - If you want to develop migration scripts for a given module, you need to have
