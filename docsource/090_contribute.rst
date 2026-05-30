@@ -58,8 +58,35 @@ For example, the sale_stock migration script may fail, if the stock migration sc
     * ``TODO``: This shouldn't be usually done.
 
 **Note:**
-You can reorder lines and group them together for including all of them in a "logical" block for putting only one comment.
-Examples: all the noupdate=0 new and del ir* records, or the NEW and DEL lines for a field that is renamed.
+Place each marker **inline, on its own line, immediately following the
+specific analysis line it annotates**. Don't consolidate multiple adjacent
+analysis lines under a single grouped comment, even when the lines are
+conceptually related — each gets its own one-line marker.
+
+Empty section headers (e.g. ``---Models in module 'X'---`` with no
+analysis lines below) get **no** marker — leave them blank. Only
+sections with content are annotated; a whole module with nothing to do
+is recorded in the coverage matrix (column 2), not by marking an empty
+work-file section.
+
+Markers are terse — typically ``# DONE: <one-line summary>`` or
+``# NOTHING TO DO``. The "why" belongs in the commit message body or
+PR description, not in the work file.
+
+Example:
+
+.. code-block:: text
+
+    ---Fields in module 'X'---
+    X / account.tax / l10n_in_is_lut (boolean): NEW
+    # DONE: add_fields in pre-migration.
+    X / account.tax / l10n_in_tax_type (selection): is now stored
+    # DONE: add_fields in pre-migration; map_values for legacy selection set.
+    X / res.partner / l10n_in_pan (char): DEL
+    # NOTHING TO DO: new field name differs; update_db preserves old column as legacy.
+
+    ---XML records in module 'X'---
+    # NOTHING TO DO
 
   * Write ``pre-migration.py`` and / or ``post-migration.py`` scripts in the same folder.
 
@@ -77,19 +104,26 @@ Examples: all the noupdate=0 new and del ir* records, or the NEW and DEL lines f
   .. code-block:: shell
 
       git add .
-      git commit -am "[ADD] account"
+      git commit -am "[MIG] account"
       git push MY_REMOTE 16.0-mig-account
 
 
   **Note:**
 
-    * For a fix of an existing migration scripts, use ``[FIX]``
+    * For a first-pass migration script for a module version, use ``[MIG]``.
+      This is the dominant prefix on recent branches (e.g. ``[MIG] account``,
+      ``[MIG] hr_recruitment``).
 
-    * For an improvement of an existing migration scripts, use ``[IMP]``
+    * For a fix of an existing migration script, use ``[FIX]``.
 
-    * For old versions when OpenUpgrade was a fork (in V13 and before),
-      use "[OU-ADD]" / "[OU-FIX]" and "[OU-IMP]" to distinguish Odoo team commits
-      and Openupgraders commits.
+    * For an improvement of an existing migration script, use ``[IMP]``.
+
+    * For changes to the OpenUpgrade framework, infrastructure, or
+      cross-cutting helpers (rather than a per-module migration script),
+      use ``[OU-ADD]`` / ``[OU-FIX]`` / ``[OU-IMP]``. These prefixes
+      originated in the V13-and-earlier era when OpenUpgrade shipped
+      patched copies of Odoo source files, and they remain in use today
+      for framework-level changes.
 
   * Propose your changes to the community for review, opening a Pull Request on github.
 
