@@ -1,0 +1,8 @@
+---Models in module 'l10n_fr_pdp'---
+new model pdp.config.wizard [transient]
+---Fields in module 'l10n_fr_pdp'---
+---XML records in module 'l10n_fr_pdp'---
+NEW ir.model.access: l10n_fr_pdp.l10n_fr_pdp_config_wizard
+NEW ir.model.constraint: l10n_fr_pdp.constraint_account_edi_proxy_client_user_peppol_proxy_types_conflict
+DEL ir.model.constraint: l10n_fr_pdp.constraint_account_edi_proxy_client_user__peppol_proxy_types_conflict
+NEW ir.ui.view: l10n_fr_pdp.pdp_config_wizard_form
