@@ -1,0 +1,98 @@
+---Models in module 'mass_mailing'---
+---Fields in module 'mass_mailing'---
+mass_mailing / mailing.contact          / properties (properties)       : NEW hasdefault: compute
+# NOTHING TO DO: new feature. The performance of this compute is high - 0,7 s for 16k records -, so no problem in letting the ORM to do it
+
+mass_mailing / mailing.contact          / title_id (many2one)           : DEL relation: res.partner.title
+# NOTHING TO DO
+
+mass_mailing / mailing.mailing          / use_exclusion_list (boolean)  : NEW hasdefault: default
+# NOTHING TO DO: use_exclusion_list deafult=True keeping previous behavior.
+
+mass_mailing / mailing.trace            / failure_type (selection)      : selection_keys added: [mail_spam] (most likely nothing to do)
+mass_mailing / mailing.trace            / is_test_trace (boolean)       : NEW
+# NOTHING TO DO
+
+---XML records in module 'mass_mailing'---
+NEW ir.asset: mass_mailing.s_badge_000_scss
+NEW ir.asset: mass_mailing.s_blockquote_000_scss
+NEW ir.asset: mass_mailing.s_company_team_000_scss
+NEW ir.asset: mass_mailing.s_cta_badge_000_scss
+DEL ir.asset: mass_mailing.s_media_list_001_scss
+NEW ir.attachment: mass_mailing.s_company_team_default_image_5
+NEW ir.attachment: mass_mailing.s_company_team_default_image_6
+NEW ir.attachment: mass_mailing.s_shape_image_default_image
+NEW ir.model.access: mass_mailing.access_properties_base_definition_mailing_user
+DEL ir.model.access: mass_mailing.access_mailing_trace_user
+NEW ir.model.constraint: mass_mailing.constraint_mailing_mailing_email_from
+NEW ir.rule: mass_mailing.properties_base_definition_rule_mailing_user
+NEW ir.ui.view: mass_mailing.link_tracker_view_tree
+NEW ir.ui.view: mass_mailing.page_mailing_confirm_unsubscribe
+NEW ir.ui.view: mass_mailing.page_mailing_has_unsubscribed
+NEW ir.ui.view: mass_mailing.s_attributes_horizontal
+NEW ir.ui.view: mass_mailing.s_author
+NEW ir.ui.view: mass_mailing.s_badge
+NEW ir.ui.view: mass_mailing.s_blog_post_card
+NEW ir.ui.view: mass_mailing.s_blog_title
+NEW ir.ui.view: mass_mailing.s_button
+NEW ir.ui.view: mass_mailing.s_centered_cta_badge
+NEW ir.ui.view: mass_mailing.s_company_team_shapes
+NEW ir.ui.view: mass_mailing.s_content_card_1
+NEW ir.ui.view: mass_mailing.s_content_card_2
+NEW ir.ui.view: mass_mailing.s_content_card_3
+NEW ir.ui.view: mass_mailing.s_content_card_4
+NEW ir.ui.view: mass_mailing.s_content_card_5
+NEW ir.ui.view: mass_mailing.s_content_card_6
+NEW ir.ui.view: mass_mailing.s_content_card_7
+NEW ir.ui.view: mass_mailing.s_cta_badge
+NEW ir.ui.view: mass_mailing.s_customer_quote
+NEW ir.ui.view: mass_mailing.s_features_column
+NEW ir.ui.view: mass_mailing.s_features_showcase
+NEW ir.ui.view: mass_mailing.s_hr_title
+NEW ir.ui.view: mass_mailing.s_icon
+NEW ir.ui.view: mass_mailing.s_image
+NEW ir.ui.view: mass_mailing.s_inline_text
+NEW ir.ui.view: mass_mailing.s_link_list
+NEW ir.ui.view: mass_mailing.s_mail_block_footer_one_liner
+NEW ir.ui.view: mass_mailing.s_mail_block_footer_social_and_logo
+NEW ir.ui.view: mass_mailing.s_mail_block_header_logo_and_button
+NEW ir.ui.view: mass_mailing.s_mail_block_header_logo_and_inline_menu
+NEW ir.ui.view: mass_mailing.s_mail_block_header_logo_and_stacked_menu
+NEW ir.ui.view: mass_mailing.s_mail_block_header_logo_col
+NEW ir.ui.view: mass_mailing.s_mail_block_header_menu
+NEW ir.ui.view: mass_mailing.s_mail_block_header_name_and_button
+NEW ir.ui.view: mass_mailing.s_mail_block_header_name_and_inline_menu
+NEW ir.ui.view: mass_mailing.s_mailing_list_advertisement
+NEW ir.ui.view: mass_mailing.s_membership_advertisement
+NEW ir.ui.view: mass_mailing.s_pricelist_boxed
+NEW ir.ui.view: mass_mailing.s_pricelist_boxed_item
+NEW ir.ui.view: mass_mailing.s_reviews_wall
+NEW ir.ui.view: mass_mailing.s_schedule
+NEW ir.ui.view: mass_mailing.s_section_mobile
+NEW ir.ui.view: mass_mailing.s_snippet_group
+NEW ir.ui.view: mass_mailing.s_special_offer_cta
+NEW ir.ui.view: mass_mailing.s_subtitle
+NEW ir.ui.view: mass_mailing.s_text_card
+NEW ir.ui.view: mass_mailing.s_text_center_cta
+NEW ir.ui.view: mass_mailing.s_text_contact
+NEW ir.ui.view: mass_mailing.s_text_cta_card
+NEW ir.ui.view: mass_mailing.s_text_describing_benefits
+NEW ir.ui.view: mass_mailing.s_text_left_cta
+NEW ir.ui.view: mass_mailing.s_text_need_help
+NEW ir.ui.view: mass_mailing.s_text_product_description
+NEW ir.ui.view: mass_mailing.s_text_product_showcase
+NEW ir.ui.view: mass_mailing.s_text_signature
+NEW ir.ui.view: mass_mailing.s_title_with_side_text
+NEW ir.ui.view: mass_mailing.s_video
+DEL ir.ui.view: mass_mailing.s_alert_options
+DEL ir.ui.view: mass_mailing.s_features
+DEL ir.ui.view: mass_mailing.s_hr_options
+DEL ir.ui.view: mass_mailing.s_mail_block_discount1
+DEL ir.ui.view: mass_mailing.s_masonry_block_options
+DEL ir.ui.view: mass_mailing.s_rating_options
+DEL ir.ui.view: mass_mailing.snippet_options
+DEL ir.ui.view: mass_mailing.snippet_options_background_options
+DEL ir.ui.view: mass_mailing.snippet_options_border_line_widgets
+DEL ir.ui.view: mass_mailing.snippet_options_border_widgets
+NEW res.groups.privilege: mass_mailing.res_groups_privilege_email_marketing
+# NOTHING TO DO
