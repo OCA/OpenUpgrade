@@ -3,6 +3,8 @@
 
 from openupgradelib import openupgrade
 
+from odoo.exceptions import ValidationError
+
 
 def hr_expense_account_move_id(env):
     """
@@ -55,6 +57,20 @@ def hr_expense_state(env):
     records._compute_state()
 
 
+def update_product_uoms(env):
+    """
+    Set updated product uoms if possible
+    """
+    uom = env.ref("uom.product_uom_unit")
+    for xmlid in ("expense_product_communication", "expense_product_gift"):
+        product = env.ref(f"hr_expense.{xmlid}")
+        org_uom = product.uom_id
+        try:
+            product.uom_id = uom
+        except ValidationError:
+            product.uom_id = org_uom
+
+
 deleted_xmlids = [
     "hr_expense.hr_expense_report_comp_rule",
     "hr_expense.ir_rule_hr_expense_sheet_approver",
@@ -66,8 +82,14 @@ deleted_xmlids = [
 
 @openupgrade.migrate()
 def migrate(env, version):
-    openupgrade.load_data(env, "hr_expense", "19.0.2.1/noupdate_changes.xml")
+    openupgrade.load_data(
+        env,
+        "hr_expense",
+        "19.0.2.1/noupdate_changes.xml",
+        xml_transformation_filename="19.0.2.1/noupdate_changes-transformation.xml",
+    )
     hr_expense_account_move_id(env)
     hr_expense_approval_fields(env)
     hr_expense_state(env)
+    update_product_uoms(env)
     openupgrade.delete_records_safely_by_xml_id(env, deleted_xmlids)
