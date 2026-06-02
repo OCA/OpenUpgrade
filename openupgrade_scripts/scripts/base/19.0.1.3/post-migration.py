@@ -98,7 +98,12 @@ def _init_default_user_group(env):
 
 @openupgrade.migrate()
 def migrate(env, version):
-    openupgrade.load_data(env, "base", "19.0.1.3/noupdate_changes_work.xml")
+    openupgrade.load_data(
+        env,
+        "base",
+        "19.0.1.3/noupdate_changes.xml",
+        xml_transformation_filename="19.0.1.3/noupdate_changes-transformation.xml",
+    )
     _init_default_user_group(env)
     openupgrade.delete_records_safely_by_xml_id(
         env,

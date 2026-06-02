@@ -1,0 +1,38 @@
+<?xml version='1.0' encoding='utf-8'?>
+<odoo>
+    <!-- don't change active field of UOMs, and don't write the factor field -->
+    <xpath expr="./record[@id='product_uom_cm']/field[@name='factor']" position="replace" />
+    <xpath expr="./record[@id='product_uom_cm']/field[@name='active']" position="replace" />
+    <xpath expr="./record[@id='product_uom_cubic_foot']/field[@name='active']" position="replace" />
+    <xpath expr="./record[@id='product_uom_cubic_inch']/field[@name='factor']" position="replace" />
+    <xpath expr="./record[@id='product_uom_cubic_inch']/field[@name='active']" position="replace" />
+    <xpath expr="./record[@id='product_uom_cubic_meter']/field[@name='active']" position="replace" />
+    <xpath expr="./record[@id='product_uom_day']/field[@name='factor']" position="replace" />
+    <xpath expr="./record[@id='product_uom_dozen']/field[@name='active']" position="replace" />
+    <xpath expr="./record[@id='product_uom_floz']/field[@name='factor']" position="replace" />
+    <xpath expr="./record[@id='product_uom_floz']/field[@name='active']" position="replace" />
+    <xpath expr="./record[@id='product_uom_foot']/field[@name='factor']" position="replace" />
+    <xpath expr="./record[@id='product_uom_foot']/field[@name='active']" position="replace" />
+    <xpath expr="./record[@id='product_uom_gal']/field[@name='active']" position="replace" />
+    <xpath expr="./record[@id='product_uom_gram']/field[@name='factor']" position="replace" />
+    <xpath expr="./record[@id='product_uom_hour']/field[@name='factor']" position="replace" />
+    <xpath expr="./record[@id='product_uom_inch']/field[@name='factor']" position="replace" />
+    <xpath expr="./record[@id='product_uom_inch']/field[@name='active']" position="replace" />
+    <xpath expr="./record[@id='product_uom_kgm']/field[@name='factor']" position="replace" />
+    <xpath expr="./record[@id='product_uom_km']/field[@name='active']" position="replace" />
+    <xpath expr="./record[@id='product_uom_kwh']/field[@name='factor']" position="replace" />
+    <xpath expr="./record[@id='product_uom_lb']/field[@name='factor']" position="replace" />
+    <xpath expr="./record[@id='product_uom_lb']/field[@name='active']" position="replace" />
+    <xpath expr="./record[@id='product_uom_litre']/field[@name='factor']" position="replace" />
+    <xpath expr="./record[@id='product_uom_meter']/field[@name='factor']" position="replace" />
+    <xpath expr="./record[@id='product_uom_mile']/field[@name='active']" position="replace" />
+    <xpath expr="./record[@id='product_uom_millimeter']/field[@name='factor']" position="replace" />
+    <xpath expr="./record[@id='product_uom_minute']/field[@name='factor']" position="replace" />
+    <xpath expr="./record[@id='product_uom_oz']/field[@name='factor']" position="replace" />
+    <xpath expr="./record[@id='product_uom_oz']/field[@name='active']" position="replace" />
+    <xpath expr="./record[@id='product_uom_qt']/field[@name='factor']" position="replace" />
+    <xpath expr="./record[@id='product_uom_qt']/field[@name='active']" position="replace" />
+    <xpath expr="./record[@id='product_uom_unit']/field[@name='factor']" position="replace" />
+    <xpath expr="./record[@id='product_uom_yard']/field[@name='factor']" position="replace" />
+    <xpath expr="./record[@id='product_uom_yard']/field[@name='active']" position="replace" />
+</odoo>

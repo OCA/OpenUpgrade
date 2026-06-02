@@ -57,5 +57,10 @@ def _uom_relative_uom_id_relative_factor(env):
 
 @openupgrade.migrate()
 def migrate(env, version):
-    openupgrade.load_data(env, "uom", "19.0.1.0/noupdate_changes_work.xml")
+    openupgrade.load_data(
+        env,
+        "uom",
+        "19.0.1.0/noupdate_changes.xml",
+        xml_transformation_filename="19.0.1.0/noupdate_changes-transformation.xml",
+    )
     _uom_relative_uom_id_relative_factor(env)
