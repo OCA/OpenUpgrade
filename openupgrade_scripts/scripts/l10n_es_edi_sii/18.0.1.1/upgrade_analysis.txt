@@ -13,7 +13,7 @@ l10n_es_edi_sii / res.company              / l10n_es_edi_tax_agency (selection):
 l10n_es_edi_sii / res.company              / l10n_es_edi_test_env (boolean): DEL
 l10n_es_edi_sii / res.company              / l10n_es_sii_certificate_id (many2one): NEW relation: certificate.certificate, hasdefault: compute
 l10n_es_edi_sii / res.company              / l10n_es_sii_certificate_ids (one2many): NEW relation: certificate.certificate
-l10n_es_edi_sii / res.company              / l10n_es_sii_tax_agency (selection): NEW selection_keys: ['aeat', 'bizkaia', 'gipuzkoa'], hasdefault: default
+l10n_es_edi_sii / res.company              / l10n_es_sii_tax_agency (selection): NEW selection_keys: ['aeat', 'bizkaia', 'gipuzkoa', 'navarra'], hasdefault: default
 l10n_es_edi_sii / res.company              / l10n_es_sii_test_env (boolean): NEW hasdefault: default
 ---XML records in module 'l10n_es_edi_sii'---
 NEW ir.actions.act_window: l10n_es_edi_sii.l10n_es_edi_sii_certificate_action
