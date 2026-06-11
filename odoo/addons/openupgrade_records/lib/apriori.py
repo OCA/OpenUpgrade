@@ -61,6 +61,8 @@ merged_modules = {
     'website_crm_phone_validation': 'website_crm',
     'website_sale_link_tracker': 'website_sale',
     'website_survey': 'survey',
+    # OCA/account-analytic
+    'account_analytic_default_account': 'account_analytic_default',
     # OCA/account-financial-tools
     'account_coa_menu': 'account_menu',
     'account_group_menu': 'account_menu',
