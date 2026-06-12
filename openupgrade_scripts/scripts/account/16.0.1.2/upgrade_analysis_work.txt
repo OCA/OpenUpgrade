@@ -97,7 +97,7 @@ account      / account.bank.statement   / _order                        : _order
 # NOTHING TO DO
 
 account      / account.bank.statement   / attachment_ids (many2many)    : NEW relation: ir.attachment
-# Put in this field existing chatter attachments?
+# DONE: post-migration: fill this field with the existing chatter attachments
 
 account      / account.bank.statement   / cashbox_end_id (many2one)     : DEL relation: account.bank.statement.cashbox
 account      / account.bank.statement   / cashbox_start_id (many2one)   : DEL relation: account.bank.statement.cashbox
