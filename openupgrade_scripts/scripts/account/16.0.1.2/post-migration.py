@@ -32,6 +32,23 @@ _deleted_xml_records = [
 ]
 
 
+def _fill_account_bank_statement_attachment_ids(env):
+    """The chatter attachments of the bank statements are now linked through
+    the new `attachment_ids` many2many field, so we fill it with the existing ones.
+    """
+    openupgrade.logged_query(
+        env.cr,
+        """
+        INSERT INTO account_bank_statement_ir_attachment_rel
+            (account_bank_statement_id, ir_attachment_id)
+        SELECT ia.res_id, ia.id
+        FROM account_bank_statement abs
+            JOIN ir_attachment ia ON abs.id = ia.res_id
+        WHERE ia.res_model = 'account.bank.statement'
+        """,
+    )
+
+
 def _compute_remaining_account_payment_amount_company_currency_signed(env):
     """Those payment with different currency than the company ones are not easily
     computed by SQL, so we use ORM for these cases, but they should luckily be few.
@@ -50,6 +67,7 @@ def migrate(env, version):
         env,
         _deleted_xml_records,
     )
+    _fill_account_bank_statement_attachment_ids(env)
     _compute_remaining_account_payment_amount_company_currency_signed(env)
     # credit_limit converted to company dependent
     old_column = openupgrade.get_legacy_name("credit_limit")
