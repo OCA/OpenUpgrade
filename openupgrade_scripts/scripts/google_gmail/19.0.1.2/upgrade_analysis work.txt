@@ -1,0 +1,12 @@
+---Models in module 'google_gmail'---
+# NOTHING TO DO
+
+---Fields in module 'google_gmail'---
+google_gmail / fetchmail.server         / google_gmail_authorization_code (char): DEL
+google_gmail / ir.mail_server           / google_gmail_authorization_code (char): DEL
+google_gmail / res.users                / outgoing_mail_server_type (False): NEW selection_keys: ['default', 'gmail'], mode: modify
+# NOTHING TO DO: removed OAuth authorization codes are transient, and the new Gmail outgoing option is computed from existing mail server settings
+
+---XML records in module 'google_gmail'---
+NEW ir.ui.view: google_gmail.google_gmail_oauth_error
+# NOTHING TO DO: new OAuth error page
