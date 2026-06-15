@@ -10,6 +10,8 @@ renamed_modules = {
     "membership": "partnership",
     "pos_viva_wallet": "pos_viva_com",
     # odoo/enterprise
+    # OCA/timesheet
+    "project_timesheet_time_control": "hr_timesheet_time_control",
     # OCA/...
 }
 
