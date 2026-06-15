@@ -1,0 +1,21 @@
+---Models in module 'sale_project'---
+---Fields in module 'sale_project'---
+sale_project / product.template         / service_tracking (False)      : selection_keys added: [partnership, repair] (most likely nothing to do)
+sale_project / product.template         / task_template_id (many2one)   : NEW relation: project.task, hasdefault: compute
+# NOTHING TO DO: new project/task template features; no existing data to prefill
+
+---XML records in module 'sale_project'---
+NEW ir.embedded.actions: sale_project.project_embedded_action_vendor_bills_dashboard
+NEW ir.model.access: sale_project.access_sale_order_line_project_user
+NEW ir.model.access: sale_project.access_sale_order_project_user
+NEW ir.ui.view: sale_project.product_product_form_view_inherit_sale_project
+NEW ir.ui.view: sale_project.product_template_form_view_inherit_sale_project
+NEW ir.ui.view: sale_project.project_milestone_view_kanban_inherit_sale_project
+NEW ir.ui.view: sale_project.project_project_view_form_simplified_template
+NEW ir.ui.view: sale_project.project_templates_view_list
+NEW ir.ui.view: sale_project.project_update_default_description
+NEW ir.ui.view: sale_project.sale_project_view_form_simplified_template
+NEW ir.ui.view: sale_project.task_type_edit_inherit_sale_project
+NEW ir.ui.view: sale_project.view_order_simple_form
+DEL ir.ui.view: sale_project.sale_project_milestone_view_tree
+# NOTHING TO DO
