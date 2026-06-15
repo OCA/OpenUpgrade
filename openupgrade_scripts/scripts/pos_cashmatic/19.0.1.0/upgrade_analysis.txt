@@ -1,0 +1,8 @@
+---Models in module 'pos_cashmatic'---
+---Fields in module 'pos_cashmatic'---
+pos_cashmatic / pos.payment.method       / cashmatic_ip (char)           : NEW
+pos_cashmatic / pos.payment.method       / cashmatic_password (char)     : NEW
+pos_cashmatic / pos.payment.method       / cashmatic_use_lna (boolean)   : NEW
+pos_cashmatic / pos.payment.method       / cashmatic_username (char)     : NEW
+---XML records in module 'pos_cashmatic'---
+NEW ir.ui.view: pos_cashmatic.pos_payment_method_view_form_inherit_pos_cashmatic
