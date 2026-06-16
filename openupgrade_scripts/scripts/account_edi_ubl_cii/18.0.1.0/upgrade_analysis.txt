@@ -1,5 +1,8 @@
 ---Models in module 'account_edi_ubl_cii'---
 new model account.edi.ubl [abstract]
+new model account.edi.ubl_cen_en16931 [abstract]
+new model account.edi.ubl_pint [abstract]
+new model account.edi.ubl_pint_eu [abstract]
 ---Fields in module 'account_edi_ubl_cii'---
 account_edi_ubl_cii / res.company              / invoice_is_ubl_cii (boolean)  : DEL
 account_edi_ubl_cii / res.partner              / invoice_edi_format (False)    : NEW selection_keys: ['facturx', 'nlcius', 'ubl_a_nz', 'ubl_bis3', 'ubl_sg', 'xrechnung', 'zugferd'], mode: modify
