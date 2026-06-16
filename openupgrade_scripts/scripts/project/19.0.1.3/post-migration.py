@@ -39,7 +39,14 @@ def project_task_type_rating(env):
             ORDER BY write_date DESC
             LIMIT 1
             """,
-            (tuple(task_type.project_ids.ids),),
+            (
+                tuple(
+                    (
+                        task_type.project_ids
+                        or task_type.with_context(active_test=False).project_ids
+                    ).ids
+                ),
+            ),
         )
         for vals in env.cr.dictfetchall():
             task_type.write(vals)
