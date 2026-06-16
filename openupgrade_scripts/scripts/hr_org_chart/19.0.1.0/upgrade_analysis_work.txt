@@ -1,0 +1,9 @@
+---Models in module 'hr_org_chart'---
+---Fields in module 'hr_org_chart'---
+---XML records in module 'hr_org_chart'---
+NEW ir.actions.act_window: hr_org_chart.action_hr_employee_public_org_chart
+# NOTHING TO DO: New feature
+
+DEL ir.ui.menu: hr_org_chart.menu_hr_employee_org_chart
+DEL ir.ui.view: hr_org_chart.res_users_view_form
+# NOTHING TO DO: handled by ORM
