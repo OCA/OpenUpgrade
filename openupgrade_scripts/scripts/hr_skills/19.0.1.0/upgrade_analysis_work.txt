@@ -1,0 +1,131 @@
+---Models in module 'hr_skills'---
+obsolete model hr.employee.skill.log
+
+# DONE: used to set hr.employee.skill#{valid_from,valid_to}
+
+new model hr.employee.certification.report [abstract]
+new model hr.employee.skill.history.report [abstract]
+new model hr.individual.skill.mixin [abstract]
+new model hr.job.skill
+
+# NOTHING TO DO
+
+---Fields in module 'hr_skills'---
+hr_recruitment_skills / hr.job                   / skill_ids (many2many)         : now a function
+hr_skills    / hr.employee              / certification_ids (one2many)  : NEW relation: hr.employee.skill, hasdefault: compute, stored: False
+hr_skills    / hr.employee              / current_employee_skill_ids (one2many): NEW relation: hr.employee.skill, hasdefault: compute, stored: False
+hr_skills    / hr.employee.skill        / display_warning_message (boolean): NEW
+
+# NOTHING TO DO
+
+hr_skills    / hr.employee.skill        / valid_from (date)             : NEW hasdefault: default
+
+# DONE: precreate this column to avoid default in pre-migration, set from hr.employee.skill.log in post-migration
+
+hr_skills    / hr.employee.skill        / valid_to (date)               : NEW
+
+# DONE: set from hr.employee.skill.log in post-migration
+
+hr_skills    / hr.employee.skill.log    / date (date)                   : DEL
+hr_skills    / hr.employee.skill.log    / department_id (many2one)      : DEL relation: hr.department
+hr_skills    / hr.employee.skill.log    / employee_id (many2one)        : DEL relation: hr.employee, required
+hr_skills    / hr.employee.skill.log    / level_progress (integer)      : DEL
+hr_skills    / hr.employee.skill.log    / skill_id (many2one)           : DEL relation: hr.skill, required
+hr_skills    / hr.employee.skill.log    / skill_level_id (many2one)     : DEL relation: hr.skill.level, required
+hr_skills    / hr.employee.skill.log    / skill_type_id (many2one)      : DEL relation: hr.skill.type, required
+
+# DONE: used to set hr.employee.skill#valid_from
+
+hr_skills    / hr.job                   / current_job_skill_ids (one2many): NEW relation: hr.job.skill, hasdefault: compute, stored: False
+hr_skills    / hr.job                   / job_skill_ids (one2many)      : NEW relation: hr.job.skill
+
+# DONE: create records of hr.job.skill for existing records in hr.job#skill_ids
+
+hr_skills    / hr.job                   / skill_ids (many2many)         : previously in module hr_recruitment_skills
+
+# NOTHING TO DO
+
+hr_skills    / hr.job.skill             / display_warning_message (boolean): NEW
+hr_skills    / hr.job.skill             / job_id (many2one)             : NEW relation: hr.job, required
+hr_skills    / hr.job.skill             / skill_id (many2one)           : NEW relation: hr.skill, required, hasdefault: compute
+hr_skills    / hr.job.skill             / skill_level_id (many2one)     : NEW relation: hr.skill.level, required, hasdefault: compute
+hr_skills    / hr.job.skill             / skill_type_id (many2one)      : NEW relation: hr.skill.type, required, hasdefault: default
+hr_skills    / hr.job.skill             / valid_from (date)             : NEW hasdefault: default
+hr_skills    / hr.job.skill             / valid_to (date)               : NEW
+
+# DONE: see hr.job#skill_ids
+
+hr_skills    / hr.resume.line           / certificate_file (binary)     : NEW attachment: True
+hr_skills    / hr.resume.line           / certificate_filename (char)   : NEW
+hr_skills    / hr.resume.line           / course_type (selection)       : NEW required, selection_keys: ['external'], hasdefault: default
+hr_skills    / hr.resume.line           / department_id (many2one)      : previously in module hr_skills_survey
+hr_skills    / hr.resume.line           / display_type (selection)      : DEL selection_keys: ['classic']
+hr_skills    / hr.resume.line           / duration (integer)            : NEW
+hr_skills    / hr.resume.line           / external_url (char)           : NEW hasdefault: compute
+hr_skills    / hr.resume.line           / resume_line_properties (properties): NEW hasdefault: compute
+hr_skills    / hr.resume.line.type      / is_course (boolean)           : NEW hasdefault: default
+hr_skills    / hr.resume.line.type      / resume_line_type_properties_definition (properties_definition): NEW
+hr_skills    / hr.skill.level           / _order                        : _order is now 'level_progress' ('level_progress desc')
+hr_skills    / hr.skill.level           / technical_is_new_default (boolean): NEW hasdefault: compute, stored: False
+hr_skills    / hr.skill.type            / _order                        : _order is now 'sequence, name' ('name')
+hr_skills    / hr.skill.type            / is_certification (boolean)    : NEW
+hr_skills    / hr.skill.type            / levels_count (integer)        : NEW hasdefault: compute
+hr_skills    / hr.skill.type            / sequence (integer)            : NEW
+hr_skills    / res.users                / employee_skill_ids (one2many) : module is now 'project_hr_skills' ('hr_skills')
+hr_skills_survey / hr.resume.line           / department_id (many2one)      : not stored anymore
+
+# NOTHING TO DO
+
+---XML records in module 'hr_skills'---
+NEW hr.resume.line.type: hr_skills.resume_type_training [renamed from hr_skills_slides module]
+DEL hr.resume.line.type: hr_skills.resume_type_social_media
+NEW ir.actions.act_window: hr_skills.action_hr_employee_skill_certification
+
+# NOTHING TO DO
+
+NEW ir.actions.act_window: hr_skills.hr_employee_certification_report_action [renamed from hr_skills_survey module] (deleted domain)
+
+# DONE: removed domain in post-migration
+
+NEW ir.actions.act_window: hr_skills.hr_resume_lines_training_action
+DEL ir.actions.act_window: hr_skills.action_hr_employee_skill_log_employee
+NEW ir.cron: hr_skills.hr_job_skills_cron_add_certification_activity_to_employees
+NEW ir.model.access: hr_skills.access_hr_employee_certification_report_user
+NEW ir.model.access: hr_skills.access_hr_employee_skill_history_report
+NEW ir.model.access: hr_skills.access_hr_employee_skill_history_report_manager
+NEW ir.model.access: hr_skills.access_hr_job_skill
+NEW ir.model.access: hr_skills.access_hr_job_skill_employee
+DEL ir.model.access: hr_skills.access_hr_employee_skill_log
+DEL ir.model.access: hr_skills.access_hr_employee_skill_log_manager
+DEL ir.model.constraint: hr_skills.constraint_hr_employee_skill__unique_skill
+DEL ir.model.constraint: hr_skills.constraint_hr_employee_skill_log__unique_skill_log
+NEW ir.rule: hr_skills.hr_employee_skill_history_report_hr_user (noupdate)
+NEW ir.rule: hr_skills.hr_employee_skill_history_report_manager (noupdate)
+NEW ir.ui.menu: hr_skills.hr_certification_menu
+NEW ir.ui.menu: hr_skills.hr_employee_certification_report_menu
+NEW ir.ui.menu: hr_skills.hr_employee_skill_inventory_report_menu
+NEW ir.ui.menu: hr_skills.hr_skill_learning_menu
+NEW ir.ui.menu: hr_skills.menu_learnings_training_attendances
+NEW ir.ui.view: hr_skills.employee_skill_view_inherit_certificate_form
+NEW ir.ui.view: hr_skills.hr_employee_certification_report_view_list
+NEW ir.ui.view: hr_skills.hr_employee_certification_report_view_pivot
+NEW ir.ui.view: hr_skills.hr_employee_certification_report_view_search
+NEW ir.ui.view: hr_skills.hr_employee_skill_history_report_view_graph
+NEW ir.ui.view: hr_skills.hr_employee_skill_history_report_view_search
+NEW ir.ui.view: hr_skills.hr_employee_skill_view_list
+NEW ir.ui.view: hr_skills.hr_employee_skill_view_search
+NEW ir.ui.view: hr_skills.hr_job_skill_view_form
+NEW ir.ui.view: hr_skills.hr_resume_line_calendar_view
+NEW ir.ui.view: hr_skills.hr_resume_line_kanban_view
+NEW ir.ui.view: hr_skills.hr_resume_line_list_view
+NEW ir.ui.view: hr_skills.resume_line_view_form_inherit
+NEW ir.ui.view: hr_skills.view_hr_job_form
+NEW ir.ui.view: hr_skills.view_resume_lines_filter
+DEL ir.ui.view: hr_skills.hr_employee_skill_log_view_graph_department
+DEL ir.ui.view: hr_skills.hr_employee_skill_log_view_graph_employee
+DEL ir.ui.view: hr_skills.hr_employee_skill_log_view_search
+DEL ir.ui.view: hr_skills.hr_employee_skill_log_view_tree
+DEL ir.ui.view: hr_skills.res_users_view_form
+NEW mail.activity.type: hr_skills.mail_activity_data_upload_certification (noupdate)
+
+# NOTHING TO DO
