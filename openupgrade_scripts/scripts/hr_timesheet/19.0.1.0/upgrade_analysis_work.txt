@@ -1,0 +1,30 @@
+---Models in module 'hr_timesheet'---
+new model account.analytic.line.calendar.employee
+
+# NOTHING TO DO: new model to store filters
+
+---Fields in module 'hr_timesheet'---
+hr_timesheet / account.analytic.line.calendar.employee / active (boolean)              : NEW hasdefault: default
+hr_timesheet / account.analytic.line.calendar.employee / checked (boolean)             : NEW hasdefault: default
+hr_timesheet / account.analytic.line.calendar.employee / employee_id (many2one)        : NEW relation: hr.employee
+hr_timesheet / account.analytic.line.calendar.employee / user_id (many2one)            : NEW relation: res.users, required, hasdefault: default
+
+# NOTHING TO DO: see above
+
+hr_timesheet / project.project          / total_timesheet_time (integer): type is now 'float' ('integer')
+
+# NOTHING TO DO: conversion is done by ORM
+
+---XML records in module 'hr_timesheet'---
+NEW ir.actions.act_window.view: hr_timesheet.act_hr_timesheet_line_view_calendar
+NEW ir.actions.act_window.view: hr_timesheet.timesheet_action_view_all_calendar
+NEW ir.model.access: hr_timesheet.access_account_analytic_line_calendar_employee
+NEW ir.ui.view: hr_timesheet.hr_employee_public_view_form
+NEW ir.ui.view: hr_timesheet.hr_employee_view_kanban_inherit_timesheet
+NEW ir.ui.view: hr_timesheet.project_templates_view_list_inherit_timesheet
+NEW ir.ui.view: hr_timesheet.view_calendar_account_analytic_line
+NEW ir.ui.view: hr_timesheet.view_calendar_account_analytic_line_multi_create
+NEW ir.ui.view: hr_timesheet.view_calendar_account_analytic_line_my_timesheets
+NEW res.groups.privilege: hr_timesheet.res_groups_privilege_timesheets (noupdate)
+
+# NOTHING TO DO
