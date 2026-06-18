@@ -1,0 +1,11 @@
+---Models in module 'website_partner'---
+# NOTHING TO DO
+
+---Fields in module 'website_partner'---
+website_partner / res.partner              / is_seo_optimized (boolean)    : is now stored
+# DONE: pre-migration: Pre-created and pre-computed for avoiding performance drainings
+
+---XML records in module 'website_partner'---
+NEW mail.message.subtype: website_partner.mt_partner_published (noupdate)
+NEW mail.message.subtype: website_partner.mt_partner_unpublished (noupdate)
+# NOTHING TO DO: new mail subtypes only support future partner publish/unpublish tracking.
