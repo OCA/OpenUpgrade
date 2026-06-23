@@ -1,0 +1,37 @@
+---Models in module 'crm'---
+---Fields in module 'crm'---
+crm          / crm.lead                 / commercial_partner_id (many2one): NEW relation: res.partner, hasdefault: compute, stored: False
+# NOTHING TO DO
+
+crm          / crm.lead                 / mobile (char)                 : DEL
+# DONE: pos-migration: if phone is empty and mobile not set phone with mobile and concatenate the mobile in the pone field in case both exist
+
+crm          / crm.lead                 / title (many2one)              : DEL relation: res.partner.title
+# NOTHING TO DO
+
+crm          / crm.lead                 / won_status (selection)        : NEW selection_keys: ['lost', 'pending', 'won'], isfunction: function, stored
+# DONE: pre-migration: pre-created column and set it to prevent massive computation
+
+crm          / crm.lead.scoring.frequency.field / color (integer)               : NEW hasdefault: default
+crm          / crm.stage                / color (integer)               : NEW
+# NOTHING TO DO
+
+crm          / crm.stage                / rotting_threshold_days (integer): NEW hasdefault: default
+# NOTHING TO DO: default is set to 0 to keep old behavoir
+
+crm          / crm.stage                / team_id (many2one)            : DEL relation: crm.team
+crm          / crm.stage                / team_ids (many2many)          : NEW relation: crm.team
+# Done: post-migration: Transform m2o to m2m
+
+crm          / crm.team.member          / assignment_domain_preferred (char): NEW
+crm          / res.users                / target_sales_done (integer)   : DEL
+crm          / res.users                / target_sales_won (integer)    : DEL
+# NOTHING TO DO
+
+---XML records in module 'crm'---
+NEW ir.actions.act_window: crm.mail_followers_edit_action_from_lead
+NEW ir.model.constraint: crm.constraint_crm_lead_create_date_team_id_idx
+NEW ir.model.constraint: crm.constraint_crm_lead_default_order_idx
+NEW ir.model.constraint: crm.constraint_crm_lead_user_id_team_id_type_index
+DEL ir.ui.view: crm.crm_lead_partner_kanban_view
+# NOTHING TO DO
