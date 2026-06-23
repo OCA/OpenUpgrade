@@ -1,0 +1,19 @@
+name: Check PR dependencies
+
+on:
+  issues:
+    types: [edited]
+
+jobs:
+  check_dependency:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v7
+        if: ${{ github.event.issue.state == 'open' && startsWith( github.event.issue.title, 'Migration to version ' ) }}
+      - name: Check dependency
+        if: ${{ github.event.issue.state == 'open' && startsWith( github.event.issue.title, 'Migration to version ' ) }}
+        uses: ./.github/actions/check-pr-dependency
+        with:
+          version: ${{ github.event.issue.milestone.title }}
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
