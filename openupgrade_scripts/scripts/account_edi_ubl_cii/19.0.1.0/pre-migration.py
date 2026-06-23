@@ -19,10 +19,16 @@ _reason_code_map = [
 
 @openupgrade.migrate()
 def migrate(env, version):
-    openupgrade.map_values(
-        env.cr,
-        "ubl_cii_tax_exemption_reason_code",
-        "ubl_cii_tax_exemption_reason_code",
-        _reason_code_map,
-        table="account_tax",
-    )
+    # ubl_cii_tax_exemption_reason_code came from account_edi_ubl_cii_tax_extension
+    # (not auto-installed in 18.0), merged into this module in 19.0. DBs without
+    # that extension lack the column, so guard the remap.
+    if openupgrade.column_exists(
+        env.cr, "account_tax", "ubl_cii_tax_exemption_reason_code"
+    ):
+        openupgrade.map_values(
+            env.cr,
+            "ubl_cii_tax_exemption_reason_code",
+            "ubl_cii_tax_exemption_reason_code",
+            _reason_code_map,
+            table="account_tax",
+        )
