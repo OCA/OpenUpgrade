@@ -1,20 +1,25 @@
+import argparse
+import os
 import re
 from pathlib import Path
 
 from github import Auth, Github
 from github.PullRequestReview import PullRequestReview
 
-import private_config
 import tools
 
-github_token_file = Path(private_config.GITHUB_TOKEN_PATH)
-with github_token_file.open(mode="r") as file:
-    github_token = file.read()
+parser = argparse.ArgumentParser()
+parser.add_argument('--version', nargs='+')
+parser.add_argument('--repo', default='OCA/OpenUpgrade')
+parser.add_argument('--github-login', default='ocabot')
+args = parser.parse_args()
 
-auth = Auth.Token(github_token)
+auth = None
+if os.environ.get('GITHUB_TOKEN'):
+    auth = Auth.Token(os.environ.get('GITHUB_TOKEN'))
 
 g = Github(auth=auth)
-repo = g.get_repo("OCA/OpenUpgrade")
+repo = g.get_repo(args.repo)
 
 # #######################
 # Custom Function
@@ -51,7 +56,7 @@ def _get_comment_or_review(pr, content):
 # Main Script
 # ####################################
 
-for current_version in private_config.CHECK_DEPENDENCY_VERSIONS:
+for current_version in map(float, args.version):
     tools._logger.info(f"*************************************************")
     tools._logger.info(f"Update Dependencies for Version {current_version}")
     tools._logger.info(f"*************************************************")
@@ -131,7 +136,7 @@ for current_version in private_config.CHECK_DEPENDENCY_VERSIONS:
             tools._logger.info(
                 f"PR#{pr.number} - {pr.title}: ADDING Text in migration message."
             )
-            if migration_message.user.login != private_config.GITHUB_LOGIN:
+            if migration_message.user.login != args.github_login:
                 tools._logger.warning(
                     f"The message has been written by @{migration_message.user.login}"
                 )
@@ -142,7 +147,7 @@ for current_version in private_config.CHECK_DEPENDENCY_VERSIONS:
             tools._logger.info(
                 f"PR#{pr.number} - {pr.title}: Replacing text in migration message."
             )
-            if migration_message.user.login != private_config.GITHUB_LOGIN:
+            if migration_message.user.login != args.github_login:
                 tools._logger.warning(
                     f"The message has been written by @{migration_message.user.login}"
                 )
