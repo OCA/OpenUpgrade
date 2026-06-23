@@ -1,4 +1,5 @@
 # Copyright 2025 Hunki Enterprises BV
+# Copyright 2026 Tecnativa - Pedro M. Baeza
 # License AGPL-3.0 or later (https://www.gnu.org/licenses/agpl).
 
 from openupgradelib import openupgrade
@@ -35,6 +36,7 @@ def _fix_res_users_apikeys(env):
 
 @openupgrade.migrate()
 def migrate(env, version):
+    openupgrade.disable_invalid_filters(env)
     _fix_res_users_apikeys(env)
     env.ref("base.model_ir_property").with_context(
         **{MODULE_UNINSTALL_FLAG: True}
