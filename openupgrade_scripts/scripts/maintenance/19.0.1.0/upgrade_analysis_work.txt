@@ -1,0 +1,33 @@
+---Models in module 'maintenance'---
+---Fields in module 'maintenance'---
+maintenance  / maintenance.equipment    / location (char)               : DEL
+# NOTHING TO DO: Odoo converts this field from char to many2one in the new stock_maintenance module.
+# However, before this change, the location field was only informational, so we did not recreate it as a stock.location records.
+# see https://github.com/odoo/odoo/pull/186032
+
+maintenance  / maintenance.equipment    / match_serial (boolean)        : module is now 'stock_maintenance' ('maintenance')
+# NOTHING TO DO: It was simply moved to the stock_maintenance module.
+
+maintenance  / maintenance.equipment.category / alias_id (many2one)           : DEL relation: mail.alias, required
+maintenance  / maintenance.equipment.category / _inherits                     : DEL _inherits: {'mail.alias': 'alias_id'}, stored: False
+maintenance  / maintenance.equipment.category / message_follower_ids (one2many): DEL relation: mail.followers
+maintenance  / maintenance.equipment.category / message_ids (one2many)        : DEL relation: mail.message
+# DONE: post-migration, delete the mail.alias records related to maintenance.equipment.category
+
+maintenance  / maintenance.team         / _inherits                     : NEW _inherits: {'mail.alias': 'alias_id'}, stored: False
+maintenance  / maintenance.team         / alias_id (many2one)           : NEW relation: mail.alias, required
+maintenance  / maintenance.team         / message_follower_ids (one2many): NEW relation: mail.followers
+maintenance  / maintenance.team         / message_ids (one2many)        : NEW relation: mail.message
+# NOTHING TO DO: There are no direct relationships that allow translating data from maintenance.equipment.category to maintenance.team.
+# See https://github.com/odoo/odoo/pull/196181
+
+maintenance  / maintenance.request      / duration (float)              : now a function
+# NOTHING TO DO: The field is now computed, but the underlying logic remains the same. The existing data is preserved.
+
+maintenance  / maintenance.request      / schedule_end (datetime)       : NEW hasdefault: compute
+# DONE: pre-migration precreated and populated based on schedule_date and duration when duration was set.
+# Otherwise, one hour was added to schedule_date, matching Odoo's field computation logic.
+
+---XML records in module 'maintenance'---
+NEW res.groups.privilege: maintenance.res_groups_privilege_maintenance
+# NOTHING TO DO: New feature
