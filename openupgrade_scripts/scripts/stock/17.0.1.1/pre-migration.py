@@ -71,6 +71,17 @@ def prefill_picked(env):
             AND sm.id = sm2.id
         """,
     )
+    # Need to set sms picked to False when the related smls are not picked
+    openupgrade.logged_query(
+        env.cr,
+        """
+        UPDATE stock_move sm
+        SET picked=False
+        FROM stock_move_line sml
+        WHERE sml.move_id = sm.id
+          AND NOT sml.picked
+        """,
+    )
 
 
 @openupgrade.migrate()
