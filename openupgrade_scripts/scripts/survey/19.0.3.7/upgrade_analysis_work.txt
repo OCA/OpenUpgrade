@@ -1,0 +1,16 @@
+---Models in module 'survey'---
+---Fields in module 'survey'---
+survey       / survey.survey            / lang_ids (many2many)          : NEW relation: res.lang, hasdefault: default
+# DONE: post-migration: clear lang_ids so each survey falls back to all installed languages instead of default that set first installed language found.
+# This feature was introduced in https://github.com/odoo/odoo/pull/165760
+
+survey       / survey.user_input        / lang_id (many2one)            : NEW relation: res.lang
+# NOTHING TO DO
+
+survey       / survey.user_input.line   / answer_is_correct (boolean)   : now a function
+survey       / survey.user_input.line   / answer_score (float)          : now a function
+# NOTHING TO DO: The fields already exist, and the computation logic remains the same.
+
+---XML records in module 'survey'---
+NEW res.groups.privilege: survey.res_groups_privilege_surveys (noupdate)
+# NOTHING TO DO: Handled by ORM
