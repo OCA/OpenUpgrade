@@ -1,0 +1,9 @@
+---Models in module 'hr_maintenance'---
+---Fields in module 'hr_maintenance'---
+hr_maintenance / res.users                / equipment_ids (one2many)      : DEL relation: maintenance.equipment
+# NOTHING TO DO: Handled by ORM
+
+---XML records in module 'hr_maintenance'---
+NEW ir.ui.view: hr_maintenance.hr_employee_public_view_form
+DEL ir.ui.view: hr_maintenance.res_users_view_form_preference
+# NOTHING TO DO: Handled by ORM
