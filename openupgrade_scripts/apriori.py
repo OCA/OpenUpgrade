@@ -98,6 +98,7 @@ merged_modules = {
     "pos_sale_order_load": "pos_sale",
     # OCA/product-attribute
     "stock_account_product_cost_security": "product_cost_security",
+    "product_sale_tax_price_included": "account",
     # OCA/server-tools
     "base_jsonify": "jsonifier",
     # OCA/server-ux
