@@ -94,7 +94,7 @@ def _inverse_arch(self):
     """
     if "install_filename" in self._context:
         path_info = get_resource_from_path(self._context["install_filename"])
-        if path_info[0] == "openupgrade_scripts":
+        if path_info and path_info[0] == "openupgrade_scripts":
             # Needs to override the context to remove the install_filename
             self = self.with_context(  # pylint: disable=context-overridden
                 {k: v for k, v in self._context.items() if k != "install_filename"}
