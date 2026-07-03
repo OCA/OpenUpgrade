@@ -1,0 +1,25 @@
+---Models in module 'base_automation'---
+---Fields in module 'base_automation'---
+base_automation / base.automation          / activity_ids (one2many)       : NEW relation: mail.activity
+base_automation / base.automation          / message_follower_ids (one2many): NEW relation: mail.followers
+base_automation / base.automation          / message_ids (one2many)        : NEW relation: mail.message
+base_automation / base.automation          / rating_ids (one2many)         : NEW relation: rating.rating
+base_automation / base.automation          / website_message_ids (one2many): NEW relation: mail.message
+# NOTHING TO DO: These fields are inherited from the mail.thread and mail.activity.mixin models.
+
+base_automation / base.automation          / previous_domain (char)        : NEW hasdefault: default, stored: False
+# NOTHING TO DO: New non-stored field used only in _onchange_domain.
+
+base_automation / base.automation          / trg_date_range_mode (selection): NEW selection_keys: ['after', 'before'], hasdefault: compute
+# DONE: pre-migration: Pre-created and pre-computed field based on trigger field
+# If trg_date_range is negative, it is set to before; otherwise, it is set to after.
+
+base_automation / ir.actions.server        / name (False)                  : DEL mode: modify
+# NOTHING TO DO: The field is now a regular field instead of a computed one,
+# but it remains stored, so the existing data is preserved.
+# From now on, this field must be filled in explicitly by the user.
+
+---XML records in module 'base_automation'---
+NEW ir.ui.view: base_automation.view_server_action_form
+DEL ir.ui.view: base_automation.ir_actions_server_view_form_automation
+# NOTHING TO DO: Handled by ORM
