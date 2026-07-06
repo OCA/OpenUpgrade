@@ -59,6 +59,7 @@ l10n_fr_pdp  / res.partner              / invoice_edi_format (False)    : NEW se
 NEW ir.actions.act_window: l10n_fr_pdp.l10n_fr_pdp_action_send_wizard
 NEW ir.actions.act_window: l10n_fr_pdp.l10n_fr_pdp_reports_action_error_moves
 NEW ir.actions.act_window: l10n_fr_pdp.l10n_fr_pdp_reports_action_flows
+NEW ir.actions.server: l10n_fr_pdp.l10n_fr_pdp_action_open_response_wizard
 NEW ir.actions.server: l10n_fr_pdp.l10n_fr_pdp_reports_action_build_multi
 NEW ir.cron: l10n_fr_pdp.ir_cron_l10n_fr_pdp_generate_flows (noupdate)
 NEW ir.cron: l10n_fr_pdp.ir_cron_pdp_get_regulatory_documents
