@@ -2,5 +2,5 @@
 ---Fields in module 'l10n_pl_edi'---
 l10n_pl_edi  / res.partner              / invoice_edi_format (False)    : selection_keys added: [pint_sg] (most likely nothing to do)
 ---XML records in module 'l10n_pl_edi'---
-NEW ir.model.constraint: l10n_pl_edi.constraint_account_move_l10n_pl_edi_number_uniq
-DEL ir.model.constraint: l10n_pl_edi.constraint_account_move_unique_l10n_pl_edi_number
+NEW ir.model.constraint: l10n_pl_edi.constraint_account_move_l10n_pl_edi_number_company_id_move_type_uniq
+DEL ir.model.constraint: l10n_pl_edi.constraint_account_move_unique_l10n_pl_edi_number_company_id_move_type

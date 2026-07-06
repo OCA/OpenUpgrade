@@ -552,6 +552,8 @@ NEW ir.actions.act_window: l10n_in.l10n_in_section_alert_action [renamed from l1
 NEW ir.actions.act_window: l10n_in.l10n_in_withholding_entry_form_action [renamed from l10n_in_withholding module]
 DEL ir.actions.act_window: l10n_in_withholding.l10n_in_section_alert_action [renamed to l10n_in module]
 DEL ir.actions.act_window: l10n_in_withholding.l10n_in_withholding_entry_form_action [renamed to l10n_in module]
+NEW ir.actions.report: l10n_in.l10n_in_account_invoices_duplicate
+NEW ir.actions.report: l10n_in.l10n_in_account_invoices_triplicate
 NEW ir.model.access: l10n_in.access_l10n_in_pan_entity
 NEW ir.model.access: l10n_in.access_l10n_in_section_alert_account_manager [renamed from l10n_in_withholding module]
 NEW ir.model.access: l10n_in.access_l10n_in_section_alert_account_readonly [renamed from l10n_in_withholding module]
@@ -568,6 +570,9 @@ DEL ir.model.constraint: l10n_in_withholding.constraint_l10n_in_section_alert_pe
 NEW ir.ui.menu: l10n_in.menu_l10n_in_pan_entity
 NEW ir.ui.view: l10n_in.account_account_tds_tcs_view_form_inherit
 NEW ir.ui.view: l10n_in.account_account_tds_tcs_view_tree_inherit
+NEW ir.ui.view: l10n_in.document_renderer
+NEW ir.ui.view: l10n_in.l10n_in_invoice_document_duplicate
+NEW ir.ui.view: l10n_in.l10n_in_invoice_document_triplicate
 NEW ir.ui.view: l10n_in.l10n_in_pan_entity_view_form
 NEW ir.ui.view: l10n_in.l10n_in_pan_entity_view_tree
 NEW ir.ui.view: l10n_in.l10n_in_section_alert_view_form

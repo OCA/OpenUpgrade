@@ -7,6 +7,10 @@
     <field name="state_required">1</field>
     <field name="vat_label">TRN</field>
   </record>
+  <record id="am" model="res.country">
+    <field eval="'%(street)s\n%(street2)s\n%(city)s\n%(state_name)s\n%(country_name)s'" name="address_format"/>
+    <field name="state_required">1</field>
+  </record>
   <record id="az" model="res.country">
     <field eval="'%(street)s\n%(street2)s\n%(city)s %(state_name)s %(zip)s\n%(country_name)s'" name="address_format"/>
   </record>
@@ -42,6 +46,14 @@
   <record id="ir_filters_portal_public_rule" model="ir.rule">
     <field name="domain_force">[('user_ids', 'in', user.ids)]</field>
   </record>
+  <record id="kg" model="res.country">
+    <field eval="'%(street)s\n%(street2)s\n%(city)s\n%(state_name)s\n%(country_name)s'" name="address_format"/>
+    <field name="state_required">1</field>
+  </record>
+  <record id="kz" model="res.country">
+    <field eval="'%(street)s\n%(street2)s\n%(city)s\n%(state_name)s\n%(country_name)s'" name="address_format"/>
+    <field name="state_required">1</field>
+  </record>
   <record id="partner_admin" model="res.partner">
     <field name="email"/>
   </record>
@@ -56,6 +68,14 @@
   </record>
   <record id="south_america" model="res.country.group">
     <field name="code">SA</field>
+  </record>
+  <record id="tj" model="res.country">
+    <field eval="'%(street)s\n%(street2)s\n%(city)s\n%(state_name)s\n%(country_name)s'" name="address_format"/>
+    <field name="state_required">1</field>
+  </record>
+  <record id="tm" model="res.country">
+    <field eval="'%(street)s\n%(street2)s\n%(city)s\n%(state_name)s\n%(country_name)s'" name="address_format"/>
+    <field name="state_required">1</field>
   </record>
   <record id="user_admin" model="res.users">
     <field name="signature" type="html">
