@@ -170,8 +170,12 @@ def migrate(env, version):
         } AS (SELECT name, state FROM ir_module_module);
         """,
     )
-    openupgrade.update_module_names(env.cr, renamed_modules.items())
-    openupgrade.update_module_names(env.cr, merged_modules.items(), merge_modules=True)
+    openupgrade.update_module_names(
+        env.cr, renamed_modules.items(), environment_namespec=True
+    )
+    openupgrade.update_module_names(
+        env.cr, merged_modules.items(), merge_modules=True, environment_namespec=True
+    )
     openupgrade.clean_transient_models(env.cr)
     openupgrade.rename_xmlids(env.cr, _renamed_xmlids)
     openupgrade.rename_xmlids(env.cr, _merged_xmlids, allow_merge=True)
