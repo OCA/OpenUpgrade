@@ -25,7 +25,7 @@ repo = g.get_repo(args.repo)
 # Custom Function
 # #######################
 def module_ok(module_name):
-    return module_coverage[module_name] in ["nothing_to_do", "done"]
+    return module_coverage[module_name] in ["nothing_to_do", "done"] or opened_prs.get(module_name) == pr_number
 
 def _extract_migration_comment(migration_message):
     if not migration_message:
