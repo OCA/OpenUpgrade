@@ -1,0 +1,213 @@
+---Models in module 'im_livechat'---
+obsolete model im_livechat.report.operator [sql_view]
+# DONE: dropped view in pre-migration
+
+new model im_livechat.channel.member.history
+new model im_livechat.conversation.tag
+new model im_livechat.expertise
+# NOTHING TO DO
+
+---Fields in module 'im_livechat'---
+im_livechat  / chatbot.message          / user_raw_script_answer_id (integer): NEW
+# DONE: copied from user_script_answer_id in pre-migration
+
+im_livechat  / chatbot.script.step      / message (text)                : type is now 'html' ('text')
+# DONE: converted to html in post-migration
+
+im_livechat  / chatbot.script.step      / operator_expertise_ids (many2many): NEW relation: im_livechat.expertise
+# NOTHING TO DO: new feature
+
+im_livechat  / discuss.call.history     / livechat_participant_history_ids (many2many): NEW relation: im_livechat.channel.member.history
+# NOTHING TO DO: can't be filled from existing data
+
+im_livechat  / discuss.channel          / anonymous_name (char)         : DEL
+im_livechat  / discuss.channel          / livechat_active (boolean)     : DEL
+# NOTHING TO DO
+
+im_livechat  / discuss.channel          / livechat_agent_partner_ids (many2many): NEW relation: res.partner, isfunction: function, stored
+im_livechat  / discuss.channel          / livechat_agent_providing_help_history (many2one): NEW relation: im_livechat.channel.member.history, isfunction: function, stored
+im_livechat  / discuss.channel          / livechat_agent_requesting_help_history (many2one): NEW relation: im_livechat.channel.member.history, isfunction: function, stored
+im_livechat  / discuss.channel          / livechat_bot_partner_ids (many2many): NEW relation: res.partner, isfunction: function, stored
+im_livechat  / discuss.channel          / livechat_channel_member_history_ids (one2many): NEW relation: im_livechat.channel.member.history
+# NOTHING TO DO: can't be filled from existing data
+
+im_livechat  / discuss.channel          / livechat_conversation_tag_ids (many2many): NEW relation: im_livechat.conversation.tag
+# NOTHING TO DO: new functionality
+
+im_livechat  / discuss.channel          / livechat_customer_partner_ids (many2many): NEW relation: res.partner, isfunction: function, stored
+# NOTHING TO DO: can't be filled from existing data
+
+im_livechat  / discuss.channel          / livechat_end_dt (datetime)    : NEW
+# NOTHING TO DO: can't be filled from existing data
+
+im_livechat  / discuss.channel          / livechat_expertise_ids (many2many): NEW relation: im_livechat.expertise
+# NOTHING TO DO: new functionality
+
+im_livechat  / discuss.channel          / livechat_failure (selection)  : NEW selection_keys: ['no_agent', 'no_answer', 'no_failure']
+# NOTHING TO DO: new functionality
+
+im_livechat  / discuss.channel          / livechat_is_escalated (boolean): NEW isfunction: function, stored
+# NOTHING TO DO: can't be filled from existing data
+
+im_livechat  / discuss.channel          / livechat_lang_id (many2one)   : NEW relation: res.lang
+# NOTHING TO DO: can't be filled from existing data
+
+im_livechat  / discuss.channel          / livechat_note (html)          : NEW
+im_livechat  / discuss.channel          / livechat_outcome (selection)  : NEW selection_keys: ['escalated', 'no_agent', 'no_answer', 'no_failure'], isfunction: function, stored
+# NOTHING TO DO: new functionality
+
+im_livechat  / discuss.channel          / livechat_start_hour (float)   : NEW isfunction: function, stored
+im_livechat  / discuss.channel          / livechat_status (selection)   : NEW selection_keys: ['in_progress', 'need_help', 'waiting'], hasdefault: compute
+im_livechat  / discuss.channel          / livechat_week_day (selection) : NEW selection_keys: ['0', '1', '2', '3', '4', '5', '6'], isfunction: function, stored
+im_livechat  / discuss.channel          / rating_last_text (selection)  : is now stored
+# NOTHING TO DO: computed by ORM
+
+im_livechat  / discuss.channel.member   / livechat_member_history_ids (one2many): NEW relation: im_livechat.channel.member.history
+# NOTHING TO DO: can't be filled from existing data
+
+im_livechat  / im_livechat.channel      / block_assignment_during_call (boolean): NEW
+# NOTHING TO DO: new functionality
+
+im_livechat  / im_livechat.channel      / image_128 (binary)            : DEL attachment: True
+im_livechat  / im_livechat.channel      / input_placeholder (char)      : DEL
+# NOTHING TO DO
+
+im_livechat  / im_livechat.channel      / max_sessions (integer)        : NEW hasdefault: default
+im_livechat  / im_livechat.channel      / max_sessions_mode (selection) : NEW selection_keys: ['limited', 'unlimited'], hasdefault: default
+# NOTHING TO DO: default is fine
+
+im_livechat  / im_livechat.channel      / review_link (char)            : NEW
+# NOTHING TO DO: new functionality
+
+im_livechat  / im_livechat.channel.member.history / agent_expertise_ids (many2many): NEW relation: im_livechat.expertise, isfunction: function, stored
+im_livechat  / im_livechat.channel.member.history / call_duration_hour (float)    : NEW isfunction: function, stored
+im_livechat  / im_livechat.channel.member.history / call_history_ids (many2many)  : NEW relation: discuss.call.history
+im_livechat  / im_livechat.channel.member.history / channel_id (many2one)         : NEW relation: discuss.channel, isfunction: function, stored
+im_livechat  / im_livechat.channel.member.history / chatbot_script_id (many2one)  : NEW relation: chatbot.script, isfunction: function, stored
+im_livechat  / im_livechat.channel.member.history / guest_id (many2one)           : NEW relation: mail.guest, isfunction: function, stored
+im_livechat  / im_livechat.channel.member.history / has_call (float)              : NEW isfunction: function, stored
+im_livechat  / im_livechat.channel.member.history / help_status (selection)       : NEW selection_keys: ['provided', 'requested'], isfunction: function, stored
+im_livechat  / im_livechat.channel.member.history / livechat_member_type (selection): NEW selection_keys: ['agent', 'bot', 'visitor'], isfunction: function, stored
+im_livechat  / im_livechat.channel.member.history / member_id (many2one)          : NEW relation: discuss.channel.member
+im_livechat  / im_livechat.channel.member.history / message_count (integer)       : NEW
+im_livechat  / im_livechat.channel.member.history / partner_id (many2one)         : NEW relation: res.partner, isfunction: function, stored
+im_livechat  / im_livechat.channel.member.history / rating_id (many2one)          : NEW relation: rating.rating, isfunction: function, stored
+im_livechat  / im_livechat.channel.member.history / response_time_hour (float)    : NEW
+im_livechat  / im_livechat.channel.member.history / session_duration_hour (float) : NEW isfunction: function, stored
+# NOTHING TO DO: new functionality
+
+im_livechat  / im_livechat.channel.rule / chatbot_enabled_condition (selection): NEW required, selection_keys: ['always', 'only_if_no_operator', 'only_if_operator'], hasdefault: default
+im_livechat  / im_livechat.channel.rule / chatbot_only_if_no_operator (boolean): DEL
+# DONE: set chatbot_enabled_condition='only_if_no_operator' in post-migration if chatbot_only_if_no_operator is set
+
+im_livechat  / im_livechat.conversation.tag / color (integer)               : NEW hasdefault: default
+im_livechat  / im_livechat.conversation.tag / conversation_ids (many2many)  : NEW relation: discuss.channel
+im_livechat  / im_livechat.conversation.tag / name (char)                   : NEW required
+# NOTHING TO DO: new functionality
+
+im_livechat  / im_livechat.expertise    / name (char)                   : NEW required, translate
+# NOTHING TO DO: new functionality
+
+im_livechat  / res.partner              / chatbot_script_ids (one2many) : NEW relation: chatbot.script
+im_livechat  / res.users                / livechat_channel_ids (many2many): NEW relation: im_livechat.channel
+# NOTHING TO DO: inverses of existing fields
+
+im_livechat  / res.users.settings       / livechat_expertise_ids (many2many): NEW relation: im_livechat.expertise
+# NOTHING TO DO: new functionality
+
+---XML records in module 'im_livechat'---
+NEW ir.actions.act_window: im_livechat.discuss_channel_looking_for_help_action
+NEW ir.actions.act_window: im_livechat.expertise_action
+NEW ir.actions.act_window: im_livechat.im_livechat_agent_history_action
+NEW ir.actions.act_window: im_livechat.im_livechat_channel_member_history_action
+NEW ir.actions.act_window: im_livechat.livechat_conversation_tag_action
+DEL ir.actions.act_window: im_livechat.im_livechat_report_operator_action
+DEL ir.actions.act_window: im_livechat.rating_rating_action_livechat
+DEL ir.actions.act_window: im_livechat.rating_rating_action_livechat_report
+NEW ir.actions.act_window.view: im_livechat.discuss_channel_action_graph
+NEW ir.actions.act_window.view: im_livechat.discuss_channel_action_livechat_graph
+NEW ir.actions.act_window.view: im_livechat.discuss_channel_action_livechat_pivot
+NEW ir.actions.act_window.view: im_livechat.discuss_channel_action_pivot
+NEW ir.actions.act_window.view: im_livechat.discuss_channel_looking_for_help_action_form
+NEW ir.actions.act_window.view: im_livechat.discuss_channel_looking_for_help_action_kanban
+NEW ir.actions.act_window.view: im_livechat.discuss_channel_looking_for_help_action_list
+DEL ir.actions.act_window.view: im_livechat.rating_rating_action_livechat_report_view_form
+DEL ir.actions.act_window.view: im_livechat.rating_rating_action_livechat_report_view_kanban
+DEL ir.actions.act_window.view: im_livechat.rating_rating_action_livechat_view_form
+DEL ir.actions.act_window.view: im_livechat.rating_rating_action_livechat_view_kanban
+DEL ir.actions.act_window.view: im_livechat.rating_rating_action_livechat_view_tree
+NEW ir.actions.report: im_livechat.action_report_livechat_conversation
+NEW ir.model.access: im_livechat.access_im_livechat_channel_member_history_user
+NEW ir.model.access: im_livechat.access_livechat_conversation_tag_livechat_manager
+NEW ir.model.access: im_livechat.access_livechat_conversation_tag_livechat_user
+NEW ir.model.access: im_livechat.access_livechat_expertise_internal_user
+NEW ir.model.access: im_livechat.access_livechat_expertise_livechat_manager
+DEL ir.model.access: im_livechat.access_livechat_channel_employee
+DEL ir.model.access: im_livechat.access_livechat_channel_portal
+DEL ir.model.access: im_livechat.access_livechat_channel_public
+DEL ir.model.access: im_livechat.access_livechat_channel_rule_employee
+DEL ir.model.access: im_livechat.access_livechat_channel_rule_portal
+DEL ir.model.access: im_livechat.access_livechat_channel_rule_public
+DEL ir.model.access: im_livechat.access_livechat_support_report_operator
+NEW ir.model.constraint: im_livechat.constraint_chatbot_message_channel_id_user_raw_script_answer_id_idx
+NEW ir.model.constraint: im_livechat.constraint_chatbot_message_unique_mail_message_id
+NEW ir.model.constraint: im_livechat.constraint_discuss_channel_livechat_channel_type_create_date_idx
+NEW ir.model.constraint: im_livechat.constraint_discuss_channel_livechat_end_dt_idx
+NEW ir.model.constraint: im_livechat.constraint_discuss_channel_livechat_end_dt_status_constraint
+NEW ir.model.constraint: im_livechat.constraint_discuss_channel_livechat_failure_idx
+NEW ir.model.constraint: im_livechat.constraint_discuss_channel_livechat_is_escalated_idx
+NEW ir.model.constraint: im_livechat.constraint_im_livechat_channel_max_sessions_mode_greater_than_zero
+NEW ir.model.constraint: im_livechat.constraint_im_livechat_channel_member_history_channel_id_guest_id_unique
+NEW ir.model.constraint: im_livechat.constraint_im_livechat_channel_member_history_channel_id_partner_id_unique
+NEW ir.model.constraint: im_livechat.constraint_im_livechat_channel_member_history_member_id_unique
+NEW ir.model.constraint: im_livechat.constraint_im_livechat_channel_member_history_partner_id_or_guest_3b134909
+NEW ir.model.constraint: im_livechat.constraint_im_livechat_conversation_tag_name_unique
+NEW ir.model.constraint: im_livechat.constraint_im_livechat_expertise_name_unique
+DEL ir.model.constraint: im_livechat.constraint_chatbot_message__unique_mail_message_id
+DEL ir.module.category: im_livechat.module_category_im_livechat
+NEW ir.rule: im_livechat.ir_rule_discuss_call_history_im_livechat_group_user (noupdate)
+NEW ir.rule: im_livechat.ir_rule_discuss_channel_im_livechat_group_user (noupdate)
+NEW ir.rule: im_livechat.ir_rule_discuss_channel_member_im_livechat_group_user (noupdate)
+# NOTHING TO DO
+
+DEL ir.rule: im_livechat.ir_rule_discuss_channel_group_im_livechat_group_manager (noupdate)
+DEL ir.rule: im_livechat.ir_rule_discuss_channel_member_group_im_livechat_group_manager (noupdate)
+# DONE: deleted in pre-migration
+
+NEW ir.ui.menu: im_livechat.expertise_menu
+NEW ir.ui.menu: im_livechat.livechat_technical
+NEW ir.ui.menu: im_livechat.menu_livechat_all_conversations
+NEW ir.ui.menu: im_livechat.menu_livechat_conversation_tag
+NEW ir.ui.menu: im_livechat.menu_livechat_looking_for_help
+NEW ir.ui.menu: im_livechat.menu_livechat_sessions
+NEW ir.ui.menu: im_livechat.menu_member_history
+NEW ir.ui.menu: im_livechat.menu_reporting_livechat_agent
+DEL ir.ui.menu: im_livechat.menu_reporting_livechat_operator
+DEL ir.ui.menu: im_livechat.rating_rating_menu_livechat
+DEL ir.ui.menu: im_livechat.session_history
+NEW ir.ui.view: im_livechat.discuss_channel_looking_for_help_view_kanban
+NEW ir.ui.view: im_livechat.discuss_channel_looking_for_help_view_list
+NEW ir.ui.view: im_livechat.discuss_channel_looking_for_help_view_search
+NEW ir.ui.view: im_livechat.discuss_channel_view_graph
+NEW ir.ui.view: im_livechat.discuss_channel_view_pivot
+NEW ir.ui.view: im_livechat.im_livechat_agent_history_view_graph
+NEW ir.ui.view: im_livechat.im_livechat_agent_history_view_pivot
+NEW ir.ui.view: im_livechat.im_livechat_agent_history_view_search
+NEW ir.ui.view: im_livechat.im_livechat_channel_conversation_tag_view_form
+NEW ir.ui.view: im_livechat.im_livechat_channel_conversation_tag_view_list
+NEW ir.ui.view: im_livechat.im_livechat_channel_member_history_view_search
+NEW ir.ui.view: im_livechat.im_livechat_channel_member_history_view_tree
+NEW ir.ui.view: im_livechat.im_livechat_expertise_view_form
+NEW ir.ui.view: im_livechat.im_livechat_expertise_view_list
+NEW ir.ui.view: im_livechat.im_livechat_report_channel_view_form
+NEW ir.ui.view: im_livechat.im_livechat_report_channel_view_list
+NEW ir.ui.view: im_livechat.report_livechat_conversation
+NEW ir.ui.view: im_livechat.view_partner_form
+DEL ir.ui.view: im_livechat.im_livechat_report_operator_view_graph
+DEL ir.ui.view: im_livechat.im_livechat_report_operator_view_pivot
+DEL ir.ui.view: im_livechat.im_livechat_report_operator_view_search
+DEL ir.ui.view: im_livechat.rating_rating_view_kanban
+DEL ir.ui.view: im_livechat.rating_rating_view_search_livechat
+DEL ir.ui.view: im_livechat.rating_rating_view_tree
+NEW res.groups.privilege: im_livechat.res_groups_privilege_live_chat
+# NOTHING TO DO
