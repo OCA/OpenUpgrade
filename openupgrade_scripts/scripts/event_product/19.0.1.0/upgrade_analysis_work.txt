@@ -1,0 +1,10 @@
+---Models in module 'event_product'---
+---Fields in module 'event_product'---
+event_product / event.registration       / sale_status (selection)       : previously in module event_sale
+# NOTHING TO DO: no changes
+
+---XML records in module 'event_product'---
+NEW ir.ui.view: event_product.event_registration_ticket_view_form
+NEW ir.ui.view: event_product.event_registration_view_graph
+NEW ir.ui.view: event_product.view_event_registration_ticket_tree
+# NOTHING TO DO
