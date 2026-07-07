@@ -796,9 +796,14 @@ def migrate(env, version):
         WHERE module='base' AND name='group_user'""",
     )
     openupgrade.update_module_names(
-        env.cr, apriori.renamed_modules.items())
+        env.cr, apriori.renamed_modules.items(), environment_namespec=True
+    )
     openupgrade.update_module_names(
-        env.cr, apriori.merged_modules.items(), merge_modules=True)
+        env.cr,
+        apriori.merged_modules.items(),
+        merge_modules=True,
+        environment_namespec=True,
+    )
     openupgrade.clean_transient_models(env.cr)
     openupgrade.copy_columns(env.cr, column_copies)
     openupgrade.rename_columns(env.cr, column_renames)
