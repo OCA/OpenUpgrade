@@ -146,8 +146,12 @@ def migrate(cr, version):
     if cr.fetchall():
         merged_modules["edi"] = renamed_modules.pop("edi")
 
-    openupgrade.update_module_names(cr, renamed_modules.items())
-    openupgrade.update_module_names(cr, merged_modules.items(), merge_modules=True)
+    openupgrade.update_module_names(
+        cr, renamed_modules.items(), environment_namespec=True
+    )
+    openupgrade.update_module_names(
+        cr, merged_modules.items(), merge_modules=True, environment_namespec=True
+    )
     openupgrade.clean_transient_models(cr)
     uninstall_conflicting_it_edi(cr)
     # Migrate partners from Fil to Tagalog
