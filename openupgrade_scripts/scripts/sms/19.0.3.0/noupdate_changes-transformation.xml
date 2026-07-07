@@ -1,0 +1,9 @@
+<?xml version='1.0' encoding='utf-8'?>
+<odoo>
+    <!--
+    don't overwrite interval number, that's done in code if default settings were kept
+    remove the whole node for the record because it's forcecreate and will fail if
+    the cron was deleted
+    -->
+    <record id="ir_cron_sms_scheduler_action" position="replace" />
+</odoo>
