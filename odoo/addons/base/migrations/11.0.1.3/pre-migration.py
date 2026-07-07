@@ -141,10 +141,14 @@ def rename_mass_mailing_event(env):
 def migrate(env, version):
     openupgrade.remove_tables_fks(env.cr, _obsolete_tables)
     openupgrade.update_module_names(
-        env.cr, apriori.renamed_modules.items()
+        env.cr, apriori.renamed_modules.items(), environment_namespec=True
     )
     openupgrade.update_module_names(
-        env.cr, apriori.merged_modules.items(), merge_modules=True)
+        env.cr,
+        apriori.merged_modules.items(),
+        merge_modules=True,
+        environment_namespec=True,
+    )
     openupgrade.clean_transient_models(env.cr)
     openupgrade.rename_columns(env.cr, column_renames)
     openupgrade.rename_models(env.cr, model_renames_ir_actions_report)
