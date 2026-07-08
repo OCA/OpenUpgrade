@@ -1,0 +1,13 @@
+---Models in module 'l10n_fr'---
+# NOTHING TO DO
+
+---Fields in module 'l10n_fr'---
+l10n_fr      / res.partner              / siret (char)                  : DEL
+# DONE: pre-migration script migrated siret values to existing company_registry when empty.
+
+---XML records in module 'l10n_fr'---
+NEW ir.ui.view: l10n_fr.view_partner_form_inherit_l10n_fr
+DEL ir.ui.view: l10n_fr.res_partner_form_l10n_fr
+res.country.group: l10n_fr.fr_and_mc (noupdate) (noupdate switched)
+DEL res.country.group: l10n_fr.dom-tom [renamed to base module]
+# NOTHING TO DO
