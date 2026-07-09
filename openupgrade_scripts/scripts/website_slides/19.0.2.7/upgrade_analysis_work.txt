@@ -1,0 +1,29 @@
+---Models in module 'website_slides'---
+# NOTHING TO DO
+
+---Fields in module 'website_slides'---
+website_slides / mail.activity            / request_partner_id (many2one) : previously in module mail
+website_slides / slide.channel            / visibility (selection)        : selection_keys added: [link] (most likely nothing to do)
+# NOTHING TO DO: field ownership/selection changes do not require data migration
+
+website_slides / slide.channel            / is_seo_optimized (boolean)    : is now stored
+website_slides / slide.slide              / is_seo_optimized (boolean)    : is now stored
+# DONE: pre-migration precomputes stored is_seo_optimized values from existing SEO metadata
+
+---XML records in module 'website_slides'---
+NEW ir.ui.view: website_slides.course_card_information_badge
+NEW ir.ui.view: website_slides.courses_home_side_bar
+NEW ir.ui.view: website_slides.courses_my
+NEW ir.ui.view: website_slides.courses_search_bar
+NEW ir.ui.view: website_slides.courses_search_results
+NEW ir.ui.view: website_slides.courses_search_tags
+NEW ir.ui.view: website_slides.mail_activity_view_form
+DEL ir.ui.view: website_slides.course_card_information_arrow
+DEL ir.ui.view: website_slides.courses_all
+DEL ir.ui.view: website_slides.slide_searchbar_input_snippet_options
+DEL ir.ui.view: website_slides.snippet_options
+NEW res.groups.privilege: website_slides.res_groups_privilege_elearning
+# NOTHING TO DO
+
+DEL mail.activity.type: website_slides.mail_activity_data_access_request (noupdate)
+# DONE: remove obsolete noupdate mail.activity.type record in post-migration
