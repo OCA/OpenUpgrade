@@ -1,0 +1,75 @@
+---Models in module 'website_event'---
+# NOTHING TO DO
+
+---Fields in module 'website_event'---
+website_event / event.event              / is_seo_optimized (boolean)    : is now stored
+# DONE: pre-migration precomputes stored is_seo_optimized values from existing event SEO metadata.
+
+website_event / website.event.menu       / menu_type (selection)         : selection_keys added: [other], removed: [location]
+# DONE: pre-migration preserves the original menu_type values and maps 'location' to 'other'.
+
+website_event / event.event              / location_menu_ids (one2many)  : DEL relation: website.event.menu
+website_event / event.event              / other_menu_ids (one2many)     : NEW relation: website.event.menu
+# NOTHING TO DO: both fields use the same website_event_menu.event_id relation
+
+website_event / event.event              / footer_visible (boolean)      : NEW hasdefault: default
+website_event / event.event              / header_visible (boolean)      : NEW hasdefault: default
+website_event / event.event              / location_menu (boolean)       : DEL
+website_event / website.event.menu       / is_seo_optimized (boolean)    : NEW isfunction: function, stored
+website_event / website.event.menu       / seo_name (char)               : NEW translate
+website_event / website.event.menu       / website_meta_description (text): NEW translate
+website_event / website.event.menu       / website_meta_keywords (char)  : NEW translate
+website_event / website.event.menu       / website_meta_og_img (char)    : NEW
+website_event / website.event.menu       / website_meta_title (char)     : NEW translate
+# NOTHING TO DO: new display toggles and new menu SEO fields
+
+---XML records in module 'website_event'---
+DEL ir.asset: website_event.s_events_000_js
+DEL ir.asset: website_event.s_searchbar_000_js
+# NOTHING TO DO: obsolete frontend asset records removed upstream
+
+NEW ir.model.access: website_event.access_event_event_slot_employee
+NEW ir.model.access: website_event.access_event_event_slot_portal
+NEW ir.model.access: website_event.access_event_event_slot_public
+NEW ir.rule: website_event.ir_rule_event_slot_public (noupdate)
+# NOTHING TO DO: new ACLs/rule for event.slot website access, loaded by module update
+
+NEW ir.ui.view: website_event.dynamic_filter_template_event_event_single_aside
+NEW ir.ui.view: website_event.dynamic_filter_template_event_event_single_badge
+NEW ir.ui.view: website_event.dynamic_filter_template_event_event_single_card
+NEW ir.ui.view: website_event.dynamic_filter_template_event_event_single_entry
+NEW ir.ui.view: website_event.dynamic_filter_template_event_event_single_offset
+NEW ir.ui.view: website_event.event_calendar_links
+NEW ir.ui.view: website_event.event_event_view_form_website_create
+NEW ir.ui.view: website_event.modal_slot_registration
+NEW ir.ui.view: website_event.opt_event_calendar_block
+NEW ir.ui.view: website_event.opt_event_dates_block
+NEW ir.ui.view: website_event.opt_event_fixed_sidebar
+NEW ir.ui.view: website_event.opt_event_location_block
+NEW ir.ui.view: website_event.opt_event_organizer_block
+NEW ir.ui.view: website_event.opt_event_registration_block
+NEW ir.ui.view: website_event.opt_event_share_block
+NEW ir.ui.view: website_event.s_dynamic_snippet_events_single_aside_preview_data
+NEW ir.ui.view: website_event.s_dynamic_snippet_events_single_badge_preview_data
+NEW ir.ui.view: website_event.s_dynamic_snippet_events_single_card_preview_data
+NEW ir.ui.view: website_event.s_dynamic_snippet_events_single_entry_preview_data
+NEW ir.ui.view: website_event.s_dynamic_snippet_events_single_offset_preview_data
+NEW ir.ui.view: website_event.s_event_upcoming_snippet_card_preview_data
+NEW ir.ui.view: website_event.s_events_card
+NEW ir.ui.view: website_event.s_events_picture
+NEW ir.ui.view: website_event.s_events_single_aside
+NEW ir.ui.view: website_event.s_events_single_badge
+NEW ir.ui.view: website_event.s_events_single_card
+NEW ir.ui.view: website_event.s_events_single_entry
+NEW ir.ui.view: website_event.s_events_single_offset
+DEL ir.ui.view: website_event.404
+DEL ir.ui.view: website_event.default_page
+DEL ir.ui.view: website_event.event_event_view_form_add
+DEL ir.ui.view: website_event.event_searchbar_input_snippet_options
+DEL ir.ui.view: website_event.events_search_box
+DEL ir.ui.view: website_event.events_search_box_input
+DEL ir.ui.view: website_event.s_dynamic_snippet_options_template
+DEL ir.ui.view: website_event.s_events_options
+DEL ir.ui.view: website_event.snippet_options
+DEL ir.ui.view: website_event.template_location
+# NOTHING TO DO: frontend templates/snippets were refactored in v19
