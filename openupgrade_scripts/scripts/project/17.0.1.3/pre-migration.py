@@ -71,11 +71,29 @@ def _set_default_analytic_plan_id(env):
         )
 
 
+def _delete_project_list_views(env):
+    """OCA module project_list got its functionality implemented in core
+    odoo. Its ir.actions.act_window.view records (reassigned to 'project'
+    module by merged_modules in base pre-migration) collide with v17 core's
+    new records on constraint act_window_view_unique_mode_per_action.
+    """
+    openupgrade.delete_records_safely_by_xml_id(
+        env,
+        [
+            "project.open_view_project_all_group_stage_kanban",
+            "project.open_view_project_all_group_stage_tree",
+            "project.open_view_project_all_kanban",
+            "project.open_view_project_all_tree",
+        ],
+    )
+
+
 @openupgrade.migrate()
 def migrate(env, version):
     _rename_fields(env)
     _convert_project_task_state(env)
     _set_default_analytic_plan_id(env)
+    _delete_project_list_views(env)
     openupgrade.set_xml_ids_noupdate_value(
         env,
         "project",

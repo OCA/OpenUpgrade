@@ -68,6 +68,8 @@ merged_modules = {
     # OCA/product-attribute
     "product_catalog": "product",
     "product_catalog_sale": "sale",
+    # OCA/project
+    "project_list": "project",
     # OCA/purchase-workflow
     "purchase_discount": "purchase",
     # OCA/sale-promotion
