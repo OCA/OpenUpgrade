@@ -5,7 +5,7 @@ l10n_pl_edi  / account.move             / l10n_pl_edi_header (html)     : NEW
 l10n_pl_edi  / account.move             / l10n_pl_edi_number (char)     : NEW
 l10n_pl_edi  / account.move             / l10n_pl_edi_ref (char)        : NEW
 l10n_pl_edi  / account.move             / l10n_pl_edi_session_id (char) : NEW
-l10n_pl_edi  / account.move             / l10n_pl_edi_status (selection): NEW selection_keys: ['accepted', 'rejected', 'sent']
+l10n_pl_edi  / account.move             / l10n_pl_edi_status (selection): NEW selection_keys: ['accepted', 'fetch_failed', 'fetch_ready', 'fetched', 'rejected', 'sent']
 l10n_pl_edi  / account.move             / l10n_pl_edi_upo_file (binary) : NEW attachment: True
 l10n_pl_edi  / res.company              / l10n_pl_edi_access_token (char): NEW
 l10n_pl_edi  / res.company              / l10n_pl_edi_certificate (many2one): NEW relation: certificate.certificate
@@ -18,7 +18,8 @@ l10n_pl_edi  / res.partner              / invoice_edi_format (False)    : NEW se
 NEW ir.cron: l10n_pl_edi.cron_auto_checks_the_polish_invoice_status (noupdate)
 NEW ir.cron: l10n_pl_edi.cron_l10n_pl_edi_ksef_download_bills (noupdate)
 NEW ir.cron: l10n_pl_edi.cron_l10n_pl_edi_refresh_tokens (noupdate)
-NEW ir.model.constraint: l10n_pl_edi.constraint_account_move_unique_l10n_pl_edi_number
+NEW ir.model.constraint: l10n_pl_edi.constraint_account_move_unique_l10n_pl_edi_number_company_id_move_type
 NEW ir.ui.view: l10n_pl_edi.fa3_xml_template
+NEW ir.ui.view: l10n_pl_edi.report_invoice_document
 NEW ir.ui.view: l10n_pl_edi.res_config_settings_view_form_l10n_pl_edi
 NEW ir.ui.view: l10n_pl_edi.view_move_form_l10n_pl_edi
