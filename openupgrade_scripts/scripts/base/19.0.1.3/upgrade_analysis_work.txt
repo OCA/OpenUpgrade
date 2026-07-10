@@ -243,7 +243,7 @@ base         / res.lang                 / time_format (char)            : type i
 
 base         / res.partner              / mobile (char)                 : DEL
 
-# NOTHING TO DO: possibly some oca module will pick this up again
+# DONE: pos-migration: If the phone field is empty and the mobile field contains a value, populate phone with the mobile number. If both phone and mobile contain different values, concatenate the mobile number to the phone field.
 
 base         / res.partner              / properties (properties)       : NEW hasdefault: compute
 

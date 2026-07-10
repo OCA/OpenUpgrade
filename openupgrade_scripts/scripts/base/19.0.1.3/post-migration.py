@@ -96,6 +96,23 @@ def _init_default_user_group(env):
     )
 
 
+def _migrate_partner_mobile(env):
+    openupgrade.copy_columns(env.cr, {"res_partner": [("phone", None, None)]})
+    openupgrade.logged_query(
+        env.cr,
+        """
+        UPDATE res_partner
+        SET phone = CONCAT(
+            COALESCE(phone, ''),
+            CASE WHEN COALESCE(phone, '') != '' THEN ' // ' ELSE '' END,
+            mobile
+        )
+        WHERE COALESCE(mobile, '') != ''
+        AND COALESCE(phone, '') != COALESCE(mobile, '')
+        """,
+    )
+
+
 @openupgrade.migrate()
 def migrate(env, version):
     openupgrade.load_data(
@@ -114,3 +131,4 @@ def migrate(env, version):
     _ir_actions_server_html_value(env)
     _ir_filters_user_ids(env)
     _res_lang(env)
+    _migrate_partner_mobile(env)
