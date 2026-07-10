@@ -4,12 +4,18 @@ from openupgradelib import openupgrade
 
 
 def _migrate_lead_mobile(env):
+    openupgrade.copy_columns(env.cr, {"crm_lead": [("phone", None, None)]})
     openupgrade.logged_query(
         env.cr,
         """
         UPDATE crm_lead
-        SET phone = CONCAT(COALESCE(phone, ''), mobile)
+        SET phone = CONCAT(
+            COALESCE(phone, ''),
+            CASE WHEN COALESCE(phone, '') != '' THEN ' // ' ELSE '' END,
+            mobile
+        )
         WHERE COALESCE(mobile, '') != ''
+        AND COALESCE(phone, '') != COALESCE(mobile, '')
         """,
     )
 
