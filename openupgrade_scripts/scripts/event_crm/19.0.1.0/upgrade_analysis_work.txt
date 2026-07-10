@@ -1,0 +1,11 @@
+---Models in module 'event_crm'---
+---Fields in module 'event_crm'---
+event_crm    / event.lead.request       / event_lead_rule_ids (many2many): NEW relation: event.lead.rule
+# NOTHING TO DO: This is a new feature added in https://github.com/odoo/odoo/commit/77a927276c6ea3e288de75aab5fbccd426eb745a
+# If the field is empty, the rule will be applied to all records, as in the previous version.
+
+---XML records in module 'event_crm'---
+NEW ir.actions.act_window: event_crm.event_lead_rule_answer_action
+NEW ir.actions.server: event_crm.action_generate_leads
+NEW ir.ui.view: event_crm.event_question_view_form
+# NOTHING TO DO: This is a new feature added in https://github.com/odoo/odoo/commit/77a927276c6ea3e288de75aab5fbccd426eb745a
