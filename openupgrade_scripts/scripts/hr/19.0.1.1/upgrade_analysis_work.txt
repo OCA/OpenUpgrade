@@ -132,6 +132,8 @@ hr           / hr.employee              / private_zip (char)            : now re
 # DONE: copied to hr.version in post-migration
 
 hr           / hr.employee              / resource_calendar_id (many2one): not stored anymore
+# DONE: post-migration: copied to hr.version when an employee does not have a contract
+
 hr           / hr.employee              / salary_distribution (json)    : NEW hasdefault: compute
 hr           / hr.employee              / sinid (char)                  : DEL
 

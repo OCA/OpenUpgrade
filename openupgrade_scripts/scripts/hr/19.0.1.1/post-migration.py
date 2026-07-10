@@ -70,11 +70,13 @@ def fill_hr_version(env):
         (
             employee_id, date_version, contract_date_start,
             last_modified_uid, last_modified_date, hr_responsible_id,
+            resource_calendar_id,
             {", ".join(fields)}
         )
         SELECT
             id, create_date, create_date,
             write_uid, write_date, {env.ref("base.user_admin").id},
+            resource_calendar_id,
             {", ".join(fields)}
         FROM hr_employee
         WHERE id NOT IN (
