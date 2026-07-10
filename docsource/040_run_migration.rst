@@ -69,6 +69,15 @@ Configuration options
     export OPENUPGRADE_TARGET_VERSION=13.0
 
   (when migrating up to 13.0)
+* When you need to merge or rename private modules, the following environment
+  variables can be used to perform those renames/merges. OpenUpgrade will load the
+  content as a JSON dict, and perform the required operations alongside the OCA ones.
+
+    export OPENUPGRADE_RENAMED_MODULES='{"module_a":"module_b"}'
+    export OPENUPGRADE_MERGED_MODULES='{"old_module":"base", "custom_sale":"sale"}'
+
+  (With these variables, openupgrade will rename "module_a" to "module_b",
+    merge "old_module" into "base" and merge "custom_sale" into "sale")
 
 Obsolete options in the Odoo configuration file
 ...............................................
