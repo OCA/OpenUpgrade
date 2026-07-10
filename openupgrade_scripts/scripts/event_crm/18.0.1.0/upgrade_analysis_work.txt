@@ -1,0 +1,14 @@
+---Models in module 'event_crm'---
+new model event.lead.request
+# NOTHING TO DO: New feature added in https://github.com/odoo/odoo/pull/152233
+
+---Fields in module 'event_crm'---
+event_crm    / event.lead.request       / event_id (many2one)           : NEW relation: event.event, required
+event_crm    / event.lead.request       / processed_registration_id (integer): NEW
+# NOTHING TO DO: New feature added in https://github.com/odoo/odoo/pull/152233
+
+---XML records in module 'event_crm'---
+NEW ir.cron: event_crm.ir_cron_generate_leads
+NEW ir.model.access: event_crm.access_event_lead_request_system
+NEW ir.model.constraint: event_crm.constraint_event_lead_request_uniq_event
+# NOTHING TO DO: New feature added in https://github.com/odoo/odoo/pull/152233
