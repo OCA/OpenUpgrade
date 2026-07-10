@@ -48,6 +48,8 @@ merged_modules = {
     # odoo/enterprise
     # OCA/account-invoicing
     "account_tax_legal_notes_translate": "account",
+    # OCA/bank-payment
+    "account_payment_partner": "account_payment_mode",
     # OCA/partner-contact
     "partner_contact_lang": "base",
     # OCA/project
