@@ -3,6 +3,9 @@
   <record id="AED" model="res.currency">
     <field name="symbol">AED</field>
   </record>
+  <record id="PKR" model="res.currency">
+    <field name="position">before</field>
+  </record>
   <record id="ae" model="res.country">
     <field name="state_required">1</field>
     <field name="vat_label">TRN</field>
