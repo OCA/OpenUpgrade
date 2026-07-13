@@ -1,0 +1,8 @@
+---Models in module 'website_event_sale'---
+---Fields in module 'website_event_sale'---
+---XML records in module 'website_event_sale'---
+DEL ir.rule: website_event_sale.event_product_template_public (noupdate)
+# DONE: deleted in post-migration
+
+DEL ir.ui.view: website_event_sale.cart_lines_inherit_website_event_sale
+# NOTHING TO DO: Handled by ORM
