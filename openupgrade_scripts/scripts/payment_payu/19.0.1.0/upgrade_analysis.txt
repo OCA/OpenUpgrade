@@ -1,0 +1,9 @@
+---Models in module 'payment_payu'---
+---Fields in module 'payment_payu'---
+payment_payu / payment.provider         / code (False)                  : NEW selection_keys: ['adyen', 'aps', 'asiapay', 'authorize', 'buckaroo', 'custom', 'demo', 'dpo', 'ecpay', 'flutterwave', 'iyzico', 'mercado_pago', 'mollie', 'none', 'nuvei', 'paymob', 'paypal', 'payu'], mode: modify
+payment_payu / payment.provider         / payu_key_id (char)            : NEW
+payment_payu / payment.provider         / payu_merchant_salt (char)     : NEW
+---XML records in module 'payment_payu'---
+NEW ir.ui.view: payment_payu.authorization_error
+NEW ir.ui.view: payment_payu.payment_provider_form
+NEW ir.ui.view: payment_payu.redirect_form
