@@ -1,0 +1,21 @@
+---Models in module 'website_event_track'---
+---Fields in module 'website_event_track'---
+website_event_track / event.track              / _order                        : _order is now 'priority desc, date' ('priority, date')
+# NOTHING TO DO: the new order reflects the expected behavior;
+# no logic changes were made in https://github.com/odoo/odoo/pull/220949
+
+website_event_track / event.track              / date (datetime)               : now a function
+# NOTHING TO DO: the field is still stored
+
+website_event_track / event.track              / is_seo_optimized (boolean)    : is now stored
+# DONE: pre-migration: Pre-created and populated this field.
+
+website_event_track / website.event.menu       / menu_type (False)             : selection_keys added: [exhibitor, other], removed: [location]
+# NOTHING TO DO: handled by the migration scripts in the website_event module
+
+---XML records in module 'website_event_track'---
+NEW ir.asset: website_event_track.s_searchbar_000_xml
+NEW ir.ui.view: website_event_track.track_list_item
+DEL ir.ui.view: website_event_track.snippet_options
+NEW mail.template: website_event_track.mail_template_data_track_reminder (noupdate)
+# NOTHING TO DO: Handled by ORM
