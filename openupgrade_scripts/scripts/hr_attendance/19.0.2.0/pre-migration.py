@@ -35,20 +35,16 @@ SQL_EMPLOYEE2TZ = """
         hr_employee
     JOIN
         resource_resource
-    ON
-        hr_employee.resource_id=resource_resource.id
+        ON hr_employee.resource_id=resource_resource.id
     LEFT JOIN
         resource_calendar
-    ON
-        resource_resource.calendar_id=resource_calendar.id
+        ON resource_resource.calendar_id=resource_calendar.id
     JOIN
         res_company
-    ON
-        hr_employee.company_id=res_company.id
+        ON hr_employee.company_id=res_company.id
     LEFT JOIN
         resource_calendar company_resource_calendar
-    ON
-        res_company.resource_calendar_id=company_resource_calendar.id
+        ON res_company.resource_calendar_id=company_resource_calendar.id
     GROUP BY
         hr_employee.id
 ) employee2zone
@@ -163,47 +159,6 @@ def hr_attendance_overtime_line_fields(env):
     )
 
 
-def hr_attendance_validated_overtime_hours(env):
-    """
-    Pre-fill hr.attendance#validated_overtime_hours
-    """
-    openupgrade.add_columns(
-        env,
-        [
-            (
-                "hr.attendance",
-                "validated_overtime_hours",
-                "float",
-                None,
-                "hr_attendance",
-            )
-        ],
-    )
-    # validated_overtime_hours is the sum of approved overtime lines
-    env.cr.execute(
-        """
-        UPDATE
-            hr_attendance
-        SET
-            validated_overtime_hours=grouped_overtime_lines.sum_duration
-        FROM
-            (
-                SELECT
-                    employee_id, time_start, SUM(manual_duration) sum_duration
-                FROM
-                    hr_attendance_overtime_line
-                WHERE
-                    status='approved'
-                GROUP BY
-                    employee_id, time_start
-            ) grouped_overtime_lines
-        WHERE
-            grouped_overtime_lines.employee_id=hr_attendance.employee_id AND
-            grouped_overtime_lines.time_start=hr_attendance.check_in
-        """
-    )
-
-
 @openupgrade.migrate()
 def migrate(env, version):
     openupgrade.rename_models(env.cr, _renamed_models)
@@ -212,4 +167,3 @@ def migrate(env, version):
     # order matters
     hr_attendance_date(env)
     hr_attendance_overtime_line_fields(env)
-    hr_attendance_validated_overtime_hours(env)
