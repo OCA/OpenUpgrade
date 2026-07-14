@@ -128,6 +128,7 @@ merged_modules = {
     # OCA/sale-reporting
     "report_qweb_pdf_fixed_column": "web",
     # OCA/sale-workflow
+    "sale_mrp_link": "sale_mrp",
     "sale_order_price_recalculation": "sale",
     "sale_order_pricelist_tracking": "sale",
     # OCA/stock-logistics-warehouse
