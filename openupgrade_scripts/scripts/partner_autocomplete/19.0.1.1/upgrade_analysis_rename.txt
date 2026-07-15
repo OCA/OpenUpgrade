@@ -1,0 +1,20 @@
+---Models in module 'partner_autocomplete'---
+obsolete model res.partner.autocomplete.sync
+# NOTHING TO DO
+
+---Fields in module 'partner_autocomplete'---
+partner_autocomplete / res.company              / partner_gid (integer)         : DEL
+partner_autocomplete / res.partner              / additional_info (char)        : DEL
+partner_autocomplete / res.partner              / partner_gid (integer)         : DEL
+partner_autocomplete / res.partner.autocomplete.sync / partner_id (many2one)         : DEL relation: res.partner
+partner_autocomplete / res.partner.autocomplete.sync / synched (boolean)             : DEL
+# NOTHING TO DO, not used anymore: see https://github.com/odoo/odoo/commit/7814c1915d7c11ce9858dd5889e9871628f52096
+
+---XML records in module 'partner_autocomplete'---
+DEL ir.cron: partner_autocomplete.ir_cron_partner_autocomplete
+DEL ir.model.access: partner_autocomplete.access_partner_autocomplete_sync_portal
+DEL ir.model.access: partner_autocomplete.access_partner_autocomplete_sync_system
+DEL ir.model.access: partner_autocomplete.access_partner_autocomplete_sync_user
+DEL ir.ui.view: partner_autocomplete.view_partner_simple_form_inherit_partner_autocomplete
+DEL ir.ui.view: partner_autocomplete.view_res_partner_form_inherit_partner_autocomplete
+# NOTHING TO DO
