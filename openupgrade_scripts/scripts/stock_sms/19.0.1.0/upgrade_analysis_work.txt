@@ -1,0 +1,6 @@
+---Models in module 'stock_sms'---
+---Fields in module 'stock_sms'---
+stock_sms    / res.company              / stock_move_sms_validation (boolean): DEL
+DONE: post-migration: if stock_move_sms_validation = False -> stock_confirmation_type = null
+
+---XML records in module 'stock_sms'---
