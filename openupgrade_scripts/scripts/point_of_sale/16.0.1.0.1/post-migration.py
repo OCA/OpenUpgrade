@@ -49,6 +49,7 @@ def migrate(env, version):
         env,
         [
             "point_of_sale.rule_pos_cashbox_line_accountant",
+            "point_of_sale.rule_pos_bank_statement_user",
             "point_of_sale.500_00",
         ],
     )
