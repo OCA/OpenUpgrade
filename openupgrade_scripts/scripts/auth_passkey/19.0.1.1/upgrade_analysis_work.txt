@@ -1,0 +1,13 @@
+---Models in module 'auth_passkey'---
+---Fields in module 'auth_passkey'---
+---XML records in module 'auth_passkey'---
+NEW ir.model.access: auth_passkey.access_auth_passkey_key_create_portal
+NEW ir.model.access: auth_passkey.access_auth_passkey_key_portal
+NEW ir.rule: auth_passkey.rule_auth_passkey_key_create_portal (noupdate)
+NEW ir.ui.view: auth_passkey.auth_passkey_key_view_kanban
+NEW ir.ui.view: auth_passkey.auth_passkey_login_oauth
+# NOTHING TO DO
+
+ir.rule: auth_passkey.rule_auth_passkey_key_admin (noupdate) (noupdate switched)
+ir.rule: auth_passkey.rule_auth_passkey_key_user (noupdate) (noupdate switched)
+# DONE: pre-migration: switched noupdate
