@@ -7,7 +7,6 @@ renamed_modules = {
     # odoo
     "l10n_ec_website_sale": "l10n_ec_sale",
     "l10n_in_edi_ewaybill": "l10n_in_ewaybill",
-    "membership": "partnership",
     "pos_viva_wallet": "pos_viva_com",
     # odoo/enterprise
     # OCA/timesheet
