@@ -1,0 +1,9 @@
+---Models in module 'project_timesheet_holidays'---
+---Fields in module 'project_timesheet_holidays'---
+project_timesheet_holidays / hr.leave.type            / timesheet_generate (boolean)  : DEL
+project_timesheet_holidays / hr.leave.type            / timesheet_project_id (many2one): DEL relation: project.project
+project_timesheet_holidays / hr.leave.type            / timesheet_task_id (many2one)  : DEL relation: project.task
+---XML records in module 'project_timesheet_holidays'---
+NEW ir.model.constraint: project_timesheet_holidays.constraint_account_analytic_line_timeoff_timesheet_idx
+DEL ir.ui.view: project_timesheet_holidays.hr_holiday_status_view_form_inherit
+# NOTHING TO DO
