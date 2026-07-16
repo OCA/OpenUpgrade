@@ -1,0 +1,7 @@
+---Models in module 'hr_recruitment_sms'---
+---Fields in module 'hr_recruitment_sms'---
+---XML records in module 'hr_recruitment_sms'---
+DEL ir.actions.act_window: hr_recruitment_sms.action_hr_applicant_mass_sms
+DEL ir.actions.act_window: hr_recruitment_sms.action_hr_candidate_mass_sms
+NEW ir.actions.server: hr_recruitment_sms.action_applicant_send_sms
+# NOTHING TO DO
