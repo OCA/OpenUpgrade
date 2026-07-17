@@ -1,0 +1,11 @@
+---Models in module 'l10n_be_invoice_bba'---
+---Fields in module 'l10n_be_invoice_bba'---
+l10n_be_invoice_bba / account.journal          / invoice_reference_model (False): NEW selection_keys: ['be', 'ch', 'euro', 'fi', 'fi_rf', 'no', 'odoo'], mode: modify
+# NOTHING TO DO: selection 'be' is added to the existing field on account.journal
+
+l10n_be_invoice_bba / res.company              / l10n_be_structured_comm (selection): DEL selection_keys: ['date', 'partner_ref', 'random']
+# DONE: post-migration: mapped values to the most sensible available choice
+
+---XML records in module 'l10n_be_invoice_bba'---
+DEL ir.ui.view: l10n_be_invoice_bba.res_config_settings_view_form
+# NOTHING TO DO: this is now handled by the account.view_account_journal_form view
