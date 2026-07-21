@@ -46,8 +46,10 @@ def hr_attendance_overtime_rule(env):
     for company in env["res.company"].search([]):
         rule = default_rule
         if (
-            default_rule.employer_tolerance != company.overtime_company_threshold
-            or default_rule.employee_tolerance != company.overtime_employee_threshold
+            main_company.overtime_company_threshold
+            != company.overtime_company_threshold
+            or main_company.overtime_employee_threshold
+            != company.overtime_employee_threshold
         ):
             rule = default_rule.copy(
                 {
