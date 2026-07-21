@@ -79,10 +79,8 @@ DEL ir.model.access: point_of_sale.access_money_in_out_wizard
 # NOTHING TO DO: the relevant models no longer exist
 
 DEL ir.rule: point_of_sale.rule_pos_bank_statement_user (noupdate)
-# NOTHING TO DO: pos_session_id no longer stored on account.bank.statement.
-
 DEL ir.rule: point_of_sale.rule_pos_cashbox_line_accountant (noupdate)
-# DONE: post-migration: Remove safely the rule
+# DONE: post-migration: Remove safely the rules
 
 DEL ir.ui.menu: point_of_sale.menu_pos_config_pos
 NEW ir.ui.view: point_of_sale.ticket_validation_screen
