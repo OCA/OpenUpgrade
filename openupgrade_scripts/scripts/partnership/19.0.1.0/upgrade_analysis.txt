@@ -1,30 +1,6 @@
 ---Models in module 'partnership'---
-obsolete model membership.invoice [transient]
-obsolete model membership.membership_line
-obsolete model report.membership [sql_view]
 model res.partner.grade (moved from website_crm_partner_assign)
 ---Fields in module 'partnership'---
-membership   / membership.membership_line / account_invoice_line (many2one): DEL relation: account.move.line
-membership   / membership.membership_line / company_id (many2one)         : DEL relation: res.company
-membership   / membership.membership_line / date (date)                   : DEL
-membership   / membership.membership_line / date_cancel (date)            : DEL
-membership   / membership.membership_line / date_from (date)              : DEL
-membership   / membership.membership_line / date_to (date)                : DEL
-membership   / membership.membership_line / member_price (float)          : DEL required
-membership   / membership.membership_line / membership_id (many2one)      : DEL relation: product.product, required
-membership   / membership.membership_line / partner (many2one)            : DEL relation: res.partner
-membership   / membership.membership_line / state (selection)             : DEL selection_keys: ['canceled', 'free', 'invoiced', 'none', 'old', 'paid', 'waiting']
-membership   / product.template         / membership (boolean)          : DEL
-membership   / product.template         / membership_date_from (date)   : DEL
-membership   / product.template         / membership_date_to (date)     : DEL
-membership   / res.partner              / associate_member (many2one)   : DEL relation: res.partner
-membership   / res.partner              / free_member (boolean)         : DEL
-membership   / res.partner              / member_lines (one2many)       : DEL relation: membership.membership_line
-membership   / res.partner              / membership_amount (float)     : DEL
-membership   / res.partner              / membership_cancel (date)      : DEL
-membership   / res.partner              / membership_start (date)       : DEL
-membership   / res.partner              / membership_state (selection)  : DEL selection_keys: ['canceled', 'free', 'invoiced', 'none', 'old', 'paid', 'waiting']
-membership   / res.partner              / membership_stop (date)        : DEL
 partnership  / product.template         / grade_id (many2one)           : NEW relation: res.partner.grade
 partnership  / product.template         / service_tracking (False)      : NEW selection_keys: ['event', 'no', 'partnership'], mode: modify
 partnership  / res.company              / partnership_label (char)      : NEW hasdefault: default, translate
@@ -41,33 +17,12 @@ partnership  / res.users                / grade_id (many2one)           : previo
 NEW ir.actions.act_window: partnership.action_grade_partners
 NEW ir.actions.act_window: partnership.action_pricelist_partners
 NEW ir.actions.act_window: partnership.res_partner_grade_action [renamed from website_crm_partner_assign module]
-DEL ir.actions.act_window: membership.action_membership_invoice_view
-DEL ir.actions.act_window: membership.action_membership_members
-DEL ir.actions.act_window: membership.action_membership_products
-DEL ir.actions.act_window: membership.action_report_membership_tree
-DEL ir.actions.act_window.view: membership.action_membership_members_view_form
-DEL ir.actions.act_window.view: membership.action_membership_members_view_kanban
-DEL ir.actions.act_window.view: membership.action_membership_members_view_tree
-DEL ir.actions.act_window.view: membership.action_membership_product_view_form
-DEL ir.actions.act_window.view: membership.action_membership_product_view_kanban
-DEL ir.actions.act_window.view: membership.action_membership_product_view_tree
-DEL ir.cron: membership.ir_cron_update_membership (noupdate)
 NEW ir.model.access: partnership.access_res_partner_grade [renamed from website_crm_partner_assign module]
 NEW ir.model.access: partnership.access_res_partner_grade_admin
 NEW ir.model.access: partnership.access_res_partner_grade_manager [renamed from website_crm_partner_assign module]
 NEW ir.model.access: partnership.access_res_partner_grade_user
-DEL ir.model.access: membership.access_membership_invoice
-DEL ir.model.access: membership.access_membership_membership_line_employee
-DEL ir.model.access: membership.access_membership_membership_line_partner_manager
-DEL ir.model.access: membership.access_report_membership
-DEL ir.model.constraint: membership.constraint_product_template_membership_date_greater
 NEW ir.ui.menu: partnership.crm_menu_partners
 NEW ir.ui.menu: partnership.menu_res_partner_grade_action [renamed from website_crm_partner_assign module]
-DEL ir.ui.menu: membership.menu_association
-DEL ir.ui.menu: membership.menu_marketing_config_association
-DEL ir.ui.menu: membership.menu_membership
-DEL ir.ui.menu: membership.menu_membership_products
-DEL ir.ui.menu: membership.menu_report_membership
 NEW ir.ui.view: partnership.product_template_form_view
 NEW ir.ui.view: partnership.res_config_settings_view_form
 NEW ir.ui.view: partnership.res_partner_grade_view_search
@@ -77,18 +32,6 @@ NEW ir.ui.view: partnership.view_partner_pricelist_form
 NEW ir.ui.view: partnership.view_res_partner_filter_assign
 NEW ir.ui.view: partnership.view_res_partner_form
 NEW ir.ui.view: partnership.view_res_partner_grade_tree
-DEL ir.ui.view: membership.membership_members_tree
-DEL ir.ui.view: membership.membership_product_search_form_view
-DEL ir.ui.view: membership.membership_products_form
-DEL ir.ui.view: membership.membership_products_kanban
-DEL ir.ui.view: membership.membership_products_tree
-DEL ir.ui.view: membership.report_membership_view_tree
-DEL ir.ui.view: membership.view_membership_invoice_view
-DEL ir.ui.view: membership.view_partner_form
-DEL ir.ui.view: membership.view_report_membership_graph1
-DEL ir.ui.view: membership.view_report_membership_pivot
-DEL ir.ui.view: membership.view_report_membership_search
-DEL ir.ui.view: membership.view_res_partner_member_filter
 NEW res.partner.grade: partnership.res_partner_grade_data_bronze [renamed from website_crm_partner_assign module]
 NEW res.partner.grade: partnership.res_partner_grade_data_gold [renamed from website_crm_partner_assign module]
 NEW res.partner.grade: partnership.res_partner_grade_data_silver [renamed from website_crm_partner_assign module]

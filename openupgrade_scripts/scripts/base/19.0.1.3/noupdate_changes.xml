@@ -26,6 +26,10 @@
   <record id="ch_and_li" model="res.country.group">
     <field name="code">CH-LI</field>
   </record>
+  <record id="dom-tom" model="res.country.group">
+    <field name="country_ids" eval="[Command.set([                 ref('yt'),ref('gp'),ref('mq'),ref('gf'),ref('re'),                 ref('pf'),ref('pm'),ref('mf'),ref('bl'),ref('nc'),             ])]"/>
+    <field name="code">DOM-TOM</field>
+  </record>
   <record id="eurasian_economic_union" model="res.country.group">
     <field name="code">EEU</field>
   </record>
@@ -56,9 +60,6 @@
   <record id="kz" model="res.country">
     <field eval="'%(street)s\n%(street2)s\n%(city)s\n%(state_name)s\n%(country_name)s'" name="address_format"/>
     <field name="state_required">1</field>
-  </record>
-  <record id="partner_admin" model="res.partner">
-    <field name="email"/>
   </record>
   <record id="pf" model="res.country">
     <field name="vat_label">VAT</field>

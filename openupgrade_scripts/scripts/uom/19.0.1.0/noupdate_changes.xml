@@ -1,5 +1,8 @@
 <?xml version='1.0' encoding='utf-8'?>
 <odoo>
+  <record id="decimal_product_uom" model="decimal.precision" forcecreate="True">
+    <field name="name">Product Unit</field>
+  </record>
   <record id="product_uom_cm" model="uom.uom">
     <field name="factor" eval="0.0"/>
     <field name="active" eval="False"/>

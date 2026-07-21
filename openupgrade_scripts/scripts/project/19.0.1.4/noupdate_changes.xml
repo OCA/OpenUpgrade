@@ -96,7 +96,7 @@
         ]</field>
   </record>
   <record id="rating_project_request_email_template" model="mail.template">
-    <field name="active" eval="False"/>
+    <field name="active" eval="True"/>
     <field name="body_html" type="html">
       <div>
         <t t-set="access_token" t-value="object._rating_get_access_token()"/>

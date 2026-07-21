@@ -24,15 +24,15 @@ obsolete model l10n_my_edi.document.status.update [module l10n_my_edi]
 obsolete model mail.resend.message [module mail]
 obsolete model mail.resend.partner [module mail]
 obsolete model mail.wizard.invite (renamed to mail.followers.edit) [module mail]
-obsolete model membership.invoice [module partnership]
-obsolete model membership.membership_line [module partnership]
+obsolete model membership.invoice [module membership]
+obsolete model membership.membership_line [module membership]
 obsolete model mrp.batch.produce (renamed to mrp.production.serials) [module mrp]
 obsolete model payment.provider.onboarding.wizard [module payment]
 obsolete model procurement.group (renamed to stock.reference) [module stock]
 obsolete model product.fetch.image.wizard [module product_images]
 obsolete model product.packaging (renamed to product.uom) [module product]
 obsolete model project.create.invoice [module sale_timesheet]
-obsolete model report.membership [module partnership]
+obsolete model report.membership [module membership]
 obsolete model report.pos_hr.multi_employee_sales_report [module pos_hr]
 obsolete model res.partner.autocomplete.sync [module partner_autocomplete]
 obsolete model res.partner.title [module base]
@@ -136,7 +136,7 @@ new model website.technical.page [module website]
 # Found in other module: 143
 # Found with different type: 32
 # In obsolete models: 207
-# New columns: 1788
+# New columns: 1798
 # Not matched: 1002
 ---XML records in module 'general'---
 ---Probably obsolete module l10n_in_ewaybill_port---
@@ -167,6 +167,67 @@ DEL ir.ui.view: l10n_mx_hr.hr_employee_form
 DEL ir.ui.view: l10n_uy_website_sale.address
 DEL ir.ui.view: l10n_uy_website_sale.partner_info
 DEL ir.ui.view: l10n_uy_website_sale.portal_my_details_fields
+---Probably obsolete module membership---
+---Models in module 'membership'---
+obsolete model membership.invoice [transient]
+obsolete model membership.membership_line
+obsolete model report.membership [sql_view]
+---Fields in module 'membership'---
+membership   / membership.membership_line / account_invoice_line (many2one): DEL relation: account.move.line
+membership   / membership.membership_line / company_id (many2one)         : DEL relation: res.company
+membership   / membership.membership_line / date (date)                   : DEL
+membership   / membership.membership_line / date_cancel (date)            : DEL
+membership   / membership.membership_line / date_from (date)              : DEL
+membership   / membership.membership_line / date_to (date)                : DEL
+membership   / membership.membership_line / member_price (float)          : DEL required
+membership   / membership.membership_line / membership_id (many2one)      : DEL relation: product.product, required
+membership   / membership.membership_line / partner (many2one)            : DEL relation: res.partner
+membership   / membership.membership_line / state (selection)             : DEL selection_keys: ['canceled', 'free', 'invoiced', 'none', 'old', 'paid', 'waiting']
+membership   / product.template         / membership (boolean)          : DEL
+membership   / product.template         / membership_date_from (date)   : DEL
+membership   / product.template         / membership_date_to (date)     : DEL
+membership   / res.partner              / associate_member (many2one)   : DEL relation: res.partner
+membership   / res.partner              / free_member (boolean)         : DEL
+membership   / res.partner              / member_lines (one2many)       : DEL relation: membership.membership_line
+membership   / res.partner              / membership_amount (float)     : DEL
+membership   / res.partner              / membership_cancel (date)      : DEL
+membership   / res.partner              / membership_start (date)       : DEL
+membership   / res.partner              / membership_state (selection)  : DEL selection_keys: ['canceled', 'free', 'invoiced', 'none', 'old', 'paid', 'waiting']
+membership   / res.partner              / membership_stop (date)        : DEL
+---XML records in module 'membership'---
+DEL ir.actions.act_window: membership.action_membership_invoice_view
+DEL ir.actions.act_window: membership.action_membership_members
+DEL ir.actions.act_window: membership.action_membership_products
+DEL ir.actions.act_window: membership.action_report_membership_tree
+DEL ir.actions.act_window.view: membership.action_membership_members_view_form
+DEL ir.actions.act_window.view: membership.action_membership_members_view_kanban
+DEL ir.actions.act_window.view: membership.action_membership_members_view_tree
+DEL ir.actions.act_window.view: membership.action_membership_product_view_form
+DEL ir.actions.act_window.view: membership.action_membership_product_view_kanban
+DEL ir.actions.act_window.view: membership.action_membership_product_view_tree
+DEL ir.cron: membership.ir_cron_update_membership (noupdate)
+DEL ir.model.access: membership.access_membership_invoice
+DEL ir.model.access: membership.access_membership_membership_line_employee
+DEL ir.model.access: membership.access_membership_membership_line_partner_manager
+DEL ir.model.access: membership.access_report_membership
+DEL ir.model.constraint: membership.constraint_product_template_membership_date_greater
+DEL ir.ui.menu: membership.menu_association
+DEL ir.ui.menu: membership.menu_marketing_config_association
+DEL ir.ui.menu: membership.menu_membership
+DEL ir.ui.menu: membership.menu_membership_products
+DEL ir.ui.menu: membership.menu_report_membership
+DEL ir.ui.view: membership.membership_members_tree
+DEL ir.ui.view: membership.membership_product_search_form_view
+DEL ir.ui.view: membership.membership_products_form
+DEL ir.ui.view: membership.membership_products_kanban
+DEL ir.ui.view: membership.membership_products_tree
+DEL ir.ui.view: membership.report_membership_view_tree
+DEL ir.ui.view: membership.view_membership_invoice_view
+DEL ir.ui.view: membership.view_partner_form
+DEL ir.ui.view: membership.view_report_membership_graph1
+DEL ir.ui.view: membership.view_report_membership_pivot
+DEL ir.ui.view: membership.view_report_membership_search
+DEL ir.ui.view: membership.view_res_partner_member_filter
 ---Probably obsolete module pos_paytm---
 ---Models in module 'pos_paytm'---
 ---Fields in module 'pos_paytm'---

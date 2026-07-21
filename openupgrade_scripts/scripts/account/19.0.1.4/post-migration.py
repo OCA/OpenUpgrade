@@ -189,6 +189,7 @@ def migrate(env, version):
         [
             "email_template_edi_credit_note",
             "email_template_edi_invoice",
+            "email_template_edi_self_billing_credit_note",
             "mail_template_data_payment_receipt",
         ],
         ["body_html"],
