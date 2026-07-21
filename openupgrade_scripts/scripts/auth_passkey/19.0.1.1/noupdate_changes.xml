@@ -2,9 +2,5 @@
 <odoo>
   <record id="rule_auth_passkey_key_user" model="ir.rule">
     <field name="groups" eval="[             (4, ref('base.group_portal')),             (4, ref('base.group_user')),         ]"/>
-    <field name="perm_create" eval="False"/>
-    <field name="perm_read" eval="False"/>
-    <field name="perm_unlink" eval="False"/>
-    <field name="perm_write" eval="False"/>
   </record>
 </odoo>

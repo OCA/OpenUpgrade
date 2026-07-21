@@ -1,0 +1,7 @@
+---Models in module 'account_payment_interco'---
+---Fields in module 'account_payment_interco'---
+account_payment_interco / res.company              / account_interco_clearing_journal_id (many2one): NEW relation: account.journal
+account_payment_interco / res.company              / account_interco_payable_id (many2one): NEW relation: account.account
+account_payment_interco / res.company              / account_interco_receivable_id (many2one): NEW relation: account.account
+---XML records in module 'account_payment_interco'---
+NEW ir.ui.view: account_payment_interco.res_config_settings_view_form

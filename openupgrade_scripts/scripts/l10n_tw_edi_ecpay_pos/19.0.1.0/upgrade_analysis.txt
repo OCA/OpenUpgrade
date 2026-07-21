@@ -1,0 +1,10 @@
+---Models in module 'l10n_tw_edi_ecpay_pos'---
+---Fields in module 'l10n_tw_edi_ecpay_pos'---
+l10n_tw_edi_ecpay_pos / pos.order                / l10n_tw_edi_carrier_number (char): NEW
+l10n_tw_edi_ecpay_pos / pos.order                / l10n_tw_edi_carrier_number_2 (char): NEW
+l10n_tw_edi_ecpay_pos / pos.order                / l10n_tw_edi_carrier_type (selection): NEW selection_keys: ['1', '2', '3', '4', '5']
+l10n_tw_edi_ecpay_pos / pos.order                / l10n_tw_edi_is_print (boolean): NEW
+l10n_tw_edi_ecpay_pos / pos.order                / l10n_tw_edi_love_code (char)  : NEW
+---XML records in module 'l10n_tw_edi_ecpay_pos'---
+NEW ir.ui.view: l10n_tw_edi_ecpay_pos.view_pos_order_form_inherit_ecpay
+NEW res.partner: l10n_tw_edi_ecpay_pos.ecpay_default_walk_in_customer (noupdate)

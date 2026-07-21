@@ -1,5 +1,11 @@
 <?xml version='1.0' encoding='utf-8'?>
 <odoo>
+  <record id="holiday_status_extra_hours" model="hr.leave.type">
+    <field name="icon_id" ref="hr_holidays.icon_4"/>
+    <field name="requires_allocation">False</field>
+    <field name="country_id" eval="False"/>
+    <field name="hide_on_dashboard">True</field>
+  </record>
   <record id="hr_holidays_status_rule_multi_company" model="ir.rule">
     <field name="domain_force">[
             '|', 
