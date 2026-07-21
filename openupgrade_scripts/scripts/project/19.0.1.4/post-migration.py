@@ -52,16 +52,6 @@ def project_task_type_rating(env):
             task_type.write(vals)
 
 
-def rating_project_request_email_template_active(env):
-    """
-    Set project.rating_project_request_email_template's active flag based on rating
-    being active for some task type
-    """
-    env.ref("project.rating_project_request_email_template").active = bool(
-        env["project.task.type"].search([("rating_active", "=", True)])
-    )
-
-
 def project_task_priority(env):
     """
     Map priorities of "1" (v18 high) to "2" (v19 high), but only if there are no
@@ -88,13 +78,11 @@ def project_task_priority(env):
 def migrate(env, version):
     project_project_allow_recurring_tasks(env)
     project_task_type_rating(env)
-    rating_project_request_email_template_active(env)
     project_task_priority(env)
     openupgrade.load_data(
         env,
         "project",
         "19.0.1.4/noupdate_changes.xml",
-        xml_transformation_filename="19.0.1.4/noupdate_changes-transformation.xml",
     )
     openupgrade.delete_record_translations(
         env.cr,

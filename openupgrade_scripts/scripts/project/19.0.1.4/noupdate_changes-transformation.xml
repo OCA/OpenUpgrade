@@ -1,5 +1,0 @@
-<?xml version='1.0' encoding='utf-8'?>
-<odoo>
-    <!-- don't set template inactive unconditionally, happens in post-migration -->
-    <xpath expr="./record[@id='rating_project_request_email_template']/field[@name='active']" position="replace" />
-</odoo>
