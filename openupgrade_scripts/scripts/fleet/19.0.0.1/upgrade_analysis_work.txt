@@ -1,0 +1,74 @@
+---Models in module 'fleet'---
+new model fleet.vehicle.odometer.report [sql_view]
+# NOTHING TO DO
+
+---Fields in module 'fleet'---
+fleet        / fleet.vehicle            / co2_emission_unit (selection) : NEW required, selection_keys: ['g/km', 'g/mi'], isfunction: function, stored
+# DONE: added column and SQL computation in pre-migration
+
+fleet        / fleet.vehicle            / contract_date_start (date)    : NEW hasdefault: default
+fleet        / fleet.vehicle            / first_contract_date (date)    : DEL
+# DONE: renamed in pre-migration
+
+fleet        / fleet.vehicle            / horsepower (integer)          : type is now 'float' ('integer')
+# NOTHING TO DO
+
+fleet        / fleet.vehicle            / model_year (char)             : selection_keys is now 'function' ('False')
+fleet        / fleet.vehicle            / model_year (char)             : type is now 'selection' ('char')
+# DONE: normalized value in end-migration
+
+fleet        / fleet.vehicle            / plan_to_change_bike (boolean) : not related anymore
+fleet        / fleet.vehicle            / plan_to_change_car (boolean)  : not related anymore
+# NOTHING TO DO: has been stored before
+
+fleet        / fleet.vehicle            / power (integer)               : type is now 'float' ('integer')
+# NOTHING TO DO
+
+fleet        / fleet.vehicle            / range_unit (selection)        : NEW required, selection_keys: ['km', 'mi'], hasdefault: default
+# DONE: added column with default km
+
+fleet        / fleet.vehicle.log.services / brand_id (many2one)           : NEW relation: fleet.vehicle.model.brand, isrelated: related, stored
+fleet        / fleet.vehicle.log.services / model_id (many2one)           : NEW relation: fleet.vehicle.model, isrelated: related, stored
+# DONE: added in pre-migration and filled with SQL
+
+fleet        / fleet.vehicle.model      / drive_type (selection)        : NEW selection_keys: ['4wd', 'awd', 'fwd', 'rwd']
+fleet        / fleet.vehicle.model      / horsepower (integer)          : type is now 'float' ('integer')
+# NOTHING TO DO
+
+fleet        / fleet.vehicle.model      / model_year (integer)          : selection_keys is now 'function' ('False')
+fleet        / fleet.vehicle.model      / model_year (integer)          : type is now 'selection' ('integer')
+# DONE: normalized value in end-migration
+
+fleet        / fleet.vehicle.model      / power (integer)               : type is now 'float' ('integer')
+fleet        / fleet.vehicle.model      / range_unit (selection)        : NEW required, selection_keys: ['km', 'mi'], hasdefault: default
+# NOTHING TO DO
+
+fleet        / fleet.vehicle.odometer   / driver_id (many2one)          : is now stored
+fleet        / fleet.vehicle.odometer   / driver_id (many2one)          : not related anymore
+# DONE: added column and filled with SQL in pre-migration
+
+fleet        / fleet.vehicle.state      / fold (boolean)                : NEW
+fleet        / res.partner              / plan_to_change_bike (boolean) : DEL
+fleet        / res.partner              / plan_to_change_car (boolean)  : DEL
+# NOTHING TO DO
+
+---XML records in module 'fleet'---
+NEW fleet.vehicle.model.brand: fleet.brand_gmc
+NEW ir.actions.act_window: fleet.fleet_vehicle_odometer_reporting_action
+NEW ir.model.access: fleet.access_fleet_vehicle_odometer_report_manager
+DEL ir.module.category: fleet.module_fleet_category
+# NOTHING TO DO
+
+DEL ir.rule: fleet.fleet_rule_contract_visibility_user (noupdate)
+DEL ir.rule: fleet.fleet_rule_odometer_visibility_user (noupdate)
+DEL ir.rule: fleet.fleet_rule_service_visibility_user (noupdate)
+DEL ir.rule: fleet.fleet_rule_vehicle_visibility_user (noupdate)
+# DONE: deleted in post-migration
+
+NEW ir.ui.menu: fleet.menu_fleet_odometer_reporting_odometer
+NEW ir.ui.view: fleet.fleet_vehicle_odometer_report_view_graph
+NEW ir.ui.view: fleet.fleet_vehicle_odometer_report_view_search
+NEW ir.ui.view: fleet.fleet_vehicle_view_form_quick_create
+DEL ir.ui.view: fleet.fleet_vehicle_odometer_view_kanban
+NEW res.groups.privilege: fleet.res_groups_privilege_fleet
+# NOTHING TO DO
