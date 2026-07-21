@@ -42,7 +42,6 @@ merged_modules = {
     "pos_epson_printer": "point_of_sale",
     "pos_self_order_epson_printer": "pos_self_order",
     "sale_async_emails": "sale",
-    "website_membership": "website_crm_partner_assign",
     "web_editor": "html_editor",
     # odoo/enterprise
     # OCA/account-invoicing
