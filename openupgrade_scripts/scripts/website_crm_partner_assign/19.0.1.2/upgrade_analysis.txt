@@ -13,11 +13,6 @@ DEL ir.actions.act_window: website_crm_partner_assign.res_partner_grade_action [
 DEL ir.model.access: website_crm_partner_assign.access_res_partner_grade [renamed to partnership module]
 DEL ir.model.access: website_crm_partner_assign.access_res_partner_grade_employee
 DEL ir.model.access: website_crm_partner_assign.access_res_partner_grade_manager [renamed to partnership module]
-DEL ir.model.access: website_membership.access_membership_membership_line_portal
-DEL ir.model.access: website_membership.access_membership_membership_line_public
-DEL ir.model.access: website_membership.access_membership_product_product_public
-DEL ir.rule: website_membership.membership_membership_line_public (noupdate)
-DEL ir.rule: website_membership.membership_product_product_public (noupdate)
 DEL ir.ui.menu: website_crm_partner_assign.crm_menu_resellers
 DEL ir.ui.menu: website_crm_partner_assign.menu_res_partner_grade_action [renamed to partnership module]
 NEW ir.ui.view: website_crm_partner_assign.contact_details
@@ -26,13 +21,6 @@ DEL ir.ui.view: website_crm_partner_assign.res_partner_grade_view_search
 DEL ir.ui.view: website_crm_partner_assign.snippet_options
 DEL ir.ui.view: website_crm_partner_assign.view_partner_grade_tree
 DEL ir.ui.view: website_crm_partner_assign.view_res_partner_filter_assign
-DEL ir.ui.view: website_membership.index
-DEL ir.ui.view: website_membership.opt_index_country
-DEL ir.ui.view: website_membership.opt_index_google_map
-DEL ir.ui.view: website_membership.partner
-DEL ir.ui.view: website_membership.product_template_view_form
-DEL ir.ui.view: website_membership.product_template_view_tree
-DEL ir.ui.view: website_membership.snippet_options
 DEL res.partner.grade: website_crm_partner_assign.res_partner_grade_data_bronze [renamed to partnership module]
 DEL res.partner.grade: website_crm_partner_assign.res_partner_grade_data_gold [renamed to partnership module]
 DEL res.partner.grade: website_crm_partner_assign.res_partner_grade_data_silver [renamed to partnership module]

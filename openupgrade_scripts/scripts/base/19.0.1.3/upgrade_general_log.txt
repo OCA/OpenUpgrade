@@ -331,6 +331,22 @@ DEL ir.ui.view: website_jitsi.chat_room_join_button
 DEL ir.ui.view: website_jitsi.chat_room_view_form
 DEL ir.ui.view: website_jitsi.chat_room_view_search
 DEL ir.ui.view: website_jitsi.chat_room_view_tree
+---Probably obsolete module website_membership---
+---Models in module 'website_membership'---
+---Fields in module 'website_membership'---
+---XML records in module 'website_membership'---
+DEL ir.model.access: website_membership.access_membership_membership_line_portal
+DEL ir.model.access: website_membership.access_membership_membership_line_public
+DEL ir.model.access: website_membership.access_membership_product_product_public
+DEL ir.rule: website_membership.membership_membership_line_public (noupdate)
+DEL ir.rule: website_membership.membership_product_product_public (noupdate)
+DEL ir.ui.view: website_membership.index
+DEL ir.ui.view: website_membership.opt_index_country
+DEL ir.ui.view: website_membership.opt_index_google_map
+DEL ir.ui.view: website_membership.partner
+DEL ir.ui.view: website_membership.product_template_view_form
+DEL ir.ui.view: website_membership.product_template_view_tree
+DEL ir.ui.view: website_membership.snippet_options
 ---Probably obsolete module website_payment_authorize---
 ---Models in module 'website_payment_authorize'---
 ---Fields in module 'website_payment_authorize'---
