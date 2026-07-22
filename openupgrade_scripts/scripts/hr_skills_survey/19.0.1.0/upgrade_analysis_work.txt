@@ -1,0 +1,15 @@
+---Models in module 'hr_skills_survey'---
+---Fields in module 'hr_skills_survey'---
+hr_skills_survey / hr.resume.line           / department_id (False)         : NEW mode: modify
+hr_skills_survey / hr.resume.line           / department_id (many2one)      : module is now 'hr_skills' ('hr_skills_survey')
+# NOTHING TO DO: Moved field from module
+
+hr_skills_survey / hr.resume.line           / display_type (False)          : DEL selection_keys: ['certification', 'classic'], mode: modify
+# NOTHING TO DO: Odoo has removed the field and distinguish this "type" of resume lines through the links
+
+---XML records in module 'hr_skills_survey'---
+DEL ir.actions.act_window: hr_skills_survey.hr_employee_certification_report_action [renamed to hr_skills module]
+DEL ir.ui.menu: hr_skills_survey.hr_employee_certication_report_menu
+DEL ir.ui.view: hr_skills_survey.hr_employee_certification_report_view_list
+DEL ir.ui.view: hr_skills_survey.hr_resume_line_view_search
+# NOTHING TO DO: noupdate=0 ir stuff
