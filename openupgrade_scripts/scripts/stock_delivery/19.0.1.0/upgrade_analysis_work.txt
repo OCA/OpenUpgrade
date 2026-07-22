@@ -1,0 +1,19 @@
+---Models in module 'stock_delivery'---
+obsolete model choose.delivery.package [transient]
+# NOTHING TO DO
+
+---Fields in module 'stock_delivery'---
+stock_delivery / stock.move.line          / carrier_id (many2one)         : not stored anymore
+# NOTHING TO DO: no existing data needs to be preserved
+
+---XML records in module 'stock_delivery'---
+NEW ir.model.access: stock_delivery.access_delivery_price_rule_stock_user
+NEW ir.model.access: stock_delivery.access_delivery_zip_prefix_stock_user
+DEL ir.model.access: stock_delivery.access_choose_delivery_package
+NEW ir.ui.view: stock_delivery.alternative_zpl_label
+NEW ir.ui.view: stock_delivery.normal_zpl_label
+NEW ir.ui.view: stock_delivery.stock_package_view_form
+NEW ir.ui.view: stock_delivery.stock_put_in_pack_form
+DEL ir.ui.view: stock_delivery.choose_delivery_package_view_form
+DEL ir.ui.view: stock_delivery.view_quant_package_weight_form
+# NOTHING TO DO
