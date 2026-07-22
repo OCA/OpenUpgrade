@@ -60,6 +60,8 @@ merged_modules = {
     "sale_order_warn_message": "sale",
     # OCA/stock-logistics-workflow
     "stock_picking_show_return": "stock",
+    # OCA/vertical-association
+    "membership_extension": "membership",
 }
 
 # only used here for upgrade_analysis
