@@ -1,0 +1,9 @@
+<odoo>
+    <!-- force create rule records -->
+    <record id="hr_attendance_overtime_employee_schedule_rule" position="attributes">
+        <attribute name="forcecreate">1</attribute>
+    </record>
+    <record id="hr_attendance_overtime_non_working_days_rule" position="attributes">
+        <attribute name="forcecreate">1</attribute>
+    </record>
+</odoo>

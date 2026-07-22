@@ -1,0 +1,178 @@
+---Models in module 'hr_attendance'---
+obsolete model hr.attendance.overtime (renamed to hr.attendance.overtime.line)
+new model hr.attendance.overtime.line (renamed from hr.attendance.overtime)
+
+# DONE: renamed in pre-migration
+
+new model hr.attendance.overtime.rule
+new model hr.attendance.overtime.ruleset
+
+# NOTHING TO DO
+
+---Fields in module 'hr_attendance'---
+hr_attendance / hr.attendance            / date (date)                   : NEW required, isfunction: function, stored
+
+# DONE: precreated
+
+hr_attendance / hr.attendance            / in_city (char)                : DEL
+
+# DONE: renamed to in_location
+
+hr_attendance / hr.attendance            / in_country_name (char)        : DEL
+
+# NOTHING TO DO
+
+hr_attendance / hr.attendance            / in_location (char)            : NEW
+
+# DONE: renamed from in_city
+
+hr_attendance / hr.attendance            / linked_overtime_ids (many2many): NEW relation: hr.attendance.overtime.line, hasdefault: compute, stored: False
+
+# NOTHING TO DO
+
+hr_attendance / hr.attendance            / out_city (char)               : DEL
+
+# DONE: renamed to in_location
+
+hr_attendance / hr.attendance            / out_country_name (char)       : DEL
+
+# NOTHING TO DO
+
+hr_attendance / hr.attendance            / out_location (char)           : NEW
+
+# DONE: renamed from out_city
+
+hr_attendance / hr.attendance            / validated_overtime_hours (float): now a function
+
+# DONE: computed in pre-migration
+
+hr_attendance / hr.attendance.overtime   / _order                        : _order is now 'time_start' ('date desc')
+hr_attendance / hr.attendance.overtime   / adjustment (boolean)          : DEL
+
+# NOTHING TO DO
+
+hr_attendance / hr.attendance.overtime   / date (date)                   : now required
+
+# DONE: filled in pre-migration if unset
+
+hr_attendance / hr.attendance.overtime   / duration_real (float)         : DEL
+
+# DONE: renamed to manual_duration
+
+hr_attendance / hr.attendance.overtime.line / amount_rate (float)           : NEW required, hasdefault: default
+
+# NOTHING TO DO
+
+hr_attendance / hr.attendance.overtime.line / manual_duration (float)       : NEW hasdefault: compute
+
+# DONE: renamed from duration_real
+
+hr_attendance / hr.attendance.overtime.line / rule_ids (many2many)          : NEW relation: hr.attendance.overtime.rule
+
+# NOTHING TO DO
+
+hr_attendance / hr.attendance.overtime.line / status (selection)            : NEW required, selection_keys: ['approved', 'refused', 'to_approve'], hasdefault: compute
+
+# DONE: precreated with value approved
+
+hr_attendance / hr.attendance.overtime.line / time_start (datetime)         : NEW
+hr_attendance / hr.attendance.overtime.line / time_stop (datetime)          : NEW
+
+# DONE: set to check_in, check_out of some attendance of same employee on same date
+
+hr_attendance / hr.attendance.overtime.rule / amount_rate (float)           : NEW hasdefault: default
+hr_attendance / hr.attendance.overtime.rule / base_off (selection)          : NEW required, selection_keys: ['quantity', 'timing'], hasdefault: default
+hr_attendance / hr.attendance.overtime.rule / description (html)            : NEW
+hr_attendance / hr.attendance.overtime.rule / employee_tolerance (float)    : NEW
+hr_attendance / hr.attendance.overtime.rule / employer_tolerance (float)    : NEW
+hr_attendance / hr.attendance.overtime.rule / expected_hours (float)        : NEW
+hr_attendance / hr.attendance.overtime.rule / expected_hours_from_contract (boolean): NEW hasdefault: default
+hr_attendance / hr.attendance.overtime.rule / name (char)                   : NEW required
+hr_attendance / hr.attendance.overtime.rule / paid (boolean)                : NEW
+hr_attendance / hr.attendance.overtime.rule / quantity_period (selection)   : NEW selection_keys: ['day', 'week'], hasdefault: default
+hr_attendance / hr.attendance.overtime.rule / resource_calendar_id (many2one): NEW relation: resource.calendar
+hr_attendance / hr.attendance.overtime.rule / ruleset_id (many2one)         : NEW relation: hr.attendance.overtime.ruleset, required
+hr_attendance / hr.attendance.overtime.rule / sequence (integer)            : NEW hasdefault: default
+hr_attendance / hr.attendance.overtime.rule / timing_start (float)          : NEW hasdefault: default
+hr_attendance / hr.attendance.overtime.rule / timing_stop (float)           : NEW hasdefault: default
+hr_attendance / hr.attendance.overtime.rule / timing_type (selection)       : NEW selection_keys: ['leave', 'non_work_days', 'schedule', 'work_days'], hasdefault: default
+hr_attendance / hr.attendance.overtime.ruleset / active (boolean)              : NEW hasdefault: default
+hr_attendance / hr.attendance.overtime.ruleset / company_id (many2one)         : NEW relation: res.company, hasdefault: default
+hr_attendance / hr.attendance.overtime.ruleset / country_id (many2one)         : NEW relation: res.country, hasdefault: default
+hr_attendance / hr.attendance.overtime.ruleset / description (html)            : NEW
+hr_attendance / hr.attendance.overtime.ruleset / name (char)                   : NEW required
+hr_attendance / hr.attendance.overtime.ruleset / rate_combination_mode (selection): NEW required, selection_keys: ['max', 'sum'], hasdefault: default
+hr_attendance / hr.attendance.overtime.ruleset / rule_ids (one2many)           : NEW relation: hr.attendance.overtime.rule
+hr_attendance / hr.employee              / overtime_ids (one2many)       : relation is now 'hr.attendance.overtime.line' ('hr.attendance.overtime') [nothing to do]
+hr_attendance / hr.version               / ruleset_id (many2one)         : NEW relation: hr.attendance.overtime.ruleset, hasdefault: default
+hr_attendance / res.company              / attendance_device_tracking (boolean): NEW hasdefault: default
+
+# NOTHING TO DO
+
+---XML records in module 'hr_attendance'---
+NEW hr.attendance.overtime.rule: hr_attendance.hr_attendance_overtime_employee_schedule_rule (noupdate)
+NEW hr.attendance.overtime.rule: hr_attendance.hr_attendance_overtime_non_working_days_rule (noupdate)
+
+# DONE: force created records in post-migration, adjusted with legacy company values
+
+NEW hr.attendance.overtime.ruleset: hr_attendance.hr_attendance_default_ruleset (noupdate)
+NEW ir.actions.act_window: hr_attendance.hr_attendance_overtime_rule_action
+NEW ir.actions.act_window: hr_attendance.hr_attendance_overtime_ruleset_action
+DEL ir.actions.act_window: hr_attendance.hr_attendance_overtime_action
+DEL ir.actions.client: hr_attendance.hr_attendance_action_install_kiosk_pwa
+NEW ir.model.access: hr_attendance.access_hr_attendance_overtime_line_officer
+NEW ir.model.access: hr_attendance.access_hr_attendance_overtime_line_own_reader
+NEW ir.model.access: hr_attendance.access_hr_attendance_overtime_rule_admin
+NEW ir.model.access: hr_attendance.access_hr_attendance_overtime_rule_officer
+NEW ir.model.access: hr_attendance.access_hr_attendance_overtime_rule_user
+NEW ir.model.access: hr_attendance.access_hr_attendance_overtime_ruleset_admin
+NEW ir.model.access: hr_attendance.access_hr_attendance_overtime_ruleset_hr_manager
+NEW ir.model.access: hr_attendance.access_hr_attendance_own_reader
+DEL ir.model.access: hr_attendance.access_hr_attendance_admin_overtime
+DEL ir.model.access: hr_attendance.access_hr_attendance_officer_overtime
+DEL ir.model.access: hr_attendance.access_hr_attendance_overtime_user
+NEW ir.model.constraint: hr_attendance.constraint_hr_attendance_overtime_line_overtime_start_before_end
+NEW ir.model.constraint: hr_attendance.constraint_hr_attendance_overtime_rule_timing_start_is_hour
+NEW ir.model.constraint: hr_attendance.constraint_hr_attendance_overtime_rule_timing_stop_is_hour
+NEW ir.rule: hr_attendance.hr_attendance_overtime_line_rule_admin (noupdate)
+NEW ir.rule: hr_attendance.hr_attendance_overtime_line_rule_employee_company (noupdate)
+NEW ir.rule: hr_attendance.hr_attendance_overtime_line_rule_officer (noupdate)
+NEW ir.rule: hr_attendance.hr_attendance_overtime_line_rule_own_reader (noupdate)
+NEW ir.rule: hr_attendance.hr_attendance_overtime_ruleset_rule (noupdate)
+NEW ir.rule: hr_attendance.hr_attendance_overtime_ruleset_rule_group_hr_attendance_manager (noupdate)
+
+# NOTHING TO DO
+
+DEL ir.rule: hr_attendance.hr_attendance_overtime_rule_employee_company (noupdate)
+DEL ir.rule: hr_attendance.hr_attendance_rule_attendance_officer_overtime_restrict (noupdate)
+DEL ir.rule: hr_attendance.hr_attendance_rule_attendance_overtime_admin (noupdate)
+DEL ir.rule: hr_attendance.hr_attendance_rule_attendance_overtime_simple_user (noupdate)
+
+# DONE: deleted in post-migration
+
+NEW ir.ui.menu: hr_attendance.menu_hr_attendance_attendance_reporting
+NEW ir.ui.menu: hr_attendance.menu_hr_attendance_configuration
+NEW ir.ui.menu: hr_attendance.menu_hr_attendance_employee
+NEW ir.ui.menu: hr_attendance.menu_hr_attendance_onboarding
+NEW ir.ui.menu: hr_attendance.menu_hr_attendance_overtime_rulesets
+NEW ir.ui.menu: hr_attendance.menu_hr_attendance_overview
+NEW ir.ui.menu: hr_attendance.menu_hr_attendance_view_dashboard
+DEL ir.ui.menu: hr_attendance.menu_hr_attendance_view_attendances
+NEW ir.ui.view: hr_attendance.hr_attendance_employee_simple_form_view
+NEW ir.ui.view: hr_attendance.hr_attendance_overtime_rule_view_form
+NEW ir.ui.view: hr_attendance.hr_attendance_overtime_rule_view_list
+NEW ir.ui.view: hr_attendance.hr_attendance_overtime_ruleset_view_filter
+NEW ir.ui.view: hr_attendance.hr_attendance_overtime_ruleset_view_form
+NEW ir.ui.view: hr_attendance.hr_attendance_overtime_ruleset_view_list
+NEW ir.ui.view: hr_attendance.hr_employee_public_view_form
+NEW ir.ui.view: hr_attendance.hr_employee_search_view
+DEL ir.ui.view: hr_attendance.hr_attendance_overtime_view_pivot
+DEL ir.ui.view: hr_attendance.hr_attendance_validated_hours_employee_simple_tree_view
+DEL ir.ui.view: hr_attendance.hr_user_view_form
+DEL ir.ui.view: hr_attendance.view_attendance_overtime_graph
+DEL ir.ui.view: hr_attendance.view_attendance_overtime_search
+DEL ir.ui.view: hr_attendance.view_attendance_overtime_tree
+NEW res.groups: hr_attendance.group_hr_attendance_user
+NEW res.groups.privilege: hr_attendance.res_groups_privilege_attendances
+
+# NOTHING TO DO
