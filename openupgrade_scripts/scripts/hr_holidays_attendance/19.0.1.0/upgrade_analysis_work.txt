@@ -1,0 +1,39 @@
+---Models in module 'hr_holidays_attendance'---
+new model hr.leave.attendance.report [sql_view]
+---Fields in module 'hr_holidays_attendance'---
+hr_holidays_attendance / hr.attendance.overtime.line / compensable_as_leave (boolean): NEW
+hr_holidays_attendance / hr.attendance.overtime.rule / compensable_as_leave (boolean): NEW hasdefault: default
+# NOTHING TO DO: New feature to give overtime as time off, and being False the default, it keeps the previous behavior
+
+hr_holidays_attendance / hr.leave                 / employee_overtime (float)     : not related anymore
+hr_holidays_attendance / hr.leave                 / employee_overtime (float)     : now a function
+hr_holidays_attendance / hr.leave.allocation      / employee_overtime (float)     : not related anymore
+hr_holidays_attendance / hr.leave.allocation      / employee_overtime (float)     : now a function
+# NOTHING TO: Non stored field
+
+hr_holidays_attendance / hr.leave                 / overtime_id (many2one)        : DEL relation: hr.attendance.overtime
+hr_holidays_attendance / hr.leave.allocation      / overtime_id (many2one)        : DEL relation: hr.attendance.overtime
+# NOTHING TO DO: No more hard-linking the relation between the overtime and the leave, but computed on the fly
+
+hr_holidays_attendance / hr.leave.accrual.level   / frequency (False)             : NEW selection_keys: ['bimonthly', 'biyearly', 'daily', 'hourly', 'monthly', 'weekly', 'worked_hours', 'yearly'], mode: modify
+hr_holidays_attendance / hr.leave.accrual.level   / frequency_hourly_source (selection): DEL selection_keys: ['attendance', 'calendar']
+# NOTHING TO DO: New accrual way of populating holidays from attendances, but not translatable from the old.
+
+---XML records in module 'hr_holidays_attendance'---
+DEL hr.leave.type: hr_holidays_attendance.holiday_status_extra_hours [renamed to hr_holidays module] (noupdate)
+# NOTHING TO DO: Already renamed on hr_holidays
+
+NEW ir.actions.act_window: hr_holidays_attendance.hr_leave_attendance_report_action
+DEL ir.actions.act_window: hr_holidays_attendance.hr_leave_allocation_overtime_action
+NEW ir.model.access: hr_holidays_attendance.access_hr_leave_attendance_report_manager
+NEW ir.ui.menu: hr_holidays_attendance.hr_leave_attendance_report
+NEW ir.ui.view: hr_holidays_attendance.hr_attendance_employee_simple_tree_view
+NEW ir.ui.view: hr_holidays_attendance.hr_attendance_overtime_rule_view_form
+NEW ir.ui.view: hr_holidays_attendance.hr_leave_attendance_report_view_form
+NEW ir.ui.view: hr_holidays_attendance.hr_leave_attendance_report_view_list
+NEW ir.ui.view: hr_holidays_attendance.hr_leave_attendance_report_view_pivot
+NEW ir.ui.view: hr_holidays_attendance.hr_leave_attendance_report_view_search
+NEW ir.ui.view: hr_holidays_attendance.view_attendance_overtime_line_list
+DEL ir.ui.view: hr_holidays_attendance.hr_leave_allocation_overtime_view_form
+DEL ir.ui.view: hr_holidays_attendance.res_users_view_form
+# NOTHING TO DO: noupdate=0 ir stuff
