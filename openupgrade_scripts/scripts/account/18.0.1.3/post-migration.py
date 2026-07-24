@@ -208,12 +208,29 @@ def _handle_outstanding_accounts(env):
             )
 
 
+def _create_batch_payment_sequence(env):
+    """Creates a Batch Payment Number Sequence for every company that does not
+    have one yet. This covers companies that existed before the ``account``
+    module was installed.
+
+    From https://github.com/odoo/odoo/pull/273905.
+    The sequence is now created when installing the module, but still isn't when
+    migrating from a lower version.
+    This causes errors after migration when making a batch payment.
+    """
+    to_create_seqs = env["res.company"].search(
+        [("batch_payment_sequence_id", "=", False)]
+    )
+    to_create_seqs._create_batch_payment_sequence()
+
+
 @openupgrade.migrate()
 def migrate(env, version):
     handle_lock_dates(env)
     link_payments_to_moves(env)
     account_account_code_fields(env)
     _handle_outstanding_accounts(env)
+    _create_batch_payment_sequence(env)
     openupgrade.m2o_to_x2m(
         env.cr, env["account.account"], "account_account", "company_ids", "company_id"
     )
