@@ -19,6 +19,7 @@ renamed_modules = {
     "commission": "commission_oca",
     "commission_formula": "commission_formula_oca",
     "hr_commission": "hr_commission_oca",
+    "sale_commission_margin": "sale_commission_margin_oca",
     "sale_commission": "sale_commission_oca",
     "sale_commission_product_criteria": "sale_commission_oca_product_criteria",
     "sale_commission_product_criteria_semaphore": "sale_commission_oca_product_criteria_semaphore",  # noqa: E501
