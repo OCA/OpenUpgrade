@@ -215,9 +215,11 @@ account      / res.company              / account_journal_payment_debit_account_
 
 account      / res.company              / account_price_include (selection): NEW required, selection_keys: ['tax_excluded', 'tax_included'], hasdefault: default
 account      / res.company              / autopost_bills (boolean)      : NEW hasdefault: default
-account      / res.company              / batch_payment_sequence_id (many2one): NEW relation: ir.sequence
 account      / res.company              / display_invoice_tax_company_currency (boolean): NEW hasdefault: default
 # NOTHING TO DO: new features
+
+account      / res.company              / batch_payment_sequence_id (many2one): NEW relation: ir.sequence
+# DONE: post-migration: sequence created if it doesn't exist yet
 
 account      / res.company              / country_code (char)           : module is now 'base' ('account')
 # NOTHING TO DO
