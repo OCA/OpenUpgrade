@@ -1,0 +1,23 @@
+---Models in module 'crm_livechat'---
+
+---Fields in module 'crm_livechat'---
+crm_livechat / chatbot.script.step      / step_type (False)             : selection_keys added: [create_lead_and_forward] (most likely nothing to do)
+# NOTHING TO DO: new functionality
+
+crm_livechat / crm.lead                 / origin_channel_id (many2one)  : NEW relation: discuss.channel
+# NOTHING TO DO: empty values are fine for existing records
+
+crm_livechat / discuss.channel          / has_crm_lead (boolean)        : NEW isfunction: function, stored
+# NOTHING TO DO: Handled by ORM
+
+crm_livechat / discuss.channel          / lead_ids (one2many)           : NEW relation: crm.lead
+# NOTHING TO DO: Non stored field
+
+---XML records in module 'crm_livechat'---
+NEW ir.model.constraint: crm_livechat.constraint_discuss_channel_has_crm_lead_index
+NEW ir.rule: crm_livechat.ir_rule_discuss_channel_crm_lead (noupdate)
+NEW ir.rule: crm_livechat.ir_rule_discuss_channel_member_crm_lead (noupdate)
+NEW ir.ui.view: crm_livechat.crm_lead_view_form
+NEW ir.ui.view: crm_livechat.discuss_channel_view_form
+
+# NOTHING TO DO
