@@ -101,6 +101,21 @@ def hr_employee_bank_account_ids(env):
     openupgrade.m2o_to_x2m(
         env.cr, env["hr.employee"], "hr_employee", "bank_account_ids", "bank_account_id"
     )
+    # Set salary distribution to avoid error on _compute_primary_bank_account_id
+    env.cr.execute(
+        """
+        UPDATE hr_employee
+        SET salary_distribution = json_build_object(
+            bank_account_id::text,
+            json_build_object(
+                'amount', 100.0,
+                'sequence', 1,
+                'amount_is_percentage', true
+            )
+        )
+        WHERE bank_account_id IS NOT NULL
+        """
+    )
 
 
 def hr_employee_notes(env):

@@ -135,6 +135,8 @@ hr           / hr.employee              / resource_calendar_id (many2one): not s
 # DONE: post-migration: copied to hr.version when an employee does not have a contract
 
 hr           / hr.employee              / salary_distribution (json)    : NEW hasdefault: compute
+# DONE: post-migration: set to {"<bank_account_id>": {'amount', 100.0, 'sequence', 1, 'amount_is_percentage', true}}
+
 hr           / hr.employee              / sinid (char)                  : DEL
 
 # NOTHING TO DO
