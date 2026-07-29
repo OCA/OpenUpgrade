@@ -1,0 +1,21 @@
+---Models in module 'calendar'---
+---Fields in module 'calendar'---
+calendar     / calendar.alarm           / notify_responsible (boolean)  : NEW hasdefault: default
+# DONE: pre-migration: renamed from sms_notify_responsible (from calendar_sms)
+
+calendar     / calendar.event           / notes (html)                  : NEW
+# NOTHING TO DO: new feature
+
+calendar     / calendar.event           / unavailable_partner_ids (many2many): previously in module hr_calendar
+# NOTHING TO DO: nothing changed in the field
+
+calendar     / discuss.channel          / calendar_event_ids (one2many) : NEW relation: calendar.event
+# NOTHING TO DO: one2many
+
+---XML records in module 'calendar'---
+NEW ir.actions.act_window: calendar.action_event_delete_wizard
+NEW ir.config_parameter: calendar.default_privacy (noupdate)
+NEW ir.ui.view: calendar.view_event_delete_wizard_form
+DEL ir.ui.view: calendar.res_partner_kanban_view
+NEW mail.template: calendar.calendar_template_delete_event (noupdate)
+# NOTHING TO DO
