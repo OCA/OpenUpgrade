@@ -1,4 +1,8 @@
+import logging
+
 from openupgradelib import openupgrade
+
+_logger = logging.getLogger(__name__)
 
 
 def _convert_project_task_assigned_users(env):
@@ -70,6 +74,19 @@ def _fill_project_task_display_project_id(env):
     )
 
 
+def _activate_project_stages_conditionally(env):
+    """Activate project stages if module project_status was installed"""
+    if openupgrade.column_exists(
+        env.cr,
+        "project_project_stage",
+        openupgrade.get_legacy_name("description"),
+    ):
+        _logger.info("project_status module was installed so enable project stages")
+        internal_group = env.ref("base.group_user")
+        stage_group = env.ref("project.group_project_stages")
+        internal_group.implied_ids += stage_group
+
+
 @openupgrade.migrate()
 def migrate(env, version):
     _convert_project_task_assigned_users(env)
@@ -77,6 +94,7 @@ def migrate(env, version):
     _add_followers_to_project_for_allowed_portal_users(env)
     _add_followers_to_task_for_allowed_users(env)
     _fill_project_task_display_project_id(env)
+    _activate_project_stages_conditionally(env)
     openupgrade.load_data(env.cr, "project", "15.0.1.2/noupdate_changes.xml")
     openupgrade.delete_record_translations(
         env.cr,
