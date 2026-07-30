@@ -126,6 +126,17 @@ merged_modules = {
     "website_snippet_timeline": "website",
 }
 
+# Deleted modules
+deleted_modules = [
+    # odoo
+    "adyen_platforms",
+    "l10n_bg",
+    "l10n_ch_qriban",
+    "odoo_referral",
+    "payment_odoo_by_adyen",
+    # OCA/...
+]
+
 # only used here for upgrade_analysis
 renamed_models = {
     # odoo
