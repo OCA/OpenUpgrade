@@ -1,0 +1,20 @@
+---Models in module 'website_livechat'---
+---Fields in module 'website_livechat'---
+website_livechat / discuss.channel          / is_pending_chat_request (boolean): NEW
+# NOTHING TO DO
+
+website_livechat / im_livechat.channel      / is_published (boolean)        : DEL
+website_livechat / im_livechat.channel      / website_description (html)    : DEL
+# NOTHING TO DO
+
+---XML records in module 'website_livechat'---
+DEL ir.model.access: website_livechat.access_im_livechat_channel_public_employee
+DEL ir.model.access: website_livechat.access_im_livechat_channel_public_portal
+DEL ir.model.access: website_livechat.access_im_livechat_channel_public_public
+DEL ir.ui.view: website_livechat.channel_list_page
+DEL ir.ui.view: website_livechat.channel_page
+DEL ir.ui.view: website_livechat.im_livechat_channel_form_view
+# NOTHING TO DO
+
+DEL ir.rule: website_livechat.im_livechat_channel_rule_public (noupdate)
+# DONE: post-migration: deleted noupdate rule
