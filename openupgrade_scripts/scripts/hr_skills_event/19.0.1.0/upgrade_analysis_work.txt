@@ -1,0 +1,13 @@
+---Models in module 'hr_skills_event'---
+---Fields in module 'hr_skills_event'---
+hr_skills_event / hr.resume.line           / course_type (False)           : NEW selection_keys: ['external', 'onsite'], mode: modify
+hr_skills_event / hr.resume.line           / event_id (many2one)           : NEW relation: event.event, isfunction: function, stored
+# NOTHING TO DO
+
+---XML records in module 'hr_skills_event'---
+NEW ir.actions.act_window: hr_skills_event.event_training_onsite_action
+NEW ir.ui.menu: hr_skills_event.menu_learnings_training_attendances_onsite
+NEW ir.ui.view: hr_skills_event.resume_slides_line_view_form
+NEW ir.ui.view: hr_skills_event.resume_slides_line_view_kanban
+NEW ir.ui.view: hr_skills_event.resume_slides_line_view_list
+# NOTHING TO DO
