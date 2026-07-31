@@ -1,0 +1,12 @@
+---Models in module 'website_sale_wishlist'---
+---Fields in module 'website_sale_wishlist'---
+website_sale_wishlist / website                  / wishlist_gap (char)           : NEW hasdefault: default
+website_sale_wishlist / website                  / wishlist_grid_columns (integer): NEW hasdefault: default
+website_sale_wishlist / website                  / wishlist_mobile_columns (integer): NEW hasdefault: default
+website_sale_wishlist / website                  / wishlist_opt_products_design_classes (char): NEW hasdefault: default
+# NOTHING TO DO: seem to be new features with default
+
+---XML records in module 'website_sale_wishlist'---
+NEW ir.ui.view: website_sale_wishlist.empty_wishlist_svg
+DEL ir.ui.view: website_sale_wishlist.snippet_options
+# NOTHING TO DO
