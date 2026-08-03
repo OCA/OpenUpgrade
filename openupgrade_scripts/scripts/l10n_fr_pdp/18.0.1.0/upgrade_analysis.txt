@@ -1,99 +1,16 @@
 ---Models in module 'l10n_fr_pdp'---
-new model account.edi.xml.ubl_21_fr [abstract]
-new model l10n.fr.pdp.reports.flow
-new model l10n.fr.pdp.reports.send.wizard [transient]
-new model pdp.flow.10.xml.builder [abstract]
-new model pdp.registration [transient]
-new model pdp.response.wizard [transient]
 ---Fields in module 'l10n_fr_pdp'---
-l10n_fr_pdp  / account.move             / l10n_fr_pdp_flow_10_operation_type (selection): NEW selection_keys: ['purchase', 'sale'], isfunction: function, stored
-l10n_fr_pdp  / account.move             / l10n_fr_pdp_flow_10_report_type (selection): NEW selection_keys: ['payment', 'transaction'], isfunction: function, stored
-l10n_fr_pdp  / account.move             / l10n_fr_pdp_has_error (boolean): NEW isfunction: function, stored
-l10n_fr_pdp  / account.move             / l10n_fr_pdp_last_flow_id (many2one): NEW relation: l10n.fr.pdp.reports.flow, isfunction: function, stored
-l10n_fr_pdp  / account.move             / l10n_fr_pdp_sent_in_flow_ids (many2many): NEW relation: l10n.fr.pdp.reports.flow
-l10n_fr_pdp  / account.move             / l10n_fr_pdp_status (selection): NEW selection_keys: ['completed', 'error', 'error', 'out_of_scope', 'pending', 'ready', 'sent'], isfunction: function, stored
-l10n_fr_pdp  / account.move             / pdp_lifecycle_residual (float): NEW isfunction: function, stored
-l10n_fr_pdp  / account.move             / pdp_ppf_lifecycle_state (selection): NEW selection_keys: ['done', 'error', 'in_progress', 'sent'], isfunction: function, stored
-l10n_fr_pdp  / account.move             / pdp_ppf_move_state (selection): NEW selection_keys: ['done', 'error', 'in_progress', 'sent'], isfunction: function, stored
-l10n_fr_pdp  / account.move             / peppol_move_state (False)     : NEW selection_keys: ['AB', 'AP', 'PD', 'RE', 'cancelled', 'done', 'error', 'made_available', 'processing', 'ready', 'refused', 'skipped', 'submitted', 'to_send'], mode: modify
-l10n_fr_pdp  / account.peppol.response  / pdp_flow_number (selection)   : NEW selection_keys: ['1', '10', '2', '6']
-l10n_fr_pdp  / account.peppol.response  / pdp_issue_date (datetime)     : NEW
-l10n_fr_pdp  / account.peppol.response  / pdp_payment_info (json)       : NEW
-l10n_fr_pdp  / account.peppol.response  / pdp_ppf_state (selection)     : NEW selection_keys: ['error', 'received', 'sent'], isfunction: function, stored
-l10n_fr_pdp  / account.peppol.response  / pdp_ref_response_code (selection): NEW selection_keys: ['AB', 'AP', 'PD', 'RE', 'cancelled', 'made_available', 'refused', 'submitted']
-l10n_fr_pdp  / account.peppol.response  / pdp_ref_uuid (char)           : NEW
-l10n_fr_pdp  / account.peppol.response  / pdp_status_info (text)        : NEW
-l10n_fr_pdp  / account.peppol.response  / response_code (False)         : NEW selection_keys: ['AB', 'AP', 'CA', 'IP', 'PD', 'RE', 'UQ', 'cancelled', 'made_available', 'refused', 'submitted'], mode: modify
-l10n_fr_pdp  / account_edi_proxy_client.user / proxy_type (False)            : NEW selection_keys: ['l10n_it_edi', 'l10n_my_edi', 'nemhandel', 'pdp', 'peppol'], mode: modify
-l10n_fr_pdp  / l10n.fr.pdp.reports.flow / activity_ids (one2many)       : NEW relation: mail.activity
-l10n_fr_pdp  / l10n.fr.pdp.reports.flow / company_id (many2one)         : NEW relation: res.company, required, hasdefault: default
-l10n_fr_pdp  / l10n.fr.pdp.reports.flow / due_period_end (date)         : NEW required
-l10n_fr_pdp  / l10n.fr.pdp.reports.flow / due_period_start (date)       : NEW required
-l10n_fr_pdp  / l10n.fr.pdp.reports.flow / error_move_message (text)     : NEW
-l10n_fr_pdp  / l10n.fr.pdp.reports.flow / initial_flow_id (many2one)    : NEW relation: l10n.fr.pdp.reports.flow
-l10n_fr_pdp  / l10n.fr.pdp.reports.flow / message_follower_ids (one2many): NEW relation: mail.followers
-l10n_fr_pdp  / l10n.fr.pdp.reports.flow / message_ids (one2many)        : NEW relation: mail.message
-l10n_fr_pdp  / l10n.fr.pdp.reports.flow / name (char)                   : NEW
-l10n_fr_pdp  / l10n.fr.pdp.reports.flow / operation_type (selection)    : NEW required, selection_keys: ['purchase', 'sale'], hasdefault: default
-l10n_fr_pdp  / l10n.fr.pdp.reports.flow / pdp_flow_id (char)            : NEW
-l10n_fr_pdp  / l10n.fr.pdp.reports.flow / period_end (date)             : NEW required
-l10n_fr_pdp  / l10n.fr.pdp.reports.flow / period_start (date)           : NEW required
-l10n_fr_pdp  / l10n.fr.pdp.reports.flow / periodicity_code (char)       : NEW
-l10n_fr_pdp  / l10n.fr.pdp.reports.flow / rating_ids (one2many)         : NEW relation: rating.rating
-l10n_fr_pdp  / l10n.fr.pdp.reports.flow / rectificative_flow_ids (one2many): NEW relation: l10n.fr.pdp.reports.flow
-l10n_fr_pdp  / l10n.fr.pdp.reports.flow / report_type (selection)       : NEW required, selection_keys: ['payment', 'transaction'], hasdefault: default
-l10n_fr_pdp  / l10n.fr.pdp.reports.flow / sent_move_ids (many2many)     : NEW relation: account.move
-l10n_fr_pdp  / l10n.fr.pdp.reports.flow / state (selection)             : NEW required, selection_keys: ['completed', 'error', 'ready', 'sent'], hasdefault: default
-l10n_fr_pdp  / l10n.fr.pdp.reports.flow / transport_message (text)      : NEW
-l10n_fr_pdp  / l10n.fr.pdp.reports.flow / transport_status (char)       : NEW
-l10n_fr_pdp  / l10n.fr.pdp.reports.flow / website_message_ids (one2many): NEW relation: mail.message
-l10n_fr_pdp  / res.company              / l10n_fr_f10_enable_reporting (boolean): NEW isfunction: function, stored
-l10n_fr_pdp  / res.company              / l10n_fr_pdp_annuaire_start_date (date): NEW
-l10n_fr_pdp  / res.company              / l10n_fr_pdp_periodicity (selection): NEW required, selection_keys: ['normal_monthly', 'normal_quarterly', 'simplified_bimonthly', 'simplified_monthly'], hasdefault: default
-l10n_fr_pdp  / res.company              / l10n_fr_pdp_pilot_phase (boolean): NEW
-l10n_fr_pdp  / res.company              / l10n_fr_pdp_send_to_ppf (boolean): NEW hasdefault: default
-l10n_fr_pdp  / res.company              / pdp_authentication_uuid (char): NEW
-l10n_fr_pdp  / res.company              / pdp_kyc_status (selection)    : NEW selection_keys: ['fail', 'processing', 'success']
+l10n_fr_pdp  / account.move             / peppol_move_state (False)     : selection_keys removed: [canceled]
+l10n_fr_pdp  / account_edi_proxy_client.user / proxy_type (False)            : selection_keys added: [nemhandel] (most likely nothing to do)
 l10n_fr_pdp  / res.partner              / invoice_edi_format (False)    : NEW selection_keys: ['ciusro', 'es_facturae', 'fa3_pl', 'facturx', 'it_edi_xml', 'nlcius', 'oioubl_201', 'oioubl_21', 'pint_anz', 'pint_jp', 'pint_my', 'pint_sg', 'tw_ecpay', 'ubl_21_fr', 'ubl_a_nz', 'ubl_bis3', 'ubl_hr', 'ubl_sg', 'ubl_tr', 'vn_sinvoice', 'xrechnung', 'zugferd'], mode: modify
+l10n_fr_pdp  / res.partner              / ubl_cii_format (False)        : DEL selection_keys: ['ciusro', 'facturx', 'nlcius', 'oioubl_201', 'pint_anz', 'pint_jp', 'pint_my', 'pint_sg', 'ubl_21_fr', 'ubl_a_nz', 'ubl_bis3', 'ubl_sg', 'ubl_tr', 'xrechnung', 'zugferd'], mode: modify
 ---XML records in module 'l10n_fr_pdp'---
-NEW ir.actions.act_window: l10n_fr_pdp.l10n_fr_pdp_action_send_wizard
-NEW ir.actions.act_window: l10n_fr_pdp.l10n_fr_pdp_reports_action_error_moves
-NEW ir.actions.act_window: l10n_fr_pdp.l10n_fr_pdp_reports_action_flows
 NEW ir.actions.server: l10n_fr_pdp.l10n_fr_pdp_action_open_response_wizard
-NEW ir.actions.server: l10n_fr_pdp.l10n_fr_pdp_reports_action_build_multi
-NEW ir.cron: l10n_fr_pdp.ir_cron_l10n_fr_pdp_generate_flows (noupdate)
-NEW ir.cron: l10n_fr_pdp.ir_cron_pdp_get_regulatory_documents
-NEW ir.cron: l10n_fr_pdp.ir_cron_pdp_send_lifecycles
-NEW ir.model.access: l10n_fr_pdp.l10n_fr_pdp_registration
-NEW ir.model.access: l10n_fr_pdp.l10n_fr_pdp_reports_flow_invoice
-NEW ir.model.access: l10n_fr_pdp.l10n_fr_pdp_reports_flow_manager
-NEW ir.model.access: l10n_fr_pdp.l10n_fr_pdp_reports_flow_readonly
-NEW ir.model.access: l10n_fr_pdp.l10n_fr_pdp_reports_flow_user
-NEW ir.model.access: l10n_fr_pdp.l10n_fr_pdp_reports_send_wizard_manager
-NEW ir.model.access: l10n_fr_pdp.l10n_fr_pdp_reports_send_wizard_user
-NEW ir.model.access: l10n_fr_pdp.l10n_fr_pdp_response_wizard
-NEW ir.model.constraint: l10n_fr_pdp.constraint_account_edi_proxy_client_user__peppol_proxy_types_conflict
-NEW ir.ui.menu: l10n_fr_pdp.l10n_fr_pdp_reports_menu_flows
-NEW ir.ui.view: l10n_fr_pdp.account_journal_dashboard_kanban_view
-NEW ir.ui.view: l10n_fr_pdp.account_peppol_response_view_form
-NEW ir.ui.view: l10n_fr_pdp.account_peppol_response_view_list
-NEW ir.ui.view: l10n_fr_pdp.l10n_fr_pdp_reports_view_flow_form
-NEW ir.ui.view: l10n_fr_pdp.l10n_fr_pdp_reports_view_flow_list
-NEW ir.ui.view: l10n_fr_pdp.l10n_fr_pdp_reports_view_flow_search
 NEW ir.ui.view: l10n_fr_pdp.l10n_fr_pdp_reports_view_in_invoice_tree
-NEW ir.ui.view: l10n_fr_pdp.l10n_fr_pdp_reports_view_move_form
 NEW ir.ui.view: l10n_fr_pdp.l10n_fr_pdp_reports_view_move_kanban
 NEW ir.ui.view: l10n_fr_pdp.l10n_fr_pdp_reports_view_move_search
 NEW ir.ui.view: l10n_fr_pdp.l10n_fr_pdp_reports_view_out_credit_note_tree
 NEW ir.ui.view: l10n_fr_pdp.l10n_fr_pdp_reports_view_out_invoice_tree
-NEW ir.ui.view: l10n_fr_pdp.l10n_fr_pdp_view_account_invoice_filter
-NEW ir.ui.view: l10n_fr_pdp.l10n_fr_pdp_view_in_bill_tree_inherit
-NEW ir.ui.view: l10n_fr_pdp.l10n_fr_pdp_view_in_invoice_refund_tree_inherit
-NEW ir.ui.view: l10n_fr_pdp.l10n_fr_pdp_view_move_form
 NEW ir.ui.view: l10n_fr_pdp.l10n_fr_pdp_view_out_credit_note_tree
 NEW ir.ui.view: l10n_fr_pdp.l10n_fr_pdp_view_out_invoice_tree
-NEW ir.ui.view: l10n_fr_pdp.l10n_fr_pdp_view_send_wizard_form
-NEW ir.ui.view: l10n_fr_pdp.pdp_registration_form
-NEW ir.ui.view: l10n_fr_pdp.pdp_response_wizard_form
-NEW ir.ui.view: l10n_fr_pdp.res_config_settings_view_form
-NEW ir.ui.view: l10n_fr_pdp.res_partner_form_l10n_fr_pdp
+DEL ir.ui.view: l10n_fr_pdp.account_move_send_inherit_account_peppol

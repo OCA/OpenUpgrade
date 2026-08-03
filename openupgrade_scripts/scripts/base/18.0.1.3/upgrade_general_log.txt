@@ -35,7 +35,6 @@ new model account.edi.ubl_cen_en16931 [module account_edi_ubl_cii]
 new model account.edi.ubl_pint [module account_edi_ubl_cii]
 new model account.edi.ubl_pint_eu [module account_edi_ubl_cii]
 new model account.edi.xml.oioubl_21 [module l10n_dk_nemhandel]
-new model account.edi.xml.ubl_21_fr [module l10n_fr_pdp]
 new model account.edi.xml.ubl_hr [module l10n_hr_edi]
 new model account.lock_exception [module account]
 new model account.merge.wizard [module account]
@@ -44,9 +43,6 @@ new model account.move.send.batch.wizard [module account]
 new model account.move.send.wizard [module account]
 new model account.payment.register.withholding.line [module l10n_account_withholding_tax]
 new model account.payment.withholding.line [module l10n_account_withholding_tax]
-new model account.peppol.clarification [module account_peppol_response]
-new model account.peppol.rejection.wizard [module account_peppol_response]
-new model account.peppol.response [module account_peppol_response]
 new model account_peppol.service [module account_peppol]
 new model account_peppol.service.wizard [module account_peppol]
 new model account.secure.entries.wizard [module account]
@@ -83,8 +79,6 @@ new model l10n_br.zip.range [module l10n_br]
 new model l10n_es_edi_facturae.ac_role_type (renamed from l10n_es_edi_facturae_adm_centers.ac_role_type) [module l10n_es_edi_facturae]
 new model l10n_es_edi_tbai.document [module l10n_es_edi_tbai]
 new model l10n_fr.fec.export.wizard [module l10n_fr_account]
-new model l10n.fr.pdp.reports.flow [module l10n_fr_pdp]
-new model l10n.fr.pdp.reports.send.wizard [module l10n_fr_pdp]
 new model l10n_gr_edi.document [module l10n_gr_edi]
 new model l10n_gr_edi.preferred_classification [module l10n_gr_edi]
 new model l10n_hr_edi.addendum [module l10n_hr_edi]
@@ -117,9 +111,6 @@ new model myinvois.document.status.update.wizard [module l10n_my_edi_pos]
 new model nemhandel.registration [module l10n_dk_nemhandel]
 new model nemhandel.rejection.wizard [module l10n_dk_nemhandel_response]
 new model nemhandel.response [module l10n_dk_nemhandel_response]
-new model pdp.flow.10.xml.builder [module l10n_fr_pdp]
-new model pdp.registration [module l10n_fr_pdp]
-new model pdp.response.wizard [module l10n_fr_pdp]
 new model peppol.registration [module account_peppol]
 new model pos.bus.mixin [module point_of_sale]
 new model pos.edi.xml.ubl_21 [module pos_edi_ubl]
@@ -151,14 +142,14 @@ new model website.custom_blocked_third_party_domains [module website]
 new model website.page.properties [module website]
 new model website.page.properties.base [module website]
 ---Fields in module 'general'---
-# 13492 fields matched,
-# Direct match: 13389
+# 13615 fields matched,
+# Direct match: 13512
 # Found in other module with different type: 0
 # Found in other module: 95
 # Found with different type: 8
 # In obsolete models: 34
-# New columns: 2060
-# Not matched: 847
+# New columns: 1939
+# Not matched: 865
 ---XML records in module 'general'---
 ERROR: module not in list of installed modules:
 ---Models in module 'pos_mercury'---
