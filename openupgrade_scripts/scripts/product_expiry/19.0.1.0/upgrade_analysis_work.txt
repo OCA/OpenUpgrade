@@ -1,0 +1,11 @@
+---Models in module 'product_expiry'---
+
+---Fields in module 'product_expiry'---
+product_expiry / stock.move.line          / removal_date (datetime)       : NEW hasdefault: compute
+
+# DONE: backfilled in post-migration, mirrors _compute_removal_date
+
+---XML records in module 'product_expiry'---
+DEL mail.activity.type: product_expiry.mail_activity_type_alert_date_reached
+
+# DONE: reassigned existing activities to mail.mail_activity_data_todo in pre-migration
