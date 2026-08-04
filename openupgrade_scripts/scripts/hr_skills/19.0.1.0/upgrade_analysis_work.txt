@@ -78,6 +78,9 @@ hr_skills_survey / hr.resume.line           / department_id (many2one)      : no
 
 ---XML records in module 'hr_skills'---
 NEW hr.resume.line.type: hr_skills.resume_type_training [renamed from hr_skills_slides module]
+
+# DONE: renamed XML ID in pre-migration
+
 DEL hr.resume.line.type: hr_skills.resume_type_social_media
 NEW ir.actions.act_window: hr_skills.action_hr_employee_skill_certification
 
