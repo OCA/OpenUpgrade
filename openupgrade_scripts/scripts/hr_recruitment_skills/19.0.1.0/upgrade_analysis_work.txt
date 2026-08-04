@@ -1,0 +1,54 @@
+---Models in module 'hr_recruitment_skills'---
+obsolete model hr.candidate.skill (renamed to hr.applicant.skill)
+new model hr.applicant.skill (renamed from hr.candidate.skill)
+# DONE: renamed in pre-migration
+
+---Fields in module 'hr_recruitment_skills'---
+hr_recruitment_skills / hr.applicant             / applicant_skill_ids (one2many): NEW relation: hr.applicant.skill
+# DONE: inverse of hr.applicant.skill#applicant_id
+
+hr_recruitment_skills / hr.applicant             / current_applicant_skill_ids (one2many): NEW relation: hr.applicant.skill, hasdefault: compute, stored: False
+# NOTHING TO DO: not stored
+
+hr_recruitment_skills / hr.applicant             / skill_ids (many2many)         : is now stored
+hr_recruitment_skills / hr.applicant             / skill_ids (many2many)         : not related anymore
+hr_recruitment_skills / hr.applicant             / skill_ids (many2many)         : now a function
+hr_recruitment_skills / hr.applicant             / skill_ids (many2many)         : table is now 'hr_applicant_hr_skill_rel' ('False')
+# DONE: created and filled table in pre-migration
+
+hr_recruitment_skills / hr.applicant.skill       / applicant_id (many2one)       : NEW relation: hr.applicant, required
+# DONE: renamed and adjusted in pre-migration
+
+hr_recruitment_skills / hr.applicant.skill       / display_warning_message (boolean): NEW
+# NOTHING TO DO: UI field, probably shouldn't be stored in the first palce
+
+hr_recruitment_skills / hr.applicant.skill       / valid_from (date)             : NEW hasdefault: default
+# DONE: set to create_date as v18 doesn't have a concept of apllicant skill validity
+
+hr_recruitment_skills / hr.applicant.skill       / valid_to (date)               : NEW
+# NOTHING TO DO
+
+hr_recruitment_skills / hr.candidate             / candidate_skill_ids (one2many): DEL relation: hr.candidate.skill
+hr_recruitment_skills / hr.candidate             / skill_ids (many2many)         : DEL relation: hr.skill
+hr_recruitment_skills / hr.candidate.skill       / _order                        : _order is now 'skill_type_id, skill_level_id desc' ('skill_level_id')
+hr_recruitment_skills / hr.candidate.skill       / candidate_id (many2one)       : DEL relation: hr.candidate, required
+# NOTHING TO DO: obsolete models
+
+hr_recruitment_skills / hr.job                   / skill_ids (many2many)         : module is now 'hr_skills' ('hr_recruitment_skills')
+# NOTHING TO DO: handled in hr_skills
+
+---XML records in module 'hr_recruitment_skills'---
+NEW ir.actions.act_window: hr_recruitment_skills.action_find_matching_job
+NEW ir.model.access: hr_recruitment_skills.access_hr_applicant_skill_interviewer
+NEW ir.model.access: hr_recruitment_skills.access_hr_job_skill_recruitment_user
+DEL ir.model.access: hr_recruitment_skills.access_hr_candidate_skill_interviewer
+DEL ir.model.constraint: hr_recruitment_skills.constraint_hr_candidate_skill__unique_skill
+NEW ir.ui.view: hr_recruitment_skills.crm_case_tree_view_inherit_hr_recruitment_skills
+NEW ir.ui.view: hr_recruitment_skills.crm_case_tree_view_job
+NEW ir.ui.view: hr_recruitment_skills.hr_job_list_inherit_hr_recruitment_skills
+NEW ir.ui.view: hr_recruitment_skills.view_hr_job_form
+DEL ir.ui.view: hr_recruitment_skills.hr_candidate_view_form
+DEL ir.ui.view: hr_recruitment_skills.hr_candidate_view_search
+DEL ir.ui.view: hr_recruitment_skills.hr_candidate_view_tree
+DEL ir.ui.view: hr_recruitment_skills.hr_job_form_inherit_hr_recruitment_skills
+# NOTHING TO DO
