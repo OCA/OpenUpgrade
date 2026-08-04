@@ -137,7 +137,7 @@ new model website.technical.page [module website]
 # Found with different type: 32
 # In obsolete models: 207
 # New columns: 1798
-# Not matched: 1002
+# Not matched: 1004
 ---XML records in module 'general'---
 ---Probably obsolete module l10n_in_ewaybill_port---
 ---Models in module 'l10n_in_ewaybill_port'---
@@ -160,6 +160,13 @@ l10n_mx_hr   / hr.employee              / l10n_mx_curp (char)           : DEL
 l10n_mx_hr   / hr.employee              / l10n_mx_rfc (char)            : DEL
 ---XML records in module 'l10n_mx_hr'---
 DEL ir.ui.view: l10n_mx_hr.hr_employee_form
+---Probably obsolete module l10n_pl_edi_jst---
+---Models in module 'l10n_pl_edi_jst'---
+---Fields in module 'l10n_pl_edi_jst'---
+l10n_pl_edi_jst / res.partner              / l10n_pl_parent_lgu (many2one) : DEL relation: res.partner
+---XML records in module 'l10n_pl_edi_jst'---
+DEL ir.ui.view: l10n_pl_edi_jst.fa3_xml_template
+DEL ir.ui.view: l10n_pl_edi_jst.res_partner_account_pl_form
 ---Probably obsolete module l10n_uy_website_sale---
 ---Models in module 'l10n_uy_website_sale'---
 ---Fields in module 'l10n_uy_website_sale'---
