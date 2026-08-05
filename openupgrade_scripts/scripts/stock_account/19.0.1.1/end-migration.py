@@ -47,6 +47,8 @@ def update_from_coa_generic(env, spec):
         for model_name, field_names in spec.items():
             filtered_records = {}
             for record_id, record_data in template_data[model_name].items():
+                if not any(record_data.get(key) for key in field_names):
+                    continue
                 filtered = {
                     key: value
                     for key, value in record_data.items()
