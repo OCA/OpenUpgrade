@@ -47,10 +47,15 @@ def update_from_coa_generic(env, spec):
         for model_name, field_names in spec.items():
             filtered_records = {}
             for record_id, record_data in template_data[model_name].items():
+                record = ref_or_id(record_id, model_name)
+                if not record:
+                    # record doesn't exist yet in this company's chart;
+                    # don't partially-create it here, only backfill existing ones
+                    continue
                 filtered = {
                     key: value
                     for key, value in record_data.items()
-                    if key in field_names and not ref_or_id(record_id, model_name)[key]
+                    if key in field_names and not record[key]
                 }
                 if filtered:
                     filtered_records[record_id] = filtered
