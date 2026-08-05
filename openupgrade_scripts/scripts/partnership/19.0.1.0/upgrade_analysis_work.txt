@@ -1,0 +1,45 @@
+---Models in module 'partnership'---
+model res.partner.grade (moved from website_crm_partner_assign)
+
+# NOTHING TO DO
+
+---Fields in module 'partnership'---
+partnership  / product.template         / grade_id (many2one)           : NEW relation: res.partner.grade
+partnership  / product.template         / service_tracking (False)      : NEW selection_keys: ['event', 'no', 'partnership'], mode: modify
+partnership  / res.company              / partnership_label (char)      : NEW hasdefault: default, translate
+partnership  / res.partner              / grade_id (many2one)           : previously in module website_crm_partner_assign
+partnership  / res.partner.grade        / _order                        : previously in module website_crm_partner_assign
+partnership  / res.partner.grade        / active (boolean)              : previously in module website_crm_partner_assign
+partnership  / res.partner.grade        / company_id (many2one)         : NEW relation: res.company, hasdefault: default
+partnership  / res.partner.grade        / default_pricelist_id (many2one): NEW relation: product.pricelist
+partnership  / res.partner.grade        / display_name (char)           : previously in module website_crm_partner_assign
+partnership  / res.partner.grade        / name (char)                   : previously in module website_crm_partner_assign
+partnership  / res.partner.grade        / sequence (integer)            : previously in module website_crm_partner_assign
+partnership  / res.users                / grade_id (many2one)           : previously in module website_crm_partner_assign
+
+# NOTHING TO DO
+
+---XML records in module 'partnership'---
+NEW ir.actions.act_window: partnership.action_grade_partners
+NEW ir.actions.act_window: partnership.action_pricelist_partners
+NEW ir.actions.act_window: partnership.res_partner_grade_action [renamed from website_crm_partner_assign module]
+NEW ir.model.access: partnership.access_res_partner_grade [renamed from website_crm_partner_assign module]
+NEW ir.model.access: partnership.access_res_partner_grade_admin
+NEW ir.model.access: partnership.access_res_partner_grade_manager [renamed from website_crm_partner_assign module]
+NEW ir.model.access: partnership.access_res_partner_grade_user
+NEW ir.ui.menu: partnership.crm_menu_partners
+NEW ir.ui.menu: partnership.menu_res_partner_grade_action [renamed from website_crm_partner_assign module]
+NEW ir.ui.view: partnership.product_template_form_view
+NEW ir.ui.view: partnership.res_config_settings_view_form
+NEW ir.ui.view: partnership.res_partner_grade_view_search
+NEW ir.ui.view: partnership.view_partner_grade_form
+NEW ir.ui.view: partnership.view_partner_grade_tree
+NEW ir.ui.view: partnership.view_partner_pricelist_form
+NEW ir.ui.view: partnership.view_res_partner_filter_assign
+NEW ir.ui.view: partnership.view_res_partner_form
+NEW ir.ui.view: partnership.view_res_partner_grade_tree
+NEW res.partner.grade: partnership.res_partner_grade_data_bronze [renamed from website_crm_partner_assign module]
+NEW res.partner.grade: partnership.res_partner_grade_data_gold [renamed from website_crm_partner_assign module]
+NEW res.partner.grade: partnership.res_partner_grade_data_silver [renamed from website_crm_partner_assign module]
+
+# DONE: xmlids renamed from website_crm_partner_assign in pre-migration
