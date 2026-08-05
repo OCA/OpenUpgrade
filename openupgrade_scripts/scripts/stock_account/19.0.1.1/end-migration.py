@@ -45,15 +45,16 @@ def update_from_coa_generic(env, spec):
 
         company_data = {}
         for model_name, field_names in spec.items():
-            company_data[model_name] = {
-                record_id: {
+            filtered_records = {}
+            for record_id, record_data in template_data[model_name].items():
+                filtered = {
                     key: value
                     for key, value in record_data.items()
                     if key in field_names and not ref_or_id(record_id, model_name)[key]
                 }
-                for record_id, record_data in template_data[model_name].items()
-                if any(record_data.get(key) for key in field_names)
-            }
+                if filtered:
+                    filtered_records[record_id] = filtered
+            company_data[model_name] = filtered_records
         AccountChartTemplate._load_data(company_data)
 
 
