@@ -3,8 +3,10 @@
 
 ---Fields in module 'event_sale'---
 event_sale   / event.registration       / sale_status (selection)       : module is now 'event_product' ('event_sale')
-event_sale   / sale.order.line          / event_slot_id (many2one)      : NEW relation: event.slot, hasdefault: compute
 # NOTHING TO DO: field definition changes only, no migration of existing data is required.
+
+event_sale   / sale.order.line          / event_slot_id (many2one)      : NEW relation: event.slot, hasdefault: compute
+# DONE: pre-migration: Pre-create column and nothing to field, as it's a new feature.
 
 ---XML records in module 'event_sale'---
 DEL ir.model.access: event_sale.access_product_product_event_manager
