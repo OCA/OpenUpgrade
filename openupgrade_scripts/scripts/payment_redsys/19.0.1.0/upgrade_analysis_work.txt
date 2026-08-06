@@ -1,0 +1,16 @@
+---Models in module 'payment_redsys'---
+---Fields in module 'payment_redsys'---
+payment_redsys / payment.provider         / code (False)                  : NEW selection_keys: ['adyen', 'aps', 'asiapay', 'authorize', 'buckaroo', 'custom', 'demo', 'dpo', 'ecpay', 'flutterwave', 'iyzico', 'mercado_pago', 'mollie', 'none', 'nuvei', 'paymob', 'paypal', 'payu', 'razorpay', 'redsys'], mode: modify
+# NOTHING TO DO: the value is the same for the OCA and this one
+
+payment_redsys / payment.provider         / redsys_merchant_code (char)   : NEW
+payment_redsys / payment.provider         / redsys_secret_key (char)      : NEW
+# NOTHING TO DO: Same field name
+
+payment_redsys / payment.provider         / redsys_merchant_terminal (char): NEW
+# DONE: pre-migration: Rename field
+
+---XML records in module 'payment_redsys'---
+NEW ir.ui.view: payment_redsys.payment_provider_form
+NEW ir.ui.view: payment_redsys.redirect_form
+# DONE: pre-migration: Rename OCA XML-IDs
