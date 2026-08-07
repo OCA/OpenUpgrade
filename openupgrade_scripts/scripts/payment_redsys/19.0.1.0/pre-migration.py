@@ -8,12 +8,14 @@ from openupgradelib import openupgrade
 def migrate(env, version):
     openupgrade.rename_fields(
         env,
-        (
-            "payment.provider",
-            "payment_provider",
-            "redsys_terminal",
-            "redsys_merchant_terminal",
-        ),
+        [
+            (
+                "payment.provider",
+                "payment_provider",
+                "redsys_terminal",
+                "redsys_merchant_terminal",
+            ),
+        ],
     )
     openupgrade.rename_xmlids(
         env.cr,
