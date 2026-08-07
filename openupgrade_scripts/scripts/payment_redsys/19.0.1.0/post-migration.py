@@ -7,7 +7,7 @@ from odoo import Command
 
 PAY_METHOD_MAPPING = {
     "T": "payment.payment_method_card",
-    "z": "	payment.payment_method_bizum",
+    "z": "payment.payment_method_bizum",
 }
 
 
