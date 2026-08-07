@@ -1,0 +1,24 @@
+---Models in module 'stock_fleet'---
+
+---Fields in module 'stock_fleet'---
+stock_fleet  / stock.location           / is_a_dock (boolean)           : DEL
+
+# DONE: legacy value preserved in pre-migration, backfilled into dock_ids in post-migration
+
+stock_fleet  / stock.picking.batch      / end_date (datetime)           : now a function
+
+# NOTHING TO DO: non-stored
+
+stock_fleet  / stock.picking.type       / dispatch_management (boolean) : NEW
+
+# DONE: set in post-migration per stock_warehouse's own defaults
+
+stock_fleet  / stock.picking.type       / dock_ids (many2many)          : NEW relation: stock.location, hasdefault: compute
+
+# DONE: backfilled from legacy is_a_dock locations in post-migration
+
+---XML records in module 'stock_fleet'---
+NEW ir.ui.view: stock_fleet.view_picking_type_form
+DEL ir.ui.view: stock_fleet.stock_location_tree_stock_fleet
+
+# NOTHING TO DO
