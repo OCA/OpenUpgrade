@@ -1,0 +1,11 @@
+---Models in module 'website_sale_slides'---
+# NOTHING TO DO
+
+---Fields in module 'website_sale_slides'---
+website_sale_slides / product.template         / detailed_type (False)         : DEL selection_keys: ['combo', 'consu', 'course', 'event', 'event_booth', 'product', 'service'], mode: modify
+website_sale_slides / product.template         / service_tracking (False)      : NEW selection_keys: ['course', 'event', 'event_booth', 'no', 'project_only', 'task_global_project', 'task_in_project'], mode: modify
+# DONE: pre-migration: preserve the previous service tracking and map course products to the new selection.
+
+---XML records in module 'website_sale_slides'---
+NEW ir.ui.view: website_sale_slides.product_template_form_view
+# NOTHING TO DO
