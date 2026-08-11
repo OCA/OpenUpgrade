@@ -81,10 +81,10 @@ def stock_move_value(env):
     env.cr.execute(
         """
         UPDATE stock_move
-        SET value=aggregated_values.value
+        SET value=aggregated_values.agg_value
         FROM (
             SELECT
-            move_id, sum(value) value
+            move_id, sum(value) AS agg_value
             FROM
             product_value
             GROUP BY move_id
