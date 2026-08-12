@@ -58,6 +58,7 @@ merged_modules = {
     "purchase_order_qty_change_no_recompute": "purchase",
     # OCA/sale-workflow
     "sale_order_warn_message": "sale",
+    "sale_product_configurator_widget_product_label": "sale",
     # OCA/stock-logistics-workflow
     "stock_picking_show_return": "stock",
     # OCA/vertical-association
