@@ -46,8 +46,10 @@ stock        / stock.move.line          / quantity (float)              : NEW ha
 
 stock        / stock.move.line          / picked (boolean)              : NEW hasdefault: compute
 stock        / stock.move.line          / quant_id (many2one)           : NEW relation: stock.quant
-stock        / stock.move.line          / quantity_product_uom (float)  : NEW isfunction: function, stored
 # NOTHING TO DO
+
+stock        / stock.move.line          / quantity_product_uom (float)  : NEW isfunction: function, stored
+# DONE: pre-migration: Pre-created and filled by SQL
 
 stock        / stock.move.line          / reserved_qty (float)          : DEL
 stock        / stock.move.line          / reserved_uom_qty (float)      : DEL required
