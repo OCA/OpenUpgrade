@@ -1,9 +1,10 @@
-from odoo.tests import TransactionCase
+from odoo.tests import TransactionCase, tagged
 
 from odoo.addons.openupgrade_framework import openupgrade_test
 
 
 @openupgrade_test
+@tagged("post_install")
 class TestHrExpenseMigration(TransactionCase):
     def test_hr_expense_state(self):
         """

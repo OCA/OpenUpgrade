@@ -26,7 +26,8 @@ def hr_expense_approval_fields(env):
     """
     Fill hr.expense#approval_{date,state} and manager_id from hr.expense.sheet
     """
-    env.cr.execute(
+    openupgrade.logged_query(
+        env.cr,
         """
         UPDATE hr_expense
         SET
@@ -42,19 +43,8 @@ def hr_expense_approval_fields(env):
         hr_expense_sheet
         WHERE
         hr_expense.former_sheet_id=hr_expense_sheet.id
-        """
+        """,
     )
-
-
-def hr_expense_state(env):
-    """
-    Recompute hr.expense#state for records in states 'approved', 'done', 'reported'
-    """
-    env.cr.execute(
-        "SELECT id FROM hr_expense WHERE state IN ('approved', 'done', 'reported')"
-    )
-    records = env["hr.expense"].browse(_id for (_id,) in env.cr.fetchall())
-    records._compute_state()
 
 
 def update_product_uoms(env):
@@ -90,6 +80,5 @@ def migrate(env, version):
     )
     hr_expense_account_move_id(env)
     hr_expense_approval_fields(env)
-    hr_expense_state(env)
     update_product_uoms(env)
     openupgrade.delete_records_safely_by_xml_id(env, deleted_xmlids)
