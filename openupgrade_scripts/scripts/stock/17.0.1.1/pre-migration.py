@@ -36,6 +36,40 @@ def fix_move_line_quantity(env):
     )
 
 
+def _prefill_sml_quantity_product_uom(env):
+    openupgrade.add_columns(
+        env,
+        [("stock.move.line", "quantity_product_uom", "float", None, "stock_move_line")],
+    )
+    openupgrade.logged_query(
+        env.cr,
+        """
+        UPDATE stock_move_line sml
+        SET quantity_product_uom =
+        CASE
+            WHEN sml.product_uom_id != pt.uom_id
+                AND uom_pt.category_id = uom_sml.category_id
+            THEN ROUND(
+                sml.quantity * uom_pt.factor / uom_sml.factor,
+                CASE
+                    WHEN uom_pt.rounding = 1.0 THEN 0
+                ELSE scale(uom_pt.rounding)
+                END
+            )
+        ELSE sml.quantity
+        END
+        FROM product_product pp,
+            uom_uom uom_sml,
+            product_template pt,
+            uom_uom uom_pt
+        WHERE pp.id = sml.product_id
+            AND uom_sml.id = sml.product_uom_id
+            AND pt.id = pp.product_tmpl_id
+            AND uom_pt.id = pt.uom_id
+        """,
+    )
+
+
 def prefill_picked(env):
     """
     Pre-fill picked for stock moves and move lines to reduce ORM
@@ -89,4 +123,5 @@ def migrate(env, version):
     openupgrade.rename_fields(env, _field_renames)
     openupgrade.copy_columns(env.cr, _column_copies)
     fix_move_line_quantity(env)
+    _prefill_sml_quantity_product_uom(env)
     prefill_picked(env)
