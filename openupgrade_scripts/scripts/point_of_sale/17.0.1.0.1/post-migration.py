@@ -30,6 +30,37 @@ def fill_pos_order_shipping_date(env):
     )
 
 
+def fill_limited_product_count(env):
+    """In v16, you could use the limited_partners_loading and limited_products_amount
+    fields in pos.config to specify whether to perform a limited load and, if so,
+    the number of products to load; it is important to maintain this behavior in v17.
+    """
+    env.cr.execute(
+        """
+        SELECT CASE
+            WHEN EXISTS (
+                SELECT 1
+                FROM pos_config
+                WHERE limited_partners_loading
+            )
+            THEN COALESCE(
+                MIN(limited_products_amount) FILTER (
+                    WHERE limited_partners_loading
+                      AND limited_products_amount > 0
+                ),
+                0
+            )
+            ELSE 0
+        END
+        FROM pos_config
+        """
+    )
+    limited_product_count = env.cr.fetchone()[0]
+    env["ir.config_parameter"].set_param(
+        "point_of_sale.limited_product_count", str(limited_product_count)
+    )
+
+
 def product_template_convert_pos_categ_id_m2o_to_m2m(env):
     openupgrade.m2o_to_x2m(
         env.cr,
@@ -44,6 +75,7 @@ def product_template_convert_pos_categ_id_m2o_to_m2m(env):
 def migrate(env, version):
     fill_account_move_pos_refunded_invoice_ids(env)
     fill_pos_order_shipping_date(env)
+    fill_limited_product_count(env)
     product_template_convert_pos_categ_id_m2o_to_m2m(env)
     openupgrade.load_data(env, "point_of_sale", "17.0.1.0.1/noupdate_changes.xml")
     openupgrade.delete_records_safely_by_xml_id(

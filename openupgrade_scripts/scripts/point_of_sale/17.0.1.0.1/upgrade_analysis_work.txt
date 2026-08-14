@@ -31,6 +31,7 @@ point_of_sale / pos.config               / printer_ids (many2many)       : previ
 # NOTHING TO DO
 
 point_of_sale / pos.config               / limited_partners_amount (integer): DEL
+# DONE: post-migration: Set the appropriate value for point_of_sale.limited_product_count to ensure consistency with the behavior of v16
 point_of_sale / pos.config               / limited_partners_loading (boolean): DEL
 point_of_sale / pos.config               / limited_products_amount (integer): DEL
 point_of_sale / pos.config               / limited_products_loading (boolean): DEL
