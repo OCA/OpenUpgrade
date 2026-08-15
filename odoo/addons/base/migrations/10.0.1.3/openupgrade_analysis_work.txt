@@ -48,7 +48,6 @@ NEW ir.rule: base.res_company_rule_employee
 NEW ir.rule: base.res_company_rule_erp_manager
 NEW ir.rule: base.res_company_rule_portal
 NEW ir.rule: base.res_company_rule_public
-DEL ir.rule: base.ir_filters_rule
 NEW ir.ui.menu: base.menu_tests
 DEL ir.ui.menu: base.menu_action_currency_form
 DEL ir.ui.menu: base.menu_action_res_bank_form
@@ -69,6 +68,7 @@ NEW ir.ui.view: base.action_view_company_form_link_2_currencies
 NEW ir.ui.view: base.view_translation_dialog_tree
 # NOTHING TO DO
 
+DEL ir.rule: base.ir_filters_rule
 DEL ir.rule: base.res_company_rule
 # DONE: Post-migration: Delete noupdate=1 record
 
