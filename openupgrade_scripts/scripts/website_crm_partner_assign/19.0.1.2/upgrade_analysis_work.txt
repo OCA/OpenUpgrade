@@ -1,0 +1,31 @@
+---Models in module 'website_crm_partner_assign'---
+model res.partner.grade (moved to partnership)
+# NOTHING TO DO
+
+---Fields in module 'website_crm_partner_assign'---
+website_crm_partner_assign / res.partner              / grade_id (many2one)           : module is now 'partnership' ('website_crm_partner_assign')
+website_crm_partner_assign / res.partner.grade        / _order                        : module is now 'partnership' ('website_crm_partner_assign')
+website_crm_partner_assign / res.partner.grade        / active (boolean)              : module is now 'partnership' ('website_crm_partner_assign')
+website_crm_partner_assign / res.partner.grade        / display_name (char)           : module is now 'partnership' ('website_crm_partner_assign')
+website_crm_partner_assign / res.partner.grade        / name (char)                   : module is now 'partnership' ('website_crm_partner_assign')
+website_crm_partner_assign / res.partner.grade        / sequence (integer)            : module is now 'partnership' ('website_crm_partner_assign')
+website_crm_partner_assign / res.users                / grade_id (many2one)           : module is now 'partnership' ('website_crm_partner_assign')
+# NOTHING TO DO
+
+---XML records in module 'website_crm_partner_assign'---
+DEL ir.actions.act_window: website_crm_partner_assign.res_partner_grade_action [renamed to partnership module]
+DEL ir.model.access: website_crm_partner_assign.access_res_partner_grade [renamed to partnership module]
+DEL ir.model.access: website_crm_partner_assign.access_res_partner_grade_employee
+DEL ir.model.access: website_crm_partner_assign.access_res_partner_grade_manager [renamed to partnership module]
+DEL ir.ui.menu: website_crm_partner_assign.crm_menu_resellers
+DEL ir.ui.menu: website_crm_partner_assign.menu_res_partner_grade_action [renamed to partnership module]
+NEW ir.ui.view: website_crm_partner_assign.contact_details
+NEW ir.ui.view: website_crm_partner_assign.index_filter_by_industry
+DEL ir.ui.view: website_crm_partner_assign.res_partner_grade_view_search
+DEL ir.ui.view: website_crm_partner_assign.snippet_options
+DEL ir.ui.view: website_crm_partner_assign.view_partner_grade_tree
+DEL ir.ui.view: website_crm_partner_assign.view_res_partner_filter_assign
+DEL res.partner.grade: website_crm_partner_assign.res_partner_grade_data_bronze [renamed to partnership module]
+DEL res.partner.grade: website_crm_partner_assign.res_partner_grade_data_gold [renamed to partnership module]
+DEL res.partner.grade: website_crm_partner_assign.res_partner_grade_data_silver [renamed to partnership module]
+# NOTHING TO DO: xml renamings are done in partnership pre-migration script
