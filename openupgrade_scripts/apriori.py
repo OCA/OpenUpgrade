@@ -11,6 +11,8 @@ renamed_modules = {
     # odoo/enterprise
     # OCA/timesheet
     "project_timesheet_time_control": "hr_timesheet_time_control",
+    # OCA/website
+    "website_odoo_debranding": "website_debranding",
     # OCA/...
 }
 
