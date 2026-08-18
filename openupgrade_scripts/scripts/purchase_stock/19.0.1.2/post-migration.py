@@ -13,4 +13,9 @@ def migrate(env, version):
         "reference_ids",
         "group_id",
     )
-    openupgrade.load_data(env, "purchase_stock", "19.0.1.2/noupdate_changes.xml")
+    openupgrade.load_data(
+        env,
+        "purchase_stock",
+        "19.0.1.2/noupdate_changes.xml",
+        xml_transformation_filename="19.0.1.2/noupdate_changes-transformation.xml",
+    )
