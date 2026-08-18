@@ -113,9 +113,9 @@ named <code class="docutils literal notranslate"><span class="pre">bus_user_pres
 <section id="analysis">
 <h2>Analysis<a class="headerlink" href="#analysis" title="Link to this heading"></a></h2>
 <div class="highlight-text notranslate"><div class="highlight"><pre><span></span>...
----Fields in module &#39;bus&#39;---
+---Fields in module 'bus'---
 ...
----XML records in module &#39;bus&#39;---
+---XML records in module 'bus'---
 DEL ir.model.constraint: bus.constraint_bus_presence_bus_user_presence_unique
 </pre></div>
 </div>
@@ -126,13 +126,13 @@ DEL ir.model.constraint: bus.constraint_bus_presence_bus_user_presence_unique
 <section id="version-14-0">
 <h3>Version 14.0<a class="headerlink" href="#version-14-0" title="Link to this heading"></a></h3>
 <div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="k">class</span><span class="w"> </span><span class="nc">BusPresence</span><span class="p">(</span><span class="n">models</span><span class="o">.</span><span class="n">Model</span><span class="p">):</span>
-    <span class="n">_name</span> <span class="o">=</span> <span class="s2">&quot;bus.presence&quot;</span>
+    <span class="n">_name</span> <span class="o">=</span> <span class="s2">"bus.presence"</span>
 
     <span class="n">_sql_constraints</span> <span class="o">=</span> <span class="p">[</span>
         <span class="p">(</span>
-            <span class="s2">&quot;bus_user_presence_unique&quot;</span><span class="p">,</span>
-            <span class="s2">&quot;unique(user_id)&quot;</span><span class="p">,</span>
-            <span class="s2">&quot;A user can only have one IM status.&quot;</span><span class="p">,</span>
+            <span class="s2">"bus_user_presence_unique"</span><span class="p">,</span>
+            <span class="s2">"unique(user_id)"</span><span class="p">,</span>
+            <span class="s2">"A user can only have one IM status."</span><span class="p">,</span>
         <span class="p">),</span>
     <span class="p">]</span>
 </pre></div>
@@ -142,7 +142,7 @@ DEL ir.model.constraint: bus.constraint_bus_presence_bus_user_presence_unique
 <section id="version-15-0">
 <h3>Version 15.0<a class="headerlink" href="#version-15-0" title="Link to this heading"></a></h3>
 <div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="k">class</span><span class="w"> </span><span class="nc">BusPresence</span><span class="p">(</span><span class="n">models</span><span class="o">.</span><span class="n">Model</span><span class="p">):</span>
-    <span class="n">_name</span> <span class="o">=</span> <span class="s2">&quot;bus.presence&quot;</span>
+    <span class="n">_name</span> <span class="o">=</span> <span class="s2">"bus.presence"</span>
 </pre></div>
 </div>
 <p>See <a class="reference external" href="https://github.com/odoo/odoo/blob/15.0/addons/bus/models/bus_presence.py#L17-L26">Full V15 Code Source</a>.</p>
@@ -155,8 +155,8 @@ DEL ir.model.constraint: bus.constraint_bus_presence_bus_user_presence_unique
 <ul class="simple">
 <li><p>Mention the operation performed, starting with <code class="docutils literal notranslate"><span class="pre">#</span> <span class="pre">DONE:</span></code></p></li>
 </ul>
-<div class="highlight-text notranslate"><div class="highlight"><pre><span></span>---Fields in module &#39;bus&#39;---
----XML records in module &#39;bus&#39;---
+<div class="highlight-text notranslate"><div class="highlight"><pre><span></span>---Fields in module 'bus'---
+---XML records in module 'bus'---
 DEL ir.model.constraint: bus.constraint_bus_presence_bus_user_presence_unique
 # DONE: pre-migration: deleted safely
 </pre></div>
@@ -173,9 +173,9 @@ DEL ir.model.constraint: bus.constraint_bus_presence_bus_user_presence_unique
     <span class="c1"># Disappeared constraint</span>
     <span class="n">openupgrade</span><span class="o">.</span><span class="n">delete_sql_constraint_safely</span><span class="p">(</span>
         <span class="n">env</span><span class="p">,</span>
-        <span class="s2">&quot;bus&quot;</span><span class="p">,</span>                          <span class="c1"># Module name</span>
-        <span class="s2">&quot;bus_presence&quot;</span><span class="p">,</span>                 <span class="c1"># Table name</span>
-        <span class="s2">&quot;bus_user_presence_unique&quot;</span><span class="p">,</span>     <span class="c1"># SQL constraint name</span>
+        <span class="s2">"bus"</span><span class="p">,</span>                          <span class="c1"># Module name</span>
+        <span class="s2">"bus_presence"</span><span class="p">,</span>                 <span class="c1"># Table name</span>
+        <span class="s2">"bus_user_presence_unique"</span><span class="p">,</span>     <span class="c1"># SQL constraint name</span>
     <span class="p">)</span>
 </pre></div>
 </div>
@@ -196,7 +196,7 @@ DEL ir.model.constraint: bus.constraint_bus_presence_bus_user_presence_unique
 
   <div role="contentinfo">
     <p>&#169; Copyright 2012-2021, Odoo Community Association (OCA) / The OpenUpgrade developers.
-      <span class="lastupdated">Last updated on Aug 12, 2026.
+      <span class="lastupdated">Last updated on Aug 18, 2026.
       </span></p>
   </div>
 

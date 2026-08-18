@@ -101,7 +101,7 @@ git<span class="w"> </span>clone<span class="w"> </span>https://github.com/OCA/O
 <span class="c1"># Create a new empty branch</span>
 git<span class="w"> </span>checkout<span class="w"> </span>--orphan<span class="w"> </span><span class="nv">$NEW</span>
 git<span class="w"> </span>rm<span class="w"> </span>-rf<span class="w"> </span>.
-git<span class="w"> </span>commit<span class="w"> </span>--allow-empty<span class="w"> </span>--no-verify<span class="w"> </span>-m<span class="w"> </span><span class="s2">&quot;[INIT] </span><span class="nv">$NEW</span><span class="s2">: Initialize branch&quot;</span>
+git<span class="w"> </span>commit<span class="w"> </span>--allow-empty<span class="w"> </span>--no-verify<span class="w"> </span>-m<span class="w"> </span><span class="s2">"[INIT] </span><span class="nv">$NEW</span><span class="s2">: Initialize branch"</span>
 git<span class="w"> </span>push<span class="w"> </span>origin<span class="w"> </span><span class="nv">$NEW</span>
 
 <span class="c1"># Create a dedicated branch</span>
@@ -112,37 +112,37 @@ git<span class="w"> </span>checkout<span class="w"> </span>-b<span class="w"> </
 <span class="c1"># - openupgrade_framework will be migrated in a future PR.</span>
 <span class="c1"># - Remove scripts from old version</span>
 git<span class="w"> </span>format-patch<span class="w"> </span>--keep-subject<span class="w"> </span>--stdout<span class="w"> </span><span class="nv">$NEW</span>..<span class="nv">$OLD</span><span class="w"> </span>--<span class="w"> </span><span class="se">\</span>
-<span class="w">    </span><span class="s1">&#39;:!docsource&#39;</span><span class="w"> </span><span class="se">\</span>
-<span class="w">    </span><span class="s1">&#39;:!openupgrade_framework&#39;</span><span class="w"> </span><span class="se">\</span>
-<span class="w">    </span><span class="s1">&#39;:!openupgrade_scripts/scripts&#39;</span><span class="w"> </span><span class="se">\</span>
-<span class="w">    </span><span class="s1">&#39;:!openupgrade_scripts/apriori.py&#39;</span><span class="w"> </span><span class="se">\</span>
+<span class="w">    </span><span class="s1">':!docsource'</span><span class="w"> </span><span class="se">\</span>
+<span class="w">    </span><span class="s1">':!openupgrade_framework'</span><span class="w"> </span><span class="se">\</span>
+<span class="w">    </span><span class="s1">':!openupgrade_scripts/scripts'</span><span class="w"> </span><span class="se">\</span>
+<span class="w">    </span><span class="s1">':!openupgrade_scripts/apriori.py'</span><span class="w"> </span><span class="se">\</span>
 <span class="p">|</span><span class="w"> </span>git<span class="w"> </span>am<span class="w"> </span>-3<span class="w"> </span>--keep
 
 <span class="c1"># Replace No-Dot Syntax (140, 150, ...)</span>
-sed<span class="w"> </span>-i<span class="w"> </span><span class="s2">&quot;s/</span><span class="nv">$NODOTDOLD</span><span class="s2">/</span><span class="nv">$NODOTNEW</span><span class="s2">/g&quot;</span><span class="w"> </span>.github/workflows/*
-sed<span class="w"> </span>-i<span class="w"> </span><span class="s2">&quot;s/</span><span class="nv">$NODOTPREV</span><span class="s2">/</span><span class="nv">$NODOTDOLD</span><span class="s2">/g&quot;</span><span class="w"> </span>.github/workflows/*
+sed<span class="w"> </span>-i<span class="w"> </span><span class="s2">"s/</span><span class="nv">$NODOTDOLD</span><span class="s2">/</span><span class="nv">$NODOTNEW</span><span class="s2">/g"</span><span class="w"> </span>.github/workflows/*
+sed<span class="w"> </span>-i<span class="w"> </span><span class="s2">"s/</span><span class="nv">$NODOTPREV</span><span class="s2">/</span><span class="nv">$NODOTDOLD</span><span class="s2">/g"</span><span class="w"> </span>.github/workflows/*
 
 <span class="c1"># Replace Doted Syntax (14.0, 15.0, ...)</span>
-sed<span class="w"> </span>-i<span class="w"> </span><span class="s2">&quot;s/</span><span class="nv">$ESCAPEDOLD</span><span class="s2">/</span><span class="nv">$NEW</span><span class="s2">/g&quot;</span><span class="w"> </span><span class="se">\</span>
+sed<span class="w"> </span>-i<span class="w"> </span><span class="s2">"s/</span><span class="nv">$ESCAPEDOLD</span><span class="s2">/</span><span class="nv">$NEW</span><span class="s2">/g"</span><span class="w"> </span><span class="se">\</span>
 <span class="w">    </span>.github/workflows/*<span class="w"> </span><span class="se">\</span>
 <span class="w">    </span>.pylintrc*<span class="w"> </span><span class="se">\</span>
 <span class="w">    </span>README.md<span class="w"> </span><span class="se">\</span>
 <span class="w">    </span>openupgrade_scripts/readme/*
 
 <span class="c1"># Reset version in manifest file</span>
-sed<span class="w"> </span>-i<span class="w"> </span><span class="s2">&quot;s/17\.0\(\.[[:digit:]]\)\{3\}/</span><span class="nv">$NEW</span><span class="s2">\.1\.0\.0/g&quot;</span><span class="w"> </span>openupgrade_scripts/__manifest__.py
+sed<span class="w"> </span>-i<span class="w"> </span><span class="s2">"s/17\.0\(\.[[:digit:]]\)\{3\}/</span><span class="nv">$NEW</span><span class="s2">\.1\.0\.0/g"</span><span class="w"> </span>openupgrade_scripts/__manifest__.py
 
-sed<span class="w"> </span>-i<span class="w"> </span><span class="s2">&quot;s/</span><span class="nv">$ESCAPEDPREV</span><span class="s2">/</span><span class="nv">$OLD</span><span class="s2">/g&quot;</span><span class="w"> </span><span class="se">\</span>
+sed<span class="w"> </span>-i<span class="w"> </span><span class="s2">"s/</span><span class="nv">$ESCAPEDPREV</span><span class="s2">/</span><span class="nv">$OLD</span><span class="s2">/g"</span><span class="w"> </span><span class="se">\</span>
 <span class="w">    </span>.github/workflows/*<span class="w"> </span><span class="se">\</span>
 <span class="w">    </span>openupgrade_scripts/readme/*
 
-git<span class="w"> </span>commit<span class="w"> </span>-am<span class="w"> </span><span class="s2">&quot;[INIT] </span><span class="nv">$NEW</span><span class="s2">: Replace version numbers.&quot;</span><span class="w"> </span>--no-verify
+git<span class="w"> </span>commit<span class="w"> </span>-am<span class="w"> </span><span class="s2">"[INIT] </span><span class="nv">$NEW</span><span class="s2">: Replace version numbers."</span><span class="w"> </span>--no-verify
 
 <span class="c1"># Initialize apriori.py file</span>
 cat<span class="w"> </span><span class="s">&lt;&lt; EOF &gt; ./openupgrade_scripts/apriori.py</span>
-<span class="s">&quot;&quot;&quot; Encode any known changes to the database here</span>
+<span class="s">""" Encode any known changes to the database here</span>
 <span class="s">to help the matching process</span>
-<span class="s">&quot;&quot;&quot;</span>
+<span class="s">"""</span>
 
 <span class="s"># Renamed modules is a mapping from old module name to new module name</span>
 <span class="s">renamed_modules = {</span>
@@ -174,7 +174,7 @@ cat<span class="w"> </span><span class="s">&lt;&lt; EOF &gt; ./openupgrade_scrip
 <span class="s">EOF</span>
 
 git<span class="w"> </span>add<span class="w"> </span>./openupgrade_scripts/apriori.py
-git<span class="w"> </span>commit<span class="w"> </span>-am<span class="w"> </span><span class="s2">&quot;[INIT] </span><span class="nv">$NEW</span><span class="s2">: Initialize apriori.py file.&quot;</span><span class="w"> </span>--no-verify
+git<span class="w"> </span>commit<span class="w"> </span>-am<span class="w"> </span><span class="s2">"[INIT] </span><span class="nv">$NEW</span><span class="s2">: Initialize apriori.py file."</span><span class="w"> </span>--no-verify
 </pre></div>
 </div>
 <p>Finally, <code class="docutils literal notranslate"><span class="pre">git</span> <span class="pre">push</span></code> the branch on your fork, and make a pull request against OCA/$NEW branch.</p>
@@ -206,7 +206,7 @@ git<span class="w"> </span>commit<span class="w"> </span>-am<span class="w"> </s
 
   <div role="contentinfo">
     <p>&#169; Copyright 2012-2021, Odoo Community Association (OCA) / The OpenUpgrade developers.
-      <span class="lastupdated">Last updated on Aug 12, 2026.
+      <span class="lastupdated">Last updated on Aug 18, 2026.
       </span></p>
   </div>
 

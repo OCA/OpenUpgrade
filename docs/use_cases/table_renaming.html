@@ -119,10 +119,10 @@ of the model <code class="docutils literal notranslate"><span class="pre">mail.n
 <code class="docutils literal notranslate"><span class="pre">upgrade_analysis.txt</span></code> file.</p>
 <p>However, if the table is used as part of a many2many field, the following lines will be present.</p>
 <div class="highlight-text notranslate"><div class="highlight"><pre><span></span>...
----Fields in module &#39;mail&#39;---
+---Fields in module 'mail'---
 ...
 mail         / mail.message             / notified_partner_ids (many2many):
-    table is now &#39;mail_notification&#39; (&#39;mail_message_res_partner_needaction_rel&#39;)
+    table is now 'mail_notification' ('mail_message_res_partner_needaction_rel')
 </pre></div>
 </div>
 <p>See <a class="reference external" href="https://github.com/OCA/OpenUpgrade/blob/15.0/openupgrade_scripts/scripts/mail/15.0.1.5/upgrade_analysis.txt">Full V15 Analysis File</a>.</p>
@@ -132,8 +132,8 @@ mail         / mail.message             / notified_partner_ids (many2many):
 <section id="version-14-0">
 <h3>Version 14.0<a class="headerlink" href="#version-14-0" title="Link to this heading"></a></h3>
 <div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="k">class</span><span class="w"> </span><span class="nc">MailNotification</span><span class="p">(</span><span class="n">models</span><span class="o">.</span><span class="n">Model</span><span class="p">):</span>
-    <span class="n">_name</span> <span class="o">=</span> <span class="s2">&quot;mail.notification&quot;</span>
-    <span class="n">_table</span> <span class="o">=</span> <span class="s2">&quot;mail_message_res_partner_needaction_rel&quot;</span>
+    <span class="n">_name</span> <span class="o">=</span> <span class="s2">"mail.notification"</span>
+    <span class="n">_table</span> <span class="o">=</span> <span class="s2">"mail_message_res_partner_needaction_rel"</span>
 </pre></div>
 </div>
 <p>See <a class="reference external" href="https://github.com/odoo/odoo/blob/14.0/addons/mail/models/mail_notification.py#L11-L13">Full V14 Code Source</a>.</p>
@@ -141,8 +141,8 @@ mail         / mail.message             / notified_partner_ids (many2many):
 <section id="version-15-0">
 <h3>Version 15.0<a class="headerlink" href="#version-15-0" title="Link to this heading"></a></h3>
 <div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="k">class</span><span class="w"> </span><span class="nc">MailNotification</span><span class="p">(</span><span class="n">models</span><span class="o">.</span><span class="n">Model</span><span class="p">):</span>
-    <span class="n">_name</span> <span class="o">=</span> <span class="s2">&quot;mail.notification&quot;</span>
-    <span class="n">_table</span> <span class="o">=</span> <span class="s2">&quot;mail_notification&quot;</span>
+    <span class="n">_name</span> <span class="o">=</span> <span class="s2">"mail.notification"</span>
+    <span class="n">_table</span> <span class="o">=</span> <span class="s2">"mail_notification"</span>
 </pre></div>
 </div>
 <p>See <a class="reference external" href="https://github.com/odoo/odoo/blob/15.0/addons/mail/models/mail_notification.py#L11-L13">Full V15 Code Source</a>.</p>
@@ -221,7 +221,7 @@ mail         / mail.message             / notified_partner_ids (many2many):
 <span class="nd">@openupgrade</span><span class="o">.</span><span class="n">migrate</span><span class="p">()</span>
 <span class="k">def</span><span class="w"> </span><span class="nf">migrate</span><span class="p">(</span><span class="n">env</span><span class="p">,</span> <span class="n">version</span><span class="p">):</span>
     <span class="n">openupgrade</span><span class="o">.</span><span class="n">rename_tables</span><span class="p">(</span>
-        <span class="n">env</span><span class="o">.</span><span class="n">cr</span><span class="p">,</span> <span class="p">[(</span><span class="s2">&quot;mail_message_res_partner_needaction_rel&quot;</span><span class="p">,</span> <span class="s2">&quot;mail_notification&quot;</span><span class="p">)]</span>
+        <span class="n">env</span><span class="o">.</span><span class="n">cr</span><span class="p">,</span> <span class="p">[(</span><span class="s2">"mail_message_res_partner_needaction_rel"</span><span class="p">,</span> <span class="s2">"mail_notification"</span><span class="p">)]</span>
     <span class="p">)</span>
 </pre></div>
 </div>
@@ -233,17 +233,17 @@ mail         / mail.message             / notified_partner_ids (many2many):
 <ul>
 <li><p>If you think the new name may already be used by an existing table,
 you can backup the table before the renaming as follows.</p>
-<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="k">if</span> <span class="n">openupgrade</span><span class="o">.</span><span class="n">table_exists</span><span class="p">(</span><span class="n">env</span><span class="o">.</span><span class="n">cr</span><span class="p">,</span> <span class="s2">&quot;mail_notification&quot;</span><span class="p">):</span>
-    <span class="n">openupgrade</span><span class="o">.</span><span class="n">rename_tables</span><span class="p">(</span><span class="n">env</span><span class="o">.</span><span class="n">cr</span><span class="p">,</span> <span class="p">[(</span><span class="s2">&quot;mail_notification&quot;</span><span class="p">,</span> <span class="kc">None</span><span class="p">)])</span>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="k">if</span> <span class="n">openupgrade</span><span class="o">.</span><span class="n">table_exists</span><span class="p">(</span><span class="n">env</span><span class="o">.</span><span class="n">cr</span><span class="p">,</span> <span class="s2">"mail_notification"</span><span class="p">):</span>
+    <span class="n">openupgrade</span><span class="o">.</span><span class="n">rename_tables</span><span class="p">(</span><span class="n">env</span><span class="o">.</span><span class="n">cr</span><span class="p">,</span> <span class="p">[(</span><span class="s2">"mail_notification"</span><span class="p">,</span> <span class="kc">None</span><span class="p">)])</span>
 </pre></div>
 </div>
 </li>
 <li><p>If the table has SQL constraints, you should drop them before the renaming</p>
 <div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="n">openupgrade</span><span class="o">.</span><span class="n">delete_sql_constraint_safely</span><span class="p">(</span>
     <span class="n">env</span><span class="p">,</span>
-    <span class="s2">&quot;mail&quot;</span><span class="p">,</span>                                     <span class="c1"># module name</span>
-    <span class="s2">&quot;mail_message_res_partner_needaction_rel&quot;</span><span class="p">,</span>  <span class="c1"># old table name</span>
-    <span class="s2">&quot;notification_partner_required&quot;</span><span class="p">,</span>            <span class="c1"># constraint name</span>
+    <span class="s2">"mail"</span><span class="p">,</span>                                     <span class="c1"># module name</span>
+    <span class="s2">"mail_message_res_partner_needaction_rel"</span><span class="p">,</span>  <span class="c1"># old table name</span>
+    <span class="s2">"notification_partner_required"</span><span class="p">,</span>            <span class="c1"># constraint name</span>
 <span class="p">)</span>
 </pre></div>
 </div>
@@ -264,7 +264,7 @@ you can backup the table before the renaming as follows.</p>
 
   <div role="contentinfo">
     <p>&#169; Copyright 2012-2021, Odoo Community Association (OCA) / The OpenUpgrade developers.
-      <span class="lastupdated">Last updated on Aug 12, 2026.
+      <span class="lastupdated">Last updated on Aug 18, 2026.
       </span></p>
   </div>
 

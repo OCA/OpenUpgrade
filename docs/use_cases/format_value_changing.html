@@ -121,9 +121,9 @@ has changed type from <code class="docutils literal notranslate"><span class="pr
 <section id="version-14-0">
 <h3>Version 14.0<a class="headerlink" href="#version-14-0" title="Link to this heading"></a></h3>
 <div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="k">class</span><span class="w"> </span><span class="nc">HrJob</span><span class="p">(</span><span class="n">models</span><span class="o">.</span><span class="n">Model</span><span class="p">):</span>
-    <span class="n">_name</span> <span class="o">=</span> <span class="s2">&quot;hr.job&quot;</span>
+    <span class="n">_name</span> <span class="o">=</span> <span class="s2">"hr.job"</span>
 
-    <span class="n">description</span> <span class="o">=</span> <span class="n">fields</span><span class="o">.</span><span class="n">Text</span><span class="p">(</span><span class="n">string</span><span class="o">=</span><span class="s1">&#39;Job Description&#39;</span><span class="p">)</span>
+    <span class="n">description</span> <span class="o">=</span> <span class="n">fields</span><span class="o">.</span><span class="n">Text</span><span class="p">(</span><span class="n">string</span><span class="o">=</span><span class="s1">'Job Description'</span><span class="p">)</span>
 </pre></div>
 </div>
 <p>See <a class="reference external" href="https://github.com/odoo/odoo/blob/f71626fa6ba413625d7242f5e13d05b8b95be48c/addons/hr/models/hr_job.py#L23">Full v14 Code Source</a>.</p>
@@ -131,9 +131,9 @@ has changed type from <code class="docutils literal notranslate"><span class="pr
 <section id="version-15-0">
 <h3>Version 15.0<a class="headerlink" href="#version-15-0" title="Link to this heading"></a></h3>
 <div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="k">class</span><span class="w"> </span><span class="nc">HrJob</span><span class="p">(</span><span class="n">models</span><span class="o">.</span><span class="n">Model</span><span class="p">):</span>
-    <span class="n">_name</span> <span class="o">=</span> <span class="s2">&quot;hr.job&quot;</span>
+    <span class="n">_name</span> <span class="o">=</span> <span class="s2">"hr.job"</span>
 
-    <span class="n">description</span> <span class="o">=</span> <span class="n">fields</span><span class="o">.</span><span class="n">Html</span><span class="p">(</span><span class="n">string</span><span class="o">=</span><span class="s1">&#39;Job Description&#39;</span><span class="p">)</span>
+    <span class="n">description</span> <span class="o">=</span> <span class="n">fields</span><span class="o">.</span><span class="n">Html</span><span class="p">(</span><span class="n">string</span><span class="o">=</span><span class="s1">'Job Description'</span><span class="p">)</span>
 </pre></div>
 </div>
 <p>See <a class="reference external" href="https://github.com/odoo/odoo/blob/ca7400f22258706f3d989c2008062648050b5b50/addons/hr/models/hr_job.py#L26">Full v15 Code Source</a>.</p>
@@ -142,9 +142,9 @@ has changed type from <code class="docutils literal notranslate"><span class="pr
 <section id="analysis">
 <h2>Analysis<a class="headerlink" href="#analysis" title="Link to this heading"></a></h2>
 <div class="highlight-text notranslate"><div class="highlight"><pre><span></span>...
----Fields in module &#39;hr&#39;---
+---Fields in module 'hr'---
 ...
-hr      / hr.job        / description (text)        : type is now &#39;html&#39; (&#39;text&#39;)
+hr      / hr.job        / description (text)        : type is now 'html' ('text')
 </pre></div>
 </div>
 <p>See <a class="reference external" href="https://github.com/OCA/OpenUpgrade/blob/25866337eb463541a1e8f35180a1b721dcb061c0/openupgrade_scripts/scripts/hr/15.0.1.1/upgrade_analysis.txt#L20">Full V15 Analysis File</a>.</p>
@@ -210,7 +210,7 @@ hr      / hr.job        / description (text)        : type is now &#39;html&#39;
 <section id="update-upgrade-analysis-work-txt-file">
 <h3>Update <code class="docutils literal notranslate"><span class="pre">upgrade_analysis_work.txt</span></code> file<a class="headerlink" href="#update-upgrade-analysis-work-txt-file" title="Link to this heading"></a></h3>
 <p>Add a comment after the line:</p>
-<div class="highlight-text notranslate"><div class="highlight"><pre><span></span>hr      / hr.job        / description (text)        : type is now &#39;html&#39; (&#39;text&#39;)
+<div class="highlight-text notranslate"><div class="highlight"><pre><span></span>hr      / hr.job        / description (text)        : type is now 'html' ('text')
 # DONE pre-migration: convert to html
 </pre></div>
 </div>
@@ -224,7 +224,7 @@ hr      / hr.job        / description (text)        : type is now &#39;html&#39;
 
 <span class="nd">@openupgrade</span><span class="o">.</span><span class="n">migrate</span><span class="p">()</span>
 <span class="k">def</span><span class="w"> </span><span class="nf">migrate</span><span class="p">(</span><span class="n">env</span><span class="p">,</span> <span class="n">version</span><span class="p">):</span>
-    <span class="n">openupgrade</span><span class="o">.</span><span class="n">convert_field_to_html</span><span class="p">(</span><span class="n">env</span><span class="o">.</span><span class="n">cr</span><span class="p">,</span> <span class="s2">&quot;hr_job&quot;</span><span class="p">,</span> <span class="s2">&quot;description&quot;</span><span class="p">,</span> <span class="s2">&quot;description&quot;</span><span class="p">)</span>
+    <span class="n">openupgrade</span><span class="o">.</span><span class="n">convert_field_to_html</span><span class="p">(</span><span class="n">env</span><span class="o">.</span><span class="n">cr</span><span class="p">,</span> <span class="s2">"hr_job"</span><span class="p">,</span> <span class="s2">"description"</span><span class="p">,</span> <span class="s2">"description"</span><span class="p">)</span>
 </pre></div>
 </div>
 <p>See <a class="reference external" href="https://github.com/OCA/OpenUpgrade/blob/15.0/openupgrade_scripts/scripts/hr/15.0.1.1/pre-migration.py">Full V15 pre migration Script</a>.</p>
@@ -266,7 +266,7 @@ or <code class="docutils literal notranslate"><span class="pre">field.One2many()
 
   <div role="contentinfo">
     <p>&#169; Copyright 2012-2021, Odoo Community Association (OCA) / The OpenUpgrade developers.
-      <span class="lastupdated">Last updated on Aug 12, 2026.
+      <span class="lastupdated">Last updated on Aug 18, 2026.
       </span></p>
   </div>
 

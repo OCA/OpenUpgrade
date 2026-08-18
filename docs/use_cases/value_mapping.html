@@ -117,15 +117,15 @@ available for the field <code class="docutils literal notranslate"><span class="
 <section id="version-14-0">
 <h3>Version 14.0<a class="headerlink" href="#version-14-0" title="Link to this heading"></a></h3>
 <div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="k">class</span><span class="w"> </span><span class="nc">Rating</span><span class="p">(</span><span class="n">models</span><span class="o">.</span><span class="n">Model</span><span class="p">):</span>
-    <span class="n">_name</span> <span class="o">=</span> <span class="s2">&quot;rating.rating&quot;</span>
+    <span class="n">_name</span> <span class="o">=</span> <span class="s2">"rating.rating"</span>
 
 <span class="n">rating_text</span> <span class="o">=</span> <span class="n">fields</span><span class="o">.</span><span class="n">Selection</span><span class="p">(</span>
-    <span class="n">string</span><span class="o">=</span><span class="s1">&#39;Rating&#39;</span><span class="p">,</span>
+    <span class="n">string</span><span class="o">=</span><span class="s1">'Rating'</span><span class="p">,</span>
     <span class="n">selection</span><span class="o">=</span><span class="p">[</span>
-        <span class="p">(</span><span class="s1">&#39;satisfied&#39;</span><span class="p">,</span> <span class="s1">&#39;Satisfied&#39;</span><span class="p">),</span>
-        <span class="p">(</span><span class="s1">&#39;not_satisfied&#39;</span><span class="p">,</span> <span class="s1">&#39;Not satisfied&#39;</span><span class="p">),</span>
-        <span class="p">(</span><span class="s1">&#39;highly_dissatisfied&#39;</span><span class="p">,</span> <span class="s1">&#39;Highly dissatisfied&#39;</span><span class="p">),</span>
-        <span class="p">(</span><span class="s1">&#39;no_rating&#39;</span><span class="p">,</span> <span class="s1">&#39;No Rating yet&#39;</span><span class="p">),</span>
+        <span class="p">(</span><span class="s1">'satisfied'</span><span class="p">,</span> <span class="s1">'Satisfied'</span><span class="p">),</span>
+        <span class="p">(</span><span class="s1">'not_satisfied'</span><span class="p">,</span> <span class="s1">'Not satisfied'</span><span class="p">),</span>
+        <span class="p">(</span><span class="s1">'highly_dissatisfied'</span><span class="p">,</span> <span class="s1">'Highly dissatisfied'</span><span class="p">),</span>
+        <span class="p">(</span><span class="s1">'no_rating'</span><span class="p">,</span> <span class="s1">'No Rating yet'</span><span class="p">),</span>
     <span class="p">]</span>
 <span class="p">)</span>
 </pre></div>
@@ -135,15 +135,15 @@ available for the field <code class="docutils literal notranslate"><span class="
 <section id="version-15-0">
 <h3>Version 15.0<a class="headerlink" href="#version-15-0" title="Link to this heading"></a></h3>
 <div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="k">class</span><span class="w"> </span><span class="nc">Rating</span><span class="p">(</span><span class="n">models</span><span class="o">.</span><span class="n">Model</span><span class="p">):</span>
-    <span class="n">_name</span> <span class="o">=</span> <span class="s2">&quot;rating.rating&quot;</span>
+    <span class="n">_name</span> <span class="o">=</span> <span class="s2">"rating.rating"</span>
 
 <span class="n">rating_text</span> <span class="o">=</span> <span class="n">fields</span><span class="o">.</span><span class="n">Selection</span><span class="p">(</span>
-    <span class="n">string</span><span class="o">=</span><span class="s1">&#39;Rating&#39;</span><span class="p">,</span>
+    <span class="n">string</span><span class="o">=</span><span class="s1">'Rating'</span><span class="p">,</span>
     <span class="n">selection</span><span class="o">=</span><span class="p">[</span>
-        <span class="p">(</span><span class="s1">&#39;top&#39;</span><span class="p">,</span> <span class="s1">&#39;Satisfied&#39;</span><span class="p">),</span>
-        <span class="p">(</span><span class="s1">&#39;ok&#39;</span><span class="p">,</span> <span class="s1">&#39;Okay&#39;</span><span class="p">),</span>
-        <span class="p">(</span><span class="s1">&#39;ko&#39;</span><span class="p">,</span> <span class="s1">&#39;Dissatisfied&#39;</span><span class="p">),</span>
-        <span class="p">(</span><span class="s1">&#39;none&#39;</span><span class="p">,</span> <span class="s1">&#39;No Rating yet&#39;</span><span class="p">),</span>
+        <span class="p">(</span><span class="s1">'top'</span><span class="p">,</span> <span class="s1">'Satisfied'</span><span class="p">),</span>
+        <span class="p">(</span><span class="s1">'ok'</span><span class="p">,</span> <span class="s1">'Okay'</span><span class="p">),</span>
+        <span class="p">(</span><span class="s1">'ko'</span><span class="p">,</span> <span class="s1">'Dissatisfied'</span><span class="p">),</span>
+        <span class="p">(</span><span class="s1">'none'</span><span class="p">,</span> <span class="s1">'No Rating yet'</span><span class="p">),</span>
     <span class="p">]</span>
 <span class="p">)</span>
 </pre></div>
@@ -153,10 +153,10 @@ available for the field <code class="docutils literal notranslate"><span class="
 </section>
 <section id="analysis">
 <h2>Analysis<a class="headerlink" href="#analysis" title="Link to this heading"></a></h2>
-<div class="highlight-text notranslate"><div class="highlight"><pre><span></span>---Fields in module &#39;rating&#39;---
+<div class="highlight-text notranslate"><div class="highlight"><pre><span></span>---Fields in module 'rating'---
 rating       / rating.rating            / rating_text (selection)       :
-selection_keys is now &#39;[&#39;ko&#39;, &#39;none&#39;, &#39;ok&#39;, &#39;top&#39;]&#39;
-(&#39;[&#39;highly_dissatisfied&#39;, &#39;no_rating&#39;, &#39;not_satisfied&#39;, &#39;satisfied&#39;]&#39;)
+selection_keys is now '['ko', 'none', 'ok', 'top']'
+('['highly_dissatisfied', 'no_rating', 'not_satisfied', 'satisfied']')
 </pre></div>
 </div>
 <p>See <a class="reference external" href="https://github.com/OCA/OpenUpgrade/blob/0d918b5b5dfb3125a5d881c8ccf4237997d8c7f5/openupgrade_scripts/scripts/rating/15.0.1.0/upgrade_analysis.txt#L1">Full V15 Analysis File</a>.</p>
@@ -262,10 +262,10 @@ and is therefore no longer displayed in the interface.</p>
 <ul class="simple">
 <li><p>Mention the operation performed, starting with <code class="docutils literal notranslate"><span class="pre">#</span> <span class="pre">DONE:</span></code></p></li>
 </ul>
-<div class="highlight-text notranslate"><div class="highlight"><pre><span></span>---Fields in module &#39;rating&#39;---
+<div class="highlight-text notranslate"><div class="highlight"><pre><span></span>---Fields in module 'rating'---
 rating       / rating.rating            / rating_text (selection)       :
-selection_keys is now &#39;[&#39;ko&#39;, &#39;none&#39;, &#39;ok&#39;, &#39;top&#39;]&#39;
-(&#39;[&#39;highly_dissatisfied&#39;, &#39;no_rating&#39;, &#39;not_satisfied&#39;, &#39;satisfied&#39;]&#39;)
+selection_keys is now '['ko', 'none', 'ok', 'top']'
+('['highly_dissatisfied', 'no_rating', 'not_satisfied', 'satisfied']')
 # DONE: post-migration: mapped value from old keys to new keys
 </pre></div>
 </div>
@@ -280,7 +280,7 @@ selection_keys is now &#39;[&#39;ko&#39;, &#39;none&#39;, &#39;ok&#39;, &#39;top
 <span class="k">def</span><span class="w"> </span><span class="nf">migrate</span><span class="p">(</span><span class="n">env</span><span class="p">,</span> <span class="n">version</span><span class="p">):</span>
     <span class="n">openupgrade</span><span class="o">.</span><span class="n">copy_columns</span><span class="p">(</span>
         <span class="n">env</span><span class="o">.</span><span class="n">cr</span><span class="p">,</span>
-        <span class="p">{</span><span class="s2">&quot;rating_rating&quot;</span><span class="p">:</span> <span class="p">[(</span><span class="s2">&quot;rating_text&quot;</span><span class="p">,</span> <span class="kc">None</span><span class="p">,</span> <span class="kc">None</span><span class="p">)]},</span>
+        <span class="p">{</span><span class="s2">"rating_rating"</span><span class="p">:</span> <span class="p">[(</span><span class="s2">"rating_text"</span><span class="p">,</span> <span class="kc">None</span><span class="p">,</span> <span class="kc">None</span><span class="p">)]},</span>
     <span class="p">)</span>
 </pre></div>
 </div>
@@ -291,15 +291,15 @@ selection_keys is now &#39;[&#39;ko&#39;, &#39;none&#39;, &#39;ok&#39;, &#39;top
 <span class="k">def</span><span class="w"> </span><span class="nf">migrate</span><span class="p">(</span><span class="n">env</span><span class="p">,</span> <span class="n">version</span><span class="p">):</span>
     <span class="n">openupgrade</span><span class="o">.</span><span class="n">map_values</span><span class="p">(</span>
         <span class="n">env</span><span class="o">.</span><span class="n">cr</span><span class="p">,</span>
-        <span class="n">openupgrade</span><span class="o">.</span><span class="n">get_legacy_name</span><span class="p">(</span><span class="s2">&quot;rating_text&quot;</span><span class="p">),</span>
-        <span class="s2">&quot;rating_text&quot;</span><span class="p">,</span>
+        <span class="n">openupgrade</span><span class="o">.</span><span class="n">get_legacy_name</span><span class="p">(</span><span class="s2">"rating_text"</span><span class="p">),</span>
+        <span class="s2">"rating_text"</span><span class="p">,</span>
         <span class="p">[</span>
-            <span class="p">(</span><span class="s2">&quot;satisfied&quot;</span><span class="p">,</span> <span class="s2">&quot;top&quot;</span><span class="p">),</span>
-            <span class="p">(</span><span class="s2">&quot;not satisfied&quot;</span><span class="p">,</span> <span class="s2">&quot;ok&quot;</span><span class="p">),</span>
-            <span class="p">(</span><span class="s2">&quot;highly_dissatisfied&quot;</span><span class="p">,</span> <span class="s2">&quot;ko&quot;</span><span class="p">),</span>
-            <span class="p">(</span><span class="s2">&quot;no_rating&quot;</span><span class="p">,</span> <span class="s2">&quot;none&quot;</span><span class="p">),</span>
+            <span class="p">(</span><span class="s2">"satisfied"</span><span class="p">,</span> <span class="s2">"top"</span><span class="p">),</span>
+            <span class="p">(</span><span class="s2">"not satisfied"</span><span class="p">,</span> <span class="s2">"ok"</span><span class="p">),</span>
+            <span class="p">(</span><span class="s2">"highly_dissatisfied"</span><span class="p">,</span> <span class="s2">"ko"</span><span class="p">),</span>
+            <span class="p">(</span><span class="s2">"no_rating"</span><span class="p">,</span> <span class="s2">"none"</span><span class="p">),</span>
         <span class="p">],</span>
-        <span class="n">table</span><span class="o">=</span><span class="s2">&quot;rating_rating&quot;</span><span class="p">,</span>
+        <span class="n">table</span><span class="o">=</span><span class="s2">"rating_rating"</span><span class="p">,</span>
     <span class="p">)</span>
 </pre></div>
 </div>
@@ -382,7 +382,7 @@ Once this is done, you can delete this data.
 
   <div role="contentinfo">
     <p>&#169; Copyright 2012-2021, Odoo Community Association (OCA) / The OpenUpgrade developers.
-      <span class="lastupdated">Last updated on Aug 12, 2026.
+      <span class="lastupdated">Last updated on Aug 18, 2026.
       </span></p>
   </div>
 

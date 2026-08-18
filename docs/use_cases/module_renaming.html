@@ -202,7 +202,7 @@ of openupgrade.</p>
 </ul>
 <p>Add a key in the following dict:</p>
 <div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="n">renamed_modules</span> <span class="o">=</span> <span class="p">{</span>
-    <span class="s2">&quot;crm_iap_lead_enrich&quot;</span><span class="p">:</span> <span class="s2">&quot;crm_iap_enrich&quot;</span><span class="p">,</span>
+    <span class="s2">"crm_iap_lead_enrich"</span><span class="p">:</span> <span class="s2">"crm_iap_enrich"</span><span class="p">,</span>
 <span class="p">}</span>
 </pre></div>
 </div>
@@ -254,7 +254,7 @@ analysis with the upgrade_analysis tool present in the OCA/server-tools project.
 <p>Once the analysis is done with the updated <code class="docutils literal notranslate"><span class="pre">apriory.py</span></code> file, the analysis
 file contains correct information, and can be studied to write remaining
 pre / post migration scripts.</p>
-<div class="highlight-xml notranslate"><div class="highlight"><pre><span></span>---XML<span class="w"> </span>records<span class="w"> </span>in<span class="w"> </span>module<span class="w"> </span>&#39;crm_iap_enrich&#39;---
+<div class="highlight-xml notranslate"><div class="highlight"><pre><span></span>---XML<span class="w"> </span>records<span class="w"> </span>in<span class="w"> </span>module<span class="w"> </span>'crm_iap_enrich'---
 NEW<span class="w"> </span>ir.actions.server:<span class="w"> </span>crm_iap_enrich.action_enrich_mail<span class="w"> </span>[renamed<span class="w"> </span>from<span class="w"> </span>crm_iap_lead_enrich<span class="w"> </span>module]
 DEL<span class="w"> </span>ir.actions.server:<span class="w"> </span>crm_iap_lead_enrich.action_enrich_mail<span class="w"> </span>[renamed<span class="w"> </span>to<span class="w"> </span>crm_iap_enrich<span class="w"> </span>module]
 </pre></div>
@@ -271,12 +271,12 @@ OCA repository. Example:</p></li>
 </ul>
 <div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="n">renamed_modules</span> <span class="o">=</span> <span class="p">{</span>
     <span class="c1"># Odoo</span>
-    <span class="s1">&#39;crm_reveal&#39;</span><span class="p">:</span> <span class="s1">&#39;crm_iap_lead&#39;</span><span class="p">,</span>
-    <span class="s1">&#39;payment_ogone&#39;</span><span class="p">:</span> <span class="s1">&#39;payment_ingenico&#39;</span><span class="p">,</span>
+    <span class="s1">'crm_reveal'</span><span class="p">:</span> <span class="s1">'crm_iap_lead'</span><span class="p">,</span>
+    <span class="s1">'payment_ogone'</span><span class="p">:</span> <span class="s1">'payment_ingenico'</span><span class="p">,</span>
     <span class="c1"># OCA/delivery-carrier</span>
-    <span class="s1">&#39;delivery_carrier_label_ups&#39;</span><span class="p">:</span> <span class="s1">&#39;delivery_ups_oca&#39;</span><span class="p">,</span>
+    <span class="s1">'delivery_carrier_label_ups'</span><span class="p">:</span> <span class="s1">'delivery_ups_oca'</span><span class="p">,</span>
     <span class="c1"># OCA/event</span>
-    <span class="s1">&#39;website_event_filter_selector&#39;</span><span class="p">:</span> <span class="s1">&#39;website_event_filter_city&#39;</span><span class="p">,</span>
+    <span class="s1">'website_event_filter_selector'</span><span class="p">:</span> <span class="s1">'website_event_filter_city'</span><span class="p">,</span>
 <span class="p">}</span>
 </pre></div>
 </div>
@@ -286,7 +286,7 @@ to refactor these custom modules by renaming them,
 you can add the following lines at the end of this file:</p></li>
 </ul>
 <div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="n">renamed_modules</span><span class="o">.</span><span class="n">update</span><span class="p">({</span>
-    <span class="s2">&quot;my_obsolete_module&quot;</span><span class="p">:</span> <span class="s2">&quot;my_renamed_module&quot;</span><span class="p">,</span>
+    <span class="s2">"my_obsolete_module"</span><span class="p">:</span> <span class="s2">"my_renamed_module"</span><span class="p">,</span>
 <span class="p">})</span>
 </pre></div>
 </div>
@@ -306,7 +306,7 @@ you can add the following lines at the end of this file:</p></li>
 
   <div role="contentinfo">
     <p>&#169; Copyright 2012-2021, Odoo Community Association (OCA) / The OpenUpgrade developers.
-      <span class="lastupdated">Last updated on Aug 12, 2026.
+      <span class="lastupdated">Last updated on Aug 18, 2026.
       </span></p>
   </div>
 
