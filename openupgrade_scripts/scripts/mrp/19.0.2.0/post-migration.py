@@ -84,7 +84,12 @@ def mrp_workcenter_capacity_product_uom_id(env):
 
 @openupgrade.migrate()
 def migrate(env, version):
-    openupgrade.load_data(env, "mrp", "19.0.2.0/noupdate_changes.xml")
+    openupgrade.load_data(
+        env,
+        "mrp",
+        "19.0.2.0/noupdate_changes.xml",
+        xml_transformation_filename="19.0.2.0/noupdate_changes-transformation.xml",
+    )
     openupgrade.m2o_to_x2m(
         env.cr,
         env["mrp.production"],
