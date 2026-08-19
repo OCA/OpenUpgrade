@@ -107,6 +107,7 @@ DEL ir.model.constraint: point_of_sale.constraint_pos_order_line_uuid_unique
 DEL ir.model.constraint: point_of_sale.constraint_pos_order_uuid_unique
 DEL ir.model.constraint: point_of_sale.constraint_pos_payment_uuid_unique
 DEL ir.model.constraint: point_of_sale.constraint_pos_session_uniq_name
+DEL ir.rule: point_of_sale.product_attribute_custom_value_pos_rule (noupdate)
 NEW ir.ui.menu: point_of_sale.menu_pos_preset
 NEW ir.ui.menu: point_of_sale.pos_menu_products_tag_action
 NEW ir.ui.view: point_of_sale.product_tag_form_view_inherit_point_of_sale

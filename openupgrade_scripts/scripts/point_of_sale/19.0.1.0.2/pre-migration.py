@@ -33,6 +33,7 @@ renamed_xmlids = [
 
 
 deleted_xmlids = [
+    "point_of_sale.product_attribute_custom_value_pos_rule",
     "point_of_sale.pos_email_marketing_template",
     "point_of_sale.product_category_pos",
 ]
