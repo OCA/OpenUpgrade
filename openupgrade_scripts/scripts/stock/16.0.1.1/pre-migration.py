@@ -180,6 +180,20 @@ def _prefill_stock_move_quantity_done(env):
     )
 
 
+def _set_lot_groups_to_portal_user(env):
+    # If base.group_user has implied_group stock.group_production_lot, we consider it as
+    # the default, so set it to the base.group_portal too
+    # We do the same for stock.group_lot_on_delivery_slip
+    production_lot_group = env.ref("stock.group_production_lot")
+    lot_on_delivery_slip_group = env.ref("stock.group_lot_on_delivery_slip")
+    base_user_group = env.ref("base.group_user")
+    portal_group = env.ref("base.group_portal")
+    if production_lot_group in base_user_group.implied_ids:
+        portal_group.implied_ids = [(4, production_lot_group.id)]
+    if lot_on_delivery_slip_group in base_user_group.implied_ids:
+        portal_group.implied_ids = [(4, lot_on_delivery_slip_group.id)]
+
+
 @openupgrade.migrate()
 def migrate(env, version):
     openupgrade.rename_tables(env.cr, _tables_renames)
@@ -192,3 +206,4 @@ def migrate(env, version):
     _compute_stock_location_replenish_location(env)
     _handle_stock_picking_backorder_strategy(env)
     _prefill_stock_move_quantity_done(env)
+    _set_lot_groups_to_portal_user(env)
