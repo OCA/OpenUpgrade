@@ -1,0 +1,10 @@
+---Models in module 'mail_group'---
+---Fields in module 'mail_group'---
+mail_group   / mail.group               / _order                        : _order is now 'is_closed ASC, create_date DESC, id DESC' ('create_date DESC, id DESC')
+mail_group   / mail.group               / is_closed (boolean)           : NEW
+# NOTHING TO DO: new feature
+
+---XML records in module 'mail_group'---
+NEW ir.actions.act_window: mail_group.mail_compose_message_action_mail_group
+NEW ir.ui.view: mail_group.email_template_mail_group_closed
+# NOTHING TO DO
