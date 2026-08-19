@@ -46,6 +46,8 @@ hr_expense   / hr.expense               / state (selection)             : select
 # DONE: recompute state for records in states 'done', 'reported'
 
 hr_expense   / hr.expense               / untaxed_amount (float)        : NEW isfunction: function, stored
+
+# DONE: hr_expense_sheet compatibility
 hr_expense   / hr.expense.sheet         / account_move_ids (one2many)   : DEL relation: account.move
 hr_expense   / hr.expense.sheet         / accounting_date (date)        : DEL
 hr_expense   / hr.expense.sheet         / activity_ids (one2many)       : DEL relation: mail.activity

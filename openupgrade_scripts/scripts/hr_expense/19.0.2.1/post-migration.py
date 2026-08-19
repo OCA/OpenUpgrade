@@ -47,6 +47,60 @@ def hr_expense_approval_fields(env):
     )
 
 
+def hr_expense_sheet_compatibility(env):
+    """
+    We update the statuses of the hr.expense.sheet records to match those of
+    hr_expense_sheet (to ensure consistency with the statuses of hr.expense)
+    """
+    openupgrade.map_values(
+        env.cr,
+        openupgrade.get_legacy_name("state"),
+        "state",
+        [
+            ("submit", "submitted"),
+            ("approve", "approved"),
+            ("cancel", "refused"),
+        ],
+        table="hr_expense_sheet",
+    )
+    openupgrade.logged_query(
+        env.cr,
+        """
+        UPDATE hr_expense_sheet
+        SET state = 'posted'
+        WHERE state = 'post' AND payment_state = 'not_paid'
+        """,
+    )
+    openupgrade.logged_query(
+        env.cr,
+        """
+        UPDATE hr_expense_sheet
+        SET state = 'in_payment'
+        WHERE state = 'post' AND payment_state = 'partial'
+        """,
+    )
+    openupgrade.logged_query(
+        env.cr,
+        """
+        UPDATE hr_expense_sheet
+        SET state = 'paid'
+        WHERE state = 'post' AND payment_state IN ('paid', 'reversed')
+        """,
+    )
+    openupgrade.map_values(
+        env.cr,
+        openupgrade.get_legacy_name("approval_state"),
+        "approval_state",
+        [
+            ("submit", "submitted"),
+            ("approve", "approved"),
+            ("post", "posted"),
+            ("cancel", "refused"),
+        ],
+        table="hr_expense_sheet",
+    )
+
+
 def update_product_uoms(env):
     """
     Set updated product uoms if possible
@@ -80,5 +134,6 @@ def migrate(env, version):
     )
     hr_expense_account_move_id(env)
     hr_expense_approval_fields(env)
+    hr_expense_sheet_compatibility(env)
     update_product_uoms(env)
     openupgrade.delete_records_safely_by_xml_id(env, deleted_xmlids)
