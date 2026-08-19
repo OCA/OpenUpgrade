@@ -234,22 +234,14 @@ DEL ir.ui.view: pos_epson_printer.pos_iot_config_view_form
 DEL ir.ui.view: pos_epson_printer.res_config_settings_view_form
 DEL ir.ui.view: pos_epson_printer.view_pos_printer_form
 NEW mail.template: point_of_sale.email_template_pos_receipt (noupdate)
-
-# NOTHING TO DO
-
-DEL mail.template: point_of_sale.pos_email_marketing_template (noupdate)
-
-# DONE: deleted in pre-migration
-
 NEW product.category: point_of_sale.product_category_food (noupdate)
-
-# NOTHING TO DO
-
-DEL product.category: point_of_sale.product_category_pos (noupdate)
-
-# DONE: deleted in pre-migration
-
 NEW res.groups: point_of_sale.group_pos_preset
 NEW res.groups.privilege: point_of_sale.res_groups_privilege_point_of_sale
 
 # NOTHING TO DO
+
+DEL ir.rule: point_of_sale.product_attribute_custom_value_pos_rule (noupdate)
+DEL mail.template: point_of_sale.pos_email_marketing_template (noupdate)
+DEL product.category: point_of_sale.product_category_pos (noupdate)
+
+# DONE: deleted in pre-migration
