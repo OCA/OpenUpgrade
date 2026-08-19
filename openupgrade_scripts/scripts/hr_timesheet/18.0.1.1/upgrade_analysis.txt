@@ -1,6 +1,7 @@
 ---Models in module 'hr_timesheet'---
 ---Fields in module 'hr_timesheet'---
 hr_timesheet / account.analytic.applicability / business_domain (False)       : NEW selection_keys: ['bill', 'expense', 'general', 'invoice', 'purchase_order', 'timesheet'], mode: modify
+hr_timesheet / account.analytic.line    / project_id (many2one)         : now a function
 hr_timesheet / project.task             / analytic_account_active (boolean): not a function anymore
 hr_timesheet / project.task             / analytic_account_active (boolean): now related
 ---XML records in module 'hr_timesheet'---
