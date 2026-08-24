@@ -1,7 +1,6 @@
 ---Models in module 'hr_timesheet'---
 new model account.analytic.line.calendar.employee
 ---Fields in module 'hr_timesheet'---
-hr_timesheet / account.analytic.line    / project_id (many2one)         : not a function anymore
 hr_timesheet / account.analytic.line.calendar.employee / active (boolean)              : NEW hasdefault: default
 hr_timesheet / account.analytic.line.calendar.employee / checked (boolean)             : NEW hasdefault: default
 hr_timesheet / account.analytic.line.calendar.employee / employee_id (many2one)        : NEW relation: hr.employee
