@@ -1,0 +1,9 @@
+---Models in module 'stock_landed_costs'---
+---Fields in module 'stock_landed_costs'---
+stock_landed_costs / stock.landed.cost        / stock_valuation_layer_ids (one2many): DEL relation: stock.valuation.layer
+stock_landed_costs / stock.valuation.layer    / stock_landed_cost_id (many2one): DEL relation: stock.landed.cost
+# NOTHING TO DO: Odoo removed these fields in https://github.com/odoo/odoo/pull/222169
+
+---XML records in module 'stock_landed_costs'---
+DEL ir.ui.view: stock_landed_costs.stock_valuation_layer_form_inherited
+# NOTHING TO DO: Handled by ORM
