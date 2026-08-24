@@ -90,6 +90,17 @@ merged_modules = {
     # OCA/...
 }
 
+# Deleted modules
+deleted_modules = [
+    # odoo
+    "l10n_ae_pos",
+    "l10n_it_edi_pa",
+    "l10n_lu_peppol_id",
+    "l10n_pl_jpk",
+    "website_payment_paypal",
+    # OCA/...
+]
+
 # only used here for upgrade_analysis
 renamed_models = {
     # odoo
