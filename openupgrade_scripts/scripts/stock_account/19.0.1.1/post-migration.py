@@ -49,13 +49,14 @@ def stock_location_valuation_account_id(env):
     Set stock.location#valuation_account_id from valuation_in_account_id and
     valuation_out_account_id if they are the same
     """
-    env.cr.execute(
+    openupgrade.logged_query(
+        env.cr,
         """
         UPDATE stock_location
         SET valuation_account_id=valuation_in_account_id
         WHERE
         valuation_in_account_id=valuation_out_account_id
-        """
+        """,
     )
 
 
@@ -63,7 +64,8 @@ def stock_move_value(env):
     """
     Set stock.move#value to sum of product.value#value for this move
     """
-    env.cr.execute(
+    openupgrade.logged_query(
+        env.cr,
         """
         UPDATE stock_move
         SET value=aggregated_values.agg_value
@@ -75,7 +77,7 @@ def stock_move_value(env):
             GROUP BY stock_move_id
         ) aggregated_values
         WHERE aggregated_values.stock_move_id=stock_move.id
-        """
+        """,
     )
 
 
@@ -84,16 +86,14 @@ def product_value(env):
     Fill product.value with stock valuations not assigned to a move
     (=manual valuations)
     """
-    openupgrade.logged_query(
-        env.cr,
+    env.cr.execute(
         """
         ALTER TABLE product_value
         ADD COLUMN IF NOT EXISTS stock_valuation_layer_id int
         """,
     )
     # simple case: the valuation layer has unit_cost set
-    openupgrade.logged_query(
-        env.cr,
+    env.cr.execute(
         """
         INSERT INTO product_value
         (
@@ -113,8 +113,7 @@ def product_value(env):
         """,
     )
     # otherwise: compute unit cost from sum of all previous values/sum of quantities
-    openupgrade.logged_query(
-        env.cr,
+    env.cr.execute(
         """
         INSERT INTO product_value
         (
