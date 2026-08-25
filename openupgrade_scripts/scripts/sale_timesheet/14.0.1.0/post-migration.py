@@ -22,7 +22,8 @@ def _fill_project_timesheet_product(env):
         env.cr,
         """UPDATE project_project pp
         SET timesheet_product_id = %s
-        WHERE pp.pricing_type IS NOT NULL AND pp.allow_timesheets""",
+        WHERE pp.pricing_type IS NOT NULL AND pp.allow_timesheets
+        AND timesheet_product_id IS NULL""",
         (product.id,),
     )
 

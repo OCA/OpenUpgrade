@@ -35,5 +35,6 @@ def migrate(env, version):
     openupgrade.rename_fields(env, _field_renames)
     map_pricing_type(env)
     openupgrade.logged_query(
-        env.cr, "ALTER TABLE project_project ADD timesheet_product_id int4"
+        env.cr,
+        "ALTER TABLE project_project ADD COLUMN IF NOT EXISTS timesheet_product_id int4",
     )
