@@ -21,6 +21,9 @@
     <field name="name">Out of stock</field>
     <field name="position">left</field>
   </record>
+  <record id="product_attribute_custom_value_sale_rule" model="ir.rule">
+    <field name="groups" eval="[(4, ref('sales_team.group_sale_salesman')), (4, ref('product.group_product_manager'))]"/>
+  </record>
   <record id="product_pricelist_comp_rule" model="ir.rule">
     <field name="domain_force">['|', ('company_id', 'in', [False, website.company_id.id]), ('company_id', 'in', company_ids)]</field>
   </record>
