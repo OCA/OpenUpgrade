@@ -62,6 +62,7 @@ merged_modules = {
     "sale_order_warn_message": "sale",
     # OCA/stock-logistics-workflow
     "stock_picking_show_return": "stock",
+    "stock_picking_mass_action": "stock",
     # OCA/vertical-association
     "membership_extension": "membership",
 }
