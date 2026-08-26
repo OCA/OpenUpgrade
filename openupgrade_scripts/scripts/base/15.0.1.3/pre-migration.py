@@ -53,6 +53,21 @@ rename_xmlids_mail = [
 ]
 
 
+def _fix_icp_mail_default_from(cr):
+    """Odoo 15 added a new ir.config_parameter key for mail.default.from.
+    See https://github.com/odoo/odoo/commit/1b9dd118cb0f305ed38b6326fa814336cbf16252
+    If a manual record was created in the database, it causes the following error:
+    DETAIL: Key (key)=(mail.default.from) already exists.
+    Therefore, the XML ID was added to prevent this error.
+    """
+    cr.execute("SELECT id FROM ir_config_parameter WHERE key = 'mail.default.from'")
+    res_id = cr.fetchone()
+    if res_id:
+        openupgrade.add_xmlid(
+            cr, "base", "icp_mail_default_from", "ir.config_parameter", res_id[0], True
+        )
+
+
 @openupgrade.migrate(use_env=False)
 def migrate(cr, version):
     """
@@ -69,7 +84,7 @@ def migrate(cr, version):
 
     openupgrade.rename_xmlids(cr, rename_xmlids_l10n_ec)
     openupgrade.rename_xmlids(cr, rename_xmlids_mail)
-
+    _fix_icp_mail_default_from(cr)
     openupgrade.update_module_names(
         cr, renamed_modules.items(), environment_namespec=True
     )
