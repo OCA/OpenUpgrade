@@ -9,8 +9,12 @@ renamed_modules = {
     "l10n_in_edi_ewaybill": "l10n_in_ewaybill",
     "pos_viva_wallet": "pos_viva_com",
     # odoo/enterprise
+    # OCA/mail
+    "mail_debrand": "mail_debranding",
     # OCA/timesheet
     "project_timesheet_time_control": "hr_timesheet_time_control",
+    # OCA/server-brand
+    "portal_odoo_debranding": "portal_debranding",
     # OCA/website
     "website_odoo_debranding": "website_debranding",
     # OCA/...
