@@ -137,6 +137,7 @@ NEW ir.model.constraint: account.constraint_account_move_account_move_sanitize_p
 NEW ir.model.constraint: account.constraint_account_move_checked_idx
 NEW ir.model.constraint: account.constraint_account_move_duplicate_bills_idx
 NEW ir.model.constraint: account.constraint_account_move_journal_id_company_id_idx
+NEW ir.model.constraint: account.constraint_account_move_journal_id_date_idx
 NEW ir.model.constraint: account.constraint_account_move_line_account_id_date_idx
 ir.model.constraint: account.constraint_account_move_line_check_accountable_required_fields (changed definition: is now 'CHECK(display_type IN ('line_section', 'line_subsection', 'line_note') OR account_id IS NOT NULL)' ('check(display_type in('line_section','line_note') or account_id is not null)'))
 ir.model.constraint: account.constraint_account_move_line_check_amount_currency_balance_sign (changed definition: is now 'CHECK(    display_type IN ('line_section', 'line_subsection', 'line_note')    OR (    (balance <= 0 AND amount_currency <= 0)    OR    (balance >= 0 AND amount_currency >= 0)    )   )' ('check(    display_type in('line_section','line_note')    or(    (balance <= 0 and amount_currency <= 0)    or    (balance >= 0 and amount_currency >= 0)    )   )'))

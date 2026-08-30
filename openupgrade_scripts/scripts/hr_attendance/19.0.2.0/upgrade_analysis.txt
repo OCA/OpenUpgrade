@@ -52,7 +52,12 @@ hr_attendance / res.company              / attendance_device_tracking (boolean):
 ---XML records in module 'hr_attendance'---
 NEW hr.attendance.overtime.rule: hr_attendance.hr_attendance_overtime_employee_schedule_rule (noupdate)
 NEW hr.attendance.overtime.rule: hr_attendance.hr_attendance_overtime_non_working_days_rule (noupdate)
+NEW hr.attendance.overtime.rule: hr_attendance.hr_attendance_overtime_rule_1_ae (noupdate)
+NEW hr.attendance.overtime.rule: hr_attendance.hr_attendance_overtime_rule_2_ae (noupdate)
+NEW hr.attendance.overtime.rule: hr_attendance.hr_attendance_overtime_rule_3_ae (noupdate)
+NEW hr.attendance.overtime.rule: hr_attendance.hr_attendance_overtime_rule_4_ae (noupdate)
 NEW hr.attendance.overtime.ruleset: hr_attendance.hr_attendance_default_ruleset (noupdate)
+NEW hr.attendance.overtime.ruleset: hr_attendance.l10n_ae_hr_attendance_overtime_ruleset (noupdate)
 NEW ir.actions.act_window: hr_attendance.hr_attendance_overtime_rule_action
 NEW ir.actions.act_window: hr_attendance.hr_attendance_overtime_ruleset_action
 DEL ir.actions.act_window: hr_attendance.hr_attendance_overtime_action
