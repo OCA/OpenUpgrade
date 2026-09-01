@@ -1,0 +1,18 @@
+---Models in module 'hr_presence'---
+---Fields in module 'hr_presence'---
+hr_presence  / hr.employee              / hr_presence_state_display (selection): selection_keys added: [out_of_working_hour], removed: [to_define]
+# DONE: pre-migration: copy_columns; post-migration: map_values 'to_define' -> 'out_of_working_hour'
+hr_presence  / hr.employee              / manually_set_presence (boolean): NEW hasdefault: default
+# DONE: pre-migration: add_columns
+---XML records in module 'hr_presence'---
+NEW ir.actions.server: hr_presence.action_hr_employee_presence_absent
+NEW ir.actions.server: hr_presence.action_hr_employee_presence_log
+NEW ir.actions.server: hr_presence.action_hr_employee_presence_present
+NEW ir.actions.server: hr_presence.action_hr_employee_presence_sms
+NEW ir.actions.server: hr_presence.action_hr_employee_presence_time_off
+DEL ir.actions.server: hr_presence.ir_actions_server_action_open_presence_view
+DEL ir.ui.menu: hr_presence.menu_hr_presence_view
+NEW ir.ui.view: hr_presence.hr_employee_view_tree
+DEL ir.ui.view: hr_presence.hr_employee_view_kanban
+DEL ir.ui.view: hr_presence.hr_employee_view_presence_search
+# NOTHING TO DO
