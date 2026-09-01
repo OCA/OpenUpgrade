@@ -4,7 +4,8 @@ from openupgradelib import openupgrade
 @openupgrade.migrate()
 def migrate(env, version=None):
     """
-    Set consumed tours from legacy table after migration
+    Set consumed tours from legacy table after migration and
+    remove obsolete security rules.
     """
     openupgrade.logged_query(
         env.cr,
@@ -17,5 +18,16 @@ def migrate(env, version=None):
         web_tour_tour
         WHERE web_tour_tour.name=legacy_table.name
         ON CONFLICT DO NOTHING
+        """,
+    )
+
+    openupgrade.logged_query(
+        env.cr,
+        """
+        DELETE FROM ir_rule
+        WHERE model_id = (
+            SELECT id FROM ir_model WHERE model = 'web_tour.tour'
+        )
+        AND domain_force LIKE '%user_id%';
         """,
     )
