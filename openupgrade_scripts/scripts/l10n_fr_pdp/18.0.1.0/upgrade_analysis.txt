@@ -5,7 +5,6 @@ l10n_fr_pdp  / account_edi_proxy_client.user / proxy_type (False)            : s
 l10n_fr_pdp  / res.partner              / invoice_edi_format (False)    : NEW selection_keys: ['ciusro', 'es_facturae', 'fa3_pl', 'facturx', 'it_edi_xml', 'nlcius', 'oioubl_201', 'oioubl_21', 'pint_anz', 'pint_jp', 'pint_my', 'pint_sg', 'tw_ecpay', 'ubl_21_fr', 'ubl_a_nz', 'ubl_bis3', 'ubl_hr', 'ubl_sg', 'ubl_tr', 'vn_sinvoice', 'xrechnung', 'zugferd'], mode: modify
 l10n_fr_pdp  / res.partner              / ubl_cii_format (False)        : DEL selection_keys: ['ciusro', 'facturx', 'nlcius', 'oioubl_201', 'pint_anz', 'pint_jp', 'pint_my', 'pint_sg', 'ubl_21_fr', 'ubl_a_nz', 'ubl_bis3', 'ubl_sg', 'ubl_tr', 'xrechnung', 'zugferd'], mode: modify
 ---XML records in module 'l10n_fr_pdp'---
-NEW ir.actions.server: l10n_fr_pdp.l10n_fr_pdp_action_open_response_wizard
 NEW ir.ui.view: l10n_fr_pdp.l10n_fr_pdp_list_view_move_ereporting
 NEW ir.ui.view: l10n_fr_pdp.l10n_fr_pdp_reports_view_in_invoice_tree
 NEW ir.ui.view: l10n_fr_pdp.l10n_fr_pdp_reports_view_move_kanban

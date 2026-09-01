@@ -1,0 +1,16 @@
+---Models in module 'l10n_gr_edi_e_invoo'---
+---Fields in module 'l10n_gr_edi_e_invoo'---
+l10n_gr_edi_e_invoo / account.move             / l10n_gr_edi_state (False)     : NEW selection_keys: ['bill_fetched', 'bill_sent', 'invoice_pending', 'invoice_sent'], mode: modify
+l10n_gr_edi_e_invoo / account_edi_proxy_client.user / proxy_type (False)            : NEW selection_keys: ['l10n_gr_edi', 'l10n_it_edi', 'l10n_my_edi', 'nemhandel', 'pdp', 'peppol'], mode: modify
+l10n_gr_edi_e_invoo / l10n_gr_edi.document     / mydata_authentication_code (char): NEW
+l10n_gr_edi_e_invoo / l10n_gr_edi.document     / mydata_uid (char)             : NEW
+l10n_gr_edi_e_invoo / l10n_gr_edi.document     / provider_invoice_identifier (char): NEW
+l10n_gr_edi_e_invoo / l10n_gr_edi.document     / provider_pdf_error (text)     : NEW
+l10n_gr_edi_e_invoo / l10n_gr_edi.document     / provider_pdf_state (selection): NEW selection_keys: ['error', 'pending', 'sent']
+l10n_gr_edi_e_invoo / l10n_gr_edi.document     / provider_qr_url (char)        : NEW
+l10n_gr_edi_e_invoo / l10n_gr_edi.document     / provider_uid (char)           : NEW
+l10n_gr_edi_e_invoo / l10n_gr_edi.document     / state (False)                 : NEW selection_keys: ['bill_error', 'bill_fetched', 'bill_sent', 'invoice_error', 'invoice_pending', 'invoice_sent'], mode: modify
+---XML records in module 'l10n_gr_edi_e_invoo'---
+NEW ir.model.constraint: l10n_gr_edi_e_invoo.constraint_account_edi_proxy_client_user_unique_identification_l10n_gr_edi
+NEW ir.ui.view: l10n_gr_edi_e_invoo.account_move_form_inherit_l10n_gr_edi_e_invoo
+NEW ir.ui.view: l10n_gr_edi_e_invoo.report_invoice_document
