@@ -46,6 +46,8 @@ merged_modules = {
     "website_sale_digital": "website_sale",
     "website_sale_loyalty_delivery": "website_sale_loyalty",
     "website_sale_stock_product_configurator": "website_sale_product_configurator",
+    # OCA/account-financial-tools
+    "base_vat_optional_vies": "base_vat",
     # OCA/account-invoicing
     "account_invoice_fiscal_position_update": "account",
     # OCA/e-commerce

@@ -34,7 +34,8 @@ def _partner_fill_vies_valid(env):
                     ) IN (SELECT code FROM eu_countries)
                 ) THEN TRUE
             ELSE FALSE
-        END;
+        END
+        WHERE vies_valid IS NULL;
         """,
     )
 
