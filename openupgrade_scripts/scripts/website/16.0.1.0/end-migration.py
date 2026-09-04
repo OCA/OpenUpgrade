@@ -115,3 +115,4 @@ def migrate(env, version):
     convert_custom_qweb_templates_bootstrap_4to5(env)
     convert_field_html_string_bootstrap_4to5(env)
     rename_t_group_website_restricted_editor(env)
+    openupgrade.cow_templates_replicate_upstream(env.cr)
