@@ -40,3 +40,4 @@ def qweb_templates_remove_inherit_id(env):
 def migrate(env, version):
     website_menu_url(env)
     qweb_templates_remove_inherit_id(env)
+    openupgrade.cow_templates_mark_if_equal_to_upstream(env.cr)
