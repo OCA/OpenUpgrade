@@ -17,3 +17,4 @@ def preserve_footer_color_combination(env):
 @openupgrade.migrate()
 def migrate(env, version):
     preserve_footer_color_combination(env)
+    openupgrade.cow_templates_replicate_upstream(env.cr)
