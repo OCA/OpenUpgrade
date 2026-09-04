@@ -23,3 +23,4 @@ def migrate(env, version):
         SET record_view_id = view_id
         WHERE page_type = 'single'""",
     )
+    openupgrade.cow_templates_mark_if_equal_to_upstream(env.cr)
