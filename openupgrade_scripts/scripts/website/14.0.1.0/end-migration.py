@@ -35,3 +35,4 @@ def convert_field_html_string(env):
 @openupgrade.migrate()
 def migrate(env, version):
     convert_field_html_string(env)
+    openupgrade.cow_templates_replicate_upstream(env.cr)

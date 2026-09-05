@@ -55,3 +55,4 @@ def migrate(env, version):
         True,
     )
     website_cookie_notice_pre_migration(env)
+    openupgrade.cow_templates_mark_if_equal_to_upstream(env.cr)
