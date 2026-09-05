@@ -131,3 +131,4 @@ def migrate(env, version):
         ],
         False,
     )
+    openupgrade.cow_templates_mark_if_equal_to_upstream(env.cr)
