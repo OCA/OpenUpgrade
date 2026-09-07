@@ -21,6 +21,7 @@ renamed_modules = {
     "hr_commission": "hr_commission_oca",
     "sale_commission_margin": "sale_commission_margin_oca",
     "sale_commission": "sale_commission_oca",
+    "sale_commission_pricelist": "sale_commission_pricelist_oca",
     "sale_commission_product_criteria": "sale_commission_oca_product_criteria",
     "sale_commission_product_criteria_semaphore": "sale_commission_oca_product_criteria_semaphore",  # noqa: E501
     # OCA/edi
