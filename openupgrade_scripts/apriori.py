@@ -107,7 +107,6 @@ merged_modules = {
     "stock_inventory_valuation_pivot": "stock_account",
     # OCA/stock-logistics-warehouse
     "stock_inventory_exclude_sublocation": "stock",
-    "stock_orderpoint_manual_procurement": "stock",
     # OCA/stock-logistics-workflow
     "stock_deferred_assign": "stock",
     "stock_move_assign_picking_hook": "stock",
