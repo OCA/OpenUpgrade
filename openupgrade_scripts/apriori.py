@@ -143,6 +143,18 @@ merged_modules = {
     # OCA/...
 }
 
+# Deleted modules
+deleted_modules = [
+    # odoo
+    "base_gengo",
+    "im_support",
+    "l10n_cn_standard",
+    "theme_bootswatch",
+    "web_diagram",
+    "website_gengo",
+    # OCA/...
+]
+
 # only used here for upgrade_analysis
 renamed_models = {
     # odoo
