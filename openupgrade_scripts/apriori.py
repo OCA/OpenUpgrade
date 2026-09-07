@@ -142,6 +142,20 @@ merged_modules = {
     "web_tree_image_tooltip": "web",
 }
 
+# Deleted modules
+deleted_modules = [
+    # odoo
+    "google_drive",
+    "google_spreadsheet",
+    "l10n_it_edi_sdicoop",
+    "l10n_sa_invoice",
+    "payment_alipay",
+    "payment_ogone",
+    "payment_payulatam",
+    "payment_payumoney",
+    # OCA/...
+]
+
 # only used here for upgrade_analysis
 renamed_models = {
     # odoo
