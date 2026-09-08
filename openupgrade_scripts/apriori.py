@@ -71,6 +71,8 @@ merged_modules = {
     "stock_picking_mass_action": "stock",
     # OCA/vertical-association
     "membership_extension": "membership",
+    # OCA/website
+    "website_login_page_editable": "web",
 }
 
 # only used here for upgrade_analysis
