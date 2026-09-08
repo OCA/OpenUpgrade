@@ -37,4 +37,41 @@ order = env["sale.order"].create(
 )
 order._onchange_sale_order_template_id()
 
+order.write(
+    {
+        "order_line": [
+            (
+                0,
+                0,
+                {
+                    "name": "non-optional line",
+                    "product_id": env.ref("product.product_product_3").id,
+                    "product_uom": env.ref("uom.product_uom_unit").id,
+                    "product_uom_qty": 2,
+                },
+            )
+        ]
+    }
+)
+
+order.sale_order_option_ids[0].add_option_to_order()
+
+order.write(
+    {
+        "order_line": [
+            (
+                0,
+                0,
+                {
+                    "name": "non-optional line2",
+                    "product_id": env.ref("product.product_product_3").id,
+                    "product_uom": env.ref("uom.product_uom_unit").id,
+                    "product_uom_qty": 22,
+                },
+            )
+        ]
+    }
+)
+
+
 env.cr.commit()
