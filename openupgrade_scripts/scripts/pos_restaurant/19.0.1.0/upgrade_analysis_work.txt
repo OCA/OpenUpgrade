@@ -9,10 +9,18 @@ pos_restaurant / pos.config               / default_screen (selection)    : NEW 
 # NOTHING TO DO: default is fine
 
 pos_restaurant / pos.config               / module_pos_restaurant_appointment (boolean): DEL
+# NOTHING TO DO
+
 pos_restaurant / pos.config               / takeaway (boolean)            : DEL
+# DONE: linked to available_preset_ids in post-migration.py
+
 pos_restaurant / pos.config               / takeaway_fp_id (many2one)     : DEL relation: account.fiscal.position
-pos_restaurant / pos.order                / course_ids (one2many)         : NEW relation: restaurant.order.course
+# DONE: mapped to pos_takeout_preset.fiscal_position_id in post-migration.py
+
 pos_restaurant / pos.order                / takeaway (boolean)            : DEL
+# DONE: backfilled to pos_order.preset_id per-config in post-migration.py
+
+pos_restaurant / pos.order                / course_ids (one2many)         : NEW relation: restaurant.order.course
 pos_restaurant / pos.order.line           / course_id (many2one)          : NEW relation: restaurant.order.course
 pos_restaurant / pos.preset               / use_guest (boolean)           : NEW hasdefault: default
 pos_restaurant / restaurant.order.course  / fired (boolean)               : NEW hasdefault: default
