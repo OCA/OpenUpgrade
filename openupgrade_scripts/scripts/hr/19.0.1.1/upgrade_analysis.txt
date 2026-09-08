@@ -12,6 +12,7 @@ hr           / hr.department            / complete_name (char)          : not st
 hr           / hr.departure.reason      / country_id (many2one)         : NEW relation: res.country, hasdefault: default
 hr           / hr.departure.reason      / reason_code (integer)         : DEL
 hr           / hr.employee              / _inherits                     : NEW _inherits: {'hr.version': 'version_id'}, stored: False
+hr           / hr.employee              / _order                        : _order is now 'name, id' ('name')
 hr           / hr.employee              / additional_note (text)        : not stored anymore
 hr           / hr.employee              / additional_note (text)        : now related
 hr           / hr.employee              / address_id (many2one)         : not stored anymore
