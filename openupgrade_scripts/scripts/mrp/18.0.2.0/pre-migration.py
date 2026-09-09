@@ -29,8 +29,31 @@ def mrp_workorder_sequence(env):
     )
 
 
+def fill_mrp_stock_move_location_dest_id(env):
+    """
+    MRP stock moves:
+    In v17, location_dest_id contained the destination of the move.
+    During the migration it is preserved as location_final_id.
+    For MRP moves, the new location_dest_id must preserve this value
+    instead of using the generic stock logic.
+    """
+    openupgrade.logged_query(
+        env.cr,
+        """
+        UPDATE stock_move
+        SET location_dest_id = location_final_id
+        WHERE (
+            raw_material_production_id IS NOT NULL
+            OR production_id IS NOT NULL
+        )
+        AND location_final_id IS NOT NULL;
+        """,
+    )
+
+
 @openupgrade.migrate()
 def migrate(env, version):
     openupgrade.add_columns(env, add_columns)
     openupgrade.copy_columns(env.cr, copy_columns)
     mrp_workorder_sequence(env)
+    fill_mrp_stock_move_location_dest_id(env)
