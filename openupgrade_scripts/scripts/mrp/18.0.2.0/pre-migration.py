@@ -29,8 +29,32 @@ def mrp_workorder_sequence(env):
     )
 
 
+def fill_mrp_stock_move_location_dest_id(env):
+    openupgrade.logged_query(
+        env.cr,
+        """
+        UPDATE stock_move sm
+        SET location_dest_id = mp.location_dest_id
+        FROM mrp_production mp
+        WHERE sm.production_id = mp.id
+            AND mp.location_dest_id IS NOT NULL
+        """,
+    )
+    openupgrade.logged_query(
+        env.cr,
+        """
+        UPDATE stock_move sm
+        SET location_dest_id = mp.production_location_id
+        FROM mrp_production mp
+        WHERE sm.raw_material_production_id = mp.id
+            AND mp.production_location_id IS NOT NULL;
+        """,
+    )
+
+
 @openupgrade.migrate()
 def migrate(env, version):
     openupgrade.add_columns(env, add_columns)
     openupgrade.copy_columns(env.cr, copy_columns)
     mrp_workorder_sequence(env)
+    fill_mrp_stock_move_location_dest_id(env)
