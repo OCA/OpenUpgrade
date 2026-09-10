@@ -71,6 +71,7 @@ DEL ir.actions.act_window: l10n_in_ewaybill_stock.l10n_in_ewaybill_form_action [
 DEL ir.actions.report: l10n_in_ewaybill_stock.action_report_ewaybill [renamed to l10n_in_ewaybill module]
 NEW ir.model.access: l10n_in_ewaybill_stock.access_l10n_in_ewaybill_stock
 NEW ir.model.access: l10n_in_ewaybill_stock.access_l10n_in_ewaybill_stock_cancel
+NEW ir.model.access: l10n_in_ewaybill_stock.access_l10n_in_ewaybill_type_stock
 DEL ir.model.access: l10n_in_ewaybill_stock.access_l10n_in_ewaybill [renamed to l10n_in_ewaybill module]
 DEL ir.model.access: l10n_in_ewaybill_stock.access_l10n_in_ewaybill_cancel [renamed to l10n_in_ewaybill module]
 DEL ir.rule: l10n_in_ewaybill_stock.l10n_in_ewaybill_comp_rule [renamed to l10n_in_ewaybill module] (noupdate)
