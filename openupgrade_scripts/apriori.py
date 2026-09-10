@@ -58,6 +58,8 @@ merged_modules = {
     "account_payment_partner": "account_payment_mode",
     # OCA/hr
     "hr_employee_document_from_applicant": "hr_recruitment",
+    # OCA/hr-holidays
+    "hr_holidays_calendar_planning": "hr_employee_calendar_planning",
     # OCA/partner-contact
     "partner_contact_lang": "base",
     # OCA/project
