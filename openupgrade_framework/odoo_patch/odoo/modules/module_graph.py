@@ -4,6 +4,7 @@ import os
 
 import odoo
 from odoo.modules.module_graph import ModuleGraph
+from odoo.tools.sql import table_exists
 
 
 def _update_from_database(self, *args, **kwargs) -> None:
@@ -14,9 +15,10 @@ def _update_from_database(self, *args, **kwargs) -> None:
     # need to be set to null instead of false. and as this is read before any upgrade
     # scripts run, we do it here. the statement is a bit clunky because it has to work
     # before and after the translate column is converted from boolean to varchar
-    self._cr.execute(
-        "UPDATE ir_model_fields SET translate=NULL where translate::varchar='false'"
-    )
+    if table_exists(self._cr, "ir_model_fields"):
+        self._cr.execute(
+            "UPDATE ir_model_fields SET translate=NULL where translate::varchar='false'"
+        )
 
     if os.environ.get("OPENUPGRADE_USE_DEMO", "") == "yes":
         return
