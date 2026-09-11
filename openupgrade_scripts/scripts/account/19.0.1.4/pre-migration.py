@@ -133,6 +133,21 @@ def account_report_expression(env):
     )
 
 
+def account_reconcile_model_archive(env):
+    """The invoice_matching reconciliation model no longer exist and have been
+    integrated into account_reconcile_oca; in any case, they must be archived
+    to prevent buttons (in the reconciliation) from appearing for items
+    (models) that do nothing.
+    """
+    env.cr.execute(
+        """
+        UPDATE account_reconcile_model
+        SET active = False
+        WHERE rule_type = 'invoice_matching'
+        """
+    )
+
+
 @openupgrade.migrate()
 def migrate(env, version):
     openupgrade.add_fields(env, _added_fields)
@@ -141,3 +156,4 @@ def migrate(env, version):
     account_journal_invoice_reference_type(env)
     account_report(env)
     account_report_expression(env)
+    account_reconcile_model_archive(env)
