@@ -1,7 +1,7 @@
 ---Models in module 'stock_account'---
 obsolete model stock.valuation.layer
 
-# DONE: renamed to product.value
+# DONE: used to compute stock.move#value
 
 obsolete model stock.valuation.layer.revaluation [transient]
 
@@ -9,7 +9,7 @@ obsolete model stock.valuation.layer.revaluation [transient]
 
 new model product.value
 
-# DONE: renamed from stock.valuation.layer
+# DONE: filled from stock.valuation.layer where appropriate
 
 new model stock_account.stock.valuation.report [abstract]
 new model stock.avco.report [abstract]
@@ -64,32 +64,23 @@ stock_account / product.template         / valuation (selection)         : selec
 
 stock_account / product.value            / company_id (many2one)         : NEW relation: res.company, required, hasdefault: compute
 
-# NOTHING TO DO
+# DONE: set from stock.valuation.layer
 
 stock_account / product.value            / date (datetime)               : NEW required, hasdefault: default
 
-# DONE: set from create_date
+# DONE: set from stock.valuation.layer#create_date
 
 stock_account / product.value            / description (char)            : NEW
 stock_account / product.value            / lot_id (many2one)             : NEW relation: stock.lot
-
-# NOTHING TO DO
-
 stock_account / product.value            / move_id (many2one)            : NEW relation: stock.move
-
-# DONE: renamed from stock_move_id
-
 stock_account / product.value            / product_id (many2one)         : NEW relation: product.product
-
-# DONE: set from move_id
-
 stock_account / product.value            / user_id (many2one)            : NEW relation: res.users, required, hasdefault: default
 
-# DONE: set from create_uid
+# DONE: set from stock.valuation.layer
 
 stock_account / product.value            / value (float)                 : NEW required
 
-# NOTHING TO DO
+# DONE: set from stock.valuation.layer#unit_cost
 
 stock_account / res.company              / account_stock_journal_id (many2one): NEW relation: account.journal
 stock_account / res.company              / account_stock_valuation_id (many2one): NEW relation: account.account
