@@ -123,6 +123,8 @@ merged_modules = {
     # OCA/project
     "project_description": "project",
     "project_stage_closed": "project",
+    # OCA/purchase-workflow
+    "purchase_tier_validation_forward": "base_tier_validation_forward",
     # OCA/reporting-engine
     "bi_sql_editor_aggregate": "bi_sql_editor",
     # OCA/sale-reporting
