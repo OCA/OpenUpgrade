@@ -7,8 +7,7 @@ analytic     / account.analytic.distribution.model / sequence (integer)         
 
 # NOTHING TO DO
 
-analytic     / account.analytic.plan    / default_applicability (selection): needs conversion to v18-style company dependent
-
+analytic     / account.analytic.plan    / default_applicability (selection): DONE: convert legacy selection value to v18 company-dependent jsonb storage in pre-migration
 # DONE
 
 ---XML records in module 'analytic'---
