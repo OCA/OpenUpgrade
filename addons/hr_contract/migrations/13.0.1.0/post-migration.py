@@ -28,10 +28,11 @@ def fill_employee_contract_id(env):
         UPDATE hr_employee he
         SET contract_id = sub.contract_id
         FROM (
-            SELECT he.id AS employee_id, hc.id as contract_id
+            SELECT DISTINCT ON (employee_id)
+                he.id AS employee_id, hc.id as contract_id
             FROM hr_contract hc, hr_employee he
             WHERE he.id = hc.employee_id AND hc.state = 'open'
-            LIMIT 1
+            ORDER BY employee_id, hc.date_start DESC
         ) sub
         WHERE sub.employee_id = he.id AND he.contract_id IS NULL
         """
