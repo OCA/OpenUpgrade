@@ -1,0 +1,13 @@
+---XML records in module 'account_reports'---
+
+account_reports.account_financial_report_totalincome0
+    DONE: Renamed to account_reports.account_financial_report_operating_income0.
+    Existing Odoo 17 databases already contain the Profit and Loss line with code INC.
+    Without renaming the XML ID, Odoo 18 attempts to create a second account.report.line
+    and fails on account_report_line_code_uniq.
+
+account_reports.account_financial_report_totalincome0_balance
+    DONE: Renamed to account_reports.account_financial_report_operating_income0_balance.
+    The existing balance expression must keep its identity.
+    Without renaming the XML ID, Odoo 18 attempts to create a second expression and fails
+    on account_report_expression_line_label_uniq.
