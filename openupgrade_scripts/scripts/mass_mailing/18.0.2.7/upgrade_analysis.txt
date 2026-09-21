@@ -2,6 +2,7 @@
 ---Fields in module 'mass_mailing'---
 mass_mailing / mailing.contact          / first_name (char)             : NEW
 mass_mailing / mailing.contact          / last_name (char)              : NEW
+mass_mailing / mailing.list             / _order                        : _order is now 'create_date DESC' ('create_date DESC, id DESC')
 ---XML records in module 'mass_mailing'---
 DEL ir.actions.act_window.view: mass_mailing.mailing_mailing_action_mail_fullwidth_form
 DEL ir.actions.act_window.view: mass_mailing.mailing_mailing_action_mail_fullwidth_graph
