@@ -90,6 +90,11 @@ DEL ir.ui.view: purchase.res_partner_view_purchase_account_buttons
 
 # NOTHING TO DO
 
+ir.ui.view: purchase.track_po_line_qty_received_template (noupdate switched)
+ir.ui.view: purchase.track_po_line_template (noupdate switched)
+
+DONE: pre-migration: switched noupdate
+
 DEL mail.message.subtype: purchase.mt_rfq_done (noupdate)
 
 # NOTHING TO DO: don't delete subtypes because then messages end up without one
