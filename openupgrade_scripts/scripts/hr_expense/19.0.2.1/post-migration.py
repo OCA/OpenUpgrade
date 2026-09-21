@@ -67,6 +67,8 @@ deleted_xmlids = [
     "hr_expense.ir_rule_hr_expense_sheet_employee",
     "hr_expense.ir_rule_hr_expense_sheet_employee_not_draft",
     "hr_expense.ir_rule_hr_expense_sheet_manager",
+    "hr_expense.action_hr_expense_sheet_my_all",
+    "hr_expense.action_hr_expense_sheet_all",
 ]
 
 
