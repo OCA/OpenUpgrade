@@ -1,5 +1,9 @@
 <?xml version='1.0' encoding='utf-8'?>
 <odoo>
+    <record id="payment_method_pay_on_site" model="payment.method">
+        <field name="support_refund">none</field>
+    </record>
+
     <record id="product_pick_up_in_store" model="product.product">
         <field name="name">Pick up in store</field>
         <field name="description"/>
