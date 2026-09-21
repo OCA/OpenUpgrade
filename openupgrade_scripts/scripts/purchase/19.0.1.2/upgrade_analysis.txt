@@ -41,6 +41,8 @@ ir.model.constraint: purchase.constraint_purchase_order_line_accountable_require
 ir.model.constraint: purchase.constraint_purchase_order_line_non_accountable_null_fields (changed definition: is now 'CHECK(display_type IS NULL OR (product_id IS NULL AND price_unit = 0 AND product_uom_qty = 0 AND product_uom_id IS NULL AND date_planned is NULL))' ('check(display_type is null or(product_id is null and price_unit = 0 and product_uom_qty = 0 and product_uom is null and date_planned is null))'))
 DEL ir.ui.menu: purchase.menu_purchase_uom_categ_form_action
 DEL ir.ui.menu: purchase.menu_unit_of_measure_in_config_purchase
+ir.ui.view: purchase.track_po_line_qty_received_template (noupdate switched)
+ir.ui.view: purchase.track_po_line_template (noupdate switched)
 DEL ir.ui.view: purchase.product_packaging_form_view_purchase
 DEL ir.ui.view: purchase.product_packaging_tree_view_purchase
 DEL ir.ui.view: purchase.purchase_partner_kanban_view

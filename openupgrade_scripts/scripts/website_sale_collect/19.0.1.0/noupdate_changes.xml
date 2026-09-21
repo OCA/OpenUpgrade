@@ -3,4 +3,10 @@
   <record id="carrier_pick_up_in_store" model="delivery.carrier" forcecreate="0">
     <field name="prod_environment" eval="True"/>
   </record>
+  <record id="payment_method_pay_on_site" model="payment.method">
+    <field name="support_manual_capture">none</field>
+  </record>
+  <record id="payment_provider_on_site" model="payment.provider">
+    <field name="is_published">True</field>
+  </record>
 </odoo>
