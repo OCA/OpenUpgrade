@@ -38,3 +38,9 @@ _xmlids_renames = [
 def migrate(env, version):
     openupgrade.copy_columns(env.cr, _columns_copy)
     openupgrade.rename_xmlids(env.cr, _xmlids_renames)
+    openupgrade.set_xml_ids_noupdate_value(
+        env,
+        "website_sale_collect",
+        ["payment_method_pay_on_site", "payment_provider_on_site"],
+        True,
+    )
