@@ -6,17 +6,21 @@ from openupgradelib import openupgrade
 
 def website_menu_url(env):
     """
-    Ensure website.menu#url is set
+    Ensure website.menu#url is set without losing controller URLs.
     """
     env.cr.execute(
         """
         UPDATE website_menu
-        SET url=COALESCE(website_page.url, '#')
-        FROM
-        website_menu website_menu2
-        LEFT JOIN website_page
-        ON website_menu2.page_id=website_page.id
-        WHERE website_menu.id=website_menu2.id
+        SET url = website_page.url
+        FROM website_page
+        WHERE website_menu.page_id = website_page.id
+        """
+    )
+    env.cr.execute(
+        """
+        UPDATE website_menu
+        SET url = '#'
+        WHERE url IS NULL OR url = ''
         """
     )
 
