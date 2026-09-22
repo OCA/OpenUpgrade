@@ -24,6 +24,19 @@ def _fill_project_reinvoiced_sale_order_id(env):
     )
 
 
+def _fix_product_service_tracking(env):
+    # from v.18 the logic of service_tracking `task_in_project` corresponds to
+    # `task_global_project`
+    openupgrade.logged_query(
+        env.cr,
+        """
+        UPDATE product_template
+        SET service_tracking = 'task_global_project'
+        WHERE service_tracking = 'task_in_project'
+        """,
+    )
+
+
 @openupgrade.migrate()
 def migrate(env, version):
     if openupgrade.column_exists(env.cr, "product_template", "project_id"):
@@ -37,3 +50,4 @@ def migrate(env, version):
             {"product_template": [("project_template_id", None)]},
         )
     _fill_project_reinvoiced_sale_order_id(env)
+    _fix_product_service_tracking(env)
