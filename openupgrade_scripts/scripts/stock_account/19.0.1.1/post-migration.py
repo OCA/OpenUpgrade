@@ -4,21 +4,6 @@
 from openupgradelib import openupgrade
 
 
-def product_value_product_id(env):
-    """
-    Fill product.value#product_id from move_id.product_id
-    """
-    env.cr.execute(
-        """
-        UPDATE product_value
-        SET product_id=stock_move.product_id
-        FROM stock_move
-        WHERE product_value.move_id=stock_move.id
-        AND product_value.product_id IS NULL
-        """
-    )
-
-
 def stock_move_account_move_id(env):
     """
     Fill stock.move#account_move_id from account.move#stock_move_id
@@ -64,13 +49,14 @@ def stock_location_valuation_account_id(env):
     Set stock.location#valuation_account_id from valuation_in_account_id and
     valuation_out_account_id if they are the same
     """
-    env.cr.execute(
+    openupgrade.logged_query(
+        env.cr,
         """
         UPDATE stock_location
         SET valuation_account_id=valuation_in_account_id
         WHERE
         valuation_in_account_id=valuation_out_account_id
-        """
+        """,
     )
 
 
@@ -78,26 +64,101 @@ def stock_move_value(env):
     """
     Set stock.move#value to sum of product.value#value for this move
     """
-    env.cr.execute(
+    openupgrade.logged_query(
+        env.cr,
         """
         UPDATE stock_move
         SET value=aggregated_values.agg_value
         FROM (
             SELECT
-            move_id, sum(value) AS agg_value
+            stock_move_id, sum(value) AS agg_value
             FROM
-            product_value
-            GROUP BY move_id
+            stock_valuation_layer
+            GROUP BY stock_move_id
         ) aggregated_values
-        WHERE aggregated_values.move_id=stock_move.id
-        """
+        WHERE aggregated_values.stock_move_id=stock_move.id
+        """,
     )
+
+
+def product_value(env):
+    """
+    Fill product.value with stock valuations not assigned to a move
+    (=manual valuations)
+    """
+    env.cr.execute(
+        """
+        ALTER TABLE product_value
+        ADD COLUMN IF NOT EXISTS stock_valuation_layer_id int
+        """,
+    )
+    # simple case: the valuation layer has unit_cost set
+    env.cr.execute(
+        """
+        INSERT INTO product_value
+        (
+            create_uid, create_date, write_uid, write_date, date, lot_id,
+            product_id, user_id, value, company_id, description,
+            stock_valuation_layer_id
+        )
+        SELECT
+            create_uid, create_date, write_uid, write_date, create_date, lot_id,
+            product_id, create_uid, unit_cost, company_id, description,
+            id
+        FROM stock_valuation_layer
+        WHERE
+            stock_move_id IS NULL
+            AND
+            unit_cost IS NOT NULL
+        """,
+    )
+    # otherwise: compute unit cost from sum of all previous values/sum of quantities
+    env.cr.execute(
+        """
+        INSERT INTO product_value
+        (
+            create_uid, create_date, write_uid, write_date,
+            date, lot_id, product_id, user_id,
+            company_id, description, value,
+            stock_valuation_layer_id
+        )
+        SELECT
+            svl1.create_uid, svl1.create_date, svl1.write_uid, svl1.write_date,
+            svl1.create_date, svl1.lot_id, svl1.product_id, svl1.create_uid,
+            svl1.company_id, svl1.description, SUM(svl2.value) / SUM(svl2.quantity),
+            svl1.id
+        FROM stock_valuation_layer svl1
+        JOIN stock_valuation_layer svl2
+        ON
+            svl1.product_id=svl2.product_id
+            AND
+            svl1.company_id=svl2.company_id
+            AND
+            (
+                svl1.lot_id=svl2.lot_id
+                OR svl1.lot_id IS NULL AND svl2.lot_id IS NULL
+            )
+            AND
+            svl1.create_date >= svl2.create_date
+        WHERE
+            svl1.stock_move_id IS NULL
+            AND
+            svl1.unit_cost IS NULL
+            AND
+            svl1.quantity = 0
+        GROUP BY
+            svl1.id
+        HAVING
+            SUM(svl2.quantity) <> 0
+        """,
+    )
+    openupgrade.lift_constraints(env.cr, "stock_valuation_layer", "id", cascade=True)
 
 
 @openupgrade.migrate()
 def migrate(env, version):
-    product_value_product_id(env)
     stock_move_account_move_id(env)
     product_category_property_valuation(env)
     stock_location_valuation_account_id(env)
     stock_move_value(env)
+    product_value(env)
