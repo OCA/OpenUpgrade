@@ -82,3 +82,33 @@ assert product_avg.standard_price == 21
 env.cr.commit()
 product_avg.standard_price = 22
 env.cr.commit()
+
+# A revaluation product: 17.0 books an adjustment to the total value of the stock
+# on hand without a per-unit price, writing quantity 0 and unit_cost 0 while value
+# carries the whole adjustment. Copying that unit_cost across to product.value
+# would set the product's cost to zero, so the migration has to derive it instead.
+product_reval = env["product.product"].create(
+    {
+        "name": "Revaluation product",
+        "categ_id": category_avg.id,
+        "standard_price": 10,
+        "is_storable": True,
+    }
+)
+buy(product_reval, price_unit=20, product_uom_qty=4)
+assert product_reval.standard_price == 20
+env.cr.commit()
+
+# 17.0 writes unit_cost 0 -- not NULL -- for this kind of adjustment, and the ORM
+# offers no way to ask for that shape, so the layer is inserted directly.
+env.cr.execute(
+    """
+    INSERT INTO stock_valuation_layer
+    (create_uid, create_date, write_uid, write_date, company_id, product_id,
+     quantity, unit_cost, value, description)
+    VALUES
+    (%s, now(), %s, now(), %s, %s, 0, 0, 40, 'Revaluation with a zero unit cost')
+    """,
+    (env.uid, env.uid, env.company.id, product_reval.id),
+)
+env.cr.commit()
