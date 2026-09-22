@@ -17,6 +17,8 @@ renamed_modules = {
     "portal_odoo_debranding": "portal_debranding",
     # OCA/website
     "website_odoo_debranding": "website_debranding",
+    # OCA/sale-report
+    "sales_team_invoiced_target_domain": "sales_team_invoiced_target_report",
     # OCA/...
 }
 
