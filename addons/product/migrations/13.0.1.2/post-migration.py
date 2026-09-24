@@ -14,14 +14,20 @@ def convert_image_attachments(env):
         'product.product': "image_variant",
         'product.template': "image",
     }
+    attachment_model = env['ir.attachment']
     for model, field in mapping.items():
         Model = env[model]
-        attachments = env['ir.attachment'].search([
+        attachment_ids = attachment_model.search([
             ('res_model', '=', model),
             ('res_field', '=', field),
             ('res_id', '!=', False),
-        ])
-        for attachment in attachments:
+        ]).ids
+        # a MemoryError can happen if too many attachments are loaded in
+        # memory. therefore, we only load one record at the time and flush the
+        # cache at each iteration.
+        for attachment_id in attachment_ids:
+            # load attachments one by one to avoid prefetching
+            attachment = attachment_model.browse(attachment_id)
             try:
                 Model.browse(attachment.res_id).image_1920 = attachment.datas
             except Exception as e:
@@ -32,6 +38,10 @@ def convert_image_attachments(env):
                     attachment.res_id,
                     repr(e),
                 )
+            # flush and clear cache to avoid to fill up memory and force the
+            # computation of the computed fields (smaller size images)
+            Model.flush()
+            env.cache.invalidate()
 
 
 @openupgrade.logging()
