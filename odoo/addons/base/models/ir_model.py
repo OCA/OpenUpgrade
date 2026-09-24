@@ -221,6 +221,8 @@ class IrModel(models.Model):
                 # prevent screwing up fields that depend on these models' fields
                 model.field_id._prepare_update()
 
+        # OpenUpgrade: always remove relations to this model (fix issue #3649)
+        self.env['ir.model.relation'].search([('model', 'in', self.ids)]).unlink()
         # delete fields whose comodel is being removed
         self.env['ir.model.fields'].search([('relation', 'in', self.mapped('model'))]).unlink()
 
