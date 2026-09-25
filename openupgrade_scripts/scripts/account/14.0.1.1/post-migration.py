@@ -481,6 +481,11 @@ def fill_statement_lines_with_no_move(env):
         st_line.move_id.with_context(skip_account_move_synchronization=True).write(
             to_write
         )
+    # The ORM still holds pending values for these lines' stored computed fields
+    # (e.g. is_reconciled, computed while the moves had no suspense line yet). Write
+    # them now, so the SQL of fill_account_bank_statement_line_reconciliation is not
+    # overwritten by a later flush.
+    env["account.bank.statement.line"].flush()
 
     openupgrade.logged_query(
         env.cr,
