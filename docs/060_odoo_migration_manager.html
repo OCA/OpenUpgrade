@@ -125,6 +125,12 @@ would never ever do so anyway. Developers are free to corrupt the regular
 workings of Odoo if it helps the migration. For instance, from OpenUpgrade
 9.0 on, the workflow engine is disabled during field recomputation.</p>
 </dd>
+<dt>How are handled auto-installed modules that have been manually uninstalled?</dt><dd><p>Modules with auto_install=True (like IAP) that have been manually uninstalled
+are automatically installed during the migration.
+If you dont want to install such module you can use
+oca/server-tools/module_change_auto_install in each migration step to
+force auto_install to False.</p>
+</dd>
 </dl>
 </section>
 </section>
@@ -141,7 +147,7 @@ workings of Odoo if it helps the migration. For instance, from OpenUpgrade
 
   <div role="contentinfo">
     <p>&#169; Copyright 2012-2021, Odoo Community Association (OCA) / The OpenUpgrade developers.
-      <span class="lastupdated">Last updated on Sep 22, 2026.
+      <span class="lastupdated">Last updated on Sep 27, 2026.
       </span></p>
   </div>
 
