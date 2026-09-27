@@ -48,3 +48,10 @@ Are migration scripts fired when installing new modules?
    would never ever do so anyway. Developers are free to corrupt the regular
    workings of Odoo if it helps the migration. For instance, from OpenUpgrade
    9.0 on, the workflow engine is disabled during field recomputation.
+
+How are handled auto-installed modules that have been manually uninstalled?
+   Modules with auto_install=True (like IAP) that have been manually uninstalled
+   are automatically installed during the migration.
+   If you dont want to install such module you can use
+   oca/server-tools/module_change_auto_install in each migration step to
+   force auto_install to False.
