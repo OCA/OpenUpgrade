@@ -12,6 +12,8 @@ renamed_modules = {
     "website_sale_picking": "website_sale_collect",
     "website_form_project": "website_project",
     # odoo/enterprise
+    # OCA/account-invoicing
+    "product_supplierinfo_for_customer_invoice": "product_customerinfo_invoice",
     # OCA/account-reconcile
     "account_reconciliation_widget_due_date": "account_reconcile_due_date",
     # OCA/commission
