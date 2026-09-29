@@ -1,0 +1,37 @@
+<?xml version='1.0' encoding='utf-8'?>
+<odoo>
+  <record id="payment.payment_provider_flutterwave" model="payment.provider">
+    <field name="redirect_form_view_id" ref="payment.generic_redirect_form"/>
+  </record>
+  <record id="payment_method_bank_account" model="payment.method">
+    <field name="support_manual_capture" eval="'none'"/>
+    <field name="support_refund" eval="'none'"/>
+    <field name="provider_id" ref="payment.payment_provider_flutterwave"/>
+    <field name="supported_currency_ids" eval="[Command.set([ref('base.EUR'), ref('base.GBP'), ref('base.USD'), ref('base.ZAR')])]"/>
+  </record>
+  <record id="payment_method_credit" model="payment.method">
+    <field name="primary_payment_method_id" eval="ref('payment_flutterwave.payment_method_card')"/>
+    <field name="provider_id" ref="payment.payment_provider_flutterwave"/>
+  </record>
+  <record id="payment_method_mobile_money" model="payment.method">
+    <field name="support_manual_capture" eval="'none'"/>
+    <field name="support_refund" eval="'none'"/>
+    <field name="supported_country_ids" eval="[Command.set([                         ref('base.ci'),                         ref('base.cm'),                         ref('base.gh'),                         ref('base.ml'),                         ref('base.rw'),                         ref('base.sn'),                         ref('base.ug'),                         ref('base.zm'),                 ])]"/>
+    <field name="supported_currency_ids" eval="[Command.set([                         ref('base.GHS'),                         ref('base.RWF'),                         ref('base.UGX'),                         ref('base.XAF'),                         ref('base.XOF'),                         ref('base.ZMW'),                 ])]"/>
+    <field name="provider_id" ref="payment.payment_provider_flutterwave"/>
+  </record>
+  <record id="payment_method_mpesa" model="payment.method">
+    <field name="support_manual_capture" eval="'none'"/>
+    <field name="support_refund" eval="'none'"/>
+    <field name="supported_country_ids" eval="[Command.set([ref('base.ke')])]"/>
+    <field name="supported_currency_ids" eval="[Command.set([ref('base.KES')])]"/>
+    <field name="provider_id" ref="payment.payment_provider_flutterwave"/>
+  </record>
+  <record id="payment_method_ussd" model="payment.method">
+    <field name="support_manual_capture" eval="'none'"/>
+    <field name="support_refund" eval="'none'"/>
+    <field name="provider_id" ref="payment.payment_provider_flutterwave"/>
+    <field name="supported_country_ids" eval="[Command.set([ref('base.ng')])]"/>
+    <field name="supported_currency_ids" eval="[Command.set([ref('base.NGN')])]"/>
+  </record>
+</odoo>

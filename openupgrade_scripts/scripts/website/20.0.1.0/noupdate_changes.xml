@@ -1,0 +1,17 @@
+<?xml version='1.0' encoding='utf-8'?>
+<odoo>
+  <record id="contactus_page" model="website.page">
+    <field name="published_date" eval="time.strftime('%Y-%m-%d %H:%M:%S')"/>
+  </record>
+  <record id="digest.digest_digest_default" model="digest.digest">
+    <field name="kpi_website_track_count">True</field>
+    <field name="kpi_website_visitor_count">True</field>
+  </record>
+  <record id="homepage_page" model="website.page">
+    <field name="published_date" eval="time.strftime('%Y-%m-%d %H:%M:%S')"/>
+  </record>
+  <record id="menu_home" model="website.menu">
+    <field name="url"/>
+    <field name="website_id" eval="False"/>
+  </record>
+</odoo>

@@ -1,0 +1,111 @@
+---Models in module 'l10n_eg_edi_eta'---
+new model l10n_eg_edi.cancel.wizard [transient]
+new model l10n_eg_edi.eta.submission
+---Fields in module 'l10n_eg_edi_eta'---
+l10n_eg_edi_eta / account.move             / l10n_eg_edi_submission_state (selection): NEW selection_keys: ['accepted', 'cancel', 'rejected', 'test', 'to_send'], isfunction: function, stored
+l10n_eg_edi_eta / account.move             / l10n_eg_eta_submission_ids (one2many): NEW relation: l10n_eg_edi.eta.submission
+l10n_eg_edi_eta / account.move             / l10n_eg_submission_number (char): DEL
+l10n_eg_edi_eta / l10n_eg_edi.eta.submission / eta_document_longid (char)    : NEW
+l10n_eg_edi_eta / l10n_eg_edi.eta.submission / eta_document_uuid (char)      : NEW
+l10n_eg_edi_eta / l10n_eg_edi.eta.submission / eta_json_filename (char)      : NEW
+l10n_eg_edi_eta / l10n_eg_edi.eta.submission / eta_submission_id (char)      : NEW
+l10n_eg_edi_eta / l10n_eg_edi.eta.submission / message (char)                : NEW
+l10n_eg_edi_eta / l10n_eg_edi.eta.submission / move_id (many2one)            : NEW relation: account.move
+l10n_eg_edi_eta / l10n_eg_edi.eta.submission / state (selection)             : NEW selection_keys: ['accepted', 'cancel', 'rejected', 'test']
+l10n_eg_edi_eta / res.company              / l10n_eg_edi_api_mode (selection): NEW selection_keys: ['demo', 'preproduction', 'production']
+l10n_eg_edi_eta / res.company              / l10n_eg_invoicing_threshold (float): DEL
+l10n_eg_edi_eta / res.company              / l10n_eg_production_env (boolean): DEL
+---XML records in module 'l10n_eg_edi_eta'---
+DEL account.edi.format: l10n_eg_edi_eta.edi_eg_eta
+NEW ir.access: l10n_eg_edi_eta.access_l10n_eg_edi_activity_type
+NEW ir.access: l10n_eg_edi_eta.access_l10n_eg_edi_cancel_wizard
+NEW ir.access: l10n_eg_edi_eta.access_l10n_eg_edi_eta_submission
+NEW ir.access: l10n_eg_edi_eta.access_l10n_eg_edi_eta_thumb_drive
+NEW ir.access: l10n_eg_edi_eta.access_l10n_eg_edi_uom_code
+NEW ir.access: l10n_eg_edi_eta.eta_thumb_drive_modify_own
+NEW ir.actions.server: l10n_eg_edi_eta.action_l10n_eg_get_invoice_pdf
+NEW ir.actions.server: l10n_eg_edi_eta.action_l10n_eg_sign_invoices
+DEL ir.actions.server: l10n_eg_edi_eta.action_sign_invoices
+DEL ir.model.access: l10n_eg_edi_eta.access_l10n_eg_edi_activity_type
+DEL ir.model.access: l10n_eg_edi_eta.access_l10n_eg_edi_eta_thumb_drive
+DEL ir.model.access: l10n_eg_edi_eta.access_l10n_eg_edi_uom_code
+DEL ir.rule: l10n_eg_edi_eta.eta_thumb_drive_modify_own (noupdate)
+NEW ir.ui.view: l10n_eg_edi_eta.l10n_eg_edi_cancel_wizard_form
+NEW ir.ui.view: l10n_eg_edi_eta.l10n_eg_edi_view_account_invoice_filter
+NEW ir.ui.view: l10n_eg_edi_eta.l10n_eg_edi_view_out_credit_note_tree_inherit
+NEW ir.ui.view: l10n_eg_edi_eta.l10n_eg_edi_view_out_invoice_tree_inherit
+NEW ir.ui.view: l10n_eg_edi_eta.uom_uom_view_form
+NEW ir.ui.view: l10n_eg_edi_eta.view_company_form_inherit_l10n_eg_edi
+NEW ir.ui.view: l10n_eg_edi_eta.view_l10n_eg_edi_activity_type_list
+NEW ir.ui.view: l10n_eg_edi_eta.view_l10n_eg_edi_activity_type_search
+DEL ir.ui.view: l10n_eg_edi_eta.product_uom_form_view_inherit
+NEW l10n_eg_edi.uom.code: l10n_eg_edi_eta.l10n_eg_edi_uom_code_2Z
+NEW l10n_eg_edi.uom.code: l10n_eg_edi_eta.l10n_eg_edi_uom_code_4K
+NEW l10n_eg_edi.uom.code: l10n_eg_edi_eta.l10n_eg_edi_uom_code_4O
+NEW l10n_eg_edi.uom.code: l10n_eg_edi_eta.l10n_eg_edi_uom_code_5I
+NEW l10n_eg_edi.uom.code: l10n_eg_edi_eta.l10n_eg_edi_uom_code_A87
+NEW l10n_eg_edi.uom.code: l10n_eg_edi_eta.l10n_eg_edi_uom_code_AE
+NEW l10n_eg_edi.uom.code: l10n_eg_edi_eta.l10n_eg_edi_uom_code_AMP
+NEW l10n_eg_edi.uom.code: l10n_eg_edi_eta.l10n_eg_edi_uom_code_B22
+NEW l10n_eg_edi.uom.code: l10n_eg_edi_eta.l10n_eg_edi_uom_code_B4
+NEW l10n_eg_edi.uom.code: l10n_eg_edi_eta.l10n_eg_edi_uom_code_B49
+NEW l10n_eg_edi.uom.code: l10n_eg_edi_eta.l10n_eg_edi_uom_code_B75
+NEW l10n_eg_edi.uom.code: l10n_eg_edi_eta.l10n_eg_edi_uom_code_B78
+NEW l10n_eg_edi.uom.code: l10n_eg_edi_eta.l10n_eg_edi_uom_code_B84
+NEW l10n_eg_edi.uom.code: l10n_eg_edi_eta.l10n_eg_edi_uom_code_BB
+NEW l10n_eg_edi.uom.code: l10n_eg_edi_eta.l10n_eg_edi_uom_code_BD
+NEW l10n_eg_edi.uom.code: l10n_eg_edi_eta.l10n_eg_edi_uom_code_BE
+NEW l10n_eg_edi.uom.code: l10n_eg_edi_eta.l10n_eg_edi_uom_code_BK
+NEW l10n_eg_edi.uom.code: l10n_eg_edi_eta.l10n_eg_edi_uom_code_BL
+NEW l10n_eg_edi.uom.code: l10n_eg_edi_eta.l10n_eg_edi_uom_code_C10
+NEW l10n_eg_edi.uom.code: l10n_eg_edi_eta.l10n_eg_edi_uom_code_C39
+NEW l10n_eg_edi.uom.code: l10n_eg_edi_eta.l10n_eg_edi_uom_code_C41
+NEW l10n_eg_edi.uom.code: l10n_eg_edi_eta.l10n_eg_edi_uom_code_CH
+NEW l10n_eg_edi.uom.code: l10n_eg_edi_eta.l10n_eg_edi_uom_code_CR
+NEW l10n_eg_edi.uom.code: l10n_eg_edi_eta.l10n_eg_edi_uom_code_D33
+NEW l10n_eg_edi.uom.code: l10n_eg_edi_eta.l10n_eg_edi_uom_code_DAA
+NEW l10n_eg_edi.uom.code: l10n_eg_edi_eta.l10n_eg_edi_uom_code_DRM
+NEW l10n_eg_edi.uom.code: l10n_eg_edi_eta.l10n_eg_edi_uom_code_DTN
+NEW l10n_eg_edi.uom.code: l10n_eg_edi_eta.l10n_eg_edi_uom_code_DZN
+NEW l10n_eg_edi.uom.code: l10n_eg_edi_eta.l10n_eg_edi_uom_code_FP
+NEW l10n_eg_edi.uom.code: l10n_eg_edi_eta.l10n_eg_edi_uom_code_HMT
+NEW l10n_eg_edi.uom.code: l10n_eg_edi_eta.l10n_eg_edi_uom_code_HTZ
+NEW l10n_eg_edi.uom.code: l10n_eg_edi_eta.l10n_eg_edi_uom_code_INQ
+NEW l10n_eg_edi.uom.code: l10n_eg_edi_eta.l10n_eg_edi_uom_code_KG
+NEW l10n_eg_edi.uom.code: l10n_eg_edi_eta.l10n_eg_edi_uom_code_KTM
+NEW l10n_eg_edi.uom.code: l10n_eg_edi_eta.l10n_eg_edi_uom_code_LO
+NEW l10n_eg_edi.uom.code: l10n_eg_edi_eta.l10n_eg_edi_uom_code_MAW
+NEW l10n_eg_edi.uom.code: l10n_eg_edi_eta.l10n_eg_edi_uom_code_MHZ
+NEW l10n_eg_edi.uom.code: l10n_eg_edi_eta.l10n_eg_edi_uom_code_MLT
+NEW l10n_eg_edi.uom.code: l10n_eg_edi_eta.l10n_eg_edi_uom_code_MT
+NEW l10n_eg_edi.uom.code: l10n_eg_edi_eta.l10n_eg_edi_uom_code_NA
+NEW l10n_eg_edi.uom.code: l10n_eg_edi_eta.l10n_eg_edi_uom_code_NAR
+NEW l10n_eg_edi.uom.code: l10n_eg_edi_eta.l10n_eg_edi_uom_code_NC
+NEW l10n_eg_edi.uom.code: l10n_eg_edi_eta.l10n_eg_edi_uom_code_NE
+NEW l10n_eg_edi.uom.code: l10n_eg_edi_eta.l10n_eg_edi_uom_code_NMP
+NEW l10n_eg_edi.uom.code: l10n_eg_edi_eta.l10n_eg_edi_uom_code_NPL
+NEW l10n_eg_edi.uom.code: l10n_eg_edi_eta.l10n_eg_edi_uom_code_NV
+NEW l10n_eg_edi.uom.code: l10n_eg_edi_eta.l10n_eg_edi_uom_code_OHM
+NEW l10n_eg_edi.uom.code: l10n_eg_edi_eta.l10n_eg_edi_uom_code_PA
+NEW l10n_eg_edi.uom.code: l10n_eg_edi_eta.l10n_eg_edi_uom_code_PG
+NEW l10n_eg_edi.uom.code: l10n_eg_edi_eta.l10n_eg_edi_uom_code_PL
+NEW l10n_eg_edi.uom.code: l10n_eg_edi_eta.l10n_eg_edi_uom_code_PR
+NEW l10n_eg_edi.uom.code: l10n_eg_edi_eta.l10n_eg_edi_uom_code_PT
+NEW l10n_eg_edi.uom.code: l10n_eg_edi_eta.l10n_eg_edi_uom_code_RL
+NEW l10n_eg_edi.uom.code: l10n_eg_edi_eta.l10n_eg_edi_uom_code_RO
+NEW l10n_eg_edi.uom.code: l10n_eg_edi_eta.l10n_eg_edi_uom_code_SET
+NEW l10n_eg_edi.uom.code: l10n_eg_edi_eta.l10n_eg_edi_uom_code_STK
+NEW l10n_eg_edi.uom.code: l10n_eg_edi_eta.l10n_eg_edi_uom_code_T3
+NEW l10n_eg_edi.uom.code: l10n_eg_edi_eta.l10n_eg_edi_uom_code_TC
+NEW l10n_eg_edi.uom.code: l10n_eg_edi_eta.l10n_eg_edi_uom_code_TK
+NEW l10n_eg_edi.uom.code: l10n_eg_edi_eta.l10n_eg_edi_uom_code_TN
+NEW l10n_eg_edi.uom.code: l10n_eg_edi_eta.l10n_eg_edi_uom_code_TTS
+NEW l10n_eg_edi.uom.code: l10n_eg_edi_eta.l10n_eg_edi_uom_code_UC
+NEW l10n_eg_edi.uom.code: l10n_eg_edi_eta.l10n_eg_edi_uom_code_VI
+NEW l10n_eg_edi.uom.code: l10n_eg_edi_eta.l10n_eg_edi_uom_code_VQ
+NEW l10n_eg_edi.uom.code: l10n_eg_edi_eta.l10n_eg_edi_uom_code_YDK
+NEW l10n_eg_edi.uom.code: l10n_eg_edi_eta.l10n_eg_edi_uom_code_Z3
+DEL l10n_eg_edi.uom.code: l10n_eg_edi_eta.l10n_eg_edi_uom_code_IVL
+DEL l10n_eg_edi.uom.code: l10n_eg_edi_eta.l10n_eg_edi_uom_code_PMP
+DEL l10n_eg_edi.uom.code: l10n_eg_edi_eta.l10n_eg_edi_uom_code_RUN
+DEL l10n_eg_edi.uom.code: l10n_eg_edi_eta.l10n_eg_edi_uom_code_SH

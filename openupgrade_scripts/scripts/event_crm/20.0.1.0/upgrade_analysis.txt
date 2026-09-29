@@ -1,0 +1,15 @@
+---Models in module 'event_crm'---
+---Fields in module 'event_crm'---
+---XML records in module 'event_crm'---
+NEW ir.access: event_crm.access_event_crm_manager
+NEW ir.access: event_crm.access_event_crm_registration
+NEW ir.access: event_crm.access_event_lead_request_system
+NEW ir.access: event_crm.ir_rule_event_crm
+DEL ir.actions.act_window: event_crm.crm_lead_action_from_event
+DEL ir.actions.act_window: event_crm.crm_lead_action_from_registration
+DEL ir.model.access: event_crm.access_event_crm_manager
+DEL ir.model.access: event_crm.access_event_crm_registration
+DEL ir.model.access: event_crm.access_event_crm_salesman
+DEL ir.model.access: event_crm.access_event_crm_user
+DEL ir.model.access: event_crm.access_event_lead_request_system
+DEL ir.rule: event_crm.ir_rule_event_crm

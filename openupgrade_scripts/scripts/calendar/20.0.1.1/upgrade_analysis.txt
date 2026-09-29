@@ -1,0 +1,96 @@
+---Models in module 'calendar'---
+obsolete model calendar.popover.delete.wizard [transient]
+obsolete model calendar.provider.config [transient]
+new model calendar.calendar
+new model calendar.event.archive.or.unlink.wizard [transient]
+new model calendar.event.multi.archive.or.unlink.wizard [transient]
+new model calendar.user
+---Fields in module 'calendar'---
+calendar     / calendar.calendar        / calendar_default_privacy (selection): NEW required, selection_keys: ['confidential', 'members_only', 'private', 'public'], hasdefault: default
+calendar     / calendar.calendar        / calendar_user_ids (one2many)  : NEW relation: calendar.user, hasdefault: default
+calendar     / calendar.calendar        / event_ids (one2many)          : NEW relation: calendar.event
+calendar     / calendar.calendar        / name (char)                   : NEW
+calendar     / calendar.calendar        / recurrence_ids (one2many)     : NEW relation: calendar.recurrence
+calendar     / calendar.event           / calendar_id (many2one)        : NEW relation: calendar.calendar, hasdefault: compute
+calendar     / calendar.event           / effective_privacy (selection) : selection_keys added: [members_only] (most likely nothing to do)
+calendar     / calendar.event           / is_draft (boolean)            : NEW
+calendar     / calendar.event           / meeting_activity_ids (one2many): NEW relation: mail.activity
+calendar     / calendar.event           / privacy (selection)           : selection_keys added: [members_only] (most likely nothing to do)
+calendar     / calendar.filters         / partner_checked (boolean)     : DEL
+calendar     / calendar.user            / access_role (selection)       : NEW required, selection_keys: ['owner', 'writer']
+calendar     / calendar.user            / calendar_id (many2one)        : NEW relation: calendar.calendar, required
+calendar     / calendar.user            / filter_color (integer)        : NEW hasdefault: default
+calendar     / calendar.user            / is_filter_active (boolean)    : NEW hasdefault: default
+calendar     / calendar.user            / is_filter_checked (boolean)   : NEW hasdefault: default
+calendar     / calendar.user            / is_primary (boolean)          : NEW
+calendar     / calendar.user            / name (char)                   : NEW
+calendar     / calendar.user            / user_id (many2one)            : NEW relation: res.users, required
+calendar     / res.users                / activity_calendar_event_id (many2one): not related anymore
+calendar     / res.users                / activity_calendar_event_id (many2one): now a function
+calendar     / res.users                / calendar_ids (one2many)       : NEW relation: calendar.calendar, hasdefault: compute, stored: False
+calendar     / res.users                / calendar_user_ids (one2many)  : NEW relation: calendar.user
+calendar     / res.users                / primary_calendar_id (many2one): NEW relation: calendar.calendar, isfunction: function, stored
+calendar     / res.users.settings       / calendar_default_privacy (selection): DEL required, selection_keys: ['confidential', 'private', 'public']
+calendar     / res.users.settings       / calendar_show_activities (boolean): NEW hasdefault: default
+---XML records in module 'calendar'---
+NEW calendar.alarm: calendar.alarm_mail_1_day (noupdate)
+NEW ir.access: calendar.access_calendar_alarm
+NEW ir.access: calendar.access_calendar_alarm_manager
+NEW ir.access: calendar.access_calendar_attendee_employee
+NEW ir.access: calendar.access_calendar_attendee_employee_archive_or_unlink_wizard
+NEW ir.access: calendar.access_calendar_attendee_employee_multi_archive_or_unlink_wizard
+NEW ir.access: calendar.access_calendar_event_type_all
+NEW ir.access: calendar.access_calendar_event_type_manager
+NEW ir.access: calendar.access_calendar_filters_all
+NEW ir.access: calendar.access_calendar_recurrence
+NEW ir.access: calendar.calendar_calendar_rule_system
+NEW ir.access: calendar.calendar_calendar_rule_users_create_and_read
+NEW ir.access: calendar.calendar_calendar_rule_users_update
+NEW ir.access: calendar.calendar_event_rule_employee
+NEW ir.access: calendar.calendar_event_rule_my
+NEW ir.access: calendar.calendar_event_rule_private
+NEW ir.access: calendar.calendar_user_rule_create
+NEW ir.access: calendar.calendar_user_rule_own_or_owner
+NEW ir.access: calendar.calendar_user_rule_read
+NEW ir.actions.act_window: calendar.action_calendar_calendar
+DEL ir.actions.act_window: calendar.action_event_delete_wizard
+DEL ir.model.access: calendar.access_calendar_alarm
+DEL ir.model.access: calendar.access_calendar_alarm_manager
+DEL ir.model.access: calendar.access_calendar_attendee_employee
+DEL ir.model.access: calendar.access_calendar_attendee_employee_delete_wizard
+DEL ir.model.access: calendar.access_calendar_attendee_portal
+DEL ir.model.access: calendar.access_calendar_event_all_employee
+DEL ir.model.access: calendar.access_calendar_event_all_user
+DEL ir.model.access: calendar.access_calendar_event_partner_manager
+DEL ir.model.access: calendar.access_calendar_event_type_all
+DEL ir.model.access: calendar.access_calendar_event_type_manager
+DEL ir.model.access: calendar.access_calendar_filters
+DEL ir.model.access: calendar.access_calendar_filters_all
+DEL ir.model.access: calendar.access_calendar_provider_config_all
+DEL ir.model.access: calendar.access_calendar_provider_config_manager
+DEL ir.model.access: calendar.access_calendar_recurrence
+NEW ir.model.constraint: calendar.constraint_calendar_event_access_token_unique
+NEW ir.model.constraint: calendar.constraint_calendar_event_check_no_recurrent_draft
+NEW ir.model.constraint: calendar.constraint_calendar_user_single_primary_calendar_per_user
+NEW ir.model.constraint: calendar.constraint_calendar_user_unique_user_per_calendar
+DEL ir.rule: calendar.calendar_attendee_rule_my (noupdate)
+DEL ir.rule: calendar.calendar_event_rule_employee (noupdate)
+DEL ir.rule: calendar.calendar_event_rule_my (noupdate)
+DEL ir.rule: calendar.calendar_event_rule_private (noupdate)
+NEW ir.ui.menu: calendar.calendar_submenu_event_type
+NEW ir.ui.menu: calendar.menu_calendar_calendars
+NEW ir.ui.view: calendar.calendar_alarm_view_kanban
+NEW ir.ui.view: calendar.calendar_alarm_view_search
+NEW ir.ui.view: calendar.calendar_calendar_view_form
+NEW ir.ui.view: calendar.calendar_calendar_view_list
+NEW ir.ui.view: calendar.calendar_event_archive_or_unlink_wizard_view_form
+NEW ir.ui.view: calendar.calendar_event_multi_archive_or_unlink_wizard_view_form
+NEW ir.ui.view: calendar.calendar_user_view_form
+NEW ir.ui.view: calendar.message_meeting_activity_done
+NEW ir.ui.view: calendar.res_partner_view_form_simplified
+NEW ir.ui.view: calendar.res_users_form_view_calendars
+DEL ir.ui.view: calendar.calendar_popover_delete_view
+DEL ir.ui.view: calendar.calendar_provider_config_view_form
+DEL ir.ui.view: calendar.res_users_form_view_calendar_default_privacy
+DEL ir.ui.view: calendar.view_event_delete_wizard_form
+NEW mail.message.subtype: calendar.mt_calendar_event_updated (noupdate)

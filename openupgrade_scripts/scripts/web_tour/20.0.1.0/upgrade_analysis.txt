@@ -1,0 +1,12 @@
+---Models in module 'web_tour'---
+---Fields in module 'web_tour'---
+web_tour     / web_tour.tour            / active (boolean)              : NEW hasdefault: default
+---XML records in module 'web_tour'---
+NEW ir.access: web_tour.access_web_tour_tour_admin
+NEW ir.access: web_tour.access_web_tour_tour_readonly
+NEW ir.access: web_tour.access_web_tour_tour_step_admin
+NEW ir.access: web_tour.access_web_tour_tour_step_readonly
+DEL ir.model.access: web_tour.access_web_tour_tour_admin
+DEL ir.model.access: web_tour.access_web_tour_tour_readonly
+DEL ir.model.access: web_tour.access_web_tour_tour_step_admin
+DEL ir.model.access: web_tour.access_web_tour_tour_step_readonly

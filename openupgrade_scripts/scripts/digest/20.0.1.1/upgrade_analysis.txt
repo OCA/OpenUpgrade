@@ -1,0 +1,15 @@
+---Models in module 'digest'---
+new model digest.test [transient]
+---Fields in module 'digest'---
+digest       / res.users                / digest_ids (many2many)        : NEW relation: digest.digest
+---XML records in module 'digest'---
+NEW ir.access: digest.access_digest_digest_system
+NEW ir.access: digest.access_digest_digest_user
+NEW ir.access: digest.access_digest_test
+NEW ir.access: digest.access_digest_tip_system
+NEW ir.access: digest.access_digest_tip_user
+DEL ir.model.access: digest.access_digest_digest_system
+DEL ir.model.access: digest.access_digest_digest_user
+DEL ir.model.access: digest.access_digest_tip_system
+DEL ir.model.access: digest.access_digest_tip_user
+NEW ir.ui.view: digest.digest_test_view_form

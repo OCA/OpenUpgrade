@@ -1,0 +1,15 @@
+---Models in module 'event_sale'---
+---Fields in module 'event_sale'---
+---XML records in module 'event_sale'---
+NEW ir.access: event_sale.access_event_event_configurator
+NEW ir.access: event_sale.access_event_sale_report_manager
+NEW ir.access: event_sale.access_registration_editor
+NEW ir.access: event_sale.access_registration_editor_line
+NEW ir.access: event_sale.event_sale_registration_portal_rule
+NEW ir.access: event_sale.event_sale_registration_user_portal_rule
+NEW ir.access: event_sale.event_sale_report_comp_rule
+DEL ir.model.access: event_sale.access_event_event_configurator
+DEL ir.model.access: event_sale.access_event_sale_report_manager
+DEL ir.model.access: event_sale.access_registration_editor
+DEL ir.model.access: event_sale.access_registration_editor_line
+DEL ir.rule: event_sale.event_sale_report_comp_rule (noupdate)

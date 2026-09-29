@@ -1,0 +1,38 @@
+<?xml version='1.0' encoding='utf-8'?>
+<odoo>
+  <record id="payment.payment_provider_worldline" model="payment.provider">
+    <field name="redirect_form_view_id" ref="payment.generic_redirect_form"/>
+  </record>
+  <record id="payment_method_alipay_plus" model="payment.method">
+    <field name="support_manual_capture" eval="'none'"/>
+    <field name="support_refund" eval="'none'"/>
+    <field name="supported_country_ids" eval="[Command.set([                 ref('base.at'),                 ref('base.au'),                 ref('base.be'),                 ref('base.bg'),                 ref('base.ch'),                 ref('base.cy'),                 ref('base.cz'),                 ref('base.de'),                 ref('base.dk'),                 ref('base.ee'),                 ref('base.es'),                 ref('base.fi'),                 ref('base.fr'),                 ref('base.gr'),                 ref('base.hr'),                 ref('base.hu'),                 ref('base.ie'),                 ref('base.is'),                 ref('base.it'),                 ref('base.li'),                 ref('base.lt'),                 ref('base.lu'),                 ref('base.lv'),                 ref('base.mt'),                 ref('base.nl'),                 ref('base.no'),                 ref('base.pl'),                 ref('base.pt'),                 ref('base.ro'),                 ref('base.se'),                 ref('base.si'),                 ref('base.sk'),                 ref('base.uk'),             ])]"/>
+    <field name="supported_currency_ids" eval="[Command.set([                 ref('base.AUD'),                 ref('base.CHF'),                 ref('base.DKK'),                 ref('base.EUR'),                 ref('base.GBP'),                 ref('base.NOK'),                 ref('base.SEK'),             ])]"/>
+    <field name="provider_id" ref="payment.payment_provider_worldline"/>
+  </record>
+  <record id="payment_method_cirrus" model="payment.method">
+    <field name="primary_payment_method_id" eval="ref('payment_worldline.payment_method_card')"/>
+    <field name="provider_id" ref="payment.payment_provider_worldline"/>
+  </record>
+  <record id="payment_method_cofidis" model="payment.method">
+    <field name="support_manual_capture" eval="'none'"/>
+    <field name="support_refund" eval="'none'"/>
+    <field name="supported_country_ids" eval="[Command.set([ref('base.fr')])]"/>
+    <field name="supported_currency_ids" eval="[Command.set([ref('base.EUR')])]"/>
+    <field name="provider_id" ref="payment.payment_provider_worldline"/>
+  </record>
+  <record id="payment_method_floa_bank" model="payment.method">
+    <field name="support_manual_capture" eval="'none'"/>
+    <field name="support_refund" eval="'none'"/>
+    <field name="supported_country_ids" eval="[Command.set([                 ref('base.be'),                 ref('base.es'),                 ref('base.fr'),                 ref('base.it'),                 ref('base.pt'),             ])]"/>
+    <field name="supported_currency_ids" eval="[Command.set([ref('base.EUR')])]"/>
+    <field name="provider_id" ref="payment.payment_provider_worldline"/>
+  </record>
+  <record id="payment_method_post_finance" model="payment.method">
+    <field name="support_manual_capture" eval="'none'"/>
+    <field name="support_refund" eval="'none'"/>
+    <field name="supported_country_ids" eval="[Command.set([                 ref('base.at'),                 ref('base.be'),                 ref('base.bg'),                 ref('base.ch'),                 ref('base.cy'),                 ref('base.cz'),                 ref('base.de'),                 ref('base.dk'),                 ref('base.ee'),                 ref('base.es'),                 ref('base.fi'),                 ref('base.fr'),                 ref('base.gr'),                 ref('base.hr'),                 ref('base.hu'),                 ref('base.ie'),                 ref('base.it'),                 ref('base.lt'),                 ref('base.lu'),                 ref('base.lv'),                 ref('base.mt'),                 ref('base.nl'),                 ref('base.pl'),                 ref('base.pt'),                 ref('base.ro'),                 ref('base.se'),                 ref('base.si'),                 ref('base.sk'),                 ref('base.uk'),             ])]"/>
+    <field name="supported_currency_ids" eval="[Command.set([ref('base.CHF')])]"/>
+    <field name="provider_id" ref="payment.payment_provider_worldline"/>
+  </record>
+</odoo>

@@ -1,0 +1,9 @@
+---Models in module 'sms_twilio'---
+---Fields in module 'sms_twilio'---
+sms_twilio   / mail.notification        / failure_type (False)          : selection_keys added: [sms_database_non_active, sn_undeliverable, twilio_wrong_credentials] (most likely nothing to do)
+sms_twilio   / sms.sms                  / failure_type (False)          : selection_keys added: [sms_database_non_active, twilio_wrong_credentials] (most likely nothing to do)
+---XML records in module 'sms_twilio'---
+NEW ir.access: sms_twilio.access_sms_twilio_account_manage_system
+NEW ir.access: sms_twilio.access_sms_twilio_number_system
+DEL ir.model.access: sms_twilio.access_sms_twilio_account_manage_system
+DEL ir.model.access: sms_twilio.access_sms_twilio_number_system

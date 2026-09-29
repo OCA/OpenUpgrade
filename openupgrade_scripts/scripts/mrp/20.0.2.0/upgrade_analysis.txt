@@ -1,0 +1,232 @@
+---Models in module 'mrp'---
+new model mrp.finished.product.label.layout [transient]
+---Fields in module 'mrp'---
+mrp          / mrp.bom                  / consumption (selection)       : DEL required, selection_keys: ['flexible', 'strict', 'warning']
+mrp          / mrp.bom                  / continuous (boolean)          : NEW hasdefault: default
+mrp          / mrp.bom                  / note (html)                   : NEW
+mrp          / mrp.bom                  / product_uom_id (many2one)     : DEL relation: uom.uom, required
+mrp          / mrp.bom                  / uom_id (many2one)             : NEW relation: uom.uom, required, hasdefault: default
+mrp          / mrp.bom                  / website_message_ids (one2many): DEL relation: mail.message
+mrp          / mrp.bom.byproduct        / product_uom_id (many2one)     : DEL relation: uom.uom, required
+mrp          / mrp.bom.byproduct        / uom_id (many2one)             : NEW relation: uom.uom, required, hasdefault: compute
+mrp          / mrp.bom.line             / product_uom_id (many2one)     : DEL relation: uom.uom, required
+mrp          / mrp.bom.line             / uom_id (many2one)             : NEW relation: uom.uom, required, hasdefault: default
+mrp          / mrp.production           / consumption (selection)       : DEL required, selection_keys: ['flexible', 'strict', 'warning']
+mrp          / mrp.production           / duration (float)              : is now stored
+mrp          / mrp.production           / duration_expected (float)     : is now stored
+mrp          / mrp.production           / forecasted_location_id (many2one): NEW relation: stock.location
+mrp          / mrp.production           / location_final_id (many2one)  : DEL relation: stock.location
+mrp          / mrp.production           / note (html)                   : NEW hasdefault: compute
+mrp          / mrp.production           / package_history_ids (one2many): NEW relation: stock.package.history
+mrp          / mrp.production           / previous_date_start (datetime): NEW
+mrp          / mrp.production           / product_uom_id (many2one)     : DEL relation: uom.uom, required
+mrp          / mrp.production           / scrap_ids (one2many)          : DEL relation: stock.scrap
+mrp          / mrp.production           / uom_id (many2one)             : NEW relation: uom.uom, required, hasdefault: compute
+mrp          / mrp.production           / website_message_ids (one2many): DEL relation: mail.message
+mrp          / mrp.routing.workcenter   / website_message_ids (one2many): DEL relation: mail.message
+mrp          / mrp.unbuild              / lot_id (many2one)             : DEL relation: stock.lot
+mrp          / mrp.unbuild              / lot_ids (many2many)           : NEW relation: stock.lot
+mrp          / mrp.unbuild              / product_uom_id (many2one)     : DEL relation: uom.uom, required
+mrp          / mrp.unbuild              / uom_id (many2one)             : NEW relation: uom.uom, required, hasdefault: compute
+mrp          / mrp.unbuild              / website_message_ids (one2many): DEL relation: mail.message
+mrp          / mrp.workcenter           / barcode (char)                : NEW
+mrp          / mrp.workcenter           / website_message_ids (one2many): DEL relation: mail.message
+mrp          / mrp.workcenter.capacity  / product_uom_id (many2one)     : DEL relation: uom.uom, required
+mrp          / mrp.workcenter.capacity  / uom_id (many2one)             : NEW relation: uom.uom, required, hasdefault: compute
+mrp          / mrp.workorder            / _order                        : _order is now 'date_start, sequence, id' ('sequence, leave_id, date_start, id')
+mrp          / mrp.workorder            / activity_ids (one2many)       : NEW relation: mail.activity
+mrp          / mrp.workorder            / cost (float)                  : NEW isfunction: function, stored
+mrp          / mrp.workorder            / is_planned (boolean)          : not related anymore
+mrp          / mrp.workorder            / is_planned (boolean)          : now a function
+mrp          / mrp.workorder            / message_follower_ids (one2many): NEW relation: mail.followers
+mrp          / mrp.workorder            / message_ids (one2many)        : NEW relation: mail.message
+mrp          / mrp.workorder            / properties (properties)       : NEW hasdefault: compute
+mrp          / mrp.workorder            / rating_ids (one2many)         : NEW relation: rating.rating
+mrp          / mrp.workorder            / scrap_ids (one2many)          : DEL relation: stock.scrap
+mrp          / product.document         / attached_on_mrp (selection)   : DEL required, selection_keys: ['bom', 'hidden']
+mrp          / stock.move               / manual_consumption (boolean)  : DEL
+mrp          / stock.package.history    / production_id (many2one)      : NEW relation: mrp.production
+mrp          / stock.picking.type       / auto_confirm_production (boolean): NEW hasdefault: default
+mrp          / stock.picking.type       / done_mrp_lot_label_to_print (selection): selection_keys is now 'function' ('['pdf', 'zpl']')
+mrp          / stock.picking.type       / generated_mrp_lot_label_to_print (selection): selection_keys is now 'function' ('['pdf', 'zpl']')
+mrp          / stock.picking.type       / mrp_product_label_to_print (selection): selection_keys is now 'function' ('['pdf', 'zpl']')
+mrp          / stock.picking.type       / wo_properties_definition (properties_definition): NEW
+mrp          / stock.scrap              / bom_id (many2one)             : DEL relation: mrp.bom
+mrp          / stock.scrap              / production_id (many2one)      : DEL relation: mrp.production
+mrp          / stock.scrap              / workorder_id (many2one)       : DEL relation: mrp.workorder
+---XML records in module 'mrp'---
+NEW ir.access: mrp.access_change_production_qty
+NEW ir.access: mrp.access_mrp_bom_byproduct_manager
+NEW ir.access: mrp.access_mrp_bom_byproduct_user
+NEW ir.access: mrp.access_mrp_bom_line_manager
+NEW ir.access: mrp.access_mrp_bom_line_stockuser
+NEW ir.access: mrp.access_mrp_bom_manager
+NEW ir.access: mrp.access_mrp_bom_stockuser
+NEW ir.access: mrp.access_mrp_consumption_warning
+NEW ir.access: mrp.access_mrp_consumption_warning_line
+NEW ir.access: mrp.access_mrp_finished_product_label_layout
+NEW ir.access: mrp.access_mrp_production
+NEW ir.access: mrp.access_mrp_production_backorder
+NEW ir.access: mrp.access_mrp_production_backorder_line
+NEW ir.access: mrp.access_mrp_production_group
+NEW ir.access: mrp.access_mrp_production_serials
+NEW ir.access: mrp.access_mrp_production_split
+NEW ir.access: mrp.access_mrp_production_split_line
+NEW ir.access: mrp.access_mrp_production_split_multi
+NEW ir.access: mrp.access_mrp_production_stock_worker
+NEW ir.access: mrp.access_mrp_routing_workcenter
+NEW ir.access: mrp.access_mrp_routing_workcenter_manager
+NEW ir.access: mrp.access_mrp_unbuild
+NEW ir.access: mrp.access_mrp_workcenter
+NEW ir.access: mrp.access_mrp_workcenter_capacity_group_user
+NEW ir.access: mrp.access_mrp_workcenter_capacity_manager
+NEW ir.access: mrp.access_mrp_workcenter_manager
+NEW ir.access: mrp.access_mrp_workcenter_productivity
+NEW ir.access: mrp.access_mrp_workcenter_productivity_loss
+NEW ir.access: mrp.access_mrp_workcenter_productivity_loss_manager
+NEW ir.access: mrp.access_mrp_workcenter_productivity_loss_type
+NEW ir.access: mrp.access_mrp_workcenter_tag_group_user
+NEW ir.access: mrp.access_mrp_workcenter_tag_manager
+NEW ir.access: mrp.access_mrp_workorder_mrp_user
+NEW ir.access: mrp.access_product_group_res_partner_mrp_manager
+NEW ir.access: mrp.access_product_pricelist_item_mrp_manager
+NEW ir.access: mrp.access_product_product_user
+NEW ir.access: mrp.access_product_supplierinfo_manager
+NEW ir.access: mrp.access_product_template_user
+NEW ir.access: mrp.access_resource_calendar_attendance_mrp_user
+NEW ir.access: mrp.access_resource_calendar_manufacturinguser
+NEW ir.access: mrp.access_resource_resource
+NEW ir.access: mrp.access_resource_resource_manager
+NEW ir.access: mrp.access_stock_move_mrp_user
+NEW ir.access: mrp.access_stock_warn_insufficient_qty_unbuild
+NEW ir.access: mrp.access_uom_uom_user
+NEW ir.access: mrp.mrp_bom_byproduct_rule
+NEW ir.access: mrp.mrp_bom_line_rule
+NEW ir.access: mrp.mrp_bom_rule
+NEW ir.access: mrp.mrp_production_rule
+NEW ir.access: mrp.mrp_routing_workcenter_rule
+NEW ir.access: mrp.mrp_unbuild_rule
+NEW ir.access: mrp.mrp_workcenter_productivity
+NEW ir.access: mrp.mrp_workcenter_rule
+NEW ir.access: mrp.mrp_workorder_rule
+NEW ir.access: mrp.res_partner_rule_edit_all
+NEW ir.access: mrp.res_partner_rule_user
+NEW ir.access: mrp.resource_calendar_leaves_rule_group_user_create
+NEW ir.access: mrp.resource_calendar_leaves_rule_group_user_modify
+NEW ir.actions.act_window: mrp.action_detailed_operations
+NEW ir.actions.act_window: mrp.mrp_bom_line_action_used_in_boms
+NEW ir.actions.act_window: mrp.mrp_workcenter_workorders_kanban
+DEL ir.actions.act_window: mrp.mrp_product_variant_action
+DEL ir.actions.client: mrp.mrp_reception_action
+NEW ir.actions.report: mrp.action_report_mrp_packages
+DEL ir.actions.report: mrp.action_report_finished_product
+DEL ir.actions.report: mrp.label_manufacture_template
+NEW ir.actions.server: mrp.action_mark_as_done_workorders
+NEW ir.actions.server: mrp.action_open_bom_lines
+NEW ir.actions.server: mrp.action_plan_at_date
+NEW ir.actions.server: mrp.action_plan_workorders
+NEW ir.actions.server: mrp.action_print_finished_product_pdf
+NEW ir.actions.server: mrp.action_print_finished_product_zpl
+NEW ir.actions.server: mrp.action_production_order_confirm
+NEW ir.actions.server: mrp.action_production_order_unbuild
+NEW ir.actions.server: mrp.action_unplan_workorders
+NEW ir.actions.server: mrp.mrp_production_action_reserve
+DEL ir.actions.server: mrp.action_plan_with_components_availability
+DEL ir.model.access: mrp.access_change_production_qty
+DEL ir.model.access: mrp.access_mrp_bom
+DEL ir.model.access: mrp.access_mrp_bom_byproduct_manager
+DEL ir.model.access: mrp.access_mrp_bom_byproduct_user
+DEL ir.model.access: mrp.access_mrp_bom_line
+DEL ir.model.access: mrp.access_mrp_bom_line_manager
+DEL ir.model.access: mrp.access_mrp_bom_line_stockuser
+DEL ir.model.access: mrp.access_mrp_bom_manager
+DEL ir.model.access: mrp.access_mrp_bom_stockuser
+DEL ir.model.access: mrp.access_mrp_consumption_warning
+DEL ir.model.access: mrp.access_mrp_consumption_warning_line
+DEL ir.model.access: mrp.access_mrp_document_mrp_manager
+DEL ir.model.access: mrp.access_mrp_production
+DEL ir.model.access: mrp.access_mrp_production_backorder
+DEL ir.model.access: mrp.access_mrp_production_backorder_line
+DEL ir.model.access: mrp.access_mrp_production_group
+DEL ir.model.access: mrp.access_mrp_production_manager
+DEL ir.model.access: mrp.access_mrp_production_serials
+DEL ir.model.access: mrp.access_mrp_production_split
+DEL ir.model.access: mrp.access_mrp_production_split_line
+DEL ir.model.access: mrp.access_mrp_production_split_multi
+DEL ir.model.access: mrp.access_mrp_production_stock_worker
+DEL ir.model.access: mrp.access_mrp_routing_workcenter
+DEL ir.model.access: mrp.access_mrp_routing_workcenter_manager
+DEL ir.model.access: mrp.access_mrp_unbuild
+DEL ir.model.access: mrp.access_mrp_unbuild_manager
+DEL ir.model.access: mrp.access_mrp_workcenter
+DEL ir.model.access: mrp.access_mrp_workcenter_capacity_group_user
+DEL ir.model.access: mrp.access_mrp_workcenter_capacity_manager
+DEL ir.model.access: mrp.access_mrp_workcenter_manager
+DEL ir.model.access: mrp.access_mrp_workcenter_productivity
+DEL ir.model.access: mrp.access_mrp_workcenter_productivity_loss
+DEL ir.model.access: mrp.access_mrp_workcenter_productivity_loss_manager
+DEL ir.model.access: mrp.access_mrp_workcenter_productivity_loss_type
+DEL ir.model.access: mrp.access_mrp_workcenter_tag_group_user
+DEL ir.model.access: mrp.access_mrp_workcenter_tag_manager
+DEL ir.model.access: mrp.access_mrp_workorder_mrp_manager
+DEL ir.model.access: mrp.access_mrp_workorder_mrp_user
+DEL ir.model.access: mrp.access_product_group_res_partner_mrp_manager
+DEL ir.model.access: mrp.access_product_pricelist_item_mrp_manager
+DEL ir.model.access: mrp.access_product_product_user
+DEL ir.model.access: mrp.access_product_supplierinfo_manager
+DEL ir.model.access: mrp.access_product_template_user
+DEL ir.model.access: mrp.access_res_partner
+DEL ir.model.access: mrp.access_resource_calendar_attendance_manager
+DEL ir.model.access: mrp.access_resource_calendar_attendance_mrp_user
+DEL ir.model.access: mrp.access_resource_calendar_leaves_manager
+DEL ir.model.access: mrp.access_resource_calendar_leaves_user
+DEL ir.model.access: mrp.access_resource_calendar_manufacturinguser
+DEL ir.model.access: mrp.access_resource_resource
+DEL ir.model.access: mrp.access_resource_resource_manager
+DEL ir.model.access: mrp.access_stock_move_mrp_user
+DEL ir.model.access: mrp.access_stock_warn_insufficient_qty_unbuild
+DEL ir.model.access: mrp.access_uom_uom_user
+NEW ir.model.constraint: mrp.constraint_mrp_workcenter_barcode_company_uniq
+ir.model.constraint: mrp.constraint_mrp_workcenter_capacity_workcenter_product_product_uom_unique (changed definition: is now 'UNIQUE INDEX (workcenter_id, COALESCE(product_id, 0), uom_id)' ('UNIQUE INDEX (workcenter_id, COALESCE(product_id, 0), product_uom_id)'))
+DEL ir.rule: mrp.mrp_bom_byproduct_rule (noupdate)
+DEL ir.rule: mrp.mrp_bom_line_rule (noupdate)
+DEL ir.rule: mrp.mrp_bom_rule (noupdate)
+DEL ir.rule: mrp.mrp_production_rule (noupdate)
+DEL ir.rule: mrp.mrp_routing_workcenter_rule (noupdate)
+DEL ir.rule: mrp.mrp_unbuild_rule (noupdate)
+DEL ir.rule: mrp.mrp_workcenter_productivity (noupdate)
+DEL ir.rule: mrp.mrp_workcenter_rule (noupdate)
+DEL ir.rule: mrp.mrp_workorder_rule (noupdate)
+DEL ir.ui.menu: mrp.product_variant_mrp
+NEW ir.ui.view: mrp.finished_product_4x12_label
+NEW ir.ui.view: mrp.finished_product_zpl_label
+NEW ir.ui.view: mrp.mrp_bom_line_view_list
+NEW ir.ui.view: mrp.mrp_bom_line_view_list_exploded_components
+NEW ir.ui.view: mrp.mrp_bom_line_view_pivot
+NEW ir.ui.view: mrp.mrp_bom_line_view_search
+NEW ir.ui.view: mrp.mrp_production_card_view
+NEW ir.ui.view: mrp.mrp_production_to_plan
+NEW ir.ui.view: mrp.mrp_production_workorder_to_plan_list
+NEW ir.ui.view: mrp.mrp_production_workorder_tree_view_backorders
+NEW ir.ui.view: mrp.report_mrp_packages
+NEW ir.ui.view: mrp.view_scrap_move_form_inherit_mrp
+NEW ir.ui.view: mrp.view_stock_move_line_detailed_operation_tree
+DEL ir.ui.view: mrp.label_production_view
+DEL ir.ui.view: mrp.label_production_view_pdf
+DEL ir.ui.view: mrp.mrp_product_product_search_view
+DEL ir.ui.view: mrp.mrp_unbuild_form_view_simplified
+DEL ir.ui.view: mrp.product_document_form
+DEL ir.ui.view: mrp.stock_scrap_search_view_inherit_mrp
+DEL ir.ui.view: mrp.stock_scrap_view_form2_mrp_inherit_mrp
+DEL ir.ui.view: mrp.stock_scrap_view_form_mrp_inherit_mrp
+DEL ir.ui.view: mrp.view_stock_move_operations_finished
+DEL ir.ui.view: mrp.view_stock_move_operations_raw
+NEW mail.message.subtype: mrp.mt_mo_state (noupdate)
+DEL mail.message.subtype: mrp.mrp_mo_in_cancelled (noupdate)
+DEL mail.message.subtype: mrp.mrp_mo_in_confirmed (noupdate)
+DEL mail.message.subtype: mrp.mrp_mo_in_done (noupdate)
+DEL mail.message.subtype: mrp.mrp_mo_in_progress (noupdate)
+DEL mail.message.subtype: mrp.mrp_mo_in_to_close (noupdate)
+DEL res.groups: mrp.group_mrp_reception_report
+DEL res.groups: mrp.group_mrp_workorder_dependencies
+NEW resource.calendar: mrp.mrp_workcenter_calendar (noupdate)

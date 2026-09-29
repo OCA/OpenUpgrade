@@ -1,0 +1,53 @@
+---Models in module 'gamification'---
+---Fields in module 'gamification'---
+---XML records in module 'gamification'---
+NEW ir.access: gamification.access_gamification_badge_user_wizard
+NEW ir.access: gamification.access_gamification_goal_wizard
+NEW ir.access: gamification.badge_employee
+NEW ir.access: gamification.badge_manager
+NEW ir.access: gamification.challenge_employee
+NEW ir.access: gamification.challenge_line_employee
+NEW ir.access: gamification.challenge_line_manager
+NEW ir.access: gamification.challenge_manager
+NEW ir.access: gamification.gamification_badge_user_access
+NEW ir.access: gamification.gamification_badge_user_access_1
+NEW ir.access: gamification.gamification_karma_rank_access_employee
+NEW ir.access: gamification.gamification_karma_rank_access_user_manager
+NEW ir.access: gamification.gamification_karma_tracking_access_user_manager
+NEW ir.access: gamification.goal_definition_employee
+NEW ir.access: gamification.goal_definition_manager
+NEW ir.access: gamification.goal_gamification_manager_visibility
+NEW ir.access: gamification.goal_global_multicompany
+NEW ir.access: gamification.goal_manager
+NEW ir.access: gamification.goal_user_visibility
+DEL ir.model.access: gamification.access_gamification_badge_user_wizard
+DEL ir.model.access: gamification.access_gamification_goal_wizard
+DEL ir.model.access: gamification.badge_employee
+DEL ir.model.access: gamification.badge_manager
+DEL ir.model.access: gamification.badge_portal
+DEL ir.model.access: gamification.badge_public
+DEL ir.model.access: gamification.badge_user_employee
+DEL ir.model.access: gamification.badge_user_manager
+DEL ir.model.access: gamification.badge_user_portal
+DEL ir.model.access: gamification.badge_user_public
+DEL ir.model.access: gamification.challenge_employee
+DEL ir.model.access: gamification.challenge_line_employee
+DEL ir.model.access: gamification.challenge_line_manager
+DEL ir.model.access: gamification.challenge_line_portal
+DEL ir.model.access: gamification.challenge_manager
+DEL ir.model.access: gamification.challenge_portal
+DEL ir.model.access: gamification.gamification_karma_rank_access_employee
+DEL ir.model.access: gamification.gamification_karma_rank_access_portal
+DEL ir.model.access: gamification.gamification_karma_rank_access_public
+DEL ir.model.access: gamification.gamification_karma_rank_access_user_manager
+DEL ir.model.access: gamification.gamification_karma_tracking_access_all
+DEL ir.model.access: gamification.gamification_karma_tracking_access_user_manager
+DEL ir.model.access: gamification.goal_definition_employee
+DEL ir.model.access: gamification.goal_definition_manager
+DEL ir.model.access: gamification.goal_definition_portal
+DEL ir.model.access: gamification.goal_employee
+DEL ir.model.access: gamification.goal_manager
+DEL ir.model.access: gamification.goal_portal
+DEL ir.rule: gamification.goal_gamification_manager_visibility (noupdate)
+DEL ir.rule: gamification.goal_global_multicompany (noupdate)
+DEL ir.rule: gamification.goal_user_visibility (noupdate)

@@ -1,0 +1,24 @@
+---Models in module 'website_hr_recruitment'---
+---Fields in module 'website_hr_recruitment'---
+website_hr_recruitment / hr.job                   / description (False)           : NEW mode: modify, hasdefault: default
+website_hr_recruitment / hr.job                   / publish_on (datetime)         : NEW
+website_hr_recruitment / hr.job                   / published_date (date)         : not a function anymore
+website_hr_recruitment / hr.job                   / published_date (date)         : type is now 'datetime' ('date')
+website_hr_recruitment / hr.job                   / website_rating (html)         : NEW hasdefault: default, translate
+---XML records in module 'website_hr_recruitment'---
+NEW ir.access: website_hr_recruitment.access_hr_job_public_employee
+NEW ir.access: website_hr_recruitment.hr_department_public
+NEW ir.access: website_hr_recruitment.hr_job_public
+NEW ir.filters: website_hr_recruitment.dynamic_snippet_latest_job_positions_filter
+DEL ir.model.access: website_hr_recruitment.access_hr_department_public
+DEL ir.model.access: website_hr_recruitment.access_hr_job_public_employee
+DEL ir.model.access: website_hr_recruitment.access_hr_job_public_portal
+DEL ir.model.access: website_hr_recruitment.access_hr_job_public_public
+DEL ir.rule: website_hr_recruitment.hr_department_public (noupdate)
+DEL ir.rule: website_hr_recruitment.hr_job_officer (noupdate)
+DEL ir.rule: website_hr_recruitment.hr_job_portal (noupdate)
+DEL ir.rule: website_hr_recruitment.hr_job_public (noupdate)
+NEW ir.ui.view: website_hr_recruitment.default_website_rating
+NEW ir.ui.view: website_hr_recruitment.dynamic_filter_template_hr_job_card
+NEW ir.ui.view: website_hr_recruitment.job_card
+NEW website.snippet.filter: website_hr_recruitment.dynamic_filter_latest_job_positions
