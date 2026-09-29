@@ -10,14 +10,6 @@ def _update_from_database(self, *args, **kwargs) -> None:
     """Prevent reloading of demo data from the new version on major upgrade"""
     ModuleGraph._update_from_database._original_method(self, *args, **kwargs)
 
-    # v19-specific: ir.model.fields#translate has changed semantics, untranslated fields
-    # need to be set to null instead of false. and as this is read before any upgrade
-    # scripts run, we do it here. the statement is a bit clunky because it has to work
-    # before and after the translate column is converted from boolean to varchar
-    self._cr.execute(
-        "UPDATE ir_model_fields SET translate=NULL where translate::varchar='false'"
-    )
-
     if os.environ.get("OPENUPGRADE_USE_DEMO", "") == "yes":
         return
     if (

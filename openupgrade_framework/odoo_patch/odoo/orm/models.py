@@ -30,10 +30,10 @@ def unlink(self):
             f'ROLLBACK TO SAVEPOINT "{savepoint}"'
         )
         _logger.warning(
-            "Could not delete obsolete record with ids %s of model %s: %s",
+            "Could not delete obsolete record with ids %s of model %s",
             self.ids,
             self._name,
-            e,
+            exc_info=e,
         )
     return False
 
