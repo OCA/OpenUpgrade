@@ -1,0 +1,19 @@
+---Models in module 'link_tracker'---
+---Fields in module 'link_tracker'---
+link_tracker / link.tracker             / utm_reference (reference)     : NEW
+---XML records in module 'link_tracker'---
+NEW ir.access: link_tracker.access_link_tracker_click_system
+NEW ir.access: link_tracker.access_link_tracker_click_user
+NEW ir.access: link_tracker.access_link_tracker_code_system
+NEW ir.access: link_tracker.access_link_tracker_code_user
+NEW ir.access: link_tracker.access_link_tracker_system
+NEW ir.access: link_tracker.access_link_tracker_user
+DEL ir.model.access: link_tracker.access_link_tracker_click_public
+DEL ir.model.access: link_tracker.access_link_tracker_click_system
+DEL ir.model.access: link_tracker.access_link_tracker_click_user
+DEL ir.model.access: link_tracker.access_link_tracker_code_public
+DEL ir.model.access: link_tracker.access_link_tracker_code_system
+DEL ir.model.access: link_tracker.access_link_tracker_code_user
+DEL ir.model.access: link_tracker.access_link_tracker_public
+DEL ir.model.access: link_tracker.access_link_tracker_system
+DEL ir.model.access: link_tracker.access_link_tracker_user

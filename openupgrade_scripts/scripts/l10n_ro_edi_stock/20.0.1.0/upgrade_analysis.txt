@@ -1,0 +1,31 @@
+---Models in module 'l10n_ro_edi_stock'---
+---Fields in module 'l10n_ro_edi_stock'---
+l10n_ro_edi_stock / l10n_ro_edi.document     / batch_id (many2one)           : previously in module l10n_ro_edi_stock_batch
+l10n_ro_edi_stock / stock.picking.batch      / l10n_ro_edi_stock_available_end_loc_types (char): previously in module l10n_ro_edi_stock_batch
+l10n_ro_edi_stock / stock.picking.batch      / l10n_ro_edi_stock_available_operation_scopes (char): previously in module l10n_ro_edi_stock_batch
+l10n_ro_edi_stock / stock.picking.batch      / l10n_ro_edi_stock_available_start_loc_types (char): previously in module l10n_ro_edi_stock_batch
+l10n_ro_edi_stock / stock.picking.batch      / l10n_ro_edi_stock_document_ids (one2many): previously in module l10n_ro_edi_stock_batch
+l10n_ro_edi_stock / stock.picking.batch      / l10n_ro_edi_stock_document_uit (char): previously in module l10n_ro_edi_stock_batch
+l10n_ro_edi_stock / stock.picking.batch      / l10n_ro_edi_stock_enable (boolean): previously in module l10n_ro_edi_stock_batch
+l10n_ro_edi_stock / stock.picking.batch      / l10n_ro_edi_stock_enable_amend (boolean): previously in module l10n_ro_edi_stock_batch
+l10n_ro_edi_stock / stock.picking.batch      / l10n_ro_edi_stock_enable_fetch (boolean): previously in module l10n_ro_edi_stock_batch
+l10n_ro_edi_stock / stock.picking.batch      / l10n_ro_edi_stock_enable_send (boolean): previously in module l10n_ro_edi_stock_batch
+l10n_ro_edi_stock / stock.picking.batch      / l10n_ro_edi_stock_end_bcp (selection): previously in module l10n_ro_edi_stock_batch
+l10n_ro_edi_stock / stock.picking.batch      / l10n_ro_edi_stock_end_customs_office (selection): previously in module l10n_ro_edi_stock_batch
+l10n_ro_edi_stock / stock.picking.batch      / l10n_ro_edi_stock_end_loc_type (selection): previously in module l10n_ro_edi_stock_batch
+l10n_ro_edi_stock / stock.picking.batch      / l10n_ro_edi_stock_fields_readonly (boolean): previously in module l10n_ro_edi_stock_batch
+l10n_ro_edi_stock / stock.picking.batch      / l10n_ro_edi_stock_operation_scope (selection): previously in module l10n_ro_edi_stock_batch
+l10n_ro_edi_stock / stock.picking.batch      / l10n_ro_edi_stock_operation_type (selection): previously in module l10n_ro_edi_stock_batch
+l10n_ro_edi_stock / stock.picking.batch      / l10n_ro_edi_stock_remarks (text): previously in module l10n_ro_edi_stock_batch
+l10n_ro_edi_stock / stock.picking.batch      / l10n_ro_edi_stock_start_bcp (selection): previously in module l10n_ro_edi_stock_batch
+l10n_ro_edi_stock / stock.picking.batch      / l10n_ro_edi_stock_start_customs_office (selection): previously in module l10n_ro_edi_stock_batch
+l10n_ro_edi_stock / stock.picking.batch      / l10n_ro_edi_stock_start_loc_type (selection): previously in module l10n_ro_edi_stock_batch
+l10n_ro_edi_stock / stock.picking.batch      / l10n_ro_edi_stock_state (selection): previously in module l10n_ro_edi_stock_batch
+l10n_ro_edi_stock / stock.picking.batch      / l10n_ro_edi_stock_trailer_1_number (char): previously in module l10n_ro_edi_stock_batch
+l10n_ro_edi_stock / stock.picking.batch      / l10n_ro_edi_stock_trailer_2_number (char): previously in module l10n_ro_edi_stock_batch
+l10n_ro_edi_stock / stock.picking.batch      / l10n_ro_edi_stock_vehicle_number (char): previously in module l10n_ro_edi_stock_batch
+---XML records in module 'l10n_ro_edi_stock'---
+NEW ir.ui.view: l10n_ro_edi_stock.report_picking_batch
+NEW ir.ui.view: l10n_ro_edi_stock.stock_picking_batch_filter
+NEW ir.ui.view: l10n_ro_edi_stock.stock_picking_batch_form
+NEW ir.ui.view: l10n_ro_edi_stock.stock_picking_batch_tree

@@ -1,0 +1,183 @@
+---Models in module 'l10n_in'---
+obsolete model l10n_in.section.alert
+obsolete model l10n_in.withhold.wizard [transient]
+---Fields in module 'l10n_in'---
+l10n_in      / account.account          / l10n_in_tds_tcs_section_id (many2one): DEL relation: l10n_in.section.alert
+l10n_in      / account.journal          / l10n_in_self_invoice (boolean): NEW
+l10n_in      / account.move             / l10n_in_adjustment_type (selection): NEW selection_keys: ['price_adjustment', 'standard'], hasdefault: compute
+l10n_in      / account.move             / l10n_in_is_gst_registered_enabled (boolean): not related anymore
+l10n_in      / account.move             / l10n_in_is_gst_registered_enabled (boolean): now a function
+l10n_in      / account.move             / l10n_in_is_withholding (boolean): DEL
+l10n_in      / account.move             / l10n_in_withhold_move_ids (one2many): DEL relation: account.move
+l10n_in      / account.move             / l10n_in_withholding_ref_move_id (many2one): DEL relation: account.move
+l10n_in      / account.move             / l10n_in_withholding_ref_payment_id (many2one): DEL relation: account.payment
+l10n_in      / account.move.line        / l10n_in_gstr_section (selection): selection_keys added: [sale_composition_supplies], removed: [purchase_b2c_regular, purchase_cdnur_regular]
+l10n_in      / account.payment          / l10n_in_withhold_move_ids (one2many): DEL relation: account.move
+l10n_in      / account.tax              / l10n_in_section_id (many2one) : DEL relation: l10n_in.section.alert
+l10n_in      / account.tax              / l10n_in_tax_type (selection)  : selection_keys added: [tds], removed: [tds_purchase, tds_sale]
+l10n_in      / l10n_in.pan.entity       / tds_certificate_filename (char): DEL
+l10n_in      / l10n_in.pan.entity       / website_message_ids (one2many): DEL relation: mail.message
+l10n_in      / l10n_in.section.alert    / aggregate_limit (float)       : DEL
+l10n_in      / l10n_in.section.alert    / aggregate_period (selection)  : DEL selection_keys: ['fiscal_yearly', 'monthly']
+l10n_in      / l10n_in.section.alert    / consider_amount (selection)   : DEL required, selection_keys: ['total_amount', 'untaxed_amount']
+l10n_in      / l10n_in.section.alert    / is_aggregate_limit (boolean)  : DEL
+l10n_in      / l10n_in.section.alert    / is_per_transaction_limit (boolean): DEL
+l10n_in      / l10n_in.section.alert    / l10n_in_section_tax_ids (one2many): DEL relation: account.tax
+l10n_in      / l10n_in.section.alert    / name (char)                   : DEL
+l10n_in      / l10n_in.section.alert    / per_transaction_limit (float) : DEL
+l10n_in      / l10n_in.section.alert    / tax_report_line_id (many2one) : DEL relation: account.report.line
+l10n_in      / l10n_in.section.alert    / tax_source_type (selection)   : DEL selection_keys: ['tcs', 'tds']
+l10n_in      / res.company              / l10n_in_composition_tax_rate (selection): NEW selection_keys: ['1', '5', '6']
+l10n_in      / res.company              / l10n_in_disable_b2c_hsn_reporting (boolean): NEW
+l10n_in      / res.company              / l10n_in_gst_registration_type (selection): NEW selection_keys: ['composition', 'regular'], isfunction: function, stored
+l10n_in      / res.company              / l10n_in_is_gst_registered (boolean): DEL
+l10n_in      / res.company              / l10n_in_withholding_account_id (many2one): DEL relation: account.account
+---XML records in module 'l10n_in'---
+NEW account.account.tag: l10n_in.account_tag_cash_and_cash_equivalents
+NEW account.account.tag: l10n_in.account_tag_current_investments
+NEW account.account.tag: l10n_in.account_tag_deferred_tax_assets
+NEW account.account.tag: l10n_in.account_tag_deferred_tax_liabilities
+NEW account.account.tag: l10n_in.account_tag_dividend_income
+NEW account.account.tag: l10n_in.account_tag_expenses
+NEW account.account.tag: l10n_in.account_tag_interest_income
+NEW account.account.tag: l10n_in.account_tag_inventories
+NEW account.account.tag: l10n_in.account_tag_long_term_borrowings
+NEW account.account.tag: l10n_in.account_tag_long_term_loans_and_advances
+NEW account.account.tag: l10n_in.account_tag_long_term_provisions
+NEW account.account.tag: l10n_in.account_tag_money_received_against_share_warrants
+NEW account.account.tag: l10n_in.account_tag_net_gain_loss
+NEW account.account.tag: l10n_in.account_tag_non_current_investments
+NEW account.account.tag: l10n_in.account_tag_other_current_assets
+NEW account.account.tag: l10n_in.account_tag_other_current_liabilities
+NEW account.account.tag: l10n_in.account_tag_other_long_term_liabilities
+NEW account.account.tag: l10n_in.account_tag_other_non_current_assets
+NEW account.account.tag: l10n_in.account_tag_other_non_operating_income
+NEW account.account.tag: l10n_in.account_tag_other_operating_revenues
+NEW account.account.tag: l10n_in.account_tag_property_plant_equipment
+NEW account.account.tag: l10n_in.account_tag_reserves_surplus
+NEW account.account.tag: l10n_in.account_tag_sale_of_products
+NEW account.account.tag: l10n_in.account_tag_sale_of_services
+NEW account.account.tag: l10n_in.account_tag_share_application_money_pending_allotment
+NEW account.account.tag: l10n_in.account_tag_share_capital
+NEW account.account.tag: l10n_in.account_tag_short_term_borrowings
+NEW account.account.tag: l10n_in.account_tag_short_term_loans_and_advances
+NEW account.account.tag: l10n_in.account_tag_short_term_provisions
+NEW account.account.tag: l10n_in.account_tag_trade_payables
+NEW account.account.tag: l10n_in.account_tag_trade_receivables
+DEL account.cash.rounding: l10n_in.cash_rounding_in_half_up
+NEW ir.access: l10n_in.access_l10n_in_pan_entity
+NEW ir.access: l10n_in.access_port_code_account_manager
+NEW ir.access: l10n_in.access_port_code_user
+DEL ir.actions.act_window: l10n_in.l10n_in_section_alert_action
+DEL ir.actions.act_window: l10n_in.l10n_in_withholding_entry_form_action
+DEL ir.model.access: l10n_in.access_l10n_in_pan_entity
+DEL ir.model.access: l10n_in.access_l10n_in_section_alert_account_manager
+DEL ir.model.access: l10n_in.access_l10n_in_section_alert_account_readonly
+DEL ir.model.access: l10n_in.access_l10n_in_withhold_wizard
+DEL ir.model.access: l10n_in.access_port_code_account_manager
+DEL ir.model.access: l10n_in.access_port_code_user
+DEL ir.model.constraint: l10n_in.constraint_l10n_in_section_alert_aggregate_limit
+DEL ir.model.constraint: l10n_in.constraint_l10n_in_section_alert_per_transaction_limit
+NEW ir.ui.view: l10n_in.external_layout_footer_content
+NEW ir.ui.view: l10n_in.l10n_in_view_partner_form_inherited
+NEW ir.ui.view: l10n_in.uom_uom_view_form
+NEW ir.ui.view: l10n_in.view_account_move_reversal_form_inherit_l10n_in
+NEW ir.ui.view: l10n_in.view_account_payment_register_form
+NEW ir.ui.view: l10n_in.view_base_document_layout
+DEL ir.ui.view: l10n_in.account_account_tds_tcs_view_form_inherit
+DEL ir.ui.view: l10n_in.account_account_tds_tcs_view_tree_inherit
+DEL ir.ui.view: l10n_in.l10n_in_section_alert_view_form
+DEL ir.ui.view: l10n_in.l10n_in_section_alert_view_tree
+DEL ir.ui.view: l10n_in.l10n_in_view_partner_base_vat_form
+DEL ir.ui.view: l10n_in.product_uom_form_view_inherit_l10n_in
+DEL ir.ui.view: l10n_in.tds_entry_view_form
+DEL ir.ui.view: l10n_in.view_account_payment_form_inherit_l10n_in_withholding
+DEL ir.ui.view: l10n_in.view_move_line_list_l10n_in_withholding
+DEL l10n_in.section.alert: l10n_in.tcs_section_206c1_alc
+DEL l10n_in.section.alert: l10n_in.tcs_section_206c1_fo
+DEL l10n_in.section.alert: l10n_in.tcs_section_206c1_min
+DEL l10n_in.section.alert: l10n_in.tcs_section_206c1_sc
+DEL l10n_in.section.alert: l10n_in.tcs_section_206c1_tim
+DEL l10n_in.section.alert: l10n_in.tcs_section_206c1_tim_o
+DEL l10n_in.section.alert: l10n_in.tcs_section_206c1_tl
+DEL l10n_in.section.alert: l10n_in.tcs_section_206c1c_mq
+DEL l10n_in.section.alert: l10n_in.tcs_section_206c1c_p
+DEL l10n_in.section.alert: l10n_in.tcs_section_206c1c_t
+DEL l10n_in.section.alert: l10n_in.tcs_section_206c1f_mv
+DEL l10n_in.section.alert: l10n_in.tcs_section_206c1g_ot
+DEL l10n_in.section.alert: l10n_in.tcs_section_206c1g_r
+DEL l10n_in.section.alert: l10n_in.tcs_section_394_1_1_liq
+DEL l10n_in.section.alert: l10n_in.tcs_section_394_1_2_tendu
+DEL l10n_in.section.alert: l10n_in.tcs_section_394_1_3_timber
+DEL l10n_in.section.alert: l10n_in.tcs_section_394_1_4_sc
+DEL l10n_in.section.alert: l10n_in.tcs_section_394_1_5_min
+DEL l10n_in.section.alert: l10n_in.tcs_section_394_1_6_a_mv
+DEL l10n_in.section.alert: l10n_in.tcs_section_394_1_6_b_ng
+DEL l10n_in.section.alert: l10n_in.tcs_section_394_1_7_a_lrs_edu
+DEL l10n_in.section.alert: l10n_in.tcs_section_394_1_7_b_lrs_oth
+DEL l10n_in.section.alert: l10n_in.tcs_section_394_1_8_ot
+DEL l10n_in.section.alert: l10n_in.tcs_section_394_1_9_parking
+DEL l10n_in.section.alert: l10n_in.tds_section_192
+DEL l10n_in.section.alert: l10n_in.tds_section_192a
+DEL l10n_in.section.alert: l10n_in.tds_section_193
+DEL l10n_in.section.alert: l10n_in.tds_section_194
+DEL l10n_in.section.alert: l10n_in.tds_section_194a
+DEL l10n_in.section.alert: l10n_in.tds_section_194b
+DEL l10n_in.section.alert: l10n_in.tds_section_194ba
+DEL l10n_in.section.alert: l10n_in.tds_section_194bb
+DEL l10n_in.section.alert: l10n_in.tds_section_194c
+DEL l10n_in.section.alert: l10n_in.tds_section_194d
+DEL l10n_in.section.alert: l10n_in.tds_section_194da
+DEL l10n_in.section.alert: l10n_in.tds_section_194e
+DEL l10n_in.section.alert: l10n_in.tds_section_194ee
+DEL l10n_in.section.alert: l10n_in.tds_section_194f
+DEL l10n_in.section.alert: l10n_in.tds_section_194g
+DEL l10n_in.section.alert: l10n_in.tds_section_194h
+DEL l10n_in.section.alert: l10n_in.tds_section_194i
+DEL l10n_in.section.alert: l10n_in.tds_section_194ia
+DEL l10n_in.section.alert: l10n_in.tds_section_194ib
+DEL l10n_in.section.alert: l10n_in.tds_section_194ic
+DEL l10n_in.section.alert: l10n_in.tds_section_194j
+DEL l10n_in.section.alert: l10n_in.tds_section_194j_dir
+DEL l10n_in.section.alert: l10n_in.tds_section_194k
+DEL l10n_in.section.alert: l10n_in.tds_section_194la
+DEL l10n_in.section.alert: l10n_in.tds_section_194lb
+DEL l10n_in.section.alert: l10n_in.tds_section_194lba1
+DEL l10n_in.section.alert: l10n_in.tds_section_194lbb
+DEL l10n_in.section.alert: l10n_in.tds_section_194lbc
+DEL l10n_in.section.alert: l10n_in.tds_section_194m
+DEL l10n_in.section.alert: l10n_in.tds_section_194n
+DEL l10n_in.section.alert: l10n_in.tds_section_194o
+DEL l10n_in.section.alert: l10n_in.tds_section_194o_huf
+DEL l10n_in.section.alert: l10n_in.tds_section_194q
+DEL l10n_in.section.alert: l10n_in.tds_section_195
+DEL l10n_in.section.alert: l10n_in.tds_section_392_1_salary
+DEL l10n_in.section.alert: l10n_in.tds_section_393_1_1_i_insu_comm
+DEL l10n_in.section.alert: l10n_in.tds_section_393_1_1_ii_comm
+DEL l10n_in.section.alert: l10n_in.tds_section_393_1_2_i_rent
+DEL l10n_in.section.alert: l10n_in.tds_section_393_1_2_ii_a_rent_mach
+DEL l10n_in.section.alert: l10n_in.tds_section_393_1_2_ii_b_rent_land
+DEL l10n_in.section.alert: l10n_in.tds_section_393_1_3_i_imp
+DEL l10n_in.section.alert: l10n_in.tds_section_393_1_3_ii_prop_67_14
+DEL l10n_in.section.alert: l10n_in.tds_section_393_1_3_iii_comp_acq
+DEL l10n_in.section.alert: l10n_in.tds_section_393_1_4_i_mf_units
+DEL l10n_in.section.alert: l10n_in.tds_section_393_1_4_ii_bt_dist
+DEL l10n_in.section.alert: l10n_in.tds_section_393_1_4_iii_inv_fund
+DEL l10n_in.section.alert: l10n_in.tds_section_393_1_4_iv_sec_trust
+DEL l10n_in.section.alert: l10n_in.tds_section_393_1_5_i_int_sec
+DEL l10n_in.section.alert: l10n_in.tds_section_393_1_5_ii_a_int_bank_sr
+DEL l10n_in.section.alert: l10n_in.tds_section_393_1_5_ii_b_int_bank_oth
+DEL l10n_in.section.alert: l10n_in.tds_section_393_1_5_iii_int_spec
+DEL l10n_in.section.alert: l10n_in.tds_section_393_1_6_i_a_contr_ind_huf
+DEL l10n_in.section.alert: l10n_in.tds_section_393_1_6_i_b_contr_non_ind_huf
+DEL l10n_in.section.alert: l10n_in.tds_section_393_1_6_ii_ind_cont
+DEL l10n_in.section.alert: l10n_in.tds_section_393_1_6_iii_a_tech
+DEL l10n_in.section.alert: l10n_in.tds_section_393_1_6_iii_b_prof
+DEL l10n_in.section.alert: l10n_in.tds_section_393_1_7_div
+DEL l10n_in.section.alert: l10n_in.tds_section_393_1_8_i_lic
+DEL l10n_in.section.alert: l10n_in.tds_section_393_1_8_ii_goods
+DEL l10n_in.section.alert: l10n_in.tds_section_393_1_8_iii_sr_citizen
+DEL l10n_in.section.alert: l10n_in.tds_section_393_1_8_iv_perq
+DEL l10n_in.section.alert: l10n_in.tds_section_393_1_8_v_ecomm
+DEL l10n_in.section.alert: l10n_in.tds_section_393_1_8_vi_vda
+DEL res.country.state: l10n_in.state_in_la [renamed to base module]

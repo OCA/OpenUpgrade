@@ -1,0 +1,129 @@
+<?xml version='1.0' encoding='utf-8'?>
+<odoo>
+  <record id="account_send_payment_receipt_by_email_action" model="ir.actions.act_window">
+    <field name="context" eval="{                 'mail_post_autofollow': True,                 'default_composition_mode': 'comment',                 'default_template_id': ref('account.mail_template_data_payment_receipt'),             }"/>
+  </record>
+  <record id="account_send_payment_receipt_by_email_action_multi" model="ir.actions.act_window">
+    <field name="context" eval="{                 'mail_post_autofollow': True,                 'default_composition_mode': 'mass_mail',                 'default_template_id': ref('account.mail_template_data_payment_receipt'),             }"/>
+  </record>
+  <record id="action_open_settings" model="ir.actions.act_window">
+    <field name="context">{'module': 'general_settings'}</field>
+  </record>
+  <record id="email_template_edi_credit_note" model="mail.template">
+    <field name="email_layout_xmlid">mail.mail_notification_layout_with_responsible_signature</field>
+  </record>
+  <record id="email_template_edi_invoice" model="mail.template">
+    <field name="body_html" type="html">
+      <div style="margin: 0px; padding: 0px;">
+        <p style="margin: 0px; padding: 0px; font-size: 13px;">
+        Dear
+        <t t-if="object.partner_id.parent_id"><t t-if="object.partner_id.name"><t t-out="object.partner_id.name">Brandon Freeman</t> (<t t-out="object.partner_id.parent_id.name or ''">Azure Interior</t>),
+            </t><t t-else=""><t t-out="object.partner_id.parent_id.name or ''">Azure Interior</t>,
+            </t></t>
+        <t t-else=""><t t-out="object.partner_id.name or ''">Brandon Freeman</t>,
+        </t>
+        <br/><br/>
+        Here is your
+        <t t-if="object.name">
+            invoice <span style="font-weight:bold;" t-out="object.name or ''">INV/2021/05/0005</span>
+        </t>
+        <t t-else="">
+            invoice
+        </t>
+        <t t-if="object.invoice_origin">
+            (with reference: <t t-out="object.invoice_origin or ''">SUB003</t>)
+        </t>
+        amounting in <span style="font-weight:bold;" t-out="format_amount(object.amount_total, object.currency_id) or ''">$ 143,750.00</span>
+        from <t t-out="object.company_id.name or ''">YourCompany</t>.
+        <t t-if="object.payment_state in ('paid', 'in_payment')">
+            This invoice is already paid.
+        </t>
+        <t t-else="">
+            Please remit payment at your earliest convenience.
+            <t t-if="object.payment_reference"><br/><br/>
+                Please use the following communication for your payment: <strong t-out="object.payment_reference or ''">INV/2021/05/0005</strong>
+                <t t-if="object.partner_bank_id">
+                    on the account <strong t-out="object.partner_bank_id.account_number"/>
+                </t>
+                .
+            </t>
+        </t>
+        <br/><br/>
+        Do not hesitate to contact us if you have any questions.
+        <t t-if="not is_html_empty(object.invoice_user_id.signature)"><br/><br/><div>--<br/><t t-out="object.invoice_user_id.signature or ''">Mitchell Admin</t></div></t>
+    </p>
+      </div>
+    </field>
+    <field name="email_layout_xmlid">mail.mail_notification_layout_with_responsible_signature</field>
+  </record>
+  <record id="email_template_edi_self_billing_invoice" model="mail.template">
+    <field name="body_html" type="html">
+      <div style="margin: 0px; padding: 0px;">
+        <p style="margin: 0px; padding: 0px; font-size: 13px;">
+        Dear
+        <t t-if="object.partner_id.parent_id"><t t-if="object.partner_id.name"><t t-out="object.partner_id.name">Brandon Freeman</t> (<t t-out="object.partner_id.parent_id.name or ''">Azure Interior</t>),
+            </t><t t-else=""><t t-out="object.partner_id.parent_id.name or ''">Azure Interior</t>,
+            </t></t>
+        <t t-else=""><t t-out="object.partner_id.name or ''">Brandon Freeman</t>,
+        </t>
+        <br/><br/>
+        Here is your
+        <t t-if="object.name">
+            self-billing invoice <span style="font-weight:bold;" t-out="object.name or ''">INV/2021/05/0005</span>
+        </t>
+        <t t-else="">
+            self-billing invoice
+        </t>
+        <t t-if="object.invoice_origin">
+            (with reference: <t t-out="object.invoice_origin or ''">SUB003</t>)
+        </t>
+        amounting in <span style="font-weight:bold;" t-out="format_amount(object.amount_total, object.currency_id) or ''">$ 143,750.00</span>
+        from <t t-out="object.company_id.name or ''">YourCompany</t>.
+        <t t-if="object.payment_state in ('paid', 'in_payment')">
+            This self-billing invoice has already been paid.
+        </t>
+        <br/><br/>
+        Do not hesitate to contact us if you have any questions.
+        <t t-if="not is_html_empty(object.invoice_user_id.signature)"><br/><br/><div>--<br/><t t-out="object.invoice_user_id.signature or ''">Mitchell Admin</t></div></t>
+    </p>
+      </div>
+    </field>
+  </record>
+  <template id="email_template_mail_gateway_failed">
+    <p>
+    Hi,
+    <br/><br/>
+    Your email has been discarded. the e-mail address you have used only accepts new invoices:
+    <ul><li>For new invoices, please ensure a PDF or electronic invoice file is attached</li><li>To add information to a previously sent invoice, reply to your "sent" email</li></ul>
+    For any other question, write to <t t-out="company_email"/>.
+    <br/>
+    --
+    <br/>
+    <t t-out="company_name"/>
+</p>
+  </template>
+  <record id="mail_template_data_payment_receipt" model="mail.template">
+    <field name="body_html" type="html">
+      <div style="margin: 0px; padding: 0px;">
+        <p style="margin: 0px; padding: 0px; font-size: 13px;">
+        Dear <t t-out="object.partner_id.name or ''">Azure Interior</t><br/><br/>
+        <t t-if="object.partner_type == 'customer' and object.payment_type == 'outbound'">We have processed your refund of</t>
+        <t t-elif="object.partner_type == 'supplier' and object.payment_type == 'outbound'">We have processed your payment of</t>
+        <t t-elif="object.partner_type == 'supplier' and object.payment_type == 'inbound'">Thank you for your refund of</t>
+        <t t-else="">Thank you for your payment of</t> <span style="font-weight:bold;" t-out="format_amount(object.amount, object.currency_id) or ''">$ 10.00</span>.
+        Please find the <t t-out="object.payment_receipt_title.lower()">payment receipt</t> <span t-if="object.name" style="font-weight:bold;" t-out="object.name.replace('/','-')">BNK1-2021-05-0002</span> from <t t-out="object.company_id.name or ''">YourCompany</t>.
+        <br/><br/>
+        Do not hesitate to contact us if you have any questions.
+        <br/><br/>
+        Best regards,
+        <t t-if="not is_html_empty(user.signature)"><br/><br/><div>--<br/><t t-out="user.signature or ''">Mitchell Admin</t></div></t>
+    </p>
+      </div>
+    </field>
+    <field name="subject">{{ object.company_id.name }} {{ object.payment_receipt_title }} (Ref {{ object.name or 'n/a' }})</field>
+    <field name="email_layout_xmlid">mail.mail_notification_light</field>
+  </record>
+  <record id="onboarding_onboarding_account_dashboard" model="onboarding.onboarding">
+    <field name="step_ids" eval="[                 Command.link(ref('account.onboarding_onboarding_step_company_data')),                 Command.link(ref('account.onboarding_onboarding_step_chart_of_accounts')),             ]"/>
+  </record>
+</odoo>

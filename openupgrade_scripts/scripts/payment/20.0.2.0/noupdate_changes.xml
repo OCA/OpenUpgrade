@@ -1,0 +1,76 @@
+<?xml version='1.0' encoding='utf-8'?>
+<odoo>
+  <record id="payment_provider_adyen" model="payment.provider">
+    <field name="payment_method_ids" eval="None"/>
+  </record>
+  <record id="payment_provider_aps" model="payment.provider">
+    <field name="payment_method_ids" eval="None"/>
+  </record>
+  <record id="payment_provider_asiapay" model="payment.provider">
+    <field name="payment_method_ids" eval="None"/>
+  </record>
+  <record id="payment_provider_authorize" model="payment.provider">
+    <field name="payment_method_ids" eval="None"/>
+  </record>
+  <record id="payment_provider_buckaroo" model="payment.provider">
+    <field name="payment_method_ids" eval="None"/>
+  </record>
+  <record id="payment_provider_demo" model="payment.provider">
+    <field name="sequence">10</field>
+  </record>
+  <record id="payment_provider_dpo" model="payment.provider">
+    <field name="payment_method_ids" eval="None"/>
+  </record>
+  <record id="payment_provider_ecpay" model="payment.provider">
+    <field name="payment_method_ids" eval="None"/>
+  </record>
+  <record id="payment_provider_flutterwave" model="payment.provider">
+    <field name="payment_method_ids" eval="None"/>
+  </record>
+  <record id="payment_provider_iyzico" model="payment.provider">
+    <field name="payment_method_ids" eval="None"/>
+  </record>
+  <record id="payment_provider_mercado_pago" model="payment.provider">
+    <field name="payment_method_ids" eval="None"/>
+  </record>
+  <record id="payment_provider_mollie" model="payment.provider">
+    <field name="payment_method_ids" eval="None"/>
+  </record>
+  <record id="payment_provider_nuvei" model="payment.provider">
+    <field name="payment_method_ids" eval="None"/>
+  </record>
+  <record id="payment_provider_paymob" model="payment.provider">
+    <field name="payment_method_ids" eval="None"/>
+  </record>
+  <record id="payment_provider_paypal" model="payment.provider">
+    <field name="payment_method_ids" eval="None"/>
+  </record>
+  <record id="payment_provider_payu" model="payment.provider">
+    <field name="payment_method_ids" eval="None"/>
+  </record>
+  <record id="payment_provider_razorpay" model="payment.provider">
+    <field name="payment_method_ids" eval="None"/>
+  </record>
+  <record id="payment_provider_redsys" model="payment.provider">
+    <field name="payment_method_ids" eval="None"/>
+  </record>
+  <record id="payment_provider_sepa_direct_debit" model="payment.provider">
+    <field name="payment_method_ids" eval="None"/>
+    <field name="sequence" eval="1000"/>
+  </record>
+  <record id="payment_provider_stripe" model="payment.provider">
+    <field name="payment_method_ids" eval="None"/>
+  </record>
+  <record id="payment_provider_toss_payments" model="payment.provider">
+    <field name="payment_method_ids" eval="None"/>
+  </record>
+  <record id="payment_provider_transfer" model="payment.provider">
+    <field name="sequence">20</field>
+  </record>
+  <record id="payment_provider_worldline" model="payment.provider">
+    <field name="payment_method_ids" eval="None"/>
+  </record>
+  <record id="payment_provider_xendit" model="payment.provider">
+    <field name="payment_method_ids" eval="None"/>
+  </record>
+</odoo>

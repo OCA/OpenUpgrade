@@ -1,0 +1,397 @@
+---Models in module 'mail'---
+obsolete model mail.thread.cc [abstract]
+model mail.tracking.value (moved to mail_tracking)
+new model bus.sync.mixin [abstract]
+new model discuss.category
+new model discuss.channel.last.interest.update
+new model mail.call.artifact
+new model mail.poll
+new model mail.poll.option
+new model mail.poll.vote
+new model mail.thread.subject.suggested [abstract]
+new model mail.track.mixin [abstract]
+---Fields in module 'mail'---
+mail         / discuss.call.history     / artifact_ids (one2many)       : NEW relation: mail.call.artifact
+mail         / discuss.category         / channel_ids (one2many)        : NEW relation: discuss.channel
+mail         / discuss.category         / name (char)                   : NEW required
+mail         / discuss.category         / sequence (integer)            : NEW hasdefault: default
+mail         / discuss.channel          / discuss_category_id (many2one): NEW relation: discuss.category
+mail         / discuss.channel          / is_readonly (boolean)         : NEW
+mail         / discuss.channel          / member_indices (char)         : NEW isfunction: function, stored
+mail         / discuss.channel          / pinned_message_ids (one2many) : DEL relation: mail.message
+mail         / discuss.channel.last.interest.update / channel_id (many2one)         : NEW relation: discuss.channel, required
+mail         / discuss.channel.last.interest.update / last_interest_dt (datetime)   : NEW required
+mail         / discuss.channel.member   / channel_role (selection)      : NEW selection_keys: ['admin', 'owner']
+mail         / discuss.channel.member   / custom_channel_name (char)    : DEL
+mail         / discuss.channel.member   / fetched_message_id (many2one) : DEL relation: mail.message
+mail         / discuss.channel.member   / invitation_sent_dt (datetime) : NEW
+mail         / discuss.channel.member   / is_favorite (boolean)         : NEW
+mail         / ir.access                / message_follower_ids (one2many): NEW relation: mail.followers
+mail         / ir.access                / message_ids (one2many)        : NEW relation: mail.message
+mail         / ir.actions.server        / activity_plan_id (many2one)   : NEW relation: mail.activity.plan, hasdefault: compute
+mail         / ir.actions.server        / activity_role_id (many2one)   : NEW relation: res.role, hasdefault: compute
+mail         / ir.actions.server        / activity_type_id (many2one)   : not related anymore
+mail         / ir.actions.server        / activity_user_type (selection): selection_keys added: [role] (most likely nothing to do)
+mail         / ir.actions.server        / log_note_note (html)          : NEW hasdefault: compute, translate
+mail         / ir.actions.server        / mail_post_method (selection)  : DEL selection_keys: ['comment', 'email', 'note']
+mail         / ir.actions.server        / state (False)                 : selection_keys added: [log_note] (most likely nothing to do)
+mail         / ir.actions.server        / subtype_ids (many2many)       : NEW relation: mail.message.subtype, hasdefault: default
+mail         / ir.ui.view               / technical_usage (False)       : NEW selection_keys: ['mail_post_source'], mode: modify
+mail         / ir.ui.view               / type (False)                  : selection_keys added: [card] (most likely nothing to do)
+mail         / mail.activity            / activity_plan_id (many2one)   : NEW relation: mail.activity.plan
+mail         / mail.activity            / activity_template_id (many2one): NEW relation: mail.activity.plan.template
+mail         / mail.activity            / phone (char)                  : NEW hasdefault: compute
+mail         / mail.activity            / previous_activity_type_id (many2one): DEL relation: mail.activity.type
+mail         / mail.activity            / recommended_activity_type_id (many2one): DEL relation: mail.activity.type
+mail         / mail.activity            / role_id (many2one)            : NEW relation: res.role, hasdefault: compute
+mail         / mail.activity            / technical_usage (selection)   : NEW selection_keys: ['none']
+mail         / mail.activity.plan.template / next_activity_ids (many2many) : DEL relation: mail.activity.type
+mail         / mail.activity.plan.template / responsible_type (selection)  : selection_keys added: [role] (most likely nothing to do)
+mail         / mail.activity.plan.template / role_id (many2one)            : NEW relation: res.role, hasdefault: compute
+mail         / mail.activity.type       / chaining_type (selection)     : DEL required, selection_keys: ['suggest', 'trigger']
+mail         / mail.activity.type       / default_role_id (many2one)    : NEW relation: res.role
+mail         / mail.activity.type       / kpi_provider_visibility (selection): NEW selection_keys: ['all', 'none', 'own'], hasdefault: default
+mail         / mail.activity.type       / suggested_next_type_id (many2one): NEW relation: mail.activity.type
+mail         / mail.activity.type       / suggested_next_type_ids (many2many): DEL relation: mail.activity.type
+mail         / mail.activity.type       / triggered_next_type_id (many2one): DEL relation: mail.activity.type
+mail         / mail.call.artifact       / discuss_call_history_id (many2one): NEW relation: discuss.call.history
+mail         / mail.call.artifact       / end_ms (integer)              : NEW required, hasdefault: default
+mail         / mail.call.artifact       / recording_started_by_id (many2one): NEW relation: res.users
+mail         / mail.call.artifact       / recording_upload_pending (boolean): NEW
+mail         / mail.call.artifact       / start_ms (integer)            : NEW required, hasdefault: default
+mail         / mail.guest               / im_status (char)              : selection_keys is now '['away', 'offline', 'online']' ('False')
+mail         / mail.guest               / im_status (char)              : type is now 'selection' ('char')
+mail         / mail.mail                / recipient_cc_ids (many2many)  : NEW relation: res.partner
+mail         / mail.mail                / tracking_value_ids (one2many) : module is now 'mail_tracking' ('mail')
+mail         / mail.message             / bookmarked_partner_ids (many2many): NEW relation: res.partner
+mail         / mail.message             / ended_poll_ids (one2many)     : NEW relation: mail.poll
+mail         / mail.message             / message_type (selection)      : selection_keys added: [tracking] (most likely nothing to do)
+mail         / mail.message             / partner_cc_ids (many2many)    : NEW relation: res.partner
+mail         / mail.message             / starred_partner_ids (many2many): DEL relation: res.partner
+mail         / mail.message             / started_poll_ids (one2many)   : NEW relation: mail.poll
+mail         / mail.message             / tracking_value_ids (one2many) : module is now 'mail_tracking' ('mail')
+mail         / mail.poll                / allow_multiple_options (boolean): NEW
+mail         / mail.poll                / end_message_id (many2one)     : NEW relation: mail.message
+mail         / mail.poll                / option_ids (one2many)         : NEW relation: mail.poll.option, required
+mail         / mail.poll                / poll_end_dt (datetime)        : NEW
+mail         / mail.poll                / poll_question (char)          : NEW required
+mail         / mail.poll                / start_message_id (many2one)   : NEW relation: mail.message, required
+mail         / mail.poll.option         / option_emoji (char)           : NEW
+mail         / mail.poll.option         / option_label (char)           : NEW required
+mail         / mail.poll.option         / poll_id (many2one)            : NEW relation: mail.poll, required
+mail         / mail.poll.option         / vote_ids (one2many)           : NEW relation: mail.poll.vote
+mail         / mail.poll.vote           / guest_id (many2one)           : NEW relation: mail.guest
+mail         / mail.poll.vote           / option_id (many2one)          : NEW relation: mail.poll.option, required
+mail         / mail.poll.vote           / user_id (many2one)            : NEW relation: res.users
+mail         / mail.scheduled.message   / partner_cc_ids (many2many)    : NEW relation: res.partner
+mail         / mail.template            / email_layout_force_footer (boolean): NEW hasdefault: default
+mail         / mail.template            / email_layout_force_header (boolean): NEW hasdefault: default
+mail         / mail.template            / partner_cc (char)             : NEW
+mail         / mail.tracking.value      / _order                        : module is now 'mail_tracking' ('mail')
+mail         / mail.tracking.value      / currency_id (many2one)        : DEL relation: res.currency
+mail         / mail.tracking.value      / display_name (char)           : module is now 'mail_tracking' ('mail')
+mail         / mail.tracking.value      / field_id (many2one)           : module is now 'mail_tracking' ('mail')
+mail         / mail.tracking.value      / field_info (json)             : module is now 'mail_tracking' ('mail')
+mail         / mail.tracking.value      / mail_message_id (many2one)    : module is now 'mail_tracking' ('mail')
+mail         / mail.tracking.value      / new_value_char (char)         : module is now 'mail_tracking' ('mail')
+mail         / mail.tracking.value      / new_value_datetime (datetime) : module is now 'mail_tracking' ('mail')
+mail         / mail.tracking.value      / new_value_float (float)       : module is now 'mail_tracking' ('mail')
+mail         / mail.tracking.value      / new_value_integer (integer)   : module is now 'mail_tracking' ('mail')
+mail         / mail.tracking.value      / new_value_text (text)         : module is now 'mail_tracking' ('mail')
+mail         / mail.tracking.value      / old_value_char (char)         : module is now 'mail_tracking' ('mail')
+mail         / mail.tracking.value      / old_value_datetime (datetime) : module is now 'mail_tracking' ('mail')
+mail         / mail.tracking.value      / old_value_float (float)       : module is now 'mail_tracking' ('mail')
+mail         / mail.tracking.value      / old_value_integer (integer)   : module is now 'mail_tracking' ('mail')
+mail         / mail.tracking.value      / old_value_text (text)         : module is now 'mail_tracking' ('mail')
+mail         / res.partner              / contact_address_inline (char) : module is now 'base' ('mail')
+mail         / res.role                 / active (boolean)              : NEW hasdefault: default
+mail         / res.users                / activity_date_deadline (date) : not related anymore
+mail         / res.users                / activity_date_deadline (date) : now a function
+mail         / res.users                / activity_exception_decoration (selection): not related anymore
+mail         / res.users                / activity_exception_decoration (selection): now a function
+mail         / res.users                / activity_exception_decoration (selection): selection_keys is now '['danger', 'warning']' ('function')
+mail         / res.users                / activity_exception_icon (char): not related anymore
+mail         / res.users                / activity_exception_icon (char): now a function
+mail         / res.users                / activity_ids (one2many)       : is now stored
+mail         / res.users                / activity_ids (one2many)       : not related anymore
+mail         / res.users                / activity_state (selection)    : not related anymore
+mail         / res.users                / activity_state (selection)    : now a function
+mail         / res.users                / activity_state (selection)    : selection_keys is now '['overdue', 'planned', 'today']' ('function')
+mail         / res.users                / activity_user_id (many2one)   : not related anymore
+mail         / res.users                / activity_user_id (many2one)   : now a function
+mail         / res.users                / contact_address_inline (char) : module is now 'base' ('mail')
+mail         / res.users                / has_message (boolean)         : not related anymore
+mail         / res.users                / has_message (boolean)         : now a function
+mail         / res.users                / im_status (char)              : selection_keys is now '['away', 'busy', 'offline', 'online']' ('False')
+mail         / res.users                / im_status (char)              : type is now 'selection' ('char')
+mail         / res.users                / message_attachment_count (integer): not related anymore
+mail         / res.users                / message_attachment_count (integer): now a function
+mail         / res.users                / message_follower_ids (one2many): is now stored
+mail         / res.users                / message_follower_ids (one2many): not related anymore
+mail         / res.users                / message_has_error (boolean)   : not related anymore
+mail         / res.users                / message_has_error (boolean)   : now a function
+mail         / res.users                / message_has_error_counter (integer): not related anymore
+mail         / res.users                / message_has_error_counter (integer): now a function
+mail         / res.users                / message_ids (one2many)        : is now stored
+mail         / res.users                / message_ids (one2many)        : not related anymore
+mail         / res.users                / message_is_follower (boolean) : not related anymore
+mail         / res.users                / message_is_follower (boolean) : now a function
+mail         / res.users                / message_needaction (boolean)  : not related anymore
+mail         / res.users                / message_needaction (boolean)  : now a function
+mail         / res.users                / message_needaction_counter (integer): not related anymore
+mail         / res.users                / message_needaction_counter (integer): now a function
+mail         / res.users                / message_partner_ids (many2many): not related anymore
+mail         / res.users                / message_partner_ids (many2many): now a function
+mail         / res.users                / my_activity_date_deadline (date): not related anymore
+mail         / res.users                / my_activity_date_deadline (date): now a function
+mail         / res.users                / offline_since (datetime)      : not related anymore
+mail         / res.users                / offline_since (datetime)      : now a function
+mail         / res.users.settings       / is_discuss_sidebar_category_channel_open (boolean): DEL
+mail         / res.users.settings       / is_discuss_sidebar_category_chat_open (boolean): DEL
+mail         / res.users.settings       / push_to_talk_key (char)       : DEL
+mail         / res.users.settings       / use_push_to_talk (boolean)    : DEL
+mail         / res.users.settings       / voice_active_duration (integer): DEL
+---XML records in module 'mail'---
+NEW discuss.channel.member: mail.channel_member_channel_admin_partner_admin (noupdate)
+NEW ir.access: mail.access_discuss_category_erp_manager
+NEW ir.access: mail.access_discuss_category_user
+NEW ir.access: mail.access_discuss_channel_last_interest_update_system
+NEW ir.access: mail.access_discuss_channel_rtc_session_system
+NEW ir.access: mail.access_discuss_voice_metadata_user
+NEW ir.access: mail.access_fetchmail_server
+NEW ir.access: mail.access_mail_activity_plan_template_user
+NEW ir.access: mail.access_mail_activity_plan_user
+NEW ir.access: mail.access_mail_activity_schedule_line_user
+NEW ir.access: mail.access_mail_activity_schedule_user
+NEW ir.access: mail.access_mail_activity_type_system
+NEW ir.access: mail.access_mail_activity_type_user
+NEW ir.access: mail.access_mail_alias_domain_system
+NEW ir.access: mail.access_mail_alias_domain_user
+NEW ir.access: mail.access_mail_alias_system
+NEW ir.access: mail.access_mail_alias_user
+NEW ir.access: mail.access_mail_blacklist_remove_system
+NEW ir.access: mail.access_mail_blacklist_system
+NEW ir.access: mail.access_mail_call_artifact_admin
+NEW ir.access: mail.access_mail_call_artifact_user
+NEW ir.access: mail.access_mail_canned_reponse
+NEW ir.access: mail.access_mail_compose_message
+NEW ir.access: mail.access_mail_followers_edit
+NEW ir.access: mail.access_mail_followers_system
+NEW ir.access: mail.access_mail_followers_user
+NEW ir.access: mail.access_mail_gateway_allowed_system
+NEW ir.access: mail.access_mail_guest_system
+NEW ir.access: mail.access_mail_guest_user
+NEW ir.access: mail.access_mail_ice_server_system
+NEW ir.access: mail.access_mail_link_preview_admin
+NEW ir.access: mail.access_mail_mail_system
+NEW ir.access: mail.access_mail_message_link_preview_erp_manager
+NEW ir.access: mail.access_mail_message_reaction_system
+NEW ir.access: mail.access_mail_message_scheduled_system
+NEW ir.access: mail.access_mail_message_subtype_system
+NEW ir.access: mail.access_mail_message_subtype_user
+NEW ir.access: mail.access_mail_message_translation_system
+NEW ir.access: mail.access_mail_notification_system
+NEW ir.access: mail.access_mail_notification_user
+NEW ir.access: mail.access_mail_poll_erp_manager
+NEW ir.access: mail.access_mail_poll_option_erp_manager
+NEW ir.access: mail.access_mail_poll_vote_erp_manager
+NEW ir.access: mail.access_mail_presence
+NEW ir.access: mail.access_mail_push_device_system
+NEW ir.access: mail.access_mail_push_system
+NEW ir.access: mail.access_mail_template
+NEW ir.access: mail.access_mail_template_editor
+NEW ir.access: mail.access_mail_template_preview
+NEW ir.access: mail.access_mail_template_reset
+NEW ir.access: mail.access_publisher_warranty_contract_all
+NEW ir.access: mail.access_res_role_admin
+NEW ir.access: mail.access_res_role_user
+NEW ir.access: mail.discuss_gif_favorite_admin_rule
+NEW ir.access: mail.discuss_gif_favorite_user_rule
+NEW ir.access: mail.ir_actions_report_access_user
+NEW ir.access: mail.ir_rule_discuss_call_history_read_all
+NEW ir.access: mail.ir_rule_discuss_channel_all
+NEW ir.access: mail.ir_rule_discuss_channel_all_user_write
+NEW ir.access: mail.ir_rule_discuss_channel_group_system
+NEW ir.access: mail.ir_rule_discuss_channel_member_create_is_group_matching_all
+NEW ir.access: mail.ir_rule_discuss_channel_member_create_is_group_matching_group_user
+NEW ir.access: mail.ir_rule_discuss_channel_member_create_is_member_group_user
+NEW ir.access: mail.ir_rule_discuss_channel_member_group_system
+NEW ir.access: mail.ir_rule_discuss_channel_member_is_channel_admin_unlink
+NEW ir.access: mail.ir_rule_discuss_channel_member_is_channel_owner_unlink
+NEW ir.access: mail.ir_rule_discuss_channel_member_is_self_all
+NEW ir.access: mail.ir_rule_discuss_channel_member_is_self_unlink
+NEW ir.access: mail.ir_rule_discuss_channel_member_read_all
+NEW ir.access: mail.ir_rule_mail_canned_response_admin
+NEW ir.access: mail.ir_rule_mail_canned_response_user_read
+NEW ir.access: mail.ir_rule_mail_canned_response_user_update
+NEW ir.access: mail.ir_rule_mail_notifications_group_portal
+NEW ir.access: mail.ir_rule_mail_notifications_group_user
+NEW ir.access: mail.ir_rule_mail_scheduled_message
+NEW ir.access: mail.ir_rule_mail_scheduled_message_user
+NEW ir.access: mail.mail_activity_plan_rule_admin
+NEW ir.access: mail.mail_activity_plan_template_rule_admin
+NEW ir.access: mail.mail_activity_rule_access_create
+NEW ir.access: mail.mail_activity_rule_access_read
+NEW ir.access: mail.mail_activity_rule_access_unlink
+NEW ir.access: mail.mail_activity_rule_access_write
+NEW ir.access: mail.mail_activity_rule_user
+NEW ir.access: mail.mail_compose_message_rule
+NEW ir.access: mail.mail_message_rule_access_create
+NEW ir.access: mail.mail_message_rule_access_create_1
+NEW ir.access: mail.mail_message_rule_access_read
+NEW ir.access: mail.mail_message_rule_access_unlink
+NEW ir.access: mail.mail_message_rule_access_unlink_1
+NEW ir.access: mail.mail_message_rule_access_write
+NEW ir.access: mail.mail_message_rule_access_write_1
+NEW ir.access: mail.mail_message_subtype_rule_public
+NEW ir.access: mail.mail_template_editor_rule
+NEW ir.access: mail.mail_template_employee_rule
+NEW ir.access: mail.res_users_settings_volumes_rule_admin
+NEW ir.access: mail.res_users_settings_volumes_rule_user
+NEW ir.actions.act_url: mail.action_open_discuss_settings
+NEW ir.actions.act_window: mail.discuss_category_settings_action
+NEW ir.actions.act_window: mail.discuss_my_conversations_action
+NEW ir.actions.act_window: mail.ir_ui_view_action_usage_mail_post
+NEW ir.actions.act_window: mail.mail_activity_action_to_assign
+DEL ir.actions.act_window: mail.action_view_mail_tracking_value [renamed to mail_tracking module]
+NEW ir.actions.act_window.view: mail.mail_activity_action_my_view_graph
+NEW ir.actions.act_window.view: mail.mail_activity_action_my_view_pivot
+NEW ir.actions.act_window.view: mail.mail_activity_action_to_assign_view_list
+NEW ir.cron: mail.ir_cron_discuss_channel_sync_last_interest_dt (noupdate)
+NEW ir.cron: mail.ir_cron_mail_end_polls (noupdate)
+DEL ir.model.access: mail.access_discuss_call_history_portal
+DEL ir.model.access: mail.access_discuss_call_history_public
+DEL ir.model.access: mail.access_discuss_call_history_user
+DEL ir.model.access: mail.access_discuss_channel_member_portal
+DEL ir.model.access: mail.access_discuss_channel_member_public
+DEL ir.model.access: mail.access_discuss_channel_member_user
+DEL ir.model.access: mail.access_discuss_channel_portal
+DEL ir.model.access: mail.access_discuss_channel_public
+DEL ir.model.access: mail.access_discuss_channel_rtc_session_system
+DEL ir.model.access: mail.access_discuss_channel_system
+DEL ir.model.access: mail.access_discuss_channel_user
+DEL ir.model.access: mail.access_discuss_gif_favorite
+DEL ir.model.access: mail.access_discuss_voice_metadata_user
+DEL ir.model.access: mail.access_fetchmail_server
+DEL ir.model.access: mail.access_mail_activity_plan_system
+DEL ir.model.access: mail.access_mail_activity_plan_template_system
+DEL ir.model.access: mail.access_mail_activity_plan_template_user
+DEL ir.model.access: mail.access_mail_activity_plan_user
+DEL ir.model.access: mail.access_mail_activity_schedule_line_user
+DEL ir.model.access: mail.access_mail_activity_schedule_user
+DEL ir.model.access: mail.access_mail_activity_type_system
+DEL ir.model.access: mail.access_mail_activity_type_user
+DEL ir.model.access: mail.access_mail_activity_user
+DEL ir.model.access: mail.access_mail_alias_domain_system
+DEL ir.model.access: mail.access_mail_alias_domain_user
+DEL ir.model.access: mail.access_mail_alias_system
+DEL ir.model.access: mail.access_mail_alias_user
+DEL ir.model.access: mail.access_mail_blacklist_remove_system
+DEL ir.model.access: mail.access_mail_blacklist_system
+DEL ir.model.access: mail.access_mail_canned_reponse
+DEL ir.model.access: mail.access_mail_compose_message
+DEL ir.model.access: mail.access_mail_followers_edit
+DEL ir.model.access: mail.access_mail_followers_system
+DEL ir.model.access: mail.access_mail_followers_user
+DEL ir.model.access: mail.access_mail_gateway_allowed_system
+DEL ir.model.access: mail.access_mail_guest_system
+DEL ir.model.access: mail.access_mail_guest_user
+DEL ir.model.access: mail.access_mail_ice_server_system
+DEL ir.model.access: mail.access_mail_link_preview_admin
+DEL ir.model.access: mail.access_mail_mail_system
+DEL ir.model.access: mail.access_mail_message_all
+DEL ir.model.access: mail.access_mail_message_link_preview_erp_manager
+DEL ir.model.access: mail.access_mail_message_portal
+DEL ir.model.access: mail.access_mail_message_reaction_system
+DEL ir.model.access: mail.access_mail_message_scheduled_system
+DEL ir.model.access: mail.access_mail_message_subtype_portal
+DEL ir.model.access: mail.access_mail_message_subtype_public
+DEL ir.model.access: mail.access_mail_message_subtype_system
+DEL ir.model.access: mail.access_mail_message_subtype_user
+DEL ir.model.access: mail.access_mail_message_translation_system
+DEL ir.model.access: mail.access_mail_message_user
+DEL ir.model.access: mail.access_mail_notification_portal
+DEL ir.model.access: mail.access_mail_notification_system
+DEL ir.model.access: mail.access_mail_notification_user
+DEL ir.model.access: mail.access_mail_presence
+DEL ir.model.access: mail.access_mail_push_device_system
+DEL ir.model.access: mail.access_mail_push_system
+DEL ir.model.access: mail.access_mail_scheduled_message
+DEL ir.model.access: mail.access_mail_template
+DEL ir.model.access: mail.access_mail_template_editor
+DEL ir.model.access: mail.access_mail_template_preview
+DEL ir.model.access: mail.access_mail_template_reset
+DEL ir.model.access: mail.access_mail_template_system
+DEL ir.model.access: mail.access_mail_tracking_value_system
+DEL ir.model.access: mail.access_publisher_warranty_contract_all
+DEL ir.model.access: mail.access_res_role_admin
+DEL ir.model.access: mail.access_res_role_user
+DEL ir.model.access: mail.access_res_users_settings_volumes_user
+DEL ir.model.access: mail.ir_actions_report_access_user
+NEW ir.model.constraint: mail.constraint_discuss_category_name_unique
+NEW ir.model.constraint: mail.constraint_discuss_channel_member_channel_id_id_idx
+NEW ir.model.constraint: mail.constraint_discuss_channel_member_indices_channel_check
+NEW ir.model.constraint: mail.constraint_discuss_channel_member_indices_chat_check
+NEW ir.model.constraint: mail.constraint_discuss_channel_member_indices_unique
+NEW ir.model.constraint: mail.constraint_discuss_channel_readonly_channel_type_check
+NEW ir.model.constraint: mail.constraint_ir_attachment_mail_call_artifact_uniq
+NEW ir.model.constraint: mail.constraint_mail_activity_unassigned_role_idx
+NEW ir.model.constraint: mail.constraint_mail_call_artifact_artifact_has_possessor
+NEW ir.model.constraint: mail.constraint_mail_call_artifact_start_before_end
+NEW ir.model.constraint: mail.constraint_mail_poll_option_check_option_label
+NEW ir.model.constraint: mail.constraint_mail_poll_unique_end_message_id
+NEW ir.model.constraint: mail.constraint_mail_poll_unique_start_message_id
+NEW ir.model.constraint: mail.constraint_mail_poll_vote_check_user_or_guest_set
+NEW ir.model.constraint: mail.constraint_mail_poll_vote_unique_option_id_guest_id
+NEW ir.model.constraint: mail.constraint_mail_poll_vote_unique_option_id_user_id
+DEL ir.rule: mail.discuss_gif_favorite_admin_rule (noupdate)
+DEL ir.rule: mail.discuss_gif_favorite_user_rule (noupdate)
+DEL ir.rule: mail.ir_rule_discuss_call_history_read_all (noupdate)
+DEL ir.rule: mail.ir_rule_discuss_channel_all (noupdate)
+DEL ir.rule: mail.ir_rule_discuss_channel_group_system (noupdate)
+DEL ir.rule: mail.ir_rule_discuss_channel_member_create_is_group_matching_all (noupdate)
+DEL ir.rule: mail.ir_rule_discuss_channel_member_create_is_group_matching_group_user (noupdate)
+DEL ir.rule: mail.ir_rule_discuss_channel_member_create_is_member_group_user (noupdate)
+DEL ir.rule: mail.ir_rule_discuss_channel_member_group_system (noupdate)
+DEL ir.rule: mail.ir_rule_discuss_channel_member_is_self_all (noupdate)
+DEL ir.rule: mail.ir_rule_discuss_channel_member_read_all (noupdate)
+DEL ir.rule: mail.ir_rule_mail_canned_response_admin (noupdate)
+DEL ir.rule: mail.ir_rule_mail_canned_response_user_read (noupdate)
+DEL ir.rule: mail.ir_rule_mail_canned_response_user_update (noupdate)
+DEL ir.rule: mail.ir_rule_mail_notifications_group_portal (noupdate)
+DEL ir.rule: mail.ir_rule_mail_notifications_group_user (noupdate)
+DEL ir.rule: mail.ir_rule_mail_scheduled_message_user (noupdate)
+DEL ir.rule: mail.mail_activity_plan_rule_admin (noupdate)
+DEL ir.rule: mail.mail_activity_plan_template_rule_admin (noupdate)
+DEL ir.rule: mail.mail_activity_rule_user (noupdate)
+DEL ir.rule: mail.mail_compose_message_rule (noupdate)
+DEL ir.rule: mail.mail_message_subtype_rule_public (noupdate)
+DEL ir.rule: mail.mail_template_editor_rule (noupdate)
+DEL ir.rule: mail.mail_template_employee_rule (noupdate)
+DEL ir.rule: mail.res_users_settings_volumes_rule_admin (noupdate)
+DEL ir.rule: mail.res_users_settings_volumes_rule_user (noupdate)
+NEW ir.ui.menu: mail.ir_ui_view_menu_usage_mail_post
+NEW ir.ui.menu: mail.menu_discuss_category
+NEW ir.ui.menu: mail.menu_discuss_user_settings
+NEW ir.ui.menu: mail.menu_settings
+DEL ir.ui.menu: mail.discuss_technical
+DEL ir.ui.menu: mail.menu_mail_tracking_value [renamed to mail_tracking module]
+NEW ir.ui.view: mail.content_markdown
+NEW ir.ui.view: mail.content_text
+NEW ir.ui.view: mail.discuss_call_history_view_search
+NEW ir.ui.view: mail.discuss_category_view_form
+NEW ir.ui.view: mail.discuss_category_view_kanban
+NEW ir.ui.view: mail.discuss_category_view_search
+NEW ir.ui.view: mail.discuss_category_view_tree
+NEW ir.ui.view: mail.discuss_my_conversations_view_search
+NEW ir.ui.view: mail.group_change_template
+NEW ir.ui.view: mail.ir_access_form_view_inherit_mail
+NEW ir.ui.view: mail.ir_attachment_view_list
+NEW ir.ui.view: mail.ir_ui_view_view_search_mail
+NEW ir.ui.view: mail.mail_activity_view_graph
+NEW ir.ui.view: mail.mail_activity_view_pivot
+NEW ir.ui.view: mail.mail_tracking_template
+NEW ir.ui.view: mail.res_config_settings_view_form_sfu_client_source
+DEL ir.ui.view: mail.view_mail_tracking_value_form
+DEL ir.ui.view: mail.view_mail_tracking_value_tree
+NEW mail.message.subtype: mail.mt_important_notification (noupdate)

@@ -1,0 +1,396 @@
+<?xml version='1.0' encoding='utf-8'?>
+<odoo>
+  <record id="l10n_au_work_entry_type_compensation" model="hr.work.entry.type">
+    <field name="count_as">absence</field>
+  </record>
+  <record id="l10n_au_work_entry_type_defence" model="hr.work.entry.type">
+    <field name="count_as">absence</field>
+  </record>
+  <record id="l10n_au_work_entry_type_long_service_leave" model="hr.work.entry.type">
+    <field name="count_as">absence</field>
+  </record>
+  <record id="l10n_au_work_entry_type_overtime_pto" model="hr.work.entry.type">
+    <field name="code">AU.OT.PH</field>
+    <field name="name">Overtime: Public Holiday</field>
+  </record>
+  <record id="l10n_au_work_entry_type_overtime_regular" model="hr.work.entry.type">
+    <field name="code">AU.OT</field>
+    <field name="name">Overtime: Week Day</field>
+  </record>
+  <record id="l10n_au_work_entry_type_overtime_saturday" model="hr.work.entry.type">
+    <field name="code">AU.OT.SAT</field>
+  </record>
+  <record id="l10n_au_work_entry_type_overtime_saturday_pto" model="hr.work.entry.type">
+    <field name="code">AU.OT.PH.SAT</field>
+    <field name="name">Overtime: Saturday &amp; Public Holiday</field>
+  </record>
+  <record id="l10n_au_work_entry_type_overtime_sunday" model="hr.work.entry.type">
+    <field name="code">AU.OT.SUN</field>
+  </record>
+  <record id="l10n_au_work_entry_type_overtime_sunday_pto" model="hr.work.entry.type">
+    <field name="code">AU.OT.PH.SUN</field>
+    <field name="name">Overtime: Sunday &amp; Public Holiday</field>
+  </record>
+  <record id="l10n_au_work_entry_type_parental" model="hr.work.entry.type">
+    <field name="count_as">absence</field>
+  </record>
+  <record id="l10n_au_work_entry_type_personal_leave" model="hr.work.entry.type">
+    <field name="count_as">absence</field>
+  </record>
+  <record id="l10n_be_work_entry_type_bank_holiday" model="hr.work.entry.type">
+    <field name="code">006.00</field>
+    <field name="name">Public holiday</field>
+    <field name="count_as">absence</field>
+    <field name="display_code">PH</field>
+  </record>
+  <record id="l10n_be_work_entry_type_breast_feeding" model="hr.work.entry.type">
+    <field name="code">146.00</field>
+    <field name="name">Breast-feeding leave</field>
+    <field name="amount_rate">0.0</field>
+    <field name="count_as">absence</field>
+    <field name="display_code">BFB</field>
+  </record>
+  <record id="l10n_be_work_entry_type_credit_time" model="hr.work.entry.type">
+    <field name="code">147.00</field>
+    <field name="name">Time credit (with/no motif)</field>
+    <field name="amount_rate">0.0</field>
+    <field name="count_as">absence</field>
+    <field name="display_code">CRT</field>
+    <field name="resource_calendar_selectable" eval="True"/>
+  </record>
+  <record id="l10n_be_work_entry_type_economic_unemployment" model="hr.work.entry.type">
+    <field name="code">137.00</field>
+    <field name="name">Economic unemployment</field>
+    <field name="amount_rate">0.0</field>
+    <field name="count_as">absence</field>
+    <field name="display_code">ECO</field>
+    <field name="resource_calendar_selectable" eval="True"/>
+  </record>
+  <record id="l10n_be_work_entry_type_european" model="hr.work.entry.type">
+    <field name="code">142.20</field>
+    <field name="count_as">absence</field>
+    <field name="display_code">EUR</field>
+  </record>
+  <record id="l10n_be_work_entry_type_extra_legal" model="hr.work.entry.type">
+    <field name="code">011.00</field>
+    <field name="name">Extra-legal holiday</field>
+    <field name="count_as">absence</field>
+    <field name="display_code">XLT</field>
+  </record>
+  <record id="l10n_be_work_entry_type_flemish_training_time_off" model="hr.work.entry.type">
+    <field name="code">024.04</field>
+    <field name="name">Flemish Training Leave (unlimited)</field>
+    <field name="count_as">absence</field>
+    <field name="display_code">FED</field>
+  </record>
+  <record id="l10n_be_work_entry_type_long_sick" model="hr.work.entry.type">
+    <field name="code">123.00</field>
+    <field name="name">Days of illness after 12 months</field>
+    <field name="amount_rate">0.0</field>
+    <field name="count_as">absence</field>
+    <field name="display_code">LTS</field>
+  </record>
+  <record id="l10n_be_work_entry_type_maternity" model="hr.work.entry.type">
+    <field name="code">128.00</field>
+    <field name="name">Maternity leave</field>
+    <field name="amount_rate">0.0</field>
+    <field name="count_as">absence</field>
+    <field name="display_code">MAT</field>
+  </record>
+  <record id="l10n_be_work_entry_type_medical_assistance" model="hr.work.entry.type">
+    <field name="code">147.07</field>
+    <field name="name">Thematic leave - Medical assistance</field>
+    <field name="amount_rate">0.0</field>
+    <field name="count_as">absence</field>
+    <field name="display_code">MED</field>
+    <field name="resource_calendar_selectable" eval="True"/>
+  </record>
+  <record id="l10n_be_work_entry_type_parental_time_off" model="hr.work.entry.type">
+    <field name="code">147.05</field>
+    <field name="name">Parental leave</field>
+    <field name="amount_rate">0.0</field>
+    <field name="count_as">absence</field>
+    <field name="display_code">PAR</field>
+    <field name="resource_calendar_selectable" eval="True"/>
+  </record>
+  <record id="l10n_be_work_entry_type_partial_incapacity" model="hr.work.entry.type">
+    <field name="code">122.04</field>
+    <field name="name">Reintegration journey &lt; 12 months</field>
+    <field name="amount_rate">0.0</field>
+    <field name="count_as">absence</field>
+    <field name="display_code">PIN</field>
+    <field name="resource_calendar_selectable" eval="True"/>
+  </record>
+  <record id="l10n_be_work_entry_type_paternity_company" model="hr.work.entry.type">
+    <field name="code">007.05</field>
+    <field name="name">Leave for Birth (days 1-3)</field>
+    <field name="count_as">absence</field>
+    <field name="display_code">PTC</field>
+  </record>
+  <record id="l10n_be_work_entry_type_paternity_legal" model="hr.work.entry.type">
+    <field name="code">128.05</field>
+    <field name="name">Leave for birth (days 4-20)</field>
+    <field name="amount_rate">0.0</field>
+    <field name="count_as">absence</field>
+    <field name="display_code">PTL</field>
+  </record>
+  <record id="l10n_be_work_entry_type_phc" model="hr.work.entry.type">
+    <field name="code">006.15</field>
+    <field name="name">Replacement public holiday</field>
+    <field name="count_as">absence</field>
+    <field name="display_code">PHC</field>
+  </record>
+  <record id="l10n_be_work_entry_type_recovery_additional" model="hr.work.entry.type">
+    <field name="code">046.00</field>
+    <field name="name">Recovered overtime</field>
+    <field name="count_as">absence</field>
+    <field name="display_code">RAT</field>
+  </record>
+  <record id="l10n_be_work_entry_type_small_unemployment" model="hr.work.entry.type">
+    <field name="code">007.00</field>
+    <field name="name">Circumstancial leave</field>
+    <field name="count_as">absence</field>
+    <field name="display_code">SUH</field>
+  </record>
+  <record id="l10n_be_work_entry_type_solicitation_time_off" model="hr.work.entry.type">
+    <field name="code">022.00</field>
+    <field name="name">Absence during notice</field>
+    <field name="count_as">absence</field>
+    <field name="display_code">SOL</field>
+  </record>
+  <record id="l10n_be_work_entry_type_strike" model="hr.work.entry.type">
+    <field name="code">132.00</field>
+    <field name="name">Strike recognized by trade union Or Lock-out</field>
+    <field name="amount_rate">0.0</field>
+    <field name="count_as">absence</field>
+    <field name="display_code">STR</field>
+  </record>
+  <record id="l10n_be_work_entry_type_training" model="hr.work.entry.type">
+    <field name="code">020.00</field>
+    <field name="name">Non-productive absence</field>
+    <field name="display_code">TRN</field>
+  </record>
+  <record id="l10n_be_work_entry_type_training_time_off" model="hr.work.entry.type">
+    <field name="code">024.00</field>
+    <field name="name">Educational leave (unlimited)</field>
+    <field name="count_as">absence</field>
+    <field name="display_code">EDU</field>
+  </record>
+  <record id="l10n_be_work_entry_type_unjustified_reason" model="hr.work.entry.type">
+    <field name="code">155.00</field>
+    <field name="name">Illegitimate absence</field>
+    <field name="amount_rate">0.0</field>
+    <field name="count_as">absence</field>
+    <field name="display_code">UJR</field>
+  </record>
+  <record id="l10n_be_work_entry_type_unpredictable" model="hr.work.entry.type">
+    <field name="code">135.00</field>
+    <field name="name">Imperative family reason (days 1-10/year)</field>
+    <field name="amount_rate">0.0</field>
+    <field name="count_as">absence</field>
+    <field name="display_code">URU</field>
+  </record>
+  <record id="l10n_be_work_entry_type_youth_time_off" model="hr.work.entry.type">
+    <field name="code">142.99</field>
+    <field name="name">Holiday junior worker</field>
+    <field name="amount_rate">0.0</field>
+    <field name="count_as">absence</field>
+    <field name="display_code">YTO</field>
+  </record>
+  <record id="l10n_ch_swissdec_accident_wt" model="hr.work.entry.type">
+    <field name="count_as">absence</field>
+  </record>
+  <record id="l10n_ch_swissdec_accident_wt_hourly" model="hr.work.entry.type">
+    <field name="count_as">absence</field>
+  </record>
+  <record id="l10n_ch_swissdec_hourly_wt" model="hr.work.entry.type">
+    <field name="count_as">working_time</field>
+  </record>
+  <record id="l10n_ch_swissdec_illness_wt" model="hr.work.entry.type">
+    <field name="count_as">absence</field>
+  </record>
+  <record id="l10n_ch_swissdec_illness_wt_hourly" model="hr.work.entry.type">
+    <field name="count_as">absence</field>
+  </record>
+  <record id="l10n_ch_swissdec_interruption_wt" model="hr.work.entry.type">
+    <field name="count_as">absence</field>
+  </record>
+  <record id="l10n_ch_swissdec_lesson_wt" model="hr.work.entry.type">
+    <field name="count_as">working_time</field>
+  </record>
+  <record id="l10n_ch_swissdec_maternity_wt" model="hr.work.entry.type">
+    <field name="count_as">absence</field>
+  </record>
+  <record id="l10n_ch_swissdec_maternity_wt_hourly" model="hr.work.entry.type">
+    <field name="count_as">absence</field>
+  </record>
+  <record id="l10n_ch_swissdec_military_wt" model="hr.work.entry.type">
+    <field name="count_as">absence</field>
+  </record>
+  <record id="l10n_ch_swissdec_military_wt_hourly" model="hr.work.entry.type">
+    <field name="count_as">absence</field>
+  </record>
+  <record id="l10n_ch_swissdec_monthly_wt" model="hr.work.entry.type">
+    <field name="count_as">working_time</field>
+  </record>
+  <record id="l10n_ch_swissdec_overtime_125_wt" model="hr.work.entry.type">
+    <field name="count_as">working_time</field>
+  </record>
+  <record id="l10n_ch_swissdec_overtime_wt" model="hr.work.entry.type">
+    <field name="count_as">working_time</field>
+  </record>
+  <record id="l10n_ch_swissdec_unpaid_wt" model="hr.work.entry.type">
+    <field name="amount_rate">0.0</field>
+    <field name="count_as">absence</field>
+  </record>
+  <record id="l10n_ch_work_entry_type_bank_holiday" model="hr.work.entry.type">
+    <field name="code">006.00</field>
+    <field name="name">Public holiday</field>
+    <field name="count_as">absence</field>
+  </record>
+  <record id="l10n_eg_work_entry_type_paid_sick_leave" model="hr.work.entry.type">
+    <field name="count_as">absence</field>
+  </record>
+  <record id="l10n_eg_work_entry_type_sick_leave_75" model="hr.work.entry.type">
+    <field name="amount_rate">0.75</field>
+    <field name="count_as">absence</field>
+  </record>
+  <record id="l10n_eg_work_entry_type_sick_leave_unpaid" model="hr.work.entry.type">
+    <field name="amount_rate">0.0</field>
+    <field name="count_as">absence</field>
+  </record>
+  <record id="l10n_hk_work_entry_type_compassionate_leave" model="hr.work.entry.type">
+    <field name="count_as">absence</field>
+  </record>
+  <record id="l10n_hk_work_entry_type_examination_leave" model="hr.work.entry.type">
+    <field name="count_as">absence</field>
+  </record>
+  <record id="l10n_hk_work_entry_type_marriage_leave" model="hr.work.entry.type">
+    <field name="count_as">absence</field>
+  </record>
+  <record id="l10n_hk_work_entry_type_maternity_leave" model="hr.work.entry.type">
+    <field name="count_as">absence</field>
+  </record>
+  <record id="l10n_hk_work_entry_type_maternity_leave_80" model="hr.work.entry.type">
+    <field name="count_as">absence</field>
+  </record>
+  <record id="l10n_hk_work_entry_type_paternity_leave" model="hr.work.entry.type">
+    <field name="count_as">absence</field>
+  </record>
+  <record id="l10n_hk_work_entry_type_paternity_leave_80" model="hr.work.entry.type">
+    <field name="count_as">absence</field>
+  </record>
+  <record id="l10n_hk_work_entry_type_public_holiday" model="hr.work.entry.type">
+    <field name="code">006.00</field>
+    <field name="name">Public holiday</field>
+    <field name="count_as">absence</field>
+  </record>
+  <record id="l10n_hk_work_entry_type_sick_leave_80" model="hr.work.entry.type">
+    <field name="count_as">absence</field>
+  </record>
+  <record id="l10n_hk_work_entry_type_statutory_holiday" model="hr.work.entry.type">
+    <field name="count_as">absence</field>
+  </record>
+  <record id="l10n_hk_work_entry_type_weekend" model="hr.work.entry.type">
+    <field name="count_as">absence</field>
+  </record>
+  <record id="l10n_id_work_entry_type_bereavement_leave" model="hr.work.entry.type">
+    <field name="count_as">absence</field>
+  </record>
+  <record id="l10n_id_work_entry_type_marriage_leave" model="hr.work.entry.type">
+    <field name="count_as">absence</field>
+  </record>
+  <record id="l10n_id_work_entry_type_maternity_leave" model="hr.work.entry.type">
+    <field name="count_as">absence</field>
+  </record>
+  <record id="l10n_id_work_entry_type_paternity_leave" model="hr.work.entry.type">
+    <field name="count_as">absence</field>
+  </record>
+  <record id="l10n_id_work_entry_type_public_holiday" model="hr.work.entry.type">
+    <field name="code">006.00</field>
+    <field name="name">Public holiday</field>
+    <field name="count_as">absence</field>
+  </record>
+  <record id="l10n_jo_work_entry_type_sick_leave_unpaid" model="hr.work.entry.type">
+    <field name="count_as">absence</field>
+  </record>
+  <record id="l10n_lu_work_entry_type_situational_unemployment" model="hr.work.entry.type">
+    <field name="amount_rate">0.0</field>
+    <field name="count_as">absence</field>
+  </record>
+  <record id="l10n_mx_work_entry_type_care_children_with_cancer_imss" model="hr.work.entry.type">
+    <field name="amount_rate">0.0</field>
+    <field name="count_as">absence</field>
+  </record>
+  <record id="l10n_mx_work_entry_type_disability_due_to_illness_imss" model="hr.work.entry.type">
+    <field name="amount_rate">0.0</field>
+    <field name="count_as">absence</field>
+  </record>
+  <record id="l10n_mx_work_entry_type_maternity_imss" model="hr.work.entry.type">
+    <field name="amount_rate">0.0</field>
+    <field name="count_as">absence</field>
+  </record>
+  <record id="l10n_mx_work_entry_type_work_risk_imss" model="hr.work.entry.type">
+    <field name="amount_rate">0.0</field>
+    <field name="count_as">absence</field>
+  </record>
+  <record id="l10n_pl_work_entry_type_sick_leave" model="hr.work.entry.type">
+    <field name="count_as">absence</field>
+  </record>
+  <record id="l10n_sa_work_entry_type_emergency" model="hr.work.entry.type">
+    <field name="count_as">absence</field>
+  </record>
+  <record id="l10n_sa_work_entry_type_maternity" model="hr.work.entry.type">
+    <field name="count_as">absence</field>
+  </record>
+  <record id="l10n_sa_work_entry_type_sick_leave_0" model="hr.work.entry.type">
+    <field name="name">Sick Time Off (Unpaid)</field>
+    <field name="color">5</field>
+    <field name="count_as">absence</field>
+    <field name="display_code">STO</field>
+  </record>
+  <record id="l10n_sa_work_entry_type_sick_leave_75" model="hr.work.entry.type">
+    <field name="name">Sick Time Off 75%</field>
+    <field name="color">5</field>
+    <field name="count_as">absence</field>
+    <field name="display_code">STO</field>
+  </record>
+  <record id="l10n_sk_work_entry_type_maternity" model="hr.work.entry.type">
+    <field name="count_as">absence</field>
+  </record>
+  <record id="l10n_sk_work_entry_type_parental_time_off" model="hr.work.entry.type">
+    <field name="count_as">absence</field>
+  </record>
+  <record id="l10n_sk_work_entry_type_sick_0" model="hr.work.entry.type">
+    <field name="count_as">absence</field>
+  </record>
+  <record id="l10n_sk_work_entry_type_sick_25" model="hr.work.entry.type">
+    <field name="count_as">absence</field>
+  </record>
+  <record id="l10n_sk_work_entry_type_sick_55" model="hr.work.entry.type">
+    <field name="count_as">absence</field>
+  </record>
+  <record id="l10n_us_work_entry_type_double" model="hr.work.entry.type">
+    <field name="name">Double Time (2x)</field>
+  </record>
+  <record id="l10n_us_work_entry_type_overtime" model="hr.work.entry.type">
+    <field name="name">Overtime (1.5x)</field>
+  </record>
+  <record id="uae_public_holiday_entry_type" model="hr.work.entry.type">
+    <field name="code">006.00</field>
+    <field name="name">Public holiday</field>
+    <field name="count_as">absence</field>
+  </record>
+  <record id="uae_work_entry_type_overtime_off_days" model="hr.work.entry.type">
+    <field name="color">4</field>
+    <field name="count_as">working_time</field>
+  </record>
+  <record id="uae_work_entry_type_overtime_work_days_daytime" model="hr.work.entry.type">
+    <field name="color">4</field>
+    <field name="count_as">working_time</field>
+  </record>
+  <record id="uae_work_entry_type_overtime_work_days_nighttime" model="hr.work.entry.type">
+    <field name="color">4</field>
+    <field name="count_as">working_time</field>
+  </record>
+</odoo>

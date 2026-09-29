@@ -1,0 +1,63 @@
+---Models in module 'survey'---
+---Fields in module 'survey'---
+survey       / digest.digest            / kpi_nbr_of_answers (boolean)  : NEW
+survey       / digest.digest            / kpi_nbr_of_certified_participants (boolean): NEW
+survey       / survey.question          / scale_mid_label (char)        : DEL
+survey       / survey.survey            / background_image_filename (char): NEW
+survey       / survey.survey            / certification_report_layout (selection): selection_keys added: [classic-1_black, classic-1_company, classic-2_black, classic-2_company, minimal_black, minimal_company, modern_black, modern_company], removed: [classic_blue, classic_gold, classic_purple, modern_blue, modern_gold, modern_purple]
+survey       / survey.survey            / session_question_can_answer (boolean): NEW hasdefault: default
+survey       / survey.survey            / website_message_ids (one2many): DEL relation: mail.message
+survey       / survey.user_input        / website_message_ids (one2many): DEL relation: mail.message
+---XML records in module 'survey'---
+NEW ir.access: survey.access_gamification_badge_survey_user
+NEW ir.access: survey.survey_invite_survey_manager
+NEW ir.access: survey.survey_invite_survey_user
+NEW ir.access: survey.survey_question_answer_rule_survey_manager
+NEW ir.access: survey.survey_question_answer_rule_survey_user
+NEW ir.access: survey.survey_question_rule_survey_manager
+NEW ir.access: survey.survey_question_rule_survey_user
+NEW ir.access: survey.survey_survey_rule_survey_manager
+NEW ir.access: survey.survey_survey_rule_survey_user
+NEW ir.access: survey.survey_user_input_line_rule_survey_manager
+NEW ir.access: survey.survey_user_input_line_rule_survey_user
+NEW ir.access: survey.survey_user_input_line_rule_survey_user_1
+NEW ir.access: survey.survey_user_input_rule_survey_manager
+NEW ir.access: survey.survey_user_input_rule_survey_user
+NEW ir.actions.act_window: survey.survey_user_input_action_certified
+DEL ir.model.access: survey.access_gamification_badge_survey_user
+DEL ir.model.access: survey.access_survey_all
+DEL ir.model.access: survey.access_survey_invite
+DEL ir.model.access: survey.access_survey_question_all
+DEL ir.model.access: survey.access_survey_question_answer_all
+DEL ir.model.access: survey.access_survey_question_answer_survey_manager
+DEL ir.model.access: survey.access_survey_question_answer_survey_user
+DEL ir.model.access: survey.access_survey_question_answer_user
+DEL ir.model.access: survey.access_survey_question_survey_manager
+DEL ir.model.access: survey.access_survey_question_survey_user
+DEL ir.model.access: survey.access_survey_question_user
+DEL ir.model.access: survey.access_survey_survey_manager
+DEL ir.model.access: survey.access_survey_survey_user
+DEL ir.model.access: survey.access_survey_user
+DEL ir.model.access: survey.access_survey_user_input_all
+DEL ir.model.access: survey.access_survey_user_input_line_all
+DEL ir.model.access: survey.access_survey_user_input_line_survey_manager
+DEL ir.model.access: survey.access_survey_user_input_line_survey_user
+DEL ir.model.access: survey.access_survey_user_input_line_user
+DEL ir.model.access: survey.access_survey_user_input_survey_manager
+DEL ir.model.access: survey.access_survey_user_input_survey_user
+DEL ir.model.access: survey.access_survey_user_input_user
+DEL ir.rule: survey.survey_invite_survey_manager (noupdate)
+DEL ir.rule: survey.survey_invite_survey_user (noupdate)
+DEL ir.rule: survey.survey_question_answer_rule_survey_manager (noupdate)
+DEL ir.rule: survey.survey_question_answer_rule_survey_user (noupdate)
+DEL ir.rule: survey.survey_question_rule_survey_manager (noupdate)
+DEL ir.rule: survey.survey_question_rule_survey_user (noupdate)
+DEL ir.rule: survey.survey_survey_rule_survey_manager (noupdate)
+DEL ir.rule: survey.survey_survey_rule_survey_user (noupdate)
+DEL ir.rule: survey.survey_user_input_line_rule_survey_manager (noupdate)
+DEL ir.rule: survey.survey_user_input_line_rule_survey_user (noupdate)
+DEL ir.rule: survey.survey_user_input_rule_survey_manager (noupdate)
+DEL ir.rule: survey.survey_user_input_rule_survey_user (noupdate)
+NEW ir.ui.view: survey.digest_digest_view_form
+NEW ir.ui.view: survey.survey_brand_message
+NEW ir.ui.view: survey.survey_toolbar

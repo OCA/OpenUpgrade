@@ -1,0 +1,12 @@
+---Models in module 'certificate'---
+---Fields in module 'certificate'---
+certificate  / certificate.certificate  / scope (selection)             : selection_keys added: [ca] (most likely nothing to do)
+---XML records in module 'certificate'---
+NEW ir.access: certificate.access_certificate_admin
+NEW ir.access: certificate.access_key_admin
+NEW ir.access: certificate.certificate_rule_company
+NEW ir.access: certificate.key_rule_company
+DEL ir.model.access: certificate.access_certificate_admin
+DEL ir.model.access: certificate.access_key_admin
+DEL ir.rule: certificate.certificate_rule_company (noupdate)
+DEL ir.rule: certificate.key_rule_company (noupdate)

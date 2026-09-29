@@ -1,0 +1,13 @@
+---Models in module 'pos_hr'---
+---Fields in module 'pos_hr'---
+pos_hr       / pos.config               / advanced_employee_ids (many2many): DEL relation: hr.employee
+pos_hr       / pos.config               / basic_employee_ids (many2many): DEL relation: hr.employee
+pos_hr       / pos.config               / cashier_employee_ids (many2many): NEW relation: hr.employee
+pos_hr       / pos.config               / manager_employee_ids (many2many): NEW relation: hr.employee
+pos_hr       / pos.config               / minimal_employee_ids (many2many): DEL relation: hr.employee
+pos_hr       / pos.config               / restrictive_employee_ids (many2many): NEW relation: hr.employee
+pos_hr       / pos.config               / supervised_employee_ids (many2many): NEW relation: hr.employee
+pos_hr       / pos.session              / logged_employee_ids (many2many): NEW relation: hr.employee, isfunction: function, stored
+---XML records in module 'pos_hr'---
+NEW ir.ui.view: pos_hr.view_pos_config_kanban_inherit_pos_hr
+NEW ir.ui.view: pos_hr.view_pos_session_form_inherit_pos_hr

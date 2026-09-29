@@ -1,0 +1,18 @@
+---Models in module 'website_crm_iap_reveal'---
+---Fields in module 'website_crm_iap_reveal'---
+---XML records in module 'website_crm_iap_reveal'---
+NEW ir.access: website_crm_iap_reveal.ir_rule_crm_reveal_rule_all
+NEW ir.access: website_crm_iap_reveal.ir_rule_crm_reveal_rule_all_1
+NEW ir.access: website_crm_iap_reveal.ir_rule_crm_reveal_rule_salesman
+NEW ir.access: website_crm_iap_reveal.ir_rule_crm_reveal_view_all
+NEW ir.access: website_crm_iap_reveal.ir_rule_crm_reveal_view_all_1
+NEW ir.access: website_crm_iap_reveal.ir_rule_crm_reveal_view_salesman
+DEL ir.model.access: website_crm_iap_reveal.access_crm_reveal_rule_manager
+DEL ir.model.access: website_crm_iap_reveal.access_crm_reveal_rule_salesman
+DEL ir.model.access: website_crm_iap_reveal.access_crm_reveal_view_manager
+DEL ir.model.access: website_crm_iap_reveal.access_crm_reveal_view_salesman
+DEL ir.rule: website_crm_iap_reveal.ir_rule_crm_reveal_rule_all (noupdate)
+DEL ir.rule: website_crm_iap_reveal.ir_rule_crm_reveal_rule_salesman (noupdate)
+DEL ir.rule: website_crm_iap_reveal.ir_rule_crm_reveal_view_all (noupdate)
+DEL ir.rule: website_crm_iap_reveal.ir_rule_crm_reveal_view_salesman (noupdate)
+NEW ir.ui.view: website_crm_iap_reveal.enrich_company

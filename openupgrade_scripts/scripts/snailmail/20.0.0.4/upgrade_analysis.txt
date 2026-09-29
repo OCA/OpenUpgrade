@@ -1,0 +1,12 @@
+---Models in module 'snailmail'---
+---Fields in module 'snailmail'---
+snailmail    / mail.message             / message_type (False)          : selection_keys added: [tracking] (most likely nothing to do)
+snailmail    / mail.notification        / failure_type (False)          : selection_keys added: [sms_database_non_active, sn_undeliverable] (most likely nothing to do)
+snailmail    / snailmail.letter         / error_code (selection)        : selection_keys added: [LETTER_UNDELIVERABLE] (most likely nothing to do)
+snailmail    / snailmail.letter         / letter_uid (char)             : NEW
+snailmail    / snailmail.letter         / state (selection)             : selection_keys added: [process] (most likely nothing to do)
+---XML records in module 'snailmail'---
+NEW ir.access: snailmail.access_snailmail_letter_system
+NEW ir.access: snailmail.access_snailmail_letter_user
+DEL ir.model.access: snailmail.access_snailmail_letter_system
+DEL ir.model.access: snailmail.access_snailmail_letter_user

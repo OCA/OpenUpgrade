@@ -1,0 +1,9 @@
+---Models in module 'crm_sale_project'---
+---Fields in module 'crm_sale_project'---
+crm_sale_project / crm.lead                 / project_ids (one2many)        : NEW relation: project.project
+crm_sale_project / project.project          / lead_id (many2one)            : NEW relation: crm.lead
+---XML records in module 'crm_sale_project'---
+NEW ir.actions.server: crm_sale_project.action_create_project_crm_lead
+NEW ir.ui.view: crm_sale_project.crm_lead_view_form
+NEW ir.ui.view: crm_sale_project.crm_project_view_form_simplified_template
+NEW ir.ui.view: crm_sale_project.view_edit_project_inherit_form_crm_project

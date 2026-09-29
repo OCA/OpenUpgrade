@@ -1,0 +1,35 @@
+---Models in module 'l10n_cz'---
+---Fields in module 'l10n_cz'---
+l10n_cz      / res.company              / l10n_cz_economic_activity_code (selection): NEW selection_keys: ['10000', '11000', '11100', '11200', '11300', '11400', '11500', '11600', '11900', '12000', '12100', '12200', '12300', '12400', '12500', '12600', '12700', '12800', '12900', '13000', '14000', '14100', '14200', '14300', '14400', '14500', '14600', '14700', '14900', '14910', '14920', '14930', '14990', '15000', '16000', '16100', '16200', '16300', '16400', '17000', '20000', '21000', '22000', '23000', '24000', '30000', '31000', '31100', '31200', '32000']
+l10n_cz      / res.company              / l10n_cz_person_authorized (many2one): NEW relation: res.partner
+l10n_cz      / res.company              / l10n_cz_relationship_person_authorized (char): NEW hasdefault: compute
+l10n_cz      / res.company              / trade_registry (char)         : module is now 'l10n_sk' ('l10n_cz')
+---XML records in module 'l10n_cz'---
+NEW account.report.expression: l10n_cz.l10n_cz_vat_declaration_line_10_raw_output_tax
+NEW account.report.expression: l10n_cz.l10n_cz_vat_declaration_line_12_raw_output_tax
+NEW account.report.expression: l10n_cz.l10n_cz_vat_declaration_line_13_raw_output_tax
+NEW account.report.expression: l10n_cz.l10n_cz_vat_declaration_line_14_raw_output_tax
+NEW account.report.expression: l10n_cz.l10n_cz_vat_declaration_line_16_raw_output_tax
+NEW account.report.expression: l10n_cz.l10n_cz_vat_declaration_line_17_raw_output_tax
+NEW account.report.expression: l10n_cz.l10n_cz_vat_declaration_line_19_raw_output_tax
+NEW account.report.expression: l10n_cz.l10n_cz_vat_declaration_line_20_raw_output_tax
+NEW account.report.expression: l10n_cz.l10n_cz_vat_declaration_line_39_raw_in_full_amount
+NEW account.report.expression: l10n_cz.l10n_cz_vat_declaration_line_3_raw_output_tax
+NEW account.report.expression: l10n_cz.l10n_cz_vat_declaration_line_40_raw_in_full_amount
+NEW account.report.expression: l10n_cz.l10n_cz_vat_declaration_line_41_raw_in_full_amount
+NEW account.report.expression: l10n_cz.l10n_cz_vat_declaration_line_47_raw_in_full_amount
+NEW account.report.expression: l10n_cz.l10n_cz_vat_declaration_line_4_raw_output_tax
+NEW account.report.expression: l10n_cz.l10n_cz_vat_declaration_line_6_raw_output_tax
+NEW account.report.expression: l10n_cz.l10n_cz_vat_declaration_line_7_raw_output_tax
+NEW account.report.expression: l10n_cz.l10n_cz_vat_declaration_line_9_raw_output_tax
+NEW ir.access: l10n_cz.access_l10n_cz_tax_office_account_manager
+NEW ir.access: l10n_cz.access_l10n_cz_tax_office_account_user
+DEL ir.model.access: l10n_cz.access_l10n_cz_tax_office_account_manager
+DEL ir.model.access: l10n_cz.access_l10n_cz_tax_office_account_user
+NEW ir.ui.view: l10n_cz.cz_partner_address_form
+DEL ir.ui.view: l10n_cz.l10n_cz_external_layout_bold
+DEL ir.ui.view: l10n_cz.l10n_cz_external_layout_boxed
+DEL ir.ui.view: l10n_cz.l10n_cz_external_layout_bubble
+DEL ir.ui.view: l10n_cz.l10n_cz_external_layout_striped
+DEL ir.ui.view: l10n_cz.l10n_cz_external_layout_wave
+DEL ir.ui.view: l10n_cz.res_partner_view_form_inherit_l10n_cz

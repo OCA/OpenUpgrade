@@ -1,0 +1,19 @@
+---Models in module 'l10n_gr_edi'---
+new model account.edi.xml.ubl_gr [abstract]
+---Fields in module 'l10n_gr_edi'---
+l10n_dk_nemhandel / res.partner              / invoice_edi_format (False)    : selection_keys added: [es_facturae, ubl_21_fr, ubl_gr, ubl_hr], removed: [pint_sg, ubl_tr]
+l10n_gr_edi  / account.move             / l10n_gr_edi_budget_type (selection): NEW selection_keys: ['1', '2', '3']
+l10n_gr_edi  / account.move             / l10n_gr_edi_contract_reference (char): NEW required, hasdefault: default
+l10n_gr_edi  / account.move             / l10n_gr_edi_project_reference (char): NEW
+l10n_gr_edi  / account.move.line        / l10n_gr_edi_cpv_code (char)   : NEW hasdefault: compute
+l10n_gr_edi  / product.template         / l10n_gr_edi_cpv_code (char)   : NEW
+l10n_gr_edi  / res.partner              / invoice_edi_format (False)    : previously in module l10n_dk_nemhandel
+l10n_gr_edi  / res.partner              / l10n_gr_edi_contracting_authority_code (char): NEW
+l10n_gr_edi  / res.partner              / l10n_gr_edi_contracting_authority_name (char): NEW
+---XML records in module 'l10n_gr_edi'---
+NEW ir.access: l10n_gr_edi.access_l10n_gr_edi_document_group_invoice
+NEW ir.access: l10n_gr_edi.access_l10n_gr_edi_document_readonly
+NEW ir.access: l10n_gr_edi.access_l10n_gr_edi_preferred_classification
+DEL ir.model.access: l10n_gr_edi.access_l10n_gr_edi_document_group_invoice
+DEL ir.model.access: l10n_gr_edi.access_l10n_gr_edi_document_readonly
+DEL ir.model.access: l10n_gr_edi.access_l10n_gr_edi_preferred_classification

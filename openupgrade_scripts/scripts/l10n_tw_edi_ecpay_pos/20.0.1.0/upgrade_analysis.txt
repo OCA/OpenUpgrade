@@ -1,0 +1,18 @@
+---Models in module 'l10n_tw_edi_ecpay_pos'---
+---Fields in module 'l10n_tw_edi_ecpay_pos'---
+l10n_tw_edi_ecpay_pos / pos.order                / ecpay_error (boolean)         : NEW hasdefault: default
+l10n_tw_edi_ecpay_pos / pos.order                / iis_create_date (datetime)    : NEW
+l10n_tw_edi_ecpay_pos / pos.order                / iis_number (char)             : NEW
+l10n_tw_edi_ecpay_pos / pos.order                / iis_random_number (char)      : NEW
+l10n_tw_edi_ecpay_pos / pos.order                / iis_tax_amount (float)        : NEW
+l10n_tw_edi_ecpay_pos / pos.order                / invoice_month (char)          : NEW
+l10n_tw_edi_ecpay_pos / pos.order                / l10n_tw_edi_ecpay_seller_identifier (char): NEW
+l10n_tw_edi_ecpay_pos / pos.order                / l10n_tw_edi_invoice_amount (float): NEW
+l10n_tw_edi_ecpay_pos / pos.order                / pos_barcode (char)            : NEW
+l10n_tw_edi_ecpay_pos / pos.order                / qrcode_left (char)            : NEW
+l10n_tw_edi_ecpay_pos / pos.order                / qrcode_right (char)           : NEW
+---XML records in module 'l10n_tw_edi_ecpay_pos'---
+NEW ir.ui.view: l10n_tw_edi_ecpay_pos.ecpay_certificate_receipt
+NEW ir.ui.view: l10n_tw_edi_ecpay_pos.ecpay_transaction_receipt
+NEW ir.ui.view: l10n_tw_edi_ecpay_pos.pos_order_receipt_header
+NEW ir.ui.view: l10n_tw_edi_ecpay_pos.pos_order_receipt_style

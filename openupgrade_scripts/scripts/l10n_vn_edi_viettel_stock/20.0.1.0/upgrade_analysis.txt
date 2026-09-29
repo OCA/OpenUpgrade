@@ -1,0 +1,26 @@
+---Models in module 'l10n_vn_edi_viettel_stock'---
+new model l10n_vn_edi_viettel_stock.send_wizard [transient]
+new model l10n_vn_edi_viettel_stock.template_field_line [transient]
+---Fields in module 'l10n_vn_edi_viettel_stock'---
+l10n_vn_edi_viettel_stock / res.company              / l10n_vn_edi_send_transfer_note (boolean): NEW
+l10n_vn_edi_viettel_stock / res.company              / l10n_vn_edi_stock_default_sinvoice_symbol_id (many2one): NEW relation: l10n_vn_edi_viettel.sinvoice.symbol
+l10n_vn_edi_viettel_stock / stock.move               / l10n_vn_edi_unit_price (float): NEW hasdefault: compute
+l10n_vn_edi_viettel_stock / stock.picking            / l10n_vn_edi_invoice_number (char): NEW
+l10n_vn_edi_viettel_stock / stock.picking            / l10n_vn_edi_is_sent (boolean) : NEW
+l10n_vn_edi_viettel_stock / stock.picking            / l10n_vn_edi_issue_date (datetime): NEW
+l10n_vn_edi_viettel_stock / stock.picking            / l10n_vn_edi_reservation_code (char): NEW
+l10n_vn_edi_viettel_stock / stock.picking            / l10n_vn_edi_sinvoice_file_id (many2one): NEW relation: ir.attachment
+l10n_vn_edi_viettel_stock / stock.picking            / l10n_vn_edi_sinvoice_pdf_file_id (many2one): NEW relation: ir.attachment
+l10n_vn_edi_viettel_stock / stock.picking            / l10n_vn_edi_sinvoice_xml_file_id (many2one): NEW relation: ir.attachment
+l10n_vn_edi_viettel_stock / stock.picking            / l10n_vn_edi_symbol_id (many2one): NEW relation: l10n_vn_edi_viettel.sinvoice.symbol, hasdefault: compute
+l10n_vn_edi_viettel_stock / stock.picking            / l10n_vn_edi_transaction_id (char): NEW
+l10n_vn_edi_viettel_stock / stock.warehouse          / l10n_vn_edi_sinvoice_symbol_id (many2one): NEW relation: l10n_vn_edi_viettel.sinvoice.symbol
+---XML records in module 'l10n_vn_edi_viettel_stock'---
+NEW ir.access: l10n_vn_edi_viettel_stock.access_send_wizard
+NEW ir.access: l10n_vn_edi_viettel_stock.access_sinvoice_symbol_stock_user
+NEW ir.access: l10n_vn_edi_viettel_stock.access_template_field_line
+NEW ir.actions.server: l10n_vn_edi_viettel_stock.l10n_vn_edi_fetch_sinvoice_files
+NEW ir.ui.view: l10n_vn_edi_viettel_stock.res_config_settings_view_form_inherit_l10n_vn_edi_viettel_stock
+NEW ir.ui.view: l10n_vn_edi_viettel_stock.stock_picking_view_form_inherit_l10n_vn_edi_viettel_stock
+NEW ir.ui.view: l10n_vn_edi_viettel_stock.stock_warehouse_view_form_inherit_sinvoice
+NEW ir.ui.view: l10n_vn_edi_viettel_stock.view_l10n_vn_edi_viettel_stock_send_wizard_form

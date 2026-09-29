@@ -1,0 +1,50 @@
+---Models in module 'portal'---
+new model portal.entry
+---Fields in module 'portal'---
+portal       / account.analytic.account / website_message_ids (one2many): DEL relation: mail.message
+portal       / calendar.event           / website_message_ids (one2many): DEL relation: mail.message
+portal       / crm.team                 / website_message_ids (one2many): DEL relation: mail.message
+portal       / crm.team.member          / website_message_ids (one2many): DEL relation: mail.message
+portal       / discuss.channel          / website_message_ids (one2many): DEL relation: mail.message
+portal       / fleet.vehicle            / website_message_ids (one2many): DEL relation: mail.message
+portal       / fleet.vehicle.log.contract / website_message_ids (one2many): DEL relation: mail.message
+portal       / fleet.vehicle.log.services / website_message_ids (one2many): DEL relation: mail.message
+portal       / fleet.vehicle.model      / website_message_ids (one2many): DEL relation: mail.message
+portal       / gamification.badge       / website_message_ids (one2many): DEL relation: mail.message
+portal       / gamification.badge.user  / website_message_ids (one2many): DEL relation: mail.message
+portal       / gamification.challenge   / website_message_ids (one2many): DEL relation: mail.message
+portal       / iap.account              / website_message_ids (one2many): DEL relation: mail.message
+portal       / ir.actions.server        / website_message_ids (one2many): DEL relation: mail.message
+portal       / ir.cron                  / website_message_ids (one2many): DEL relation: mail.message
+portal       / lunch.supplier           / website_message_ids (one2many): DEL relation: mail.message
+portal       / mail.blacklist           / website_message_ids (one2many): DEL relation: mail.message
+portal       / maintenance.equipment    / website_message_ids (one2many): DEL relation: mail.message
+portal       / maintenance.request      / website_message_ids (one2many): DEL relation: mail.message
+portal       / maintenance.team         / website_message_ids (one2many): DEL relation: mail.message
+portal       / phone.blacklist          / website_message_ids (one2many): DEL relation: mail.message
+portal       / portal.entry             / category (char)               : NEW hasdefault: default
+portal       / portal.entry             / description (text)            : NEW translate
+portal       / portal.entry             / image (binary)                : NEW attachment: True
+portal       / portal.entry             / is_config_card (boolean)      : NEW hasdefault: default
+portal       / portal.entry             / name (char)                   : NEW required, translate
+portal       / portal.entry             / placeholder_count (char)      : NEW
+portal       / portal.entry             / sequence (integer)            : NEW hasdefault: default
+portal       / portal.entry             / show_in_portal (boolean)      : NEW hasdefault: default
+portal       / portal.entry             / url (char)                    : NEW
+portal       / product.category         / website_message_ids (one2many): DEL relation: mail.message
+portal       / product.pricelist        / website_message_ids (one2many): DEL relation: mail.message
+portal       / product.product          / website_message_ids (one2many): DEL relation: mail.message
+portal       / product.template         / website_message_ids (one2many): DEL relation: mail.message
+portal       / res.partner              / website_message_ids (one2many): DEL relation: mail.message
+---XML records in module 'portal'---
+NEW ir.access: portal.access_portal_entry_public
+NEW ir.access: portal.access_portal_share
+NEW ir.access: portal.access_portal_wizard
+NEW ir.access: portal.access_portal_wizard_user
+DEL ir.model.access: portal.access_portal_share
+DEL ir.model.access: portal.access_portal_wizard
+DEL ir.model.access: portal.access_portal_wizard_user
+NEW ir.ui.view: portal.address_warning_icon
+NEW ir.ui.view: portal.profile_picture_card
+NEW portal.entry: portal.portal_entry_addresses (noupdate)
+NEW portal.entry: portal.portal_entry_base (noupdate)

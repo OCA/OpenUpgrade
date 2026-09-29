@@ -1,0 +1,14 @@
+---Models in module 'rating'---
+---Fields in module 'rating'---
+rating       / ir.access                / rating_ids (one2many)         : NEW relation: rating.rating
+rating       / rating.rating            / parent_res_id (integer)       : relation is now 'parent_res_model' ('False') [nothing to do]
+rating       / rating.rating            / parent_res_id (integer)       : type is now 'many2one_reference' ('integer')
+rating       / res.users                / rating_ids (one2many)         : is now stored
+rating       / res.users                / rating_ids (one2many)         : not related anymore
+---XML records in module 'rating'---
+NEW ir.access: rating.access_rating_user
+NEW ir.access: rating.rating_rating_access_system
+DEL ir.model.access: rating.access_rating_portal
+DEL ir.model.access: rating.access_rating_public
+DEL ir.model.access: rating.access_rating_user
+DEL ir.model.access: rating.rating_rating_access_system

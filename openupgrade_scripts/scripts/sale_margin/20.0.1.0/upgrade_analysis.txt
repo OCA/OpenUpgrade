@@ -1,0 +1,16 @@
+---Models in module 'sale_margin'---
+---Fields in module 'sale_margin'---
+sale_margin  / sale.order.line          / margin (float)                : not a function anymore
+sale_margin  / sale.order.line          / margin_percent (float)        : not a function anymore
+sale_margin  / sale.order.template.line / purchase_price (float)        : NEW
+---XML records in module 'sale_margin'---
+NEW ir.actions.act_window: sale_margin.action_order_report_projected_margins
+NEW ir.actions.act_window.view: sale_margin.action_order_report_projected_margins_view_graph
+NEW ir.actions.act_window.view: sale_margin.action_order_report_projected_margins_view_kanban
+NEW ir.actions.act_window.view: sale_margin.action_order_report_projected_margins_view_list
+NEW ir.actions.act_window.view: sale_margin.action_order_report_projected_margins_view_pivot
+NEW ir.ui.view: sale_margin.sale_order_template_form
+NEW ir.ui.view: sale_margin.sale_report_projected_margins_kanban
+NEW ir.ui.view: sale_margin.sale_report_projected_margins_list
+NEW ir.ui.view: sale_margin.sale_report_view_projected_margins_graph
+NEW ir.ui.view: sale_margin.sale_report_view_projected_margins_pivot

@@ -1,0 +1,12 @@
+---Models in module 'l10n_in_pos'---
+---Fields in module 'l10n_in_pos'---
+l10n_in_pos  / pos.payment.method       / qr_payment_icon_ids (many2many): NEW relation: ir.attachment
+l10n_in_pos  / pos.payment.method       / upi_identifier (char)         : NEW
+---XML records in module 'l10n_in_pos'---
+NEW ir.model.constraint: l10n_in_pos.constraint_pos_payment_method_check_unique_upi_identifier
+NEW ir.ui.view: l10n_in_pos.pos_order_receipt
+NEW ir.ui.view: l10n_in_pos.pos_order_receipt_header
+NEW ir.ui.view: l10n_in_pos.pos_orderline_receipt_information
+NEW ir.ui.view: l10n_in_pos.pos_payment_method_view_form_inherit_l10n_in_pos
+NEW ir.ui.view: l10n_in_pos.report_invoice_document
+NEW ir.ui.view: l10n_in_pos.view_partner_form_pos_ui_inherit_l10n_in_pos

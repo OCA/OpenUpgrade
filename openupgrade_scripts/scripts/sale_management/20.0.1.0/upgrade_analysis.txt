@@ -1,0 +1,39 @@
+---Models in module 'sale_management'---
+---Fields in module 'sale_management'---
+sale_management / product.attribute.custom.value / sale_order_template_line_id (many2one): NEW relation: sale.order.template.line
+sale_management / res.company              / sale_order_template_id (many2one): DEL relation: sale.order.template
+sale_management / sale.order.template      / currency_id (many2one)        : NEW relation: res.currency
+sale_management / sale.order.template      / name (char)                   : now translatable
+sale_management / sale.order.template      / require_payment (boolean)     : DEL
+sale_management / sale.order.template      / share_template (boolean)      : NEW hasdefault: default
+sale_management / sale.order.template      / team_ids (many2many)          : NEW relation: crm.team
+sale_management / sale.order.template      / template_type (selection)     : NEW required, selection_keys: ['quotation', 'section'], hasdefault: default
+sale_management / sale.order.template.line / collapse_composition (boolean): NEW
+sale_management / sale.order.template.line / collapse_prices (boolean)     : NEW
+sale_management / sale.order.template.line / discount (float)              : NEW
+sale_management / sale.order.template.line / price_unit (float)            : NEW
+sale_management / sale.order.template.line / product_custom_attribute_value_ids (one2many): NEW relation: product.attribute.custom.value, hasdefault: compute
+sale_management / sale.order.template.line / product_no_variant_attribute_value_ids (many2many): NEW relation: product.template.attribute.value, hasdefault: compute
+sale_management / sale.order.template.line / product_template_id (many2one): NEW relation: product.template, hasdefault: compute, stored: False
+sale_management / sale.order.template.line / section_qty (float)           : NEW hasdefault: compute
+sale_management / sale.order.template.line / section_uom_id (many2one)     : NEW relation: uom.uom, hasdefault: compute
+sale_management / sale.order.template.line / tax_ids (many2many)           : NEW relation: account.tax
+---XML records in module 'sale_management'---
+NEW ir.access: sale_management.access_sale_order_template_line
+NEW ir.access: sale_management.access_sale_order_template_line_manager
+NEW ir.access: sale_management.sale_order_template_rule_company
+NEW ir.access: sale_management.sale_order_template_rule_visibility_manager
+NEW ir.access: sale_management.sale_order_template_rule_visibility_salesman
+NEW ir.access: sale_management.sale_order_template_rule_visibility_system
+NEW ir.actions.server: sale_management.model_sale_order_action_create_quotation_template
+DEL ir.model.access: sale_management.access_sale_order_template
+DEL ir.model.access: sale_management.access_sale_order_template_line
+DEL ir.model.access: sale_management.access_sale_order_template_line_manager
+DEL ir.model.access: sale_management.access_sale_order_template_manager
+DEL ir.model.access: sale_management.access_sale_order_template_system
+NEW ir.model.constraint: sale_management.constraint_product_attribute_custom_value_sotl_custom_value_unique
+ir.model.constraint: sale_management.constraint_sale_order_template_line_accountable_product_id_required (changed definition: is now 'CHECK(display_type IS NOT NULL OR product_uom_id IS NOT NULL)' ('CHECK(display_type IS NOT NULL OR (product_id IS NOT NULL AND product_uom_id IS NOT NULL))'))
+NEW ir.model.constraint: sale_management.constraint_sale_order_template_line_section_fields_null
+DEL ir.rule: sale_management.sale_order_template_rule_company (noupdate)
+NEW ir.ui.view: sale_management.sale_order_template_view_form_mandatory_product
+DEL res.groups: sale_management.group_sale_order_template

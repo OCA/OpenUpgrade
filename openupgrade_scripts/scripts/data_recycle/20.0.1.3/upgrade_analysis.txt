@@ -1,0 +1,9 @@
+---Models in module 'data_recycle'---
+---Fields in module 'data_recycle'---
+data_recycle / data_recycle.record      / res_id (integer)              : relation is now 'res_model_name' ('False') [nothing to do]
+data_recycle / data_recycle.record      / res_id (integer)              : type is now 'many2one_reference' ('integer')
+---XML records in module 'data_recycle'---
+NEW ir.access: data_recycle.access_data_recycle_model_group_system
+NEW ir.access: data_recycle.access_data_recycle_record_group_system
+DEL ir.model.access: data_recycle.access_data_recycle_model_group_system
+DEL ir.model.access: data_recycle.access_data_recycle_record_group_system

@@ -1,0 +1,38 @@
+---Models in module 'pos_loyalty'---
+---Fields in module 'pos_loyalty'---
+pos_loyalty  / pos.order                / active_payment_programs (json): NEW hasdefault: default
+pos_loyalty  / pos.order                / active_rewards (json)         : NEW hasdefault: default
+pos_loyalty  / pos.order                / applied_codes (json)          : NEW hasdefault: default
+pos_loyalty  / pos.order                / disabled_program_ids (json)   : NEW hasdefault: default
+pos_loyalty  / pos.order.line           / card_id (many2one)            : NEW relation: loyalty.card
+pos_loyalty  / pos.order.line           / coupon_id (many2one)          : DEL relation: loyalty.card
+pos_loyalty  / pos.order.line           / gift_card_vals (json)         : NEW
+pos_loyalty  / pos.order.line           / reward_identifier_code (char) : DEL
+---XML records in module 'pos_loyalty'---
+NEW ir.access: pos_loyalty.access_applicability_pos_manager
+NEW ir.access: pos_loyalty.access_applicability_pos_user
+NEW ir.access: pos_loyalty.access_communication_pos_manager
+NEW ir.access: pos_loyalty.access_communication_pos_user
+NEW ir.access: pos_loyalty.access_coupon_pos_manager
+NEW ir.access: pos_loyalty.access_coupon_pos_user
+NEW ir.access: pos_loyalty.access_loyalty_card_update_balance_pos_user
+NEW ir.access: pos_loyalty.access_loyalty_history_pos_user
+NEW ir.access: pos_loyalty.access_program_pos_manager
+NEW ir.access: pos_loyalty.access_program_pos_user
+NEW ir.access: pos_loyalty.access_reward_pos_manager
+NEW ir.access: pos_loyalty.access_reward_pos_user
+NEW ir.access: pos_loyalty.access_sale_coupon_generate
+DEL ir.model.access: pos_loyalty.access_applicability_pos_manager
+DEL ir.model.access: pos_loyalty.access_applicability_pos_user
+DEL ir.model.access: pos_loyalty.access_communication_pos_manager
+DEL ir.model.access: pos_loyalty.access_communication_pos_user
+DEL ir.model.access: pos_loyalty.access_coupon_pos_manager
+DEL ir.model.access: pos_loyalty.access_coupon_pos_user
+DEL ir.model.access: pos_loyalty.access_loyalty_card_update_balance_pos_user
+DEL ir.model.access: pos_loyalty.access_loyalty_history_pos_user
+DEL ir.model.access: pos_loyalty.access_program_pos_manager
+DEL ir.model.access: pos_loyalty.access_program_pos_user
+DEL ir.model.access: pos_loyalty.access_reward_pos_manager
+DEL ir.model.access: pos_loyalty.access_reward_pos_user
+DEL ir.model.access: pos_loyalty.access_sale_coupon_generate
+NEW ir.ui.view: pos_loyalty.pos_order_receipt

@@ -1,0 +1,18 @@
+---Models in module 'hr_holidays_attendance'---
+---Fields in module 'hr_holidays_attendance'---
+hr_holidays_attendance / hr.attendance.overtime.line / compensable_as_leave (boolean): DEL
+hr_holidays_attendance / hr.attendance.overtime.rule / compensable_as_leave (boolean): DEL
+hr_holidays_attendance / hr.leave.type            / overtime_deductible (boolean) : DEL
+---XML records in module 'hr_holidays_attendance'---
+NEW ir.access: hr_holidays_attendance.access_hr_leave_attendance_report_manager
+DEL ir.model.access: hr_holidays_attendance.access_hr_leave_attendance_report_manager
+NEW ir.ui.view: hr_holidays_attendance.view_attendance_overtime_leave_form
+NEW ir.ui.view: hr_holidays_attendance.view_attendance_search_inherit_holidays
+NEW ir.ui.view: hr_holidays_attendance.view_attendance_tree_inherit_holidays
+DEL ir.ui.view: hr_holidays_attendance.hr_attendance_employee_simple_tree_view
+DEL ir.ui.view: hr_holidays_attendance.hr_attendance_holidays_hr_leave_allocation_view_form_inherit
+DEL ir.ui.view: hr_holidays_attendance.hr_attendance_overtime_rule_view_form
+DEL ir.ui.view: hr_holidays_attendance.hr_employee_view_form_inherit
+DEL ir.ui.view: hr_holidays_attendance.hr_leave_type_view_form
+DEL ir.ui.view: hr_holidays_attendance.hr_leave_view_form
+DEL ir.ui.view: hr_holidays_attendance.view_attendance_overtime_line_list

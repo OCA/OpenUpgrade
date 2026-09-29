@@ -1,0 +1,22 @@
+---Models in module 'l10n_do'---
+---Fields in module 'l10n_do'---
+l10n_do      / account.move             / l10n_do_payment_type (selection): NEW selection_keys: ['1', '2', '3', '4', '5', '6', '7'], hasdefault: default
+l10n_do      / account.move             / l10n_do_purchase_type (selection): NEW selection_keys: ['1', '10', '11', '2', '3', '4', '5', '6', '7', '8', '9'], hasdefault: default
+l10n_do      / account.tax              / l10n_do_isr_type (selection)  : NEW selection_keys: ['1', '2', '3', '4', '5', '6', '7', '8', '9']
+---XML records in module 'l10n_do'---
+NEW account.account.tag: l10n_do.tag_tax_cost_purchase
+NEW account.account.tag: l10n_do.tag_tax_isr_purchase
+DEL account.report.expression: l10n_do.account_tax_report_2B13_base_tag
+DEL account.report.expression: l10n_do.account_tax_report_2B14_base_tag
+DEL account.report.expression: l10n_do.account_tax_report_3_18_tax_tag
+DEL account.report.expression: l10n_do.account_tax_report_3_19_tax_tag
+DEL account.report.line: l10n_do.account_tax_report_2B13_base
+DEL account.report.line: l10n_do.account_tax_report_2B14_base
+DEL account.report.line: l10n_do.account_tax_report_3_18_tax
+DEL account.report.line: l10n_do.account_tax_report_3_19_tax
+NEW ir.ui.view: l10n_do.account_move_view_form
+NEW ir.ui.view: l10n_do.account_tax_view_form
+NEW l10n_latam.document.type: l10n_do.ecf_31 (noupdate)
+NEW l10n_latam.document.type: l10n_do.ecf_32 (noupdate)
+NEW l10n_latam.document.type: l10n_do.ecf_33 (noupdate)
+NEW l10n_latam.document.type: l10n_do.ecf_34 (noupdate)

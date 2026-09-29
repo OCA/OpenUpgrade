@@ -1,0 +1,56 @@
+<?xml version='1.0' encoding='utf-8'?>
+<odoo>
+  <record id="payment.payment_provider_ecpay" model="payment.provider">
+    <field name="redirect_form_view_id" ref="payment.generic_redirect_form"/>
+  </record>
+  <record id="payment_method_7eleven" model="payment.method">
+    <field name="support_manual_capture" eval="'none'"/>
+    <field name="support_refund" eval="'none'"/>
+    <field name="supported_country_ids" eval="None"/>
+    <field name="supported_currency_ids" eval="None"/>
+    <field name="primary_payment_method_id" eval="ref('payment_ecpay.payment_method_cvs')"/>
+    <field name="provider_id" ref="payment.payment_provider_ecpay"/>
+  </record>
+  <record id="payment_method_bank_transfer" model="payment.method">
+    <field name="support_manual_capture" eval="'none'"/>
+    <field name="support_refund" eval="'none'"/>
+    <field name="provider_id" ref="payment.payment_provider_ecpay"/>
+    <field name="supported_currency_ids" eval="[Command.set([ref('base.TWD')])]"/>
+  </record>
+  <record id="payment_method_cvs" model="payment.method">
+    <field name="name">CVS</field>
+    <field name="support_manual_capture" eval="'none'"/>
+    <field name="support_refund" eval="'none'"/>
+    <field name="provider_id" ref="payment.payment_provider_ecpay"/>
+    <field name="supported_currency_ids" eval="[Command.set([ref('base.TWD')])]"/>
+  </record>
+  <record id="payment_method_family_mart" model="payment.method">
+    <field name="primary_payment_method_id" eval="ref('payment_ecpay.payment_method_cvs')"/>
+    <field name="provider_id" ref="payment.payment_provider_ecpay"/>
+  </record>
+  <record id="payment_method_hi_life" model="payment.method">
+    <field name="primary_payment_method_id" eval="ref('payment_ecpay.payment_method_cvs')"/>
+    <field name="provider_id" ref="payment.payment_provider_ecpay"/>
+  </record>
+  <record id="payment_method_ipass_money" model="payment.method">
+    <field name="primary_payment_method_id" eval="ref('payment_ecpay.payment_method_mobile_wallet')"/>
+    <field name="provider_id" ref="payment.payment_provider_ecpay"/>
+  </record>
+  <record id="payment_method_mobile_wallet" model="payment.method">
+    <field name="sequence" eval="1000"/>
+    <field name="support_manual_capture" eval="'none'"/>
+    <field name="support_refund" eval="'none'"/>
+    <field name="provider_id" ref="payment.payment_provider_ecpay"/>
+    <field name="supported_currency_ids" eval="[Command.set([ref('base.TWD')])]"/>
+  </record>
+  <record id="payment_method_ok_mart" model="payment.method">
+    <field name="primary_payment_method_id" eval="ref('payment_ecpay.payment_method_cvs')"/>
+    <field name="provider_id" ref="payment.payment_provider_ecpay"/>
+  </record>
+  <record id="payment_method_twqr" model="payment.method">
+    <field name="support_manual_capture" eval="'none'"/>
+    <field name="support_refund" eval="'none'"/>
+    <field name="supported_currency_ids" eval="[Command.set([ref('base.TWD')])]"/>
+    <field name="provider_id" ref="payment.payment_provider_ecpay"/>
+  </record>
+</odoo>

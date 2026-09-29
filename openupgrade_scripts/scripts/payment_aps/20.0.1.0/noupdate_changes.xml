@@ -1,0 +1,38 @@
+<?xml version='1.0' encoding='utf-8'?>
+<odoo>
+  <record id="payment.payment_provider_aps" model="payment.provider">
+    <field name="redirect_form_view_id" ref="payment.generic_redirect_form"/>
+  </record>
+  <record id="payment_method_knet" model="payment.method">
+    <field name="support_manual_capture" eval="'none'"/>
+    <field name="support_refund" eval="'none'"/>
+    <field name="supported_country_ids" eval="[Command.set([ref('base.kw')])]"/>
+    <field name="supported_currency_ids" eval="[Command.set([ref('base.KWD')])]"/>
+    <field name="provider_id" ref="payment.payment_provider_aps"/>
+  </record>
+  <record id="payment_method_mada" model="payment.method">
+    <field name="support_manual_capture" eval="'none'"/>
+    <field name="support_refund" eval="'none'"/>
+    <field name="supported_country_ids" eval="[Command.set([ref('base.sa')])]"/>
+    <field name="supported_currency_ids" eval="None"/>
+    <field name="provider_id" ref="payment.payment_provider_aps"/>
+  </record>
+  <record id="payment_method_meeza" model="payment.method">
+    <field name="primary_payment_method_id" eval="None"/>
+    <field name="provider_id" ref="payment.payment_provider_aps"/>
+    <field name="supported_country_ids" eval="[Command.set([ref('base.eg')])]"/>
+    <field name="supported_currency_ids" eval="[Command.set([ref('base.EGP')])]"/>
+  </record>
+  <record id="payment_method_naps" model="payment.method">
+    <field name="primary_payment_method_id" eval="None"/>
+    <field name="provider_id" ref="payment.payment_provider_aps"/>
+    <field name="supported_country_ids" eval="[Command.set([ref('base.qa')])]"/>
+    <field name="supported_currency_ids" eval="[Command.set([ref('base.QAR')])]"/>
+  </record>
+  <record id="payment_method_omannet" model="payment.method">
+    <field name="primary_payment_method_id" eval="None"/>
+    <field name="support_manual_capture" eval="'none'"/>
+    <field name="support_refund" eval="'none'"/>
+    <field name="provider_id" ref="payment.payment_provider_aps"/>
+  </record>
+</odoo>

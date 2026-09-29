@@ -1,0 +1,72 @@
+---Models in module 'website_forum'---
+new model forum.post.comment
+---Fields in module 'website_forum'---
+website_forum / forum.forum              / website_message_ids (one2many): DEL relation: mail.message
+website_forum / forum.post               / comment_ids (one2many)        : NEW relation: forum.post.comment
+website_forum / forum.post               / follower_ids (many2many)      : NEW relation: res.partner
+website_forum / forum.post               / message_follower_ids (one2many): DEL relation: mail.followers
+website_forum / forum.post               / message_ids (one2many)        : DEL relation: mail.message
+website_forum / forum.post               / rating_ids (one2many)         : DEL relation: rating.rating
+website_forum / forum.post               / website_message_ids (one2many): DEL relation: mail.message
+website_forum / forum.post               / write_date_content (datetime) : NEW
+website_forum / forum.post.comment       / body (html)                   : NEW
+website_forum / forum.post.comment       / post_id (many2one)            : NEW relation: forum.post, required
+website_forum / forum.tag                / follower_ids (many2many)      : NEW relation: res.partner
+website_forum / forum.tag                / message_follower_ids (one2many): DEL relation: mail.followers
+website_forum / forum.tag                / message_ids (one2many)        : DEL relation: mail.message
+website_forum / forum.tag                / rating_ids (one2many)         : DEL relation: rating.rating
+website_forum / forum.tag                / website_message_ids (one2many): DEL relation: mail.message
+---XML records in module 'website_forum'---
+NEW ir.access: website_forum.access_forum_forum_manager
+NEW ir.access: website_forum.access_forum_forum_public
+NEW ir.access: website_forum.access_forum_post_comment_portal
+NEW ir.access: website_forum.access_forum_post_comment_public
+NEW ir.access: website_forum.access_forum_post_comment_user
+NEW ir.access: website_forum.access_forum_post_portal
+NEW ir.access: website_forum.access_forum_post_public
+NEW ir.access: website_forum.access_forum_post_reason_public
+NEW ir.access: website_forum.access_forum_post_reason_website_designer
+NEW ir.access: website_forum.access_forum_post_user
+NEW ir.access: website_forum.access_forum_tag_public
+NEW ir.access: website_forum.access_forum_tag_user
+NEW ir.access: website_forum.website_forum
+NEW ir.access: website_forum.website_forum_create_website_designer
+NEW ir.access: website_forum.website_forum_post
+NEW ir.access: website_forum.website_forum_post_comment
+NEW ir.access: website_forum.website_forum_post_vote_all
+NEW ir.access: website_forum.website_forum_post_vote_own
+NEW ir.access: website_forum.website_forum_post_vote_own_1
+NEW ir.access: website_forum.website_forum_tag
+DEL ir.model.access: website_forum.access_forum_forum_employee
+DEL ir.model.access: website_forum.access_forum_forum_manager
+DEL ir.model.access: website_forum.access_forum_forum_portal
+DEL ir.model.access: website_forum.access_forum_forum_public
+DEL ir.model.access: website_forum.access_forum_post_portal
+DEL ir.model.access: website_forum.access_forum_post_public
+DEL ir.model.access: website_forum.access_forum_post_reason_portal
+DEL ir.model.access: website_forum.access_forum_post_reason_public
+DEL ir.model.access: website_forum.access_forum_post_reason_user
+DEL ir.model.access: website_forum.access_forum_post_user
+DEL ir.model.access: website_forum.access_forum_post_vote_portal
+DEL ir.model.access: website_forum.access_forum_post_vote_user
+DEL ir.model.access: website_forum.access_forum_tag_portal
+DEL ir.model.access: website_forum.access_forum_tag_public
+DEL ir.model.access: website_forum.access_forum_tag_user
+NEW ir.model.constraint: website_forum.constraint_forum_tag_forum_id_posts_count_idx
+DEL ir.rule: website_forum.website_forum_connected (noupdate)
+DEL ir.rule: website_forum.website_forum_connected_post (noupdate)
+DEL ir.rule: website_forum.website_forum_connected_tag (noupdate)
+DEL ir.rule: website_forum.website_forum_create_website_designer (noupdate)
+DEL ir.rule: website_forum.website_forum_post_vote_all (noupdate)
+DEL ir.rule: website_forum.website_forum_post_vote_own (noupdate)
+DEL ir.rule: website_forum.website_forum_private (noupdate)
+DEL ir.rule: website_forum.website_forum_private_post (noupdate)
+DEL ir.rule: website_forum.website_forum_private_tag (noupdate)
+DEL ir.rule: website_forum.website_forum_public (noupdate)
+DEL ir.rule: website_forum.website_forum_public_post (noupdate)
+DEL ir.rule: website_forum.website_forum_public_tag (noupdate)
+NEW ir.ui.view: website_forum.follow_button
+NEW ir.ui.view: website_forum.forum_post_link (noupdate)
+DEL ir.ui.view: website_forum.follow
+NEW mail.message.subtype: website_forum.mt_ask_validation (noupdate)
+NEW mail.message.subtype: website_forum.mt_comment_new (noupdate)

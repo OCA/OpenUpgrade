@@ -1,0 +1,209 @@
+---Models in module 'mass_mailing'---
+obsolete model mailing.list.merge [transient]
+---Fields in module 'mass_mailing'---
+mass_mailing / ir.ui.view               / technical_usage (False)       : NEW selection_keys: ['mail_post_source', 'mass_mailing'], mode: modify
+mass_mailing / mailing.contact          / last_clicked_datetime (datetime): NEW
+mass_mailing / mailing.contact          / last_opened_datetime (datetime): NEW
+mass_mailing / mailing.contact          / last_replied_datetime (datetime): NEW
+mass_mailing / mailing.contact          / partner_id (many2one)         : NEW relation: res.partner
+mass_mailing / mailing.contact          / website_message_ids (one2many): DEL relation: mail.message
+mass_mailing / mailing.filter           / active (boolean)              : NEW hasdefault: default
+mass_mailing / mailing.filter           / color (integer)               : NEW hasdefault: default
+mass_mailing / mailing.list             / color (integer)               : NEW hasdefault: default
+mass_mailing / mailing.mailing          / _order                        : _order is now 'state ASC, calendar_date DESC, write_date DESC' ('calendar_date DESC')
+mass_mailing / mailing.mailing          / ab_testing_version_name (char): NEW
+mass_mailing / mailing.mailing          / favorite (boolean)            : DEL
+mass_mailing / mailing.mailing          / favorite_date (datetime)      : DEL
+mass_mailing / mailing.mailing          / is_template (boolean)         : NEW
+mass_mailing / mailing.mailing          / mailing_filter_id (many2one)  : DEL relation: mailing.filter
+mass_mailing / mailing.mailing          / mailing_filter_ids (many2many): NEW relation: mailing.filter, hasdefault: compute
+mass_mailing / mailing.mailing          / website_message_ids (one2many): DEL relation: mail.message
+mass_mailing / res.partner              / mailing_contact_ids (one2many): NEW relation: mailing.contact
+---XML records in module 'mass_mailing'---
+NEW ir.access: mass_mailing.access_ir_mail_server
+NEW ir.access: mass_mailing.access_ir_model
+NEW ir.access: mass_mailing.access_link_tracker_mailing
+NEW ir.access: mass_mailing.access_mail_blacklist_mass_mailing_user
+NEW ir.access: mass_mailing.access_mail_blacklist_remove_mass_mailing_user
+NEW ir.access: mass_mailing.access_mailing_contact_import_mailing_user
+NEW ir.access: mass_mailing.access_mailing_contact_mm_user
+NEW ir.access: mass_mailing.access_mailing_contact_to_list
+NEW ir.access: mass_mailing.access_mailing_filter_mailing_user
+NEW ir.access: mass_mailing.access_mailing_list_mm_user
+NEW ir.access: mass_mailing.access_mailing_mailing_mm_user
+NEW ir.access: mass_mailing.access_mailing_mailing_system
+NEW ir.access: mass_mailing.access_mailing_mailing_test
+NEW ir.access: mass_mailing.access_mailing_schedule_date
+NEW ir.access: mass_mailing.access_mailing_subscription_mm_user
+NEW ir.access: mass_mailing.access_mailing_subscription_optout_mm_user
+NEW ir.access: mass_mailing.access_mailing_trace_mm_user
+NEW ir.access: mass_mailing.access_mailing_trace_report_mm_user
+NEW ir.access: mass_mailing.access_utm_campaign_mass_mailing_user
+NEW ir.access: mass_mailing.access_utm_medium
+NEW ir.access: mass_mailing.access_utm_source
+NEW ir.access: mass_mailing.access_utm_stage
+NEW ir.access: mass_mailing.access_utm_tag_mass_mailing_campaign
+NEW ir.access: mass_mailing.ir_ui_view_mass_mailing_user_edit_access
+NEW ir.access: mass_mailing.ir_ui_view_mass_mailing_user_read_access
+NEW ir.access: mass_mailing.ir_ui_view_rule_system
+NEW ir.access: mass_mailing.properties_base_definition_rule_mailing_user
+NEW ir.actions.act_window: mass_mailing.action_mailing_filter_quick_create
+NEW ir.actions.act_window: mass_mailing.action_mailing_list_quick_create
+NEW ir.actions.act_window: mass_mailing.mailing_mailing_action_templates
+NEW ir.actions.act_window: mass_mailing.res_partner_to_list_action
+DEL ir.actions.act_window: mass_mailing.mailing_list_merge_action
+NEW ir.actions.client: mass_mailing.res_partner_to_list_results_action
+NEW ir.actions.server: mass_mailing.mailing_list_merge_action
+DEL ir.asset: mass_mailing.s_alert_001_scss
+DEL ir.asset: mass_mailing.s_badge_000_scss
+DEL ir.asset: mass_mailing.s_blockquote_000_scss
+DEL ir.asset: mass_mailing.s_company_team_000_scss
+DEL ir.asset: mass_mailing.s_cta_badge_000_scss
+DEL ir.asset: mass_mailing.s_features_grid_000_scss
+DEL ir.asset: mass_mailing.s_hr_000_scss
+DEL ir.asset: mass_mailing.s_masonry_block_001_scss
+DEL ir.asset: mass_mailing.s_rating_000_scss
+DEL ir.asset: mass_mailing.s_rating_001_scss
+NEW ir.attachment: mass_mailing.set_catalog_square_md_1
+NEW ir.attachment: mass_mailing.set_catalog_square_md_2
+NEW ir.attachment: mass_mailing.set_catalog_square_md_3
+NEW ir.attachment: mass_mailing.set_catalog_square_md_4
+DEL ir.model.access: mass_mailing.access_ir_mail_server
+DEL ir.model.access: mass_mailing.access_ir_model
+DEL ir.model.access: mass_mailing.access_link_tracker_mailing
+DEL ir.model.access: mass_mailing.access_mail_blacklist_mass_mailing_user
+DEL ir.model.access: mass_mailing.access_mail_blacklist_remove_mass_mailing_user
+DEL ir.model.access: mass_mailing.access_mailing_contact_import_mailing_user
+DEL ir.model.access: mass_mailing.access_mailing_contact_mm_user
+DEL ir.model.access: mass_mailing.access_mailing_contact_to_list
+DEL ir.model.access: mass_mailing.access_mailing_filter_mailing_user
+DEL ir.model.access: mass_mailing.access_mailing_list_merge
+DEL ir.model.access: mass_mailing.access_mailing_list_mm_user
+DEL ir.model.access: mass_mailing.access_mailing_mailing_mm_user
+DEL ir.model.access: mass_mailing.access_mailing_mailing_system
+DEL ir.model.access: mass_mailing.access_mailing_mailing_test
+DEL ir.model.access: mass_mailing.access_mailing_schedule_date
+DEL ir.model.access: mass_mailing.access_mailing_subscription_mm_user
+DEL ir.model.access: mass_mailing.access_mailing_subscription_optout_mm_user
+DEL ir.model.access: mass_mailing.access_mailing_trace_mm_user
+DEL ir.model.access: mass_mailing.access_mailing_trace_report_mm_user
+DEL ir.model.access: mass_mailing.access_properties_base_definition_mailing_user
+DEL ir.model.access: mass_mailing.access_utm_campaign_mass_mailing_user
+DEL ir.model.access: mass_mailing.access_utm_medium
+DEL ir.model.access: mass_mailing.access_utm_source
+DEL ir.model.access: mass_mailing.access_utm_stage
+DEL ir.model.access: mass_mailing.access_utm_tag_mass_mailing_campaign
+ir.model.constraint: mass_mailing.constraint_mailing_mailing_email_from (changed definition: is now 'CHECK(is_template = true OR email_from IS NOT NULL OR mailing_type != 'mail')' ('CHECK(email_from IS NOT NULL OR mailing_type != 'mail')'))
+DEL ir.rule: mass_mailing.properties_base_definition_rule_mailing_user
+NEW ir.ui.menu: mass_mailing.mass_mailing_template_menu
+NEW ir.ui.menu: mass_mailing.menu_email_mass_mailing_dynamic_lists
+DEL ir.ui.menu: mass_mailing.mailing_filter_menu_action
+NEW ir.ui.view: mass_mailing.link_tracker_click_view_list_simplified
+NEW ir.ui.view: mass_mailing.mailing_contact_view_list_from_filter
+NEW ir.ui.view: mass_mailing.mailing_filter_view_form_simplified
+NEW ir.ui.view: mass_mailing.mailing_filter_view_kanban
+NEW ir.ui.view: mass_mailing.mailing_mailing_view_kanban_templates
+NEW ir.ui.view: mass_mailing.mailing_mailing_view_list_template
+NEW ir.ui.view: mass_mailing.mailing_mailing_view_search_templates
+NEW ir.ui.view: mass_mailing.res_partner_view_form
+NEW ir.ui.view: mass_mailing.res_partner_view_list
+NEW ir.ui.view: mass_mailing.s_mail_company_logo
+NEW ir.ui.view: mass_mailing.s_social_media
+NEW ir.ui.view: mass_mailing.s_social_media_template
+NEW ir.ui.view: mass_mailing.view_mail_mass_mailing_test_send_test_form
+DEL ir.ui.view: mass_mailing.mailing_list_merge_view_form
+DEL ir.ui.view: mass_mailing.s_alert
+DEL ir.ui.view: mass_mailing.s_attributes_horizontal
+DEL ir.ui.view: mass_mailing.s_author
+DEL ir.ui.view: mass_mailing.s_badge
+DEL ir.ui.view: mass_mailing.s_blockquote
+DEL ir.ui.view: mass_mailing.s_blog_post_card
+DEL ir.ui.view: mass_mailing.s_blog_title
+DEL ir.ui.view: mass_mailing.s_button
+DEL ir.ui.view: mass_mailing.s_call_to_action
+DEL ir.ui.view: mass_mailing.s_centered_cta_badge
+DEL ir.ui.view: mass_mailing.s_color_blocks_2
+DEL ir.ui.view: mass_mailing.s_company_team
+DEL ir.ui.view: mass_mailing.s_company_team_shapes
+DEL ir.ui.view: mass_mailing.s_comparisons
+DEL ir.ui.view: mass_mailing.s_content_card_1
+DEL ir.ui.view: mass_mailing.s_content_card_2
+DEL ir.ui.view: mass_mailing.s_content_card_3
+DEL ir.ui.view: mass_mailing.s_content_card_4
+DEL ir.ui.view: mass_mailing.s_content_card_5
+DEL ir.ui.view: mass_mailing.s_content_card_6
+DEL ir.ui.view: mass_mailing.s_content_card_7
+DEL ir.ui.view: mass_mailing.s_coupon_code
+DEL ir.ui.view: mass_mailing.s_cover
+DEL ir.ui.view: mass_mailing.s_cta_badge
+DEL ir.ui.view: mass_mailing.s_customer_quote
+DEL ir.ui.view: mass_mailing.s_event
+DEL ir.ui.view: mass_mailing.s_features_column
+DEL ir.ui.view: mass_mailing.s_features_grid
+DEL ir.ui.view: mass_mailing.s_features_showcase
+DEL ir.ui.view: mass_mailing.s_hr
+DEL ir.ui.view: mass_mailing.s_hr_title
+DEL ir.ui.view: mass_mailing.s_icon
+DEL ir.ui.view: mass_mailing.s_image
+DEL ir.ui.view: mass_mailing.s_image_text
+DEL ir.ui.view: mass_mailing.s_inline_text
+DEL ir.ui.view: mass_mailing.s_link_list
+DEL ir.ui.view: mass_mailing.s_mail_block_footer_one_liner
+DEL ir.ui.view: mass_mailing.s_mail_block_footer_social_and_logo
+DEL ir.ui.view: mass_mailing.s_mail_block_footer_social_left
+DEL ir.ui.view: mass_mailing.s_mail_block_header_logo
+DEL ir.ui.view: mass_mailing.s_mail_block_header_logo_and_button
+DEL ir.ui.view: mass_mailing.s_mail_block_header_logo_and_inline_menu
+DEL ir.ui.view: mass_mailing.s_mail_block_header_logo_col
+DEL ir.ui.view: mass_mailing.s_mail_block_header_menu
+DEL ir.ui.view: mass_mailing.s_mail_block_header_name_and_button
+DEL ir.ui.view: mass_mailing.s_mail_block_header_name_and_inline_menu
+DEL ir.ui.view: mass_mailing.s_mail_block_header_social
+DEL ir.ui.view: mass_mailing.s_mail_block_header_text_social
+DEL ir.ui.view: mass_mailing.s_mail_block_header_view
+DEL ir.ui.view: mass_mailing.s_mailing_list_advertisement
+DEL ir.ui.view: mass_mailing.s_masonry_block
+DEL ir.ui.view: mass_mailing.s_masonry_block_alternation_image_text_template
+DEL ir.ui.view: mass_mailing.s_masonry_block_alternation_text_image_template
+DEL ir.ui.view: mass_mailing.s_masonry_block_alternation_text_image_text_template
+DEL ir.ui.view: mass_mailing.s_masonry_block_alternation_text_template
+DEL ir.ui.view: mass_mailing.s_masonry_block_default_template
+DEL ir.ui.view: mass_mailing.s_masonry_block_image_texts_image_template
+DEL ir.ui.view: mass_mailing.s_masonry_block_images_template
+DEL ir.ui.view: mass_mailing.s_masonry_block_mosaic_template
+DEL ir.ui.view: mass_mailing.s_masonry_block_reversed_template
+DEL ir.ui.view: mass_mailing.s_masonry_block_texts_image_texts_template
+DEL ir.ui.view: mass_mailing.s_media_list
+DEL ir.ui.view: mass_mailing.s_membership_advertisement
+DEL ir.ui.view: mass_mailing.s_numbers
+DEL ir.ui.view: mass_mailing.s_picture
+DEL ir.ui.view: mass_mailing.s_pricelist_boxed
+DEL ir.ui.view: mass_mailing.s_pricelist_boxed_item
+DEL ir.ui.view: mass_mailing.s_product_list
+DEL ir.ui.view: mass_mailing.s_rating
+DEL ir.ui.view: mass_mailing.s_references
+DEL ir.ui.view: mass_mailing.s_reviews_wall
+DEL ir.ui.view: mass_mailing.s_schedule
+DEL ir.ui.view: mass_mailing.s_section_mobile
+DEL ir.ui.view: mass_mailing.s_showcase
+DEL ir.ui.view: mass_mailing.s_snippet_group
+DEL ir.ui.view: mass_mailing.s_special_offer_cta
+DEL ir.ui.view: mass_mailing.s_subtitle
+DEL ir.ui.view: mass_mailing.s_text_block
+DEL ir.ui.view: mass_mailing.s_text_card
+DEL ir.ui.view: mass_mailing.s_text_center_cta
+DEL ir.ui.view: mass_mailing.s_text_contact
+DEL ir.ui.view: mass_mailing.s_text_cta_card
+DEL ir.ui.view: mass_mailing.s_text_describing_benefits
+DEL ir.ui.view: mass_mailing.s_text_highlight
+DEL ir.ui.view: mass_mailing.s_text_image
+DEL ir.ui.view: mass_mailing.s_text_left_cta
+DEL ir.ui.view: mass_mailing.s_text_need_help
+DEL ir.ui.view: mass_mailing.s_text_product_description
+DEL ir.ui.view: mass_mailing.s_text_product_showcase
+DEL ir.ui.view: mass_mailing.s_text_signature
+DEL ir.ui.view: mass_mailing.s_three_columns
+DEL ir.ui.view: mass_mailing.s_title
+DEL ir.ui.view: mass_mailing.s_title_with_side_text
+DEL ir.ui.view: mass_mailing.s_video
+NEW portal.entry: mass_mailing.portal_entry_newsletters (noupdate)

@@ -1,0 +1,35 @@
+---Models in module 'loyalty'---
+---Fields in module 'loyalty'---
+loyalty      / loyalty.card             / points (float)                : not stored anymore
+loyalty      / loyalty.card             / points (float)                : now a function
+loyalty      / loyalty.card             / program_id (many2one)         : now required
+loyalty      / loyalty.card             / website_message_ids (one2many): DEL relation: mail.message
+loyalty      / loyalty.history          / _order                        : _order is now 'points_changed_date desc, id desc' ('id desc')
+loyalty      / loyalty.history          / expiration_date (date)        : NEW
+loyalty      / loyalty.history          / linked_loyalty_history_id (many2one): NEW relation: loyalty.history
+loyalty      / loyalty.history          / points_changed_date (datetime): NEW required
+loyalty      / loyalty.program          / expire_after (integer)        : NEW
+loyalty      / loyalty.program          / once_per_user (boolean)       : NEW
+loyalty      / loyalty.program          / partner_ids (many2many)       : NEW relation: res.partner
+---XML records in module 'loyalty'---
+NEW ir.access: loyalty.loyalty_history_company_rule
+NEW ir.access: loyalty.sale_loyalty_card_company_rule
+NEW ir.access: loyalty.sale_loyalty_program_company_rule
+NEW ir.access: loyalty.sale_loyalty_reward_company_rule
+NEW ir.access: loyalty.sale_loyalty_rule_company_rule
+DEL ir.model.access: loyalty.access_loyalty_card
+DEL ir.model.access: loyalty.access_loyalty_card_update_balance_user
+DEL ir.model.access: loyalty.access_loyalty_generate_wizard
+DEL ir.model.access: loyalty.access_loyalty_history
+DEL ir.model.access: loyalty.access_loyalty_mail
+DEL ir.model.access: loyalty.access_loyalty_program
+DEL ir.model.access: loyalty.access_loyalty_reward
+DEL ir.model.access: loyalty.access_loyalty_rule
+NEW ir.model.constraint: loyalty.constraint_loyalty_history_issued_and_used_positive
+NEW ir.model.constraint: loyalty.constraint_loyalty_history_issued_or_used
+NEW ir.model.constraint: loyalty.constraint_loyalty_program_check_expire_after
+DEL ir.rule: loyalty.loyalty_history_company_rule (noupdate)
+DEL ir.rule: loyalty.sale_loyalty_card_company_rule (noupdate)
+DEL ir.rule: loyalty.sale_loyalty_program_company_rule (noupdate)
+DEL ir.rule: loyalty.sale_loyalty_reward_company_rule (noupdate)
+DEL ir.rule: loyalty.sale_loyalty_rule_company_rule (noupdate)

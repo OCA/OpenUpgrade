@@ -1,0 +1,11 @@
+---Models in module 'website_event_booth'---
+---Fields in module 'website_event_booth'---
+---XML records in module 'website_event_booth'---
+NEW ir.access: website_event_booth.access_event_booth_category_public
+NEW ir.access: website_event_booth.access_event_booth_employee
+NEW ir.access: website_event_booth.ir_rule_event_booth_public
+DEL ir.model.access: website_event_booth.access_event_booth_category_public
+DEL ir.model.access: website_event_booth.access_event_booth_employee
+DEL ir.model.access: website_event_booth.access_event_booth_portal
+DEL ir.model.access: website_event_booth.access_event_booth_public
+DEL ir.rule: website_event_booth.ir_rule_event_booth_public (noupdate)

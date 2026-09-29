@@ -1,0 +1,9 @@
+---Models in module 'l10n_fr_pos_cert'---
+---Fields in module 'l10n_fr_pos_cert'---
+---XML records in module 'l10n_fr_pos_cert'---
+NEW ir.access: l10n_fr_pos_cert.access_l10n_fr_pos_cert_account_sale_closing_user
+NEW ir.access: l10n_fr_pos_cert.account_sale_closing_multi_company
+DEL ir.model.access: l10n_fr_pos_cert.access_l10n_fr_pos_cert_account_sale_closing_user
+DEL ir.rule: l10n_fr_pos_cert.account_sale_closing_multi_company (noupdate)
+NEW ir.ui.view: l10n_fr_pos_cert.pos_order_receipt
+NEW ir.ui.view: l10n_fr_pos_cert.pos_orderline_receipt_information

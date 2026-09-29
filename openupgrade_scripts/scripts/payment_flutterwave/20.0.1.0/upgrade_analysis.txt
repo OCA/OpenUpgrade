@@ -1,0 +1,16 @@
+---Models in module 'payment_flutterwave'---
+---Fields in module 'payment_flutterwave'---
+---XML records in module 'payment_flutterwave'---
+DEL ir.ui.view: payment_flutterwave.redirect_form
+NEW payment.method: payment_flutterwave.payment_method_amex (noupdate)
+NEW payment.method: payment_flutterwave.payment_method_bank_account [renamed from payment module] (noupdate)
+NEW payment.method: payment_flutterwave.payment_method_bank_transfer (noupdate)
+NEW payment.method: payment_flutterwave.payment_method_card (noupdate)
+NEW payment.method: payment_flutterwave.payment_method_credit [renamed from payment module] (noupdate)
+NEW payment.method: payment_flutterwave.payment_method_discover (noupdate)
+NEW payment.method: payment_flutterwave.payment_method_mastercard (noupdate)
+NEW payment.method: payment_flutterwave.payment_method_mobile_money [renamed from payment module] (noupdate)
+NEW payment.method: payment_flutterwave.payment_method_mpesa [renamed from payment module] (noupdate)
+NEW payment.method: payment_flutterwave.payment_method_paypal (noupdate)
+NEW payment.method: payment_flutterwave.payment_method_ussd [renamed from payment module] (noupdate)
+NEW payment.method: payment_flutterwave.payment_method_visa (noupdate)

@@ -1,0 +1,68 @@
+---Models in module 'account_peppol'---
+obsolete model account_peppol.service [transient]
+obsolete model peppol.config.wizard [transient]
+model account.peppol.clarification (moved from account_peppol_response)
+model account.peppol.rejection.wizard (moved from account_peppol_response) [transient]
+model account.peppol.response (moved from account_peppol_response)
+---Fields in module 'account_peppol'---
+account_peppol / account.bank.statement.line / peppol_can_send_response (boolean): previously in module account_peppol_response
+account_peppol / account.bank.statement.line / peppol_response_ids (one2many): previously in module account_peppol_response
+account_peppol / account.move             / peppol_can_send_response (boolean): previously in module account_peppol_response
+account_peppol / account.move             / peppol_move_state (selection) : selection_keys added: [AB, AP, RE], removed: [skipped]
+account_peppol / account.move             / peppol_response_ids (one2many): previously in module account_peppol_response
+account_peppol / account.peppol.clarification / _order                        : previously in module account_peppol_response
+account_peppol / account.peppol.clarification / code (char)                   : previously in module account_peppol_response
+account_peppol / account.peppol.clarification / description (char)            : previously in module account_peppol_response
+account_peppol / account.peppol.clarification / display_name (char)           : previously in module account_peppol_response
+account_peppol / account.peppol.clarification / list_identifier (selection)   : previously in module account_peppol_response
+account_peppol / account.peppol.clarification / name (char)                   : previously in module account_peppol_response
+account_peppol / account.peppol.response  / _order                        : previously in module account_peppol_response
+account_peppol / account.peppol.response  / company_id (many2one)         : previously in module account_peppol_response
+account_peppol / account.peppol.response  / display_name (char)           : previously in module account_peppol_response
+account_peppol / account.peppol.response  / move_id (many2one)            : previously in module account_peppol_response
+account_peppol / account.peppol.response  / peppol_message_uuid (char)    : previously in module account_peppol_response
+account_peppol / account.peppol.response  / peppol_state (selection)      : previously in module account_peppol_response
+account_peppol / account.peppol.response  / response_code (selection)     : previously in module account_peppol_response
+account_peppol / res.company              / peppol_activate_self_billing_sending (boolean): DEL
+account_peppol / res.company              / peppol_self_billing_reception_journal_id (many2one): DEL relation: account.journal
+account_peppol / res.partner              / peppol_eas (False)            : DEL selection_keys: ['0002', '0007', '0009', '0037', '0060', '0088', '0096', '0097', '0106', '0130', '0135', '0142', '0151', '0183', '0184', '0188', '0190', '0191', '0192', '0193', '0195', '0196', '0198', '0199', '0200', '0201', '0202', '0204', '0208', '0209', '0210', '0211', '0213', '0216', '0218', '0221', '0225', '0230', '0235', '0240', '0244', '0245', '0246', '9910', '9913', '9914', '9915', '9918', '9919', '9920', '9922', '9923', '9924', '9925', '9926', '9927', '9928', '9929', '9930', '9931', '9932', '9933', '9934', '9935', '9936', '9937', '9938', '9939', '9940', '9941', '9942', '9943', '9944', '9945', '9946', '9947', '9948', '9949', '9950', '9951', '9952', '9953', '9955', '9957', '9959', 'AN', 'AQ', 'AS', 'AU', 'EM', 'odemo'], mode: modify
+account_peppol / res.partner              / peppol_response_support (boolean): previously in module account_peppol_response
+account_peppol / res.partner              / peppol_supported_documents (json): previously in module account_peppol_response
+account_peppol / res.partner              / routing_scheme (False)        : NEW selection_keys: ['0002', '0007', '0009', '0037', '0060', '0088', '0096', '0097', '0106', '0130', '0135', '0142', '0151', '0183', '0184', '0188', '0190', '0191', '0192', '0193', '0195', '0196', '0198', '0199', '0200', '0201', '0202', '0204', '0208', '0209', '0210', '0211', '0213', '0216', '0218', '0221', '0225', '0230', '0235', '0240', '0244', '0245', '0246', '9910', '9913', '9914', '9915', '9918', '9919', '9920', '9922', '9923', '9924', '9925', '9926', '9927', '9928', '9929', '9930', '9931', '9932', '9933', '9934', '9935', '9936', '9937', '9938', '9939', '9940', '9941', '9942', '9943', '9944', '9945', '9946', '9947', '9948', '9949', '9950', '9951', '9952', '9953', '9955', '9957', '9959', 'AN', 'AQ', 'AS', 'AU', 'EM', 'odemo'], mode: modify
+account_peppol / res.users                / peppol_response_support (boolean): previously in module account_peppol_response
+account_peppol / res.users                / peppol_supported_documents (json): previously in module account_peppol_response
+---XML records in module 'account_peppol'---
+NEW account.peppol.clarification: account_peppol.peppol_clarification_action_cna [renamed from account_peppol_response module]
+NEW account.peppol.clarification: account_peppol.peppol_clarification_action_cnf [renamed from account_peppol_response module]
+NEW account.peppol.clarification: account_peppol.peppol_clarification_action_cnp [renamed from account_peppol_response module]
+NEW account.peppol.clarification: account_peppol.peppol_clarification_action_nin [renamed from account_peppol_response module]
+NEW account.peppol.clarification: account_peppol.peppol_clarification_action_noa [renamed from account_peppol_response module]
+NEW account.peppol.clarification: account_peppol.peppol_clarification_action_oth [renamed from account_peppol_response module]
+NEW account.peppol.clarification: account_peppol.peppol_clarification_action_pin [renamed from account_peppol_response module]
+NEW account.peppol.clarification: account_peppol.peppol_clarification_reason_del [renamed from account_peppol_response module]
+NEW account.peppol.clarification: account_peppol.peppol_clarification_reason_fin [renamed from account_peppol_response module]
+NEW account.peppol.clarification: account_peppol.peppol_clarification_reason_itm [renamed from account_peppol_response module]
+NEW account.peppol.clarification: account_peppol.peppol_clarification_reason_leg [renamed from account_peppol_response module]
+NEW account.peppol.clarification: account_peppol.peppol_clarification_reason_non [renamed from account_peppol_response module]
+NEW account.peppol.clarification: account_peppol.peppol_clarification_reason_oth [renamed from account_peppol_response module]
+NEW account.peppol.clarification: account_peppol.peppol_clarification_reason_pay [renamed from account_peppol_response module]
+NEW account.peppol.clarification: account_peppol.peppol_clarification_reason_ppd [renamed from account_peppol_response module]
+NEW account.peppol.clarification: account_peppol.peppol_clarification_reason_pri [renamed from account_peppol_response module]
+NEW account.peppol.clarification: account_peppol.peppol_clarification_reason_qty [renamed from account_peppol_response module]
+NEW account.peppol.clarification: account_peppol.peppol_clarification_reason_qua [renamed from account_peppol_response module]
+NEW account.peppol.clarification: account_peppol.peppol_clarification_reason_rec [renamed from account_peppol_response module]
+NEW account.peppol.clarification: account_peppol.peppol_clarification_reason_ref [renamed from account_peppol_response module]
+NEW account.peppol.clarification: account_peppol.peppol_clarification_reason_unr [renamed from account_peppol_response module]
+NEW ir.access: account_peppol.access_peppol_registration
+NEW ir.access: account_peppol.account_peppol_clarification
+NEW ir.access: account_peppol.account_peppol_rejection_wizard
+NEW ir.access: account_peppol.account_peppol_response
+DEL ir.actions.server: account_peppol.partner_action_verify_peppol
+NEW ir.cron: account_peppol.ir_cron_peppol_auto_register_services [renamed from account_peppol_response module]
+DEL ir.model.access: account_peppol.access_peppol_config_wizard
+DEL ir.model.access: account_peppol.access_peppol_registration
+DEL ir.model.access: account_peppol.account_peppol_service_system
+NEW ir.ui.view: account_peppol.account_peppol_rejection_wizard_view_form
+NEW ir.ui.view: account_peppol.account_peppol_response_view_form
+NEW ir.ui.view: account_peppol.account_peppol_response_view_list
+DEL ir.ui.view: account_peppol.peppol_config_wizard_form

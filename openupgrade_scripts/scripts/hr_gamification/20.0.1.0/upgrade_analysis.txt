@@ -1,0 +1,19 @@
+---Models in module 'hr_gamification'---
+---Fields in module 'hr_gamification'---
+---XML records in module 'hr_gamification'---
+NEW ir.access: hr_gamification.badge_officer
+NEW ir.access: hr_gamification.challenge_line_officer
+NEW ir.access: hr_gamification.challenge_officer
+NEW ir.access: hr_gamification.goal_gamification_hr_user_visibility
+NEW ir.access: hr_gamification.hr_gamification_badge_base_user_not_owned_access
+NEW ir.access: hr_gamification.hr_gamification_badge_base_user_owned_access
+NEW ir.access: hr_gamification.hr_gamification_badge_group_hr_user_access
+DEL ir.model.access: hr_gamification.badge_base_user
+DEL ir.model.access: hr_gamification.badge_officer
+DEL ir.model.access: hr_gamification.badge_user_officer
+DEL ir.model.access: hr_gamification.challenge_line_officer
+DEL ir.model.access: hr_gamification.challenge_officer
+DEL ir.rule: hr_gamification.goal_gamification_hr_user_visibility (noupdate)
+DEL ir.rule: hr_gamification.hr_gamification_badge_base_user_not_owned_access (noupdate)
+DEL ir.rule: hr_gamification.hr_gamification_badge_base_user_owned_access (noupdate)
+DEL ir.rule: hr_gamification.hr_gamification_badge_group_hr_user_access (noupdate)

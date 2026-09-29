@@ -1,0 +1,29 @@
+---Models in module 'l10n_gr_edi_delivery_note'---
+---Fields in module 'l10n_gr_edi_delivery_note'---
+l10n_gr_edi_delivery_note / l10n_gr_edi.document     / picking_id (many2one)         : NEW relation: stock.picking
+l10n_gr_edi_delivery_note / l10n_gr_edi.document     / state (False)                 : NEW selection_keys: ['bill_error', 'bill_fetched', 'bill_sent', 'delivery_note_error', 'delivery_note_sent', 'invoice_error', 'invoice_sent'], mode: modify
+l10n_gr_edi_delivery_note / stock.move               / l10n_gr_edi_measurement_unit (selection): NEW selection_keys: ['1', '2', '3', '4', '5', '6'], isfunction: function, stored
+l10n_gr_edi_delivery_note / stock.picking            / l10n_gr_edi_attachment_id (many2one): NEW relation: ir.attachment, isfunction: function, stored
+l10n_gr_edi_delivery_note / stock.picking            / l10n_gr_edi_delivery_address_city (char): NEW
+l10n_gr_edi_delivery_note / stock.picking            / l10n_gr_edi_delivery_address_number (char): NEW
+l10n_gr_edi_delivery_note / stock.picking            / l10n_gr_edi_delivery_address_street (char): NEW
+l10n_gr_edi_delivery_note / stock.picking            / l10n_gr_edi_delivery_address_zip (char): NEW
+l10n_gr_edi_delivery_note / stock.picking            / l10n_gr_edi_document_ids (one2many): NEW relation: l10n_gr_edi.document
+l10n_gr_edi_delivery_note / stock.picking            / l10n_gr_edi_loading_address_city (char): NEW
+l10n_gr_edi_delivery_note / stock.picking            / l10n_gr_edi_loading_address_number (char): NEW
+l10n_gr_edi_delivery_note / stock.picking            / l10n_gr_edi_loading_address_street (char): NEW
+l10n_gr_edi_delivery_note / stock.picking            / l10n_gr_edi_loading_address_zip (char): NEW
+l10n_gr_edi_delivery_note / stock.picking            / l10n_gr_edi_mark (char)       : NEW isfunction: function, stored
+l10n_gr_edi_delivery_note / stock.picking            / l10n_gr_edi_move_purpose (selection): NEW selection_keys: ['1', '10', '11', '12', '13', '14', '15', '16', '17', '18', '19', '2', '3', '4', '5', '6', '7', '8', '9'], hasdefault: default
+l10n_gr_edi_delivery_note / stock.picking            / l10n_gr_edi_other_move_purpose (char): NEW
+l10n_gr_edi_delivery_note / stock.picking            / l10n_gr_edi_state (selection) : NEW selection_keys: ['delivery_note_error', 'delivery_note_sent'], isfunction: function, stored
+l10n_gr_edi_delivery_note / stock.picking            / l10n_gr_edi_vehicle_number (char): NEW
+---XML records in module 'l10n_gr_edi_delivery_note'---
+NEW ir.access: l10n_gr_edi_delivery_note.access_l10n_gr_edi_document_group_invoice
+NEW ir.access: l10n_gr_edi_delivery_note.access_l10n_gr_edi_document_readonly
+NEW ir.access: l10n_gr_edi_delivery_note.access_l10n_gr_edi_preferred_classification
+NEW ir.ui.view: l10n_gr_edi_delivery_note.report_delivery_document
+NEW ir.ui.view: l10n_gr_edi_delivery_note.stock_picking_form_inherit_l10n_gr_edi
+NEW ir.ui.view: l10n_gr_edi_delivery_note.view_company_form_inherit_mydata_required_fields
+NEW ir.ui.view: l10n_gr_edi_delivery_note.view_out_vpicktree_inherit_l10n_gr_edi
+NEW ir.ui.view: l10n_gr_edi_delivery_note.view_partner_form_inherit_mydata_required_fields

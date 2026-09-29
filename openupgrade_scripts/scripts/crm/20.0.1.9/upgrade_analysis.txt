@@ -1,0 +1,94 @@
+---Models in module 'crm'---
+obsolete model crm.lead2opportunity.partner [transient]
+---Fields in module 'crm'---
+crm          / crm.lead                 / commercial_partner_id (many2one): DEL relation: res.partner, stored: False
+crm          / crm.lead                 / duration_tracking (json)      : is now stored
+crm          / crm.lead                 / email_cc (char)               : DEL
+crm          / crm.lead                 / utm_reference (reference)     : NEW
+crm          / crm.lead                 / website_message_ids (one2many): DEL relation: mail.message
+crm          / crm.stage                / color (integer)               : DEL
+crm          / crm.team.member          / assignment_optout (boolean)   : DEL
+crm          / crm.team.member          / assignment_rules (selection)  : NEW selection_keys: ['limited', 'opt-out', 'unlimited'], hasdefault: compute, stored: False
+---XML records in module 'crm'---
+NEW ir.access: crm.access_calendar_event_type_sale_manager
+NEW ir.access: crm.access_calendar_event_type_sale_user
+NEW ir.access: crm.access_crm_lead2opportunity_partner_mass
+NEW ir.access: crm.access_crm_lead_lost
+NEW ir.access: crm.access_crm_lead_scoring_frequency
+NEW ir.access: crm.access_crm_lead_scoring_frequency_field
+NEW ir.access: crm.access_crm_lead_scoring_frequency_field_system
+NEW ir.access: crm.access_crm_lead_scoring_frequency_system
+NEW ir.access: crm.access_crm_lost_reason_manager
+NEW ir.access: crm.access_crm_lost_reason_user
+NEW ir.access: crm.access_crm_merge_opportunity
+NEW ir.access: crm.access_crm_stage
+NEW ir.access: crm.access_crm_stage_manager
+NEW ir.access: crm.access_mail_activity_plan_sale_manager
+NEW ir.access: crm.access_mail_activity_plan_template_sale_manager
+NEW ir.access: crm.access_mail_activity_type_sale_manager
+NEW ir.access: crm.access_res_partner
+NEW ir.access: crm.access_res_partner_category
+NEW ir.access: crm.calendar_event_rule_employee
+NEW ir.access: crm.calendar_event_rule_employee_1
+NEW ir.access: crm.crm_activity_report_rule_all_activities
+NEW ir.access: crm.crm_activity_report_rule_multi_company
+NEW ir.access: crm.crm_activity_report_rule_personal_activities
+NEW ir.access: crm.crm_lead_company_rule
+NEW ir.access: crm.crm_lead_pls_update_access_system
+NEW ir.access: crm.crm_recurring_plan_access_manager
+NEW ir.access: crm.crm_recurring_plan_access_salesman
+NEW ir.access: crm.crm_rule_all_lead
+NEW ir.access: crm.crm_rule_all_lead_1
+NEW ir.access: crm.crm_rule_personal_lead
+NEW ir.access: crm.mail_plan_rule_group_sale_manager_lead
+NEW ir.access: crm.mail_plan_templates_rule_group_sale_manager_lead
+NEW ir.access: crm.res_partner_rule_edit_all
+NEW ir.access: crm.res_partner_rule_user
+DEL ir.actions.act_window: crm.action_crm_lead2opportunity_partner
+DEL ir.actions.act_window.view: crm.crm_lead_all_leads_view_calendar
+DEL ir.actions.server: crm.action_opportunity_forecast
+DEL ir.actions.server: crm.action_your_pipeline
+DEL ir.model.access: crm.access_calendar_event
+DEL ir.model.access: crm.access_calendar_event_manager
+DEL ir.model.access: crm.access_calendar_event_type_sale_manager
+DEL ir.model.access: crm.access_calendar_event_type_sale_salesman
+DEL ir.model.access: crm.access_calendar_event_type_sale_user
+DEL ir.model.access: crm.access_crm_activity_report_salesman
+DEL ir.model.access: crm.access_crm_activity_report_user
+DEL ir.model.access: crm.access_crm_lead
+DEL ir.model.access: crm.access_crm_lead2opportunity_partner
+DEL ir.model.access: crm.access_crm_lead2opportunity_partner_mass
+DEL ir.model.access: crm.access_crm_lead_lost
+DEL ir.model.access: crm.access_crm_lead_manager
+DEL ir.model.access: crm.access_crm_lead_scoring_frequency
+DEL ir.model.access: crm.access_crm_lead_scoring_frequency_field
+DEL ir.model.access: crm.access_crm_lead_scoring_frequency_field_system
+DEL ir.model.access: crm.access_crm_lead_scoring_frequency_system
+DEL ir.model.access: crm.access_crm_lost_reason_manager
+DEL ir.model.access: crm.access_crm_lost_reason_salesman
+DEL ir.model.access: crm.access_crm_lost_reason_user
+DEL ir.model.access: crm.access_crm_merge_opportunity
+DEL ir.model.access: crm.access_crm_stage
+DEL ir.model.access: crm.access_crm_stage_manager
+DEL ir.model.access: crm.access_mail_activity_plan_sale_manager
+DEL ir.model.access: crm.access_mail_activity_plan_template_sale_manager
+DEL ir.model.access: crm.access_mail_activity_type_sale_manager
+DEL ir.model.access: crm.access_res_partner
+DEL ir.model.access: crm.access_res_partner_category
+DEL ir.model.access: crm.access_res_partner_category_manager
+DEL ir.model.access: crm.access_res_partner_manager
+DEL ir.model.access: crm.crm_lead_pls_update_access_system
+DEL ir.model.access: crm.crm_recurring_plan_access_manager
+DEL ir.model.access: crm.crm_recurring_plan_access_salesman
+DEL ir.rule: crm.crm_activity_report_rule_all_activities (noupdate)
+DEL ir.rule: crm.crm_activity_report_rule_multi_company (noupdate)
+DEL ir.rule: crm.crm_activity_report_rule_personal_activities (noupdate)
+DEL ir.rule: crm.crm_lead_company_rule (noupdate)
+DEL ir.rule: crm.crm_rule_all_lead (noupdate)
+DEL ir.rule: crm.crm_rule_personal_lead (noupdate)
+DEL ir.rule: crm.mail_plan_rule_group_sale_manager_lead (noupdate)
+DEL ir.rule: crm.mail_plan_templates_rule_group_sale_manager_lead (noupdate)
+NEW ir.ui.view: crm.crm_lead_creation_message
+NEW ir.ui.view: crm.crm_lead_view_list_simplified
+NEW ir.ui.view: crm.crm_module_access_request_template
+DEL ir.ui.view: crm.view_crm_lead2opportunity_partner

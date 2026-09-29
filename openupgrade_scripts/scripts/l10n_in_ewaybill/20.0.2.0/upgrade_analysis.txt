@@ -1,0 +1,14 @@
+---Models in module 'l10n_in_ewaybill'---
+---Fields in module 'l10n_in_ewaybill'---
+l10n_in_ewaybill / l10n.in.ewaybill         / website_message_ids (one2many): DEL relation: mail.message
+---XML records in module 'l10n_in_ewaybill'---
+NEW ir.access: l10n_in_ewaybill.access_l10n_in_ewaybill
+NEW ir.access: l10n_in_ewaybill.access_l10n_in_ewaybill_cancel
+NEW ir.access: l10n_in_ewaybill.access_l10n_in_ewaybill_type
+NEW ir.access: l10n_in_ewaybill.l10n_in_ewaybill_comp_rule
+NEW ir.access: l10n_in_ewaybill.view_l10n_in_ewaybill
+DEL ir.model.access: l10n_in_ewaybill.access_l10n_in_ewaybill
+DEL ir.model.access: l10n_in_ewaybill.access_l10n_in_ewaybill_cancel
+DEL ir.model.access: l10n_in_ewaybill.access_l10n_in_ewaybill_type
+DEL ir.model.access: l10n_in_ewaybill.view_l10n_in_ewaybill
+DEL ir.rule: l10n_in_ewaybill.l10n_in_ewaybill_comp_rule (noupdate)

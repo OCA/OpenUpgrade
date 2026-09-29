@@ -1,0 +1,11 @@
+---Models in module 'l10n_ph_sale'---
+---Fields in module 'l10n_ph_sale'---
+l10n_ph_sale / sale.order.line          / l10n_ph_discount_privilege_id (many2one): NEW relation: l10n_ph.discount.privilege
+l10n_ph_sale / sale.order.line          / l10n_ph_original_discount (float): NEW
+l10n_ph_sale / sale.order.line          / l10n_ph_original_price_unit (float): NEW
+l10n_ph_sale / sale.order.line          / l10n_ph_original_tax_ids (many2many): NEW relation: account.tax
+---XML records in module 'l10n_ph_sale'---
+NEW ir.access: l10n_ph_sale.access_l10n_ph_discount_privilege_sale_salesman
+NEW ir.access: l10n_ph_sale.access_l10n_ph_discount_privilege_wizard_line_sale_salesman
+NEW ir.access: l10n_ph_sale.access_l10n_ph_discount_privilege_wizard_sale_salesman
+NEW ir.ui.view: l10n_ph_sale.view_order_form_l10n_ph_discount_privilege

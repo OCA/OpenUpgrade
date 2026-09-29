@@ -1,0 +1,11 @@
+---Models in module 'purchase_requisition_stock'---
+---Fields in module 'purchase_requisition_stock'---
+purchase_requisition_stock / purchase.order           / on_time_rate_perc (float)     : module is now 'purchase_alternative_stock' ('purchase_requisition_stock')
+purchase_requisition_stock / purchase.order.line      / on_time_rate_perc (float)     : module is now 'purchase_alternative_stock' ('purchase_requisition_stock')
+---XML records in module 'purchase_requisition_stock'---
+NEW ir.access: purchase_requisition_stock.access_purchase_requisition_line_stock_manager
+NEW ir.access: purchase_requisition_stock.access_purchase_requisition_stock_manager
+DEL ir.model.access: purchase_requisition_stock.access_purchase_requisition_line_stock_manager
+DEL ir.model.access: purchase_requisition_stock.access_purchase_requisition_stock_manager
+DEL ir.ui.view: purchase_requisition_stock.purchase_order_form_inherit_purchase_requisition_stock
+DEL ir.ui.view: purchase_requisition_stock.purchase_order_line_compare_tree_inherit_purchase_requisition_stock

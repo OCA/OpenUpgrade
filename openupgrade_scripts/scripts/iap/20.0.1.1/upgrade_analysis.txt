@@ -1,0 +1,28 @@
+---Models in module 'iap'---
+new model iap.service.pack
+---Fields in module 'iap'---
+iap          / iap.account              / balance (char)                : not stored anymore
+iap          / iap.account              / balance (char)                : now a function
+iap          / iap.account              / balance_amount (float)        : NEW
+iap          / iap.service              / name (char)                   : now translatable
+iap          / iap.service              / pack_ids (one2many)           : NEW relation: iap.service.pack
+iap          / iap.service              / price_description (char)      : NEW translate
+iap          / iap.service.pack         / credit (float)                : NEW required
+iap          / iap.service.pack         / iap_service_pack_identifier (integer): NEW required
+iap          / iap.service.pack         / name (char)                   : NEW required
+iap          / iap.service.pack         / price (float)                 : NEW required
+iap          / iap.service.pack         / service_id (many2one)         : NEW relation: iap.service, required
+---XML records in module 'iap'---
+NEW ir.access: iap.access_iap_service_manager
+NEW ir.access: iap.access_iap_service_pack
+NEW ir.access: iap.access_iap_service_user
+NEW ir.access: iap.user_iap_account
+NEW ir.access: iap.user_iap_account_1
+DEL ir.model.access: iap.access_client_iap_account_manager
+DEL ir.model.access: iap.access_client_iap_account_user
+DEL ir.model.access: iap.access_iap_service_manager
+DEL ir.model.access: iap.access_iap_service_user
+NEW ir.model.constraint: iap.constraint_iap_service_pack_unique_iap_service_pack_identifier
+DEL ir.rule: iap.user_iap_account (noupdate)
+NEW ir.ui.view: iap.iap_service_pack_view_tree
+NEW ir.ui.view: iap.view_iap_users_tree
