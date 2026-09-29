@@ -1,0 +1,17 @@
+name: 'Check PR dependencies'
+description: 'List PR dependencies in comment, set labels Dependency OK, Blocked by dependency'
+inputs:
+  version:
+    description: 'OpenUpgrade version'
+    required: true
+branding:
+  icon: 'git-merge'
+  color: 'yellow'
+runs:
+  using: "composite"
+  steps:
+    - name: 'Run check'
+      run: |
+        pip install -r ${{ github.action_path }}/requirements.txt
+        python ${{ github.action_path }}/check_dependency.py --version ${{ inputs.version }} --repo ${{ github.repository }} --github-login ${{ github.actor }}
+      shell: sh

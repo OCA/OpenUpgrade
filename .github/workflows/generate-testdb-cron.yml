@@ -1,0 +1,40 @@
+name: Generate test databases - cron and manually
+
+on:
+  workflow_dispatch:
+    inputs:
+      version:
+        description: 'Version'
+        required: true
+        type: choice
+        options:
+        - all
+        - 16.0
+        - 17.0
+        - 18.0
+  schedule:
+    # every first of month
+    - cron: "0 4 1 * *"
+
+jobs:
+  generate-testdb18:
+    name: Generate test database 18.0
+    if: (github.repository == 'OCA/OpenUpgrade' && github.event_name == 'schedule') || inputs.version == '18.0' || inputs.version == 'all'
+    uses: ./.github/workflows/generate-testdb.yml
+    with:
+      version: "18.0"
+      exclude_modules: "['payment_alipay', 'payment_ogone', 'payment_payulatam', 'payment_payumoney']"
+  generate-testdb17:
+    name: Generate test database 17.0
+    if: (github.repository == 'OCA/OpenUpgrade' && github.event_name == 'schedule') || inputs.version == '17.0' || inputs.version == 'all'
+    uses: ./.github/workflows/generate-testdb.yml
+    with:
+      version: "17.0"
+      exclude_modules: "['payment_alipay', 'payment_ogone', 'payment_payulatam', 'payment_payumoney']"
+  generate-testdb16:
+    name: Generate test database 16.0
+    if: (github.repository == 'OCA/OpenUpgrade' && github.event_name == 'schedule') || inputs.version == '16.0' || inputs.version == 'all'
+    uses: ./.github/workflows/generate-testdb.yml
+    with:
+      version: "16.0"
+      exclude_modules: "['payment_alipay', 'payment_ogone', 'payment_payulatam', 'payment_payumoney']"
