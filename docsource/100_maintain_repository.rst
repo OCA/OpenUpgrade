@@ -6,6 +6,8 @@ The following documentation is for OpenUpgrade Maintainers.
 Set up the branch for a new Odoo release
 ----------------------------------------
 
+Wait until the new branch was created via an entry in https://github.com/OCA/repo-maintainer-conf, then run the following script:
+
 .. literalinclude:: maintainer_scripts/setup_new_branch.sh
   :language: shell
 
@@ -18,16 +20,12 @@ Manual changes
 
 * Run the module migration, see https://github.com/OCA/OpenUpgrade/wiki/Crude-script-to-create-the-full-analysis-between-two-versions-of-Odoo. Run with Odoo configuration option module_coverage_file_folder = <some folder>.
 
-* On success, propose the migration of ``upgrade_analysis`` into server-tools, and the analysis files into ``openupgrade_scripts``.
+* Add the coverage file from the step above (e.g. docsource/modules170-180.rst)
 
-* Add a coverage file (e.g. docsource/modules170-180.rst)
+* On success, propose the migration of ``upgrade_analysis`` into server-tools
 
-* In the ``OpenUpgrade``/``documentation`` branch, add a new line in ``build_openupgrade_docs``.
+* PR adding a job for the new version in ``.github/workflows/generate-analysis-cron.yml`` on the current default branch of OpenUpgrade
 
-* Push a test database for the old release to GitHub (see https://github.com/OCA/OpenUpgrade/wiki/How-to-create-a-reference-database)
+* PR adding a job for the new version in ``.github/workflows/generate-testdb-cron.yml`` on the current default branch of OpenUpgrade
 
 * Execute the technical migration of ``openupgrade_framework``.
-
-* Check files in .github/workflows for any required changes.
-
-* Once development starts on the new edition's migration scripts, change the default branch for new PRs at https://github.com/OCA/OpenUpgrade/settings/branches.
