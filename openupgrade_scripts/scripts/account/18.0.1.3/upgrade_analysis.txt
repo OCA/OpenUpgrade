@@ -31,6 +31,7 @@ account      / account.bank.statement.line / company_id (many2one)         : now
 account      / account.bank.statement.line / journal_id (many2one)         : is now stored
 account      / account.cash.rounding    / loss_account_id (many2one)    : needs conversion to v18-style company dependent
 account      / account.cash.rounding    / profit_account_id (many2one)  : needs conversion to v18-style company dependent
+account      / account.fiscal.position  / _order                        : _order is now 'sequence, id' ('sequence')
 account      / account.group            / parent_path (char)            : DEL
 account      / account.journal          / autocheck_on_post (boolean)   : NEW hasdefault: default
 account      / account.journal          / sale_activity_note (text)     : DEL
