@@ -8,11 +8,11 @@ name: Test OpenUpgrade migration
 on:
   pull_request:
     branches:
-      - "19.0*"
+      - "20.0*"
   push:
     branches:
-      - "19.0"
-      - "19.0-ocabot-*"
+      - "20.0"
+      - "20.0-ocabot-*"
 
 jobs:
   test:
@@ -49,20 +49,20 @@ jobs:
         run: createdb $DB
       - name: DB Restore
         run: |
-          wget -q -O- $DOWNLOADS/18.0.psql | pg_restore -d $DB --no-owner
+          wget -q -O- $DOWNLOADS/19.0.psql | pg_restore -d $DB --no-owner
           psql $DB -c "UPDATE ir_module_module SET demo=False"
       - name: Check out Odoo
         uses: actions/checkout@v4
         with:
           repository: odoo/odoo
-          ref: "19.0"
+          ref: "20.0"
           fetch-depth: 1
           path: odoo
       - name: Check out previous Odoo
         uses: actions/checkout@v4
         with:
           repository: odoo/odoo
-          ref: "18.0"
+          ref: "19.0"
           fetch-depth: 1
           path: odoo-old
       - name: Check out OpenUpgrade
@@ -115,7 +115,7 @@ jobs:
           # select modules and perform the upgrade
           MODULES_OLD=$(\
               sed -n '/^+========/,$p' \
-              openupgrade/docsource/modules180-190.rst \
+              openupgrade/docsource/modules190-200.rst \
               | grep "Done\|Partial\|Nothing" \
               | grep -v "theme_" \
               | sed -rn 's/((^\| *\|del\| *)|^\| *)([0-9a-z_]*)[ \|].*/\3/g p' \
@@ -123,7 +123,7 @@ jobs:
               | paste -d, -s)
           MODULES_NEW=$(\
               sed -n '/^+========/,$p' \
-              openupgrade/docsource/modules180-190.rst \
+              openupgrade/docsource/modules190-200.rst \
               | grep "Done\|Partial\|Nothing" \
               | grep -v "theme_" \
               | sed -rn 's/((^\| *\|new\| *)|^\| *)([0-9a-z_]*)[ \|].*/\3/g p' \
