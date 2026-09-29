@@ -2,8 +2,8 @@
 # License AGPL-3.0 or later (http://www.gnu.org/licenses/agpl).
 {
     "name": "Openupgrade Scripts",
-    "summary": """Module that contains all the migrations analysis
-        and scripts for migrate Odoo SA modules.""",
+    "summary": "Module that contains all the migration analysis files "
+    "and scripts to migrate Odoo SA modules.",
     "author": "Odoo Community Association (OCA)",
     "website": "https://github.com/OCA/OpenUpgrade",
     "category": "Migration",
