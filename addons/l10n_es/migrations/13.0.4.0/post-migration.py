@@ -73,6 +73,26 @@ def use_new_taxes_and_repartition_lines_on_move_lines(env):
                 FROM account_tax
                 WHERE id IN %%s""" % column, (tuple(tax_ids), ),
             )
+        # A group tax holds no account: its children do. Each tax repartition
+        # line takes the account of its child's one, matched as the move
+        # lines are matched to their repartition line below.
+        for tax_column in ("invoice_tax_id", "refund_tax_id"):
+            openupgrade.logged_query(
+                env.cr, sql.SQL("""
+                UPDATE account_tax_repartition_line atrl2
+                SET account_id = atrl.account_id
+                FROM account_tax_repartition_line atrl
+                JOIN account_tax at ON atrl.{column} = at.id
+                JOIN account_tax_filiation_rel rel ON rel.child_tax = at.id
+                WHERE atrl2.{column} = rel.parent_tax
+                    AND atrl2.repartition_type = 'tax'
+                    AND atrl.repartition_type = 'tax'
+                    AND SIGN(at.amount) = SIGN(atrl2.factor_percent)
+                    AND atrl2.account_id IS NULL
+                    AND rel.parent_tax IN %s
+                """).format(column=sql.Identifier(tax_column)),
+                (tuple(tax_ids), ),
+            )
     if children_tax_ids:
         # assure children taxes are not parent taxes
         openupgrade.logged_query(
