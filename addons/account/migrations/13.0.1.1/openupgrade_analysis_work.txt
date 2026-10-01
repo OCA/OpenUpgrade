@@ -332,7 +332,7 @@ account      / account.move             / reverse_entry_id (many2one)   : DEL re
 account      / account.move             / reversed_entry_id (many2one)  : NEW relation: account.move
 account      / account.invoice          / refund_invoice_id (many2one)  : DEL relation: account.invoice
 # DONE: pre-migration: lift FK constraint in reverse_entry_id
-# DONE: post-migration: used refund_invoice_id to fill reverse_entry_id in case is empty (for invoices transformed to moves)
+# DONE: post-migration: used refund_invoice_id to fill reversed_entry_id in case is empty (for invoices transformed to moves)
 # DONE: post-migration: used reverse_entry_id to fill reversed_entry_id in case is empty
 
 account      / account.move             / tax_type_domain (char)        : DEL
