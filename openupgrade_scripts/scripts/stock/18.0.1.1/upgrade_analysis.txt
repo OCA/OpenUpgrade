@@ -10,7 +10,6 @@ stock        / product.template         / is_storable (boolean)         : NEW ha
 stock        / product.template         / property_stock_inventory (many2one): needs conversion to v18-style company dependent
 stock        / product.template         / property_stock_production (many2one): needs conversion to v18-style company dependent
 stock        / product.template         / responsible_id (many2one)     : needs conversion to v18-style company dependent
-stock        / product.template         / route_from_categ_ids (many2many): table is now 'False' ('stock.route')
 stock        / product.template         / type (False)                  : DEL selection_keys: ['consu', 'product', 'service'], mode: modify
 stock        / res.partner              / property_stock_customer (many2one): needs conversion to v18-style company dependent
 stock        / res.partner              / property_stock_supplier (many2one): needs conversion to v18-style company dependent
