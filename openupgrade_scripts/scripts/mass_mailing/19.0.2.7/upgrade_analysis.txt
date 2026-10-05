@@ -2,6 +2,7 @@
 ---Fields in module 'mass_mailing'---
 mass_mailing / mailing.contact          / properties (properties)       : NEW hasdefault: compute
 mass_mailing / mailing.contact          / title_id (many2one)           : DEL relation: res.partner.title
+mass_mailing / mailing.list             / _order                        : _order is now 'create_date DESC' ('create_date DESC, id DESC')
 mass_mailing / mailing.mailing          / use_exclusion_list (boolean)  : NEW hasdefault: default
 mass_mailing / mailing.trace            / failure_type (selection)      : selection_keys added: [mail_spam] (most likely nothing to do)
 mass_mailing / mailing.trace            / is_test_trace (boolean)       : NEW

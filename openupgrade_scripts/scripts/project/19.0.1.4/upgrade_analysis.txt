@@ -64,6 +64,7 @@ NEW ir.model.access: project.access_project_template_role_to_users_map_manager
 NEW ir.model.access: project.access_project_template_role_to_users_map_user
 NEW ir.model.constraint: project.constraint_mail_message_date_res_id_id_for_burndown_chart
 NEW ir.model.constraint: project.constraint_project_task_is_template_idx
+NEW ir.rule: project.project_task_rule_portal_project_sharing_create_access (noupdate)
 NEW ir.ui.menu: project.project_menu_config_project_roles
 NEW ir.ui.view: project.portal_my_tasks_badge_widget_template
 NEW ir.ui.view: project.portal_task_share_wizard
