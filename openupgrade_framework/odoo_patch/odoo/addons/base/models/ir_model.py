@@ -17,7 +17,7 @@ def _drop_table(self):
         if self.env.get(model.model) is not None:
             openupgrade.message(
                 self.env.cr,
-                "Unknown",
+                self.env.context.get("module", "Unknown"),
                 False,
                 False,
                 "Not dropping the table or view of model %s",
@@ -35,7 +35,7 @@ def _drop_column(self):
             continue
         openupgrade.message(
             self.env.cr,
-            "Unknown",
+            self.env.context.get("module", "Unknown"),
             False,
             False,
             "Not dropping the column of field %s of model %s",
