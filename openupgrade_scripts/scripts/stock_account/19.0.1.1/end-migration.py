@@ -1,6 +1,7 @@
 # Copyright 2026 Hunki Enterprises BV
 # License AGPL-3.0 or later (https://www.gnu.org/licenses/agpl).
 
+from markupsafe import Markup
 from openupgradelib import openupgrade
 
 from odoo import fields
@@ -14,7 +15,7 @@ def update_from_coa_generic(env, spec):
     TODO: Move this to openupgradelib if needed for more migrations than
     account, stock_account
     """
-
+    admin_channel = env.ref("mail.channel_admin", False)
     for company in env["res.company"].search([]):
         AccountChartTemplate = env["account.chart.template"].with_context(
             default_company_id=company.id,
@@ -24,12 +25,15 @@ def update_from_coa_generic(env, spec):
             lang="en_US",
             chart_template_load=True,
         )
-
         if company.chart_template not in AccountChartTemplate._template_register:
-            openupgrade.logger.error(
-                "chart template %s unknown (not yet migrated?)",
-                company.chart_template,
-            )
+            if admin_channel:
+                admin_channel.message_post(
+                    body=Markup(
+                        "<h1>Openupgrade v18: account</h1>"
+                        f"<p>Chart template {company.chart_template} unknown "
+                        "(not yet migrated?)</p>"
+                    )
+                )
             continue
 
         def ref_or_id(ref_or_id, model_name, AccountChartTemplate=AccountChartTemplate):
@@ -112,6 +116,6 @@ def stock_move_is_fields(env):
 
 @openupgrade.migrate()
 def migrate(env, version):
-    update_from_coa(env)
+    # update_from_coa(env)
     stock_lot_avg_cost(env)
     stock_move_is_fields(env)

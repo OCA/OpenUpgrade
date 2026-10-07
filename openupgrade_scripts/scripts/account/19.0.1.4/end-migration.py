@@ -1,3 +1,4 @@
+from markupsafe import Markup
 from openupgradelib import openupgrade
 
 
@@ -16,6 +17,7 @@ def res_company(env):
     Set fields expense_account_id, income_account_id, price_difference_account_id
     from localization if not set elsewhere and the localization sets it
     """
+    admin_channel = env.ref("mail.channel_admin", False)
     for company in env["res.company"].search([]):
         AccountChartTemplate = env["account.chart.template"].with_context(
             default_company_id=company.id,
@@ -26,10 +28,14 @@ def res_company(env):
             chart_template_load=True,
         )
         if company.chart_template not in AccountChartTemplate._template_register:
-            openupgrade.logger.error(
-                "chart template %s unknown (not yet migrated?)",
-                company.chart_template,
-            )
+            if admin_channel:
+                admin_channel.message_post(
+                    body=Markup(
+                        "<h1>Openupgrade v18: account</h1>"
+                        f"<p>Chart template {company.chart_template} unknown "
+                        "(not yet migrated?)</p>"
+                    )
+                )
             continue
         template_data = AccountChartTemplate._get_chart_template_data(
             company.chart_template
@@ -54,4 +60,4 @@ def res_company(env):
 @openupgrade.migrate()
 def migrate(env, version):
     account_move_line_is_storno(env)
-    res_company(env)
+    # res_company(env)
