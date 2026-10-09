@@ -19,6 +19,9 @@ renamed_modules = {
     "website_odoo_debranding": "website_debranding",
     # OCA/sale-report
     "sales_team_invoiced_target_domain": "sales_team_invoiced_target_report",
+    # OCA/l10n-italy
+    "l10n_it_intrastat": "l10n_it_intrastat_oca",
+    "l10n_it_intrastat_statement": "l10n_it_intrastat_statement_oca",
     # OCA/...
 }
 
