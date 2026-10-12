@@ -11,7 +11,7 @@ new model account.move.send.batch.wizard [transient]
 new model account.move.send.wizard [transient]
 new model account.secure.entries.wizard [transient]
 ---Fields in module 'account'---
-account      / account.account          / _order                        : _order is now 'code, placeholder_code' ('code, company_id')
+account      / account.account          / _order                        : _order is now 'code, placeholder_code, id' ('code, company_id')
 account      / account.account          / code (char)                   : not stored anymore
 account      / account.account          / code (char)                   : now a function
 account      / account.account          / code_mapping_ids (one2many)   : NEW relation: account.code.mapping
