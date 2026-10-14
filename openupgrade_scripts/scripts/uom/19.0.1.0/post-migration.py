@@ -19,6 +19,9 @@ def _uom_relative_uom_id_relative_factor(env):
     )
     with_xml_id = Uom.browse(set(_id for (_id,) in env.cr.fetchall()))
 
+    # Up to 18.0, one reference unit equals `factor` of a unit, whatever its type
+    # (a "bigger" unit stores factor = 1 / ratio, e.g. a dozen: 1/12), so the 19.0
+    # relative_factor is always 1 / factor.
     env.cr.execute(
         f"""
         SELECT
@@ -43,14 +46,10 @@ def _uom_relative_uom_id_relative_factor(env):
         for uom in uoms - old_reference - with_xml_id:
             # uoms with xmlid will be updated by the migration of the module
             # providing them
-            relative_factor = (
-                uom2factor[uom] if uom2type[uom] == "bigger" else (1 / uom2factor[uom])
-            )
-
             uom.write(
                 {
                     "relative_uom_id": old_reference,
-                    "relative_factor": relative_factor,
+                    "relative_factor": 1 / uom2factor[uom],
                 }
             )
 
