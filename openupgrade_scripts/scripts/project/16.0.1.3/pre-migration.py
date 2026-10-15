@@ -119,21 +119,19 @@ def _compute_project_task_ancestor_id(env):
 def _compute_project_task_is_analytic_account_id_changed(env):
     """
     `is_analytic_account_id_changed` is a new field at version 16.0.
-    It has a value of False if you have the same admin account as the project,
-    otherwise it will have a value of True
+    It is True when the task has an analytic account different from the one of
+    its project. In 15.0 an empty analytic account on a task meant using the one
+    of the project, so those tasks keep False, the default of the column.
     """
     openupgrade.logged_query(
         env.cr,
         """
         UPDATE project_task task
-        SET is_analytic_account_id_changed = CASE
-            WHEN project_id IS NOT NULL
-               AND task.project_id = project.id
-               AND task.analytic_account_id != project.analytic_account_id
-            THEN TRUE
-            ELSE FALSE
-        END
-        FROM project_project as project;
+        SET is_analytic_account_id_changed = TRUE
+        FROM project_project project
+        WHERE task.project_id = project.id
+            AND task.analytic_account_id IS NOT NULL
+            AND task.analytic_account_id IS DISTINCT FROM project.analytic_account_id;
         """,
     )
 
