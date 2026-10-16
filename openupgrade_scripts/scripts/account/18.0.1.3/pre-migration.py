@@ -34,6 +34,7 @@ _new_columns = [
     ("account.move", "preferred_payment_method_line_id", "many2one"),
     ("account.reconcile.model", "counterpart_type", "selection", "general"),
     ("account.tax", "price_include_override", "selection", "tax_excluded"),
+    ("account.payment", "company_id", "many2one"),
     ("account.payment", "name", "char"),
     ("account.payment", "date", "date"),
     ("account.payment", "memo", "char"),
@@ -161,7 +162,8 @@ def fill_account_payment(env):
         env.cr,
         """
         UPDATE account_payment ap
-        SET memo = am.ref,
+        SET company_id = am.company_id,
+            memo = am.ref,
             state= CASE WHEN am.state = 'cancel' THEN 'canceled'
                         WHEN am.payment_state = 'paid' THEN 'paid'
                         WHEN am.state = 'posted' THEN 'in_process'
