@@ -62,6 +62,35 @@ def _fix_company_layout_background(cr):
     )
 
 
+def _create_missing_cron_server_action_xmlids(cr):
+    """
+    When a record with an XML ID is created, Odoo also creates the XML ID
+    ``<xmlid>_<parent model>`` of its ``_inherits`` parent, but crons created by
+    old versions lack the one of their server action. 18.0 data references them
+    (e.g. stock.ir_cron_scheduler_action_ir_actions_server in the stock and mrp
+    procurement menus), so loading it fails with "External ID not found".
+    Reloading the cron data doesn't help: the parent XML ID is only added when
+    the record is created, not when an existing one is updated.
+    """
+    cr.execute(
+        """
+        SELECT imd.module, imd.name, cron.ir_actions_server_id, imd.noupdate
+        FROM ir_model_data imd
+        JOIN ir_cron cron ON cron.id = imd.res_id
+        WHERE imd.model = 'ir.cron'
+        """
+    )
+    for module, name, server_action_id, noupdate in cr.fetchall():
+        openupgrade.add_xmlid(
+            cr,
+            module,
+            f"{name}_ir_actions_server",
+            "ir.actions.server",
+            server_action_id,
+            noupdate=noupdate,
+        )
+
+
 @openupgrade.migrate(use_env=False)
 def migrate(cr, version):
     openupgrade.logged_query(
@@ -95,3 +124,4 @@ def migrate(cr, version):
     _fix_list_view_mode(cr)
     _fix_serbian_res_lang_record(cr)
     _fix_company_layout_background(cr)
+    _create_missing_cron_server_action_xmlids(cr)
