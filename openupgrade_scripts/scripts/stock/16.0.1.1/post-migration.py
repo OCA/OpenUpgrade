@@ -23,6 +23,18 @@ def _handle_multi_location_visibility(env):
                 view.active = False
 
 
+def _handle_production_lot_portal_group(env):
+    """In v16, the setting `group_stock_production_lot` is linked to both internal and
+    portal users (group="base.group_user,base.group_portal"), while in v15 it was only
+    linked to internal users. The setting value is only True if all the groups imply
+    `stock.group_production_lot`, so we need to add it to the portal group if it was
+    enabled; otherwise the setting appears as disabled after the migration.
+    """
+    group_production_lot = env.ref("stock.group_production_lot")
+    if group_production_lot in env.ref("base.group_user").implied_ids:
+        env.ref("base.group_portal")._apply_group(group_production_lot)
+
+
 def _handle_stock_picking_backorder_strategy(env):
     # Handle the merge of OCA/stock-logistics-workflow/stock_picking_backorder_strategy
     # feature in odoo/stock V16 module.
@@ -63,6 +75,7 @@ def _complete_stock_move_quantity_done_with_orm(env):
 @openupgrade.migrate()
 def migrate(env, version):
     _handle_multi_location_visibility(env)
+    _handle_production_lot_portal_group(env)
     _handle_stock_picking_backorder_strategy(env)
     openupgrade.load_data(env.cr, "stock", "16.0.1.1/noupdate_changes.xml")
     _complete_stock_move_quantity_done_with_orm(env)
