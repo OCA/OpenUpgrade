@@ -58,6 +58,8 @@ merged_modules = {
     "account_reconcile_model_oca": "account_reconcile_oca",
     # OCA/bank-payment
     "account_payment_partner": "account_payment_mode",
+    # OCA/edi-framework
+    "edi_account_core_oca": "edi_account_oca",
     # OCA/hr
     "hr_employee_document_from_applicant": "hr_recruitment",
     # OCA/hr-holidays
