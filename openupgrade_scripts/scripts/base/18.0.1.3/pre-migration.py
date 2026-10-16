@@ -95,3 +95,8 @@ def migrate(cr, version):
     _fix_list_view_mode(cr)
     _fix_serbian_res_lang_record(cr)
     _fix_company_layout_background(cr)
+    # Crons created before 11.0 lack the XML ID of their server action,
+    # referenced by the stock and mrp procurement menus since 18.0
+    openupgrade.add_inherits_parent_xmlids(
+        cr, "ir.cron", "ir.actions.server", "ir_actions_server_id"
+    )
