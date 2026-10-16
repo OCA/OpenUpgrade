@@ -1,0 +1,7 @@
+<?xml version='1.0' encoding='utf-8'?>
+<odoo>
+    <!-- employee_admin is forcecreate="0" in hr_data.xml: loading it recreates the
+    employee without name when it was deleted, and otherwise only overwrites the
+    private email just migrated by _transfer_employee_private_data -->
+    <record id="employee_admin" position="replace" />
+</odoo>
