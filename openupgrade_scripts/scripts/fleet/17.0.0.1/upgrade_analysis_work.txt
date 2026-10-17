@@ -4,6 +4,7 @@ fleet        / fleet.vehicle            / activity_user_id (many2one)   : not re
 fleet        / fleet.vehicle            / activity_user_id (many2one)   : now a function
 fleet        / fleet.vehicle            / image_1024 (binary)           : NEW attachment: True, isrelated: related, stored
 fleet        / fleet.vehicle            / image_128 (binary)            : is now stored
+# DONE: post-migration: computed, as an attachment field is not computed when it becomes stored
 fleet        / fleet.vehicle            / image_1920 (binary)           : NEW attachment: True
 fleet        / fleet.vehicle            / image_256 (binary)            : NEW attachment: True, isrelated: related, stored
 fleet        / fleet.vehicle            / image_512 (binary)            : NEW attachment: True, isrelated: related, stored
@@ -20,6 +21,7 @@ fleet        / fleet.vehicle.log.services / message_main_attachment_id (many2one
 # NOTHING TO DO
 fleet        / fleet.vehicle.model      / image_1024 (binary)           : NEW attachment: True, isrelated: related, stored
 fleet        / fleet.vehicle.model      / image_128 (binary)            : is now stored
+# DONE: post-migration: computed, as an attachment field is not computed when it becomes stored
 fleet        / fleet.vehicle.model      / image_1920 (binary)           : NEW attachment: True
 fleet        / fleet.vehicle.model      / image_256 (binary)            : NEW attachment: True, isrelated: related, stored
 fleet        / fleet.vehicle.model      / image_512 (binary)            : NEW attachment: True, isrelated: related, stored
