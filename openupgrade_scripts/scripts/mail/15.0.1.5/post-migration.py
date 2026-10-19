@@ -80,6 +80,43 @@ def finish_migration_to_mail_group(env):
     )
 
 
+def _sub_placeholders(string, repl):
+    """
+    Replace each ${expression} by repl(expression).
+    The closing brace is found by balancing the braces and skipping quoted strings,
+    so expressions like ${create({"a": b}).name} are matched as a whole.
+    An unbalanced placeholder is left untouched.
+    """
+    result = []
+    pos = 0
+    while True:
+        start = string.find("${", pos)
+        if start == -1:
+            break
+        depth = 0
+        quote = None
+        for end in range(start + 1, len(string)):
+            char = string[end]
+            if quote:
+                if char == quote and string[end - 1] != "\\":
+                    quote = None
+            elif char in "\"'":
+                quote = char
+            elif char == "{":
+                depth += 1
+            elif char == "}":
+                depth -= 1
+                if depth == 0:
+                    break
+        else:
+            break
+        result.append(string[pos:start])
+        result.append(repl(string[start + 2 : end]))
+        pos = end + 1
+    result.append(string[pos:])
+    return "".join(result)
+
+
 def _migrate_placeholder_char(string):
     """
     Replace dynamic placeholders in char/text fields:
@@ -88,14 +125,11 @@ def _migrate_placeholder_char(string):
     if not string:
         return string
     string = re.sub(r"\s?\|\s?safe\s?", "", string)
-    pattern = r"\$\{([^}]*)\}"
-    repl = r"{{\1}}"
-    return re.sub(pattern, repl, string)
+    return _sub_placeholders(string, lambda expression: "{{%s}}" % expression)
 
 
-def repl_placeholder(match):
+def repl_placeholder(expression):
     """Aux. method. We declare it globally so we don't have scope issues from shell"""
-    (expression,) = match.groups()
     expression = html.escape(expression)
     return f'<t t-out="{expression}"></t>'
 
@@ -107,9 +141,7 @@ def _migrate_placeholder_html(string):
     Example:'${object.html_content | safe}' -> '<t t-out="object.html_content"></t>'
     """
     string = re.sub(r"\|\s*safe\s*(?=\W|$)", "", string)
-    pattern = r"\$\{([^}]*)\}"
-    string = re.sub(pattern, repl_placeholder, string)
-    return string
+    return _sub_placeholders(string, repl_placeholder)
 
 
 def _migrate_end(string):
