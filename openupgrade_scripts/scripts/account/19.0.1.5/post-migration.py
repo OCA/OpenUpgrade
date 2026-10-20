@@ -182,7 +182,7 @@ def account_move_line_no_followup(env):
 
 @openupgrade.migrate()
 def migrate(env, version):
-    openupgrade.load_data(env, "account", "19.0.1.4/noupdate_changes.xml")
+    openupgrade.load_data(env, "account", "19.0.1.5/noupdate_changes.xml")
     openupgrade.delete_record_translations(
         env.cr,
         "account",
