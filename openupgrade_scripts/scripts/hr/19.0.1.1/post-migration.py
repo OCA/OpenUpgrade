@@ -54,6 +54,15 @@ def fill_hr_version(env):
         f"ALTER TABLE hr_version ADD COLUMN IF NOT EXISTS {link_column} int",
     )
     env.cr.execute(f"UPDATE hr_version SET {link_column}=id")
+    if openupgrade.column_exists(env.cr, "hr_version", "contract_date_start"):
+        env.cr.execute(
+            """
+            UPDATE hr_version
+            SET date_version = contract_date_start
+            WHERE contract_date_start IS NOT NULL
+            AND date_version != contract_date_start
+            """
+        )
     env.cr.execute(
         f"""
         UPDATE hr_version
