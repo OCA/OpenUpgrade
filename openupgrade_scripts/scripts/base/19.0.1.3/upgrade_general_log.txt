@@ -90,6 +90,7 @@ new model l10n_cz.tax_office [module l10n_cz]
 new model l10n_in_edi.cancel [module l10n_in_edi]
 new model l10n.in.hr.leave.optional.holiday [module l10n_in_hr_holidays]
 new model l10n_in.pan.entity [module l10n_in]
+new model l10n_tr.ticarifatura.response.wizard [module l10n_tr_gib_invoice_scenarios]
 new model mail.activity.schedule.line [module mail]
 new model mail.followers.edit (renamed from mail.wizard.invite) [module mail]
 new model mail.message.link.preview [module mail]
@@ -136,9 +137,16 @@ new model website.technical.page [module website]
 # Found in other module: 143
 # Found with different type: 32
 # In obsolete models: 207
-# New columns: 1805
-# Not matched: 1002
+# New columns: 1815
+# Not matched: 1003
 ---XML records in module 'general'---
+---Probably obsolete module l10n_gr_edi_e_invoo_bridge---
+---Models in module 'l10n_gr_edi_e_invoo_bridge'---
+---Fields in module 'l10n_gr_edi_e_invoo_bridge'---
+l10n_gr_edi_e_invoo_bridge / res.company              / l10n_gr_edi_methodoos_api_token (char): DEL
+---XML records in module 'l10n_gr_edi_e_invoo_bridge'---
+DEL ir.ui.view: l10n_gr_edi_e_invoo_bridge.res_config_settings_form_inherit_l10n_gr_edi
+DEL ir.ui.view: l10n_gr_edi_e_invoo_bridge.view_company_form
 ---Probably obsolete module l10n_in_ewaybill_port---
 ---Models in module 'l10n_in_ewaybill_port'---
 ---Fields in module 'l10n_in_ewaybill_port'---
