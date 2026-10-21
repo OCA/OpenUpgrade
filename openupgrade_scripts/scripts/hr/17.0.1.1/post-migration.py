@@ -45,5 +45,10 @@ def _transfer_employee_private_data(env):
 @openupgrade.migrate()
 def migrate(env, version):
     _transfer_employee_private_data(env)
-    openupgrade.load_data(env, "hr", "17.0.1.1/noupdate_changes.xml")
+    openupgrade.load_data(
+        env,
+        "hr",
+        "17.0.1.1/noupdate_changes.xml",
+        xml_transformation_filename="17.0.1.1/noupdate_changes-transformation.xml",
+    )
     openupgrade.delete_records_safely_by_xml_id(env, _deleted_xml_records)
