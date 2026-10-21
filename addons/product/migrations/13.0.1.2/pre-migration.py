@@ -190,6 +190,37 @@ def calculate_product_product_combination_indices(env):
         ) grouped_pvc
         WHERE grouped_pvc.product_product_id = pp.id""",
     )
+    # variants without attribute values: Odoo computes an empty string
+    openupgrade.logged_query(
+        env.cr, """
+        UPDATE product_product pp
+        SET combination_indices = ''
+        WHERE NOT EXISTS (
+            SELECT 1 FROM product_attribute_value_product_product_rel pavppr
+            WHERE pavppr.product_product_id = pp.id)""",
+    )
+
+
+def archive_duplicated_variants(env):
+    """Before odoo/odoo@088edee2ce71, v12 could reactivate an archived variant
+    whose combination already had an active variant (remove an attribute from
+    the template and add it again). On v13 there can be only one active
+    variant per combination (product_product_combination_unique), so the
+    extra ones are archived, keeping the one with the lowest ID.
+    """
+    openupgrade.logged_query(
+        env.cr, """
+        UPDATE product_product pp
+        SET active = False
+        FROM (
+            SELECT id, ROW_NUMBER() OVER (
+                PARTITION BY product_tmpl_id, combination_indices
+                ORDER BY id) AS rn
+            FROM product_product
+            WHERE active AND combination_indices IS NOT NULL
+        ) dup
+        WHERE dup.id = pp.id AND dup.rn > 1""",
+    )
 
 
 def create_and_fill_product_variant_combination(env):
@@ -270,4 +301,5 @@ def migrate(env, version):
     insert_missing_product_template_attribute_value(env)
     fill_product_template_attribute_value__attribute_id_related(env)
     calculate_product_product_combination_indices(env)
+    archive_duplicated_variants(env)
     create_and_fill_product_variant_combination(env)
