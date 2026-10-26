@@ -1,0 +1,18 @@
+---Models in module 'l10n_tr_gib_invoice_scenarios'---
+new model l10n_tr.ticarifatura.response.wizard [transient]
+---Fields in module 'l10n_tr_gib_invoice_scenarios'---
+l10n_tr_gib_invoice_scenarios / account.move             / l10n_tr_gib_invoice_scenario (False): NEW selection_keys: ['KAMU', 'TEMELFATURA', 'TICARIFATURA'], mode: modify
+l10n_tr_gib_invoice_scenarios / account.move             / l10n_tr_gib_invoice_type (False): NEW selection_keys: ['IADE', 'IHRACKAYITLI', 'ISTISNA', 'SATIS', 'TEVKIFAT', 'TEVKIFATIADE'], mode: modify
+l10n_tr_gib_invoice_scenarios / account.move             / l10n_tr_nilvera_send_status (False): NEW selection_keys: ['commercial_answered_automatically', 'commercial_approved', 'commercial_rejected', 'error', 'not_sent', 'sent', 'succeed', 'unknown', 'waiting'], mode: modify
+l10n_tr_gib_invoice_scenarios / account.move             / l10n_tr_original_invoice_date (date): NEW
+l10n_tr_gib_invoice_scenarios / account.move             / l10n_tr_ticarifatura_last_checked_at (datetime): NEW
+l10n_tr_gib_invoice_scenarios / account.move.line        / l10n_tr_original_line_id (many2one): NEW relation: account.move.line
+l10n_tr_gib_invoice_scenarios / account.move.line        / l10n_tr_original_quantity (float): NEW
+l10n_tr_gib_invoice_scenarios / account.move.line        / l10n_tr_original_tax_without_withholding (float): NEW
+---XML records in module 'l10n_tr_gib_invoice_scenarios'---
+NEW ir.cron: l10n_tr_gib_invoice_scenarios.ir_cron_nilvera_sync_ticarifatura_response
+NEW ir.model.access: l10n_tr_gib_invoice_scenarios.access_l10n_tr_ticarifatura_response_wizard_group_invoicing
+NEW ir.ui.view: l10n_tr_gib_invoice_scenarios.account_move_form_view_l10n_tr_nilvera_extended
+NEW ir.ui.view: l10n_tr_gib_invoice_scenarios.account_nilvera_view_invoice_tree
+NEW ir.ui.view: l10n_tr_gib_invoice_scenarios.account_nilvera_view_move_form
+NEW ir.ui.view: l10n_tr_gib_invoice_scenarios.ticarifatura_response_wizard_form
