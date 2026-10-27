@@ -49,10 +49,15 @@ def update_from_coa_generic(env, spec):
             for record_id, record_data in template_data[model_name].items():
                 if not any(record_data.get(key) for key in field_names):
                     continue
+                record = ref_or_id(record_id, model_name)
+                if not record:
+                    # only complete existing records, _load_data would create
+                    # the missing ones with just the fields in spec
+                    continue
                 filtered = {
                     key: value
                     for key, value in record_data.items()
-                    if key in field_names and not ref_or_id(record_id, model_name)[key]
+                    if key in field_names and not record[key]
                 }
                 if filtered:
                     filtered_records[record_id] = filtered
