@@ -16,8 +16,10 @@ event_sale   / event.type.ticket        / price (float)                 : module
 event_sale   / event.type.ticket        / price_reduce (float)          : module is now 'event_product' ('event_sale')
 event_sale   / event.type.ticket        / product_id (many2one)         : module is now 'event_product' ('event_sale')
 event_sale   / product.product          / event_ticket_ids (one2many)   : module is now 'event_product' ('event_sale')
-event_sale   / product.template         / detailed_type (False)         : DEL selection_keys: ['combo', 'consu', 'event', 'product', 'service'], mode: modify
 # NOTHING TO DO: Module changed handled by ORM
+
+event_sale   / product.template         / detailed_type (False)         : DEL selection_keys: ['combo', 'consu', 'event', 'product', 'service'], mode: modify
+# DONE: pre-migration: Assign this new value to products with detailed_type='event'
 
 ---XML records in module 'event_sale'---
 NEW ir.ui.view: event_sale.product_template_form_view
