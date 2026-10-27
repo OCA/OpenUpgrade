@@ -16,8 +16,10 @@ event_product / event.type.ticket        / price (float)                 : previ
 event_product / event.type.ticket        / price_reduce (float)          : previously in module event_sale
 event_product / event.type.ticket        / product_id (many2one)         : previously in module event_sale
 event_product / product.product          / event_ticket_ids (one2many)   : previously in module event_sale
-event_product / product.template         / service_tracking (False)      : NEW selection_keys: ['event', 'no'], mode: modify
 # NOTHING TO DO: Moved to this module, and handled by ORM (doing the field/model XML-IDs renaming)
+
+event_product / product.template         / service_tracking (False)      : NEW selection_keys: ['event', 'no'], mode: modify
+# NOTHING TO DO: Handled in event_sale migration
 
 ---XML records in module 'event_product'---
 NEW ir.ui.view: event_product.event_event_ticket_form_view
