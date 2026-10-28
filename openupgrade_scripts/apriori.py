@@ -32,6 +32,8 @@ renamed_modules = {
     "account_vat_period_end_statement": "l10n_it_account_vat_period_end_settlement",
     "currency_rate_update_boi": "l10n_it_currency_rate_update_boi",
     "l10n_it_vat_statement_communication": "l10n_it_vat_settlement_communication",
+    # OCA/multi-company
+    "company_dependent_flag": "web_field_company_dependent_flag",
     # OCA/product-attribute
     "product_packaging_type_vendor": "product_packaging_level_vendor",
     "product_supplierinfo_for_customer": "product_customerinfo",
