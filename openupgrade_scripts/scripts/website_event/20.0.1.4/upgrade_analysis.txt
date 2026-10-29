@@ -1,0 +1,77 @@
+---Models in module 'website_event'---
+---Fields in module 'website_event'---
+website_event / event.event              / breadcrumb_visible (boolean)  : NEW hasdefault: default
+website_event / event.event              / publish_on (datetime)         : NEW
+website_event / event.event              / published_date (datetime)     : NEW
+website_event / event.tag                / publish_on (datetime)         : NEW
+website_event / event.tag                / published_date (datetime)     : NEW
+website_event / event.tag.category       / publish_on (datetime)         : NEW
+website_event / event.tag.category       / published_date (datetime)     : NEW
+website_event / website.track            / event_id (many2one)           : NEW relation: event.event
+---XML records in module 'website_event'---
+NEW ir.access: website_event.access_event_event_employee
+NEW ir.access: website_event.access_event_event_slot_employee
+NEW ir.access: website_event.access_event_event_ticket_employee
+NEW ir.access: website_event.access_event_tag_category_public
+NEW ir.access: website_event.access_event_tag_employee
+NEW ir.access: website_event.access_website_event_menu_public
+NEW ir.access: website_event.access_website_event_menu_user
+NEW ir.access: website_event.access_website_visitor_user
+NEW ir.access: website_event.event_event_public
+NEW ir.access: website_event.ir_rule_event_event_ticket_public
+NEW ir.access: website_event.ir_rule_event_question_answer_event_user
+NEW ir.access: website_event.ir_rule_event_question_answer_published
+NEW ir.access: website_event.ir_rule_event_question_event_user
+NEW ir.access: website_event.ir_rule_event_question_published
+NEW ir.access: website_event.ir_rule_event_slot_public
+NEW ir.access: website_event.ir_rule_event_tag_public
+NEW ir.access: website_event.ir_rule_view_event_manager
+NEW ir.actions.act_window: website_event.website_event_visitor_event_action
+DEL ir.asset: website_event.s_searchbar_000_xml
+DEL ir.model.access: website_event.access_event_event_employee
+DEL ir.model.access: website_event.access_event_event_portal
+DEL ir.model.access: website_event.access_event_event_public
+DEL ir.model.access: website_event.access_event_event_slot_employee
+DEL ir.model.access: website_event.access_event_event_slot_portal
+DEL ir.model.access: website_event.access_event_event_slot_public
+DEL ir.model.access: website_event.access_event_event_ticket_employee
+DEL ir.model.access: website_event.access_event_event_ticket_portal
+DEL ir.model.access: website_event.access_event_event_ticket_public
+DEL ir.model.access: website_event.access_event_question_answer_portal
+DEL ir.model.access: website_event.access_event_question_answer_public
+DEL ir.model.access: website_event.access_event_question_answer_user
+DEL ir.model.access: website_event.access_event_question_portal
+DEL ir.model.access: website_event.access_event_question_public
+DEL ir.model.access: website_event.access_event_question_user
+DEL ir.model.access: website_event.access_event_tag_category_employee
+DEL ir.model.access: website_event.access_event_tag_category_portal
+DEL ir.model.access: website_event.access_event_tag_category_public
+DEL ir.model.access: website_event.access_event_tag_employee
+DEL ir.model.access: website_event.access_event_tag_portal
+DEL ir.model.access: website_event.access_event_tag_public
+DEL ir.model.access: website_event.access_event_type
+DEL ir.model.access: website_event.access_website_event_menu_employee
+DEL ir.model.access: website_event.access_website_event_menu_portal
+DEL ir.model.access: website_event.access_website_event_menu_public
+DEL ir.model.access: website_event.access_website_event_menu_user
+DEL ir.model.access: website_event.access_website_visitor_user
+DEL ir.rule: website_event.event_event_public (noupdate)
+DEL ir.rule: website_event.ir_rule_event_event_ticket_public (noupdate)
+DEL ir.rule: website_event.ir_rule_event_question_answer_event_user (noupdate)
+DEL ir.rule: website_event.ir_rule_event_question_answer_published (noupdate)
+DEL ir.rule: website_event.ir_rule_event_question_event_user (noupdate)
+DEL ir.rule: website_event.ir_rule_event_question_published (noupdate)
+DEL ir.rule: website_event.ir_rule_event_slot_public (noupdate)
+DEL ir.rule: website_event.ir_rule_event_tag_public (noupdate)
+NEW ir.ui.view: website_event.event_card
+NEW ir.ui.view: website_event.event_location_include_online
+NEW ir.ui.view: website_event.portal_my_events
+NEW ir.ui.view: website_event.s_event_upcoming_snippet_preview_data_carousel
+NEW ir.ui.view: website_event.s_events_carousel
+NEW ir.ui.view: website_event.s_events_carousel_preview_card
+NEW ir.ui.view: website_event.website_event_visitor_page_view_search
+NEW ir.ui.view: website_event.website_event_visitor_page_view_tree
+NEW ir.ui.view: website_event.website_event_visitor_track_view_tree
+DEL ir.ui.view: website_event.s_speaker_bio
+NEW mail.message.subtype: website_event.mt_event_scheduled (noupdate)
+NEW mail.message.subtype: website_event.mt_event_unscheduled (noupdate)

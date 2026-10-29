@@ -1,0 +1,444 @@
+---Models in module 'website'---
+model website (moved to base)
+new model website.llms [transient]
+new model website.located.mixin [abstract]
+new model website.structured_data.mixin [abstract]
+new model website.trackable.mixin [abstract]
+---Fields in module 'website'---
+website      / digest.digest            / kpi_website_track_count (boolean): NEW
+website      / digest.digest            / kpi_website_visitor_count (boolean): NEW
+website      / ir.ui.view               / visibility (selection)        : now required
+website      / ir.ui.view               / visibility (selection)        : selection_keys added: [public], removed: []
+website      / res.partner              / publish_on (datetime)         : NEW
+website      / res.partner              / published_date (datetime)     : NEW
+website      / theme.website.page       / breadcrumb_color (char)       : NEW
+website      / theme.website.page       / breadcrumb_overlay (boolean)  : NEW
+website      / theme.website.page       / breadcrumb_text_color (char)  : NEW
+website      / theme.website.page       / breadcrumb_visible (boolean)  : NEW hasdefault: default
+website      / theme.website.page       / url (char)                    : now translatable
+website      / website                  / _order                        : module is now 'base' ('website')
+website      / website                  / company_id (many2one)         : module is now 'base' ('website')
+website      / website                  / cookie_policy_id (many2one)   : NEW relation: website.page
+website      / website                  / display_name (char)           : module is now 'base' ('website')
+website      / website                  / domain (char)                 : module is now 'base' ('website')
+website      / website                  / domain_punycode (char)        : module is now 'base' ('website')
+website      / website                  / header_search_limit (integer) : NEW hasdefault: default
+website      / website                  / header_search_order_by (char) : NEW required, hasdefault: default
+website      / website                  / header_search_type (char)     : NEW required, hasdefault: default
+website      / website                  / llms_txt (text)               : NEW
+website      / website                  / name (char)                   : module is now 'base' ('website')
+website      / website                  / sequence (integer)            : module is now 'base' ('website')
+website      / website                  / social_discord (char)         : DEL
+website      / website                  / social_facebook (char)        : DEL
+website      / website                  / social_github (char)          : DEL
+website      / website                  / social_instagram (char)       : DEL
+website      / website                  / social_linkedin (char)        : DEL
+website      / website                  / social_tiktok (char)          : DEL
+website      / website                  / social_twitter (char)         : DEL
+website      / website                  / social_youtube (char)         : DEL
+website      / website                  / user_id (many2one)            : module is now 'base' ('website')
+website      / website.configurator.feature / icon_class (char)             : NEW
+website      / website.controller.page  / publish_on (datetime)         : NEW
+website      / website.controller.page  / published_date (datetime)     : NEW
+website      / website.controller.page  / visibility (selection)        : now required
+website      / website.menu             / manual_url (char)             : NEW
+website      / website.menu             / url (char)                    : not stored anymore
+website      / website.menu             / url (char)                    : now a function
+website      / website.page             / breadcrumb_color (char)       : NEW
+website      / website.page             / breadcrumb_overlay (boolean)  : NEW
+website      / website.page             / breadcrumb_text_color (char)  : NEW
+website      / website.page             / breadcrumb_visible (boolean)  : NEW hasdefault: default
+website      / website.page             / date_publish (datetime)       : DEL
+website      / website.page             / name (char)                   : is now stored
+website      / website.page             / name (char)                   : not related anymore
+website      / website.page             / name (char)                   : now a function
+website      / website.page             / name (char)                   : now translatable
+website      / website.page             / parent_id (many2one)          : NEW relation: website.page
+website      / website.page             / publish_on (datetime)         : NEW
+website      / website.page             / published_date (datetime)     : NEW
+website      / website.page             / url (char)                    : now translatable
+website      / website.page             / visibility (selection)        : now required
+website      / website.rewrite          / redirect_type (selection)     : now required
+website      / website.rewrite          / url_from (char)               : now required
+website      / website.snippet.filter   / publish_on (datetime)         : NEW
+website      / website.snippet.filter   / published_date (datetime)     : NEW
+website      / website.track            / _order                        : _order is now 'visit_datetime DESC, id DESC' ('visit_datetime DESC')
+---XML records in module 'website'---
+NEW ir.access: website.access_portal_entry
+NEW ir.access: website.access_seo_designer
+NEW ir.access: website.access_seo_public_public
+NEW ir.access: website.access_theme_ir_asset_group_system
+NEW ir.access: website.access_theme_ir_attachment
+NEW ir.access: website.access_theme_ir_ui_view
+NEW ir.access: website.access_theme_website_menu
+NEW ir.access: website.access_theme_website_page
+NEW ir.access: website.access_website_configurator_feature_designer
+NEW ir.access: website.access_website_custom_blocked_third_party_domains
+NEW ir.access: website.access_website_designer
+NEW ir.access: website.access_website_dynamic_filter_system
+NEW ir.access: website.access_website_ir_asset_designer
+NEW ir.access: website.access_website_llms
+NEW ir.access: website.access_website_menu_designer
+NEW ir.access: website.access_website_menu_public
+NEW ir.access: website.access_website_page_designer
+NEW ir.access: website.access_website_page_properties_base_designer
+NEW ir.access: website.access_website_page_properties_base_employee
+NEW ir.access: website.access_website_page_properties_designer
+NEW ir.access: website.access_website_page_properties_employee
+NEW ir.access: website.access_website_rewrite_designer
+NEW ir.access: website.access_website_robots
+NEW ir.access: website.access_website_route_designer
+NEW ir.access: website.access_website_technical_page
+NEW ir.access: website.access_website_track_designer
+NEW ir.access: website.access_website_visitor_designer
+NEW ir.access: website.website_designer_edit_qweb
+NEW ir.access: website.website_designer_view
+NEW ir.access: website.website_group_system_edit_all_views
+NEW ir.access: website.website_menu
+NEW ir.access: website.website_page_controller_rule_designer
+NEW ir.access: website.website_page_controller_rule_public
+NEW ir.asset: website.s_age_verification_popup_001_scss
+NEW ir.asset: website.s_animated_cover_000_scss
+NEW ir.asset: website.s_avatars_000_scss
+NEW ir.asset: website.s_bento_features_000_scss
+NEW ir.asset: website.s_bento_grid_000_scss
+NEW ir.asset: website.s_bento_grid_avatars_000_scss
+NEW ir.asset: website.s_countdown_000_scss
+NEW ir.asset: website.s_countdown_001_scss
+NEW ir.asset: website.s_icon_list_000_scss
+NEW ir.asset: website.s_mega_menu_dropzone_000_scss
+NEW ir.asset: website.s_references_tiles_000_scss
+NEW ir.asset: website.s_splash_intro_000_scss
+NEW ir.asset: website.s_whatsapp_000_scss
+NEW ir.asset: website.s_whatsapp_chatbox_xml
+DEL ir.asset: website.s_image_gallery_000_xml
+DEL ir.asset: website.s_image_gallery_001_xml
+NEW ir.attachment: website.landscape_md_1
+NEW ir.attachment: website.landscape_md_2
+NEW ir.attachment: website.landscape_md_3
+NEW ir.attachment: website.landscape_md_4
+NEW ir.attachment: website.landscape_md_5
+NEW ir.attachment: website.landscape_md_6
+NEW ir.attachment: website.landscape_md_7
+NEW ir.attachment: website.landscape_md_8
+NEW ir.attachment: website.landscape_md_9
+NEW ir.attachment: website.landscape_xl_1
+NEW ir.attachment: website.landscape_xl_2
+NEW ir.attachment: website.landscape_xl_3
+NEW ir.attachment: website.portrait_lg_1
+NEW ir.attachment: website.portrait_lg_2
+NEW ir.attachment: website.portrait_lg_3
+NEW ir.attachment: website.s_launch_countdown_default_image
+NEW ir.attachment: website.s_newsletter_aside_default_image
+NEW ir.attachment: website.s_splash_intro_default_image
+NEW ir.attachment: website.set_1_landscape_md_1
+NEW ir.attachment: website.set_1_landscape_md_2
+NEW ir.attachment: website.set_1_landscape_md_3
+NEW ir.attachment: website.set_2_square_md_1
+NEW ir.attachment: website.set_2_square_md_2
+NEW ir.attachment: website.set_2_square_md_3
+NEW ir.attachment: website.set_2_square_md_4
+NEW ir.attachment: website.set_2_square_md_5
+NEW ir.attachment: website.set_2_square_md_6
+NEW ir.attachment: website.set_2_square_md_7
+NEW ir.attachment: website.set_avatars_square_md_1
+NEW ir.attachment: website.set_avatars_square_md_2
+NEW ir.attachment: website.set_avatars_square_md_3
+NEW ir.attachment: website.set_avatars_square_md_4
+NEW ir.attachment: website.set_avatars_square_md_5
+NEW ir.attachment: website.set_avatars_square_md_6
+NEW ir.attachment: website.set_catalog_landscape_lg_1
+NEW ir.attachment: website.set_catalog_landscape_lg_2
+NEW ir.attachment: website.set_catalog_landscape_lg_3
+NEW ir.attachment: website.set_catalog_landscape_lg_4
+NEW ir.attachment: website.set_catalog_portrait_md_1
+NEW ir.attachment: website.set_catalog_square_md_1
+NEW ir.attachment: website.set_catalog_square_md_2
+NEW ir.attachment: website.set_catalog_square_md_3
+NEW ir.attachment: website.set_catalog_square_md_4
+NEW ir.attachment: website.set_catalog_square_md_5
+NEW ir.attachment: website.set_catalog_square_md_6
+NEW ir.attachment: website.set_doers_portrait_lg_1
+NEW ir.attachment: website.set_ui_landscape_xl_1
+NEW ir.attachment: website.ultrawide_lg_1
+NEW ir.attachment: website.ultrawide_lg_2
+NEW ir.attachment: website.ultrawide_lg_3
+NEW ir.attachment: website.ultrawide_lg_4
+NEW ir.attachment: website.ultrawide_lg_5
+NEW ir.attachment: website.ultrawide_lg_6
+NEW ir.cron: website.ir_cron_publish_scheduled_pages
+DEL ir.model.access: website.access_seo_designer
+DEL ir.model.access: website.access_seo_public_employee
+DEL ir.model.access: website.access_seo_public_portal
+DEL ir.model.access: website.access_seo_public_public
+DEL ir.model.access: website.access_theme_ir_asset_group_system
+DEL ir.model.access: website.access_theme_ir_attachment
+DEL ir.model.access: website.access_theme_ir_ui_view
+DEL ir.model.access: website.access_theme_website_menu
+DEL ir.model.access: website.access_theme_website_page
+DEL ir.model.access: website.access_website_configurator_feature_designer
+DEL ir.model.access: website.access_website_controller_page_designer
+DEL ir.model.access: website.access_website_controller_page_public
+DEL ir.model.access: website.access_website_custom_blocked_third_party_domains
+DEL ir.model.access: website.access_website_designer
+DEL ir.model.access: website.access_website_dynamic_filter_public
+DEL ir.model.access: website.access_website_dynamic_filter_system
+DEL ir.model.access: website.access_website_ir_asset_designer
+DEL ir.model.access: website.access_website_ir_ui_view_designer
+DEL ir.model.access: website.access_website_ir_ui_view_restricted_editor
+DEL ir.model.access: website.access_website_menu_designer
+DEL ir.model.access: website.access_website_menu_employee
+DEL ir.model.access: website.access_website_menu_portal
+DEL ir.model.access: website.access_website_menu_public
+DEL ir.model.access: website.access_website_page_designer
+DEL ir.model.access: website.access_website_page_properties_base_designer
+DEL ir.model.access: website.access_website_page_properties_base_employee
+DEL ir.model.access: website.access_website_page_properties_base_portal
+DEL ir.model.access: website.access_website_page_properties_base_public
+DEL ir.model.access: website.access_website_page_properties_designer
+DEL ir.model.access: website.access_website_page_properties_employee
+DEL ir.model.access: website.access_website_page_properties_portal
+DEL ir.model.access: website.access_website_page_properties_public
+DEL ir.model.access: website.access_website_public_employee
+DEL ir.model.access: website.access_website_public_portal
+DEL ir.model.access: website.access_website_public_public
+DEL ir.model.access: website.access_website_rewrite
+DEL ir.model.access: website.access_website_rewrite_designer
+DEL ir.model.access: website.access_website_robots
+DEL ir.model.access: website.access_website_route_designer
+DEL ir.model.access: website.access_website_technical_page
+DEL ir.model.access: website.access_website_track_designer
+DEL ir.model.access: website.access_website_track_system
+DEL ir.model.access: website.access_website_visitor_designer
+DEL ir.model.access: website.access_website_visitor_system
+DEL ir.model.constraint: website.constraint_website_domain_unique [renamed to base module]
+DEL ir.rule: website.view_rule_visibility_connected (noupdate)
+DEL ir.rule: website.view_rule_visibility_public (noupdate)
+DEL ir.rule: website.website_designer_edit_qweb (noupdate)
+DEL ir.rule: website.website_designer_view (noupdate)
+DEL ir.rule: website.website_group_system_edit_all_views (noupdate)
+DEL ir.rule: website.website_menu (noupdate)
+DEL ir.rule: website.website_page_controller_rule_public
+DEL ir.rule: website.website_page_rule_public (noupdate)
+NEW ir.ui.view: website.400_hide_error
+NEW ir.ui.view: website.403_hide_error
+NEW ir.ui.view: website.415_hide_error
+NEW ir.ui.view: website.422_hide_error
+NEW ir.ui.view: website.4xx_hide_error
+NEW ir.ui.view: website.digest_digest_view_form
+NEW ir.ui.view: website.font_links
+NEW ir.ui.view: website.footer_cookie_policy_link
+NEW ir.ui.view: website.icons_fonts_preload
+NEW ir.ui.view: website.new_page_template_about_us_s_company_team_spotlight
+NEW ir.ui.view: website.new_page_template_about_us_s_title_split
+NEW ir.ui.view: website.new_page_template_contact_us_s_duo_images
+NEW ir.ui.view: website.new_page_template_portfolio_s_announcement_scroll
+NEW ir.ui.view: website.new_page_template_portfolio_s_projects_grid_minimal
+NEW ir.ui.view: website.new_page_template_portfolio_s_timeline_images
+NEW ir.ui.view: website.new_page_template_portfolio_s_title
+NEW ir.ui.view: website.new_page_template_portfolio_s_title_split
+NEW ir.ui.view: website.new_page_template_s_announcement_scroll
+NEW ir.ui.view: website.new_page_template_s_company_team_spotlight
+NEW ir.ui.view: website.new_page_template_s_duo_images
+NEW ir.ui.view: website.new_page_template_s_projects_grid_minimal
+NEW ir.ui.view: website.new_page_template_s_timeline_images
+NEW ir.ui.view: website.new_page_template_s_title
+NEW ir.ui.view: website.new_page_template_s_title_split
+NEW ir.ui.view: website.new_page_template_services_s_title_split
+NEW ir.ui.view: website.new_page_template_utility_0_s_title_split
+NEW ir.ui.view: website.new_page_template_utility_1_s_title_split
+NEW ir.ui.view: website.new_page_template_utility_s_title_split
+NEW ir.ui.view: website.option_header_disclaimer
+NEW ir.ui.view: website.placeholder_header_disclaimer
+NEW ir.ui.view: website.s_about_bold
+NEW ir.ui.view: website.s_achievements_list
+NEW ir.ui.view: website.s_achievements_list_item
+NEW ir.ui.view: website.s_age_verification_popup
+NEW ir.ui.view: website.s_animated_cover
+NEW ir.ui.view: website.s_animated_number
+NEW ir.ui.view: website.s_avatars
+NEW ir.ui.view: website.s_awards_list
+NEW ir.ui.view: website.s_banner_contained
+NEW ir.ui.view: website.s_banner_glow
+NEW ir.ui.view: website.s_bento_features
+NEW ir.ui.view: website.s_bento_grid_avatars
+NEW ir.ui.view: website.s_chart_text
+NEW ir.ui.view: website.s_countdown_big_numbers_template
+NEW ir.ui.view: website.s_countdown_bordered_text_template
+NEW ir.ui.view: website.s_countdown_circle_template
+NEW ir.ui.view: website.s_countdown_dominoes_template
+NEW ir.ui.view: website.s_countdown_text_template
+NEW ir.ui.view: website.s_countdown_wrapped_numbers_template
+NEW ir.ui.view: website.s_cta_centered
+NEW ir.ui.view: website.s_duo_images
+NEW ir.ui.view: website.s_dynamic_snippet_carousel_preview_data
+NEW ir.ui.view: website.s_faq_collapse_centered
+NEW ir.ui.view: website.s_features_cards
+NEW ir.ui.view: website.s_features_image
+NEW ir.ui.view: website.s_hero_about
+NEW ir.ui.view: website.s_hero_maintenance
+NEW ir.ui.view: website.s_hero_minimalist
+NEW ir.ui.view: website.s_hours_and_place
+NEW ir.ui.view: website.s_icon
+NEW ir.ui.view: website.s_icon_list
+NEW ir.ui.view: website.s_image_features
+NEW ir.ui.view: website.s_image_text_full
+NEW ir.ui.view: website.s_intro_spotlight
+NEW ir.ui.view: website.s_launch_countdown
+NEW ir.ui.view: website.s_manifesto
+NEW ir.ui.view: website.s_masonry_block_quad_template
+NEW ir.ui.view: website.s_mega_menu_dropzone
+NEW ir.ui.view: website.s_numbers_inline
+NEW ir.ui.view: website.s_numbers_lite
+NEW ir.ui.view: website.s_opening_hours_alt
+NEW ir.ui.view: website.s_projects_grid
+NEW ir.ui.view: website.s_projects_grid_minimal
+NEW ir.ui.view: website.s_projects_list
+NEW ir.ui.view: website.s_references_columns
+NEW ir.ui.view: website.s_references_lite
+NEW ir.ui.view: website.s_references_tiles
+NEW ir.ui.view: website.s_services_grid
+NEW ir.ui.view: website.s_services_pack
+NEW ir.ui.view: website.s_showcase_square
+NEW ir.ui.view: website.s_splash_intro
+NEW ir.ui.view: website.s_text_block_split
+NEW ir.ui.view: website.s_text_bold
+NEW ir.ui.view: website.s_text_chart
+NEW ir.ui.view: website.s_text_image_full
+NEW ir.ui.view: website.s_title_split
+NEW ir.ui.view: website.s_website_form_bold
+NEW ir.ui.view: website.s_whatsapp
+NEW ir.ui.view: website.search_image_item_view
+NEW ir.ui.view: website.search_result_items
+NEW ir.ui.view: website.search_tags_highlight
+NEW ir.ui.view: website.theme_colors_preview
+NEW ir.ui.view: website.unpublished_badge
+NEW ir.ui.view: website.view_edit_llms
+DEL ir.ui.view: website.header_search_box_input
+DEL ir.ui.view: website.new_page_template_about_full_1_s_text_block_h1
+DEL ir.ui.view: website.new_page_template_about_full_1_s_text_block_h2
+DEL ir.ui.view: website.new_page_template_about_full_s_image_text
+DEL ir.ui.view: website.new_page_template_about_full_s_numbers
+DEL ir.ui.view: website.new_page_template_about_full_s_text_image
+DEL ir.ui.view: website.new_page_template_about_map_s_text_block_2nd
+DEL ir.ui.view: website.new_page_template_about_map_s_text_block_h1
+DEL ir.ui.view: website.new_page_template_about_map_s_text_block_h2
+DEL ir.ui.view: website.new_page_template_about_mini_s_text_block_h2
+DEL ir.ui.view: website.new_page_template_about_personal_s_image_text
+DEL ir.ui.view: website.new_page_template_about_personal_s_numbers
+DEL ir.ui.view: website.new_page_template_about_personal_s_text_block_h2
+DEL ir.ui.view: website.new_page_template_about_s_banner
+DEL ir.ui.view: website.new_page_template_about_s_company_team
+DEL ir.ui.view: website.new_page_template_about_s_cover
+DEL ir.ui.view: website.new_page_template_about_s_features
+DEL ir.ui.view: website.new_page_template_about_s_image_text
+DEL ir.ui.view: website.new_page_template_about_s_numbers
+DEL ir.ui.view: website.new_page_template_about_s_picture
+DEL ir.ui.view: website.new_page_template_about_s_text_block_2nd
+DEL ir.ui.view: website.new_page_template_about_s_text_block_h1
+DEL ir.ui.view: website.new_page_template_about_s_text_block_h2
+DEL ir.ui.view: website.new_page_template_about_s_text_cover
+DEL ir.ui.view: website.new_page_template_about_s_text_image
+DEL ir.ui.view: website.new_page_template_about_s_three_columns
+DEL ir.ui.view: website.new_page_template_about_timeline_s_text_block_h2
+DEL ir.ui.view: website.new_page_template_basic_2_s_text_block_h1
+DEL ir.ui.view: website.new_page_template_basic_s_picture
+DEL ir.ui.view: website.new_page_template_basic_s_quotes_carousel
+DEL ir.ui.view: website.new_page_template_basic_s_text_block_h1
+DEL ir.ui.view: website.new_page_template_basic_s_text_cover
+DEL ir.ui.view: website.new_page_template_gallery_s_banner
+DEL ir.ui.view: website.new_page_template_gallery_s_image_text_2nd
+DEL ir.ui.view: website.new_page_template_gallery_s_text_block_2nd
+DEL ir.ui.view: website.new_page_template_gallery_s_text_block_h1
+DEL ir.ui.view: website.new_page_template_landing_0_s_cover
+DEL ir.ui.view: website.new_page_template_landing_1_s_banner
+DEL ir.ui.view: website.new_page_template_landing_2_s_call_to_action
+DEL ir.ui.view: website.new_page_template_landing_2_s_cover
+DEL ir.ui.view: website.new_page_template_landing_2_s_text_block_h2
+DEL ir.ui.view: website.new_page_template_landing_2_s_three_columns
+DEL ir.ui.view: website.new_page_template_landing_3_s_call_to_action
+DEL ir.ui.view: website.new_page_template_landing_3_s_text_block_h2
+DEL ir.ui.view: website.new_page_template_landing_3_s_three_columns
+DEL ir.ui.view: website.new_page_template_landing_4_s_cover
+DEL ir.ui.view: website.new_page_template_landing_4_s_text_block_h2
+DEL ir.ui.view: website.new_page_template_landing_5_s_banner
+DEL ir.ui.view: website.new_page_template_landing_s_banner
+DEL ir.ui.view: website.new_page_template_landing_s_call_to_action
+DEL ir.ui.view: website.new_page_template_landing_s_color_blocks_2
+DEL ir.ui.view: website.new_page_template_landing_s_cover
+DEL ir.ui.view: website.new_page_template_landing_s_features
+DEL ir.ui.view: website.new_page_template_landing_s_showcase
+DEL ir.ui.view: website.new_page_template_landing_s_text_block_h2
+DEL ir.ui.view: website.new_page_template_landing_s_text_cover
+DEL ir.ui.view: website.new_page_template_landing_s_text_image
+DEL ir.ui.view: website.new_page_template_landing_s_three_columns
+DEL ir.ui.view: website.new_page_template_pricing_5_s_text_block_h1
+DEL ir.ui.view: website.new_page_template_pricing_s_image_text_2nd
+DEL ir.ui.view: website.new_page_template_pricing_s_text_block_2nd
+DEL ir.ui.view: website.new_page_template_pricing_s_text_block_h1
+DEL ir.ui.view: website.new_page_template_pricing_s_text_block_h2
+DEL ir.ui.view: website.new_page_template_s_banner
+DEL ir.ui.view: website.new_page_template_s_call_to_action
+DEL ir.ui.view: website.new_page_template_s_carousel
+DEL ir.ui.view: website.new_page_template_s_color_blocks_2
+DEL ir.ui.view: website.new_page_template_s_company_team
+DEL ir.ui.view: website.new_page_template_s_cover
+DEL ir.ui.view: website.new_page_template_s_features
+DEL ir.ui.view: website.new_page_template_s_image_gallery
+DEL ir.ui.view: website.new_page_template_s_image_text
+DEL ir.ui.view: website.new_page_template_s_image_text_2nd
+DEL ir.ui.view: website.new_page_template_s_images_wall
+DEL ir.ui.view: website.new_page_template_s_media_list
+DEL ir.ui.view: website.new_page_template_s_numbers
+DEL ir.ui.view: website.new_page_template_s_parallax
+DEL ir.ui.view: website.new_page_template_s_picture
+DEL ir.ui.view: website.new_page_template_s_quotes_carousel
+DEL ir.ui.view: website.new_page_template_s_references
+DEL ir.ui.view: website.new_page_template_s_showcase
+DEL ir.ui.view: website.new_page_template_s_text_block_2nd
+DEL ir.ui.view: website.new_page_template_s_text_block_h1
+DEL ir.ui.view: website.new_page_template_s_text_block_h2
+DEL ir.ui.view: website.new_page_template_s_text_cover
+DEL ir.ui.view: website.new_page_template_s_text_image
+DEL ir.ui.view: website.new_page_template_s_three_columns
+DEL ir.ui.view: website.new_page_template_services_0_s_three_columns
+DEL ir.ui.view: website.new_page_template_services_3_s_text_block_h1
+DEL ir.ui.view: website.new_page_template_services_s_image_text
+DEL ir.ui.view: website.new_page_template_services_s_image_text_2nd
+DEL ir.ui.view: website.new_page_template_services_s_parallax
+DEL ir.ui.view: website.new_page_template_services_s_text_block_2nd
+DEL ir.ui.view: website.new_page_template_services_s_text_block_h1
+DEL ir.ui.view: website.new_page_template_services_s_text_block_h2
+DEL ir.ui.view: website.new_page_template_services_s_text_cover
+DEL ir.ui.view: website.new_page_template_services_s_text_image
+DEL ir.ui.view: website.new_page_template_services_s_three_columns
+DEL ir.ui.view: website.new_page_template_team_0_s_three_columns
+DEL ir.ui.view: website.new_page_template_team_2_s_text_block_h1
+DEL ir.ui.view: website.new_page_template_team_s_image_gallery
+DEL ir.ui.view: website.new_page_template_team_s_image_text
+DEL ir.ui.view: website.new_page_template_team_s_image_text_2nd
+DEL ir.ui.view: website.new_page_template_team_s_images_wall
+DEL ir.ui.view: website.new_page_template_team_s_media_list
+DEL ir.ui.view: website.new_page_template_team_s_picture
+DEL ir.ui.view: website.new_page_template_team_s_text_block_h1
+DEL ir.ui.view: website.new_page_template_team_s_text_image
+DEL ir.ui.view: website.new_page_template_team_s_three_columns
+DEL ir.ui.view: website.one_hybrid
+DEL ir.ui.view: website.s_call_to_action_about
+DEL ir.ui.view: website.s_call_to_action_digital
+DEL ir.ui.view: website.s_call_to_action_menu
+DEL ir.ui.view: website.s_image_text_2nd
+DEL ir.ui.view: website.s_picture_only
+DEL ir.ui.view: website.s_text_block_2nd
+DEL ir.ui.view: website.s_text_block_h1
+DEL ir.ui.view: website.s_text_block_h2
+DEL ir.ui.view: website.s_text_block_h2_contact
+DEL ir.ui.view: website.s_three_columns_2nd
+DEL ir.ui.view: website.s_three_columns_menu
+DEL website: website.default_website [renamed to base module] (noupdate)
+DEL website.configurator.feature: website.feature_module_forum
+DEL website.configurator.feature: website.feature_module_stores_locator
+DEL website.configurator.feature: website.feature_module_success_stories
+DEL website.configurator.feature: website.feature_page_privacy_policy
+DEL website.menu: website.menu_contactus (noupdate)
+NEW website.page: website.privacy_policy_page (noupdate)

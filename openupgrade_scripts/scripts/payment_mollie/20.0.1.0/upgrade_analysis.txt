@@ -1,0 +1,32 @@
+---Models in module 'payment_mollie'---
+---Fields in module 'payment_mollie'---
+payment_mollie / payment.token            / mollie_customer_id (char)     : NEW
+---XML records in module 'payment_mollie'---
+DEL ir.ui.view: payment_mollie.redirect_form
+NEW payment.method: payment_mollie.payment_method_amex (noupdate)
+NEW payment.method: payment_mollie.payment_method_apple_pay (noupdate)
+NEW payment.method: payment_mollie.payment_method_bancontact (noupdate)
+NEW payment.method: payment_mollie.payment_method_bank_transfer (noupdate)
+NEW payment.method: payment_mollie.payment_method_belfius (noupdate)
+NEW payment.method: payment_mollie.payment_method_blik (noupdate)
+NEW payment.method: payment_mollie.payment_method_card (noupdate)
+NEW payment.method: payment_mollie.payment_method_cartes_bancaires (noupdate)
+NEW payment.method: payment_mollie.payment_method_discover (noupdate)
+NEW payment.method: payment_mollie.payment_method_eps (noupdate)
+NEW payment.method: payment_mollie.payment_method_google_pay (noupdate)
+NEW payment.method: payment_mollie.payment_method_ideal (noupdate)
+NEW payment.method: payment_mollie.payment_method_ideal_brand (noupdate)
+NEW payment.method: payment_mollie.payment_method_in3 (noupdate)
+NEW payment.method: payment_mollie.payment_method_kbc_cbc (noupdate)
+NEW payment.method: payment_mollie.payment_method_klarna (noupdate)
+NEW payment.method: payment_mollie.payment_method_maestro (noupdate)
+NEW payment.method: payment_mollie.payment_method_mastercard (noupdate)
+NEW payment.method: payment_mollie.payment_method_mbway (noupdate)
+NEW payment.method: payment_mollie.payment_method_multibanco (noupdate)
+NEW payment.method: payment_mollie.payment_method_p24 (noupdate)
+NEW payment.method: payment_mollie.payment_method_paypal (noupdate)
+NEW payment.method: payment_mollie.payment_method_paysafecard (noupdate)
+NEW payment.method: payment_mollie.payment_method_swish (noupdate)
+NEW payment.method: payment_mollie.payment_method_twint (noupdate)
+NEW payment.method: payment_mollie.payment_method_visa (noupdate)
+NEW payment.method: payment_mollie.payment_method_wero_brand (noupdate)

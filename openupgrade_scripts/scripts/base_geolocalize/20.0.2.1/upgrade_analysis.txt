@@ -1,0 +1,7 @@
+---Models in module 'base_geolocalize'---
+---Fields in module 'base_geolocalize'---
+base_geolocalize / res.partner              / should_be_geolocalized (boolean): NEW hasdefault: default
+---XML records in module 'base_geolocalize'---
+NEW ir.access: base_geolocalize.access_base_geo_provider
+NEW ir.cron: base_geolocalize.ir_cron_geolocalize_required_partners
+DEL ir.model.access: base_geolocalize.access_base_geo_provider

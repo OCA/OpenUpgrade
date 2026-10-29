@@ -1,0 +1,16 @@
+---Models in module 'website_customer'---
+---Fields in module 'website_customer'---
+website_customer / res.partner.tag          / publish_on (datetime)         : NEW
+website_customer / res.partner.tag          / published_date (datetime)     : NEW
+---XML records in module 'website_customer'---
+NEW ir.access: website_customer.res_partner_industry_public
+NEW ir.access: website_customer.res_partner_tag_sale_manager_edition
+NEW ir.access: website_customer.res_partner_tag_sale_manager_employee
+NEW ir.access: website_customer.website_customer_res_partner_tag_public
+DEL ir.model.access: website_customer.res_partner_industry_portal
+DEL ir.model.access: website_customer.res_partner_industry_public
+DEL ir.model.access: website_customer.res_partner_tag_sale_manager_edition
+DEL ir.model.access: website_customer.res_partner_tag_sale_manager_employee
+DEL ir.model.access: website_customer.res_partner_tag_sale_manager_portal
+DEL ir.model.access: website_customer.res_partner_tag_sale_manager_public
+DEL ir.rule: website_customer.website_customer_res_partner_tag_public (noupdate)

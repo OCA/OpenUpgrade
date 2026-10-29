@@ -1,0 +1,45 @@
+---Models in module 'populate'---
+new model populate.blueprint
+new model populate.job
+new model populate.model.data
+new model populate.session
+---Fields in module 'populate'---
+populate     / populate.blueprint       / definition_json (json)        : NEW
+populate     / populate.blueprint       / definition_xml (char)         : NEW
+populate     / populate.blueprint       / inherit_id (many2one)         : NEW relation: populate.blueprint
+populate     / populate.blueprint       / name (char)                   : NEW required
+populate     / populate.job             / batched (boolean)             : NEW
+populate     / populate.job             / blueprint_id (many2one)       : NEW relation: populate.blueprint, required, isrelated: related, stored
+populate     / populate.job             / child_ids (one2many)          : NEW relation: populate.job
+populate     / populate.job             / context (json)                : NEW
+populate     / populate.job             / domain (char)                 : NEW
+populate     / populate.job             / instructions (json)           : NEW
+populate     / populate.job             / is_done (boolean)             : NEW
+populate     / populate.job             / method_name (char)            : NEW
+populate     / populate.job             / model_name (char)             : NEW required
+populate     / populate.job             / operation (selection)         : NEW required, selection_keys: ['create', 'function', 'write'], hasdefault: default
+populate     / populate.job             / parallel (boolean)            : NEW hasdefault: default
+populate     / populate.job             / parent_id (many2one)          : NEW relation: populate.job
+populate     / populate.job             / parent_path (char)            : NEW
+populate     / populate.job             / record_count (integer)        : NEW hasdefault: default
+populate     / populate.job             / ref (char)                    : NEW
+populate     / populate.job             / seed (integer)                : NEW
+populate     / populate.job             / session_id (many2one)         : NEW relation: populate.session, required
+populate     / populate.model.data      / job_id (many2one)             : NEW relation: populate.job, required
+populate     / populate.model.data      / res_id (many2one_reference)   : NEW relation: res_model, required
+populate     / populate.session         / blueprint_id (many2one)       : NEW relation: populate.blueprint, required
+populate     / populate.session         / job_ids (one2many)            : NEW relation: populate.job
+populate     / populate.session         / scaling_factor (float)        : NEW
+populate     / populate.session         / seed (integer)                : NEW hasdefault: default
+populate     / populate.session         / worker_count (integer)        : NEW hasdefault: default
+---XML records in module 'populate'---
+NEW ir.access: populate.access_populate_blueprint
+NEW ir.access: populate.access_populate_job
+NEW ir.access: populate.access_populate_model_data
+NEW ir.access: populate.access_populate_session
+NEW ir.model.constraint: populate.constraint_populate_blueprint_has_definition
+NEW ir.model.constraint: populate.constraint_populate_job_create_job_without_domain
+NEW ir.model.constraint: populate.constraint_populate_job_record_count_invariant
+NEW ir.model.constraint: populate.constraint_populate_job_records_idx
+NEW ir.model.constraint: populate.constraint_populate_job_unique_ref_per_session
+NEW ir.model.constraint: populate.constraint_populate_model_data_job_records_idx

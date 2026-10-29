@@ -1,0 +1,168 @@
+---Models in module 'l10n_pk_edi'---
+new model l10n_pk_edi.sro
+new model l10n_pk_edi.sro.item
+---Fields in module 'l10n_pk_edi'---
+l10n_pk_edi  / account.move             / l10n_pk_edi_reference (char)  : NEW
+l10n_pk_edi  / account.move             / l10n_pk_edi_refund_reason (char): NEW
+l10n_pk_edi  / account.move             / l10n_pk_edi_status (selection): NEW selection_keys: ['failed', 'sent', 'sent_test', 'to_send']
+l10n_pk_edi  / account.move.line        / l10n_pk_edi_sale_type (selection): NEW selection_keys: ['115', '122', '123', '125', '129', '130', '132', '134', '138', '139', '178', '18', '181', '21', '22', '23', '24', '25', '62', '75', '77', '80', '81', '82', '84', '85'], hasdefault: compute
+l10n_pk_edi  / account.move.line        / l10n_pk_edi_sro_id (many2one) : NEW relation: l10n_pk_edi.sro, hasdefault: compute
+l10n_pk_edi  / account.move.line        / l10n_pk_edi_sro_item_id (many2one): NEW relation: l10n_pk_edi.sro.item, hasdefault: compute
+l10n_pk_edi  / l10n_pk_edi.sro          / l10n_pk_edi_sale_type (selection): NEW required, selection_keys: ['115', '122', '123', '125', '129', '130', '132', '134', '138', '139', '178', '18', '181', '21', '22', '23', '24', '25', '62', '75', '77', '80', '81', '82', '84', '85']
+l10n_pk_edi  / l10n_pk_edi.sro          / name (char)                   : NEW
+l10n_pk_edi  / l10n_pk_edi.sro          / sro_item_ids (one2many)       : NEW relation: l10n_pk_edi.sro.item
+l10n_pk_edi  / l10n_pk_edi.sro.item     / name (char)                   : NEW
+l10n_pk_edi  / l10n_pk_edi.sro.item     / sro_id (many2one)             : NEW relation: l10n_pk_edi.sro
+l10n_pk_edi  / product.template         / l10n_pk_edi_sale_type (selection): NEW required, selection_keys: ['115', '122', '123', '125', '129', '130', '132', '134', '138', '139', '178', '18', '181', '21', '22', '23', '24', '25', '62', '75', '77', '80', '81', '82', '84', '85'], hasdefault: default
+l10n_pk_edi  / product.template         / l10n_pk_edi_sro_id (many2one) : NEW relation: l10n_pk_edi.sro
+l10n_pk_edi  / product.template         / l10n_pk_edi_sro_item_id (many2one): NEW relation: l10n_pk_edi.sro.item
+l10n_pk_edi  / res.company              / l10n_pk_edi_enable (boolean)  : NEW
+l10n_pk_edi  / res.company              / l10n_pk_edi_production_auth_token (char): NEW
+l10n_pk_edi  / res.company              / l10n_pk_edi_whitelisted (boolean): NEW
+l10n_pk_edi  / res.partner              / l10n_pk_edi_fbr_customer_status (selection): NEW selection_keys: ['not_checked', 'registered', 'unregistered'], hasdefault: default
+l10n_pk_edi  / uom.uom                  / l10n_pk_edi_uom_code (selection): NEW selection_keys: ['11', '12', '13', '3', '4', '46', '48', '5', '50', '53', '55', '57', '59', '6', '61', '63', '65', '67', '69', '71', '73', '75', '77', '79', '8', '81', '83', '85', '87', '88', '9', '96']
+---XML records in module 'l10n_pk_edi'---
+NEW ir.access: l10n_pk_edi.l10n_pk_edi_sro
+NEW ir.access: l10n_pk_edi.l10n_pk_edi_sro_item
+NEW ir.access: l10n_pk_edi.l10n_pk_edi_sro_item_user
+NEW ir.access: l10n_pk_edi.l10n_pk_edi_sro_user
+NEW ir.actions.act_window: l10n_pk_edi.action_l10n_pk_edi_sro
+NEW ir.actions.server: l10n_pk_edi.partner_action_verify_fbr
+NEW ir.config_parameter: l10n_pk_edi.l10n_pk_edi_mode (noupdate)
+NEW ir.config_parameter: l10n_pk_edi.l10n_pk_edi_test_scenario_id (noupdate)
+NEW ir.ui.menu: l10n_pk_edi.menu_l10n_pk_edi
+NEW ir.ui.menu: l10n_pk_edi.menu_l10n_pk_edi_sro
+NEW ir.ui.view: l10n_pk_edi.l10n_pk_edi_sro_view_form
+NEW ir.ui.view: l10n_pk_edi.l10n_pk_edi_sro_view_list
+NEW ir.ui.view: l10n_pk_edi.product_template_form_view
+NEW ir.ui.view: l10n_pk_edi.report_invoice
+NEW ir.ui.view: l10n_pk_edi.report_invoice_document
+NEW ir.ui.view: l10n_pk_edi.res_config_settings_view_form
+NEW ir.ui.view: l10n_pk_edi.uom_uom_view_form
+NEW ir.ui.view: l10n_pk_edi.uom_uom_view_list
+NEW ir.ui.view: l10n_pk_edi.view_move_form_inherit
+NEW ir.ui.view: l10n_pk_edi.view_partner_property_form
+NEW l10n_pk_edi.sro: l10n_pk_edi.l10n_pk_edi_sro_297_i_2023_table_1 (noupdate)
+NEW l10n_pk_edi.sro: l10n_pk_edi.l10n_pk_edi_sro_297_i_2023_table_2 (noupdate)
+NEW l10n_pk_edi.sro: l10n_pk_edi.l10n_pk_edi_sro_327_i_2008 (noupdate)
+NEW l10n_pk_edi.sro: l10n_pk_edi.l10n_pk_edi_sro_3rd_schedule_goods (noupdate)
+NEW l10n_pk_edi.sro: l10n_pk_edi.l10n_pk_edi_sro_587_1_2017 (noupdate)
+NEW l10n_pk_edi.sro: l10n_pk_edi.l10n_pk_edi_sro_6th_schd_table_1 (noupdate)
+NEW l10n_pk_edi.sro: l10n_pk_edi.l10n_pk_edi_sro_6th_schd_table_2 (noupdate)
+NEW l10n_pk_edi.sro: l10n_pk_edi.l10n_pk_edi_sro_6th_schd_table_3 (noupdate)
+NEW l10n_pk_edi.sro: l10n_pk_edi.l10n_pk_edi_sro_eighth_schedule_table_1 (noupdate)
+NEW l10n_pk_edi.sro: l10n_pk_edi.l10n_pk_edi_sro_fifth_schedule (noupdate)
+NEW l10n_pk_edi.sro: l10n_pk_edi.l10n_pk_edi_sro_icto_table_1 (noupdate)
+NEW l10n_pk_edi.sro: l10n_pk_edi.l10n_pk_edi_sro_icto_table_2 (noupdate)
+NEW l10n_pk_edi.sro: l10n_pk_edi.l10n_pk_edi_sro_section_49 (noupdate)
+NEW l10n_pk_edi.sro: l10n_pk_edi.l10n_pk_edi_sro_section_4b (noupdate)
+NEW l10n_pk_edi.sro.item: l10n_pk_edi.l10n_pk_edi_sro_item_297_i_2023_table_1_1 (noupdate)
+NEW l10n_pk_edi.sro.item: l10n_pk_edi.l10n_pk_edi_sro_item_297_i_2023_table_1_10 (noupdate)
+NEW l10n_pk_edi.sro.item: l10n_pk_edi.l10n_pk_edi_sro_item_297_i_2023_table_1_17 (noupdate)
+NEW l10n_pk_edi.sro.item: l10n_pk_edi.l10n_pk_edi_sro_item_297_i_2023_table_1_2 (noupdate)
+NEW l10n_pk_edi.sro.item: l10n_pk_edi.l10n_pk_edi_sro_item_297_i_2023_table_1_20 (noupdate)
+NEW l10n_pk_edi.sro.item: l10n_pk_edi.l10n_pk_edi_sro_item_297_i_2023_table_1_21 (noupdate)
+NEW l10n_pk_edi.sro.item: l10n_pk_edi.l10n_pk_edi_sro_item_297_i_2023_table_1_23 (noupdate)
+NEW l10n_pk_edi.sro.item: l10n_pk_edi.l10n_pk_edi_sro_item_297_i_2023_table_1_29 (noupdate)
+NEW l10n_pk_edi.sro.item: l10n_pk_edi.l10n_pk_edi_sro_item_297_i_2023_table_1_31 (noupdate)
+NEW l10n_pk_edi.sro.item: l10n_pk_edi.l10n_pk_edi_sro_item_297_i_2023_table_1_7 (noupdate)
+NEW l10n_pk_edi.sro.item: l10n_pk_edi.l10n_pk_edi_sro_item_297_i_2023_table_1_8 (noupdate)
+NEW l10n_pk_edi.sro.item: l10n_pk_edi.l10n_pk_edi_sro_item_297_i_2023_table_2_1 (noupdate)
+NEW l10n_pk_edi.sro.item: l10n_pk_edi.l10n_pk_edi_sro_item_297_i_2023_table_2_2 (noupdate)
+NEW l10n_pk_edi.sro.item: l10n_pk_edi.l10n_pk_edi_sro_item_297_i_2023_table_2_3 (noupdate)
+NEW l10n_pk_edi.sro.item: l10n_pk_edi.l10n_pk_edi_sro_item_327_i_2008_1 (noupdate)
+NEW l10n_pk_edi.sro.item: l10n_pk_edi.l10n_pk_edi_sro_item_327_i_2008_2 (noupdate)
+NEW l10n_pk_edi.sro.item: l10n_pk_edi.l10n_pk_edi_sro_item_327_i_2008_3 (noupdate)
+NEW l10n_pk_edi.sro.item: l10n_pk_edi.l10n_pk_edi_sro_item_327_i_2008_4 (noupdate)
+NEW l10n_pk_edi.sro.item: l10n_pk_edi.l10n_pk_edi_sro_item_327_i_2008_blank (noupdate)
+NEW l10n_pk_edi.sro.item: l10n_pk_edi.l10n_pk_edi_sro_item_3rd_schedule_51 (noupdate)
+NEW l10n_pk_edi.sro.item: l10n_pk_edi.l10n_pk_edi_sro_item_587_1_2017_1 (noupdate)
+NEW l10n_pk_edi.sro.item: l10n_pk_edi.l10n_pk_edi_sro_item_6th_schd_table_1_122 (noupdate)
+NEW l10n_pk_edi.sro.item: l10n_pk_edi.l10n_pk_edi_sro_item_6th_schd_table_1_14 (noupdate)
+NEW l10n_pk_edi.sro.item: l10n_pk_edi.l10n_pk_edi_sro_item_6th_schd_table_1_143i (noupdate)
+NEW l10n_pk_edi.sro.item: l10n_pk_edi.l10n_pk_edi_sro_item_6th_schd_table_1_143ia (noupdate)
+NEW l10n_pk_edi.sro.item: l10n_pk_edi.l10n_pk_edi_sro_item_6th_schd_table_1_143ib (noupdate)
+NEW l10n_pk_edi.sro.item: l10n_pk_edi.l10n_pk_edi_sro_item_6th_schd_table_1_143ic (noupdate)
+NEW l10n_pk_edi.sro.item: l10n_pk_edi.l10n_pk_edi_sro_item_6th_schd_table_1_143id (noupdate)
+NEW l10n_pk_edi.sro.item: l10n_pk_edi.l10n_pk_edi_sro_item_6th_schd_table_1_168 (noupdate)
+NEW l10n_pk_edi.sro.item: l10n_pk_edi.l10n_pk_edi_sro_item_6th_schd_table_1_171 (noupdate)
+NEW l10n_pk_edi.sro.item: l10n_pk_edi.l10n_pk_edi_sro_item_6th_schd_table_1_179 (noupdate)
+NEW l10n_pk_edi.sro.item: l10n_pk_edi.l10n_pk_edi_sro_item_6th_schd_table_1_19 (noupdate)
+NEW l10n_pk_edi.sro.item: l10n_pk_edi.l10n_pk_edi_sro_item_6th_schd_table_1_22 (noupdate)
+NEW l10n_pk_edi.sro.item: l10n_pk_edi.l10n_pk_edi_sro_item_6th_schd_table_1_32 (noupdate)
+NEW l10n_pk_edi.sro.item: l10n_pk_edi.l10n_pk_edi_sro_item_6th_schd_table_1_45 (noupdate)
+NEW l10n_pk_edi.sro.item: l10n_pk_edi.l10n_pk_edi_sro_item_6th_schd_table_1_89 (noupdate)
+NEW l10n_pk_edi.sro.item: l10n_pk_edi.l10n_pk_edi_sro_item_6th_schd_table_2_3 (noupdate)
+NEW l10n_pk_edi.sro.item: l10n_pk_edi.l10n_pk_edi_sro_item_6th_schd_table_2_34 (noupdate)
+NEW l10n_pk_edi.sro.item: l10n_pk_edi.l10n_pk_edi_sro_item_6th_schd_table_2_35 (noupdate)
+NEW l10n_pk_edi.sro.item: l10n_pk_edi.l10n_pk_edi_sro_item_6th_schd_table_2_36 (noupdate)
+NEW l10n_pk_edi.sro.item: l10n_pk_edi.l10n_pk_edi_sro_item_6th_schd_table_2_37 (noupdate)
+NEW l10n_pk_edi.sro.item: l10n_pk_edi.l10n_pk_edi_sro_item_6th_schd_table_2_43 (noupdate)
+NEW l10n_pk_edi.sro.item: l10n_pk_edi.l10n_pk_edi_sro_item_6th_schd_table_2_44 (noupdate)
+NEW l10n_pk_edi.sro.item: l10n_pk_edi.l10n_pk_edi_sro_item_6th_schd_table_2_45 (noupdate)
+NEW l10n_pk_edi.sro.item: l10n_pk_edi.l10n_pk_edi_sro_item_6th_schd_table_2_46 (noupdate)
+NEW l10n_pk_edi.sro.item: l10n_pk_edi.l10n_pk_edi_sro_item_6th_schd_table_2_48 (noupdate)
+NEW l10n_pk_edi.sro.item: l10n_pk_edi.l10n_pk_edi_sro_item_6th_schd_table_2_50 (noupdate)
+NEW l10n_pk_edi.sro.item: l10n_pk_edi.l10n_pk_edi_sro_item_6th_schd_table_2_51 (noupdate)
+NEW l10n_pk_edi.sro.item: l10n_pk_edi.l10n_pk_edi_sro_item_6th_schd_table_2_53 (noupdate)
+NEW l10n_pk_edi.sro.item: l10n_pk_edi.l10n_pk_edi_sro_item_6th_schd_table_2_54 (noupdate)
+NEW l10n_pk_edi.sro.item: l10n_pk_edi.l10n_pk_edi_sro_item_6th_schd_table_2_57 (noupdate)
+NEW l10n_pk_edi.sro.item: l10n_pk_edi.l10n_pk_edi_sro_item_6th_schd_table_3_18iii (noupdate)
+NEW l10n_pk_edi.sro.item: l10n_pk_edi.l10n_pk_edi_sro_item_6th_schd_table_3_18ix (noupdate)
+NEW l10n_pk_edi.sro.item: l10n_pk_edi.l10n_pk_edi_sro_item_6th_schd_table_3_18v (noupdate)
+NEW l10n_pk_edi.sro.item: l10n_pk_edi.l10n_pk_edi_sro_item_6th_schd_table_3_18vi (noupdate)
+NEW l10n_pk_edi.sro.item: l10n_pk_edi.l10n_pk_edi_sro_item_6th_schd_table_3_18vii (noupdate)
+NEW l10n_pk_edi.sro.item: l10n_pk_edi.l10n_pk_edi_sro_item_6th_schd_table_3_18viii (noupdate)
+NEW l10n_pk_edi.sro.item: l10n_pk_edi.l10n_pk_edi_sro_item_6th_schd_table_3_18x (noupdate)
+NEW l10n_pk_edi.sro.item: l10n_pk_edi.l10n_pk_edi_sro_item_6th_schd_table_3_18xi (noupdate)
+NEW l10n_pk_edi.sro.item: l10n_pk_edi.l10n_pk_edi_sro_item_6th_schd_table_3_18xii (noupdate)
+NEW l10n_pk_edi.sro.item: l10n_pk_edi.l10n_pk_edi_sro_item_6th_schd_table_3_18xiii (noupdate)
+NEW l10n_pk_edi.sro.item: l10n_pk_edi.l10n_pk_edi_sro_item_6th_schd_table_3_18xiv (noupdate)
+NEW l10n_pk_edi.sro.item: l10n_pk_edi.l10n_pk_edi_sro_item_6th_schd_table_3_18xix (noupdate)
+NEW l10n_pk_edi.sro.item: l10n_pk_edi.l10n_pk_edi_sro_item_6th_schd_table_3_18xv (noupdate)
+NEW l10n_pk_edi.sro.item: l10n_pk_edi.l10n_pk_edi_sro_item_6th_schd_table_3_18xvi (noupdate)
+NEW l10n_pk_edi.sro.item: l10n_pk_edi.l10n_pk_edi_sro_item_6th_schd_table_3_18xvii (noupdate)
+NEW l10n_pk_edi.sro.item: l10n_pk_edi.l10n_pk_edi_sro_item_6th_schd_table_3_18xviii (noupdate)
+NEW l10n_pk_edi.sro.item: l10n_pk_edi.l10n_pk_edi_sro_item_6th_schd_table_3_18xx (noupdate)
+NEW l10n_pk_edi.sro.item: l10n_pk_edi.l10n_pk_edi_sro_item_6th_schd_table_3_18xxi (noupdate)
+NEW l10n_pk_edi.sro.item: l10n_pk_edi.l10n_pk_edi_sro_item_eighth_schedule_53i (noupdate)
+NEW l10n_pk_edi.sro.item: l10n_pk_edi.l10n_pk_edi_sro_item_eighth_schedule_53vii (noupdate)
+NEW l10n_pk_edi.sro.item: l10n_pk_edi.l10n_pk_edi_sro_item_eighth_schedule_77 (noupdate)
+NEW l10n_pk_edi.sro.item: l10n_pk_edi.l10n_pk_edi_sro_item_eighth_schedule_81 (noupdate)
+NEW l10n_pk_edi.sro.item: l10n_pk_edi.l10n_pk_edi_sro_item_eighth_schedule_82 (noupdate)
+NEW l10n_pk_edi.sro.item: l10n_pk_edi.l10n_pk_edi_sro_item_eighth_schedule_83 (noupdate)
+NEW l10n_pk_edi.sro.item: l10n_pk_edi.l10n_pk_edi_sro_item_eighth_schedule_84i (noupdate)
+NEW l10n_pk_edi.sro.item: l10n_pk_edi.l10n_pk_edi_sro_item_eighth_schedule_84ii (noupdate)
+NEW l10n_pk_edi.sro.item: l10n_pk_edi.l10n_pk_edi_sro_item_eighth_schedule_84iv (noupdate)
+NEW l10n_pk_edi.sro.item: l10n_pk_edi.l10n_pk_edi_sro_item_eighth_schedule_84v (noupdate)
+NEW l10n_pk_edi.sro.item: l10n_pk_edi.l10n_pk_edi_sro_item_eighth_schedule_84vi (noupdate)
+NEW l10n_pk_edi.sro.item: l10n_pk_edi.l10n_pk_edi_sro_item_eighth_schedule_84vii (noupdate)
+NEW l10n_pk_edi.sro.item: l10n_pk_edi.l10n_pk_edi_sro_item_eighth_schedule_87 (noupdate)
+NEW l10n_pk_edi.sro.item: l10n_pk_edi.l10n_pk_edi_sro_item_fifth_schedule_12xxiii (noupdate)
+NEW l10n_pk_edi.sro.item: l10n_pk_edi.l10n_pk_edi_sro_item_fifth_schedule_154 (noupdate)
+NEW l10n_pk_edi.sro.item: l10n_pk_edi.l10n_pk_edi_sro_item_fifth_schedule_155 (noupdate)
+NEW l10n_pk_edi.sro.item: l10n_pk_edi.l10n_pk_edi_sro_item_fifth_schedule_5 (noupdate)
+NEW l10n_pk_edi.sro.item: l10n_pk_edi.l10n_pk_edi_sro_item_icto_table_1_11a (noupdate)
+NEW l10n_pk_edi.sro.item: l10n_pk_edi.l10n_pk_edi_sro_item_icto_table_1_11b (noupdate)
+NEW l10n_pk_edi.sro.item: l10n_pk_edi.l10n_pk_edi_sro_item_icto_table_1_13 (noupdate)
+NEW l10n_pk_edi.sro.item: l10n_pk_edi.l10n_pk_edi_sro_item_icto_table_1_19 (noupdate)
+NEW l10n_pk_edi.sro.item: l10n_pk_edi.l10n_pk_edi_sro_item_icto_table_1_1ii (noupdate)
+NEW l10n_pk_edi.sro.item: l10n_pk_edi.l10n_pk_edi_sro_item_icto_table_1_1iia (noupdate)
+NEW l10n_pk_edi.sro.item: l10n_pk_edi.l10n_pk_edi_sro_item_icto_table_1_1iib (noupdate)
+NEW l10n_pk_edi.sro.item: l10n_pk_edi.l10n_pk_edi_sro_item_icto_table_1_25 (noupdate)
+NEW l10n_pk_edi.sro.item: l10n_pk_edi.l10n_pk_edi_sro_item_icto_table_1_27 (noupdate)
+NEW l10n_pk_edi.sro.item: l10n_pk_edi.l10n_pk_edi_sro_item_icto_table_1_37 (noupdate)
+NEW l10n_pk_edi.sro.item: l10n_pk_edi.l10n_pk_edi_sro_item_icto_table_1_46 (noupdate)
+NEW l10n_pk_edi.sro.item: l10n_pk_edi.l10n_pk_edi_sro_item_icto_table_1_47 (noupdate)
+NEW l10n_pk_edi.sro.item: l10n_pk_edi.l10n_pk_edi_sro_item_icto_table_1_48 (noupdate)
+NEW l10n_pk_edi.sro.item: l10n_pk_edi.l10n_pk_edi_sro_item_icto_table_1_9 (noupdate)
+NEW l10n_pk_edi.sro.item: l10n_pk_edi.l10n_pk_edi_sro_item_icto_table_2_11 (noupdate)
+NEW l10n_pk_edi.sro.item: l10n_pk_edi.l10n_pk_edi_sro_item_icto_table_2_1i (noupdate)
+NEW l10n_pk_edi.sro.item: l10n_pk_edi.l10n_pk_edi_sro_item_icto_table_2_1ii (noupdate)
+NEW l10n_pk_edi.sro.item: l10n_pk_edi.l10n_pk_edi_sro_item_icto_table_2_1iii (noupdate)
+NEW l10n_pk_edi.sro.item: l10n_pk_edi.l10n_pk_edi_sro_item_icto_table_2_1iv (noupdate)
+NEW l10n_pk_edi.sro.item: l10n_pk_edi.l10n_pk_edi_sro_item_icto_table_2_1v (noupdate)
+NEW l10n_pk_edi.sro.item: l10n_pk_edi.l10n_pk_edi_sro_item_icto_table_2_4 (noupdate)
+NEW l10n_pk_edi.sro.item: l10n_pk_edi.l10n_pk_edi_sro_item_icto_table_2_6 (noupdate)
+NEW l10n_pk_edi.sro.item: l10n_pk_edi.l10n_pk_edi_sro_item_section_49_1 (noupdate)
+NEW l10n_pk_edi.sro.item: l10n_pk_edi.l10n_pk_edi_sro_item_section_4b_blank (noupdate)

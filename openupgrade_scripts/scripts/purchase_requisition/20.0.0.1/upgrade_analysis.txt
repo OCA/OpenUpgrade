@@ -1,0 +1,39 @@
+---Models in module 'purchase_requisition'---
+model purchase.order.group (moved to purchase_alternative)
+obsolete model purchase.requisition.alternative.warning [transient]
+obsolete model purchase.requisition.create.alternative [transient]
+---Fields in module 'purchase_requisition'---
+purchase_requisition / purchase.order           / alternative_po_ids (one2many) : module is now 'purchase_alternative' ('purchase_requisition')
+purchase_requisition / purchase.order           / purchase_group_id (many2one)  : module is now 'purchase_alternative' ('purchase_requisition')
+purchase_requisition / purchase.order.group     / _order                        : module is now 'purchase_alternative' ('purchase_requisition')
+purchase_requisition / purchase.order.group     / display_name (char)           : module is now 'purchase_alternative' ('purchase_requisition')
+purchase_requisition / purchase.order.group     / order_ids (one2many)          : module is now 'purchase_alternative' ('purchase_requisition')
+purchase_requisition / purchase.order.line      / company_currency_id (many2one): module is now 'purchase_alternative' ('purchase_requisition')
+purchase_requisition / purchase.order.line      / price_total_cc (float)        : module is now 'purchase_alternative' ('purchase_requisition')
+purchase_requisition / purchase.requisition     / website_message_ids (one2many): DEL relation: mail.message
+purchase_requisition / purchase.requisition.line / _order                        : _order is now 'sequence, id' ('id')
+purchase_requisition / purchase.requisition.line / display_type (selection)      : NEW selection_keys: ['line_note', 'line_section', 'line_subsection'], hasdefault: default
+purchase_requisition / purchase.requisition.line / name (text)                   : NEW
+purchase_requisition / purchase.requisition.line / price_subtotal (float)        : NEW isfunction: function, stored
+purchase_requisition / purchase.requisition.line / product_uom_id (many2one)     : DEL relation: uom.uom
+purchase_requisition / purchase.requisition.line / sequence (integer)            : NEW hasdefault: default
+purchase_requisition / purchase.requisition.line / uom_id (many2one)             : NEW relation: uom.uom, hasdefault: compute
+---XML records in module 'purchase_requisition'---
+NEW ir.access: purchase_requisition.access_purchase_requisition
+NEW ir.access: purchase_requisition.access_purchase_requisition_line_purchase_user
+NEW ir.access: purchase_requisition.purchase_requisition_comp_rule
+NEW ir.access: purchase_requisition.purchase_requisition_line_comp_rule
+DEL ir.model.access: purchase_requisition.access_purchase_requisition
+DEL ir.model.access: purchase_requisition.access_purchase_requisition_alternative_warning
+DEL ir.model.access: purchase_requisition.access_purchase_requisition_create_alternative
+DEL ir.model.access: purchase_requisition.access_purchase_requisition_line_manager
+DEL ir.model.access: purchase_requisition.access_purchase_requisition_line_purchase_user
+DEL ir.model.access: purchase_requisition.access_purchase_requisition_manager
+DEL ir.model.access: purchase_requisition.access_purchase_requisition_purchase_order_group
+DEL ir.rule: purchase_requisition.purchase_requisition_comp_rule (noupdate)
+DEL ir.rule: purchase_requisition.purchase_requisition_line_comp_rule (noupdate)
+DEL ir.ui.view: purchase_requisition.purchase_order_line_compare_tree
+DEL ir.ui.view: purchase_requisition.purchase_requisition_alternative_warning_form
+DEL ir.ui.view: purchase_requisition.purchase_requisition_create_alternative_form
+DEL ir.ui.view: purchase_requisition.res_config_settings_view_form_purchase_requisition
+DEL res.groups: purchase_requisition.group_purchase_alternatives (noupdate)

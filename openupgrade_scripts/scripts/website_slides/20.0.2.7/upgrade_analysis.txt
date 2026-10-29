@@ -1,0 +1,137 @@
+---Models in module 'website_slides'---
+---Fields in module 'website_slides'---
+website_slides / digest.digest            / kpi_nbr_of_certified_attendees (boolean): NEW
+website_slides / digest.digest            / kpi_nbr_of_new_attendees (boolean): NEW
+website_slides / slide.channel            / publish_on (datetime)         : NEW
+website_slides / slide.channel            / published_date (datetime)     : NEW
+website_slides / slide.channel            / website_message_ids (one2many): DEL relation: mail.message
+website_slides / slide.channel.partner    / completion_date (datetime)    : NEW isfunction: function, stored
+website_slides / slide.channel.tag.group  / publish_on (datetime)         : NEW
+website_slides / slide.channel.tag.group  / published_date (datetime)     : NEW
+website_slides / slide.slide              / date_published (datetime)     : DEL
+website_slides / slide.slide              / publish_on (datetime)         : NEW
+website_slides / slide.slide              / published_date (datetime)     : NEW
+website_slides / slide.slide              / website_message_ids (one2many): DEL relation: mail.message
+website_slides / website.track            / slide_channel_id (many2one)   : NEW relation: slide.channel
+---XML records in module 'website_slides'---
+NEW ir.access: website_slides.access_slide_answer_officer
+NEW ir.access: website_slides.access_slide_channel_invite
+NEW ir.access: website_slides.access_slide_channel_partners_system
+NEW ir.access: website_slides.access_slide_channel_tag_employee
+NEW ir.access: website_slides.access_slide_channel_tag_group_public
+NEW ir.access: website_slides.access_slide_channel_tag_group_user
+NEW ir.access: website_slides.access_slide_channel_tag_user
+NEW ir.access: website_slides.access_slide_embed_public
+NEW ir.access: website_slides.access_slide_embed_user
+NEW ir.access: website_slides.access_slide_question_officer
+NEW ir.access: website_slides.access_slide_question_public
+NEW ir.access: website_slides.access_slide_slide_partner_system
+NEW ir.access: website_slides.access_slide_tag_officer
+NEW ir.access: website_slides.access_slide_tag_public
+NEW ir.access: website_slides.rule_slide_channel_global
+NEW ir.access: website_slides.rule_slide_channel_manager
+NEW ir.access: website_slides.rule_slide_channel_officer_cw
+NEW ir.access: website_slides.rule_slide_channel_officer_r
+NEW ir.access: website_slides.rule_slide_channel_partner_manager
+NEW ir.access: website_slides.rule_slide_channel_partner_officer
+NEW ir.access: website_slides.rule_slide_channel_tag_public
+NEW ir.access: website_slides.rule_slide_channel_visibility_public_user
+NEW ir.access: website_slides.rule_slide_channel_visibility_signed_in_user
+NEW ir.access: website_slides.rule_slide_channel_visibility_signed_in_user_1
+NEW ir.access: website_slides.rule_slide_slide_global
+NEW ir.access: website_slides.rule_slide_slide_manager
+NEW ir.access: website_slides.rule_slide_slide_officer_cw
+NEW ir.access: website_slides.rule_slide_slide_officer_r
+NEW ir.access: website_slides.rule_slide_slide_partner_manager
+NEW ir.access: website_slides.rule_slide_slide_partner_officer
+NEW ir.access: website_slides.rule_slide_slide_public_user
+NEW ir.access: website_slides.rule_slide_slide_resource_downloadable
+NEW ir.access: website_slides.rule_slide_slide_resource_downloadable_1
+NEW ir.access: website_slides.rule_slide_slide_resource_downloadable_manager
+NEW ir.access: website_slides.rule_slide_slide_resource_officer_crud
+NEW ir.access: website_slides.rule_slide_slide_resource_officer_read
+NEW ir.access: website_slides.rule_slide_slide_signed_in_user
+NEW ir.access: website_slides.rule_slide_slide_signed_in_user_1
+NEW ir.actions.act_window: website_slides.slide_channel_partner_action_report_certified
+NEW ir.actions.act_window: website_slides.slide_channel_partner_action_send_mail
+NEW ir.actions.act_window: website_slides.website_slides_visitor_slide_channel_action
+NEW ir.filters: website_slides.dynamic_snippet_latest_courses_filter
+DEL ir.model.access: website_slides.access_slide_answer_all
+DEL ir.model.access: website_slides.access_slide_answer_officer
+DEL ir.model.access: website_slides.access_slide_channel_employee
+DEL ir.model.access: website_slides.access_slide_channel_invite
+DEL ir.model.access: website_slides.access_slide_channel_manager
+DEL ir.model.access: website_slides.access_slide_channel_officer
+DEL ir.model.access: website_slides.access_slide_channel_partners_all
+DEL ir.model.access: website_slides.access_slide_channel_partners_system
+DEL ir.model.access: website_slides.access_slide_channel_portal
+DEL ir.model.access: website_slides.access_slide_channel_public
+DEL ir.model.access: website_slides.access_slide_channel_tag_employee
+DEL ir.model.access: website_slides.access_slide_channel_tag_group_employee
+DEL ir.model.access: website_slides.access_slide_channel_tag_group_portal
+DEL ir.model.access: website_slides.access_slide_channel_tag_group_public
+DEL ir.model.access: website_slides.access_slide_channel_tag_group_user
+DEL ir.model.access: website_slides.access_slide_channel_tag_portal
+DEL ir.model.access: website_slides.access_slide_channel_tag_public
+DEL ir.model.access: website_slides.access_slide_channel_tag_user
+DEL ir.model.access: website_slides.access_slide_embed_portal
+DEL ir.model.access: website_slides.access_slide_embed_public
+DEL ir.model.access: website_slides.access_slide_embed_user
+DEL ir.model.access: website_slides.access_slide_question_employee
+DEL ir.model.access: website_slides.access_slide_question_officer
+DEL ir.model.access: website_slides.access_slide_question_portal
+DEL ir.model.access: website_slides.access_slide_question_public
+DEL ir.model.access: website_slides.access_slide_slide_employee
+DEL ir.model.access: website_slides.access_slide_slide_manager
+DEL ir.model.access: website_slides.access_slide_slide_officer
+DEL ir.model.access: website_slides.access_slide_slide_partner_all
+DEL ir.model.access: website_slides.access_slide_slide_partner_system
+DEL ir.model.access: website_slides.access_slide_slide_portal
+DEL ir.model.access: website_slides.access_slide_slide_public
+DEL ir.model.access: website_slides.access_slide_slide_resource_all
+DEL ir.model.access: website_slides.access_slide_slide_resource_internal
+DEL ir.model.access: website_slides.access_slide_slide_resource_portal
+DEL ir.model.access: website_slides.access_slide_slide_resource_public
+DEL ir.model.access: website_slides.access_slide_slide_resource_publisher
+DEL ir.model.access: website_slides.access_slide_tag_employee
+DEL ir.model.access: website_slides.access_slide_tag_officer
+DEL ir.model.access: website_slides.access_slide_tag_portal
+DEL ir.model.access: website_slides.access_slide_tag_public
+DEL ir.rule: website_slides.rule_slide_channel_global (noupdate)
+DEL ir.rule: website_slides.rule_slide_channel_manager (noupdate)
+DEL ir.rule: website_slides.rule_slide_channel_officer_cw (noupdate)
+DEL ir.rule: website_slides.rule_slide_channel_officer_r (noupdate)
+DEL ir.rule: website_slides.rule_slide_channel_partner_manager (noupdate)
+DEL ir.rule: website_slides.rule_slide_channel_partner_officer (noupdate)
+DEL ir.rule: website_slides.rule_slide_channel_tag_public (noupdate)
+DEL ir.rule: website_slides.rule_slide_channel_visibility_public_user (noupdate)
+DEL ir.rule: website_slides.rule_slide_channel_visibility_signed_in_user (noupdate)
+DEL ir.rule: website_slides.rule_slide_slide_global (noupdate)
+DEL ir.rule: website_slides.rule_slide_slide_manager (noupdate)
+DEL ir.rule: website_slides.rule_slide_slide_officer_cw (noupdate)
+DEL ir.rule: website_slides.rule_slide_slide_officer_r (noupdate)
+DEL ir.rule: website_slides.rule_slide_slide_partner_manager (noupdate)
+DEL ir.rule: website_slides.rule_slide_slide_partner_officer (noupdate)
+DEL ir.rule: website_slides.rule_slide_slide_public_user (noupdate)
+DEL ir.rule: website_slides.rule_slide_slide_resource_downloadable (noupdate)
+DEL ir.rule: website_slides.rule_slide_slide_resource_downloadable_manager (noupdate)
+DEL ir.rule: website_slides.rule_slide_slide_resource_officer_crud (noupdate)
+DEL ir.rule: website_slides.rule_slide_slide_resource_officer_read (noupdate)
+DEL ir.rule: website_slides.rule_slide_slide_signed_in_user (noupdate)
+NEW ir.ui.view: website_slides.digest_digest_view_form
+NEW ir.ui.view: website_slides.dynamic_filter_template_slide_channel_card
+NEW ir.ui.view: website_slides.website_slides_visitor_page_view_search
+NEW ir.ui.view: website_slides.website_slides_visitor_page_view_tree
+NEW ir.ui.view: website_slides.website_slides_visitor_track_view_tree
+NEW ir.ui.view: website_slides.website_slides_visitor_view_form
+NEW ir.ui.view: website_slides.website_slides_visitor_view_tree
+DEL ir.ui.view: website_slides.mail_notification_channel_invite (noupdate)
+DEL ir.ui.view: website_slides.slide_share_link
+DEL ir.ui.view: website_slides.slide_share_modal
+DEL ir.ui.view: website_slides.slide_share_modal_body
+DEL ir.ui.view: website_slides.slide_share_modal_header
+DEL ir.ui.view: website_slides.slide_share_social
+DEL ir.ui.view: website_slides.slide_social_email
+DEL ir.ui.view: website_slides.slide_social_embed
+NEW portal.entry: website_slides.portal_slides_client (noupdate)
+NEW website.snippet.filter: website_slides.dynamic_filter_latest_courses

@@ -1,0 +1,14 @@
+---Models in module 'pos_sale'---
+---Fields in module 'pos_sale'---
+pos_sale     / pos.config               / default_product_id (many2one) : NEW relation: product.product, required, hasdefault: default
+pos_sale     / pos.config               / down_payment_product_id (many2one): now required
+pos_sale     / sale.order               / amount_unpaid (float)         : module is now 'sale' ('pos_sale')
+---XML records in module 'pos_sale'---
+NEW ir.access: pos_sale.pos_sale_rule_pos_channel_pos_manager
+NEW ir.access: pos_sale.rule_pos_sale_order
+NEW ir.access: pos_sale.rule_pos_sale_order_line
+DEL ir.model.access: pos_sale.access_crm_team_pos_manager
+DEL ir.rule: pos_sale.pos_sale_rule_pos_channel_pos_manager (noupdate)
+NEW ir.ui.view: pos_sale.pos_orderline_receipt_information
+DEL ir.ui.view: pos_sale.message_body
+NEW product.product: pos_sale.default_sol_product (noupdate)

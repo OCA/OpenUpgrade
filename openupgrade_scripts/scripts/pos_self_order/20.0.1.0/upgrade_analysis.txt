@@ -1,0 +1,31 @@
+---Models in module 'pos_self_order'---
+---Fields in module 'pos_self_order'---
+pos_self_order / pos.category             / pos_config_ids (many2many)    : module is now 'point_of_sale' ('pos_self_order')
+pos_self_order / pos.config               / self_ordering_primary_color (char): NEW hasdefault: default
+pos_self_order / pos.config               / self_ordering_service_mode (selection): selection_keys added: [dynamic_qr] (most likely nothing to do)
+pos_self_order / pos.preset               / delivery_distance_unit (selection): NEW selection_keys: ['km', 'mi'], hasdefault: default
+pos_self_order / pos.preset               / delivery_from_address (char)  : NEW isfunction: function, stored
+pos_self_order / pos.preset               / delivery_from_city (char)     : NEW
+pos_self_order / pos.preset               / delivery_from_country_id (many2one): NEW relation: res.country
+pos_self_order / pos.preset               / delivery_from_latitude (float): NEW
+pos_self_order / pos.preset               / delivery_from_longitude (float): NEW
+pos_self_order / pos.preset               / delivery_from_state_id (many2one): NEW relation: res.country.state
+pos_self_order / pos.preset               / delivery_from_street (char)   : NEW
+pos_self_order / pos.preset               / delivery_from_zip (char)      : NEW
+pos_self_order / pos.preset               / delivery_max_distance_km (float): NEW hasdefault: default
+pos_self_order / pos.preset               / delivery_product_id (many2one): NEW relation: product.product, hasdefault: default
+pos_self_order / pos.preset               / delivery_product_price (float): NEW hasdefault: default
+pos_self_order / pos.preset               / free_delivery_min_amount (float): NEW
+pos_self_order / pos.snooze               / type (False)                  : NEW selection_keys: ['product', 'self-ordering'], mode: modify
+---XML records in module 'pos_self_order'---
+NEW ir.access: pos_self_order.access_pos_self_order_custom_link_manager
+NEW ir.access: pos_self_order.access_pos_self_order_custom_link_user
+DEL ir.model.access: pos_self_order.access_pos_self_order_custom_link_manager
+DEL ir.model.access: pos_self_order.access_pos_self_order_custom_link_user
+NEW ir.ui.view: pos_self_order.DynamicQrReceipt
+NEW ir.ui.view: pos_self_order.pos_config_view_form_inherit_pos_self_order
+NEW ir.ui.view: pos_self_order.pos_order_change_receipt
+NEW ir.ui.view: pos_self_order.pos_order_receipt_header
+NEW ir.ui.view: pos_self_order.view_pos_preset_tree
+DEL ir.ui.view: pos_self_order.pos_self_view_pos_session_form
+NEW product.template: pos_self_order.product_delivery_template (noupdate)

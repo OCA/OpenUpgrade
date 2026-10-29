@@ -1,0 +1,42 @@
+---Models in module 'repair'---
+obsolete model stock.warn.insufficient.qty.repair [transient]
+new model repair.consumption.warning [transient]
+new model repair.consumption.warning.line [transient]
+new model repair.service.line
+---Fields in module 'repair'---
+repair       / account.move             / repair_order_id (many2one)    : NEW relation: repair.order
+repair       / account.move.line        / repair_service_line_id (many2one): NEW relation: repair.service.line
+repair       / product.template         / service_tracking (False)      : selection_keys added: [subcontract] (most likely nothing to do)
+repair       / repair.order             / invoice_ids (one2many)        : NEW relation: account.move, isfunction: function, stored
+repair       / repair.order             / product_uom (many2one)        : DEL relation: uom.uom
+repair       / repair.order             / repair_service_line_ids (one2many): NEW relation: repair.service.line
+repair       / repair.order             / state (selection)             : selection_keys removed: [under_repair]
+repair       / repair.order             / uom_id (many2one)             : NEW relation: uom.uom, hasdefault: compute
+repair       / repair.order             / website_message_ids (one2many): DEL relation: mail.message
+repair       / repair.service.line      / description (text)            : NEW translate
+repair       / repair.service.line      / invoice_line_ids (one2many)   : NEW relation: account.move.line
+repair       / repair.service.line      / product_id (many2one)         : NEW relation: product.product
+repair       / repair.service.line      / quantity (float)              : NEW required, hasdefault: default
+repair       / repair.service.line      / repair_id (many2one)          : NEW relation: repair.order
+repair       / repair.service.line      / sale_line_id (one2many)       : NEW relation: sale.order.line
+repair       / repair.service.line      / sequence (integer)            : NEW hasdefault: default
+repair       / repair.service.line      / uom_id (many2one)             : NEW relation: uom.uom, required, hasdefault: compute
+repair       / sale.order.line          / repair_service_line_id (many2one): NEW relation: repair.service.line
+---XML records in module 'repair'---
+NEW ir.access: repair.access_repair_consumption_warning
+NEW ir.access: repair.access_repair_consumption_warning_line
+NEW ir.access: repair.access_repair_service_line
+NEW ir.access: repair.access_repair_tag_user
+NEW ir.access: repair.access_repair_user
+NEW ir.access: repair.repair_order_rule
+NEW ir.actions.act_window: repair.action_repair_consumption_warning
+NEW ir.actions.server: repair.action_unreserve
+DEL ir.model.access: repair.access_repair_tag_user
+DEL ir.model.access: repair.access_repair_user
+DEL ir.model.access: repair.access_stock_warn_insufficient_qty_repair
+DEL ir.rule: repair.repair_order_rule (noupdate)
+DEL ir.ui.menu: repair.repair_menu_product_product
+NEW ir.ui.view: repair.view_account_move_form_inherit_repair
+NEW ir.ui.view: repair.view_partner_form
+NEW ir.ui.view: repair.view_repair_consumption_warning_form
+DEL ir.ui.view: repair.stock_warn_insufficient_qty_repair_form_view

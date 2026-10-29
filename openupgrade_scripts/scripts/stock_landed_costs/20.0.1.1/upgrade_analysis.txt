@@ -1,0 +1,14 @@
+---Models in module 'stock_landed_costs'---
+---Fields in module 'stock_landed_costs'---
+stock_landed_costs / product.template         / landed_cost_on_product_ids (many2many): NEW relation: product.product
+stock_landed_costs / stock.landed.cost        / website_message_ids (one2many): DEL relation: mail.message
+stock_landed_costs / stock.landed.cost.lines  / apply_on_product_ids (many2many): NEW relation: product.product, hasdefault: compute
+---XML records in module 'stock_landed_costs'---
+NEW ir.access: stock_landed_costs.access_stock_landed_cost
+NEW ir.access: stock_landed_costs.access_stock_landed_cost_lines
+NEW ir.access: stock_landed_costs.access_stock_valuation_adjustment_lines
+NEW ir.access: stock_landed_costs.stock_landed_cost_rule
+DEL ir.model.access: stock_landed_costs.access_stock_landed_cost
+DEL ir.model.access: stock_landed_costs.access_stock_landed_cost_lines
+DEL ir.model.access: stock_landed_costs.access_stock_valuation_adjustment_lines
+DEL ir.rule: stock_landed_costs.stock_landed_cost_rule (noupdate)

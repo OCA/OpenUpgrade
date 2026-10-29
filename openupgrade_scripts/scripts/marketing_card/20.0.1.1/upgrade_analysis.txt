@@ -1,0 +1,38 @@
+---Models in module 'marketing_card'---
+---Fields in module 'marketing_card'---
+marketing_card / card.campaign            / content_header (char)         : now translatable
+marketing_card / card.campaign            / content_section (char)        : now translatable
+marketing_card / card.campaign            / content_sub_header (char)     : now translatable
+marketing_card / card.campaign            / content_sub_section1 (char)   : now translatable
+marketing_card / card.campaign            / content_sub_section2 (char)   : now translatable
+marketing_card / card.campaign            / request_description (text)    : now translatable
+marketing_card / card.campaign            / request_title (char)          : now translatable
+marketing_card / card.campaign            / reward_message (html)         : now translatable
+marketing_card / card.campaign            / website_message_ids (one2many): DEL relation: mail.message
+marketing_card / card.card                / lang (selection)              : NEW required, selection_keys: function
+marketing_card / mailing.mailing          / card_lang (selection)         : NEW selection_keys: function, hasdefault: compute
+---XML records in module 'marketing_card'---
+NEW ir.access: marketing_card.access_card_campaign_tag_manager
+NEW ir.access: marketing_card.access_card_campaign_tag_user
+NEW ir.access: marketing_card.access_card_campaign_user
+NEW ir.access: marketing_card.access_card_card_manager
+NEW ir.access: marketing_card.access_card_card_public
+NEW ir.access: marketing_card.access_card_card_user
+NEW ir.access: marketing_card.access_card_template_system
+NEW ir.access: marketing_card.access_card_template_user
+NEW ir.access: marketing_card.marketing_card_campaign_manager_own_rule
+NEW ir.access: marketing_card.marketing_card_campaign_user_owl_rule
+DEL ir.model.access: marketing_card.access_card_campaign_tag_manager
+DEL ir.model.access: marketing_card.access_card_campaign_tag_user
+DEL ir.model.access: marketing_card.access_card_campaign_user
+DEL ir.model.access: marketing_card.access_card_card_manager
+DEL ir.model.access: marketing_card.access_card_card_portal
+DEL ir.model.access: marketing_card.access_card_card_public
+DEL ir.model.access: marketing_card.access_card_card_user
+DEL ir.model.access: marketing_card.access_card_template_system
+DEL ir.model.access: marketing_card.access_card_template_user
+NEW ir.model.constraint: marketing_card.constraint_card_card_campaign_record_lang_unique
+DEL ir.model.constraint: marketing_card.constraint_card_card_campaign_record_unique
+DEL ir.rule: marketing_card.marketing_card_campaign_manager_own_rule (noupdate)
+DEL ir.rule: marketing_card.marketing_card_campaign_user_owl_rule (noupdate)
+NEW ir.ui.view: marketing_card.card_campaign_linkedin_share_composer

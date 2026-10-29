@@ -1,0 +1,17 @@
+---Models in module 'stock_fleet'---
+new model report.stock_fleet.report_cmr [abstract]
+new model report.stock_fleet.report_cmr_batch [abstract]
+---Fields in module 'stock_fleet'---
+stock_fleet  / stock.picking.type       / auto_print_cmr_report (boolean): NEW
+---XML records in module 'stock_fleet'---
+NEW ir.actions.report: stock_fleet.action_report_cmr
+NEW ir.actions.report: stock_fleet.action_report_cmr_batch
+NEW ir.ui.view: stock_fleet.report_cmr
+NEW ir.ui.view: stock_fleet.report_cmr_batch
+NEW ir.ui.view: stock_fleet.report_cmr_document
+NEW ir.ui.view: stock_fleet.report_cmr_goods_table
+NEW ir.ui.view: stock_fleet.report_cmr_picking_copies
+NEW ir.ui.view: stock_fleet.report_cmr_translated_label
+NEW ir.ui.view: stock_fleet.stock_picking_batch_card
+DEL ir.ui.view: stock_fleet.stock_picking_batch_kanban
+NEW report.paperformat: stock_fleet.paperformat_cmr

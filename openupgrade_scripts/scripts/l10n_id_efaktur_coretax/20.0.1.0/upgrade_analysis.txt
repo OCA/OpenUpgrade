@@ -1,0 +1,17 @@
+---Models in module 'l10n_id_efaktur_coretax'---
+---Fields in module 'l10n_id_efaktur_coretax'---
+l10n_id_efaktur_coretax / l10n_id_efaktur_coretax.document / website_message_ids (one2many): DEL relation: mail.message
+l10n_id_efaktur_coretax / res.partner              / l10n_id_nik (char)            : DEL
+l10n_id_efaktur_coretax / res.partner              / l10n_id_pkp (boolean)         : DEL
+l10n_id_efaktur_coretax / res.partner              / l10n_id_tku (char)            : DEL
+---XML records in module 'l10n_id_efaktur_coretax'---
+NEW ir.access: l10n_id_efaktur_coretax.access_efaktur_document_user
+NEW ir.access: l10n_id_efaktur_coretax.access_product_code_user
+NEW ir.access: l10n_id_efaktur_coretax.access_uom_code_user
+NEW ir.access: l10n_id_efaktur_coretax.efaktur_document_multi_company
+DEL ir.model.access: l10n_id_efaktur_coretax.access_efaktur_document_user
+DEL ir.model.access: l10n_id_efaktur_coretax.access_product_code_user
+DEL ir.model.access: l10n_id_efaktur_coretax.access_uom_code_user
+DEL ir.rule: l10n_id_efaktur_coretax.efaktur_document_multi_company (noupdate)
+NEW ir.ui.view: l10n_id_efaktur_coretax.uom_uom_view_form
+DEL ir.ui.view: l10n_id_efaktur_coretax.product_uom_form_view_inherit_coretax

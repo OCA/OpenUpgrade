@@ -1,0 +1,34 @@
+<?xml version='1.0' encoding='utf-8'?>
+<odoo>
+  <record id="base.res_partner_bank_rule_user" model="ir.access">
+    <field name="active" eval="False"/>
+  </record>
+  <record id="base.res_partner_bank_rule_user_1" model="ir.access">
+    <field name="active" eval="False"/>
+  </record>
+  <record id="contract_type_apprenticeship" model="hr.employee.type">
+    <field name="sequence">6</field>
+  </record>
+  <record id="contract_type_employee" model="hr.employee.type">
+    <field name="sequence">0</field>
+  </record>
+  <record id="contract_type_interim" model="hr.employee.type" forcecreate="1">
+    <field name="sequence">5</field>
+  </record>
+  <record id="contract_type_intern" model="hr.employee.type">
+    <field name="sequence">4</field>
+  </record>
+  <record id="contract_type_seasonal" model="hr.employee.type">
+    <field name="name">Occasional / Seasonal</field>
+    <field name="sequence">7</field>
+  </record>
+  <record id="contract_type_student" model="hr.employee.type">
+    <field name="sequence">3</field>
+  </record>
+  <record id="contract_type_thesis" model="hr.employee.type">
+    <field name="sequence">8</field>
+  </record>
+  <record id="structure_type_employee_cp200" model="hr.payroll.structure.type">
+    <field name="name">Belgium Pay</field>
+  </record>
+</odoo>

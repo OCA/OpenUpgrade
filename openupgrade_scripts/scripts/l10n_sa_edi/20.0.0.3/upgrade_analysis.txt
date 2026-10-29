@@ -1,0 +1,70 @@
+---Models in module 'l10n_sa_edi'---
+new model l10n_sa_edi.document
+new model l10n_sa_edi.log
+new model l10n_sa_edi.transaction.type
+new model zatca.ubl.mixin [abstract]
+---Fields in module 'l10n_sa_edi'---
+l10n_sa_edi  / account.move             / l10n_sa_chain_index (integer) : not stored anymore
+l10n_sa_edi  / account.move             / l10n_sa_chain_index (integer) : now related
+l10n_sa_edi  / account.move             / l10n_sa_edi_chain_head_id (many2one): DEL relation: account.move
+l10n_sa_edi  / account.move             / l10n_sa_edi_document_id (many2one): NEW relation: l10n_sa_edi.document
+l10n_sa_edi  / account.move             / l10n_sa_edi_supply_end_date (date): NEW
+l10n_sa_edi  / account.move             / l10n_sa_edi_transaction_type_ids (many2many): NEW relation: l10n_sa_edi.transaction.type, hasdefault: compute
+l10n_sa_edi  / account.move             / l10n_sa_is_test (boolean)     : NEW isfunction: function, stored
+l10n_sa_edi  / account.tax              / l10n_sa_exemption_reason_code (selection): DEL selection_keys: ['VATEX-SA-29', 'VATEX-SA-29-7', 'VATEX-SA-30', 'VATEX-SA-32', 'VATEX-SA-33', 'VATEX-SA-34-1', 'VATEX-SA-34-2', 'VATEX-SA-34-3', 'VATEX-SA-34-4', 'VATEX-SA-34-5', 'VATEX-SA-35', 'VATEX-SA-36', 'VATEX-SA-EDU', 'VATEX-SA-HEA', 'VATEX-SA-OOS']
+l10n_sa_edi  / account.tax              / l10n_sa_is_retention (boolean): DEL
+l10n_sa_edi  / account.tax              / ubl_cii_tax_exemption_reason_code (False): NEW selection_keys: ['VATEX-EU-132', 'VATEX-EU-132-1A', 'VATEX-EU-132-1B', 'VATEX-EU-132-1C', 'VATEX-EU-132-1D', 'VATEX-EU-132-1E', 'VATEX-EU-132-1F', 'VATEX-EU-132-1G', 'VATEX-EU-132-1H', 'VATEX-EU-132-1I', 'VATEX-EU-132-1J', 'VATEX-EU-132-1K', 'VATEX-EU-132-1L', 'VATEX-EU-132-1M', 'VATEX-EU-132-1N', 'VATEX-EU-132-1O', 'VATEX-EU-132-1P', 'VATEX-EU-132-1Q', 'VATEX-EU-135-1', 'VATEX-EU-143', 'VATEX-EU-143-1A', 'VATEX-EU-143-1B', 'VATEX-EU-143-1C', 'VATEX-EU-143-1D', 'VATEX-EU-143-1E', 'VATEX-EU-143-1F', 'VATEX-EU-143-1FA', 'VATEX-EU-143-1G', 'VATEX-EU-143-1H', 'VATEX-EU-143-1I', 'VATEX-EU-143-1J', 'VATEX-EU-143-1K', 'VATEX-EU-143-1L', 'VATEX-EU-144', 'VATEX-EU-146-1E', 'VATEX-EU-148', 'VATEX-EU-148-A', 'VATEX-EU-148-B', 'VATEX-EU-148-C', 'VATEX-EU-148-D', 'VATEX-EU-148-E', 'VATEX-EU-148-F', 'VATEX-EU-148-G', 'VATEX-EU-151', 'VATEX-EU-151-1A', 'VATEX-EU-151-1AA', 'VATEX-EU-151-1B', 'VATEX-EU-151-1C', 'VATEX-EU-151-1D', 'VATEX-EU-151-1E', 'VATEX-EU-153', 'VATEX-EU-159', 'VATEX-EU-309', 'VATEX-EU-79-C', 'VATEX-EU-AE', 'VATEX-EU-D', 'VATEX-EU-F', 'VATEX-EU-G', 'VATEX-EU-I', 'VATEX-EU-IC', 'VATEX-EU-J', 'VATEX-EU-O', 'VATEX-FR-298SEXDECIESA', 'VATEX-FR-AE', 'VATEX-FR-CGI261-1', 'VATEX-FR-CGI261-2', 'VATEX-FR-CGI261-3', 'VATEX-FR-CGI261-4', 'VATEX-FR-CGI261-5', 'VATEX-FR-CGI261-7', 'VATEX-FR-CGI261-8', 'VATEX-FR-CGI261A', 'VATEX-FR-CGI261B', 'VATEX-FR-CGI261C-1', 'VATEX-FR-CGI261C-2', 'VATEX-FR-CGI261C-3', 'VATEX-FR-CGI261D-1', 'VATEX-FR-CGI261D-1BIS', 'VATEX-FR-CGI261D-2', 'VATEX-FR-CGI261D-3', 'VATEX-FR-CGI261D-4', 'VATEX-FR-CGI261E-1', 'VATEX-FR-CGI261E-2', 'VATEX-FR-CGI275', 'VATEX-FR-CGI277A', 'VATEX-FR-CGI295', 'VATEX-FR-CNWVAT', 'VATEX-FR-F', 'VATEX-FR-FRANCHISE', 'VATEX-FR-I', 'VATEX-FR-J', 'VATEX-SA-29', 'VATEX-SA-29-7', 'VATEX-SA-30', 'VATEX-SA-32', 'VATEX-SA-33', 'VATEX-SA-34-1', 'VATEX-SA-34-2', 'VATEX-SA-34-3', 'VATEX-SA-34-4', 'VATEX-SA-34-5', 'VATEX-SA-35', 'VATEX-SA-36', 'VATEX-SA-EDU', 'VATEX-SA-HEA', 'VATEX-SA-OOS'], mode: modify
+l10n_sa_edi  / l10n_sa_edi.document     / attachment_id (many2one)      : NEW relation: ir.attachment
+l10n_sa_edi  / l10n_sa_edi.document     / company_id (many2one)         : NEW relation: res.company, required
+l10n_sa_edi  / l10n_sa_edi.document     / journal_id (many2one)         : NEW relation: account.journal, required
+l10n_sa_edi  / l10n_sa_edi.document     / l10n_sa_chain_index (integer) : NEW
+l10n_sa_edi  / l10n_sa_edi.document     / l10n_sa_edi_log_ids (one2many): NEW relation: l10n_sa_edi.log
+l10n_sa_edi  / l10n_sa_edi.document     / message (html)                : NEW translate
+l10n_sa_edi  / l10n_sa_edi.document     / res_id (many2one_reference)   : NEW relation: res_model, required
+l10n_sa_edi  / l10n_sa_edi.document     / res_model (selection)         : NEW required, selection_keys: ['account.move', 'pos.order']
+l10n_sa_edi  / l10n_sa_edi.document     / state (selection)             : NEW selection_keys: ['accepted', 'rejected', 'to_send', 'unknown', 'warning']
+l10n_sa_edi  / l10n_sa_edi.log          / attachment_name (char)        : NEW
+l10n_sa_edi  / l10n_sa_edi.log          / is_test (boolean)             : NEW
+l10n_sa_edi  / l10n_sa_edi.log          / l10n_sa_edi_document_id (many2one): NEW relation: l10n_sa_edi.document
+l10n_sa_edi  / l10n_sa_edi.log          / message (html)                : NEW translate
+l10n_sa_edi  / l10n_sa_edi.log          / state (selection)             : NEW selection_keys: ['accepted', 'rejected', 'to_send', 'unknown', 'warning']
+l10n_sa_edi  / l10n_sa_edi.transaction.type / code (selection)              : NEW required, selection_keys: ['export', 'nominal', 'summary']
+l10n_sa_edi  / l10n_sa_edi.transaction.type / name (char)                   : NEW required, translate
+l10n_sa_edi  / res.company              / l10n_sa_edi_additional_identification_scheme (selection): selection_keys is now 'False' ('function')
+l10n_sa_edi  / res.company              / l10n_sa_edi_additional_identification_scheme (selection): type is now 'char' ('selection')
+l10n_sa_edi  / res.partner              / l10n_sa_edi_additional_identification_number (char): not stored anymore
+l10n_sa_edi  / res.partner              / l10n_sa_edi_additional_identification_number (char): now a function
+l10n_sa_edi  / res.partner              / l10n_sa_edi_additional_identification_scheme (selection): not stored anymore
+l10n_sa_edi  / res.partner              / l10n_sa_edi_additional_identification_scheme (selection): now a function
+l10n_sa_edi  / res.partner              / l10n_sa_edi_additional_identification_scheme (selection): selection_keys is now 'False' ('['700', 'CRN', 'GCC', 'IQA', 'MLS', 'MOM', 'NAT', 'OTH', 'PAS', 'SAG', 'TIN']')
+l10n_sa_edi  / res.partner              / l10n_sa_edi_additional_identification_scheme (selection): type is now 'char' ('selection')
+l10n_sa_edi  / res.users                / l10n_sa_edi_additional_identification_scheme (selection): selection_keys is now 'False' ('function')
+l10n_sa_edi  / res.users                / l10n_sa_edi_additional_identification_scheme (selection): type is now 'char' ('selection')
+---XML records in module 'l10n_sa_edi'---
+DEL account.edi.format: l10n_sa_edi.edi_sa_zatca (noupdate)
+NEW ir.access: l10n_sa_edi.l10n_sa_edi_document_group_invoice
+NEW ir.access: l10n_sa_edi.l10n_sa_edi_document_readonly
+NEW ir.access: l10n_sa_edi.l10n_sa_edi_log_group_invoice
+NEW ir.access: l10n_sa_edi.l10n_sa_edi_log_readonly
+NEW ir.access: l10n_sa_edi.l10n_sa_edi_otp_wizard
+NEW ir.access: l10n_sa_edi.l10n_sa_edi_transaction_type
+DEL ir.model.access: l10n_sa_edi.l10n_sa_edi_otp_wizard
+NEW ir.model.constraint: l10n_sa_edi.constraint_l10n_sa_edi_document_unique_record
+NEW ir.model.constraint: l10n_sa_edi.constraint_res_partner_check_l10n_sa_edi_building_number
+NEW ir.model.constraint: l10n_sa_edi.constraint_res_partner_check_l10n_sa_edi_plot_number
+NEW ir.ui.view: l10n_sa_edi.l10n_sa_edi_company_address_list
+NEW ir.ui.view: l10n_sa_edi.view_account_invoice_filter
+NEW ir.ui.view: l10n_sa_edi.view_invoice_tree
+NEW ir.ui.view: l10n_sa_edi.view_move_form
+DEL ir.ui.view: l10n_sa_edi.l10n_sa_edi_external_layout_bold
+DEL ir.ui.view: l10n_sa_edi.l10n_sa_edi_external_layout_boxed
+DEL ir.ui.view: l10n_sa_edi.l10n_sa_edi_external_layout_bubble
+DEL ir.ui.view: l10n_sa_edi.l10n_sa_edi_external_layout_folder
+DEL ir.ui.view: l10n_sa_edi.l10n_sa_edi_external_layout_standard
+DEL ir.ui.view: l10n_sa_edi.l10n_sa_edi_external_layout_striped
+DEL ir.ui.view: l10n_sa_edi.l10n_sa_edi_external_layout_wave
+DEL ir.ui.view: l10n_sa_edi.view_account_form_inherit
+DEL ir.ui.view: l10n_sa_edi.view_partner_form
+NEW l10n_sa_edi.transaction.type: l10n_sa_edi.transaction_type_export (noupdate)
+NEW l10n_sa_edi.transaction.type: l10n_sa_edi.transaction_type_nominal (noupdate)
+NEW l10n_sa_edi.transaction.type: l10n_sa_edi.transaction_type_summary (noupdate)

@@ -1,0 +1,9 @@
+---Models in module 'hr_presence'---
+---Fields in module 'hr_presence'---
+hr_presence  / hr.employee              / hr_presence_state_display (selection): DEL selection_keys: ['absent', 'out_of_working_hour', 'present']
+---XML records in module 'hr_presence'---
+NEW ir.access: hr_presence.access_sms_template_hr_manager
+NEW ir.access: hr_presence.ir_rule_sms_template_hr_manager
+DEL ir.actions.server: hr_presence.action_hr_employee_presence_log
+DEL ir.model.access: hr_presence.access_sms_template_hr_manager
+DEL ir.rule: hr_presence.ir_rule_sms_template_hr_manager
