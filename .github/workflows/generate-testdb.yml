@@ -1,0 +1,76 @@
+name: Generate test database
+
+on:
+  workflow_call:
+    inputs:
+      version:
+        required: true
+        type: string
+      python_version:
+        default: "3.10"
+        type: string
+      postgres_version:
+        default: "14"
+        type: string
+      exclude_modules:
+        default: "[]"
+        type: string
+      release_tag:
+        default: "databases"
+        type: string
+jobs:
+  generate-testdb:
+    name: Generate test database ${{ inputs.version }}
+    runs-on: ubuntu-22.04
+    container: ghcr.io/oca/oca-ci/py${{ inputs.python_version }}-ocb${{ inputs.version }}:latest
+    env:
+      PGHOST: "postgres"
+      PGPASSWORD: "odoo"
+      PGUSER: "odoo"
+      VERSION: "${{ inputs.version }}"
+      DBNAME: "openupgrade"
+    services:
+      postgres:
+        image: postgres:${{ inputs.postgres_version }}
+        env:
+          POSTGRES_USER: odoo
+          POSTGRES_PASSWORD: odoo
+        ports:
+          - 5432:5432
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+      - name: Install extra dependencies
+        run: |
+          # this is for l10n_eg_edi_eta which crashes without it
+          pip install asn1crypto
+          # this is for cloud_storage_google
+          pip install "google-auth<2.48.0"
+          # this is for account_peppol
+          pip install phonenumbers
+          # for pushing release
+          apt install gh -y
+      - name: Install all modules and an extra language
+        run: |
+          odoo -d $DBNAME -i base --stop-after-init
+          odoo shell -d $DBNAME <<EOF
+          # be sure attachments go into the database
+          env['ir.config_parameter'].set_param('ir_attachment.location', 'db')
+          env['ir.attachment'].force_storage()
+          env['ir.module.module'].search([
+              ('name', 'not in', ${{ inputs.exclude_modules }}),
+              ('name', 'not ilike', 'test_%'),
+              ('name', 'not ilike', 'hw_%'),
+          ]).button_immediate_install()
+          env.cr.commit()
+          EOF
+          odoo -d $DBNAME --load-language=fr_FR --stop-after-init
+      - name: Dump database
+        run: |
+          pg_dump $DBNAME -Fc -f $VERSION.psql
+      - name: Upload database dump to release
+        env:
+          GH_TOKEN: ${{ github.token }}
+        run: |
+          git config --global --add safe.directory $(pwd)
+          gh release upload ${{ inputs.release_tag }} $VERSION.psql --clobber
