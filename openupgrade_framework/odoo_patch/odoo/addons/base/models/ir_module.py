@@ -2,6 +2,7 @@
 # License AGPL-3.0 or later (http://www.gnu.org/licenses/agpl).
 
 from odoo import api
+from odoo.fields import Domain
 
 from odoo.addons.base.models.ir_module import IrModuleModule
 
@@ -16,11 +17,23 @@ def update_list(self):
     result = IrModuleModule.update_list._original_method(self)
     new_auto_install_modules = self.browse([])
     for module in self.env["ir.module.module"].search(
-        [
-            ("auto_install", "=", True),
-            ("state", "=", "uninstalled"),
-            ("name", "not like", ("l10n_%")),
-        ]
+        Domain(
+            [
+                ("auto_install", "=", True),
+                ("state", "=", "uninstalled"),
+                ("name", "not like", ("l10n_%")),
+            ]
+        )
+        & Domain.OR(
+            [
+                Domain("country_ids", "=", False),
+                Domain(
+                    "country_ids",
+                    "in",
+                    self.env["res.company"].search([]).country_id.ids,
+                ),
+            ]
+        )
     ):
         if all(
             state in ("to upgrade", "to install", "installed")
