@@ -16,6 +16,9 @@ class TestStockAccountMigration(TransactionCase):
         self.product_fifo = self.env["product.product"].search(
             [("name", "=", "FIFO product")]
         )
+        self.product_reval = self.env["product.product"].search(
+            [("name", "=", "Revaluation product")]
+        )
         self.location_customer = self.env.ref("stock.stock_location_customers")
         self.location_supplier = self.env.ref("stock.stock_location_suppliers")
         self.location_stock = self.env.ref("stock.stock_location_stock")
@@ -79,3 +82,18 @@ class TestStockAccountMigration(TransactionCase):
         # 2*24 (v19)
         self.assertEqual(out_move.value, 48)
         self.assertEqual(self.product_fifo.standard_price, 24)
+
+    def test_zero_unit_cost_revaluation(self):
+        """A revaluation booked with unit_cost 0 must not zero the cost.
+
+        17.0 writes unit_cost 0 -- not NULL -- when an adjustment changes the total
+        value of the stock without a per-unit price, keeping the adjustment in value.
+        Carrying that unit_cost straight over to product.value reads 0 as the cost,
+        which is worse than leaving it wrong: a zero cost looks like a product that
+        has simply never been costed, and it prices every subsequent delivery at
+        nothing.
+
+        4 bought at 20 gives a value of 80, and the revaluation adds 40, so the cost
+        the migration has to arrive at is 120 / 4 = 30.
+        """
+        self.assertEqual(self.product_reval.standard_price, 30)
