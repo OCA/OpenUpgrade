@@ -25,15 +25,24 @@ class TestOpenupgradeFramework(TransactionCase):
         """
         Test that we patch away fatal view errors and log the problem
         """
+        base_view = self.env["ir.ui.view"].create(
+            {
+                "model": "res.partner",
+                "arch": '<form><field name="nonexisting_field" /></form>',
+            }
+        )
+        inherited_view1 = self.env["ir.ui.view"].create(
+            {
+                "model": "res.partner",
+                "inherit_id": base_view.id,
+                "arch": '<field name="nonexisting_field2" position="replace" />',
+            }
+        )
+        inherited_view2 = inherited_view1.copy()
         with self.assertLogs(
-            "odoo.addons.openupgrade_framework.odoo_patch.odoo.addons.base.models.ir_ui_view"
+            "odoo.addons.openupgrade_framework.odoo_patch.odoo.addons.base.models.ir_ui_view",
         ):
-            self.env["ir.ui.view"].create(
-                {
-                    "model": "res.partner",
-                    "arch": '<form><field name="nonexisting_field" /></form>',
-                }
-            )
+            (inherited_view1 + inherited_view2)._get_combined_archs()
 
     def test_03_update_list(self):
         """
