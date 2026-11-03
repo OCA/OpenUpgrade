@@ -1,3 +1,4 @@
+from odoo import fields
 from odoo.tests.common import TransactionCase
 from odoo.tools.misc import mute_logger
 
@@ -33,3 +34,51 @@ class TestOpenupgradeFramework(TransactionCase):
                     "arch": '<form><field name="nonexisting_field" /></form>',
                 }
             )
+
+    def test_03_update_list(self):
+        """
+        Test that updating the module list marks uninstalled auto_install modules as
+        to install if it's not a localization or country specific with a country not
+        in use
+        """
+        IrModuleModule = self.env["ir.module.module"]
+        base = IrModuleModule.create(
+            {
+                "name": "openupgrade_framework_test_base",
+                "state": "installed",
+            }
+        )
+        auto_install = IrModuleModule.create(
+            {
+                "name": "openupgrade_framework_test_auto_install",
+                "state": "uninstalled",
+                "auto_install": "true",
+                "dependencies_id": [
+                    fields.Command.create({"name": base.name}),
+                ],
+            }
+        )
+        auto_install_localization = IrModuleModule.create(
+            {
+                "name": "l10n_openupgrade_framework_localization",
+                "state": "uninstalled",
+                "auto_install": "true",
+                "dependencies_id": [
+                    fields.Command.create({"name": base.name}),
+                ],
+            }
+        )
+        auto_install_country_specific = IrModuleModule.create(
+            {
+                "name": "l10n_openupgrade_framework_auto_install_country_specific",
+                "state": "uninstalled",
+                "auto_install": "true",
+                "dependencies_id": [
+                    fields.Command.create({"name": base.name}),
+                ],
+            }
+        )
+        self.env["ir.module.module"].update_list()
+        self.assertEqual(auto_install.state, "to install")
+        self.assertEqual(auto_install_localization.state, "uninstalled")
+        self.assertEqual(auto_install_country_specific.state, "uninstalled")
