@@ -26,5 +26,6 @@ renamed_models = {
 # only used here for upgrade_analysis
 merged_models = {
     # odoo
+    "ir.model.access": "ir.access",
     # OCA/...
 }
