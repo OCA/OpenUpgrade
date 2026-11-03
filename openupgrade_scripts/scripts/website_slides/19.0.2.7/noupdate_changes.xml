@@ -174,7 +174,7 @@
                         Hello<br/><br/>
                         There is something new in the course <strong t-out="object.channel_id.name or ''">Trees, Wood and Gardens</strong> you are following:<br/><br/>
                         <center><strong t-out="object.name or ''">Trees</strong></center>
-                        <t t-if="object.image_1024"><div style="padding: 16px 8px 16px 8px; text-align: center;"><a t-att-href="object.website_share_url"><img t-att-alt="object.name" t-attf-src="{{ ctx.get('base_url') }}/web/image/slide.slide/{{ object.id }}/image_1024" style="height:auto; width:150px; margin: 16px;"/></a></div></t>
+                        <t t-if="object.image_1024"><div style="padding: 16px 8px 16px 8px; text-align: center;"><a t-att-href="object.website_share_url"><img t-att-alt="object.name" t-att-src="object.get_image_1024_src()" style="height:auto; width:150px; margin: 16px;"/></a></div></t>
                         <div style="padding: 16px 8px 16px 8px; text-align: center;"><a t-att-href="object.website_share_url" t-attf-style="background-color: {{object.user_id.company_id.email_secondary_color or '#875A7B'}}; padding: 8px 16px 8px 16px; text-decoration: none; color: {{object.user_id.company_id.email_primary_color or '#FFFFFF'}}; border-radius: 5px;">View content</a></div>
                         Enjoy this exclusive content!
                         <t t-if="user.signature"><br/><div>--<br/><t t-out="user.signature or ''">Mitchell Admin</t></div></t>
@@ -189,7 +189,7 @@
         <p style="margin: 0px; padding: 0px; font-size: 13px;">
                         Hello<br/><br/>
                         <t t-out="user.name or ''">Mitchell Admin</t> shared the <t t-out="object.slide_category or ''">document</t> <strong t-out="object.name or ''">Trees</strong> with you!
-                        <div style="margin: 16px 8px 16px 8px; text-align: center;"><a t-att-href="(object.website_share_url + '?fullscreen=1') if ctx.get('fullscreen') else object.website_share_url"><img t-att-alt="object.name" t-attf-src="{{ ctx.get('base_url') }}/web/image/slide.slide/{{ object.id }}/image_1024" style="height:auto; width:150px; margin: 16px;"/></a></div>
+                        <div style="margin: 16px 8px 16px 8px; text-align: center;"><a t-att-href="(object.website_share_url + '?fullscreen=1') if ctx.get('fullscreen') else object.website_share_url"><img t-att-alt="object.name" t-att-src="object.get_image_1024_src()" style="height:auto; width:150px; margin: 16px;"/></a></div>
                         <div style="padding: 16px 8px 16px 8px; text-align: center;"><a t-att-href="(object.website_share_url + '?fullscreen=1') if ctx.get('fullscreen') else object.website_share_url" t-attf-style="background-color: {{user.company_id.email_secondary_color or '#875A7B'}}; padding: 8px 16px 8px 16px; text-decoration: none; color: {{user.company_id.email_primary_color or '#FFFFFF'}}; border-radius: 5px;">View <strong t-out="object.name or ''">Trees</strong></a></div>
                         <t t-if="user.signature"><br/><div>--<br/><t t-out="user.signature or ''">Mitchell Admin</t></div></t>
                     </p>

@@ -53,6 +53,9 @@
   <record id="ir_filters_portal_public_rule" model="ir.rule">
     <field name="domain_force">[('user_ids', 'in', user.ids)]</field>
   </record>
+  <record id="it" model="res.country">
+    <field eval="'%(street)s\n%(street2)s\n%(zip)s %(city)s %(state_code)s\n%(country_name)s'" name="address_format"/>
+  </record>
   <record id="kg" model="res.country">
     <field eval="'%(street)s\n%(street2)s\n%(city)s\n%(state_name)s\n%(country_name)s'" name="address_format"/>
     <field name="state_required">1</field>
