@@ -234,3 +234,5 @@ jobs:
           milestone: "${{ steps.get_milestone.outputs.number }}"
           path: "openupgrade-${{ env.TO_VERSION }}"
           title: "[${{ env.TO_VERSION }}][IMP] Update analysis files"
+          committer: "OCA-git-bot <oca-git-bot@odoo-community.org>"
+          author: "OCA-git-bot <oca-git-bot@odoo-community.org>"
