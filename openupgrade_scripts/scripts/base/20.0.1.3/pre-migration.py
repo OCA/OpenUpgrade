@@ -85,8 +85,8 @@ def res_company(env):
     """
     openupgrade.map_values(
         env.cr,
-        "font",
         openupgrade.get_legacy_name("font"),
+        "font",
         [("Fira_Mono", "Noto_Sans_Mono")],
         table="res_company",
     )
