@@ -2,7 +2,7 @@
 # License AGPL-3.0 or later (http://www.gnu.org/licenses/agpl).
 from openupgradelib import openupgrade
 
-from odoo import models
+from odoo import api, models
 
 from odoo.addons.base.models.ir_model import (
     IrModel,
@@ -26,6 +26,23 @@ def _drop_table(self):
 
 
 IrModel._drop_table = _drop_table
+
+
+@api.ondelete(at_uninstall=False)
+def _unlink_related_attachments(self):
+    """Never delete attachments (incl. binary field data) of removed models"""
+    for model in self:
+        openupgrade.message(
+            self.env.cr,
+            self.env.context.get("module", "Unknown"),
+            False,
+            False,
+            "Not deleting the attachments of model %s",
+            model.model,
+        )
+
+
+IrModel._unlink_related_attachments = _unlink_related_attachments
 
 
 def _drop_column(self):
