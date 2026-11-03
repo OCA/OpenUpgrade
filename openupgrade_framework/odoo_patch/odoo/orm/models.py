@@ -1,7 +1,6 @@
 # Copyright Odoo Community Association (OCA)
 # License AGPL-3.0 or later (http://www.gnu.org/licenses/agpl).
 import logging
-from uuid import uuid4
 
 from odoo.models import BaseModel
 
@@ -19,16 +18,10 @@ def unlink(self):
     """
     if not self.env.context.get(MODULE_UNINSTALL_FLAG):
         return BaseModel.unlink._original_method(self)
-    savepoint = str(uuid4)
     try:
-        self.env.cr.execute(  # pylint: disable=sql-injection
-            f'SAVEPOINT "{savepoint}"'
-        )
-        return BaseModel.unlink._original_method(self)
+        with self.env.cr.savepoint():
+            return BaseModel.unlink._original_method(self)
     except Exception as e:
-        self.env.cr.execute(  # pylint: disable=sql-injection
-            f'ROLLBACK TO SAVEPOINT "{savepoint}"'
-        )
         _logger.warning(
             "Could not delete obsolete record with ids %s of model %s",
             self.ids,
