@@ -6,7 +6,8 @@ to help the matching process
 renamed_modules = {
     # odoo
     # odoo/enterprise
-    # OCA/...
+    # OCA/mail
+    "mail_tracking": "mail_recipient_tracking",
 }
 
 # Merged modules contain a mapping from old module names to other,
