@@ -1,0 +1,469 @@
+---Models in module 'account'---
+obsolete model account.group
+new model account.stock.valuation.report [abstract]
+new model res.currency.rate.consolidation.mixin [abstract]
+---Fields in module 'account'---
+account      / account.account          / _order                        : _order is now 'code_path, account_type, name_path' ('code, placeholder_code')
+account      / account.account          / account_stock_expense_id (many2one): previously in module stock_account
+account      / account.account          / account_stock_variation_id (many2one): previously in module stock_account
+account      / account.account          / parent_id (many2one)          : NEW relation: account.account
+account      / account.account          / parent_path (char)            : NEW
+account      / account.account          / website_message_ids (one2many): DEL relation: mail.message
+account      / account.bank.statement   / is_statement_posted (boolean) : NEW hasdefault: default
+account      / account.bank.statement.line / invoice_outstanding_credits_debits_widget (binary): type is now 'json' ('binary')
+account      / account.bank.statement.line / invoice_payments_widget (binary): type is now 'json' ('binary')
+account      / account.bank.statement.line / needed_terms (binary)         : type is now 'json' ('binary')
+account      / account.bank.statement.line / payment_term_details (binary) : type is now 'json' ('binary')
+account      / account.bank.statement.line / tax_totals (binary)           : type is now 'json' ('binary')
+account      / account.cash.rounding    / _order                        : _order is now 'sequence, id' ('id')
+account      / account.cash.rounding    / active (boolean)              : NEW hasdefault: default
+account      / account.cash.rounding    / company_id (many2one)         : NEW relation: res.company
+account      / account.cash.rounding    / currency_ids (many2many)      : NEW relation: res.currency
+account      / account.cash.rounding    / partner_category_ids (many2many): NEW relation: res.partner.category
+account      / account.cash.rounding    / payment_method_line_ids (many2many): NEW relation: account.payment.method.line
+account      / account.cash.rounding    / sequence (integer)            : NEW required, hasdefault: default
+account      / account.fiscal.position  / _order                        : _order is now 'sequence, id' ('sequence')
+account      / account.fiscal.position  / account_map (binary)          : type is now 'json' ('binary')
+account      / account.fiscal.position  / tax_map (binary)              : type is now 'json' ('binary')
+account      / account.group            / code_prefix_end (char)        : DEL
+account      / account.group            / code_prefix_start (char)      : DEL
+account      / account.group            / company_id (many2one)         : DEL relation: res.company, required
+account      / account.group            / name (char)                   : DEL required
+account      / account.group            / parent_id (many2one)          : DEL relation: account.group
+account      / account.journal          / disable_dashboard_graph (boolean): NEW
+account      / account.journal          / display_invoice_template_pdf_report_id (boolean): now a function
+account      / account.journal          / journal_group_id (many2one)   : NEW relation: account.journal.group
+account      / account.journal          / journal_group_ids (many2many) : DEL relation: account.journal.group
+account      / account.journal          / website_message_ids (one2many): DEL relation: mail.message
+account      / account.journal.group    / company_id (many2one)         : DEL relation: res.company
+account      / account.journal.group    / excluded_journal_ids (many2many): DEL relation: account.journal
+account      / account.journal.group    / included_journal_ids (one2many): NEW relation: account.journal
+account      / account.move             / checked (boolean)             : DEL
+account      / account.move             / document_tax_mode (selection) : NEW selection_keys: ['tax_excluded', 'tax_included'], hasdefault: compute
+account      / account.move             / import_source_attachment_id (many2one): NEW relation: ir.attachment
+account      / account.move             / inventory_closing (boolean)   : NEW hasdefault: default
+account      / account.move             / invoice_outstanding_credits_debits_widget (binary): type is now 'json' ('binary')
+account      / account.move             / invoice_payments_widget (binary): type is now 'json' ('binary')
+account      / account.move             / journal_group_id (many2one)   : now related
+account      / account.move             / journal_line_ids (one2many)   : DEL relation: account.move.line
+account      / account.move             / narration (html)              : now a function
+account      / account.move             / needed_terms (binary)         : type is now 'json' ('binary')
+account      / account.move             / payment_term_details (binary) : type is now 'json' ('binary')
+account      / account.move             / review_state (selection)      : NEW required, selection_keys: ['anomaly', 'no_review', 'reviewed', 'supervised', 'todo'], hasdefault: default
+account      / account.move             / tax_totals (binary)           : type is now 'json' ('binary')
+account      / account.move             / website_message_ids (one2many): DEL relation: mail.message
+account      / account.move.line        / cogs_origin_id (many2one)     : previously in module stock_account
+account      / account.move.line        / deductible_amount (float)     : DEL
+account      / account.move.line        / deductible_percentage (float) : NEW hasdefault: default
+account      / account.move.line        / discount_allocation_key (binary): type is now 'json' ('binary')
+account      / account.move.line        / discount_allocation_needed (binary): type is now 'json' ('binary')
+account      / account.move.line        / epd_key (binary)              : type is now 'json' ('binary')
+account      / account.move.line        / epd_needed (binary)           : type is now 'json' ('binary')
+account      / account.move.line        / journal_group_id (many2one)   : now related
+account      / account.move.line        / name (char)                   : type is now 'text' ('char')
+account      / account.move.line        / open_on (date)                : NEW stored: False
+account      / account.move.line        / term_key (binary)             : type is now 'json' ('binary')
+account      / account.payment          / commercial_partner_id (many2one): NEW relation: res.partner, isfunction: function, stored
+account      / account.payment          / return_partner_bank_id (many2one): NEW relation: res.partner.bank, hasdefault: compute
+account      / account.payment          / state (selection)             : selection_keys added: [reconciled], removed: [in_process]
+account      / account.payment          / transaction_uuid (char)       : NEW isfunction: function, stored
+account      / account.payment          / website_message_ids (one2many): DEL relation: mail.message
+account      / account.reconcile.model  / matching_order (selection)    : NEW required, selection_keys: ['new_first', 'old_first'], hasdefault: default
+account      / account.reconcile.model  / payment_tolerance (float)     : NEW required, hasdefault: default
+account      / account.reconcile.model  / payment_tolerance_type (selection): NEW required, selection_keys: ['amount', 'percentage'], hasdefault: default
+account      / account.reconcile.model  / rule_type (selection)         : NEW selection_keys: ['matching_rule', 'reco_model'], hasdefault: default
+account      / account.reconcile.model  / website_message_ids (one2many): DEL relation: mail.message
+account      / account.report           / active (boolean)              : not stored anymore
+account      / account.report           / active (boolean)              : now a function
+account      / account.report           / active_fallback (boolean)     : NEW hasdefault: default
+account      / account.report           / active_selection (selection)  : NEW selection_keys: ['False', 'True']
+account      / account.report           / availability_condition (selection): selection_keys added: [consolidation] (most likely nothing to do)
+account      / account.report           / enable_snapshots (boolean)    : NEW hasdefault: compute
+account      / account.report           / filter_analytic (boolean)     : DEL
+account      / account.report           / filter_line_comparison (boolean): NEW hasdefault: compute
+account      / account.report           / groupby (char)                : NEW
+account      / account.report           / prefix_groups_threshold (integer): DEL
+account      / account.report           / use_fiscal_periods (boolean)  : NEW hasdefault: compute
+account      / account.report           / user_groupby (char)           : NEW hasdefault: compute
+account      / account.report.column    / figure_type (selection)       : selection_keys added: [many2one] (most likely nothing to do)
+account      / account.report.column    / report_id (many2one)          : now required
+account      / account.report.expression / engine (selection)            : selection_keys added: [reference, text] (most likely nothing to do)
+account      / account.report.expression / figure_type (selection)       : selection_keys added: [many2one] (most likely nothing to do)
+account      / account.report.expression / formula (char)                : type is now 'text' ('char')
+account      / account.report.expression / subformula (char)             : type is now 'text' ('char')
+account      / account.report.line      / foldability (selection)       : NEW selection_keys: ['always_unfolded', 'foldable', 'never_unfolded'], hasdefault: compute
+account      / account.report.line      / foldable (boolean)            : DEL
+account      / account.tax              / website_message_ids (one2many): DEL relation: mail.message
+account      / account.tax.group        / advance_tax_payment_account_id (many2one): DEL relation: account.account
+account      / account.tax.group        / tax_payable_account_id (many2one): DEL relation: account.account
+account      / account.tax.group        / tax_receivable_account_id (many2one): DEL relation: account.account
+account      / account.tax.repartition.line / tag_ids_domain (binary)       : type is now 'json' ('binary')
+account      / ir.module.module         / account_templates (binary)    : type is now 'json' ('binary')
+account      / product.category         / account_stock_variation_id (many2one): previously in module stock_account
+account      / product.category         / property_cost_method (selection): previously in module stock_account
+account      / product.category         / property_price_difference_account_id (many2one): previously in module stock_account
+account      / product.category         / property_stock_journal (many2one): previously in module stock_account
+account      / product.category         / property_stock_valuation_account_id (many2one): previously in module stock_account
+account      / product.category         / property_valuation (selection): previously in module stock_account
+account      / product.product          / catalog_is_in_selected_section (boolean): NEW stored: False
+account      / product.product          / cost_method (selection)       : previously in module stock_account
+account      / product.product          / valuation (selection)         : previously in module stock_account
+account      / product.template         / cost_method (selection)       : previously in module stock_account
+account      / product.template         / valuation (selection)         : previously in module stock_account
+account      / res.company              / account_stock_journal_id (many2one): previously in module stock_account
+account      / res.company              / account_stock_valuation_id (many2one): previously in module stock_account
+account      / res.company              / cost_method (selection)       : previously in module stock_account
+account      / res.company              / document_sequence_editable (boolean): NEW
+account      / res.company              / expense_account_id (many2one) : not stored anymore
+account      / res.company              / expense_account_id (many2one) : now a function
+account      / res.company              / income_account_id (many2one)  : not stored anymore
+account      / res.company              / income_account_id (many2one)  : now a function
+account      / res.company              / inventory_period (selection)  : previously in module stock_account
+account      / res.company              / inventory_valuation (selection): previously in module stock_account
+account      / res.company              / quick_edit_mode_enabled (boolean): NEW
+account      / res.company              / set_to_review_documents (boolean): NEW
+account      / res.company              / vat_check_vies (boolean)      : previously in module base_vat
+account      / res.company              / vat_disabled (boolean)        : NEW isfunction: function, stored
+account      / res.company              / website_message_ids (one2many): DEL relation: mail.message
+account      / res.partner              / display_invoice_template_pdf_report_id (boolean): now a function
+account      / res.partner              / duplicate_bank_partner_ids (many2many): not related anymore
+account      / res.partner              / duplicate_bank_partner_ids (many2many): now a function
+account      / res.partner              / global_location_number (char) : previously in module account_add_gln
+account      / res.partner              / qr_code_method (selection)    : NEW selection_keys: function
+account      / res.partner.bank         / account_type (False)          : NEW selection_keys: ['bank', 'clabe', 'iban'], mode: modify
+account      / res.partner.bank         / has_iban_warning (boolean)    : DEL
+account      / res.partner.bank         / has_money_transfer_warning (boolean): DEL
+account      / res.partner.bank         / has_phishing_warnings (boolean): NEW isfunction: function, stored
+account      / res.partner.bank         / website_message_ids (one2many): DEL relation: mail.message
+account      / res.users                / global_location_number (char) : previously in module account_add_gln
+account_add_gln / res.partner              / global_location_number (char) : not stored anymore
+account_add_gln / res.partner              / global_location_number (char) : now a function
+stock_account / product.category         / property_cost_method (selection): selection_keys removed: [fifo]
+stock_account / product.template         / cost_method (selection)       : selection_keys removed: [fifo]
+stock_account / res.company              / account_stock_journal_id (many2one): not stored anymore
+stock_account / res.company              / account_stock_journal_id (many2one): now a function
+stock_account / res.company              / account_stock_valuation_id (many2one): not stored anymore
+stock_account / res.company              / account_stock_valuation_id (many2one): now a function
+stock_account / res.company              / cost_method (selection)       : not stored anymore
+stock_account / res.company              / cost_method (selection)       : now a function
+stock_account / res.company              / cost_method (selection)       : selection_keys removed: [fifo]
+stock_account / res.company              / inventory_valuation (selection): not stored anymore
+stock_account / res.company              / inventory_valuation (selection): now a function
+---XML records in module 'account'---
+DEL digest.tip: account.digest_tip_account_0
+NEW ir.access: account.access_account_account_manager
+NEW ir.access: account.access_account_account_tax
+NEW ir.access: account.access_account_account_user
+NEW ir.access: account.access_account_accrued_orders_wizard
+NEW ir.access: account.access_account_analytic_account
+NEW ir.access: account.access_account_analytic_accountant
+NEW ir.access: account.access_account_analytic_applicability_accountant
+NEW ir.access: account.access_account_analytic_distribution_invoice
+NEW ir.access: account.access_account_analytic_distribution_readonly
+NEW ir.access: account.access_account_analytic_plan_accountant
+NEW ir.access: account.access_account_automatic_entry_wizard
+NEW ir.access: account.access_account_autopost_bills_wizard
+NEW ir.access: account.access_account_bank_statement
+NEW ir.access: account.access_account_bank_statement_group_invoice
+NEW ir.access: account.access_account_bank_statement_group_readonly
+NEW ir.access: account.access_account_cash_rounding_readonly
+NEW ir.access: account.access_account_cash_rounding_uinvoice
+NEW ir.access: account.access_account_code_mapping
+NEW ir.access: account.access_account_code_mapping_manager
+NEW ir.access: account.access_account_financial_year_op
+NEW ir.access: account.access_account_fiscal_position
+NEW ir.access: account.access_account_fiscal_position_account
+NEW ir.access: account.access_account_fiscal_position_account_product_manager
+NEW ir.access: account.access_account_fiscal_position_product_manager
+NEW ir.access: account.access_account_full_reconcile_group_invoice
+NEW ir.access: account.access_account_full_reconcile_group_readonly
+NEW ir.access: account.access_account_incoterms_all
+NEW ir.access: account.access_account_incoterms_manager
+NEW ir.access: account.access_account_journal_group_invoice
+NEW ir.access: account.access_account_journal_group_manager
+NEW ir.access: account.access_account_journal_group_readonly
+NEW ir.access: account.access_account_journal_invoice
+NEW ir.access: account.access_account_journal_manager
+NEW ir.access: account.access_account_journal_readonly
+NEW ir.access: account.access_account_lock_exception
+NEW ir.access: account.access_account_lock_exception_manager
+NEW ir.access: account.access_account_merge_wizard_line_manager
+NEW ir.access: account.access_account_merge_wizard_manager
+NEW ir.access: account.access_account_move_reversal
+NEW ir.access: account.access_account_partial_reconcile_group_invoice
+NEW ir.access: account.access_account_partial_reconcile_readonly
+NEW ir.access: account.access_account_payment
+NEW ir.access: account.access_account_payment_method
+NEW ir.access: account.access_account_payment_method_line
+NEW ir.access: account.access_account_payment_method_line_readonly
+NEW ir.access: account.access_account_payment_method_readonly
+NEW ir.access: account.access_account_payment_readonly
+NEW ir.access: account.access_account_payment_register
+NEW ir.access: account.access_account_payment_term_line_manager
+NEW ir.access: account.access_account_payment_term_line_partner_manager
+NEW ir.access: account.access_account_payment_term_manager
+NEW ir.access: account.access_account_payment_term_partner_manager
+NEW ir.access: account.access_account_payment_term_portal
+NEW ir.access: account.access_account_reconcile_model
+NEW ir.access: account.access_account_reconcile_model_billing
+NEW ir.access: account.access_account_reconcile_model_line
+NEW ir.access: account.access_account_reconcile_model_line_billing
+NEW ir.access: account.access_account_reconcile_model_line_readonly
+NEW ir.access: account.access_account_reconcile_model_readonly
+NEW ir.access: account.access_account_report_ac_user
+NEW ir.access: account.access_account_report_column_ac_user
+NEW ir.access: account.access_account_report_column_readonly
+NEW ir.access: account.access_account_report_expression_ac_user
+NEW ir.access: account.access_account_report_expression_readonly
+NEW ir.access: account.access_account_report_external_value_ac_user
+NEW ir.access: account.access_account_report_external_value_readonly
+NEW ir.access: account.access_account_report_line_ac_user
+NEW ir.access: account.access_account_report_line_readonly
+NEW ir.access: account.access_account_report_readonly
+NEW ir.access: account.access_account_resequence
+NEW ir.access: account.access_account_root
+NEW ir.access: account.access_account_secure_entries_wizard
+NEW ir.access: account.access_account_setup_bank_manual_config
+NEW ir.access: account.access_account_tag_internal_user
+NEW ir.access: account.access_account_tax_group_internal_user
+NEW ir.access: account.access_account_tax_group_manager
+NEW ir.access: account.access_account_tax_internal_user
+NEW ir.access: account.access_account_tax_manager
+NEW ir.access: account.access_account_tax_repartition_line_manager
+NEW ir.access: account.access_account_tax_repartition_line_user
+NEW ir.access: account.access_base_document_layout_account_user
+NEW ir.access: account.access_ir_model_account_reports
+NEW ir.access: account.access_product_product_account_user
+NEW ir.access: account.access_res_currency_account_manager
+NEW ir.access: account.access_res_currency_rate_account_manager
+NEW ir.access: account.access_validate_account_move
+NEW ir.access: account.account_analytic_line_rule_billing_user
+NEW ir.access: account.account_analytic_line_rule_readonly_user
+NEW ir.access: account.account_bank_statement_comp_rule
+NEW ir.access: account.account_bank_statement_line_comp_rule
+NEW ir.access: account.account_bank_statement_line_rule_basic_user
+NEW ir.access: account.account_bank_statement_line_rule_invoice_user
+NEW ir.access: account.account_bank_statement_line_rule_readonly_user
+NEW ir.access: account.account_cash_rounding_comp_rule
+NEW ir.access: account.account_comp_rule
+NEW ir.access: account.account_fiscal_position_comp_rule
+NEW ir.access: account.account_invoice_line_rule_portal
+NEW ir.access: account.account_invoice_report_rule_invoice
+NEW ir.access: account.account_invoice_report_rule_readonly
+NEW ir.access: account.account_invoice_rule_portal
+NEW ir.access: account.account_move_comp_rule
+NEW ir.access: account.account_move_line_comp_rule
+NEW ir.access: account.account_move_line_rule_group_readonly
+NEW ir.access: account.account_move_line_see_all
+NEW ir.access: account.account_move_rule_group_readonly
+NEW ir.access: account.account_move_see_all
+NEW ir.access: account.account_move_send_batch_rule_group_invoice
+NEW ir.access: account.account_move_send_single_rule_group_invoice
+NEW ir.access: account.account_payment_comp_rule
+NEW ir.access: account.account_payment_term_comp_rule
+NEW ir.access: account.account_reconcile_model_line_template_comp_rule
+NEW ir.access: account.account_reconcile_model_template_comp_rule
+NEW ir.access: account.invoice_analysis_comp_rule
+NEW ir.access: account.ir_rule_res_partner_bank_billing_officers
+NEW ir.access: account.journal_comp_rule
+NEW ir.access: account.report_external_value_comp_rule
+NEW ir.access: account.res_partner_rule_user
+NEW ir.access: account.tax_comp_rule
+NEW ir.access: account.tax_group_comp_rule
+NEW ir.access: account.tax_rep_comp_rule
+NEW ir.actions.act_window: account.action_account_cashflow_analysis
+NEW ir.actions.act_window: account.action_account_matching_rules
+NEW ir.actions.client: account.action_report_stock_valuation [renamed from stock_account module]
+NEW ir.actions.server: account.accountant_reset_to_draft_entries_action
+NEW ir.actions.server: account.action_mark_payment_as_reconciled
+NEW ir.actions.server: account.action_server_payment_receipt
+DEL ir.actions.server: account.accountant_confirm_entries_action
+NEW ir.config_parameter: account.disable_dashboard_kpis (noupdate)
+NEW ir.cron: account.ir_cron_post_stock_valuation [renamed from stock_account module] (noupdate switched)
+DEL ir.model.access: account.access_account_account
+DEL ir.model.access: account.access_account_account_invoice
+DEL ir.model.access: account.access_account_account_manager
+DEL ir.model.access: account.access_account_account_partner_manager
+DEL ir.model.access: account.access_account_account_tax
+DEL ir.model.access: account.access_account_account_tax_readonly
+DEL ir.model.access: account.access_account_account_tax_user
+DEL ir.model.access: account.access_account_account_user
+DEL ir.model.access: account.access_account_accrued_orders_wizard
+DEL ir.model.access: account.access_account_analytic_account
+DEL ir.model.access: account.access_account_analytic_accountant
+DEL ir.model.access: account.access_account_analytic_applicability_accountant
+DEL ir.model.access: account.access_account_analytic_distribution_invoice
+DEL ir.model.access: account.access_account_analytic_distribution_readonly
+DEL ir.model.access: account.access_account_analytic_line_invoice
+DEL ir.model.access: account.access_account_analytic_line_manager
+DEL ir.model.access: account.access_account_analytic_line_readonly
+DEL ir.model.access: account.access_account_analytic_plan_accountant
+DEL ir.model.access: account.access_account_automatic_entry_wizard
+DEL ir.model.access: account.access_account_autopost_bills_wizard
+DEL ir.model.access: account.access_account_bank_statement
+DEL ir.model.access: account.access_account_bank_statement_group_invoice
+DEL ir.model.access: account.access_account_bank_statement_group_readonly
+DEL ir.model.access: account.access_account_bank_statement_line
+DEL ir.model.access: account.access_account_bank_statement_line_group_invoice
+DEL ir.model.access: account.access_account_bank_statement_line_group_readonly
+DEL ir.model.access: account.access_account_cash_rounding_readonly
+DEL ir.model.access: account.access_account_cash_rounding_uinvoice
+DEL ir.model.access: account.access_account_code_mapping
+DEL ir.model.access: account.access_account_code_mapping_manager
+DEL ir.model.access: account.access_account_financial_year_op
+DEL ir.model.access: account.access_account_fiscal_position
+DEL ir.model.access: account.access_account_fiscal_position_account
+DEL ir.model.access: account.access_account_fiscal_position_account_product_manager
+DEL ir.model.access: account.access_account_fiscal_position_product_manager
+DEL ir.model.access: account.access_account_full_reconcile
+DEL ir.model.access: account.access_account_full_reconcile_group_invoice
+DEL ir.model.access: account.access_account_full_reconcile_group_readonly
+DEL ir.model.access: account.access_account_group
+DEL ir.model.access: account.access_account_group_basic
+DEL ir.model.access: account.access_account_group_manager
+DEL ir.model.access: account.access_account_incoterms_all
+DEL ir.model.access: account.access_account_incoterms_manager
+DEL ir.model.access: account.access_account_invoice_line_portal
+DEL ir.model.access: account.access_account_invoice_portal
+DEL ir.model.access: account.access_account_invoice_report
+DEL ir.model.access: account.access_account_invoice_report_billing
+DEL ir.model.access: account.access_account_invoice_report_readonly
+DEL ir.model.access: account.access_account_journal_group_invoice
+DEL ir.model.access: account.access_account_journal_group_manager
+DEL ir.model.access: account.access_account_journal_group_readonly
+DEL ir.model.access: account.access_account_journal_invoice
+DEL ir.model.access: account.access_account_journal_manager
+DEL ir.model.access: account.access_account_journal_readonly
+DEL ir.model.access: account.access_account_lock_exception
+DEL ir.model.access: account.access_account_lock_exception_manager
+DEL ir.model.access: account.access_account_merge_wizard_line_manager
+DEL ir.model.access: account.access_account_merge_wizard_manager
+DEL ir.model.access: account.access_account_move_line_manager
+DEL ir.model.access: account.access_account_move_line_readonly
+DEL ir.model.access: account.access_account_move_line_uinvoice
+DEL ir.model.access: account.access_account_move_manager
+DEL ir.model.access: account.access_account_move_readonly
+DEL ir.model.access: account.access_account_move_reversal
+DEL ir.model.access: account.access_account_move_send_batch_wizard
+DEL ir.model.access: account.access_account_move_send_wizard
+DEL ir.model.access: account.access_account_move_uinvoice
+DEL ir.model.access: account.access_account_partial_reconcile
+DEL ir.model.access: account.access_account_partial_reconcile_group_invoice
+DEL ir.model.access: account.access_account_partial_reconcile_readonly
+DEL ir.model.access: account.access_account_payment
+DEL ir.model.access: account.access_account_payment_method
+DEL ir.model.access: account.access_account_payment_method_line
+DEL ir.model.access: account.access_account_payment_method_line_readonly
+DEL ir.model.access: account.access_account_payment_method_readonly
+DEL ir.model.access: account.access_account_payment_readonly
+DEL ir.model.access: account.access_account_payment_register
+DEL ir.model.access: account.access_account_payment_term_line_manager
+DEL ir.model.access: account.access_account_payment_term_line_partner_manager
+DEL ir.model.access: account.access_account_payment_term_manager
+DEL ir.model.access: account.access_account_payment_term_partner_manager
+DEL ir.model.access: account.access_account_payment_term_portal
+DEL ir.model.access: account.access_account_reconcile_model
+DEL ir.model.access: account.access_account_reconcile_model_billing
+DEL ir.model.access: account.access_account_reconcile_model_line
+DEL ir.model.access: account.access_account_reconcile_model_line_billing
+DEL ir.model.access: account.access_account_reconcile_model_line_readonly
+DEL ir.model.access: account.access_account_reconcile_model_readonly
+DEL ir.model.access: account.access_account_report_ac_user
+DEL ir.model.access: account.access_account_report_basic
+DEL ir.model.access: account.access_account_report_column_ac_user
+DEL ir.model.access: account.access_account_report_column_basic
+DEL ir.model.access: account.access_account_report_column_readonly
+DEL ir.model.access: account.access_account_report_expression_ac_user
+DEL ir.model.access: account.access_account_report_expression_basic
+DEL ir.model.access: account.access_account_report_expression_readonly
+DEL ir.model.access: account.access_account_report_external_value_ac_user
+DEL ir.model.access: account.access_account_report_external_value_readonly
+DEL ir.model.access: account.access_account_report_line_ac_user
+DEL ir.model.access: account.access_account_report_line_basic
+DEL ir.model.access: account.access_account_report_line_readonly
+DEL ir.model.access: account.access_account_report_readonly
+DEL ir.model.access: account.access_account_resequence
+DEL ir.model.access: account.access_account_root
+DEL ir.model.access: account.access_account_root_manager
+DEL ir.model.access: account.access_account_secure_entries_wizard
+DEL ir.model.access: account.access_account_setup_bank_manual_config
+DEL ir.model.access: account.access_account_tag_internal_user
+DEL ir.model.access: account.access_account_tax_group
+DEL ir.model.access: account.access_account_tax_group_internal_user
+DEL ir.model.access: account.access_account_tax_group_manager
+DEL ir.model.access: account.access_account_tax_group_readonly
+DEL ir.model.access: account.access_account_tax_internal_user
+DEL ir.model.access: account.access_account_tax_invoice
+DEL ir.model.access: account.access_account_tax_manager
+DEL ir.model.access: account.access_account_tax_readonly
+DEL ir.model.access: account.access_account_tax_repartition_line_invoice
+DEL ir.model.access: account.access_account_tax_repartition_line_manager
+DEL ir.model.access: account.access_account_tax_repartition_line_readonly
+DEL ir.model.access: account.access_account_tax_repartition_line_user
+DEL ir.model.access: account.access_product_product_account_user
+DEL ir.model.access: account.access_res_currency_account_manager
+DEL ir.model.access: account.access_res_currency_rate_account_manager
+DEL ir.model.access: account.access_res_partner_group_account_manager
+DEL ir.model.access: account.access_validate_account_move
+ir.model.constraint: account.constraint_account_journal_group_uniq_name (changed definition: is now 'unique(name)' ('unique(company_id, name)'))
+NEW ir.model.constraint: account.constraint_account_move_check_document_tax_mode_set
+ir.model.constraint: account.constraint_account_move_checked_idx (changed definition: is now 'INDEX (journal_id) WHERE (review_state IN ('todo', 'anomaly'))' ('INDEX (journal_id) WHERE (checked IS NOT TRUE)'))
+ir.model.constraint: account.constraint_account_move_duplicate_bills_idx (changed definition: is now 'INDEX (ref) WHERE (move_type IN ('in_invoice', 'in_refund', 'in_receipt'))' ('INDEX (ref) WHERE (move_type IN ('in_invoice', 'in_refund'))'))
+NEW ir.model.constraint: account.constraint_account_report_column_expression_label_uniq
+DEL ir.model.constraint: account.constraint_account_group_check_length_prefix
+DEL ir.rule: account.account_analytic_line_rule_billing_user (noupdate)
+DEL ir.rule: account.account_analytic_line_rule_readonly_user (noupdate)
+DEL ir.rule: account.account_bank_statement_comp_rule (noupdate)
+DEL ir.rule: account.account_bank_statement_line_comp_rule (noupdate)
+DEL ir.rule: account.account_comp_rule (noupdate)
+DEL ir.rule: account.account_fiscal_position_comp_rule (noupdate)
+DEL ir.rule: account.account_group_comp_rule (noupdate)
+DEL ir.rule: account.account_invoice_line_rule_portal (noupdate)
+DEL ir.rule: account.account_invoice_rule_portal (noupdate)
+DEL ir.rule: account.account_move_comp_rule (noupdate)
+DEL ir.rule: account.account_move_line_comp_rule (noupdate)
+DEL ir.rule: account.account_move_line_rule_group_invoice (noupdate)
+DEL ir.rule: account.account_move_line_rule_group_readonly (noupdate)
+DEL ir.rule: account.account_move_line_see_all (noupdate)
+DEL ir.rule: account.account_move_rule_group_invoice (noupdate)
+DEL ir.rule: account.account_move_rule_group_readonly (noupdate)
+DEL ir.rule: account.account_move_see_all (noupdate)
+DEL ir.rule: account.account_move_send_batch_rule_group_invoice (noupdate)
+DEL ir.rule: account.account_move_send_single_rule_group_invoice (noupdate)
+DEL ir.rule: account.account_payment_comp_rule (noupdate)
+DEL ir.rule: account.account_payment_term_comp_rule (noupdate)
+DEL ir.rule: account.account_reconcile_model_line_template_comp_rule (noupdate)
+DEL ir.rule: account.account_reconcile_model_template_comp_rule (noupdate)
+DEL ir.rule: account.invoice_analysis_comp_rule (noupdate)
+DEL ir.rule: account.ir_rule_res_partner_bank_billing_officers (noupdate)
+DEL ir.rule: account.journal_comp_rule (noupdate)
+DEL ir.rule: account.journal_group_comp_rule (noupdate)
+DEL ir.rule: account.report_external_value_comp_rule (noupdate)
+DEL ir.rule: account.tax_comp_rule (noupdate)
+DEL ir.rule: account.tax_group_comp_rule (noupdate)
+DEL ir.rule: account.tax_rep_comp_rule (noupdate)
+NEW ir.ui.menu: account.menu_action_account_cashflow_analysis
+DEL ir.ui.menu: account.account_logs_menu
+DEL ir.ui.menu: account.root_payment_menu
+NEW ir.ui.view: account.account_bank_statement_line_view_graph_cashflow
+NEW ir.ui.view: account.account_bank_statement_line_view_pivot_cashflow
+NEW ir.ui.view: account.account_bank_statement_line_view_search_cashflow
+NEW ir.ui.view: account.address_form_additional_identifiers
+NEW ir.ui.view: account.tax_repartition_line_form
+NEW ir.ui.view: account.tax_repartition_line_kanban
+NEW ir.ui.view: account.uom_uom_view_form
+NEW ir.ui.view: account.view_account_list_from_entry
+NEW ir.ui.view: account.view_account_move_graph_invoice
+NEW ir.ui.view: account.view_account_move_pivot_invoice
+NEW ir.ui.view: account.view_bank_statement_kanban
+NEW ir.ui.view: account.view_move_line_tree_open_on
+NEW ir.ui.view: account.view_partner_bank_kanban_account
+DEL ir.ui.view: account.portal_my_home_invoice
+DEL ir.ui.view: account.product_uom_form_view_inherit
+DEL ir.ui.view: account.product_view_search_catalog
+DEL ir.ui.view: account.view_account_group_form
+DEL ir.ui.view: account.view_account_group_search
+DEL ir.ui.view: account.view_account_group_tree
+NEW onboarding.onboarding: account.onboarding_onboarding_account_return_dashboard (noupdate)
+NEW portal.entry: account.portal_invoice_client (noupdate)
+NEW portal.entry: account.portal_invoice_vendor (noupdate)

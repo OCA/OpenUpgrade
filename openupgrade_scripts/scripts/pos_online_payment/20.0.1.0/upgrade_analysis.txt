@@ -1,0 +1,8 @@
+---Models in module 'pos_online_payment'---
+---Fields in module 'pos_online_payment'---
+pos_online_payment / pos.payment.method       / is_online_payment (boolean)   : DEL
+---XML records in module 'pos_online_payment'---
+NEW ir.access: pos_online_payment.payment_provider_pos_manager
+DEL ir.model.access: pos_online_payment.payment_provider_pos_manager
+NEW ir.ui.view: pos_online_payment.pos_payment_status
+NEW ir.ui.view: pos_online_payment.pos_state_header

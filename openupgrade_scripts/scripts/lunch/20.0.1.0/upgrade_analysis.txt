@@ -1,0 +1,58 @@
+---Models in module 'lunch'---
+---Fields in module 'lunch'---
+lunch        / lunch.alert              / notification_moment (selection): DEL required, selection_keys: ['am', 'pm']
+lunch        / lunch.supplier           / moment (selection)            : DEL required, selection_keys: ['am', 'pm']
+---XML records in module 'lunch'---
+NEW ir.access: lunch.ir_rule_lunch_location_multi_company
+NEW ir.access: lunch.ir_rule_lunch_order_multi_company
+NEW ir.access: lunch.ir_rule_lunch_product_category_multi_company
+NEW ir.access: lunch.ir_rule_lunch_product_multi_company
+NEW ir.access: lunch.ir_rule_lunch_supplier_multi_company
+NEW ir.access: lunch.lunch_alert_access
+NEW ir.access: lunch.lunch_alert_manager
+NEW ir.access: lunch.lunch_cashmove_report_manager
+NEW ir.access: lunch.lunch_location_manager
+NEW ir.access: lunch.lunch_location_user
+NEW ir.access: lunch.lunch_mind_other_food_money
+NEW ir.access: lunch.lunch_mind_your_own_food_money
+NEW ir.access: lunch.lunch_order_rule_delete
+NEW ir.access: lunch.lunch_order_rule_write
+NEW ir.access: lunch.lunch_order_rule_write_manager
+NEW ir.access: lunch.lunch_supplier_manager
+NEW ir.access: lunch.lunch_supplier_user
+NEW ir.access: lunch.lunch_topping_manager
+NEW ir.access: lunch.lunch_topping_user
+NEW ir.access: lunch.order_user
+NEW ir.access: lunch.product_category_manager
+NEW ir.access: lunch.product_category_user
+NEW ir.access: lunch.product_manager
+NEW ir.access: lunch.product_user
+DEL ir.model.access: lunch.cashmove_manager
+DEL ir.model.access: lunch.cashmove_user
+DEL ir.model.access: lunch.lunch_alert_access
+DEL ir.model.access: lunch.lunch_alert_manager
+DEL ir.model.access: lunch.lunch_cashmove_report_manager
+DEL ir.model.access: lunch.lunch_location_manager
+DEL ir.model.access: lunch.lunch_location_user
+DEL ir.model.access: lunch.lunch_supplier_manager
+DEL ir.model.access: lunch.lunch_supplier_user
+DEL ir.model.access: lunch.lunch_topping_manager
+DEL ir.model.access: lunch.lunch_topping_user
+DEL ir.model.access: lunch.order_manager
+DEL ir.model.access: lunch.order_user
+DEL ir.model.access: lunch.product_category_manager
+DEL ir.model.access: lunch.product_category_user
+DEL ir.model.access: lunch.product_manager
+DEL ir.model.access: lunch.product_user
+ir.model.constraint: lunch.constraint_lunch_alert_notification_time_range (changed definition: is now 'CHECK(notification_time >= 0 and notification_time <= 24)' ('CHECK(notification_time >= 0 and notification_time <= 12)'))
+ir.model.constraint: lunch.constraint_lunch_supplier_automatic_email_time_range (changed definition: is now 'CHECK(automatic_email_time >= 0 AND automatic_email_time <= 24)' ('CHECK(automatic_email_time >= 0 AND automatic_email_time <= 12)'))
+DEL ir.rule: lunch.ir_rule_lunch_location_multi_company (noupdate)
+DEL ir.rule: lunch.ir_rule_lunch_order_multi_company (noupdate)
+DEL ir.rule: lunch.ir_rule_lunch_product_category_multi_company (noupdate)
+DEL ir.rule: lunch.ir_rule_lunch_product_multi_company (noupdate)
+DEL ir.rule: lunch.ir_rule_lunch_supplier_multi_company (noupdate)
+DEL ir.rule: lunch.lunch_mind_other_food_money (noupdate)
+DEL ir.rule: lunch.lunch_mind_your_own_food_money (noupdate)
+DEL ir.rule: lunch.lunch_order_rule_delete (noupdate)
+DEL ir.rule: lunch.lunch_order_rule_write (noupdate)
+DEL ir.rule: lunch.lunch_order_rule_write_manager (noupdate)

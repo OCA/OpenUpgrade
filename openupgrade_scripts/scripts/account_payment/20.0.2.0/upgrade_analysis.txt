@@ -1,0 +1,17 @@
+---Models in module 'account_payment'---
+---Fields in module 'account_payment'---
+account_payment / payment.provider         / available_pricelist_ids (many2many): NEW relation: product.pricelist
+---XML records in module 'account_payment'---
+NEW ir.access: account_payment.payment_link_wizard
+NEW ir.access: account_payment.payment_refund_wizard
+NEW ir.access: account_payment.payment_token_billing_rule
+NEW ir.access: account_payment.payment_transaction_user
+DEL ir.model.access: account_payment.payment_link_wizard
+DEL ir.model.access: account_payment.payment_refund_wizard
+DEL ir.model.access: account_payment.payment_transaction_user
+DEL ir.rule: account_payment.payment_token_billing_rule (noupdate)
+DEL ir.ui.menu: account_payment.payment_method_menu
+DEL ir.ui.menu: account_payment.payment_token_menu
+DEL ir.ui.menu: account_payment.payment_transaction_menu
+DEL ir.ui.view: account_payment.portal_my_home_account_payment
+NEW portal.entry: account_payment.portal_entry_overdue_invoices (noupdate)

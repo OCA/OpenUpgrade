@@ -1,0 +1,43 @@
+---Models in module 'l10n_pe'---
+---Fields in module 'l10n_pe'---
+l10n_pe      / l10n_latam.identification.type / l10n_pe_vat_code (char)       : DEL
+l10n_pe      / res.bank                 / l10n_pe_edi_code (char)       : DEL
+l10n_pe      / res.partner              / l10n_pe_sunat_id_code (char)  : NEW isfunction: function, stored
+l10n_pe      / res.partner              / l10n_pe_sunat_id_value (char) : NEW isfunction: function, stored
+---XML records in module 'l10n_pe'---
+NEW ir.access: l10n_pe.access_l10n_pe_district_group_user
+DEL ir.model.access: l10n_pe.access_city_portal
+DEL ir.model.access: l10n_pe.access_city_public
+DEL ir.model.access: l10n_pe.access_l10n_pe_district_group_all
+DEL ir.model.access: l10n_pe.access_l10n_pe_district_group_user
+NEW ir.ui.view: l10n_pe.res_city_view_form_inherit_l10n_pe
+DEL ir.ui.view: l10n_pe.view_res_bank_inherit_l10n_pe_bank
+DEL l10n_latam.identification.type: l10n_pe.it_CPP
+DEL l10n_latam.identification.type: l10n_pe.it_DIC
+DEL l10n_latam.identification.type: l10n_pe.it_DNI
+DEL l10n_latam.identification.type: l10n_pe.it_IDCR
+DEL l10n_latam.identification.type: l10n_pe.it_IN
+DEL l10n_latam.identification.type: l10n_pe.it_NDTD
+DEL l10n_latam.identification.type: l10n_pe.it_PTP
+DEL l10n_latam.identification.type: l10n_pe.it_RUC
+DEL l10n_latam.identification.type: l10n_pe.it_SP
+DEL l10n_latam.identification.type: l10n_pe.it_TAM
+DEL l10n_latam.identification.type: l10n_pe.it_TIN
+DEL res.bank: l10n_pe.peruvian_baiopep1_bank
+DEL res.bank: l10n_pe.peruvian_bconpepl_bank
+DEL res.bank: l10n_pe.peruvian_bcplpepl_bank
+DEL res.bank: l10n_pe.peruvian_bdcmpepl_bank
+DEL res.bank: l10n_pe.peruvian_belppepl_bank
+DEL res.bank: l10n_pe.peruvian_bifspepl_bank
+DEL res.bank: l10n_pe.peruvian_binppepl_bank
+DEL res.bank: l10n_pe.peruvian_bnpepep1_bank
+DEL res.bank: l10n_pe.peruvian_bsappepl_bank
+DEL res.bank: l10n_pe.peruvian_bsudpepl_bank
+DEL res.bank: l10n_pe.peruvian_cbolpep1_bank
+DEL res.bank: l10n_pe.peruvian_citipep1_bank
+DEL res.bank: l10n_pe.peruvian_citipepl_bank
+DEL res.bank: l10n_pe.peruvian_cjsipep1_bank
+DEL res.bank: l10n_pe.peruvian_cofdpepl_bank
+DEL res.bank: l10n_pe.peruvian_crhcpep1001_bank
+DEL res.bank: l10n_pe.peruvian_crhcpep1_bank
+DEL res.bank: l10n_pe.peruvian_national_bank

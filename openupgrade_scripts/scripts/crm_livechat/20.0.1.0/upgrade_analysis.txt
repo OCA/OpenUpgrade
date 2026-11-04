@@ -1,0 +1,9 @@
+---Models in module 'crm_livechat'---
+---Fields in module 'crm_livechat'---
+crm_livechat / chatbot.script.step      / step_type (False)             : selection_keys removed: [create_lead_and_forward]
+---XML records in module 'crm_livechat'---
+NEW ir.access: crm_livechat.ir_rule_discuss_channel_crm_lead
+NEW ir.access: crm_livechat.ir_rule_discuss_channel_member_crm_lead
+DEL ir.rule: crm_livechat.ir_rule_discuss_channel_crm_lead (noupdate)
+DEL ir.rule: crm_livechat.ir_rule_discuss_channel_member_crm_lead (noupdate)
+DEL utm.source: crm_livechat.utm_source_livechat [renamed to utm module] (noupdate)

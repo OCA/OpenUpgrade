@@ -1,0 +1,12 @@
+---Models in module 'account_edi_ubl_cii'---
+---Fields in module 'account_edi_ubl_cii'---
+account_edi_ubl_cii / account.move             / has_grouped_lines (boolean)   : NEW
+account_edi_ubl_cii / account.tax              / ubl_cii_tax_exemption_reason (char): NEW
+account_edi_ubl_cii / res.partner              / peppol_eas (selection)        : DEL selection_keys: ['0002', '0007', '0009', '0037', '0060', '0088', '0096', '0097', '0106', '0130', '0135', '0142', '0151', '0183', '0184', '0188', '0190', '0191', '0192', '0193', '0195', '0196', '0198', '0199', '0200', '0201', '0202', '0204', '0208', '0209', '0210', '0211', '0213', '0216', '0218', '0221', '0225', '0230', '0235', '0240', '0244', '0245', '0246', '9910', '9913', '9914', '9915', '9918', '9919', '9920', '9922', '9923', '9924', '9925', '9926', '9927', '9928', '9929', '9930', '9931', '9932', '9933', '9934', '9935', '9936', '9937', '9938', '9939', '9940', '9941', '9942', '9943', '9944', '9945', '9946', '9947', '9948', '9949', '9950', '9951', '9952', '9953', '9955', '9957', '9959', 'AN', 'AQ', 'AS', 'AU', 'EM']
+account_edi_ubl_cii / res.partner              / peppol_endpoint (char)        : DEL
+account_edi_ubl_cii / res.partner              / routing_endpoint (char)       : NEW hasdefault: compute
+account_edi_ubl_cii / res.partner              / routing_scheme (selection)    : NEW selection_keys: ['0002', '0007', '0009', '0037', '0060', '0088', '0096', '0097', '0106', '0130', '0135', '0142', '0151', '0183', '0184', '0188', '0190', '0191', '0192', '0193', '0195', '0196', '0198', '0199', '0200', '0201', '0202', '0204', '0208', '0209', '0210', '0211', '0213', '0216', '0218', '0221', '0225', '0230', '0235', '0240', '0244', '0245', '0246', '9910', '9913', '9914', '9915', '9918', '9919', '9920', '9922', '9923', '9924', '9925', '9926', '9927', '9928', '9929', '9930', '9931', '9932', '9933', '9934', '9935', '9936', '9937', '9938', '9939', '9940', '9941', '9942', '9943', '9944', '9945', '9946', '9947', '9948', '9949', '9950', '9951', '9952', '9953', '9955', '9957', '9959', 'AN', 'AQ', 'AS', 'AU', 'EM'], hasdefault: compute
+account_edi_ubl_cii / uom.uom                  / unece_code (char)             : NEW
+---XML records in module 'account_edi_ubl_cii'---
+NEW ir.model.constraint: account_edi_ubl_cii.constraint_uom_uom_unece_code_unique
+NEW ir.ui.view: account_edi_ubl_cii.uom_uom_view_form_inherit

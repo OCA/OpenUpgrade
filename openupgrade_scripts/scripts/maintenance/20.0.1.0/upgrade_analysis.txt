@@ -1,0 +1,55 @@
+---Models in module 'maintenance'---
+---Fields in module 'maintenance'---
+hr_maintenance / maintenance.equipment    / equipment_assign_to (selection): selection_keys removed: [department, employee]
+maintenance  / maintenance.equipment    / equipment_assign_to (selection): previously in module hr_maintenance
+maintenance  / maintenance.equipment    / equipment_req_properties_definition (properties_definition): NEW
+maintenance  / maintenance.request      / archive (boolean)             : DEL
+maintenance  / maintenance.request      / email_cc (char)               : DEL
+maintenance  / maintenance.request      / equipment_req_properties (properties): NEW hasdefault: compute
+maintenance  / maintenance.request      / instruction_google_slide (char): DEL
+maintenance  / maintenance.request      / instruction_pdf (binary)      : DEL attachment: True
+maintenance  / maintenance.request      / instruction_type (selection)  : DEL selection_keys: ['google_slide', 'pdf', 'text']
+maintenance  / maintenance.request      / kanban_state (selection)      : DEL required, selection_keys: ['blocked', 'done', 'normal']
+maintenance  / maintenance.request      / request_date (date)           : DEL
+maintenance  / maintenance.request      / state (selection)             : NEW required, selection_keys: ['approved', 'cancelled', 'changes_requested', 'done', 'normal'], hasdefault: default
+maintenance  / maintenance.request      / user_id (many2one)            : DEL relation: res.users
+maintenance  / maintenance.request      / user_ids (many2many)          : NEW relation: res.users, hasdefault: compute
+maintenance  / maintenance.stage        / done (boolean)                : DEL
+maintenance  / maintenance.stage        / maintenance_team_ids (many2many): NEW relation: maintenance.team
+---XML records in module 'maintenance'---
+NEW ir.access: maintenance.access_equipment_category_admin_user
+NEW ir.access: maintenance.access_equipment_category_user
+NEW ir.access: maintenance.access_mail_activity_type_equipment_manager
+NEW ir.access: maintenance.access_maintenance_stage_admin_user
+NEW ir.access: maintenance.access_maintenance_stage_user
+NEW ir.access: maintenance.access_maintenance_team_admin_user
+NEW ir.access: maintenance.access_maintenance_team_user
+NEW ir.access: maintenance.equipment_request_rule_admin_user
+NEW ir.access: maintenance.equipment_request_rule_user
+NEW ir.access: maintenance.equipment_rule_admin_user
+NEW ir.access: maintenance.equipment_rule_user
+NEW ir.access: maintenance.maintenance_equipment_category_comp_rule
+NEW ir.access: maintenance.maintenance_equipment_comp_rule
+NEW ir.access: maintenance.maintenance_request_comp_rule
+NEW ir.access: maintenance.maintenance_team_comp_rule
+DEL ir.model.access: maintenance.access_equipment_admin_user
+DEL ir.model.access: maintenance.access_equipment_category_admin_user
+DEL ir.model.access: maintenance.access_equipment_category_user
+DEL ir.model.access: maintenance.access_equipment_user
+DEL ir.model.access: maintenance.access_mail_activity_type_equipment_manager
+DEL ir.model.access: maintenance.access_maintenance_stage_admin_user
+DEL ir.model.access: maintenance.access_maintenance_stage_user
+DEL ir.model.access: maintenance.access_maintenance_system_user
+DEL ir.model.access: maintenance.access_maintenance_team_admin_user
+DEL ir.model.access: maintenance.access_maintenance_team_user
+DEL ir.rule: maintenance.equipment_request_rule_admin_user (noupdate)
+DEL ir.rule: maintenance.equipment_request_rule_user (noupdate)
+DEL ir.rule: maintenance.equipment_rule_admin_user (noupdate)
+DEL ir.rule: maintenance.equipment_rule_user (noupdate)
+DEL ir.rule: maintenance.maintenance_equipment_category_comp_rule (noupdate)
+DEL ir.rule: maintenance.maintenance_equipment_comp_rule (noupdate)
+DEL ir.rule: maintenance.maintenance_request_comp_rule (noupdate)
+DEL ir.rule: maintenance.maintenance_team_comp_rule (noupdate)
+DEL ir.ui.menu: maintenance.menu_m_request_calendar
+NEW ir.ui.view: maintenance.hr_equipment_request_view_card
+NEW ir.ui.view: maintenance.hr_equipment_stage_view_form

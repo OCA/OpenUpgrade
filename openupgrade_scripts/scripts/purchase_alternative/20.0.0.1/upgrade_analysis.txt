@@ -1,0 +1,20 @@
+---Models in module 'purchase_alternative'---
+new model purchase.alternative.create [transient]
+new model purchase.alternative.warning [transient]
+model purchase.order.group (moved from purchase_requisition)
+---Fields in module 'purchase_alternative'---
+purchase_alternative / purchase.order           / alternative_po_ids (one2many) : previously in module purchase_requisition
+purchase_alternative / purchase.order           / purchase_group_id (many2one)  : previously in module purchase_requisition
+purchase_alternative / purchase.order.group     / _order                        : previously in module purchase_requisition
+purchase_alternative / purchase.order.group     / display_name (char)           : previously in module purchase_requisition
+purchase_alternative / purchase.order.group     / order_ids (one2many)          : previously in module purchase_requisition
+purchase_alternative / purchase.order.line      / company_currency_id (many2one): previously in module purchase_requisition
+purchase_alternative / purchase.order.line      / price_total_cc (float)        : previously in module purchase_requisition
+---XML records in module 'purchase_alternative'---
+NEW ir.access: purchase_alternative.access_purchase_alternative_create
+NEW ir.access: purchase_alternative.access_purchase_alternative_purchase_order_group
+NEW ir.access: purchase_alternative.access_purchase_alternative_warning
+NEW ir.ui.view: purchase_alternative.purchase_alternative_create_form
+NEW ir.ui.view: purchase_alternative.purchase_alternative_warning_form
+NEW ir.ui.view: purchase_alternative.purchase_order_form
+NEW ir.ui.view: purchase_alternative.purchase_order_line_view_compare_list

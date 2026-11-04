@@ -1,0 +1,29 @@
+<?xml version='1.0' encoding='utf-8'?>
+<odoo>
+  <record id="mail_template_data_project_task" model="mail.template">
+    <field name="email_layout_xmlid">mail.mail_notification_light</field>
+  </record>
+  <template id="project_message_user_assigned">
+    <div>
+    Dear <t t-out="assignee_name"/>,
+    <br/><br/>
+    <span style="margin-top: 8px;">You have been assigned to the <t t-out="model_description or 'document'"/> <t t-out="object.display_name"/>.</span>
+</div>
+  </template>
+  <record id="project_task_rule_portal_project_sharing" model="ir.access">
+    <field name="domain">[
+            ('project_id.privacy_visibility', 'in', ['invited_users', 'portal']),
+            ('has_template_ancestor', '=', False),
+            ('active', '=', True),
+            ('project_id.collaborator_ids', 'any', [
+                ('partner_id', '=', user.partner_id.id),
+                ('access_mode', 'in', ['edit', 'advanced_edit'])
+            ]),
+        ]</field>
+    <field name="group_id" ref="base.group_portal"/>
+    <field name="operation">cu</field>
+  </record>
+  <record id="rating_project_request_email_template" model="mail.template">
+    <field name="email_layout_xmlid">mail.mail_notification_light</field>
+  </record>
+</odoo>

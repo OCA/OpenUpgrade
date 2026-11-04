@@ -1,0 +1,31 @@
+---Models in module 'mail_tracking'---
+model mail.tracking.value (moved from mail)
+---Fields in module 'mail_tracking'---
+mail_tracking / mail.mail                / tracking_value_ids (one2many) : previously in module mail
+mail_tracking / mail.message             / source_template_id (many2one) : NEW relation: mail.template
+mail_tracking / mail.message             / source_view_id (many2one)     : NEW relation: ir.ui.view
+mail_tracking / mail.message             / tracking_value_ids (one2many) : previously in module mail
+mail_tracking / mail.tracking.value      / _order                        : previously in module mail
+mail_tracking / mail.tracking.value      / display_name (char)           : previously in module mail
+mail_tracking / mail.tracking.value      / field_id (many2one)           : previously in module mail
+mail_tracking / mail.tracking.value      / field_info (json)             : previously in module mail
+mail_tracking / mail.tracking.value      / mail_message_id (many2one)    : previously in module mail
+mail_tracking / mail.tracking.value      / new_value_char (char)         : previously in module mail
+mail_tracking / mail.tracking.value      / new_value_datetime (datetime) : previously in module mail
+mail_tracking / mail.tracking.value      / new_value_float (float)       : previously in module mail
+mail_tracking / mail.tracking.value      / new_value_integer (integer)   : previously in module mail
+mail_tracking / mail.tracking.value      / new_value_text (text)         : previously in module mail
+mail_tracking / mail.tracking.value      / old_value_char (char)         : previously in module mail
+mail_tracking / mail.tracking.value      / old_value_datetime (datetime) : previously in module mail
+mail_tracking / mail.tracking.value      / old_value_float (float)       : previously in module mail
+mail_tracking / mail.tracking.value      / old_value_integer (integer)   : previously in module mail
+mail_tracking / mail.tracking.value      / old_value_text (text)         : previously in module mail
+---XML records in module 'mail_tracking'---
+NEW ir.access: mail_tracking.access_mail_tracking_value_system
+NEW ir.actions.act_window: mail_tracking.action_view_mail_tracking_value [renamed from mail module]
+NEW ir.ui.menu: mail_tracking.menu_mail_tracking_value [renamed from mail module]
+NEW ir.ui.view: mail_tracking.mail_message_view_form_inherit_mail_tracking
+NEW ir.ui.view: mail_tracking.mail_message_view_list
+NEW ir.ui.view: mail_tracking.mail_message_view_search
+NEW ir.ui.view: mail_tracking.view_mail_tracking_value_form
+NEW ir.ui.view: mail_tracking.view_mail_tracking_value_tree

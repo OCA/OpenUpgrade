@@ -1,0 +1,18 @@
+---Models in module 'printer'---
+new model printer.printer
+new model select.printers.wizard [transient]
+---Fields in module 'printer'---
+printer      / ir.actions.report        / printer_ids (many2many)       : NEW relation: printer.printer
+printer      / printer.printer          / ip_address (char)             : NEW
+printer      / printer.printer          / name (char)                   : NEW required
+printer      / printer.printer          / report_ids (many2many)        : NEW relation: ir.actions.report
+printer      / printer.printer          / type (selection)              : NEW required, selection_keys: ['epos', 'zpl'], hasdefault: default
+---XML records in module 'printer'---
+NEW ir.access: printer.access_printer_user
+NEW ir.access: printer.access_select_printers_wizard_user
+NEW ir.actions.act_window: printer.manage_printers_action
+NEW ir.actions.client: printer.action_reset_linked_printers
+NEW ir.ui.view: printer.act_report_xml_view_printer
+NEW ir.ui.view: printer.printer_view_form
+NEW ir.ui.view: printer.printer_view_list
+NEW ir.ui.view: printer.view_select_printers_wizard

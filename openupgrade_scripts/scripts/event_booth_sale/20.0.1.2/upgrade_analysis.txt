@@ -1,0 +1,12 @@
+---Models in module 'event_booth_sale'---
+---Fields in module 'event_booth_sale'---
+event_booth_sale / product.template         / service_tracking (False)      : selection_keys added: [subcontract] (most likely nothing to do)
+---XML records in module 'event_booth_sale'---
+NEW ir.access: event_booth_sale.access_event_booth_configurator_salesman
+NEW ir.access: event_booth_sale.access_event_booth_registration_event_desk
+NEW ir.access: event_booth_sale.access_event_booth_registration_event_user
+NEW ir.access: event_booth_sale.access_event_booth_registration_salesman
+DEL ir.model.access: event_booth_sale.access_event_booth_configurator_salesman
+DEL ir.model.access: event_booth_sale.access_event_booth_registration_event_desk
+DEL ir.model.access: event_booth_sale.access_event_booth_registration_event_user
+DEL ir.model.access: event_booth_sale.access_event_booth_registration_salesman

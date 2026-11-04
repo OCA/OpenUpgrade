@@ -1,0 +1,136 @@
+---Models in module 'hr_attendance'---
+obsolete model hr.attendance.overtime.line
+obsolete model hr.attendance.overtime.rule
+obsolete model hr.attendance.overtime.ruleset
+---Fields in module 'hr_attendance'---
+hr_attendance / hr.attendance            / break_duration (float)        : NEW
+hr_attendance / hr.attendance            / day_of_date (selection)       : NEW selection_keys: ['0', '1', '2', '3', '4', '5', '6'], isfunction: function, stored
+hr_attendance / hr.attendance            / expected_hours (float)        : DEL
+hr_attendance / hr.attendance            / in_image (binary)             : NEW attachment: True
+hr_attendance / hr.attendance            / linked_overtime_ids (many2many): DEL relation: hr.attendance.overtime.line, stored: False
+hr_attendance / hr.attendance            / overtime_attendance_ids (one2many): NEW relation: hr.attendance
+hr_attendance / hr.attendance            / overtime_hours (float)        : DEL
+hr_attendance / hr.attendance            / overtime_status (selection)   : DEL selection_keys: ['approved', 'refused', 'to_approve']
+hr_attendance / hr.attendance            / source_attendance_id (many2one): NEW relation: hr.attendance
+hr_attendance / hr.attendance            / source_stale (boolean)        : NEW hasdefault: default
+hr_attendance / hr.attendance            / state (selection)             : NEW required, selection_keys: ['draft', 'refused', 'validated']
+hr_attendance / hr.attendance            / time_rule_id (many2one)       : NEW relation: hr.time.rule
+hr_attendance / hr.attendance            / validated_overtime_hours (float): DEL
+hr_attendance / hr.attendance            / website_message_ids (one2many): DEL relation: mail.message
+hr_attendance / hr.attendance            / work_entry_type_id (many2one) : NEW relation: hr.work.entry.type, required, hasdefault: default
+hr_attendance / hr.attendance.overtime.line / amount_rate (float)           : DEL required
+hr_attendance / hr.attendance.overtime.line / date (date)                   : DEL required
+hr_attendance / hr.attendance.overtime.line / duration (float)              : DEL required
+hr_attendance / hr.attendance.overtime.line / employee_id (many2one)        : DEL relation: hr.employee, required
+hr_attendance / hr.attendance.overtime.line / manual_duration (float)       : DEL
+hr_attendance / hr.attendance.overtime.line / rule_ids (many2many)          : DEL relation: hr.attendance.overtime.rule
+hr_attendance / hr.attendance.overtime.line / status (selection)            : DEL required, selection_keys: ['approved', 'refused', 'to_approve']
+hr_attendance / hr.attendance.overtime.line / time_start (datetime)         : DEL
+hr_attendance / hr.attendance.overtime.line / time_stop (datetime)          : DEL
+hr_attendance / hr.attendance.overtime.rule / amount_rate (float)           : DEL
+hr_attendance / hr.attendance.overtime.rule / base_off (selection)          : DEL required, selection_keys: ['quantity', 'timing']
+hr_attendance / hr.attendance.overtime.rule / description (html)            : DEL
+hr_attendance / hr.attendance.overtime.rule / employee_tolerance (float)    : DEL
+hr_attendance / hr.attendance.overtime.rule / employer_tolerance (float)    : DEL
+hr_attendance / hr.attendance.overtime.rule / expected_hours (float)        : DEL
+hr_attendance / hr.attendance.overtime.rule / expected_hours_from_contract (boolean): DEL
+hr_attendance / hr.attendance.overtime.rule / name (char)                   : DEL required
+hr_attendance / hr.attendance.overtime.rule / paid (boolean)                : DEL
+hr_attendance / hr.attendance.overtime.rule / quantity_period (selection)   : DEL selection_keys: ['day', 'week']
+hr_attendance / hr.attendance.overtime.rule / resource_calendar_id (many2one): DEL relation: resource.calendar
+hr_attendance / hr.attendance.overtime.rule / ruleset_id (many2one)         : DEL relation: hr.attendance.overtime.ruleset, required
+hr_attendance / hr.attendance.overtime.rule / sequence (integer)            : DEL
+hr_attendance / hr.attendance.overtime.rule / timing_start (float)          : DEL
+hr_attendance / hr.attendance.overtime.rule / timing_stop (float)           : DEL
+hr_attendance / hr.attendance.overtime.rule / timing_type (selection)       : DEL selection_keys: ['leave', 'non_work_days', 'schedule', 'work_days']
+hr_attendance / hr.attendance.overtime.ruleset / active (boolean)              : DEL
+hr_attendance / hr.attendance.overtime.ruleset / company_id (many2one)         : DEL relation: res.company
+hr_attendance / hr.attendance.overtime.ruleset / country_id (many2one)         : DEL relation: res.country
+hr_attendance / hr.attendance.overtime.ruleset / description (html)            : DEL
+hr_attendance / hr.attendance.overtime.ruleset / name (char)                   : DEL required
+hr_attendance / hr.attendance.overtime.ruleset / rate_combination_mode (selection): DEL required, selection_keys: ['max', 'sum']
+hr_attendance / hr.attendance.overtime.ruleset / rule_ids (one2many)           : DEL relation: hr.attendance.overtime.rule
+hr_attendance / hr.employee              / overtime_ids (one2many)       : DEL relation: hr.attendance.overtime.line
+hr_attendance / hr.time.rule             / condition_work_entry_type_ids (False): NEW mode: modify, hasdefault: default
+hr_attendance / hr.version               / attendance_based (boolean)    : NEW hasdefault: default
+hr_attendance / hr.version               / ruleset_id (many2one)         : DEL relation: hr.attendance.overtime.ruleset
+hr_attendance / res.company              / attendance_based (boolean)    : NEW hasdefault: default
+hr_attendance / res.company              / attendance_break_management (boolean): NEW
+hr_attendance / res.company              / attendance_capture_check_in (boolean): NEW hasdefault: default
+hr_attendance / res.company              / attendance_overtime_validation (selection): DEL selection_keys: ['by_manager', 'no_validation']
+hr_attendance / res.company              / attendance_validation (selection): NEW selection_keys: ['manual_validation', 'no_validation', 'tolerance_validation'], hasdefault: default
+hr_attendance / res.company              / attendance_validation_tolerance (float): NEW hasdefault: default
+hr_attendance / res.company              / attendance_work_entry_type_id (many2one): NEW relation: hr.work.entry.type, hasdefault: compute
+hr_attendance / res.company              / auto_check_out_mode (selection): NEW selection_keys: ['specific_time', 'tolerance'], hasdefault: default
+hr_attendance / res.company              / auto_check_out_specific_time (float): NEW hasdefault: default
+hr_attendance / res.company              / hr_attendance_display_overtime (boolean): DEL
+hr_attendance / res.company              / overtime_company_threshold (integer): DEL
+hr_attendance / res.company              / overtime_employee_threshold (integer): DEL
+hr_attendance / res.company              / single_check_in (boolean)     : NEW
+---XML records in module 'hr_attendance'---
+DEL hr.attendance.overtime.rule: hr_attendance.hr_attendance_overtime_employee_schedule_rule (noupdate)
+DEL hr.attendance.overtime.rule: hr_attendance.hr_attendance_overtime_non_working_days_rule (noupdate)
+DEL hr.attendance.overtime.rule: hr_attendance.hr_attendance_overtime_rule_1_ae (noupdate)
+DEL hr.attendance.overtime.rule: hr_attendance.hr_attendance_overtime_rule_2_ae (noupdate)
+DEL hr.attendance.overtime.rule: hr_attendance.hr_attendance_overtime_rule_3_ae (noupdate)
+DEL hr.attendance.overtime.rule: hr_attendance.hr_attendance_overtime_rule_4_ae (noupdate)
+DEL hr.attendance.overtime.ruleset: hr_attendance.hr_attendance_default_ruleset (noupdate)
+DEL hr.attendance.overtime.ruleset: hr_attendance.l10n_ae_hr_attendance_overtime_ruleset (noupdate)
+NEW ir.access: hr_attendance.access_hr_time_rule_attendance_admin
+NEW ir.access: hr_attendance.hr_attendance_rule_attendance_admin
+NEW ir.access: hr_attendance.hr_attendance_rule_attendance_manager_restrict
+NEW ir.access: hr_attendance.hr_attendance_rule_attendance_own
+NEW ir.access: hr_attendance.hr_attendance_rule_attendance_simple_user
+NEW ir.access: hr_attendance.hr_attendance_rule_employee_company
+NEW ir.actions.act_window: hr_attendance.hr_attendance_my_action
+DEL ir.actions.act_window: hr_attendance.hr_attendance_overtime_rule_action
+DEL ir.actions.act_window: hr_attendance.hr_attendance_overtime_ruleset_action
+NEW ir.actions.server: hr_attendance.action_attendance_refuse
+NEW ir.actions.server: hr_attendance.action_attendance_validate
+NEW ir.cron: hr_attendance.hr_attendance_day_undertime_rules_cron
+NEW ir.cron: hr_attendance.hr_attendance_week_time_rules_cron
+DEL ir.model.access: hr_attendance.access_hr_attendance_admin
+DEL ir.model.access: hr_attendance.access_hr_attendance_officer
+DEL ir.model.access: hr_attendance.access_hr_attendance_overtime_line_officer
+DEL ir.model.access: hr_attendance.access_hr_attendance_overtime_line_own_reader
+DEL ir.model.access: hr_attendance.access_hr_attendance_overtime_rule_admin
+DEL ir.model.access: hr_attendance.access_hr_attendance_overtime_rule_officer
+DEL ir.model.access: hr_attendance.access_hr_attendance_overtime_rule_user
+DEL ir.model.access: hr_attendance.access_hr_attendance_overtime_ruleset_admin
+DEL ir.model.access: hr_attendance.access_hr_attendance_overtime_ruleset_hr_manager
+DEL ir.model.access: hr_attendance.access_hr_attendance_own_reader
+DEL ir.model.access: hr_attendance.access_hr_attendance_user
+NEW ir.model.constraint: hr_attendance.constraint_res_company_check_auto_check_out_specific_time_range
+DEL ir.model.constraint: hr_attendance.constraint_hr_attendance_overtime_line_overtime_start_before_end
+DEL ir.model.constraint: hr_attendance.constraint_hr_attendance_overtime_rule_timing_start_is_hour
+DEL ir.model.constraint: hr_attendance.constraint_hr_attendance_overtime_rule_timing_stop_is_hour
+DEL ir.rule: hr_attendance.hr_attendance_overtime_line_rule_admin (noupdate)
+DEL ir.rule: hr_attendance.hr_attendance_overtime_line_rule_employee_company (noupdate)
+DEL ir.rule: hr_attendance.hr_attendance_overtime_line_rule_officer (noupdate)
+DEL ir.rule: hr_attendance.hr_attendance_overtime_line_rule_own_reader (noupdate)
+DEL ir.rule: hr_attendance.hr_attendance_overtime_ruleset_rule (noupdate)
+DEL ir.rule: hr_attendance.hr_attendance_overtime_ruleset_rule_group_hr_attendance_manager (noupdate)
+DEL ir.rule: hr_attendance.hr_attendance_rule_attendance_admin (noupdate)
+DEL ir.rule: hr_attendance.hr_attendance_rule_attendance_manager_restrict (noupdate)
+DEL ir.rule: hr_attendance.hr_attendance_rule_attendance_simple_user (noupdate)
+DEL ir.rule: hr_attendance.hr_attendance_rule_employee_company (noupdate)
+NEW ir.ui.menu: hr_attendance.menu_hr_attendance_management_list
+NEW ir.ui.menu: hr_attendance.menu_hr_attendance_my_attendances
+NEW ir.ui.menu: hr_attendance.menu_hr_attendance_time_rules
+NEW ir.ui.menu: hr_attendance.menu_hr_attendance_work_entry_type
+DEL ir.ui.menu: hr_attendance.menu_hr_attendance_overtime_rulesets
+DEL ir.ui.menu: hr_attendance.menu_hr_attendance_overview
+NEW ir.ui.view: hr_attendance.hr_attendance_create_view_form
+NEW ir.ui.view: hr_attendance.hr_attendance_employee_calendar_view
+NEW ir.ui.view: hr_attendance.hr_attendance_my_calendar_view
+NEW ir.ui.view: hr_attendance.hr_attendance_my_form_view
+NEW ir.ui.view: hr_attendance.hr_contract_template_view_form
+NEW ir.ui.view: hr_attendance.hr_version_list_view_enhanced_hr_attendance_base
+NEW ir.ui.view: hr_attendance.hr_version_search_view_enhanced_hr_attendance
+DEL ir.ui.view: hr_attendance.hr_attendance_employee_simple_tree_view
+DEL ir.ui.view: hr_attendance.hr_attendance_overtime_rule_view_form
+DEL ir.ui.view: hr_attendance.hr_attendance_overtime_rule_view_list
+DEL ir.ui.view: hr_attendance.hr_attendance_overtime_ruleset_view_filter
+DEL ir.ui.view: hr_attendance.hr_attendance_overtime_ruleset_view_form
+DEL ir.ui.view: hr_attendance.hr_attendance_overtime_ruleset_view_list
+NEW res.groups: hr_attendance.group_hr_attendance_own

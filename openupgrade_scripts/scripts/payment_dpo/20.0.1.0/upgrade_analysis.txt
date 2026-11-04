@@ -1,0 +1,9 @@
+---Models in module 'payment_dpo'---
+---Fields in module 'payment_dpo'---
+---XML records in module 'payment_dpo'---
+DEL ir.ui.view: payment_dpo.redirect_form
+NEW payment.method: payment_dpo.payment_method_amex (noupdate)
+NEW payment.method: payment_dpo.payment_method_card (noupdate)
+NEW payment.method: payment_dpo.payment_method_mastercard (noupdate)
+NEW payment.method: payment_dpo.payment_method_mobile [renamed from payment module] (noupdate)
+NEW payment.method: payment_dpo.payment_method_visa (noupdate)

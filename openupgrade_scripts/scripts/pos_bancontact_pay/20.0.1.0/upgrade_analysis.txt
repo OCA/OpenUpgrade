@@ -1,0 +1,9 @@
+---Models in module 'pos_bancontact_pay'---
+---Fields in module 'pos_bancontact_pay'---
+pos_bancontact_pay / pos.payment              / bancontact_id (char)          : NEW
+pos_bancontact_pay / pos.payment.method       / bancontact_api_key (char)     : NEW
+pos_bancontact_pay / pos.payment.method       / bancontact_ppid (char)        : NEW
+pos_bancontact_pay / pos.payment.method       / bancontact_test_mode (boolean): NEW
+pos_bancontact_pay / pos.payment.method       / bancontact_usage (selection)  : NEW required, selection_keys: ['display', 'sticker'], hasdefault: default
+---XML records in module 'pos_bancontact_pay'---
+NEW ir.ui.view: pos_bancontact_pay.pos_payment_method_view_form_inherit_bancontact_pay

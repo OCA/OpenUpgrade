@@ -1,0 +1,10 @@
+---Models in module 'pos_safaricom'---
+---Fields in module 'pos_safaricom'---
+pos_safaricom / pos.payment              / safaricom_transaction_id (char): NEW
+pos_safaricom / pos.payment.method       / safaricom_identifier_type (selection): NEW selection_keys: ['paybill', 'till'], hasdefault: default
+pos_safaricom / pos.payment.method       / safaricom_paybill_number (char): NEW
+pos_safaricom / pos.payment.method       / safaricom_till_number (char)  : NEW
+---XML records in module 'pos_safaricom'---
+NEW ir.access: pos_safaricom.access_transaction_lipa_na_mpesa_pos
+DEL ir.model.access: pos_safaricom.access_transaction_lipa_na_mpesa_pos
+NEW ir.ui.view: pos_safaricom.pos_order_receipt

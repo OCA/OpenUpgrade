@@ -1,0 +1,10 @@
+---Models in module 'hr_maintenance'---
+---Fields in module 'hr_maintenance'---
+hr_maintenance / maintenance.equipment    / assign_date (False)           : DEL mode: modify
+hr_maintenance / maintenance.equipment    / equipment_assign_to (False)   : NEW selection_keys: ['department', 'employee', 'other', 'vehicle'], mode: modify
+hr_maintenance / maintenance.equipment    / equipment_assign_to (selection): module is now 'maintenance' ('hr_maintenance')
+---XML records in module 'hr_maintenance'---
+NEW ir.actions.act_window: hr_maintenance.equipment_action
+NEW ir.ui.view: hr_maintenance.maintenance_request_view_card_inherit_hr
+DEL ir.ui.view: hr_maintenance.hr_departure_wizard_view_form
+DEL ir.ui.view: hr_maintenance.maintenance_request_view_kanban_inherit_hr

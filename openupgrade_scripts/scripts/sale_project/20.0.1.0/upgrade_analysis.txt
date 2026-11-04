@@ -1,0 +1,34 @@
+---Models in module 'sale_project'---
+---Fields in module 'sale_project'---
+sale_project / account.analytic.line    / billable_type (selection)     : NEW selection_keys: function, isfunction: function, stored
+sale_project / account.analytic.line    / category_report (selection)   : NEW selection_keys: ['costs', 'revenues'], isfunction: function, stored
+sale_project / product.template         / service_tracking (False)      : selection_keys added: [subcontract] (most likely nothing to do)
+sale_project / project.milestone        / quantity_percentage (float)   : not a function anymore
+---XML records in module 'sale_project'---
+NEW ir.access: sale_project.sale_order_line_rule_project_user
+NEW ir.access: sale_project.sale_order_rule_project_user
+NEW ir.actions.act_window: sale_project.action_analytic_reporting_inherit_sale_project
+NEW ir.actions.act_window.view: sale_project.action_view_analytic_reporting_inherit_sale_project_graph
+NEW ir.actions.act_window.view: sale_project.action_view_analytic_reporting_inherit_sale_project_kanban
+NEW ir.actions.act_window.view: sale_project.action_view_analytic_reporting_inherit_sale_project_pivot
+NEW ir.actions.act_window.view: sale_project.action_view_analytic_reporting_inherit_sale_project_tree
+NEW ir.embedded.actions: sale_project.project_embedded_action_project_actual_margin
+NEW ir.embedded.actions: sale_project.project_embedded_action_sales_order_items
+NEW ir.embedded.actions: sale_project.project_embedded_action_sales_order_items_dashboard
+DEL ir.model.access: sale_project.access_sale_order_line_project_manager
+DEL ir.model.access: sale_project.access_sale_order_line_project_user
+DEL ir.model.access: sale_project.access_sale_order_project_manager
+DEL ir.model.access: sale_project.access_sale_order_project_user
+DEL ir.rule: sale_project.sale_order_line_rule_project_manager (noupdate)
+NEW ir.ui.menu: sale_project.analytic_margins_menu_project
+NEW ir.ui.view: sale_project.account_analytic_line_view_graph_for_single_project
+NEW ir.ui.view: sale_project.account_analytic_line_view_graph_project_margin
+NEW ir.ui.view: sale_project.account_analytic_line_view_list_margins_no_group
+NEW ir.ui.view: sale_project.project_project_view_card_inherit_sale_project
+NEW ir.ui.view: sale_project.sale_project_line_search
+NEW ir.ui.view: sale_project.sale_report_view_search
+NEW ir.ui.view: sale_project.view_account_analytic_line_inherit_sale_project_pivot
+NEW ir.ui.view: sale_project.view_account_analytic_line_inherit_sale_project_pivot_single
+NEW ir.ui.view: sale_project.view_account_analytic_line_inherit_sale_project_tree
+DEL ir.ui.view: sale_project.product_template_form_view_inherit_sale_project
+DEL ir.ui.view: sale_project.project_update_default_description
