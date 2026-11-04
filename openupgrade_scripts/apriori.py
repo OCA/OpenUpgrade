@@ -15,6 +15,8 @@ merged_modules = {
     # odoo
     # odoo/enterprise
     # OCA/...
+    # OCA/stock-logistics-warehouse
+    "stock_move_quantity_product_uom": "stock",
 }
 
 # only used here for upgrade_analysis
