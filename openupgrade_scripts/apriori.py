@@ -15,6 +15,8 @@ merged_modules = {
     # odoo
     # odoo/enterprise
     # OCA/...
+    # OCA/sale-workflow
+    "sale_force_invoiced": "sale",
     # OCA/stock-logistics-warehouse
     "stock_move_quantity_product_uom": "stock",
 }
