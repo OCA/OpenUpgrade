@@ -224,6 +224,107 @@ def _create_batch_payment_sequence(env):
     to_create_seqs._create_batch_payment_sequence()
 
 
+def fix_payment_paid_state(env):
+    """Set 'paid' on the payments that fill_account_payment left as 'in_process'.
+
+    It reads the payment's own move, whose payment_state is always 'not_paid'
+    below v18 as it is only computed for invoices, so every posted payment ends
+    up 'in_process'. Apply the two conditions of account.payment._compute_state.
+    """
+    # liquidity line fully reconciled, or on a non reconcilable account
+    openupgrade.logged_query(
+        env.cr,
+        """
+        WITH liquidity AS (
+            SELECT ap.id AS payment_id,
+                SUM(aml.amount_residual) AS residual,
+                BOOL_OR(aa.reconcile) AS reconcilable,
+                cur.rounding AS rounding
+            FROM account_payment ap
+            JOIN account_move am ON am.id = ap.move_id
+            JOIN res_company rc ON rc.id = am.company_id
+            JOIN res_currency cur ON cur.id = rc.currency_id
+            JOIN account_journal aj ON aj.id = ap.journal_id
+            JOIN account_move_line aml ON aml.move_id = am.id
+            JOIN account_account aa ON aa.id = aml.account_id
+            LEFT JOIN account_payment_method_line apml
+                ON apml.id = ap.payment_method_line_id
+            WHERE ap.state = 'in_process'
+                AND (
+                    aml.account_id = aj.default_account_id
+                    OR aml.account_id = ap.outstanding_account_id
+                    OR aml.account_id = apml.payment_account_id
+                    OR aml.account_id IN (
+                        SELECT payment_account_id
+                        FROM account_payment_method_line
+                        WHERE journal_id = ap.journal_id
+                            AND payment_account_id IS NOT NULL
+                    )
+                )
+            GROUP BY ap.id, cur.rounding
+        )
+        UPDATE account_payment ap
+        SET state = 'paid'
+        FROM liquidity
+        WHERE ap.id = liquidity.payment_id
+            AND (
+                NOT liquidity.reconcilable
+                OR ABS(liquidity.residual) < liquidity.rounding / 2
+            )
+        """,
+    )
+    # all the reconciled invoices, or all the reconciled bills, are paid
+    openupgrade.logged_query(
+        env.cr,
+        """
+        WITH reconciled AS (
+            SELECT DISTINCT ap.id AS payment_id, inv.id AS invoice_id,
+                inv.move_type, inv.payment_state
+            FROM account_payment ap
+            JOIN account_move am ON am.id = ap.move_id
+            JOIN account_move_line aml ON aml.move_id = am.id
+            JOIN account_account aa ON aa.id = aml.account_id
+            JOIN account_partial_reconcile apr
+                ON apr.debit_move_id = aml.id OR apr.credit_move_id = aml.id
+            JOIN account_move_line counterpart
+                ON (apr.debit_move_id = counterpart.id
+                    OR apr.credit_move_id = counterpart.id)
+                AND counterpart.id != aml.id
+            JOIN account_move inv ON inv.id = counterpart.move_id
+            WHERE ap.state = 'in_process'
+                AND aa.account_type IN ('asset_receivable', 'liability_payable')
+                AND inv.move_type IN (
+                    'out_invoice', 'out_refund', 'out_receipt',
+                    'in_invoice', 'in_refund', 'in_receipt'
+                )
+        ), counts AS (
+            SELECT payment_id,
+                COUNT(*) FILTER (WHERE move_type IN (
+                    'out_invoice', 'out_refund', 'out_receipt')) AS invoices,
+                COUNT(*) FILTER (WHERE move_type IN (
+                    'out_invoice', 'out_refund', 'out_receipt')
+                    AND payment_state = 'paid') AS paid_invoices,
+                COUNT(*) FILTER (WHERE move_type IN (
+                    'in_invoice', 'in_refund', 'in_receipt')) AS bills,
+                COUNT(*) FILTER (WHERE move_type IN (
+                    'in_invoice', 'in_refund', 'in_receipt')
+                    AND payment_state = 'paid') AS paid_bills
+            FROM reconciled
+            GROUP BY payment_id
+        )
+        UPDATE account_payment ap
+        SET state = 'paid'
+        FROM counts
+        WHERE ap.id = counts.payment_id
+            AND ap.state = 'in_process'
+            AND (
+                (counts.invoices > 0 AND counts.invoices = counts.paid_invoices)
+                OR (counts.bills > 0 AND counts.bills = counts.paid_bills)
+            )
+        """,
+    )
+
+
 @openupgrade.migrate()
 def migrate(env, version):
     handle_lock_dates(env)
@@ -236,6 +337,7 @@ def migrate(env, version):
     )
     convert_company_dependent(env)
     fill_res_partner_property_x_payment_method_line_id(env)
+    fix_payment_paid_state(env)
     openupgrade.load_data(env, "account", "18.0.1.3/noupdate_changes.xml")
     openupgrade.delete_record_translations(
         env.cr, "account", ["email_template_edi_invoice"]
