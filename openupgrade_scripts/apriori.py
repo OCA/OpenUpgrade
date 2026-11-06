@@ -2,6 +2,16 @@
 to help the matching process
 """
 
+# Deleted modules
+deleted_modules = [
+    # odoo
+    "pos_mercury",
+    "spreadsheet_dashboard_purchase",
+    "spreadsheet_dashboard_purchase_stock",
+    "website_twitter",
+    # OCA/...
+]
+
 # Renamed modules is a mapping from old module name to new module name
 renamed_modules = {
     # odoo
