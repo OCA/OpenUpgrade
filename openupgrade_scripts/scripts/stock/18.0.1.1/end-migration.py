@@ -4,13 +4,10 @@ from openupgradelib import openupgrade
 
 
 def fill_stock_picking_type_default_locations(env):
-    picking_types = env["stock.picking.type"].search(
-        [("default_location_src_id", "=", False)]
-    )
+    PickingType = env["stock.picking.type"].with_context(active_test=False)
+    picking_types = PickingType.search([("default_location_src_id", "=", False)])
     picking_types._compute_default_location_src_id()
-    picking_types = env["stock.picking.type"].search(
-        [("default_location_dest_id", "=", False)]
-    )
+    picking_types = PickingType.search([("default_location_dest_id", "=", False)])
     picking_types._compute_default_location_dest_id()
 
 
