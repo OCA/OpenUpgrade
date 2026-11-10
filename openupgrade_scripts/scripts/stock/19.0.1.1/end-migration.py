@@ -8,6 +8,6 @@ from openupgradelib import openupgrade
 def migrate(env, version):
     env["stock.picking"].search(
         [
-            ("move_line_ids", "not in", ("done", "cancel")),
+            ("state", "not in", ("done", "cancel")),
         ]
     )._check_entire_pack()
