@@ -56,6 +56,8 @@ merged_modules = {
     "website_sale_wishlist": "website_sale",
     # odoo/enterprise
     "iot_base": "iot",
+    # OCA/crm
+    "crm_stage_multi_team": "crm",
     # OCA/stock-logistics-warehouse
     "stock_move_quantity_product_uom": "stock",
 }
