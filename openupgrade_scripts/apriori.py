@@ -58,6 +58,8 @@ merged_modules = {
     "iot_base": "iot",
     # OCA/stock-logistics-warehouse
     "stock_move_quantity_product_uom": "stock",
+    # OCA/e-commerce
+    "website_sale_category_breadcrumb": "website_sale",
 }
 
 # only used here for upgrade_analysis
