@@ -19,6 +19,8 @@ renamed_modules = {
     "website_odoo_debranding": "website_debranding",
     # OCA/sale-report
     "sales_team_invoiced_target_domain": "sales_team_invoiced_target_report",
+    # OCA/stock-logistics-workflow
+    "stock_valuation_layer_usage": "stock_move_valuation_usage",
     # OCA/...
 }
 
