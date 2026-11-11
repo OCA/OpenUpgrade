@@ -17,6 +17,8 @@ renamed_modules = {
     "helpdesk_sale_coupon": "helpdesk_sale_loyalty",
     "sale_coupon_taxcloud": "sale_loyalty_taxcloud",
     "sale_coupon_taxcloud_delivery": "sale_loyalty_taxcloud_delivery",
+    # OCA/account-analytic
+    "mrp_analytic": "mrp_stock_analytic",
     # OCA/account-reconcile
     "account_reconciliation_widget": "account_reconcile_oca",
     # OCA/bank-statement-import
