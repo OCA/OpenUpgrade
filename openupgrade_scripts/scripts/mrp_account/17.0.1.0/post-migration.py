@@ -26,9 +26,11 @@ def _fill_account_analytic_account_mrp_production_rel(env):
         """
         INSERT INTO account_analytic_account_mrp_production_rel
         (mrp_production_id, account_analytic_account_id)
-        SELECT id, analytic_account_id
-        FROM mrp_production
-        WHERE analytic_account_id IS NOT NULL
+        SELECT DISTINCT mp.id, aaa.id
+        FROM mrp_production mp
+        CROSS JOIN LATERAL jsonb_object_keys(mp.analytic_distribution) AS dist(key)
+        JOIN account_analytic_account aaa ON aaa.id = dist.key::int
+        WHERE mp.analytic_distribution IS NOT NULL
         """,
     )
 
