@@ -1,4 +1,7 @@
 
+[![Support the OCA](https://odoo-community.org/readme-banner-image)](https://odoo-community.org/get-involved?utm_source=repo-readme)
+
+# OpenUpgrade
 [![Runboat](https://img.shields.io/badge/runboat-Try%20me-875A7B.png)](https://runboat.odoo-community.org/builds?repo=OCA/OpenUpgrade&target_branch=19.0)
 [![Pre-commit Status](https://github.com/OCA/OpenUpgrade/actions/workflows/pre-commit.yml/badge.svg?branch=19.0)](https://github.com/OCA/OpenUpgrade/actions/workflows/pre-commit.yml?query=branch%3A19.0)
 [![Build Status](https://github.com/OCA/OpenUpgrade/actions/workflows/test.yml/badge.svg?branch=19.0)](https://github.com/OCA/OpenUpgrade/actions/workflows/test.yml?query=branch%3A19.0)
@@ -6,8 +9,6 @@
 [![Translation Status](https://translation.odoo-community.org/widgets/OpenUpgrade-19-0/-/svg-badge.svg)](https://translation.odoo-community.org/engage/OpenUpgrade-19-0/?utm_source=widget)
 
 <!-- /!\ do not modify above this line -->
-
-# OpenUpgrade
 
 OpenUpgrade
 
