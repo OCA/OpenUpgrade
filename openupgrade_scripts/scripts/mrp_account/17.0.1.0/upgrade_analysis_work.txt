@@ -8,7 +8,7 @@ mrp_account  / mrp.bom                  / analytic_account_id (many2one): DEL re
 mrp_account  / account.analytic.account / production_ids (one2many)     : table is now 'account_analytic_account_mrp_production_rel' ('False')
 mrp_account  / account.analytic.account / production_ids (one2many)     : type is now 'many2many' ('one2many')
 mrp_account  / mrp.production           / analytic_account_ids (many2many): NEW relation: account.analytic.account, isfunction: function, stored
-# DONE: post-migration: Fill the m2m table with the old column analytic_account_id
+# DONE: post-migration: Fill the m2m table with the accounts of the analytic distribution
 
 mrp_account  / account.analytic.account / workcenter_ids (one2many)     : table is now 'account_analytic_account_mrp_workcenter_rel' ('False')
 mrp_account  / account.analytic.account / workcenter_ids (one2many)     : type is now 'many2many' ('one2many')
@@ -31,7 +31,7 @@ mrp_account  / mrp.workcenter           / analytic_precision (integer)  : NEW ha
 
 mrp_account  / mrp.production           / analytic_account_id (many2one): DEL relation: account.analytic.account
 mrp_account  / mrp.production           / analytic_distribution (json)  : NEW hasdefault: compute
-# DONE: pre-migration: Convert analytic account to analytic distribution
+# DONE: pre-migration: Convert analytic account to analytic distribution, keeping the one already set by OCA mrp_stock_analytic
 
 mrp_account  / mrp.workcenter           / costs_hour_account_id (many2one): DEL relation: account.analytic.account
 mrp_account  / mrp.workcenter           / analytic_distribution (json)  : NEW hasdefault: compute
