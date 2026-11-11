@@ -207,12 +207,53 @@ def fill_repair_picking_type(env):
         WHERE ro.location_id = sl.id
         """,
     )
-    # Remove the temporary location and picking type
+    # Remove/Archive the temporary location and picking type
     # created during the migration
-    env["stock.location"].search(
+    temp_location = env["stock.location"].search(
         [("name", "=", "Temporary Location OpenUpgrade")]
-    ).unlink()
-    env["stock.picking.type"].search([("name", "=", "SPT Repair OpenUpgrade")]).unlink()
+    )
+    openupgrade.logged_query(
+        env.cr,
+        """
+        SELECT id
+        FROM repair_order
+        WHERE location_dest_id = %(temp_location_id)s
+        OR parts_location_id = %(temp_location_id)s
+        OR recycle_location_id = %(temp_location_id)s
+        """,
+        dict(temp_location_id=temp_location.id),
+    )
+    if env.cr.fetchone():
+        temp_location.write(
+            {
+                "name": "Historical OpenUpgrade Location for 17.0 migration",
+                "active": False,
+            }
+        )
+    else:
+        temp_location.unlink()
+
+    temp_type = env["stock.picking.type"].search(
+        [("name", "=", "SPT Repair OpenUpgrade")]
+    )
+    openupgrade.logged_query(
+        env.cr,
+        """
+        SELECT id
+        FROM repair_order
+        WHERE picking_type_id = %(temp_type_id)s
+        """,
+        dict(temp_type_id=temp_type.id),
+    )
+    if env.cr.fetchone():
+        temp_type.write(
+            {
+                "name": "Historical OpenUpgrade Picking Type for 17.0 migration",
+                "active": False,
+            }
+        )
+    else:
+        temp_type.unlink()
 
 
 def fill_repair_procurement_group(env):
