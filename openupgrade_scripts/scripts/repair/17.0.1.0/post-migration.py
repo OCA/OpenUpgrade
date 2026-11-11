@@ -207,6 +207,29 @@ def fill_repair_picking_type(env):
         WHERE ro.location_id = sl.id
         """,
     )
+    # Repair orders whose location doesn't belong to any warehouse
+    # (e.g. a customer location) still point to the temporary records,
+    # so fall back to the first warehouse of their company
+    openupgrade.logged_query(
+        env.cr,
+        """
+        UPDATE repair_order ro
+        SET picking_type_id = sw.repair_type_id,
+            location_dest_id = spt.default_location_dest_id,
+            parts_location_id = spt.default_remove_location_dest_id,
+            recycle_location_id = spt.default_recycle_location_dest_id
+        FROM stock_picking_type tmp, (
+            SELECT DISTINCT ON (company_id) company_id, repair_type_id
+            FROM stock_warehouse
+            WHERE repair_type_id IS NOT NULL
+            ORDER BY company_id, id
+        ) sw
+            JOIN stock_picking_type spt ON spt.id = sw.repair_type_id
+        WHERE tmp.name->>'en_US' = 'SPT Repair OpenUpgrade'
+            AND ro.picking_type_id = tmp.id
+            AND ro.company_id = sw.company_id
+        """,
+    )
     # Remove the temporary location and picking type
     # created during the migration
     env["stock.location"].search(
