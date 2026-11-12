@@ -87,6 +87,7 @@ new model im_livechat.expertise [module im_livechat]
 new model ir.actions.server.history [module base]
 new model job.add.applicants [module hr_recruitment]
 new model l10n_cz.tax_office [module l10n_cz]
+new model l10n_es.deca.wizard [module l10n_es_stock]
 new model l10n_in_edi.cancel [module l10n_in_edi]
 new model l10n.in.hr.leave.optional.holiday [module l10n_in_hr_holidays]
 new model l10n_in.pan.entity [module l10n_in]
@@ -110,6 +111,7 @@ new model project.template.create.wizard [module project]
 new model project.template.role.to.users.map [module project]
 new model properties.base.definition [module base]
 new model properties.base.definition.mixin [module base]
+new model report.l10n_es_stock.report_deca [module l10n_es_stock]
 new model res.groups.privilege [module base]
 new model res.role [module mail]
 new model res.users.settings.embedded.action [module web]
@@ -137,7 +139,7 @@ new model website.technical.page [module website]
 # Found in other module: 143
 # Found with different type: 32
 # In obsolete models: 207
-# New columns: 1816
+# New columns: 1822
 # Not matched: 1002
 ---XML records in module 'general'---
 ---Probably obsolete module l10n_in_ewaybill_port---
