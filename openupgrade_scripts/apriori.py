@@ -62,6 +62,8 @@ merged_modules = {
     "account_payment_partner": "account_payment_mode",
     # OCA/edi-framework
     "edi_account_core_oca": "edi_account_oca",
+    # OCA/e-commerce
+    "website_sale_category_breadcrumb": "website_sale",
     # OCA/hr
     "hr_employee_document_from_applicant": "hr_recruitment",
     # OCA/hr-holidays
