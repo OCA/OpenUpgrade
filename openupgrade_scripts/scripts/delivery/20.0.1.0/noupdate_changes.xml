@@ -1,0 +1,13 @@
+<?xml version='1.0' encoding='utf-8'?>
+<odoo>
+  <record id="payment_method_cash_on_delivery" model="payment.method">
+    <field name="provider_id" ref="delivery.payment_provider_cod"/>
+  </record>
+  <record id="payment_provider_cod" model="payment.provider">
+    <field name="is_published" eval="False"/>
+    <field name="payment_method_ids" eval="None"/>
+    <field name="redirect_form_view_id" ref="payment.generic_redirect_form"/>
+    <field name="is_live">True</field>
+    <field name="sequence">30</field>
+  </record>
+</odoo>

@@ -1,0 +1,93 @@
+---Models in module 'l10n_ph'---
+obsolete model l10n_ph_2307.wizard [transient]
+---Fields in module 'l10n_ph'---
+l10n_ph      / res.company              / l10n_ph_is_vat_registered (boolean): NEW
+l10n_ph      / res.company              / l10n_ph_rdo (char)            : is now stored
+l10n_ph      / res.company              / l10n_ph_rdo (char)            : not related anymore
+l10n_ph      / res.partner              / branch_code (char)            : DEL
+l10n_ph      / res.partner              / first_name (char)             : DEL
+l10n_ph      / res.partner              / l10n_ph_branch_code (char)    : NEW isfunction: function, stored
+l10n_ph      / res.partner              / l10n_ph_entity_type (selection): NEW selection_keys: ['corporation', 'individual']
+l10n_ph      / res.partner              / l10n_ph_rdo (char)            : DEL
+l10n_ph      / res.partner              / last_name (char)              : DEL
+l10n_ph      / res.partner              / middle_name (char)            : DEL
+---XML records in module 'l10n_ph'---
+NEW account.report: l10n_ph.percentage_tax
+NEW account.report.column: l10n_ph.l10n_ph_2551Q_balance
+NEW account.report.column: l10n_ph.l10n_ph_2551Q_tax
+NEW account.report.column: l10n_ph.l10n_ph_2551Q_tax_base
+NEW account.report.expression: l10n_ph.l10n_ph_2550Q_2550q_1600VTA_balance
+NEW account.report.expression: l10n_ph.l10n_ph_2550Q_2550q_1600VTB_balance
+NEW account.report.expression: l10n_ph.l10n_ph_2551Q_2551q_14_balance
+NEW account.report.expression: l10n_ph.l10n_ph_2551Q_2551q_15_balance
+NEW account.report.expression: l10n_ph.l10n_ph_2551Q_2551q_16_balance
+NEW account.report.expression: l10n_ph.l10n_ph_2551Q_2551q_17_balance
+NEW account.report.expression: l10n_ph.l10n_ph_2551Q_2551q_18_balance
+NEW account.report.expression: l10n_ph.l10n_ph_2551Q_2551q_19_balance
+NEW account.report.expression: l10n_ph.l10n_ph_2551Q_2551q_20_balance
+NEW account.report.expression: l10n_ph.l10n_ph_2551Q_2551q_21_balance
+NEW account.report.expression: l10n_ph.l10n_ph_2551Q_2551q_22_balance
+NEW account.report.expression: l10n_ph.l10n_ph_2551Q_2551q_23_balance
+NEW account.report.expression: l10n_ph.l10n_ph_2551Q_2551q_24_balance
+NEW account.report.expression: l10n_ph.l10n_ph_2551Q_2551q_pt010_tax
+NEW account.report.expression: l10n_ph.l10n_ph_2551Q_2551q_pt010_tax_base
+NEW account.report.expression: l10n_ph.l10n_ph_2551Q_2551q_pt040_tax
+NEW account.report.expression: l10n_ph.l10n_ph_2551Q_2551q_pt040_tax_base
+NEW account.report.expression: l10n_ph.l10n_ph_2551Q_2551q_pt105_tax
+NEW account.report.expression: l10n_ph.l10n_ph_2551Q_2551q_pt105_tax_base
+NEW account.report.expression: l10n_ph.l10n_ph_2551Q_2551q_pt113_tax
+NEW account.report.expression: l10n_ph.l10n_ph_2551Q_2551q_pt113_tax_base
+NEW account.report.expression: l10n_ph.l10n_ph_2551Q_2551q_pt115_tax
+NEW account.report.expression: l10n_ph.l10n_ph_2551Q_2551q_pt115_tax_base
+NEW account.report.expression: l10n_ph.l10n_ph_2551Q_2551q_pt130_tax
+NEW account.report.expression: l10n_ph.l10n_ph_2551Q_2551q_pt130_tax_base
+NEW account.report.line: l10n_ph.l10n_ph_2551Q_2551q_14
+NEW account.report.line: l10n_ph.l10n_ph_2551Q_2551q_15
+NEW account.report.line: l10n_ph.l10n_ph_2551Q_2551q_16
+NEW account.report.line: l10n_ph.l10n_ph_2551Q_2551q_17
+NEW account.report.line: l10n_ph.l10n_ph_2551Q_2551q_18
+NEW account.report.line: l10n_ph.l10n_ph_2551Q_2551q_19
+NEW account.report.line: l10n_ph.l10n_ph_2551Q_2551q_20
+NEW account.report.line: l10n_ph.l10n_ph_2551Q_2551q_21
+NEW account.report.line: l10n_ph.l10n_ph_2551Q_2551q_22
+NEW account.report.line: l10n_ph.l10n_ph_2551Q_2551q_23
+NEW account.report.line: l10n_ph.l10n_ph_2551Q_2551q_24
+NEW account.report.line: l10n_ph.l10n_ph_2551Q_2551q_a
+NEW account.report.line: l10n_ph.l10n_ph_2551Q_2551q_b
+NEW account.report.line: l10n_ph.l10n_ph_2551Q_2551q_f
+NEW account.report.line: l10n_ph.l10n_ph_2551Q_2551q_l
+NEW account.report.line: l10n_ph.l10n_ph_2551Q_2551q_nb
+NEW account.report.line: l10n_ph.l10n_ph_2551Q_2551q_pt010
+NEW account.report.line: l10n_ph.l10n_ph_2551Q_2551q_pt040
+NEW account.report.line: l10n_ph.l10n_ph_2551Q_2551q_pt105
+NEW account.report.line: l10n_ph.l10n_ph_2551Q_2551q_pt113
+NEW account.report.line: l10n_ph.l10n_ph_2551Q_2551q_pt115
+NEW account.report.line: l10n_ph.l10n_ph_2551Q_2551q_pt130
+NEW account.report.line: l10n_ph.l10n_ph_2551Q_2551q_pto
+NEW account.report.line: l10n_ph.l10n_ph_2551Q_2551q_sched1
+NEW account.report.line: l10n_ph.l10n_ph_2551Q_2551q_ttp
+DEL ir.actions.act_window: l10n_ph.view_l10n_ph_2307_wizard_act_window
+NEW ir.actions.report: l10n_ph.action_report_bir_reprint_invoice
+NEW ir.actions.report: l10n_ph.action_report_commercial_invoice [renamed from l10n_lk_invoice module]
+NEW ir.actions.report: l10n_ph.action_report_disbursement_voucher_internal_ph
+DEL ir.actions.server: l10n_ph.action_account_move_bir_2307
+DEL ir.actions.server: l10n_ph.action_account_payment_bir_2307
+DEL ir.model.access: l10n_ph.generate_2307_wizard
+NEW ir.ui.menu: l10n_ph.account_reports_ph_statements_menu
+NEW ir.ui.view: l10n_ph.company_address_list
+NEW ir.ui.view: l10n_ph.external_layout_footer_content
+NEW ir.ui.view: l10n_ph.report_commercial_invoice
+NEW ir.ui.view: l10n_ph.report_disbursement_voucher_internal
+NEW ir.ui.view: l10n_ph.report_disbursement_voucher_internal_document
+NEW ir.ui.view: l10n_ph.report_invoice
+NEW ir.ui.view: l10n_ph.report_invoice_document
+NEW ir.ui.view: l10n_ph.report_invoice_reprint
+NEW ir.ui.view: l10n_ph.res_config_settings_view_form_l10n_ph
+DEL ir.ui.view: l10n_ph.external_layout_bold
+DEL ir.ui.view: l10n_ph.external_layout_boxed
+DEL ir.ui.view: l10n_ph.external_layout_bubble
+DEL ir.ui.view: l10n_ph.external_layout_folder
+DEL ir.ui.view: l10n_ph.external_layout_standard
+DEL ir.ui.view: l10n_ph.external_layout_striped
+DEL ir.ui.view: l10n_ph.external_layout_wave
+DEL ir.ui.view: l10n_ph.l10n_ph_2307_wizard_view_form

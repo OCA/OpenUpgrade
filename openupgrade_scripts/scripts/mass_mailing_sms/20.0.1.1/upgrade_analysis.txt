@@ -1,0 +1,13 @@
+---Models in module 'mass_mailing_sms'---
+---Fields in module 'mass_mailing_sms'---
+mass_mailing_sms / mailing.trace            / failure_type (False)          : selection_keys added: [sms_database_non_active] (most likely nothing to do)
+---XML records in module 'mass_mailing_sms'---
+NEW ir.access: mass_mailing_sms.access_mailing_sms_test
+NEW ir.access: mass_mailing_sms.access_phone_blacklist_remove_mass_mailing_user
+NEW ir.access: mass_mailing_sms.access_sms_tracker_mailing_user
+DEL ir.model.access: mass_mailing_sms.access_mailing_sms_test
+DEL ir.model.access: mass_mailing_sms.access_phone_blacklist_remove_mass_mailing_user
+DEL ir.model.access: mass_mailing_sms.access_sms_tracker_mailing_user
+NEW ir.ui.view: mass_mailing_sms.mailing_trace_view_graph
+DEL ir.ui.view: mass_mailing_sms.mailing_list_view_form
+NEW utm.source: mass_mailing_sms.utm_source_mass_sms (noupdate)

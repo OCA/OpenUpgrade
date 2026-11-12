@@ -1,0 +1,6 @@
+---Models in module 'event_product'---
+---Fields in module 'event_product'---
+event_product / event.event.ticket       / additional_product_ids (many2many): NEW relation: product.product
+event_product / event.event.ticket       / price_incl (float)            : DEL stored: False
+event_product / event.type.ticket        / additional_product_ids (many2many): NEW relation: product.product
+---XML records in module 'event_product'---

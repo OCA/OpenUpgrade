@@ -1,0 +1,12 @@
+---Models in module 'payment_redsys'---
+---Fields in module 'payment_redsys'---
+---XML records in module 'payment_redsys'---
+DEL ir.ui.view: payment_redsys.redirect_form
+NEW payment.method: payment_redsys.payment_method_amex (noupdate)
+NEW payment.method: payment_redsys.payment_method_bizum (noupdate)
+NEW payment.method: payment_redsys.payment_method_card (noupdate)
+NEW payment.method: payment_redsys.payment_method_diners (noupdate)
+NEW payment.method: payment_redsys.payment_method_jcb (noupdate)
+NEW payment.method: payment_redsys.payment_method_mastercard (noupdate)
+NEW payment.method: payment_redsys.payment_method_unionpay (noupdate)
+NEW payment.method: payment_redsys.payment_method_visa (noupdate)

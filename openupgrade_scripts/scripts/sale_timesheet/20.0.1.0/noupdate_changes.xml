@@ -1,0 +1,15 @@
+<?xml version='1.0' encoding='utf-8'?>
+<odoo>
+  <record id="account.account_analytic_line_rule_billing_user" model="ir.access">
+    <field name="active" eval="False"/>
+  </record>
+  <record id="account.account_analytic_line_rule_readonly_user" model="ir.access">
+    <field name="active" eval="False"/>
+  </record>
+  <record id="account.email_template_edi_invoice" model="mail.template">
+    <field name="report_template_ids" eval="[Command.link(ref('sale_timesheet.timesheet_report_account_move'))]"/>
+  </record>
+  <record id="account.email_template_edi_self_billing_invoice" model="mail.template">
+    <field name="report_template_ids" eval="[Command.link(ref('sale_timesheet.timesheet_report_account_move'))]"/>
+  </record>
+</odoo>

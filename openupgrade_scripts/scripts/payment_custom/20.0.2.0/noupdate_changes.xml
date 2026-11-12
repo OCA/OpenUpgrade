@@ -1,0 +1,24 @@
+<?xml version='1.0' encoding='utf-8'?>
+<odoo>
+  <record id="payment.payment_provider_pay_on_invoice" model="payment.provider">
+    <field name="code">custom</field>
+    <field name="custom_mode">pay_on_invoice</field>
+    <field name="done_msg" type="html">
+      <p>Your order is confirmed, you will receive your invoice shortly.</p>
+    </field>
+    <field name="is_live">True</field>
+    <field name="redirect_form_view_id" ref="payment.generic_redirect_form"/>
+    <field name="sequence">50</field>
+  </record>
+  <record id="payment.payment_provider_transfer" model="payment.provider">
+    <field name="payment_method_ids" eval="None"/>
+    <field name="pending_msg" type="html">
+      <p>Please find the payment details below.</p>
+    </field>
+    <field name="redirect_form_view_id" ref="payment.generic_redirect_form"/>
+    <field name="is_live">True</field>
+  </record>
+  <record id="payment_method_wire_transfer" model="payment.method">
+    <field name="provider_id" ref="payment.payment_provider_transfer"/>
+  </record>
+</odoo>

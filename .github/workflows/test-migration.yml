@@ -13,29 +13,27 @@ on:
     branches:
       - "20.0"
       - "20.0-ocabot-*"
+# TODO remove
+      - "20.0-mail"
 
 jobs:
   test:
     runs-on: ubuntu-22.04
     env:
       DB: "openupgrade"
-      DB_HOST: "localhost"
-      DB_PASSWORD: "odoo"
-      DB_PORT: 5432
-      DB_USERNAME: "odoo"
       DOWNLOADS: https://github.com/${{github.repository}}/releases/download/databases
-      ODOO: "./odoo/odoo-bin"
       PGHOST: "localhost"
       PGPASSWORD: "odoo"
       PGUSER: "odoo"
-      OPENUPGRADE_USE_DEMO: "yes"
+      OCA_IMAGE_PREV: ghcr.io/oca/oca-ci/py3.10-ocb19.0:latest
+      OCA_IMAGE_CURRENT: ghcr.io/oca/oca-ci/py3.12-ocb20.0:latest
     services:
       postgres:
-        image: postgres:14.0
+        image: postgres:16.0
         env:
           POSTGRES_USER: odoo
           POSTGRES_PASSWORD: odoo
-          POSTGRES_DB: odoo
+          POSTGRES_DB: openupgrade
         ports:
           - 5432:5432
     steps:
@@ -43,70 +41,38 @@ jobs:
         uses: actions/setup-python@v5
         with:
           python-version: '3.10'
-      - name: Sleep for 10 seconds
-        run: sleep 10s
-      - name: DB Creation
-        run: createdb $DB
-      - name: DB Restore
+      - name: Wait for postgres
+        run: while ! pg_isready; do sleep 1; done
+      - name: Restore database
         run: |
           wget -q -O- $DOWNLOADS/19.0.psql | pg_restore -d $DB --no-owner
           psql $DB -c "UPDATE ir_module_module SET demo=False"
-      - name: Check out Odoo
-        uses: actions/checkout@v4
-        with:
-          repository: odoo/odoo
-          ref: "20.0"
-          fetch-depth: 1
-          path: odoo
-      - name: Check out previous Odoo
-        uses: actions/checkout@v4
-        with:
-          repository: odoo/odoo
-          ref: "19.0"
-          fetch-depth: 1
-          path: odoo-old
       - name: Check out OpenUpgrade
         uses: actions/checkout@v4
         with:
           path: openupgrade
-      - name: Configuration
+      - name: Download docker images and start containers
         run: |
-          sudo apt update
-          sudo apt install \
-              expect \
-              expect-dev \
-              libevent-dev \
-              libldap2-dev \
-              libsasl2-dev \
-              libxml2-dev \
-              libxslt1-dev \
-              nodejs \
-              python3-lxml \
-              python3-passlib \
-              python3-psycopg2 \
-              python3-serial \
-              python3-simplejson \
-              python3-werkzeug \
-              python3-yaml \
-              unixodbc-dev
-      - name: Requirements Installation
+          docker pull $OCA_IMAGE_PREV
+          docker pull $OCA_IMAGE_CURRENT
+          docker run -e PGHOST=$PGHOST --net=host $OCA_IMAGE_PREV psql -l
+          docker run -d --net=host --name openupgrade_prev $OCA_IMAGE_PREV sleep infinity
+          docker run -d --net=host --name openupgrade_current --volume=$(pwd)/openupgrade:/opt/openupgrade $OCA_IMAGE_CURRENT sleep infinity
+      - name: Install dependencies
         run: |
-          sed -i -E "s/(gevent==)21\.8\.0( ; sys_platform != 'win32' and python_version == '3.10')/\122.10.2\2/;s/(greenlet==)1.1.2( ; sys_platform != 'win32' and python_version == '3.10')/\12.0.2\2/" odoo/requirements.txt
-          pip install -q -r odoo/requirements.txt
-          pip install -r ./openupgrade/requirements.txt
-          pip install -U git+https://github.com/oca/openupgradelib
-          # this is for v18 l10n_eg_edi_eta which crashes without it
-          pip install asn1crypto
-          # required by v18
-          pip install decorator
-          pip install coverage
-          # this is for account_peppol
-          pip install phonenumbers
+          # install dependencies not available in the oca image
+          # cloud_storage_google, needs pin to not pull incompatible cryptography version
+          docker exec openupgrade_prev pip install "google-auth<2.48.0"
+          # install openupgrade dependencies
+          docker exec openupgrade_current sh -c "
+            cd /opt/openupgrade
+            oca_install_addons
+          "
       - name: Test data
         run: |
           if test -n "$(ls openupgrade/openupgrade_scripts/scripts/*/tests/data*.py 2> /dev/null)"; then
              for snippet in openupgrade/openupgrade_scripts/scripts/*/tests/data*.py; do
-               odoo-old/odoo-bin shell -d $DB < $snippet
+               docker exec -e PGHOST=$PGHOST openupgrade_prev odoo shell -d $DB < $snippet
              done
           fi
       - name: OpenUpgrade test
@@ -147,25 +113,28 @@ jobs:
           echo Execution of Openupgrade with the update of the following modules : $MODULES_NEW
           # Silence redundant logs from unlinking records (1 line is enough)
           # to prevent log overflow
-          coverage run \
-              --source=$GITHUB_WORKSPACE/openupgrade/openupgrade_scripts/scripts \
-          $ODOO \
-              --addons-path=`echo $ADDONS_PATHS | awk -v OFS="," '$1=$1'` \
-              --database=$DB \
-              --db_host=$DB_HOST \
-              --db_password=$DB_PASSWORD \
-              --db_port=$DB_PORT \
-              --db_user=$DB_USERNAME \
-              --load=base,web,openupgrade_framework \
-              --test-enable \
-              --test-tags openupgrade \
-              --log-handler odoo.models.unlink:WARNING \
-              --stop-after-init \
-              --without-demo=$MODULES_NEW \
-              --update=$MODULES_NEW
+          docker exec -e PGHOST=$PGHOST -e OPENUPGRADE_USE_DEMO=yes openupgrade_current sh -c "
+            cd /opt/openupgrade
+            coverage run \\
+                --source=/opt/openupgrade/openupgrade_scripts/scripts \\
+            \$(which odoo) \\
+                --load=base,web,openupgrade_framework \\
+                --database=$DB \\
+                --test-enable \\
+                --test-tags openupgrade \\
+                --log-handler odoo.models.unlink:WARNING \\
+                --stop-after-init \\
+                --without-demo=$MODULES_NEW \\
+                --update=$MODULES_NEW
+          "
       - name: Generate coverage.xml
         if: ${{ steps.run_migration.outputs.modules_new != '' }}
-        run: coverage xml
+        run: |
+          docker exec openupgrade_current sh -c "
+            cd /opt/openupgrade
+            coverage xml
+          "
+          docker cp openupgrade_current:/opt/openupgrade/coverage.xml .
       - uses: codecov/codecov-action@v4
         if: ${{ steps.run_migration.outputs.modules_new != '' }}
         with:

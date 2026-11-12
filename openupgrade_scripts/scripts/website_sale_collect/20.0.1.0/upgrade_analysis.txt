@@ -1,0 +1,8 @@
+---Models in module 'website_sale_collect'---
+---Fields in module 'website_sale_collect'---
+website_sale_collect / payment.provider         / custom_mode (False)           : selection_keys added: [pay_on_invoice] (most likely nothing to do)
+---XML records in module 'website_sale_collect'---
+NEW ir.ui.view: website_sale_collect.payment_provider_form
+NEW ir.ui.view: website_sale_collect.sale_order_view_form
+payment.method: website_sale_collect.payment_method_pay_on_site (noupdate) (noupdate switched)
+payment.provider: website_sale_collect.payment_provider_on_site (noupdate) (noupdate switched)

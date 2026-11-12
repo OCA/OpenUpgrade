@@ -1,0 +1,163 @@
+<?xml version='1.0' encoding='utf-8'?>
+<odoo>
+  <record id="payment.payment_provider_xendit" model="payment.provider">
+    <field name="inline_form_view_id" eval="None"/>
+    <field name="redirect_form_view_id" ref="payment.generic_redirect_form"/>
+  </record>
+  <record id="payment_method_akulaku" model="payment.method">
+    <field name="support_manual_capture" eval="'none'"/>
+    <field name="support_refund" eval="'none'"/>
+    <field name="supported_country_ids" eval="[Command.set([ref('base.id')])]"/>
+    <field name="supported_currency_ids" eval="[Command.set([ref('base.IDR')])]"/>
+    <field name="provider_id" ref="payment.payment_provider_xendit"/>
+  </record>
+  <record id="payment_method_appota" model="payment.method">
+    <field name="support_refund" eval="'none'"/>
+    <field name="supported_country_ids" eval="[Command.set([ref('base.vn')])]"/>
+    <field name="supported_currency_ids" eval="[Command.set([ref('base.VND')])]"/>
+    <field name="provider_id" ref="payment.payment_provider_xendit"/>
+  </record>
+  <record id="payment_method_bank_bca" model="payment.method">
+    <field name="support_manual_capture" eval="'none'"/>
+    <field name="support_refund" eval="'none'"/>
+    <field name="supported_country_ids" eval="[Command.set([ref('base.id')])]"/>
+    <field name="supported_currency_ids" eval="[Command.set([ref('base.IDR')])]"/>
+    <field name="provider_id" ref="payment.payment_provider_xendit"/>
+  </record>
+  <record id="payment_method_bank_permata" model="payment.method">
+    <field name="support_manual_capture" eval="'none'"/>
+    <field name="support_refund" eval="'none'"/>
+    <field name="supported_country_ids" eval="[Command.set([ref('base.id')])]"/>
+    <field name="supported_currency_ids" eval="[Command.set([ref('base.IDR')])]"/>
+    <field name="provider_id" ref="payment.payment_provider_xendit"/>
+  </record>
+  <record id="payment_method_billease" model="payment.method">
+    <field name="support_manual_capture" eval="'none'"/>
+    <field name="support_refund" eval="'none'"/>
+    <field name="supported_country_ids" eval="[Command.set([ref('base.ph')])]"/>
+    <field name="supported_currency_ids" eval="[Command.set([ref('base.PHP')])]"/>
+    <field name="provider_id" ref="payment.payment_provider_xendit"/>
+  </record>
+  <record id="payment_method_bni" model="payment.method">
+    <field name="support_manual_capture" eval="'none'"/>
+    <field name="support_refund" eval="'none'"/>
+    <field name="supported_country_ids" eval="[Command.set([ref('base.id')])]"/>
+    <field name="supported_currency_ids" eval="[Command.set([ref('base.IDR')])]"/>
+    <field name="provider_id" ref="payment.payment_provider_xendit"/>
+  </record>
+  <record id="payment_method_bri" model="payment.method">
+    <field name="support_manual_capture" eval="'none'"/>
+    <field name="support_refund" eval="'none'"/>
+    <field name="supported_country_ids" eval="[Command.set([ref('base.id')])]"/>
+    <field name="supported_currency_ids" eval="[Command.set([ref('base.IDR')])]"/>
+    <field name="provider_id" ref="payment.payment_provider_xendit"/>
+  </record>
+  <record id="payment_method_bsi" model="payment.method">
+    <field name="support_manual_capture" eval="'none'"/>
+    <field name="support_refund" eval="'none'"/>
+    <field name="supported_country_ids" eval="[Command.set([ref('base.id')])]"/>
+    <field name="supported_currency_ids" eval="[Command.set([ref('base.IDR')])]"/>
+    <field name="provider_id" ref="payment.payment_provider_xendit"/>
+  </record>
+  <record id="payment_method_cashalo" model="payment.method">
+    <field name="support_manual_capture" eval="'none'"/>
+    <field name="support_refund" eval="'none'"/>
+    <field name="supported_country_ids" eval="[Command.set([ref('base.ph')])]"/>
+    <field name="supported_currency_ids" eval="[Command.set([ref('base.PHP')])]"/>
+    <field name="provider_id" ref="payment.payment_provider_xendit"/>
+  </record>
+  <record id="payment_method_cebuana" model="payment.method">
+    <field name="support_manual_capture" eval="'none'"/>
+    <field name="support_refund" eval="'none'"/>
+    <field name="supported_country_ids" eval="[Command.set([ref('base.ph')])]"/>
+    <field name="supported_currency_ids" eval="[Command.set([ref('base.PHP')])]"/>
+    <field name="provider_id" ref="payment.payment_provider_xendit"/>
+  </record>
+  <record id="payment_method_cimb_niaga" model="payment.method">
+    <field name="support_manual_capture" eval="'none'"/>
+    <field name="support_refund" eval="'none'"/>
+    <field name="supported_country_ids" eval="[Command.set([ref('base.id')])]"/>
+    <field name="supported_currency_ids" eval="[Command.set([ref('base.IDR')])]"/>
+    <field name="provider_id" ref="payment.payment_provider_xendit"/>
+  </record>
+  <record id="payment_method_jeniuspay" model="payment.method">
+    <field name="support_manual_capture" eval="'none'"/>
+    <field name="support_refund" eval="'none'"/>
+    <field name="supported_country_ids" eval="[Command.set([ref('base.id')])]"/>
+    <field name="supported_currency_ids" eval="[Command.set([ref('base.IDR')])]"/>
+    <field name="provider_id" ref="payment.payment_provider_xendit"/>
+  </record>
+  <record id="payment_method_kfh" model="payment.method">
+    <field name="code">kfh</field>
+    <field name="support_refund" eval="'none'"/>
+    <field name="provider_id" ref="payment.payment_provider_xendit"/>
+  </record>
+  <record id="payment_method_kredivo" model="payment.method">
+    <field name="support_manual_capture" eval="'none'"/>
+    <field name="support_refund" eval="'none'"/>
+    <field name="supported_country_ids" eval="[Command.set([ref('base.id')])]"/>
+    <field name="supported_currency_ids" eval="[Command.set([ref('base.IDR')])]"/>
+    <field name="provider_id" ref="payment.payment_provider_xendit"/>
+  </record>
+  <record id="payment_method_linkaja" model="payment.method">
+    <field name="support_manual_capture" eval="'none'"/>
+    <field name="support_refund" eval="'none'"/>
+    <field name="supported_country_ids" eval="[Command.set([ref('base.id')])]"/>
+    <field name="supported_currency_ids" eval="[Command.set([ref('base.IDR')])]"/>
+    <field name="provider_id" ref="payment.payment_provider_xendit"/>
+  </record>
+  <record id="payment_method_mandiri" model="payment.method">
+    <field name="support_manual_capture" eval="'none'"/>
+    <field name="support_refund" eval="'none'"/>
+    <field name="supported_country_ids" eval="[Command.set([ref('base.id')])]"/>
+    <field name="supported_currency_ids" eval="[Command.set([ref('base.IDR')])]"/>
+    <field name="provider_id" ref="payment.payment_provider_xendit"/>
+  </record>
+  <record id="payment_method_ovo" model="payment.method">
+    <field name="support_manual_capture" eval="'none'"/>
+    <field name="support_refund" eval="'none'"/>
+    <field name="supported_country_ids" eval="[Command.set([ref('base.id')])]"/>
+    <field name="supported_currency_ids" eval="[Command.set([ref('base.IDR')])]"/>
+    <field name="provider_id" ref="payment.payment_provider_xendit"/>
+  </record>
+  <record id="payment_method_qris" model="payment.method">
+    <field name="support_manual_capture" eval="'none'"/>
+    <field name="support_refund" eval="'none'"/>
+    <field name="supported_country_ids" eval="[Command.set([ref('base.id')])]"/>
+    <field name="supported_currency_ids" eval="[Command.set([ref('base.IDR')])]"/>
+    <field name="provider_id" ref="payment.payment_provider_xendit"/>
+  </record>
+  <record id="payment_method_shopeepay" model="payment.method">
+    <field name="support_manual_capture" eval="'none'"/>
+    <field name="support_refund" eval="'none'"/>
+    <field name="supported_country_ids" eval="[Command.set([                 ref('base.id'),                 ref('base.my'),                 ref('base.ph'),                 ref('base.th'),                 ref('base.vn'),             ])]"/>
+    <field name="supported_currency_ids" eval="[Command.set([                 ref('base.IDR'),                 ref('base.MYR'),                 ref('base.PHP'),                 ref('base.THB'),                 ref('base.VND'),             ])]"/>
+    <field name="provider_id" ref="payment.payment_provider_xendit"/>
+  </record>
+  <record id="payment_method_vietcapital" model="payment.method">
+    <field name="support_refund" eval="'none'"/>
+    <field name="provider_id" ref="payment.payment_provider_xendit"/>
+  </record>
+  <record id="payment_method_viettelpay" model="payment.method">
+    <field name="support_refund" eval="'none'"/>
+    <field name="provider_id" ref="payment.payment_provider_xendit"/>
+  </record>
+  <record id="payment_method_vnptwallet" model="payment.method">
+    <field name="support_refund" eval="'none'"/>
+    <field name="provider_id" ref="payment.payment_provider_xendit"/>
+  </record>
+  <record id="payment_method_vpbank" model="payment.method">
+    <field name="support_refund" eval="'none'"/>
+    <field name="provider_id" ref="payment.payment_provider_xendit"/>
+  </record>
+  <record id="payment_method_woori" model="payment.method">
+    <field name="support_refund" eval="'none'"/>
+    <field name="provider_id" ref="payment.payment_provider_xendit"/>
+  </record>
+  <record id="payment_method_zalopay" model="payment.method">
+    <field name="support_refund" eval="'none'"/>
+    <field name="supported_country_ids" eval="[Command.set([ref('base.vn')])]"/>
+    <field name="supported_currency_ids" eval="[Command.set([ref('base.VND')])]"/>
+    <field name="provider_id" ref="payment.payment_provider_xendit"/>
+  </record>
+</odoo>

@@ -1,0 +1,25 @@
+---Models in module 'l10n_eg_edi_pos'---
+---Fields in module 'l10n_eg_edi_pos'---
+l10n_eg_edi_pos / pos.config               / l10n_eg_edi_pos_access_token (char): NEW
+l10n_eg_edi_pos / pos.config               / l10n_eg_edi_pos_client_id (char): NEW
+l10n_eg_edi_pos / pos.config               / l10n_eg_edi_pos_client_secret (char): NEW
+l10n_eg_edi_pos / pos.config               / l10n_eg_edi_pos_enable (boolean): NEW
+l10n_eg_edi_pos / pos.config               / l10n_eg_edi_pos_last_uuid (char): NEW
+l10n_eg_edi_pos / pos.config               / l10n_eg_edi_pos_preprod (boolean): NEW
+l10n_eg_edi_pos / pos.config               / l10n_eg_edi_pos_serial_number (char): NEW
+l10n_eg_edi_pos / pos.config               / l10n_eg_edi_pos_token_expiry (datetime): NEW
+l10n_eg_edi_pos / pos.order                / l10n_eg_edi_pos_error (text)  : NEW
+l10n_eg_edi_pos / pos.order                / l10n_eg_edi_pos_json_doc_file (binary): NEW attachment: True
+l10n_eg_edi_pos / pos.order                / l10n_eg_edi_pos_qr (char)     : NEW
+l10n_eg_edi_pos / pos.order                / l10n_eg_edi_pos_state (selection): NEW selection_keys: ['error', 'error_test', 'rejected', 'rejected_test', 'sent', 'sent_test', 'to_send']
+l10n_eg_edi_pos / pos.order                / l10n_eg_edi_pos_submission_uuid (char): NEW
+l10n_eg_edi_pos / pos.order                / l10n_eg_edi_pos_uuid (char)   : NEW
+l10n_eg_edi_pos / pos.payment.method       / l10n_eg_edi_pos_payment_code (selection): NEW selection_keys: ['C', 'CC', 'GC', 'O', 'P', 'PR', 'V', 'VC', 'VO'], hasdefault: default
+---XML records in module 'l10n_eg_edi_pos'---
+NEW ir.ui.view: l10n_eg_edi_pos.pos_order_receipt_footer
+NEW ir.ui.view: l10n_eg_edi_pos.pos_order_receipt_header
+NEW ir.ui.view: l10n_eg_edi_pos.pos_payment_method_view_form
+NEW ir.ui.view: l10n_eg_edi_pos.res_config_settings_view_form
+NEW ir.ui.view: l10n_eg_edi_pos.view_pos_order_filter
+NEW ir.ui.view: l10n_eg_edi_pos.view_pos_order_tree
+NEW ir.ui.view: l10n_eg_edi_pos.view_pos_pos_form

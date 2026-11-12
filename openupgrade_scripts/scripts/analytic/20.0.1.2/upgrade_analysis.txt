@@ -1,0 +1,23 @@
+---Models in module 'analytic'---
+---Fields in module 'analytic'---
+analytic     / account.analytic.distribution.model / analytic_distribution (json)  : now required
+analytic     / account.analytic.line    / x_plan1_id (many2one)         : NEW relation: account.analytic.account
+---XML records in module 'analytic'---
+NEW ir.access: analytic.access_account_analytic_account
+NEW ir.access: analytic.access_account_analytic_applicability
+NEW ir.access: analytic.access_account_analytic_distribution_model
+NEW ir.access: analytic.access_account_analytic_plan
+NEW ir.access: analytic.analytic_applicability_comp_rule
+NEW ir.access: analytic.analytic_comp_rule
+NEW ir.access: analytic.analytic_distribution_model_comp_rule
+NEW ir.access: analytic.analytic_line_analytic
+NEW ir.access: analytic.analytic_line_comp_rule
+DEL ir.model.access: analytic.access_account_analytic_account
+DEL ir.model.access: analytic.access_account_analytic_applicability
+DEL ir.model.access: analytic.access_account_analytic_distribution_model
+DEL ir.model.access: analytic.access_account_analytic_line
+DEL ir.model.access: analytic.access_account_analytic_plan
+DEL ir.rule: analytic.analytic_applicability_comp_rule (noupdate)
+DEL ir.rule: analytic.analytic_comp_rule (noupdate)
+DEL ir.rule: analytic.analytic_distribution_model_comp_rule (noupdate)
+DEL ir.rule: analytic.analytic_line_comp_rule (noupdate)

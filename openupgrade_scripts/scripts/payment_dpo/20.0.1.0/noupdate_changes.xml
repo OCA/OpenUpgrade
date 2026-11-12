@@ -1,0 +1,12 @@
+<?xml version='1.0' encoding='utf-8'?>
+<odoo>
+  <record id="payment.payment_provider_dpo" model="payment.provider">
+    <field name="redirect_form_view_id" ref="payment.generic_redirect_form"/>
+  </record>
+  <record id="payment_method_mobile" model="payment.method">
+    <field name="support_manual_capture" eval="'none'"/>
+    <field name="support_refund" eval="'none'"/>
+    <field name="provider_id" ref="payment.payment_provider_dpo"/>
+    <field name="supported_country_ids" eval="[Command.set([                         ref('base.bf'),                         ref('base.bw'),                         ref('base.cd'),                         ref('base.ci'),                         ref('base.et'),                         ref('base.gh'),                         ref('base.ke'),                         ref('base.ls'),                         ref('base.mu'),                         ref('base.mw'),                         ref('base.na'),                         ref('base.ng'),                         ref('base.rw'),                         ref('base.sn'),                         ref('base.sz'),                         ref('base.tz'),                         ref('base.ug'),                         ref('base.za'),                         ref('base.zm'),                         ref('base.zw'),                 ])]"/>
+  </record>
+</odoo>

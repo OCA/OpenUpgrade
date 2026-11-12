@@ -1,0 +1,50 @@
+---Models in module 'pos_restaurant'---
+new model pos.course
+---Fields in module 'pos_restaurant'---
+pos_restaurant / pos.category             / course_id (many2one)          : NEW relation: pos.course
+pos_restaurant / pos.config               / floor_plan_settings (json)    : NEW
+pos_restaurant / pos.config               / iface_printbill (boolean)     : module is now 'point_of_sale' ('pos_restaurant')
+pos_restaurant / pos.config               / iface_splitbill (boolean)     : DEL
+pos_restaurant / pos.config               / set_tip_after_payment (boolean): module is now 'point_of_sale' ('pos_restaurant')
+pos_restaurant / pos.config               / use_course_allocation (boolean): NEW
+pos_restaurant / pos.config               / use_show_items_on_course_ticket (boolean): NEW
+pos_restaurant / pos.course               / category_ids (one2many)       : NEW relation: pos.category
+pos_restaurant / pos.course               / name (char)                   : NEW required
+pos_restaurant / pos.course               / sequence (integer)            : NEW hasdefault: default
+pos_restaurant / restaurant.floor         / background_color (char)       : DEL
+pos_restaurant / restaurant.floor         / background_image (binary)     : DEL attachment: True
+pos_restaurant / restaurant.floor         / floor_background_image (binary): DEL attachment: True
+pos_restaurant / restaurant.floor         / floor_plan_layout (json)      : NEW
+pos_restaurant / restaurant.order.course  / course_id (many2one)          : NEW relation: pos.course
+pos_restaurant / restaurant.order.course  / name (char)                   : NEW
+pos_restaurant / restaurant.table         / color (char)                  : DEL
+pos_restaurant / restaurant.table         / floor_plan_layout (json)      : NEW
+pos_restaurant / restaurant.table         / height (float)                : DEL
+pos_restaurant / restaurant.table         / parent_side (selection)       : NEW selection_keys: ['bottom', 'left', 'right', 'top']
+pos_restaurant / restaurant.table         / position_h (float)            : DEL
+pos_restaurant / restaurant.table         / position_v (float)            : DEL
+pos_restaurant / restaurant.table         / shape (selection)             : DEL required, selection_keys: ['round', 'square']
+pos_restaurant / restaurant.table         / width (float)                 : DEL
+---XML records in module 'pos_restaurant'---
+NEW ir.access: pos_restaurant.access_pos_course
+NEW ir.access: pos_restaurant.access_pos_course_manager
+NEW ir.access: pos_restaurant.access_restaurant_floor
+NEW ir.access: pos_restaurant.access_restaurant_floor_manager
+NEW ir.access: pos_restaurant.access_restaurant_order_course
+NEW ir.access: pos_restaurant.access_restaurant_table
+NEW ir.access: pos_restaurant.access_restaurant_table_manager
+NEW ir.actions.act_window: pos_restaurant.action_pos_course
+DEL ir.model.access: pos_restaurant.access_restaurant_floor
+DEL ir.model.access: pos_restaurant.access_restaurant_floor_manager
+DEL ir.model.access: pos_restaurant.access_restaurant_order_course
+DEL ir.model.access: pos_restaurant.access_restaurant_table
+DEL ir.model.access: pos_restaurant.access_restaurant_table_manager
+NEW ir.model.constraint: pos_restaurant.constraint_pos_course_name_unique
+NEW ir.ui.menu: pos_restaurant.menu_pos_course
+NEW ir.ui.view: pos_restaurant.pos_order_change_receipt
+NEW ir.ui.view: pos_restaurant.pos_order_receipt_header
+NEW ir.ui.view: pos_restaurant.pos_restaurant_pos_category_kanban_view
+NEW ir.ui.view: pos_restaurant.pos_restaurant_product_pos_category_tree_view
+NEW ir.ui.view: pos_restaurant.view_pos_category_form_inherit_course
+NEW ir.ui.view: pos_restaurant.view_pos_course_form
+NEW ir.ui.view: pos_restaurant.view_pos_course_list

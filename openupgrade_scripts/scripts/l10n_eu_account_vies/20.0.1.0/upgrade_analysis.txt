@@ -1,0 +1,10 @@
+---Models in module 'l10n_eu_account_vies'---
+---Fields in module 'l10n_eu_account_vies'---
+l10n_eu_account_vies / res.country              / has_foreign_fiscal_position (boolean): previously in module base_vat
+l10n_eu_account_vies / res.partner              / perform_vies_validation (boolean): previously in module base_vat
+l10n_eu_account_vies / res.partner              / vies_valid (boolean)          : previously in module base_vat
+l10n_eu_account_vies / res.users                / perform_vies_validation (boolean): previously in module base_vat
+l10n_eu_account_vies / res.users                / vies_valid (boolean)          : previously in module base_vat
+---XML records in module 'l10n_eu_account_vies'---
+NEW ir.cron: l10n_eu_account_vies.vies_iap_check_update [renamed from base_vat module]
+NEW ir.ui.view: l10n_eu_account_vies.view_partner_l10n_eu_account_vies_form
