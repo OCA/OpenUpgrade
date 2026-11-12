@@ -92,7 +92,11 @@ def product_value(env):
         ADD COLUMN IF NOT EXISTS stock_valuation_layer_id int
         """,
     )
-    # simple case: the valuation layer has unit_cost set
+    # simple case: the valuation layer has a unit_cost to carry over.
+    # A zero unit_cost is not one: 17.0 writes it on revaluations that adjust a
+    # total value without a per-unit price, and copying it across would set the
+    # product's cost to zero. Those are handled with the unit_cost IS NULL case
+    # below, which derives the cost instead.
     env.cr.execute(
         """
         INSERT INTO product_value
@@ -110,9 +114,14 @@ def product_value(env):
             stock_move_id IS NULL
             AND
             unit_cost IS NOT NULL
+            AND
+            unit_cost <> 0
         """,
     )
-    # otherwise: compute unit cost from sum of all previous values/sum of quantities
+    # otherwise: compute the unit cost from sum of all previous values/sum of
+    # quantities. This covers both a NULL unit_cost and a zero one -- see above --
+    # and does not restrict itself to quantity = 0, because a revaluation booked
+    # together with a quantity change carries a total value just the same.
     env.cr.execute(
         """
         INSERT INTO product_value
@@ -143,13 +152,13 @@ def product_value(env):
         WHERE
             svl1.stock_move_id IS NULL
             AND
-            svl1.unit_cost IS NULL
-            AND
-            svl1.quantity = 0
+            COALESCE(svl1.unit_cost, 0) = 0
         GROUP BY
             svl1.id
         HAVING
             SUM(svl2.quantity) <> 0
+            AND
+            SUM(svl2.value) / SUM(svl2.quantity) > 0
         """,
     )
     openupgrade.lift_constraints(env.cr, "stock_valuation_layer", "id", cascade=True)
