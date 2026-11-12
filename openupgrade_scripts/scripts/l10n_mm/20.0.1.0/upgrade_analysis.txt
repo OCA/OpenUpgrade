@@ -1,0 +1,9 @@
+---Models in module 'l10n_mm'---
+---Fields in module 'l10n_mm'---
+l10n_mm      / res.partner.bank         / l10n_mm_merchant_city (char)  : NEW
+l10n_mm      / res.partner.bank         / l10n_mm_merchant_name (char)  : NEW
+l10n_mm      / res.partner.bank         / l10n_mm_terminal_id (char)    : NEW
+l10n_mm      / res.partner.bank         / proxy_type (False)            : NEW selection_keys: ['bakong_id_merchant', 'bakong_id_solo', 'email', 'id', 'merchant_id', 'mobile', 'none'], mode: modify
+---XML records in module 'l10n_mm'---
+NEW ir.ui.view: l10n_mm.res_config_settings_view_form
+NEW ir.ui.view: l10n_mm.view_partner_bank_form_inherit_account

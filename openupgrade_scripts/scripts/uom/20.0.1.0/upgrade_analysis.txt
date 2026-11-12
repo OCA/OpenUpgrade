@@ -1,0 +1,13 @@
+---Models in module 'uom'---
+---Fields in module 'uom'---
+---XML records in module 'uom'---
+NEW ir.access: uom.access_uom_uom_manager
+NEW ir.access: uom.access_uom_uom_user
+NEW ir.actions.act_window: uom.uom_uom_action_list
+DEL ir.actions.act_window: uom.product_uom_form_action
+DEL ir.model.access: uom.access_uom_uom_manager
+DEL ir.model.access: uom.access_uom_uom_user
+NEW ir.ui.view: uom.uom_uom_view_form
+NEW ir.ui.view: uom.uom_uom_view_list
+DEL ir.ui.view: uom.product_uom_form_view
+DEL ir.ui.view: uom.product_uom_tree_view

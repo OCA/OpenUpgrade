@@ -1,0 +1,10 @@
+<?xml version='1.0' encoding='utf-8'?>
+<odoo>
+  <record id="par_cfa" model="res.partner">
+    <field name="additional_identifiers" eval="{'AR_SIGD': '0'}"/>
+  </record>
+  <record id="partner_afip" model="res.partner">
+    <field name="is_company" eval="False"/>
+    <field name="country_id" ref="base.ar"/>
+  </record>
+</odoo>

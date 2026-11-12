@@ -1,0 +1,14 @@
+---Models in module 'mail_plugin'---
+obsolete model res.partner.iap
+---Fields in module 'mail_plugin'---
+mail_plugin  / res.partner.iap          / iap_enrich_info (text)        : DEL
+mail_plugin  / res.partner.iap          / iap_search_domain (char)      : DEL
+mail_plugin  / res.partner.iap          / partner_id (many2one)         : DEL relation: res.partner, required
+---XML records in module 'mail_plugin'---
+NEW digest.tip: mail_plugin.digest_tip_mail_plugin
+DEL ir.actions.act_window: mail_plugin.res_partner_iap_action
+DEL ir.model.access: mail_plugin.access_res_partner_iap
+DEL ir.model.constraint: mail_plugin.constraint_res_partner_iap_unique_partner_id
+DEL ir.ui.menu: mail_plugin.res_partner_iap_menu
+DEL ir.ui.view: mail_plugin.res_partner_iap_view_form
+DEL ir.ui.view: mail_plugin.res_partner_iap_view_tree

@@ -1,0 +1,7 @@
+---Models in module 'event_sms'---
+---Fields in module 'event_sms'---
+---XML records in module 'event_sms'---
+NEW ir.access: event_sms.access_sms_template_event_manager
+NEW ir.access: event_sms.ir_rule_sms_template_event_manager
+DEL ir.model.access: event_sms.access_sms_template_event_manager
+DEL ir.rule: event_sms.ir_rule_sms_template_event_manager (noupdate)

@@ -1,0 +1,79 @@
+---Models in module 'l10n_th'---
+new model l10n_th.tax.invoice
+new model report.l10n_th.report_50_tawi [abstract]
+---Fields in module 'l10n_th'---
+l10n_th      / account.move             / l10n_th_tax_invoice_ids (one2many): NEW relation: l10n_th.tax.invoice
+l10n_th      / account.payment          / l10n_th_wth_condition (selection): NEW selection_keys: ['at_source', 'forever', 'one_time'], hasdefault: compute
+l10n_th      / account.tax              / l10n_th_income_tax_type (selection): NEW selection_keys: ['advertising', 'commission', 'contract', 'dividend', 'hire_of_work', 'insurance', 'interest', 'na', 'others', 'prize', 'prof_fees', 'public_actor', 'rentals', 'royalties', 'service', 'transportation']
+l10n_th      / account.tax              / l10n_th_income_tax_type_others (char): NEW
+l10n_th      / l10n_th.tax.invoice      / amount_residual (float)       : NEW
+l10n_th      / l10n_th.tax.invoice      / company_id (many2one)         : NEW relation: res.company, isrelated: related, stored
+l10n_th      / l10n_th.tax.invoice      / date (date)                   : NEW
+l10n_th      / l10n_th.tax.invoice      / invoice_move_id (many2one)    : NEW relation: account.move, required
+l10n_th      / l10n_th.tax.invoice      / is_partially_paid (boolean)   : NEW
+l10n_th      / l10n_th.tax.invoice      / payment_move_id (many2one)    : NEW relation: account.move
+l10n_th      / l10n_th.tax.invoice      / reference (char)              : NEW
+l10n_th      / l10n_th.tax.invoice      / state (selection)             : NEW required, selection_keys: ['cancel', 'draft', 'posted']
+l10n_th      / l10n_th.tax.invoice      / tax_group_amounts (json)      : NEW
+l10n_th      / l10n_th.tax.invoice      / tax_invoice_lines (json)      : NEW
+l10n_th      / l10n_th.tax.invoice      / tax_invoice_number (char)     : NEW
+l10n_th      / l10n_th.tax.invoice      / total_amount (float)          : NEW
+l10n_th      / l10n_th.tax.invoice      / total_on_payment_amount (float): NEW
+l10n_th      / l10n_th.tax.invoice      / vat_amount (float)            : NEW
+l10n_th      / res.company              / l10n_th_is_vat_registered (boolean): NEW
+l10n_th      / res.partner              / l10n_th_company_type (selection): NEW selection_keys: ['asso', 'company_ltd', 'foundation', 'joint_venture', 'ltd_partner', 'others', 'pub_company_ltd']
+l10n_th      / res.partner              / l10n_th_title (selection)     : NEW selection_keys: ['khun', 'mr', 'mrs', 'ms']
+l10n_th      / res.partner.bank         / proxy_type (False)            : selection_keys added: [merchant_id], removed: [uen]
+---XML records in module 'l10n_th'---
+NEW account.account.tag: l10n_th.tag_th_income_pnd3 (noupdate)
+NEW account.account.tag: l10n_th.tag_th_income_pnd53 (noupdate)
+NEW account.account.tag: l10n_th.tag_th_pnd3 (noupdate)
+NEW account.account.tag: l10n_th.tag_th_pnd53 (noupdate)
+DEL account.report: l10n_th.tax_report_pnd3
+DEL account.report: l10n_th.tax_report_pnd53
+DEL account.report.column: l10n_th.tax_report_pnd3_balance
+DEL account.report.column: l10n_th.tax_report_pnd53_balance
+NEW account.report.expression: l10n_th.tax_report_out_tax_sale_tag_neg
+NEW account.report.expression: l10n_th.tax_report_out_tax_sale_tag_pos
+DEL account.report.expression: l10n_th.tax_report_surcharge_pnd3
+DEL account.report.expression: l10n_th.tax_report_surcharge_pnd53
+DEL account.report.expression: l10n_th.tax_report_total_income_pnd3
+DEL account.report.expression: l10n_th.tax_report_total_income_pnd53
+DEL account.report.expression: l10n_th.tax_report_total_pnd3
+DEL account.report.expression: l10n_th.tax_report_total_pnd53
+DEL account.report.expression: l10n_th.tax_report_total_remittance_pnd3
+DEL account.report.expression: l10n_th.tax_report_total_remittance_pnd53
+DEL account.report.line: l10n_th.tax_report_surcharge_pnd3_line
+DEL account.report.line: l10n_th.tax_report_surcharge_pnd53_line
+DEL account.report.line: l10n_th.tax_report_total_income_pnd3_line
+DEL account.report.line: l10n_th.tax_report_total_income_pnd53_line
+DEL account.report.line: l10n_th.tax_report_total_pnd3_line
+DEL account.report.line: l10n_th.tax_report_total_pnd53_line
+DEL account.report.line: l10n_th.tax_report_total_remittance_pnd3_line
+DEL account.report.line: l10n_th.tax_report_total_remittance_pnd53_line
+NEW ir.access: l10n_th.access_l10n_th_tax_invoice
+NEW ir.access: l10n_th.access_l10n_th_tax_invoice_readonly
+NEW ir.access: l10n_th.l10n_th_tax_invoice_comp_rule
+NEW ir.actions.report: l10n_th.action_report_50_tawi
+NEW ir.actions.report: l10n_th.action_report_tax_invoice
+DEL ir.actions.report: l10n_th.action_report_commercial_invoice [renamed to l10n_lk module]
+NEW ir.actions.server: l10n_th.action_download_50_tawi_zip
+NEW ir.ui.view: l10n_th.company_address_list
+NEW ir.ui.view: l10n_th.report_50_tawi
+NEW ir.ui.view: l10n_th.report_50_tawi_document
+NEW ir.ui.view: l10n_th.report_tax_invoice
+NEW ir.ui.view: l10n_th.report_tax_invoice_document
+NEW ir.ui.view: l10n_th.res_company_form_inherit_l10n_th
+NEW ir.ui.view: l10n_th.res_config_settings_view_form
+NEW ir.ui.view: l10n_th.tawi_square
+NEW ir.ui.view: l10n_th.tax_invoice_document_tax_totals
+NEW ir.ui.view: l10n_th.th_partner_address_form
+NEW ir.ui.view: l10n_th.tickbox_with_desc
+NEW ir.ui.view: l10n_th.view_account_payment_form_inherit_l10n_th
+NEW ir.ui.view: l10n_th.view_account_payment_register_form_inherit_l10n_th
+NEW ir.ui.view: l10n_th.view_move_form_th_inherit
+NEW ir.ui.view: l10n_th.view_partner_form_inherit_l10n_th
+NEW ir.ui.view: l10n_th.view_tax_form_inherit_l10n_th
+NEW ir.ui.view: l10n_th.view_tax_tree_inherit_l10n_th
+DEL ir.ui.view: l10n_th.report_commercial_invoice
+NEW report.paperformat: l10n_th.paperformat_tawi

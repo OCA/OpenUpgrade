@@ -1,0 +1,60 @@
+---Models in module 'mrp_subcontracting'---
+---Fields in module 'mrp_subcontracting'---
+mrp_subcontracting / mrp.production           / subcontracting_has_been_recorded (boolean): DEL
+---XML records in module 'mrp_subcontracting'---
+NEW ir.access: mrp_subcontracting.access_subcontracting_portal_barcode_nomenclature_stock_user
+NEW ir.access: mrp_subcontracting.access_subcontracting_portal_mrp_production_serials
+NEW ir.access: mrp_subcontracting.access_subcontracting_portal_product
+NEW ir.access: mrp_subcontracting.access_subcontracting_portal_uom
+NEW ir.access: mrp_subcontracting.bom_line_subcontractor_rule
+NEW ir.access: mrp_subcontracting.bom_subcontractor_rule
+NEW ir.access: mrp_subcontracting.consumption_warning_line_subcontractor_rule
+NEW ir.access: mrp_subcontracting.consumption_warning_subcontractor_rule
+NEW ir.access: mrp_subcontracting.picking_subcontractor_rule
+NEW ir.access: mrp_subcontracting.picking_type_subcontractor_rule
+NEW ir.access: mrp_subcontracting.product_template_subcontracting_rule
+NEW ir.access: mrp_subcontracting.production_subcontractor_rule
+NEW ir.access: mrp_subcontracting.stock_location_subcontractor_rule
+NEW ir.access: mrp_subcontracting.stock_lot_subcontracting_rule
+NEW ir.access: mrp_subcontracting.stock_move_line_subcontractor_rule
+NEW ir.access: mrp_subcontracting.stock_move_subcontractor_rule
+NEW ir.access: mrp_subcontracting.stock_warehouse_subcontractor_rule
+DEL ir.model.access: mrp_subcontracting.access_subcontracting_portal_barcode_nomenclature_stock_user
+DEL ir.model.access: mrp_subcontracting.access_subcontracting_portal_bom
+DEL ir.model.access: mrp_subcontracting.access_subcontracting_portal_bom_line
+DEL ir.model.access: mrp_subcontracting.access_subcontracting_portal_consumption_warning
+DEL ir.model.access: mrp_subcontracting.access_subcontracting_portal_consumption_warning_line
+DEL ir.model.access: mrp_subcontracting.access_subcontracting_portal_location
+DEL ir.model.access: mrp_subcontracting.access_subcontracting_portal_lot
+DEL ir.model.access: mrp_subcontracting.access_subcontracting_portal_mrp_production_serials
+DEL ir.model.access: mrp_subcontracting.access_subcontracting_portal_picking_type
+DEL ir.model.access: mrp_subcontracting.access_subcontracting_portal_product
+DEL ir.model.access: mrp_subcontracting.access_subcontracting_portal_product_template
+DEL ir.model.access: mrp_subcontracting.access_subcontracting_portal_production
+DEL ir.model.access: mrp_subcontracting.access_subcontracting_portal_stock_move
+DEL ir.model.access: mrp_subcontracting.access_subcontracting_portal_stock_move_line
+DEL ir.model.access: mrp_subcontracting.access_subcontracting_portal_stock_picking
+DEL ir.model.access: mrp_subcontracting.access_subcontracting_portal_uom
+DEL ir.model.access: mrp_subcontracting.access_subcontracting_portal_warehouse
+DEL ir.rule: mrp_subcontracting.bom_line_subcontractor_rule
+DEL ir.rule: mrp_subcontracting.bom_subcontractor_rule
+DEL ir.rule: mrp_subcontracting.consumption_warning_line_subcontractor_rule
+DEL ir.rule: mrp_subcontracting.consumption_warning_subcontractor_rule
+DEL ir.rule: mrp_subcontracting.picking_subcontractor_rule
+DEL ir.rule: mrp_subcontracting.picking_type_subcontractor_rule
+DEL ir.rule: mrp_subcontracting.product_template_subcontracting_rule
+DEL ir.rule: mrp_subcontracting.production_subcontractor_rule
+DEL ir.rule: mrp_subcontracting.stock_location_subcontractor_rule
+DEL ir.rule: mrp_subcontracting.stock_lot_subcontracting_rule
+DEL ir.rule: mrp_subcontracting.stock_move_line_subcontractor_rule
+DEL ir.rule: mrp_subcontracting.stock_move_subcontractor_rule
+DEL ir.rule: mrp_subcontracting.stock_warehouse_subcontractor_rule
+NEW ir.ui.view: mrp_subcontracting.mo_overview_byproducts
+NEW ir.ui.view: mrp_subcontracting.mo_overview_content
+NEW ir.ui.view: mrp_subcontracting.mo_overview_line
+NEW ir.ui.view: mrp_subcontracting.mo_overview_operations
+NEW ir.ui.view: mrp_subcontracting.report_mrp_bom
+NEW ir.ui.view: mrp_subcontracting.report_mrp_bom_pdf_line
+DEL ir.ui.view: mrp_subcontracting.portal_my_home_productions
+DEL ir.ui.view: mrp_subcontracting.view_move_search
+NEW portal.entry: mrp_subcontracting.portal_manufacturing_orders (noupdate)

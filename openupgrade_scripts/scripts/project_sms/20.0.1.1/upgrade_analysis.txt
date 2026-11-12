@@ -1,0 +1,7 @@
+---Models in module 'project_sms'---
+---Fields in module 'project_sms'---
+---XML records in module 'project_sms'---
+NEW ir.access: project_sms.access_sms_template_project_manager
+NEW ir.access: project_sms.ir_rule_sms_template_project_manager
+DEL ir.model.access: project_sms.access_sms_template_project_manager
+DEL ir.rule: project_sms.ir_rule_sms_template_project_manager (noupdate)

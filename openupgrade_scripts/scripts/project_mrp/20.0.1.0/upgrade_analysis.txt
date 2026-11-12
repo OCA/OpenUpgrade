@@ -1,0 +1,8 @@
+---Models in module 'project_mrp'---
+---Fields in module 'project_mrp'---
+---XML records in module 'project_mrp'---
+NEW ir.access: project_mrp.access_mrp_bom_line_project_user
+NEW ir.access: project_mrp.access_mrp_bom_project_user
+DEL ir.model.access: project_mrp.access_mrp_bom_line_project_user
+DEL ir.model.access: project_mrp.access_mrp_bom_project_user
+NEW ir.ui.view: project_mrp.project_view_form_inherit_project_mrp

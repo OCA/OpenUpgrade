@@ -1,0 +1,25 @@
+---Models in module 'l10n_es'---
+---Fields in module 'l10n_es'---
+l10n_es      / account.move             / l10n_es_invoice_type (selection): NEW selection_keys: function, hasdefault: compute
+l10n_es      / account.move             / l10n_es_is_simplified (boolean): DEL
+l10n_es      / account.move             / l10n_es_original_invoice_credited (char): NEW stored: False
+l10n_es      / account.move             / l10n_es_regime_code (selection): NEW selection_keys: function, hasdefault: compute
+l10n_es      / account.move             / l10n_es_regime_code_additional (selection): NEW selection_keys: function, hasdefault: compute
+l10n_es      / account.tax              / l10n_es_applicability (selection): previously in module l10n_es_edi_verifactu
+l10n_es      / account.tax              / l10n_es_regime_code (selection): NEW selection_keys: function, hasdefault: compute
+l10n_es      / res.company              / l10n_es_special_vat_regime (selection): NEW selection_keys: ['cash_basis', 'equivalence_surcharge', 'reagyp', 'simplified']
+---XML records in module 'l10n_es'---
+NEW account.account.tag: l10n_es.account_tag_mod349_A
+NEW account.account.tag: l10n_es.account_tag_mod349_C
+NEW account.account.tag: l10n_es.account_tag_mod349_D
+NEW account.account.tag: l10n_es.account_tag_mod349_E
+NEW account.account.tag: l10n_es.account_tag_mod349_H
+NEW account.account.tag: l10n_es.account_tag_mod349_I
+NEW account.account.tag: l10n_es.account_tag_mod349_M
+NEW account.account.tag: l10n_es.account_tag_mod349_R
+NEW account.account.tag: l10n_es.account_tag_mod349_S
+NEW account.account.tag: l10n_es.account_tag_mod349_T
+DEL ir.ui.view: l10n_es.report_invoice_document
+DEL product.product: l10n_es.product_dua_valuation_10
+DEL product.product: l10n_es.product_dua_valuation_21
+DEL product.product: l10n_es.product_dua_valuation_4

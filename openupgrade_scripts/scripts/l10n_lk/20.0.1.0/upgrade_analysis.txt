@@ -1,0 +1,85 @@
+---Models in module 'l10n_lk'---
+---Fields in module 'l10n_lk'---
+l10n_lk      / res.company              / l10n_lk_vat_registered (boolean): previously in module l10n_lk_invoice
+l10n_lk      / res.partner              / l10n_lk_vat_registered (boolean): previously in module l10n_lk_invoice
+l10n_lk      / res.users                / l10n_lk_vat_registered (boolean): previously in module l10n_lk_invoice
+---XML records in module 'l10n_lk'---
+NEW account.account.tag: l10n_lk.account_tag_fc
+NEW account.account.tag: l10n_lk.account_tag_ite
+NEW account.account.tag: l10n_lk.account_tag_oci
+NEW account.report.column: l10n_lk.l10n_lk_vat001_cell_a
+NEW account.report.column: l10n_lk.l10n_lk_vat001_cell_b
+NEW account.report.column: l10n_lk.l10n_lk_vat001_cell_c
+NEW account.report.expression: l10n_lk.l10n_lk_vat001_lk_vat_001e_10_cell_c
+NEW account.report.expression: l10n_lk.l10n_lk_vat001_lk_vat_001e_11_cell_c
+NEW account.report.expression: l10n_lk.l10n_lk_vat001_lk_vat_001e_12_cell_c
+NEW account.report.expression: l10n_lk.l10n_lk_vat001_lk_vat_001e_13_cell_c
+NEW account.report.expression: l10n_lk.l10n_lk_vat001_lk_vat_001e_14_cell_c
+NEW account.report.expression: l10n_lk.l10n_lk_vat001_lk_vat_001e_15_cell_c
+NEW account.report.expression: l10n_lk.l10n_lk_vat001_lk_vat_001e_16_cell_c
+NEW account.report.expression: l10n_lk.l10n_lk_vat001_lk_vat_001e_17_cell_c
+NEW account.report.expression: l10n_lk.l10n_lk_vat001_lk_vat_001e_18_cell_c
+NEW account.report.expression: l10n_lk.l10n_lk_vat001_lk_vat_001e_8_cell_c
+NEW account.report.expression: l10n_lk.l10n_lk_vat001_lk_vat_001e_8a_cell_c
+NEW account.report.expression: l10n_lk.l10n_lk_vat001_lk_vat_001e_9_cell_c
+NEW account.report.expression: l10n_lk.l10n_lk_vat001_lk_vat_001e_a1_cell_a
+NEW account.report.expression: l10n_lk.l10n_lk_vat001_lk_vat_001e_a1_cell_b
+NEW account.report.expression: l10n_lk.l10n_lk_vat001_lk_vat_001e_a2_cell_a
+NEW account.report.expression: l10n_lk.l10n_lk_vat001_lk_vat_001e_a2_cell_b
+NEW account.report.expression: l10n_lk.l10n_lk_vat001_lk_vat_001e_a_cell_a
+NEW account.report.expression: l10n_lk.l10n_lk_vat001_lk_vat_001e_a_cell_b
+NEW account.report.expression: l10n_lk.l10n_lk_vat001_lk_vat_001e_b_cell_a
+NEW account.report.expression: l10n_lk.l10n_lk_vat001_lk_vat_001e_b_cell_b
+NEW account.report.expression: l10n_lk.l10n_lk_vat001_lk_vat_001e_c_cell_a
+NEW account.report.expression: l10n_lk.l10n_lk_vat001_lk_vat_001e_c_cell_b
+NEW account.report.expression: l10n_lk.l10n_lk_vat001_lk_vat_001e_d1_cell_a
+NEW account.report.expression: l10n_lk.l10n_lk_vat001_lk_vat_001e_d_cell_a
+NEW account.report.expression: l10n_lk.l10n_lk_vat001_lk_vat_001e_e1_cell_a
+NEW account.report.expression: l10n_lk.l10n_lk_vat001_lk_vat_001e_e_cell_a
+NEW account.report.expression: l10n_lk.l10n_lk_vat001_lk_vat_001e_f_cell_a
+NEW account.report.expression: l10n_lk.l10n_lk_vat001_lk_vat_001e_f_cell_b
+NEW account.report.expression: l10n_lk.l10n_lk_vat001_lk_vat_001e_g_cell_a
+NEW account.report.expression: l10n_lk.l10n_lk_vat001_lk_vat_001e_g_cell_b
+NEW account.report.expression: l10n_lk.l10n_lk_vat001_lk_vat_001e_h_cell_a
+NEW account.report.expression: l10n_lk.l10n_lk_vat001_lk_vat_001e_h_cell_b
+NEW account.report.expression: l10n_lk.l10n_lk_vat001_lk_vat_001e_h_cell_c
+NEW account.report.expression: l10n_lk.l10n_lk_vat001_lk_vat_001e_i_cell_a
+NEW account.report.expression: l10n_lk.l10n_lk_vat001_lk_vat_001e_i_cell_c
+NEW account.report.expression: l10n_lk.l10n_lk_vat001_lk_vat_001e_j1_cell_a
+NEW account.report.expression: l10n_lk.l10n_lk_vat001_lk_vat_001e_j1_cell_b
+NEW account.report.expression: l10n_lk.l10n_lk_vat001_lk_vat_001e_j2_cell_a
+NEW account.report.expression: l10n_lk.l10n_lk_vat001_lk_vat_001e_j3_cell_a
+NEW account.report.expression: l10n_lk.l10n_lk_vat001_lk_vat_001e_j4_cell_a
+NEW account.report.expression: l10n_lk.l10n_lk_vat001_lk_vat_001e_j_cell_a
+NEW account.report.expression: l10n_lk.l10n_lk_vat001_lk_vat_001e_j_cell_b
+NEW account.report.expression: l10n_lk.l10n_lk_vat001_lk_vat_001e_l_cell_c
+NEW account.report.expression: l10n_lk.l10n_lk_vat001_lk_vat_001e_m_cell_c
+NEW account.report.expression: l10n_lk.l10n_lk_vat001_lk_vat_001e_n_cell_c
+NEW account.report.expression: l10n_lk.l10n_lk_vat001_lk_vat_001e_o_cell_c
+NEW account.report.expression: l10n_lk.l10n_lk_vat001_lk_vat_001e_p_cell_c
+NEW account.report.expression: l10n_lk.l10n_lk_vat001_lk_vat_001e_q_cell_c
+NEW account.report.expression: l10n_lk.l10n_lk_vat001_lk_vat_001e_r1_cell_c
+NEW account.report.expression: l10n_lk.l10n_lk_vat001_lk_vat_001e_r2_cell_c
+NEW account.report.expression: l10n_lk.l10n_lk_vat001_lk_vat_001e_r3_cell_c
+NEW account.report.expression: l10n_lk.l10n_lk_vat001_lk_vat_001e_r3a_cell_c
+NEW account.report.expression: l10n_lk.l10n_lk_vat001_lk_vat_001e_r3b_cell_c
+NEW account.report.expression: l10n_lk.l10n_lk_vat001_lk_vat_001e_r3c_cell_c
+NEW account.report.expression: l10n_lk.l10n_lk_vat001_lk_vat_001e_r3d_cell_c
+NEW account.report.expression: l10n_lk.l10n_lk_vat001_lk_vat_001e_r3e_cell_c
+NEW account.report.expression: l10n_lk.l10n_lk_vat001_lk_vat_001e_r3f_cell_c
+NEW account.report.expression: l10n_lk.l10n_lk_vat001_lk_vat_001e_r3g_cell_c
+NEW account.report.expression: l10n_lk.l10n_lk_vat001_lk_vat_001e_r_cell_c
+NEW account.report.expression: l10n_lk.l10n_lk_vat001_lk_vat_001e_s1_cell_a
+NEW account.report.expression: l10n_lk.l10n_lk_vat001_lk_vat_001e_s1_cell_b
+NEW account.report.expression: l10n_lk.l10n_lk_vat001_lk_vat_001e_s1_cell_c
+NEW account.report.expression: l10n_lk.l10n_lk_vat001_lk_vat_001e_s2_cell_c
+NEW account.report.expression: l10n_lk.l10n_lk_vat001_lk_vat_001e_s3_cell_c
+NEW account.report.expression: l10n_lk.l10n_lk_vat001_lk_vat_001e_s_cell_c
+NEW account.report.expression: l10n_lk.l10n_lk_vat001_lk_vat_001e_tit_cell_c
+NEW account.report.expression: l10n_lk.l10n_lk_vat001_lk_vat_001e_tot_cell_c
+NEW ir.actions.report: l10n_lk.action_report_commercial_invoice [renamed from l10n_th module]
+NEW ir.ui.view: l10n_lk.report_commercial_invoice
+NEW ir.ui.view: l10n_lk.report_invoice
+NEW ir.ui.view: l10n_lk.report_invoice_document
+NEW ir.ui.view: l10n_lk.view_company_form_l10n_lk_vat_registered
+NEW ir.ui.view: l10n_lk.view_partner_form_l10n_lk_vat_registered

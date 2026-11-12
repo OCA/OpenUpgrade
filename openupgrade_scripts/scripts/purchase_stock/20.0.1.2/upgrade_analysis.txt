@@ -1,0 +1,36 @@
+---Models in module 'purchase_stock'---
+---Fields in module 'purchase_stock'---
+purchase_stock / purchase.order           / date_promised (datetime)      : NEW hasdefault: compute
+purchase_stock / purchase.order           / incoterm_location (char)      : module is now 'purchase' ('purchase_stock')
+purchase_stock / purchase.order           / receipt_status (selection)    : module is now 'purchase' ('purchase_stock')
+purchase_stock / purchase.order.line      / date_promised (datetime)      : NEW
+purchase_stock / purchase.order.line      / forecasted_location_id (many2one): NEW relation: stock.location
+purchase_stock / purchase.order.line      / location_final_id (many2one)  : DEL relation: stock.location
+purchase_stock / res.company              / days_to_purchase (float)      : type is now 'integer' ('float')
+---XML records in module 'purchase_stock'---
+NEW ir.access: purchase_stock.access_report_purchase_order_user
+NEW ir.access: purchase_stock.access_stock_location_purchase_user
+NEW ir.access: purchase_stock.access_stock_move_purchase_user
+NEW ir.access: purchase_stock.access_stock_move_purchase_user_manager
+NEW ir.access: purchase_stock.access_stock_picking_purchase_user
+NEW ir.access: purchase_stock.access_stock_warehouse_orderpoint_user
+NEW ir.access: purchase_stock.access_stock_warehouse_purchase_user
+NEW ir.access: purchase_stock.purchase_order_line_stock_user_rule
+NEW ir.access: purchase_stock.purchase_order_stock_user_rule
+DEL ir.model.access: purchase_stock.access_purchase_order_line_stock_worker
+DEL ir.model.access: purchase_stock.access_purchase_order_stock_worker
+DEL ir.model.access: purchase_stock.access_report_purchase_order
+DEL ir.model.access: purchase_stock.access_report_purchase_order_user
+DEL ir.model.access: purchase_stock.access_stock_location_purchase_user
+DEL ir.model.access: purchase_stock.access_stock_location_purchase_user_manager
+DEL ir.model.access: purchase_stock.access_stock_move_purchase_user
+DEL ir.model.access: purchase_stock.access_stock_move_purchase_user_manager
+DEL ir.model.access: purchase_stock.access_stock_picking_purchase_user
+DEL ir.model.access: purchase_stock.access_stock_picking_purchase_user_manager
+DEL ir.model.access: purchase_stock.access_stock_warehouse_orderpoint_manager
+DEL ir.model.access: purchase_stock.access_stock_warehouse_orderpoint_user
+DEL ir.model.access: purchase_stock.access_stock_warehouse_purchase_user
+DEL ir.model.access: purchase_stock.access_stock_warehouse_purchase_user_manager
+NEW ir.ui.view: purchase_stock.exception_on_picking
+NEW ir.ui.view: purchase_stock.product_product_tree_view_stock
+NEW ir.ui.view: purchase_stock.product_template_form_view_stock

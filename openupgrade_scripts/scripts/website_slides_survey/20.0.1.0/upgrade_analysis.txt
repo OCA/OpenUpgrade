@@ -1,0 +1,18 @@
+---Models in module 'website_slides_survey'---
+---Fields in module 'website_slides_survey'---
+---XML records in module 'website_slides_survey'---
+NEW ir.access: website_slides_survey.survey_question_answer_slide_channel_officer
+NEW ir.access: website_slides_survey.survey_question_rule_slide_channel_officer
+NEW ir.access: website_slides_survey.survey_rule_slide_channel_officer
+NEW ir.access: website_slides_survey.survey_user_input_line_rule_slide_channel_officer
+NEW ir.access: website_slides_survey.survey_user_input_rule_slide_channel_officer
+DEL ir.model.access: website_slides_survey.access_survey_question_answer_slides_officer
+DEL ir.model.access: website_slides_survey.access_survey_question_slides_officer
+DEL ir.model.access: website_slides_survey.access_survey_slides_officer
+DEL ir.model.access: website_slides_survey.access_survey_user_input_line_slides_officer
+DEL ir.model.access: website_slides_survey.access_survey_user_input_slides_officer
+DEL ir.rule: website_slides_survey.survey_question_answer_slide_channel_officer (noupdate)
+DEL ir.rule: website_slides_survey.survey_question_rule_slide_channel_officer (noupdate)
+DEL ir.rule: website_slides_survey.survey_rule_slide_channel_officer (noupdate)
+DEL ir.rule: website_slides_survey.survey_user_input_line_rule_slide_channel_officer (noupdate)
+DEL ir.rule: website_slides_survey.survey_user_input_rule_slide_channel_officer (noupdate)

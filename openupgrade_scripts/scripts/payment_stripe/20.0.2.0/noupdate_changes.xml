@@ -1,0 +1,24 @@
+<?xml version='1.0' encoding='utf-8'?>
+<odoo>
+  <record id="payment_method_amazon_pay" model="payment.method">
+    <field name="supported_country_ids" eval="None"/>
+    <field name="supported_currency_ids" eval="[Command.set([                         ref('base.AUD'),                         ref('base.CHF'),                         ref('base.DKK'),                         ref('base.EUR'),                         ref('base.GBP'),                         ref('base.HKD'),                         ref('base.JPY'),                         ref('base.NOK'),                         ref('base.NZD'),                         ref('base.SEK'),                         ref('base.USD'),                         ref('base.ZAR'),                 ])]"/>
+    <field name="provider_id" ref="payment.payment_provider_stripe"/>
+  </record>
+  <record id="payment_method_becs_direct_debit" model="payment.method">
+    <field name="supported_country_ids" eval="[Command.set([ref('base.au')])]"/>
+    <field name="supported_currency_ids" eval="[Command.set([ref('base.AUD')])]"/>
+    <field name="provider_id" ref="payment.payment_provider_stripe"/>
+  </record>
+  <record id="payment_method_grabpay" model="payment.method">
+    <field name="supported_country_ids" eval="[Command.set([ref('base.my'), ref('base.sg')])]"/>
+    <field name="supported_currency_ids" eval="[Command.set([ref('base.SGD'), ref('base.MYR')])]"/>
+    <field name="provider_id" ref="payment.payment_provider_stripe"/>
+  </record>
+  <record id="payment_method_revolut_pay" model="payment.method">
+    <field name="support_tokenization">True</field>
+    <field name="supported_country_ids" eval="[Command.set([                         ref('base.at'),                         ref('base.be'),                         ref('base.bg'),                         ref('base.cy'),                         ref('base.cz'),                         ref('base.de'),                         ref('base.dk'),                         ref('base.ee'),                         ref('base.es'),                         ref('base.fi'),                         ref('base.fr'),                         ref('base.gr'),                         ref('base.hr'),                         ref('base.hu'),                         ref('base.ie'),                         ref('base.it'),                         ref('base.li'),                         ref('base.lt'),                         ref('base.lu'),                         ref('base.lv'),                         ref('base.mt'),                         ref('base.nl'),                         ref('base.no'),                         ref('base.pl'),                         ref('base.pt'),                         ref('base.ro'),                         ref('base.se'),                         ref('base.si'),                         ref('base.sk'),                         ref('base.uk'),                 ])]"/>
+    <field name="supported_currency_ids" eval="[Command.set([                         ref('base.DKK'),                         ref('base.EUR'),                         ref('base.GBP'),                         ref('base.HUF'),                         ref('base.PLN'),                         ref('base.RON'),                 ])]"/>
+    <field name="provider_id" ref="payment.payment_provider_stripe"/>
+  </record>
+</odoo>

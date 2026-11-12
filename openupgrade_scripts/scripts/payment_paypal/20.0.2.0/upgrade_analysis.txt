@@ -1,0 +1,28 @@
+---Models in module 'payment_paypal'---
+---Fields in module 'payment_paypal'---
+payment_paypal / payment.provider         / paypal_account_id (char)      : NEW
+payment_paypal / payment.provider         / paypal_email_confirmed (boolean): NEW
+payment_paypal / payment.provider         / paypal_is_oauth_onboarded (boolean): NEW
+payment_paypal / payment.provider         / paypal_payments_receivable (boolean): NEW
+payment_paypal / payment.provider         / paypal_seller_nonce (char)    : NEW
+payment_paypal / payment.transaction      / paypal_setup_token_ref (char) : NEW
+---XML records in module 'payment_paypal'---
+NEW ir.ui.view: payment_paypal.inline_form
+NEW payment.method: payment_paypal.payment_method_amex (noupdate)
+NEW payment.method: payment_paypal.payment_method_bancontact (noupdate)
+NEW payment.method: payment_paypal.payment_method_blik (noupdate)
+NEW payment.method: payment_paypal.payment_method_card (noupdate)
+NEW payment.method: payment_paypal.payment_method_diners (noupdate)
+NEW payment.method: payment_paypal.payment_method_eps (noupdate)
+NEW payment.method: payment_paypal.payment_method_ideal (noupdate)
+NEW payment.method: payment_paypal.payment_method_jcb (noupdate)
+NEW payment.method: payment_paypal.payment_method_maestro (noupdate)
+NEW payment.method: payment_paypal.payment_method_mastercard (noupdate)
+NEW payment.method: payment_paypal.payment_method_multibanco (noupdate)
+NEW payment.method: payment_paypal.payment_method_mybank [renamed from payment module] (noupdate)
+NEW payment.method: payment_paypal.payment_method_p24 (noupdate)
+NEW payment.method: payment_paypal.payment_method_paypal (noupdate)
+NEW payment.method: payment_paypal.payment_method_paypal_paylater (noupdate)
+NEW payment.method: payment_paypal.payment_method_trustly (noupdate)
+NEW payment.method: payment_paypal.payment_method_venmo [renamed from payment module] (noupdate)
+NEW payment.method: payment_paypal.payment_method_visa (noupdate)

@@ -1,0 +1,8 @@
+---Models in module 'website_livechat'---
+---Fields in module 'website_livechat'---
+website_livechat / website.visitor          / livechat_operator_id (many2one): DEL relation: res.partner
+---XML records in module 'website_livechat'---
+NEW ir.access: website_livechat.access_website_track_livechat_users
+NEW ir.access: website_livechat.access_website_visitor_livechat_users
+DEL ir.model.access: website_livechat.access_website_track_livechat_users
+DEL ir.model.access: website_livechat.access_website_visitor_livechat_users

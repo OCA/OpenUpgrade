@@ -1,0 +1,47 @@
+---Models in module 'pos_stock'---
+model pos.pack.operation.lot (moved from point_of_sale)
+---Fields in module 'pos_stock'---
+pos_stock    / pos.config               / picking_policy (selection)    : previously in module point_of_sale
+pos_stock    / pos.config               / picking_type_id (many2one)    : previously in module point_of_sale
+pos_stock    / pos.config               / route_id (many2one)           : previously in module point_of_sale
+pos_stock    / pos.config               / ship_later (boolean)          : previously in module point_of_sale
+pos_stock    / pos.config               / warehouse_id (many2one)       : previously in module point_of_sale
+pos_stock    / pos.order                / failed_pickings (boolean)     : previously in module point_of_sale
+pos_stock    / pos.order                / picking_count (integer)       : previously in module point_of_sale
+pos_stock    / pos.order                / picking_ids (one2many)        : previously in module point_of_sale
+pos_stock    / pos.order                / picking_type_id (many2one)    : previously in module point_of_sale
+pos_stock    / pos.order                / shipping_date (date)          : previously in module point_of_sale
+pos_stock    / pos.order                / stock_reference_ids (many2many): previously in module point_of_sale
+pos_stock    / pos.order.line           / pack_lot_ids (one2many)       : previously in module point_of_sale
+pos_stock    / pos.pack.operation.lot   / _order                        : previously in module point_of_sale
+pos_stock    / pos.pack.operation.lot   / display_name (char)           : previously in module point_of_sale
+pos_stock    / pos.pack.operation.lot   / lot_name (char)               : previously in module point_of_sale
+pos_stock    / pos.pack.operation.lot   / order_id (many2one)           : previously in module point_of_sale
+pos_stock    / pos.pack.operation.lot   / pos_order_line_id (many2one)  : previously in module point_of_sale
+pos_stock    / pos.pack.operation.lot   / product_id (many2one)         : previously in module point_of_sale
+pos_stock    / pos.session              / failed_pickings (boolean)     : previously in module point_of_sale
+pos_stock    / pos.session              / picking_count (integer)       : previously in module point_of_sale
+pos_stock    / pos.session              / picking_ids (one2many)        : previously in module point_of_sale
+pos_stock    / pos.session              / update_stock_at_closing (boolean): previously in module point_of_sale
+pos_stock    / res.company              / point_of_sale_update_stock_quantities (selection): previously in module point_of_sale
+pos_stock    / stock.picking            / pos_order_id (many2one)       : previously in module point_of_sale
+pos_stock    / stock.picking            / pos_session_id (many2one)     : previously in module point_of_sale
+pos_stock    / stock.picking.type       / has_stock_reports_to_print (boolean): previously in module point_of_sale
+pos_stock    / stock.reference          / pos_order_ids (many2many)     : previously in module point_of_sale
+pos_stock    / stock.warehouse          / pos_type_id (many2one)        : previously in module point_of_sale
+---XML records in module 'pos_stock'---
+NEW ir.access: pos_stock.access_pos_order_stock_worker
+NEW ir.access: pos_stock.access_pos_pack_operation_lot
+NEW ir.access: pos_stock.access_stock_location_manager
+NEW ir.access: pos_stock.access_stock_move_pos_user
+NEW ir.access: pos_stock.access_stock_picking_batch_pos_user
+NEW ir.access: pos_stock.access_stock_picking_pos_user
+NEW ir.access: pos_stock.access_stock_warehouse_pos_user
+NEW ir.ui.view: pos_stock.pos_order_receipt_footer
+NEW ir.ui.view: pos_stock.pos_orderline_receipt_information
+NEW ir.ui.view: pos_stock.product_template_view_form_normalized_pos
+NEW ir.ui.view: pos_stock.res_config_settings_view_form
+NEW ir.ui.view: pos_stock.stock_reference_view_form
+NEW ir.ui.view: pos_stock.view_pos_config_search
+NEW ir.ui.view: pos_stock.view_pos_pos_form
+NEW ir.ui.view: pos_stock.view_pos_session_form

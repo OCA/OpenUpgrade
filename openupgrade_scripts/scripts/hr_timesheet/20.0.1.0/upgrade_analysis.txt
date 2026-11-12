@@ -1,0 +1,55 @@
+---Models in module 'hr_timesheet'---
+---Fields in module 'hr_timesheet'---
+hr_timesheet / account.analytic.applicability / business_domain (False)       : selection_keys removed: [purchase_order]
+hr_timesheet / account.analytic.line    / sequence (integer)            : NEW hasdefault: default
+hr_timesheet / project.task             / portal_timesheet_ids (one2many): NEW relation: account.analytic.line
+hr_timesheet / project.task             / show_portal_timesheets (boolean): NEW hasdefault: default, stored: False
+---XML records in module 'hr_timesheet'---
+DEL digest.tip: hr_timesheet.digest_tip_hr_timesheet_0
+NEW ir.access: hr_timesheet.access_account_analytic_line_calendar_employee
+NEW ir.access: hr_timesheet.access_account_analytic_user
+NEW ir.access: hr_timesheet.access_hr_employee_delete_wizard_hr_user
+NEW ir.access: hr_timesheet.access_uom_uom_hr_timesheet
+NEW ir.access: hr_timesheet.project_project_manager_rule
+NEW ir.access: hr_timesheet.project_public_members_rule
+NEW ir.access: hr_timesheet.timesheet_analysis_report_approver
+NEW ir.access: hr_timesheet.timesheet_analysis_report_department_manager
+NEW ir.access: hr_timesheet.timesheet_analysis_report_manager
+NEW ir.access: hr_timesheet.timesheet_analysis_report_manager_1
+NEW ir.access: hr_timesheet.timesheet_analysis_report_user
+NEW ir.access: hr_timesheet.timesheet_line_rule_approver
+NEW ir.access: hr_timesheet.timesheet_line_rule_manager
+NEW ir.access: hr_timesheet.timesheet_line_rule_manager_1
+NEW ir.access: hr_timesheet.timesheet_line_rule_portal_user (noupdate)
+NEW ir.access: hr_timesheet.timesheet_line_rule_user
+NEW ir.access: hr_timesheet.timesheets_analysis_report_comp_rule
+NEW ir.actions.server: hr_timesheet.action_server_print_project_timesheets
+NEW ir.actions.server: hr_timesheet.action_server_print_task_timesheets
+DEL ir.model.access: hr_timesheet.access_account_analytic_line_calendar_employee
+DEL ir.model.access: hr_timesheet.access_account_analytic_line_portal_user (noupdate)
+DEL ir.model.access: hr_timesheet.access_account_analytic_line_user
+DEL ir.model.access: hr_timesheet.access_account_analytic_user
+DEL ir.model.access: hr_timesheet.access_hr_employee_delete_wizard
+DEL ir.model.access: hr_timesheet.access_project_project
+DEL ir.model.access: hr_timesheet.access_timesheets_analysis_report
+DEL ir.model.access: hr_timesheet.access_uom_uom_hr_timesheet
+DEL ir.rule: hr_timesheet.timesheet_analysis_report_approver (noupdate)
+DEL ir.rule: hr_timesheet.timesheet_analysis_report_department_manager (noupdate)
+DEL ir.rule: hr_timesheet.timesheet_analysis_report_manager (noupdate)
+DEL ir.rule: hr_timesheet.timesheet_analysis_report_user (noupdate)
+DEL ir.rule: hr_timesheet.timesheet_line_rule_approver (noupdate)
+DEL ir.rule: hr_timesheet.timesheet_line_rule_manager (noupdate)
+DEL ir.rule: hr_timesheet.timesheet_line_rule_portal_user (noupdate)
+DEL ir.rule: hr_timesheet.timesheet_line_rule_user (noupdate)
+DEL ir.rule: hr_timesheet.timesheets_analysis_report_comp_rule (noupdate)
+NEW ir.ui.view: hr_timesheet.portal_timesheet_table_with_total
+NEW ir.ui.view: hr_timesheet.project_sharing_inherit_project_task_view_card
+NEW ir.ui.view: hr_timesheet.quick_create_account_analytic_line_form
+NEW ir.ui.view: hr_timesheet.view_project_card_inherited
+NEW ir.ui.view: hr_timesheet.view_task_card_inherited_progress
+DEL ir.ui.view: hr_timesheet.portal_my_home_timesheet
+DEL ir.ui.view: hr_timesheet.project_project_view_form_simplified_inherit_timesheet
+DEL ir.ui.view: hr_timesheet.project_sharing_kanban_inherit_project_task_view_kanban
+DEL ir.ui.view: hr_timesheet.view_project_kanban_inherited
+DEL ir.ui.view: hr_timesheet.view_task_kanban_inherited_progress
+NEW portal.entry: hr_timesheet.portal_timesheets (noupdate)
