@@ -21,6 +21,8 @@ renamed_modules = {
     "sales_team_invoiced_target_domain": "sales_team_invoiced_target_report",
     # OCA/stock-logistics-workflow
     "stock_valuation_layer_usage": "stock_move_valuation_usage",
+    # OCA/sale-workflow
+    "sale_procurement_group_by_line": "sale_stock_reference_by_line",
     # OCA/...
 }
 
