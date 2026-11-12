@@ -1,0 +1,33 @@
+---Models in module 'pos_self_order'---
+
+---Fields in module 'pos_self_order'---
+pos_self_order / pos.category             / hour_after (float)            : module is now 'point_of_sale' ('pos_self_order')
+pos_self_order / pos.category             / hour_until (float)            : module is now 'point_of_sale' ('pos_self_order')
+# NOTHING TO DO
+
+pos_self_order / pos.category             / pos_config_ids (many2many)    : NEW relation: pos.config
+# NOTHING TO DO
+
+pos_self_order / pos.config               / self_ordering_image_background_ids (many2many): NEW relation: ir.attachment
+# NOTHING TO DO
+
+pos_self_order / pos.config               / self_ordering_takeaway (boolean): DEL
+# NOTHING TO DO: handled in pos_restaurant's migration
+
+pos_self_order / pos.order                / self_ordering_table_id (many2one): NEW relation: restaurant.table
+# NOTHING TO DO
+
+pos_self_order / pos.order                / source (False)                : NEW selection_keys: ['kiosk', 'mobile', 'pos'], mode: modify
+# NOTHING TO DO
+
+pos_self_order / pos.preset               / available_in_self (boolean)   : NEW hasdefault: default
+pos_self_order / pos.preset               / mail_template_id (many2one)   : NEW relation: mail.template
+pos_self_order / pos.preset               / service_at (selection)        : NEW required, selection_keys: ['counter', 'delivery', 'table'], hasdefault: default
+# NOTHING TO DO
+
+---XML records in module 'pos_self_order'---
+NEW ir.ui.view: pos_self_order.view_pos_preset_form
+NEW mail.template: pos_self_order.delivery_email_template (noupdate)
+NEW mail.template: pos_self_order.takeout_email_template (noupdate)
+
+# NOTHING TO DO
