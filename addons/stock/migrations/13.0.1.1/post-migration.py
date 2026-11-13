@@ -409,7 +409,7 @@ def map_stock_locations(env, main_company):
 
     conditions = {
         'location_inventory':
-            "sl2.usage = 'inventory' AND sl2.scrap_location IS NOT TRUE",
+            "sl2.usage = 'inventory' AND sl2.scrap_location IS NOT TRUE AND sl2.name ILIKE '%Inventory adjustment%'",
         'location_production': "sl2.usage = 'production'",
         'stock_location_scrapped':
             "sl2.usage = 'inventory' AND sl2.scrap_location IS TRUE",
