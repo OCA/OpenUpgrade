@@ -50,6 +50,7 @@ merged_modules = {
     "base_vat_optional_vies": "base_vat",
     # OCA/account-invoicing
     "account_invoice_fiscal_position_update": "account",
+    "account_invoice_force_number": "account",
     # OCA/e-commerce
     "website_sale_invoice_address": "website_sale",
     # OCA/hr-attendance
