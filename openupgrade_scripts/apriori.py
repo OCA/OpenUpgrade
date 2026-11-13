@@ -50,6 +50,7 @@ merged_modules = {
     "base_vat_optional_vies": "base_vat",
     # OCA/account-invoicing
     "account_invoice_fiscal_position_update": "account",
+    "account_invoice_force_number": "account",
     # OCA/e-commerce
     "website_sale_invoice_address": "website_sale",
     # OCA/hr-attendance
@@ -74,6 +75,7 @@ merged_modules = {
     "project_list": "project",
     # OCA/purchase-workflow
     "purchase_discount": "purchase",
+    "purchase_fully_received": "purchase_reception_status",
     # OCA/sale-promotion
     "loyalty_initial_date_validity": "loyalty",
     "sale_loyalty_initial_date_validity": "sale_loyalty",
@@ -85,6 +87,7 @@ merged_modules = {
     "mail_template_multi_attachment": "mail",
     # OCA/stock-logistics-warehouse
     "stock_lot_filter_available": "stock",
+    "stock_procurement_group_hook": "stock",
     # OCA/web
     "web_advanced_search": "web",
     "web_listview_range_select": "web",
