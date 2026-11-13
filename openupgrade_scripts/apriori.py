@@ -87,6 +87,7 @@ merged_modules = {
     # OCA/account-invoicing
     "account_invoice_mass_sending": "account",
     "account_invoice_supplierinfo_update_discount": "account_invoice_supplierinfo_update",  # noqa: E501
+    "account_invoice_view_payment": "account",
     # OCA/e-commerce
     "website_sale_product_attachment": "website_sale",
     "website_sale_product_attribute_filter_collapse": "website_sale",
