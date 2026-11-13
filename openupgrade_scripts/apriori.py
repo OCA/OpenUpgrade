@@ -49,6 +49,7 @@ renamed_modules = {
     "product_supplierinfo_for_customer_elaboration": "product_customerinfo_elaboration",
     "sale_product_set_sale_by_packaging": "product_set_sell_only_by_packaging",
     # OCA/stock-logistics-workflow
+    "product_supplierinfo_for_customer_picking": "product_customerinfo_picking",
     "stock_picking_type_shipping_policy": "stock_picking_type_force_move_type",
     "stock_picking_batch_extended_account": "stock_picking_batch_account",
     "stock_picking_batch_extended_account_sale_type": "stock_picking_batch_account_sale_type",  # noqa: E501
@@ -83,9 +84,12 @@ merged_modules = {
     "stock_landed_costs_company": "stock_landed_costs",
     "website_sale_product_configurator": "website_sale",
     # odoo/enterprise
+    # OCA/account-analytic
+    "procurement_mto_analytic": "sale_purchase_stock",
     # OCA/account-invoicing
     "account_invoice_mass_sending": "account",
     "account_invoice_supplierinfo_update_discount": "account_invoice_supplierinfo_update",  # noqa: E501
+    "account_invoice_view_payment": "account",
     # OCA/e-commerce
     "website_sale_product_attachment": "website_sale",
     "website_sale_product_attribute_filter_collapse": "website_sale",
