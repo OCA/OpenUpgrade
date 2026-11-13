@@ -36,6 +36,7 @@ new model account.edi.ubl_cen_en16931 [module account_edi_ubl_cii]
 new model account.edi.ubl_pint [module account_edi_ubl_cii]
 new model account.edi.ubl_pint_eu [module account_edi_ubl_cii]
 new model account.edi.xml.oioubl_21 [module l10n_dk_nemhandel]
+new model account.edi.xml.pint_ae [module l10n_ae_ubl_pint]
 new model account.edi.xml.ubl_hr [module l10n_hr_edi]
 new model account.lock_exception [module account]
 new model account.merge.wizard [module account]
@@ -73,6 +74,7 @@ new model hr.manager.department.report [module hr]
 new model iap.service [module iap]
 new model ir.cron.progress [module base]
 new model ir.embedded.actions [module base]
+new model l10n_ae.transaction.type [module l10n_ae_ubl_pint]
 new model l10n_ar.earnings.scale [module l10n_ar_withholding]
 new model l10n_ar.earnings.scale.line [module l10n_ar_withholding]
 new model l10n_ar.partner.tax [module l10n_ar_withholding]
@@ -149,7 +151,7 @@ new model website.page.properties.base [module website]
 # Found in other module: 95
 # Found with different type: 8
 # In obsolete models: 34
-# New columns: 1950
+# New columns: 1996
 # Not matched: 866
 ---XML records in module 'general'---
 ERROR: module not in list of installed modules:

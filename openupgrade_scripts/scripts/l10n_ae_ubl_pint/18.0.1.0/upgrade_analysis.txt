@@ -1,0 +1,45 @@
+---Models in module 'l10n_ae_ubl_pint'---
+new model account.edi.xml.pint_ae [abstract]
+new model l10n_ae.transaction.type
+---Fields in module 'l10n_ae_ubl_pint'---
+l10n_ae_ubl_pint / account.move             / l10n_ae_beneficiary_id (char) : NEW
+l10n_ae_ubl_pint / account.move             / l10n_ae_credit_note_reason (selection): NEW selection_keys: ['DL8.61.1.A', 'DL8.61.1.B', 'DL8.61.1.C', 'DL8.61.1.D', 'DL8.61.1.E', 'VD']
+l10n_ae_ubl_pint / account.move             / l10n_ae_invoice_type (selection): NEW selection_keys: ['commercial', 'simplified', 'tax'], hasdefault: compute
+l10n_ae_ubl_pint / account.move             / l10n_ae_principal_id (char)   : NEW
+l10n_ae_ubl_pint / account.move             / l10n_ae_transaction_type_ids (many2many): NEW relation: l10n_ae.transaction.type, hasdefault: compute
+l10n_ae_ubl_pint / account.move             / l10n_ae_uuid (char)           : NEW
+l10n_ae_ubl_pint / account.move.line        / l10n_ae_goods_service_type (selection): NEW selection_keys: ['DL8.48.3.1', 'DL8.48.3.2', 'DL8.48.3.3', 'DL8.48.8.1', 'DL8.48.8.2'], hasdefault: compute
+l10n_ae_ubl_pint / account.move.line        / l10n_ae_hs_code (char)        : NEW hasdefault: compute
+l10n_ae_ubl_pint / account.move.line        / l10n_ae_item_type (selection) : NEW selection_keys: ['B', 'G', 'S'], hasdefault: compute
+l10n_ae_ubl_pint / account.move.line        / l10n_ae_service_accounting_code (char): NEW hasdefault: compute
+l10n_ae_ubl_pint / account.payment.term     / l10n_ae_billing_frequency (selection): NEW selection_keys: ['DLY', 'HYR', 'MTH', 'OTH', 'Q15', 'Q45', 'Q60', 'QTR', 'WKY', 'YRL']
+l10n_ae_ubl_pint / account.tax              / ubl_cii_tax_category_code (False): NEW selection_keys: ['AE', 'B', 'DS', 'E', 'ES33', 'ESN33', 'G', 'K', 'L', 'M', 'N', 'NA', 'NG', 'O', 'OS', 'S', 'SR', 'SRCA-C', 'SRCA-S', 'SRLVG', 'SROVR-LVG', 'SROVR-RS', 'SRRC', 'Z', 'ZR'], mode: modify
+l10n_ae_ubl_pint / account.tax              / ubl_cii_tax_exemption_reason_code (False): NEW selection_keys: ['DL8.46.1', 'DL8.46.2', 'DL8.46.3', 'DL8.46.4', 'VATEX-EU-132', 'VATEX-EU-132-1A', 'VATEX-EU-132-1B', 'VATEX-EU-132-1C', 'VATEX-EU-132-1D', 'VATEX-EU-132-1E', 'VATEX-EU-132-1F', 'VATEX-EU-132-1G', 'VATEX-EU-132-1H', 'VATEX-EU-132-1I', 'VATEX-EU-132-1J', 'VATEX-EU-132-1K', 'VATEX-EU-132-1L', 'VATEX-EU-132-1M', 'VATEX-EU-132-1N', 'VATEX-EU-132-1O', 'VATEX-EU-132-1P', 'VATEX-EU-132-1Q', 'VATEX-EU-135-1', 'VATEX-EU-143', 'VATEX-EU-143-1A', 'VATEX-EU-143-1B', 'VATEX-EU-143-1C', 'VATEX-EU-143-1D', 'VATEX-EU-143-1E', 'VATEX-EU-143-1F', 'VATEX-EU-143-1FA', 'VATEX-EU-143-1G', 'VATEX-EU-143-1H', 'VATEX-EU-143-1I', 'VATEX-EU-143-1J', 'VATEX-EU-143-1K', 'VATEX-EU-143-1L', 'VATEX-EU-144', 'VATEX-EU-146-1E', 'VATEX-EU-148', 'VATEX-EU-148-A', 'VATEX-EU-148-B', 'VATEX-EU-148-C', 'VATEX-EU-148-D', 'VATEX-EU-148-E', 'VATEX-EU-148-F', 'VATEX-EU-148-G', 'VATEX-EU-151', 'VATEX-EU-151-1A', 'VATEX-EU-151-1AA', 'VATEX-EU-151-1B', 'VATEX-EU-151-1C', 'VATEX-EU-151-1D', 'VATEX-EU-151-1E', 'VATEX-EU-153', 'VATEX-EU-159', 'VATEX-EU-309', 'VATEX-EU-79-C', 'VATEX-FR-298SEXDECIESA', 'VATEX-FR-AE', 'VATEX-FR-CGI261-1', 'VATEX-FR-CGI261-2', 'VATEX-FR-CGI261-3', 'VATEX-FR-CGI261-4', 'VATEX-FR-CGI261-5', 'VATEX-FR-CGI261-7', 'VATEX-FR-CGI261-8', 'VATEX-FR-CGI261A', 'VATEX-FR-CGI261B', 'VATEX-FR-CGI261C-1', 'VATEX-FR-CGI261C-2', 'VATEX-FR-CGI261C-3', 'VATEX-FR-CGI261D-1', 'VATEX-FR-CGI261D-1BIS', 'VATEX-FR-CGI261D-2', 'VATEX-FR-CGI261D-3', 'VATEX-FR-CGI261D-4', 'VATEX-FR-CGI261E-1', 'VATEX-FR-CGI261E-2', 'VATEX-FR-CGI275', 'VATEX-FR-CGI277A', 'VATEX-FR-CGI295', 'VATEX-FR-F', 'VATEX-FR-I', 'VATEX-FR-J', 'VATEX_EU_AE', 'VATEX_EU_D', 'VATEX_EU_F', 'VATEX_EU_G', 'VATEX_EU_I', 'VATEX_EU_IC', 'VATEX_EU_J', 'VATEX_EU_O', 'VATEX_FR-CNWVAT', 'VATEX_FR-FRANCHISE'], mode: modify
+l10n_ae_ubl_pint / l10n_ae.transaction.type / code (selection)              : NEW required, selection_keys: ['00000001', '00000010', '00000100', '00001000', '00010000', '00100000', '01000000', '10000000']
+l10n_ae_ubl_pint / l10n_ae.transaction.type / name (char)                   : NEW required, translate
+l10n_ae_ubl_pint / product.template         / l10n_ae_goods_service_type (selection): NEW selection_keys: ['DL8.48.3.1', 'DL8.48.3.2', 'DL8.48.3.3', 'DL8.48.8.1', 'DL8.48.8.2']
+l10n_ae_ubl_pint / product.template         / l10n_ae_hs_code (char)        : NEW
+l10n_ae_ubl_pint / product.template         / l10n_ae_is_good_and_service (boolean): NEW
+l10n_ae_ubl_pint / product.template         / l10n_ae_service_accounting_code (char): NEW
+l10n_ae_ubl_pint / res.partner              / invoice_edi_format (False)    : NEW selection_keys: ['ciusro', 'es_facturae', 'fa3_pl', 'facturx', 'it_edi_xml', 'nlcius', 'oioubl_201', 'oioubl_21', 'pint_ae', 'pint_anz', 'pint_jp', 'pint_my', 'pint_sg', 'tw_ecpay', 'ubl_a_nz', 'ubl_bis3', 'ubl_hr', 'ubl_sg', 'ubl_tr', 'vn_sinvoice', 'xrechnung', 'zugferd'], mode: modify
+l10n_ae_ubl_pint / res.partner              / l10n_ae_authority_name (char) : NEW
+l10n_ae_ubl_pint / res.partner              / l10n_ae_passport_issuing_country_id (many2one): NEW relation: res.country
+l10n_ae_ubl_pint / res.partner              / l10n_ae_registration_identifier (char): NEW
+l10n_ae_ubl_pint / res.partner              / l10n_ae_registration_identifier_type (selection): NEW selection_keys: ['CD', 'EID', 'PAS', 'TL']
+---XML records in module 'l10n_ae_ubl_pint'---
+NEW ir.model.access: l10n_ae_ubl_pint.access_l10n_ae_transaction_type_user
+NEW ir.model.constraint: l10n_ae_ubl_pint.constraint_l10n_ae_transaction_type_code_uniq
+NEW ir.ui.view: l10n_ae_ubl_pint.product_template_form_view_inherit_l10n_ae_ubl_pint
+NEW ir.ui.view: l10n_ae_ubl_pint.view_account_move_reversal_inherit_l10n_ae_ubl_pint
+NEW ir.ui.view: l10n_ae_ubl_pint.view_company_form_inherit_l10n_ae_ubl_pint
+NEW ir.ui.view: l10n_ae_ubl_pint.view_move_form_inherit_l10n_ae_ubl_pint
+NEW ir.ui.view: l10n_ae_ubl_pint.view_partner_form_inherit_l10n_ae_ubl_pint
+NEW ir.ui.view: l10n_ae_ubl_pint.view_payment_term_form_inherit_l10n_ae_ubl_pint
+NEW l10n_ae.transaction.type: l10n_ae_ubl_pint.transaction_type_continuous_supply (noupdate)
+NEW l10n_ae.transaction.type: l10n_ae_ubl_pint.transaction_type_deemed_supply (noupdate)
+NEW l10n_ae.transaction.type: l10n_ae_ubl_pint.transaction_type_disclosed_agent_billing (noupdate)
+NEW l10n_ae.transaction.type: l10n_ae_ubl_pint.transaction_type_e_commerce (noupdate)
+NEW l10n_ae.transaction.type: l10n_ae_ubl_pint.transaction_type_exports (noupdate)
+NEW l10n_ae.transaction.type: l10n_ae_ubl_pint.transaction_type_free_trade_zone (noupdate)
+NEW l10n_ae.transaction.type: l10n_ae_ubl_pint.transaction_type_profit_margin_scheme (noupdate)
+NEW l10n_ae.transaction.type: l10n_ae_ubl_pint.transaction_type_summary (noupdate)
