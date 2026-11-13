@@ -87,6 +87,7 @@ merged_modules = {
     "mail_template_multi_attachment": "mail",
     # OCA/stock-logistics-warehouse
     "stock_lot_filter_available": "stock",
+    "stock_procurement_group_hook": "stock",
     # OCA/web
     "web_advanced_search": "web",
     "web_listview_range_select": "web",
