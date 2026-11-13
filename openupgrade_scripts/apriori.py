@@ -84,6 +84,8 @@ merged_modules = {
     "stock_landed_costs_company": "stock_landed_costs",
     "website_sale_product_configurator": "website_sale",
     # odoo/enterprise
+    # OCA/account-analytic
+    "procurement_mto_analytic": "sale_purchase_stock",
     # OCA/account-invoicing
     "account_invoice_mass_sending": "account",
     "account_invoice_supplierinfo_update_discount": "account_invoice_supplierinfo_update",  # noqa: E501
