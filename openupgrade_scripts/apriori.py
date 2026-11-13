@@ -75,6 +75,7 @@ merged_modules = {
     "project_list": "project",
     # OCA/purchase-workflow
     "purchase_discount": "purchase",
+    "purchase_fully_received": "purchase_reception_status",
     # OCA/sale-promotion
     "loyalty_initial_date_validity": "loyalty",
     "sale_loyalty_initial_date_validity": "sale_loyalty",
