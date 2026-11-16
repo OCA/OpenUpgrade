@@ -1,0 +1,14 @@
+---Models in module 'l10n_es_stock'---
+new model l10n_es.deca.wizard [transient]
+new model report.l10n_es_stock.report_deca [abstract]
+---Fields in module 'l10n_es_stock'---
+l10n_es_stock / stock.picking            / l10n_es_deca_attachment_ids (many2many): NEW relation: ir.attachment
+---XML records in module 'l10n_es_stock'---
+NEW ir.actions.report: l10n_es_stock.action_report_deca
+NEW ir.actions.server: l10n_es_stock.action_l10n_es_generate_deca
+NEW ir.model.access: l10n_es_stock.access_l10n_es_deca_wizard
+NEW ir.ui.view: l10n_es_stock.l10n_es_deca_wizard_form_view
+NEW ir.ui.view: l10n_es_stock.report_deca
+NEW ir.ui.view: l10n_es_stock.report_deca_goods_table
+NEW ir.ui.view: l10n_es_stock.view_picking_form_inherit_deca_report
+NEW report.paperformat: l10n_es_stock.paperformat_deca
