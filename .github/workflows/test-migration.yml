@@ -13,8 +13,6 @@ on:
     branches:
       - "20.0"
       - "20.0-ocabot-*"
-# TODO remove
-      - "20.0-mail"
 
 jobs:
   test:
@@ -67,6 +65,7 @@ jobs:
           docker exec openupgrade_current sh -c "
             cd /opt/openupgrade
             oca_install_addons
+            pip install -U https://github.com/oca/openupgradelib
           "
       - name: Test data
         run: |
