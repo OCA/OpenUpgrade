@@ -446,7 +446,11 @@ NEW ir.ui.view: mail.mail_activity_view_graph
 NEW ir.ui.view: mail.mail_activity_view_pivot
 NEW ir.ui.view: mail.mail_tracking_template
 NEW ir.ui.view: mail.res_config_settings_view_form_sfu_client_source
+# NOTHING TO DO
+
 DEL ir.ui.view: mail.view_mail_tracking_value_form
 DEL ir.ui.view: mail.view_mail_tracking_value_tree
+# DONE: renamed to mail_tracking in pre-migration
+
 NEW mail.message.subtype: mail.mt_important_notification (noupdate)
 # NOTHING TO DO

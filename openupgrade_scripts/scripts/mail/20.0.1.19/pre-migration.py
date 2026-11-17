@@ -9,6 +9,14 @@ _renamed_xmlids = [
         "mail_tracking.action_view_mail_tracking_value",
     ),
     ("mail.menu_mail_tracking_value", "mail_tracking.menu_mail_tracking_value"),
+    (
+        "mail.view_mail_tracking_value_form",
+        "mail_tracking.view_mail_tracking_value_form",
+    ),
+    (
+        "mail.view_mail_tracking_value_tree",
+        "mail_tracking.view_mail_tracking_value_tree",
+    ),
 ]
 
 _renamed_tables = [
