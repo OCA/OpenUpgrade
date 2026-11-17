@@ -144,6 +144,71 @@ def update_translatable_fields(cr):
         )
 
 
+def deduplicate_res_partner_bank(cr):
+    """Keep one bank account per partner and sanitized account number.
+
+    The unique constraint of res.partner.bank changes from
+    ``unique(sanitized_acc_number, company_id)`` to
+    ``unique(sanitized_acc_number, partner_id)``. The same account number for
+    the same partner in several companies is no longer allowed, so re-point
+    every reference to the kept record and remove the duplicates.
+    """
+    if not openupgrade.column_exists(cr, "res_partner_bank", "sanitized_acc_number"):
+        return
+    openupgrade.logged_query(
+        cr,
+        """
+        SELECT partner_id, sanitized_acc_number,
+               array_agg(id ORDER BY active DESC NULLS LAST, id) AS ids
+        FROM res_partner_bank
+        WHERE sanitized_acc_number IS NOT NULL
+        GROUP BY partner_id, sanitized_acc_number
+        HAVING count(*) > 1
+        """,
+    )
+    for partner_id, sanitized_acc_number, ids in cr.fetchall():
+        keep_id = ids[0]
+        duplicate_ids = ids[1:]
+        # Re-point every single-column foreign key to the kept account before
+        # deleting the duplicates (some of them are RESTRICT).
+        cr.execute(
+            """
+            SELECT conrelid::regclass::text, attname
+            FROM pg_constraint c
+            JOIN pg_attribute a
+                ON a.attrelid = c.conrelid
+                AND a.attnum = c.conkey[1]
+            WHERE c.contype = 'f'
+                AND c.confrelid = 'res_partner_bank'::regclass
+                AND cardinality(c.conkey) = 1
+            """
+        )
+        for table, column in cr.fetchall():
+            openupgrade.logged_query(
+                cr,
+                f"UPDATE {table} SET {column} = %s WHERE {column} = ANY(%s)",
+                (keep_id, duplicate_ids),
+            )
+        openupgrade.logged_query(
+            cr,
+            "UPDATE ir_model_data SET res_id = %s "
+            "WHERE model = 'res.partner.bank' AND res_id = ANY(%s)",
+            (keep_id, duplicate_ids),
+        )
+        openupgrade.logged_query(
+            cr,
+            "DELETE FROM res_partner_bank WHERE id = ANY(%s)",
+            (duplicate_ids,),
+        )
+        _logger.warning(
+            "Deleted duplicate bank accounts %s of partner %s (account %s), kept %s",
+            duplicate_ids,
+            partner_id,
+            sanitized_acc_number,
+            keep_id,
+        )
+
+
 @openupgrade.migrate(use_env=False)
 def migrate(cr, version):
     """
@@ -166,6 +231,7 @@ def migrate(cr, version):
         cr, merged_modules.items(), merge_modules=True, environment_namespec=True
     )
     openupgrade.clean_transient_models(cr)
+    deduplicate_res_partner_bank(cr)
     # restricting inherited views to groups isn't allowed anymore
     cr.execute(
         "DELETE FROM ir_ui_view_group_rel r "
