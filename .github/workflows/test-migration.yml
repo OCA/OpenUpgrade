@@ -71,7 +71,7 @@ jobs:
         run: |
           if test -n "$(ls openupgrade/openupgrade_scripts/scripts/*/tests/data*.py 2> /dev/null)"; then
              for snippet in openupgrade/openupgrade_scripts/scripts/*/tests/data*.py; do
-               docker exec -e PGHOST=$PGHOST openupgrade_prev odoo shell -d $DB < $snippet
+               docker exec -i -e PGHOST=$PGHOST openupgrade_prev odoo shell -d $DB < $snippet
              done
           fi
       - name: OpenUpgrade test
