@@ -96,6 +96,7 @@ def res_device_log(env):
     """
     Fill required columns
     """
+    openupgrade.lift_constraints(env.cr, "res_device_log", "user_id")
     for column, value in (
         ("first_activity", "create_date"),
         ("ip_address", "'0.0.0.0'"),

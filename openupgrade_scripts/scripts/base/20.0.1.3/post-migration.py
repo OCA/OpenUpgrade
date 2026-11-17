@@ -3,6 +3,8 @@
 
 from openupgradelib import openupgrade
 
+from odoo.addons.base.models.ir_model import selection_xmlid
+
 
 def ir_model_fields_index(env):
     """
@@ -36,24 +38,37 @@ def res_partner_tz(env):
             ],
         },
     )
+    mapped_values = [
+        ("Europe/Kiev", "Europe/Kyiv"),
+        ("Portugal", "Europe/Lisbon"),
+        ("Poland", "Europe/Warsaw"),
+    ]
     openupgrade.map_values(
         env.cr,
         openupgrade.get_legacy_name("tz"),
         "tz",
         table="res_partner",
-        mapping=[
-            ("Europe/Kiev", "Europe/Kyiv"),
-            ("Portugal", "Europe/Lisbon"),
-            ("Poland", "Europe/Warsaw"),
+        mapping=mapped_values,
+    )
+    openupgrade.rename_xmlids(
+        env.cr,
+        [
+            (
+                selection_xmlid("base", "res.partner", "tz", old_value),
+                selection_xmlid("base", "res.partner", "tz", new_value),
+            )
+            for old_value, new_value in mapped_values
         ],
+        allow_merge=True,
     )
 
 
 def res_partner_bank(env):
     """
-    Fill new res.partner.bank from res.bank, set company_id from partner
+    Fill new res.partner.bank fields from res.bank, set company_id from partner,
     """
-    env.cr.execute(
+    openupgrade.logged_query(
+        env.cr,
         """
         UPDATE
             res_partner_bank
@@ -70,23 +85,7 @@ def res_partner_bank(env):
             res_bank
         WHERE
             bank_id=res_bank.id
-        """
-    )
-
-
-def res_country(env):
-    """
-    Set zip_applicability=optional where it was not required
-    """
-    env.cr.execute(
-        """
-        UPDATE
-            res_country
-        SET
-            zip_applicability='optional'
-        WHERE
-            NOT zip_required
-        """
+        """,
     )
 
 
@@ -134,12 +133,54 @@ def res_groups(env):
     )
 
 
+def res_users_apikeys_scope(env):
+    """
+    Set scope rpc for apikeys with scope null
+    """
+    openupgrade.logged_query(
+        env.cr, "UPDATE res_users_apikeys SET scope='rpc' WHERE scope IS NULL"
+    )
+
+
+def ir_config_parameter_default_max_email_size(env):
+    """
+    Preserve custom default_max_email_size or ir.mail_server#max_email_size,
+    whichever is lowest. Set new default 20 otherwise
+    """
+    IrConfigParameter = env["ir.config_parameter"]
+    key = "base.default_max_email_size"
+    config_param_value = IrConfigParameter.get_float(key, 10)
+    env.cr.execute(
+        f"""
+        SELECT
+            MIN(
+                CASE
+                    WHEN max_email_size > 0 THEN max_email_size
+                    ELSE {config_param_value}
+                END
+            )
+        FROM
+            ir_mail_server
+        WHERE
+            active
+        """
+    )
+    least_value = 0
+    for row in env.cr.fetchall():
+        least_value = row[0]
+    if least_value and least_value != 10:
+        IrConfigParameter.set_float(key, least_value)
+    else:
+        IrConfigParameter.set_float(key, 20)
+
+
 @openupgrade.migrate()
 def migrate(env, version):
     openupgrade.load_data(
         env,
         "base",
         "20.0.1.3/noupdate_changes.xml",
+        xml_transformation_filename="20.0.1.3/noupdate_changes-transformation.xml",
     )
     openupgrade.delete_records_safely_by_xml_id(
         env,
@@ -148,6 +189,7 @@ def migrate(env, version):
     res_partner_tz(env)
     ir_model_fields_index(env)
     res_partner_bank(env)
-    res_country(env)
     res_partner(env)
     res_groups(env)
+    res_users_apikeys_scope(env)
+    ir_config_parameter_default_max_email_size(env)

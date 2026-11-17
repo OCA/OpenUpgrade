@@ -72,6 +72,8 @@ base         / ir.exports.line          / sequence (integer)            : NEW ha
 # DONE: set sequence=id
 
 base         / ir.mail_server           / max_email_size (float)        : DEL
+# DONE: used to set config param base.default_max_email_size if different from default
+
 base         / ir.model                 / access_ids (one2many)         : relation is now 'ir.access' ('ir.model.access') [nothing to do]
 base         / ir.model                 / explanation (text)            : NEW
 base         / ir.model                 / rule_ids (one2many)           : DEL relation: ir.rule
@@ -152,8 +154,10 @@ base         / res.company              / report_tables_id (selection)  : NEW se
 # NOTHING TO DO
 
 base         / res.country              / zip_applicability (selection) : NEW required, selection_keys: ['not_applicable', 'optional', 'required'], hasdefault: default
+# NOTHING TO DO: rely on data set in noupdate_changes.xml
+
 base         / res.country              / zip_required (boolean)        : DEL
-# DONE: set zip_applicability=optional where not zip_required in post-migration
+# NOTHING TO DO
 
 base         / res.device.log           / browser (char)                : DEL
 # DONE: renamed to user_agent

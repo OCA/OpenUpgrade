@@ -277,6 +277,9 @@ def ir_access(env):
             following models do what you expect.</p>
             <p>Be especially cautious with group based restrictions, those will
             most likely not work the way they used to.</p>
+            <p>If for example you added extra permissions with a custom ir.model.access
+            record, but relied on standard ir.rules to restrict this access, this
+            restriction will be gone.</p>
             <p>Also ir.model.access records without a group work as restrictions in v20.
             If you really want to grant everyone some access, you'll have to set group
             <em>Everyone</em> there. The migration only did this for models that do not

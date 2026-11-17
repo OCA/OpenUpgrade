@@ -58,3 +58,11 @@ class TestBaseMigration(TransactionCase):
             self.env.ref("base.group_user_regular"),
             self.env.ref("base.user_admin").group_ids,
         )
+
+    def test_bank_account_has_clearing_label(self):
+        """
+        Test that bank accounts have clearing_label_id assigned
+        """
+        self.assertFalse(
+            self.env["res.partner.bank"].search([("clearing_label_id", "=", False)])
+        )

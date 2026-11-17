@@ -129,4 +129,15 @@ test_user = env["res.users"].create(
         "login": "test_user_v19",
     }
 )
+env["res.device.log"].create(
+    {
+        "session_identifier": "ou20_migration",
+    }
+)
+env["res.partner.bank"].create(
+    {
+        "partner_id": env.ref("base.main_partner").id,
+        "acc_number": "12345",
+    }
+)
 env.cr.commit()
