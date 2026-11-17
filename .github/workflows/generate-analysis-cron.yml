@@ -28,7 +28,10 @@ jobs:
     uses: ./.github/workflows/generate-analysis.yml
     with:
       from_version: "17.0"
+      from_version_python: "3.10"
       to_version: "18.0"
+      to_version_python: "3.10"
+      postgres_version: "14"
   generate-analysis19:
     name: Generate analysis 19.0
     if: |
@@ -37,4 +40,7 @@ jobs:
     uses: ./.github/workflows/generate-analysis.yml
     with:
       from_version: "18.0"
+      from_version_python: "3.10"
       to_version: "19.0"
+      to_version_python: "3.10"
+      postgres_version: "14"
