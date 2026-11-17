@@ -65,7 +65,7 @@ jobs:
           docker exec openupgrade_current sh -c "
             cd /opt/openupgrade
             oca_install_addons
-            pip install -U https://github.com/oca/openupgradelib
+            pip install -U git+https://github.com/oca/openupgradelib
           "
       - name: Test data
         run: |
