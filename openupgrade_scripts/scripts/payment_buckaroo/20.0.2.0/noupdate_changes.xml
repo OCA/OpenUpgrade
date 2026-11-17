@@ -1,0 +1,79 @@
+<?xml version='1.0' encoding='utf-8'?>
+<odoo>
+  <record id="payment.payment_provider_buckaroo" model="payment.provider">
+    <field name="redirect_form_view_id" ref="payment.generic_redirect_form"/>
+  </record>
+  <record id="payment_method_afterpay_riverty" model="payment.method">
+    <field name="support_manual_capture" eval="'none'"/>
+    <field name="support_refund" eval="'none'"/>
+    <field name="supported_country_ids" eval="[Command.set([                         ref('base.at'),                         ref('base.be'),                         ref('base.de'),                         ref('base.fi'),                         ref('base.nl'),                 ])]"/>
+    <field name="supported_currency_ids" eval="[Command.set([ref('base.EUR')])]"/>
+    <field name="provider_id" ref="payment.payment_provider_buckaroo"/>
+  </record>
+  <record id="payment_method_banco_de_bogota" model="payment.method">
+    <field name="primary_payment_method_id" eval="ref('payment_buckaroo.payment_method_bank_reference')"/>
+    <field name="provider_id" ref="payment.payment_provider_buckaroo"/>
+  </record>
+  <record id="payment_method_bancolombia" model="payment.method">
+    <field name="primary_payment_method_id" eval="ref('payment_buckaroo.payment_method_bank_reference')"/>
+    <field name="provider_id" ref="payment.payment_provider_buckaroo"/>
+  </record>
+  <record id="payment_method_bank_reference" model="payment.method">
+    <field name="support_manual_capture" eval="'none'"/>
+    <field name="support_refund" eval="'none'"/>
+    <field name="provider_id" ref="payment.payment_provider_buckaroo"/>
+  </record>
+  <record id="payment_method_belfius" model="payment.method">
+    <field name="support_manual_capture" eval="'none'"/>
+    <field name="support_refund" eval="'none'"/>
+    <field name="supported_country_ids" eval="[Command.set([ref('base.be')])]"/>
+    <field name="supported_currency_ids" eval="[Command.set([ref('base.EUR')])]"/>
+    <field name="provider_id" ref="payment.payment_provider_buckaroo"/>
+  </record>
+  <record id="payment_method_billink" model="payment.method">
+    <field name="support_manual_capture" eval="'none'"/>
+    <field name="support_refund" eval="'none'"/>
+    <field name="supported_country_ids" eval="[Command.set([ref('base.be'), ref('base.nl')])]"/>
+    <field name="supported_currency_ids" eval="[Command.set([ref('base.EUR')])]"/>
+    <field name="provider_id" ref="payment.payment_provider_buckaroo"/>
+  </record>
+  <record id="payment_method_davivienda" model="payment.method">
+    <field name="primary_payment_method_id" eval="ref('payment_buckaroo.payment_method_bank_reference')"/>
+    <field name="provider_id" ref="payment.payment_provider_buckaroo"/>
+  </record>
+  <record id="payment_method_in3" model="payment.method">
+    <field name="support_manual_capture" eval="'none'"/>
+    <field name="support_refund" eval="'none'"/>
+    <field name="supported_country_ids" eval="[Command.set([ref('base.nl')])]"/>
+    <field name="supported_currency_ids" eval="[Command.set([ref('base.EUR')])]"/>
+    <field name="provider_id" ref="payment.payment_provider_buckaroo"/>
+  </record>
+  <record id="payment_method_kbc_cbc" model="payment.method">
+    <field name="support_manual_capture" eval="'none'"/>
+    <field name="support_refund" eval="'none'"/>
+    <field name="supported_country_ids" eval="[Command.set([ref('base.be')])]"/>
+    <field name="supported_currency_ids" eval="[Command.set([ref('base.EUR')])]"/>
+    <field name="provider_id" ref="payment.payment_provider_buckaroo"/>
+  </record>
+  <record id="payment_method_poste_pay" model="payment.method">
+    <field name="support_manual_capture" eval="'none'"/>
+    <field name="support_refund" eval="'none'"/>
+    <field name="supported_country_ids" eval="[Command.set([ref('base.it')])]"/>
+    <field name="supported_currency_ids" eval="[Command.set([ref('base.EUR')])]"/>
+    <field name="provider_id" ref="payment.payment_provider_buckaroo"/>
+  </record>
+  <record id="payment_method_tinka" model="payment.method">
+    <field name="support_manual_capture" eval="'none'"/>
+    <field name="support_refund" eval="'none'"/>
+    <field name="supported_country_ids" eval="[Command.set([ref('base.nl')])]"/>
+    <field name="supported_currency_ids" eval="[Command.set([ref('base.EUR')])]"/>
+    <field name="provider_id" ref="payment.payment_provider_buckaroo"/>
+  </record>
+  <record id="payment_method_wero" model="payment.method">
+    <field name="name">Wero</field>
+    <field name="primary_payment_method_id" eval="None"/>
+    <field name="provider_id" ref="payment.payment_provider_buckaroo"/>
+    <field name="supported_country_ids" eval="[Command.set([ref('base.be'), ref('base.de'), ref('base.fr')])]"/>
+    <field name="supported_currency_ids" eval="[Command.set([ref('base.EUR')])]"/>
+  </record>
+</odoo>

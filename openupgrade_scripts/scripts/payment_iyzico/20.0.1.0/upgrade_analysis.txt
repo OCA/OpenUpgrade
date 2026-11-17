@@ -1,0 +1,10 @@
+---Models in module 'payment_iyzico'---
+---Fields in module 'payment_iyzico'---
+---XML records in module 'payment_iyzico'---
+DEL ir.ui.view: payment_iyzico.redirect_form
+NEW payment.method: payment_iyzico.payment_method_amex (noupdate)
+NEW payment.method: payment_iyzico.payment_method_bank_transfer (noupdate)
+NEW payment.method: payment_iyzico.payment_method_card (noupdate)
+NEW payment.method: payment_iyzico.payment_method_mastercard (noupdate)
+NEW payment.method: payment_iyzico.payment_method_troy (noupdate)
+NEW payment.method: payment_iyzico.payment_method_visa (noupdate)

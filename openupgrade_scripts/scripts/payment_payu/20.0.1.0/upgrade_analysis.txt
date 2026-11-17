@@ -1,0 +1,14 @@
+---Models in module 'payment_payu'---
+---Fields in module 'payment_payu'---
+---XML records in module 'payment_payu'---
+DEL ir.ui.view: payment_payu.redirect_form
+NEW payment.method: payment_payu.payment_method_amex (noupdate)
+NEW payment.method: payment_payu.payment_method_card (noupdate)
+NEW payment.method: payment_payu.payment_method_emi_india [renamed from payment module] (noupdate)
+NEW payment.method: payment_payu.payment_method_mastercard (noupdate)
+NEW payment.method: payment_payu.payment_method_netbanking [renamed from payment module] (noupdate)
+NEW payment.method: payment_payu.payment_method_paylater_india [renamed from payment module] (noupdate)
+NEW payment.method: payment_payu.payment_method_rupay [renamed from payment module] (noupdate)
+NEW payment.method: payment_payu.payment_method_upi (noupdate)
+NEW payment.method: payment_payu.payment_method_visa (noupdate)
+NEW payment.method: payment_payu.payment_method_wallets_india (noupdate)

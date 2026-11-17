@@ -1,0 +1,116 @@
+---Models in module 'hr_recruitment'---
+obsolete model applicant.send.mail [transient]
+new model applicant.refuse.single [transient]
+new model hr.job.tag
+---Fields in module 'hr_recruitment'---
+hr_recruitment / hr.applicant             / duration_tracking (json)      : is now stored
+hr_recruitment / hr.applicant             / email_cc (char)               : DEL
+hr_recruitment / hr.applicant             / linked_applicant_ids (one2many): NEW relation: hr.applicant
+hr_recruitment / hr.applicant             / recruiter_id (many2one)       : NEW relation: hr.employee, hasdefault: compute
+hr_recruitment / hr.applicant             / schedule_pay (selection)      : NEW required, selection_keys: ['biweekly', 'daily', 'hourly', 'monthly', 'weekly', 'yearly'], hasdefault: default
+hr_recruitment / hr.applicant             / user_id (many2one)            : DEL relation: res.users
+hr_recruitment / hr.applicant             / utm_reference (reference)     : NEW
+hr_recruitment / hr.applicant             / website_message_ids (one2many): DEL relation: mail.message
+hr_recruitment / hr.job                   / applicant_properties_definition (properties_definition): DEL
+hr_recruitment / hr.job                   / favorite_recruiter_ids (many2many): NEW relation: hr.employee, hasdefault: default
+hr_recruitment / hr.job                   / favorite_user_ids (many2many) : DEL relation: res.users
+hr_recruitment / hr.job                   / payment_interval (selection)  : NEW required, selection_keys: ['biweekly', 'daily', 'hourly', 'monthly', 'weekly', 'yearly'], hasdefault: default
+hr_recruitment / hr.job                   / salary_max (float)            : NEW
+hr_recruitment / hr.job                   / salary_min (float)            : NEW
+hr_recruitment / hr.job                   / tag_ids (many2many)           : NEW relation: hr.job.tag
+hr_recruitment / hr.job.tag               / color (integer)               : NEW hasdefault: default
+hr_recruitment / hr.job.tag               / name (char)                   : NEW required
+hr_recruitment / hr.recruitment.stage     / company_id (many2one)         : NEW relation: res.company
+hr_recruitment / hr.recruitment.stage     / legend_blocked (char)         : DEL required
+hr_recruitment / hr.recruitment.stage     / legend_done (char)            : DEL required
+hr_recruitment / hr.recruitment.stage     / legend_normal (char)          : DEL required
+hr_recruitment / hr.recruitment.stage     / legend_waiting (char)         : DEL required
+hr_recruitment / hr.talent.pool           / website_message_ids (one2many): DEL relation: mail.message
+hr_recruitment / res.company              / applicant_properties_definition (properties_definition): NEW
+---XML records in module 'hr_recruitment'---
+NEW hr.recruitment.degree: hr_recruitment.degree_diploma (noupdate)
+NEW ir.access: hr_recruitment.access_applicant_get_refuse_reason_interviewer
+NEW ir.access: hr_recruitment.access_applicant_refuse_single_interviewer
+NEW ir.access: hr_recruitment.access_calendar_event_type_hr_officer
+NEW ir.access: hr_recruitment.access_hr_applicant_category
+NEW ir.access: hr_recruitment.access_hr_applicant_category_manager
+NEW ir.access: hr_recruitment.access_hr_job_interviewer
+NEW ir.access: hr_recruitment.access_hr_job_platform
+NEW ir.access: hr_recruitment.access_hr_job_tag_interviewer
+NEW ir.access: hr_recruitment.access_hr_job_tag_manager
+NEW ir.access: hr_recruitment.access_hr_job_user
+NEW ir.access: hr_recruitment.access_hr_recruitment_degree
+NEW ir.access: hr_recruitment.access_hr_recruitment_degree_interviewer
+NEW ir.access: hr_recruitment.access_hr_recruitment_refuse_reason
+NEW ir.access: hr_recruitment.access_hr_recruitment_refuse_reason_interviewer
+NEW ir.access: hr_recruitment.access_hr_recruitment_source_all
+NEW ir.access: hr_recruitment.access_hr_recruitment_source_hr_officer
+NEW ir.access: hr_recruitment.access_hr_recruitment_stage_interviewer
+NEW ir.access: hr_recruitment.access_hr_recruitment_stage_manager
+NEW ir.access: hr_recruitment.access_hr_talent_pool_interviewer
+NEW ir.access: hr_recruitment.access_job_add_applicants
+NEW ir.access: hr_recruitment.access_mail_activity_plan_hr_recruitment_manager
+NEW ir.access: hr_recruitment.access_mail_activity_plan_template_hr_recruitment_manager
+NEW ir.access: hr_recruitment.access_res_partner_hr_user
+NEW ir.access: hr_recruitment.access_talent_pool_add_applicants
+NEW ir.access: hr_recruitment.calendar_event_rule_employee
+NEW ir.access: hr_recruitment.hr_applicant_comp_rule
+NEW ir.access: hr_recruitment.hr_applicant_interviewer_rule
+NEW ir.access: hr_recruitment.hr_applicant_user_rule
+NEW ir.access: hr_recruitment.hr_job_user_rule
+NEW ir.access: hr_recruitment.hr_talent_pool_user_rule
+NEW ir.access: hr_recruitment.ir_rule_hr_recruitment_stage_multi_company
+NEW ir.access: hr_recruitment.mail_plan_rule_group_hr_recruitment_manager_applicant
+NEW ir.access: hr_recruitment.mail_plan_templates_rule_group_hr_recruitment_manager_applicant
+NEW ir.access: hr_recruitment.res_partner_rule_edit_all
+NEW ir.access: hr_recruitment.res_partner_rule_user
+NEW ir.actions.act_window: hr_recruitment.action_applicant_mass_mail
+NEW ir.actions.act_window: hr_recruitment.hr_job_tag_action
+NEW ir.actions.server: hr_recruitment.action_job_add_applicants
+DEL ir.actions.server: hr_recruitment.action_applicant_send_mail
+DEL ir.model.access: hr_recruitment.access_applicant_get_refuse_reason
+DEL ir.model.access: hr_recruitment.access_applicant_get_refuse_reason_interviewer
+DEL ir.model.access: hr_recruitment.access_applicant_send_mail
+DEL ir.model.access: hr_recruitment.access_applicant_send_mail_interviewer
+DEL ir.model.access: hr_recruitment.access_calendar_event_hruser
+DEL ir.model.access: hr_recruitment.access_calendar_event_type_hr_officer
+DEL ir.model.access: hr_recruitment.access_hr_applicant_category
+DEL ir.model.access: hr_recruitment.access_hr_applicant_category_manager
+DEL ir.model.access: hr_recruitment.access_hr_applicant_interviewer
+DEL ir.model.access: hr_recruitment.access_hr_applicant_user
+DEL ir.model.access: hr_recruitment.access_hr_job_interviewer
+DEL ir.model.access: hr_recruitment.access_hr_job_platform
+DEL ir.model.access: hr_recruitment.access_hr_job_user
+DEL ir.model.access: hr_recruitment.access_hr_recruitment_degree
+DEL ir.model.access: hr_recruitment.access_hr_recruitment_refuse_reason
+DEL ir.model.access: hr_recruitment.access_hr_recruitment_refuse_reason_interviewer
+DEL ir.model.access: hr_recruitment.access_hr_recruitment_source_all
+DEL ir.model.access: hr_recruitment.access_hr_recruitment_source_hr_officer
+DEL ir.model.access: hr_recruitment.access_hr_recruitment_stage_interviewer
+DEL ir.model.access: hr_recruitment.access_hr_recruitment_stage_manager
+DEL ir.model.access: hr_recruitment.access_hr_recruitment_stage_user
+DEL ir.model.access: hr_recruitment.access_hr_talent_pool
+DEL ir.model.access: hr_recruitment.access_hr_talent_pool_interviewer
+DEL ir.model.access: hr_recruitment.access_job_add_applicants
+DEL ir.model.access: hr_recruitment.access_job_add_applicants_interviewer
+DEL ir.model.access: hr_recruitment.access_mail_activity_plan_hr_recruitment_manager
+DEL ir.model.access: hr_recruitment.access_mail_activity_plan_template_hr_recruitment_manager
+DEL ir.model.access: hr_recruitment.access_res_partner_hr_user
+DEL ir.model.access: hr_recruitment.access_talent_pool_add_applicants
+DEL ir.model.access: hr_recruitment.access_talent_pool_add_applicants_interviewer
+DEL ir.rule: hr_recruitment.hr_applicant_comp_rule (noupdate)
+DEL ir.rule: hr_recruitment.hr_applicant_interviewer_rule (noupdate)
+DEL ir.rule: hr_recruitment.hr_applicant_user_rule (noupdate)
+DEL ir.rule: hr_recruitment.hr_job_user_rule (noupdate)
+DEL ir.rule: hr_recruitment.hr_talent_pool_user_rule (noupdate)
+DEL ir.rule: hr_recruitment.mail_message_user_rule (noupdate)
+DEL ir.rule: hr_recruitment.mail_plan_rule_group_hr_recruitment_manager_applicant (noupdate)
+DEL ir.rule: hr_recruitment.mail_plan_templates_rule_group_hr_recruitment_manager_applicant (noupdate)
+NEW ir.ui.menu: hr_recruitment.menu_hr_job_tag_menu
+NEW ir.ui.menu: hr_recruitment.menu_hr_recruitment_utm_campaigns
+NEW ir.ui.view: hr_recruitment.applicant_refuse_single_view_form
+NEW ir.ui.view: hr_recruitment.hr_employee_view_form_inherit_applicant_button
+NEW ir.ui.view: hr_recruitment.hr_job_tag_view_form
+NEW ir.ui.view: hr_recruitment.hr_job_tag_view_list
+NEW ir.ui.view: hr_recruitment.job_add_applicants_from_job_view_form
+DEL ir.ui.view: hr_recruitment.applicant_send_mail_view_form

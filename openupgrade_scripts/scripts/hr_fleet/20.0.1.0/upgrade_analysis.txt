@@ -1,0 +1,13 @@
+---Models in module 'hr_fleet'---
+---Fields in module 'hr_fleet'---
+hr_fleet     / fleet.vehicle            / mobility_card (char)          : DEL
+hr_fleet     / hr.employee              / mobility_card (char)          : DEL
+hr_fleet     / mail.activity.plan.template / responsible_type (False)      : DEL selection_keys: ['coach', 'employee', 'fleet_manager', 'manager', 'on_demand', 'other'], mode: modify
+---XML records in module 'hr_fleet'---
+NEW ir.access: hr_fleet.hr_fleet_rule_vehicle_visibility_hr_officier
+DEL ir.model.access: hr_fleet.hr_fleet_vehicle_access_right_hr_officer
+DEL ir.rule: hr_fleet.hr_fleet_rule_vehicle_visibility_hr_officier (noupdate)
+NEW ir.ui.view: hr_fleet.hr_employee_public_view_form
+DEL ir.ui.view: hr_fleet.hr_departure_wizard_view_form
+DEL ir.ui.view: hr_fleet.view_employee_filter
+DEL mail.activity.plan.template: hr_fleet.offboarding_fleet (noupdate)

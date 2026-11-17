@@ -1,0 +1,27 @@
+---Models in module 'website_sale_stock'---
+---Fields in module 'website_sale_stock'---
+website_sale_stock / product.product          / allow_out_of_stock_order (boolean): module is now 'website_sale' ('website_sale_stock')
+website_sale_stock / product.product          / available_threshold (float)   : module is now 'website_sale' ('website_sale_stock')
+website_sale_stock / product.product          / out_of_stock_message (html)   : module is now 'website_sale' ('website_sale_stock')
+website_sale_stock / product.product          / show_availability (boolean)   : module is now 'website_sale' ('website_sale_stock')
+website_sale_stock / product.product          / stock_notification_partner_ids (many2many): DEL relation: res.partner
+website_sale_stock / product.ribbon           / assign (False)                : DEL selection_keys: ['manual', 'new', 'out_of_stock', 'sale'], mode: modify
+website_sale_stock / product.template         / allow_out_of_stock_order (boolean): module is now 'website_sale' ('website_sale_stock')
+website_sale_stock / product.template         / available_threshold (float)   : module is now 'website_sale' ('website_sale_stock')
+website_sale_stock / product.template         / out_of_stock_message (html)   : module is now 'website_sale' ('website_sale_stock')
+website_sale_stock / product.template         / show_availability (boolean)   : module is now 'website_sale' ('website_sale_stock')
+website_sale_stock / res.partner              / pickup_delivery_method_id (many2one): NEW relation: delivery.carrier
+---XML records in module 'website_sale_stock'---
+DEL ir.cron: website_sale_stock.ir_cron_send_availability_email
+NEW ir.ui.view: website_sale_stock.choose_delivery_carrier_view_form_inherit_website_sale
+NEW ir.ui.view: website_sale_stock.pickup_address_on_checkout
+NEW ir.ui.view: website_sale_stock.pickup_delivery_method
+NEW ir.ui.view: website_sale_stock.sale_order_list_view_ecommerce
+NEW ir.ui.view: website_sale_stock.sale_order_view_form
+NEW ir.ui.view: website_sale_stock.view_picking_form_inherit_website_sale
+DEL ir.ui.view: website_sale_stock.availability_email_body
+DEL ir.ui.view: website_sale_stock.product_pages_tree_view
+DEL ir.ui.view: website_sale_stock.product_template_form_view_inherit_website_sale_stock
+DEL ir.ui.view: website_sale_stock.view_picking_form_inherit_website_sale_stock
+DEL ir.ui.view: website_sale_stock.website_sale_stock_cart_lines
+DEL ir.ui.view: website_sale_stock.website_sale_stock_product

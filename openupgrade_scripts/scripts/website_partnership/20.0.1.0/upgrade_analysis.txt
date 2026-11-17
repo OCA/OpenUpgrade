@@ -1,0 +1,26 @@
+---Models in module 'website_partnership'---
+---Fields in module 'website_partnership'---
+website_partnership / res.partner.grade        / can_publish (boolean)         : previously in module website_crm_partner_assign
+website_partnership / res.partner.grade        / is_published (boolean)        : previously in module website_crm_partner_assign
+website_partnership / res.partner.grade        / publish_on (datetime)         : NEW
+website_partnership / res.partner.grade        / published_date (datetime)     : NEW
+website_partnership / res.partner.grade        / website_absolute_url (char)   : previously in module website_crm_partner_assign
+website_partnership / res.partner.grade        / website_published (boolean)   : previously in module website_crm_partner_assign
+website_partnership / res.partner.grade        / website_url (char)            : previously in module website_crm_partner_assign
+---XML records in module 'website_partnership'---
+NEW ir.access: website_partnership.res_partner_grade_rule_portal_public
+NEW ir.ui.view: website_partnership.categories_setting
+NEW ir.ui.view: website_partnership.companies_only_setting
+NEW ir.ui.view: website_partnership.contact_details
+NEW ir.ui.view: website_partnership.image_four_five_partner_page
+NEW ir.ui.view: website_partnership.image_one_one_partner_page
+NEW ir.ui.view: website_partnership.image_six_five_partner_page
+NEW ir.ui.view: website_partnership.index
+NEW ir.ui.view: website_partnership.index_layout
+NEW ir.ui.view: website_partnership.linked_partner_page_setting
+NEW ir.ui.view: website_partnership.o_wcrm_partner_address
+NEW ir.ui.view: website_partnership.partner_detail
+NEW ir.ui.view: website_partnership.partner_page
+NEW ir.ui.view: website_partnership.res_config_settings_view_form
+NEW ir.ui.view: website_partnership.search_setting
+NEW ir.ui.view: website_partnership.view_partner_grade_form

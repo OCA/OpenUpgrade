@@ -1,0 +1,67 @@
+---Models in module 'l10n_dk'---
+model account.edi.xml.oioubl_21 (moved from l10n_dk_nemhandel) [abstract]
+model nemhandel.registration (moved from l10n_dk_nemhandel) [transient]
+model nemhandel.rejection.wizard (moved from l10n_dk_nemhandel_response) [transient]
+model nemhandel.response (moved from l10n_dk_nemhandel_response)
+---Fields in module 'l10n_dk'---
+l10n_dk      / account.bank.statement.line / nemhandel_can_send_response (boolean): previously in module l10n_dk_nemhandel_response
+l10n_dk      / account.bank.statement.line / nemhandel_message_uuid (char) : previously in module l10n_dk_nemhandel
+l10n_dk      / account.bank.statement.line / nemhandel_move_state (selection): previously in module l10n_dk_nemhandel
+l10n_dk      / account.bank.statement.line / nemhandel_response_ids (one2many): previously in module l10n_dk_nemhandel_response
+l10n_dk      / account.journal          / is_nemhandel_journal (boolean): previously in module l10n_dk_nemhandel
+l10n_dk      / account.journal          / l10n_dk_nemhandel_proxy_state (selection): previously in module l10n_dk_nemhandel
+l10n_dk      / account.move             / nemhandel_can_send_response (boolean): previously in module l10n_dk_nemhandel_response
+l10n_dk      / account.move             / nemhandel_message_uuid (char) : previously in module l10n_dk_nemhandel
+l10n_dk      / account.move             / nemhandel_move_state (selection): previously in module l10n_dk_nemhandel
+l10n_dk      / account.move             / nemhandel_response_ids (one2many): previously in module l10n_dk_nemhandel_response
+l10n_dk      / account_edi_proxy_client.user / nemhandel_verification_code (char): previously in module l10n_dk_nemhandel
+l10n_dk      / account_edi_proxy_client.user / proxy_type (False)            : previously in module l10n_dk_nemhandel
+l10n_dk      / nemhandel.response       / _order                        : previously in module l10n_dk_nemhandel_response
+l10n_dk      / nemhandel.response       / company_id (many2one)         : previously in module l10n_dk_nemhandel_response
+l10n_dk      / nemhandel.response       / display_name (char)           : previously in module l10n_dk_nemhandel_response
+l10n_dk      / nemhandel.response       / move_id (many2one)            : previously in module l10n_dk_nemhandel_response
+l10n_dk      / nemhandel.response       / nemhandel_message_uuid (char) : previously in module l10n_dk_nemhandel_response
+l10n_dk      / nemhandel.response       / nemhandel_state (selection)   : previously in module l10n_dk_nemhandel_response
+l10n_dk      / nemhandel.response       / response_code (selection)     : previously in module l10n_dk_nemhandel_response
+l10n_dk      / res.company              / l10n_dk_nemhandel_proxy_state (selection): previously in module l10n_dk_nemhandel
+l10n_dk      / res.company              / nemhandel_contact_email (char): previously in module l10n_dk_nemhandel
+l10n_dk      / res.company              / nemhandel_edi_user (many2one) : previously in module l10n_dk_nemhandel
+l10n_dk      / res.company              / nemhandel_identifier_type (selection): previously in module l10n_dk_nemhandel
+l10n_dk      / res.company              / nemhandel_identifier_value (char): previously in module l10n_dk_nemhandel
+l10n_dk      / res.company              / nemhandel_phone_number (char) : previously in module l10n_dk_nemhandel
+l10n_dk      / res.company              / nemhandel_purchase_journal_id (many2one): previously in module l10n_dk_nemhandel
+l10n_dk      / res.partner              / invoice_edi_format (False)    : previously in module l10n_tr_nilvera
+l10n_dk      / res.partner              / invoice_sending_method (False): previously in module l10n_dk_nemhandel
+l10n_dk      / res.partner              / is_using_nemhandel (boolean)  : previously in module l10n_dk_nemhandel
+l10n_dk      / res.partner              / nemhandel_identifier_type (selection): previously in module l10n_dk_nemhandel
+l10n_dk      / res.partner              / nemhandel_identifier_value (char): previously in module l10n_dk_nemhandel
+l10n_dk      / res.partner              / nemhandel_response_support (boolean): previously in module l10n_dk_nemhandel_response
+l10n_dk      / res.partner              / nemhandel_supported_documents (json): previously in module l10n_dk_nemhandel_response
+l10n_dk      / res.partner              / nemhandel_verification_state (selection): previously in module l10n_dk_nemhandel
+l10n_dk      / res.users                / is_using_nemhandel (boolean)  : previously in module l10n_dk_nemhandel
+l10n_dk      / res.users                / nemhandel_identifier_type (selection): previously in module l10n_dk_nemhandel
+l10n_dk      / res.users                / nemhandel_identifier_value (char): previously in module l10n_dk_nemhandel
+l10n_dk      / res.users                / nemhandel_response_support (boolean): previously in module l10n_dk_nemhandel_response
+l10n_dk      / res.users                / nemhandel_supported_documents (json): previously in module l10n_dk_nemhandel_response
+l10n_dk      / res.users                / nemhandel_verification_state (selection): previously in module l10n_dk_nemhandel
+l10n_dk_nemhandel / account.move             / nemhandel_move_state (selection): selection_keys added: [BusinessAccept, BusinessReject] (most likely nothing to do)
+l10n_tr_nilvera / res.partner              / invoice_edi_format (False)    : selection_keys added: [oioubl_21], removed: [pint_jp, pint_my, pint_sg, ubl_tr]
+---XML records in module 'l10n_dk'---
+NEW ir.access: l10n_dk.l10n_dk_registration
+NEW ir.access: l10n_dk.nemhandel_rejection_wizard
+NEW ir.access: l10n_dk.nemhandel_response
+NEW ir.cron: l10n_dk.ir_cron_nemhandel_get_message_status [renamed from l10n_dk_nemhandel module]
+NEW ir.cron: l10n_dk.ir_cron_nemhandel_get_new_documents [renamed from l10n_dk_nemhandel module]
+NEW ir.cron: l10n_dk.ir_cron_nemhandel_get_participant_status [renamed from l10n_dk_nemhandel module]
+NEW ir.cron: l10n_dk.ir_cron_nemhandel_webhook_keepalive [renamed from l10n_dk_nemhandel module]
+NEW ir.ui.view: l10n_dk.l10n_dk_nemhandel_view_move_form
+NEW ir.ui.view: l10n_dk.nemhandel_registration_form
+NEW ir.ui.view: l10n_dk.nemhandel_rejection_wizard_view_form
+NEW ir.ui.view: l10n_dk.nemhandel_response_view_form
+NEW ir.ui.view: l10n_dk.nemhandel_response_view_list
+NEW ir.ui.view: l10n_dk.nemhandel_view_account_invoice_filter
+NEW ir.ui.view: l10n_dk.nemhandel_view_out_credit_note_tree_inherit
+NEW ir.ui.view: l10n_dk.nemhandel_view_out_invoice_tree_inherit
+NEW ir.ui.view: l10n_dk.res_config_settings_view_form
+DEL ir.ui.view: l10n_dk.view_company_form_inherit_l10n_dk
+NEW web_tour.tour: l10n_dk.nemhandel_onboarding_tour [renamed from l10n_dk_nemhandel module]

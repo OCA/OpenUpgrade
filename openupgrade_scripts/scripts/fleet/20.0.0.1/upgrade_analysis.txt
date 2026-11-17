@@ -1,0 +1,91 @@
+---Models in module 'fleet'---
+---Fields in module 'fleet'---
+fleet        / fleet.service.type       / company_id (many2one)         : NEW relation: res.company, hasdefault: default
+fleet        / fleet.vehicle            / contract_state (selection)    : selection_keys added: [done] (most likely nothing to do)
+fleet        / fleet.vehicle            / horsepower_tax (float)        : DEL
+fleet        / fleet.vehicle            / plan_to_change_bike (boolean) : DEL
+fleet        / fleet.vehicle            / plan_to_change_car (boolean)  : DEL
+fleet        / fleet.vehicle            / plan_to_change_vehicle (boolean): NEW
+fleet        / fleet.vehicle            / transmission (selection)      : selection_keys added: [semi_automatic] (most likely nothing to do)
+fleet        / fleet.vehicle.log.contract / state (selection)             : selection_keys added: [done] (most likely nothing to do)
+fleet        / fleet.vehicle.log.services / date (date)                   : DEL
+fleet        / fleet.vehicle.log.services / date_from (date)              : NEW hasdefault: default
+fleet        / fleet.vehicle.log.services / date_to (date)                : NEW
+fleet        / fleet.vehicle.model      / color (char)                  : DEL
+fleet        / fleet.vehicle.model      / company_id (many2one)         : NEW relation: res.company
+fleet        / fleet.vehicle.model      / horsepower_tax (float)        : DEL
+fleet        / fleet.vehicle.model      / trailer_hook (boolean)        : DEL
+fleet        / fleet.vehicle.model      / transmission (selection)      : selection_keys added: [semi_automatic] (most likely nothing to do)
+fleet        / fleet.vehicle.model      / vehicle_type (selection)      : selection_keys added: [other] (most likely nothing to do)
+---XML records in module 'fleet'---
+NEW ir.access: fleet.access_fleet_report_manager
+NEW ir.access: fleet.access_fleet_vehicle_assignation_log_fleet_group_user
+NEW ir.access: fleet.access_fleet_vehicle_odometer_report_manager
+NEW ir.access: fleet.access_fleet_vehicle_send_mail
+NEW ir.access: fleet.access_mail_activity_type_fleet_manager
+NEW ir.access: fleet.fleet_rule_service_visibility_manager
+NEW ir.access: fleet.fleet_rule_vehicle_visibility_user
+NEW ir.access: fleet.fleet_service_type_access_right
+NEW ir.access: fleet.fleet_service_type_access_right_user
+NEW ir.access: fleet.fleet_vehicle_log_contract_access_right_user
+NEW ir.access: fleet.fleet_vehicle_log_services_access_right_user
+NEW ir.access: fleet.fleet_vehicle_model_access_right
+NEW ir.access: fleet.fleet_vehicle_model_access_right_user
+NEW ir.access: fleet.fleet_vehicle_model_brand_access_right
+NEW ir.access: fleet.fleet_vehicle_model_brand_access_right_user
+NEW ir.access: fleet.fleet_vehicle_model_brand_category_right_user
+NEW ir.access: fleet.fleet_vehicle_model_category_access_right
+NEW ir.access: fleet.fleet_vehicle_odometer_access_right
+NEW ir.access: fleet.fleet_vehicle_state_access_right
+NEW ir.access: fleet.fleet_vehicle_state_access_right_user
+NEW ir.access: fleet.fleet_vehicle_tag_access_right
+NEW ir.access: fleet.fleet_vehicle_tag_access_right_user
+NEW ir.access: fleet.ir_rule_fleet_log_services
+NEW ir.access: fleet.ir_rule_fleet_odometer
+NEW ir.access: fleet.ir_rule_fleet_report
+NEW ir.access: fleet.ir_rule_fleet_service_type
+NEW ir.access: fleet.ir_rule_fleet_vehicle
+NEW ir.access: fleet.ir_rule_fleet_vehicle_log_contract
+NEW ir.access: fleet.ir_rule_fleet_vehicle_model
+NEW ir.actions.act_window: fleet.fleet_vehicle_contract_types_action
+DEL ir.model.access: fleet.access_fleet_report_manager
+DEL ir.model.access: fleet.access_fleet_vehicle_assignation_log_fleet_group_user
+DEL ir.model.access: fleet.access_fleet_vehicle_odometer_report_manager
+DEL ir.model.access: fleet.access_fleet_vehicle_send_mail
+DEL ir.model.access: fleet.access_mail_activity_type_fleet_manager
+DEL ir.model.access: fleet.fleet_service_type_access_right
+DEL ir.model.access: fleet.fleet_service_type_access_right_user
+DEL ir.model.access: fleet.fleet_vehicle_access_right
+DEL ir.model.access: fleet.fleet_vehicle_access_right_user
+DEL ir.model.access: fleet.fleet_vehicle_log_contract_access_right
+DEL ir.model.access: fleet.fleet_vehicle_log_contract_access_right_user
+DEL ir.model.access: fleet.fleet_vehicle_log_services_access_right
+DEL ir.model.access: fleet.fleet_vehicle_log_services_access_right_user
+DEL ir.model.access: fleet.fleet_vehicle_model_access_right
+DEL ir.model.access: fleet.fleet_vehicle_model_access_right_user
+DEL ir.model.access: fleet.fleet_vehicle_model_brand_access_right
+DEL ir.model.access: fleet.fleet_vehicle_model_brand_access_right_user
+DEL ir.model.access: fleet.fleet_vehicle_model_brand_category_right_user
+DEL ir.model.access: fleet.fleet_vehicle_model_category_access_right
+DEL ir.model.access: fleet.fleet_vehicle_odometer_access_right
+DEL ir.model.access: fleet.fleet_vehicle_state_access_right
+DEL ir.model.access: fleet.fleet_vehicle_state_access_right_user
+DEL ir.model.access: fleet.fleet_vehicle_tag_access_right
+DEL ir.model.access: fleet.fleet_vehicle_tag_access_right_user
+NEW ir.model.constraint: fleet.constraint_fleet_vehicle_log_services_check_service_dates
+NEW ir.model.constraint: fleet.constraint_fleet_vehicle_unique_license_plate
+DEL ir.rule: fleet.fleet_rule_contract_visibility_manager (noupdate)
+DEL ir.rule: fleet.fleet_rule_odometer_visibility_manager (noupdate)
+DEL ir.rule: fleet.fleet_rule_service_visibility_manager (noupdate)
+DEL ir.rule: fleet.fleet_rule_vehicle_visibility_manager (noupdate)
+DEL ir.rule: fleet.ir_rule_fleet_log_services (noupdate)
+DEL ir.rule: fleet.ir_rule_fleet_odometer (noupdate)
+DEL ir.rule: fleet.ir_rule_fleet_report (noupdate)
+DEL ir.rule: fleet.ir_rule_fleet_vehicle (noupdate)
+DEL ir.rule: fleet.ir_rule_fleet_vehicle_log_contract (noupdate)
+NEW ir.ui.menu: fleet.fleet_contracts_configuration
+NEW ir.ui.menu: fleet.fleet_vehicle_contract_types_menu
+NEW ir.ui.view: fleet.fleet_service_type_view_form_shared
+NEW ir.ui.view: fleet.fleet_vehicle_odometer_report_view_tree
+NEW ir.ui.view: fleet.view_partner_form
+DEL ir.ui.view: fleet.fleet_vehicle_odometer_view_graph

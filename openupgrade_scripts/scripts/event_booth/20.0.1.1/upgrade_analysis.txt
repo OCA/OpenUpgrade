@@ -1,0 +1,19 @@
+---Models in module 'event_booth'---
+---Fields in module 'event_booth'---
+event_booth  / event.booth              / website_message_ids (one2many): DEL relation: mail.message
+---XML records in module 'event_booth'---
+NEW ir.access: event_booth.access_event_booth_category_desk
+NEW ir.access: event_booth.access_event_booth_category_manager
+NEW ir.access: event_booth.access_event_booth_desk
+NEW ir.access: event_booth.access_event_booth_user
+NEW ir.access: event_booth.access_event_type_booth_manager
+NEW ir.access: event_booth.access_event_type_booth_user
+DEL ir.model.access: event_booth.access_event_booth_all
+DEL ir.model.access: event_booth.access_event_booth_category
+DEL ir.model.access: event_booth.access_event_booth_category_desk
+DEL ir.model.access: event_booth.access_event_booth_category_manager
+DEL ir.model.access: event_booth.access_event_booth_desk
+DEL ir.model.access: event_booth.access_event_booth_manager
+DEL ir.model.access: event_booth.access_event_booth_user
+DEL ir.model.access: event_booth.access_event_type_booth_manager
+DEL ir.model.access: event_booth.access_event_type_booth_user

@@ -1,0 +1,22 @@
+<?xml version='1.0' encoding='utf-8'?>
+<odoo>
+  <record id="payment.payment_provider_paypal" model="payment.provider">
+    <field name="allow_tokenization">True</field>
+    <field name="inline_form_view_id" ref="inline_form"/>
+    <field name="redirect_form_view_id" ref="payment.generic_redirect_form"/>
+  </record>
+  <record id="payment_method_mybank" model="payment.method">
+    <field name="support_manual_capture" eval="'none'"/>
+    <field name="support_refund" eval="'none'"/>
+    <field name="supported_country_ids" eval="[Command.set([ref('base.it')])]"/>
+    <field name="supported_currency_ids" eval="[Command.set([ref('base.EUR')])]"/>
+    <field name="provider_id" ref="payment.payment_provider_paypal"/>
+  </record>
+  <record id="payment_method_venmo" model="payment.method">
+    <field name="support_manual_capture" eval="'none'"/>
+    <field name="support_refund" eval="'none'"/>
+    <field name="supported_country_ids" eval="[Command.set([ref('base.us')])]"/>
+    <field name="supported_currency_ids" eval="[Command.set([ref('base.USD')])]"/>
+    <field name="provider_id" ref="payment.payment_provider_paypal"/>
+  </record>
+</odoo>

@@ -1,0 +1,34 @@
+---Models in module 'l10n_es_edi_verifactu'---
+new model l10n_es_edi_verifactu.issuer
+---Fields in module 'l10n_es_edi_verifactu'---
+l10n_es_edi_verifactu / account.move             / l10n_es_edi_verifactu_clave_regimen (selection): DEL selection_keys: function
+l10n_es_edi_verifactu / account.move             / l10n_es_edi_verifactu_refund_reason (selection): DEL selection_keys: ['R1', 'R2', 'R3', 'R4', 'R5']
+l10n_es_edi_verifactu / account.move             / l10n_es_edi_verifactu_state (selection): selection_keys added: [invalid] (most likely nothing to do)
+l10n_es_edi_verifactu / account.tax              / l10n_es_applicability (selection): module is now 'l10n_es' ('l10n_es_edi_verifactu')
+l10n_es_edi_verifactu / certificate.certificate  / scope (False)                 : selection_keys added: [ca] (most likely nothing to do)
+l10n_es_edi_verifactu / l10n_es_edi_verifactu.document / obligado_partner_id (many2one): NEW relation: res.partner, required
+l10n_es_edi_verifactu / l10n_es_edi_verifactu.document / state (selection)             : selection_keys added: [invalid] (most likely nothing to do)
+l10n_es_edi_verifactu / l10n_es_edi_verifactu.issuer / chain_sequence_id (many2one)  : NEW relation: ir.sequence
+l10n_es_edi_verifactu / l10n_es_edi_verifactu.issuer / company_id (many2one)         : NEW relation: res.company, required
+l10n_es_edi_verifactu / l10n_es_edi_verifactu.issuer / next_batch_time (datetime)    : NEW
+l10n_es_edi_verifactu / l10n_es_edi_verifactu.issuer / obligado_partner_id (many2one): NEW relation: res.partner, required
+l10n_es_edi_verifactu / res.company              / l10n_es_edi_verifactu_chain_sequence_id (many2one): DEL relation: ir.sequence
+l10n_es_edi_verifactu / res.company              / l10n_es_edi_verifactu_next_batch_time (datetime): DEL
+l10n_es_edi_verifactu / res.company              / l10n_es_edi_verifactu_special_vat_regime (selection): DEL selection_keys: ['reagyp', 'recargo', 'simplified']
+---XML records in module 'l10n_es_edi_verifactu'---
+NEW ir.access: l10n_es_edi_verifactu.access_l10n_es_edi_verifactu_document_readonly
+NEW ir.access: l10n_es_edi_verifactu.access_l10n_es_edi_verifactu_document_readonly_account_readonly
+NEW ir.access: l10n_es_edi_verifactu.access_l10n_es_edi_verifactu_document_user
+NEW ir.access: l10n_es_edi_verifactu.access_l10n_es_edi_verifactu_issuer_readonly
+NEW ir.access: l10n_es_edi_verifactu.access_l10n_es_edi_verifactu_issuer_readonly_account_readonly
+NEW ir.actions.server: l10n_es_edi_verifactu.action_l10n_es_edi_verifactu_button_cancel
+DEL ir.model.access: l10n_es_edi_verifactu.access_l10n_es_edi_verifactu_document_readonly
+DEL ir.model.access: l10n_es_edi_verifactu.access_l10n_es_edi_verifactu_document_readonly_account_readonly
+DEL ir.model.access: l10n_es_edi_verifactu.access_l10n_es_edi_verifactu_document_user
+NEW ir.model.constraint: l10n_es_edi_verifactu.constraint_l10n_es_edi_verifactu_issuer_unique_issuer_per_obligado
+NEW ir.ui.view: l10n_es_edi_verifactu.account_journal_dashboard_kanban_view_inherit_verifactu
+NEW ir.ui.view: l10n_es_edi_verifactu.view_account_move_filter_vf_rejected
+NEW ir.ui.view: l10n_es_edi_verifactu.view_account_resequence_inherit_l10n_es_edi_verifactu
+DEL ir.ui.view: l10n_es_edi_verifactu.view_account_move_reversal_inherit_l10n_es_edi_verifactu
+DEL ir.ui.view: l10n_es_edi_verifactu.view_company_form
+DEL ir.ui.view: l10n_es_edi_verifactu.view_tax_form_inherit_l10n_es_edi_verifactu

@@ -1,0 +1,69 @@
+---Models in module 'hr_skills'---
+obsolete model hr.employee.certification.report [abstract]
+---Fields in module 'hr_skills'---
+hr_skills    / hr.employee.skill        / _order                        : _order is now 'skill_type_id, skill_level_id desc' ('skill_type_id, skill_level_id')
+hr_skills    / hr.employee.skill        / certificate_file (binary)     : NEW attachment: True
+hr_skills    / hr.job.skill             / certificate_file (binary)     : NEW attachment: True
+hr_skills    / hr.resume.line           / certificate_filename (char)   : DEL
+---XML records in module 'hr_skills'---
+NEW ir.access: hr_skills.access_hr_employee_cv_wizard
+NEW ir.access: hr_skills.access_hr_job_skill
+NEW ir.access: hr_skills.access_hr_job_skill_employee
+NEW ir.access: hr_skills.access_hr_resume_line_type
+NEW ir.access: hr_skills.access_hr_resume_line_type_employee
+NEW ir.access: hr_skills.access_hr_skill
+NEW ir.access: hr_skills.access_hr_skill_employee
+NEW ir.access: hr_skills.access_hr_skill_level
+NEW ir.access: hr_skills.access_hr_skill_level_employee
+NEW ir.access: hr_skills.access_hr_skill_type
+NEW ir.access: hr_skills.access_hr_skill_type_employee
+NEW ir.access: hr_skills.hr_employee_skill_history_report_hr_user
+NEW ir.access: hr_skills.hr_employee_skill_history_report_manager
+NEW ir.access: hr_skills.hr_employee_skill_report_hr_user
+NEW ir.access: hr_skills.hr_employee_skill_report_manager
+NEW ir.access: hr_skills.hr_employee_skill_report_multicompany
+NEW ir.access: hr_skills.hr_resume_rule_employee
+NEW ir.access: hr_skills.hr_resume_rule_employee_hr_user
+NEW ir.access: hr_skills.hr_skill_rule_employee
+NEW ir.access: hr_skills.hr_skill_rule_employee_update
+NEW ir.access: hr_skills.hr_skill_rule_hr_user
+NEW ir.access: hr_skills.hr_skills_rule_employee_update
+DEL ir.actions.act_window: hr_skills.hr_employee_certification_report_action
+NEW ir.actions.server: hr_skills.action_server_hr_employee_skill_certification
+DEL ir.model.access: hr_skills.access_hr_employee_certification_report_user
+DEL ir.model.access: hr_skills.access_hr_employee_cv_wizard
+DEL ir.model.access: hr_skills.access_hr_employee_skill
+DEL ir.model.access: hr_skills.access_hr_employee_skill_employee
+DEL ir.model.access: hr_skills.access_hr_employee_skill_history_report
+DEL ir.model.access: hr_skills.access_hr_employee_skill_history_report_manager
+DEL ir.model.access: hr_skills.access_hr_employee_skill_report_manager
+DEL ir.model.access: hr_skills.access_hr_employee_skill_report_user
+DEL ir.model.access: hr_skills.access_hr_job_skill
+DEL ir.model.access: hr_skills.access_hr_job_skill_employee
+DEL ir.model.access: hr_skills.access_hr_resume_line
+DEL ir.model.access: hr_skills.access_hr_resume_line_employee
+DEL ir.model.access: hr_skills.access_hr_resume_line_type
+DEL ir.model.access: hr_skills.access_hr_resume_line_type_employee
+DEL ir.model.access: hr_skills.access_hr_skill
+DEL ir.model.access: hr_skills.access_hr_skill_employee
+DEL ir.model.access: hr_skills.access_hr_skill_level
+DEL ir.model.access: hr_skills.access_hr_skill_level_employee
+DEL ir.model.access: hr_skills.access_hr_skill_type
+DEL ir.model.access: hr_skills.access_hr_skill_type_employee
+DEL ir.rule: hr_skills.hr_employee_skill_history_report_hr_user (noupdate)
+DEL ir.rule: hr_skills.hr_employee_skill_history_report_manager (noupdate)
+DEL ir.rule: hr_skills.hr_employee_skill_report_hr_user (noupdate)
+DEL ir.rule: hr_skills.hr_employee_skill_report_manager (noupdate)
+DEL ir.rule: hr_skills.hr_employee_skill_report_multicompany (noupdate)
+DEL ir.rule: hr_skills.hr_resume_rule_employee (noupdate)
+DEL ir.rule: hr_skills.hr_resume_rule_employee_hr_user (noupdate)
+DEL ir.rule: hr_skills.hr_skill_rule_employee (noupdate)
+DEL ir.rule: hr_skills.hr_skill_rule_employee_update (noupdate)
+DEL ir.rule: hr_skills.hr_skill_rule_hr_user (noupdate)
+DEL ir.rule: hr_skills.hr_skills_rule_employee_update (noupdate)
+DEL ir.ui.menu: hr_skills.hr_employee_certification_report_menu
+DEL ir.ui.menu: hr_skills.hr_employee_skill_report_menu
+DEL ir.ui.view: hr_skills.hr_employee_certification_report_view_list
+DEL ir.ui.view: hr_skills.hr_employee_certification_report_view_pivot
+DEL ir.ui.view: hr_skills.hr_employee_certification_report_view_search
+DEL mail.activity.type: hr_skills.mail_activity_data_upload_certification (noupdate)

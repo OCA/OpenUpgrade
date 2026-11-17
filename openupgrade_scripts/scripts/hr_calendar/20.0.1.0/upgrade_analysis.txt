@@ -1,0 +1,9 @@
+---Models in module 'hr_calendar'---
+model homework.location.wizard (moved from hr_homeworking_calendar) [transient]
+---Fields in module 'hr_calendar'---
+---XML records in module 'hr_calendar'---
+NEW ir.access: hr_calendar.homeworking_location_wizard_admin_rule
+NEW ir.access: hr_calendar.homeworking_location_wizard_own_rule
+NEW ir.actions.act_window: hr_calendar.set_location_wizard_action [renamed from hr_homeworking_calendar module]
+NEW ir.ui.menu: hr_calendar.menu_hr_homeworking_location_menu
+NEW ir.ui.view: hr_calendar.homework_location_wizard_view_form

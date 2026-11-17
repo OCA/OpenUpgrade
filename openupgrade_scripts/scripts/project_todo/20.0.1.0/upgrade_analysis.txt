@@ -1,0 +1,22 @@
+---Models in module 'project_todo'---
+---Fields in module 'project_todo'---
+---XML records in module 'project_todo'---
+NEW digest.tip: project_todo.digest_tip_project_todo_0
+NEW ir.access: project_todo.access_mail_activity_todo_create
+NEW ir.access: project_todo.access_project_task_type_user
+NEW ir.access: project_todo.ir_rule_private_task
+NEW ir.access: project_todo.project_manager_all_project_tasks_rule
+NEW ir.access: project_todo.project_user_read_on_tasks_templates_without_project_rule
+NEW ir.access: project_todo.tags_manager_rule
+NEW ir.access: project_todo.tags_own_write_rule
+NEW ir.access: project_todo.tags_user_rule
+NEW ir.access: project_todo.task_edition_rule_internal
+NEW ir.access: project_todo.task_type_manager_rule
+NEW ir.access: project_todo.task_type_own_write_rule
+NEW ir.access: project_todo.task_visibility_rule
+NEW ir.access: project_todo.task_visibility_rule_project_user
+DEL ir.model.access: project_todo.access_mail_activity_todo_create
+DEL ir.model.access: project_todo.access_project_tags_user
+DEL ir.model.access: project_todo.access_project_task_type_user
+DEL ir.model.access: project_todo.access_task_on_partner
+DEL ir.rule: project_todo.task_edition_rule_internal (noupdate)

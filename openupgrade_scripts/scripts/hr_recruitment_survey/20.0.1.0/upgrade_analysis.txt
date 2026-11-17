@@ -1,0 +1,47 @@
+---Models in module 'hr_recruitment_survey'---
+new model hr.recruitment.survey.invite [transient]
+---Fields in module 'hr_recruitment_survey'---
+---XML records in module 'hr_recruitment_survey'---
+NEW ir.access: hr_recruitment_survey.survey_invite_recruitment_interviewer
+NEW ir.access: hr_recruitment_survey.survey_invite_recruitment_manager
+NEW ir.access: hr_recruitment_survey.survey_invite_recruitment_user
+NEW ir.access: hr_recruitment_survey.survey_question_answer_rule_recruitment_manager
+NEW ir.access: hr_recruitment_survey.survey_question_recruitment_interviewer
+NEW ir.access: hr_recruitment_survey.survey_question_rule_recruitment_manager
+NEW ir.access: hr_recruitment_survey.survey_survey_recruitment_interviewer
+NEW ir.access: hr_recruitment_survey.survey_survey_rule_recruitment_manager
+NEW ir.access: hr_recruitment_survey.survey_user_input_line_rule_recruitment_interviewer
+NEW ir.access: hr_recruitment_survey.survey_user_input_line_rule_recruitment_manager
+NEW ir.access: hr_recruitment_survey.survey_user_input_line_rule_recruitment_user
+NEW ir.access: hr_recruitment_survey.survey_user_input_rule_recruitment_interviewer
+NEW ir.access: hr_recruitment_survey.survey_user_input_rule_recruitment_manager
+NEW ir.access: hr_recruitment_survey.survey_user_input_rule_recruitment_user
+NEW ir.actions.server: hr_recruitment_survey.action_applicant_send_interview
+DEL ir.model.access: hr_recruitment_survey.access_survey_invite_recruitment_interviewer
+DEL ir.model.access: hr_recruitment_survey.access_survey_invite_recruitment_user
+DEL ir.model.access: hr_recruitment_survey.access_survey_question_answer_recruitment_manager
+DEL ir.model.access: hr_recruitment_survey.access_survey_question_recruitment_interviewer
+DEL ir.model.access: hr_recruitment_survey.access_survey_question_recruitment_manager
+DEL ir.model.access: hr_recruitment_survey.access_survey_survey_recruitment_interviewer
+DEL ir.model.access: hr_recruitment_survey.access_survey_survey_recruitment_manager
+DEL ir.model.access: hr_recruitment_survey.access_survey_user_input_line_recruitment_interviewer
+DEL ir.model.access: hr_recruitment_survey.access_survey_user_input_line_recruitment_manager
+DEL ir.model.access: hr_recruitment_survey.access_survey_user_input_line_recruitment_user
+DEL ir.model.access: hr_recruitment_survey.access_survey_user_input_recruitment_interviewer
+DEL ir.model.access: hr_recruitment_survey.access_survey_user_input_recruitment_manager
+DEL ir.model.access: hr_recruitment_survey.access_survey_user_input_recruitment_user
+DEL ir.rule: hr_recruitment_survey.survey_invite_recruitment_interviewer (noupdate)
+DEL ir.rule: hr_recruitment_survey.survey_invite_recruitment_manager (noupdate)
+DEL ir.rule: hr_recruitment_survey.survey_invite_recruitment_user (noupdate)
+DEL ir.rule: hr_recruitment_survey.survey_question_answer_rule_recruitment_manager (noupdate)
+DEL ir.rule: hr_recruitment_survey.survey_question_recruitment_interviewer (noupdate)
+DEL ir.rule: hr_recruitment_survey.survey_question_rule_recruitment_manager (noupdate)
+DEL ir.rule: hr_recruitment_survey.survey_survey_recruitment_interviewer (noupdate)
+DEL ir.rule: hr_recruitment_survey.survey_survey_rule_recruitment_manager (noupdate)
+DEL ir.rule: hr_recruitment_survey.survey_user_input_line_rule_recruitment_interviewer (noupdate)
+DEL ir.rule: hr_recruitment_survey.survey_user_input_line_rule_recruitment_manager (noupdate)
+DEL ir.rule: hr_recruitment_survey.survey_user_input_line_rule_recruitment_user (noupdate)
+DEL ir.rule: hr_recruitment_survey.survey_user_input_rule_recruitment_interviewer (noupdate)
+DEL ir.rule: hr_recruitment_survey.survey_user_input_rule_recruitment_manager (noupdate)
+DEL ir.rule: hr_recruitment_survey.survey_user_input_rule_recruitment_user (noupdate)
+NEW ir.ui.view: hr_recruitment_survey.hr_recruitment_survey_invite_view_form

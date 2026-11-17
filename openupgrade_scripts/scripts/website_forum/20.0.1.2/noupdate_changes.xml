@@ -1,0 +1,118 @@
+<?xml version='1.0' encoding='utf-8'?>
+<odoo>
+  <template id="forum_post_template_new_answer">
+    <p>A new answer on <i t-out="object.forum_id.name"/> has been posted. Click here to access the question:</p>
+    <t t-call="website_forum.forum_post_link" label.translate="See answer"/>
+  </template>
+  <template id="forum_post_template_new_question">
+    <p>A new question <b t-out="object.name"/> on <i t-out="object.forum_id.name"/> has been posted. Click here to access the question :</p>
+    <t t-call="website_forum.forum_post_link" label.translate="See question"/>
+  </template>
+  <template id="forum_post_template_validation">
+    <p>A new question <b t-out="object.name"/> on <i t-out="object.forum_id.name"/> has been posted and requires your validation. Click here to access the question :</p>
+    <t t-call="website_forum.forum_post_link" label.translate="Validate question"/>
+  </template>
+  <record id="forum_post_view_form" model="ir.ui.view">
+    <field name="arch" type="xml">
+      <form string="Forum Post">
+        <sheet>
+          <div class="oe_button_box" name="button_box">
+            <button type="object" class="oe_stat_button" icon="public" name="go_to_website">
+              <div class="o_form_field o_stat_info">
+                <span class="o_stat_text">Go to <br/>Website</span>
+              </div>
+            </button>
+          </div>
+          <widget name="web_ribbon" title="Archived" bg_color="text-bg-danger" invisible="active"/>
+          <label for="name"/>
+          <h1>
+            <field name="name" placeholder="e.g. When should I plant my tomatoes?"/>
+          </h1>
+          <group>
+            <group name="forum_details">
+              <field name="forum_id"/>
+              <field name="website_id" groups="website.group_multi_website"/>
+              <field name="parent_id" invisible="not parent_id"/>
+            </group>
+            <group name="post_details">
+              <field name="tag_ids" widget="many2many_tags" options="{'color_field': 'color', 'on_tag_click': 'edit_color'}"/>
+              <field name="state"/>
+              <field name="closed_reason_id" invisible="not closed_reason_id"/>
+              <field name="closed_uid" invisible="not closed_uid"/>
+              <field name="closed_date" invisible="not closed_date"/>
+            </group>
+            <group name="creation_details">
+              <field name="create_uid"/>
+              <field name="create_date"/>
+              <field name="write_uid"/>
+              <field name="write_date"/>
+            </group>
+            <group name="post_statistics">
+              <field name="is_correct" invisible="not parent_id"/>
+              <field name="views"/>
+              <field name="vote_count"/>
+              <field name="favourite_count"/>
+              <field name="child_count"/>
+              <field name="relevancy"/>
+            </group>
+          </group>
+          <group name="answers" string="Answers" invisible="parent_id">
+            <field name="child_ids" nolabel="1">
+              <list>
+                <field name="create_uid" string="Answered by"/>
+                <field name="vote_count"/>
+                <field name="state"/>
+                <field name="is_correct"/>
+              </list>
+            </field>
+          </group>
+        </sheet>
+        <chatter/>
+      </form>
+    </field>
+  </record>
+  <record id="forum_post_view_kanban" model="ir.ui.view">
+    <field name="arch" type="xml">
+      <kanban js_class="website_pages_kanban" create="false" action="go_to_website" type="object" sample="1">
+        <field name="parent_id"/>
+        <templates>
+          <t t-name="card">
+            <field name="name" class="text-truncate fw-bold"/>
+            <div class="text-muted text-truncate fw-bold" t-if="record.website_id.value" groups="website.group_multi_website">
+              <i class="oi me-1" data-icon="public" title="Website"/>
+              <field name="website_id"/>
+            </div>
+            <div class="text-muted text-truncate fw-bold">
+              <i class="oi me-1" data-icon="forum" title="Forum"/>
+              <field name="forum_id"/>
+              <span t-if="!record.parent_id.raw_value" class="ms-3"><field name="child_count"/> Answers</span>
+            </div>
+            <div class="row">
+              <div class="col-6 text-primary">
+                <i class="oi me-1" data-icon="visibility" title="Views"/>
+                <field name="views"/>
+              </div>
+              <div class="col-6">
+                <field name="create_uid" widget="many2one_avatar_user" class="float-end"/>
+              </div>
+            </div>
+          </t>
+        </templates>
+      </kanban>
+    </field>
+  </record>
+  <record id="forum_post_view_tree" model="ir.ui.view">
+    <field name="arch" type="xml">
+      <list js_class="website_pages_list" create="false" type="object" action="go_to_website" multi_edit="1">
+        <field name="name"/>
+        <field name="website_url"/>
+        <field name="forum_id" optional="show"/>
+        <field name="views" string="# Views" sum="Total Views" optional="hide"/>
+        <field name="child_count" string="# Answers" sum="Total Answers" optional="hide"/>
+        <field name="state" widget="badge" decoration-success="state == 'active'" decoration-danger="state == 'close'" decoration-warning="state not in ('active', 'close')" optional="show"/>
+        <field name="is_seo_optimized"/>
+        <field name="website_id" groups="website.group_multi_website"/>
+      </list>
+    </field>
+  </record>
+</odoo>

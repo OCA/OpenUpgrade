@@ -1,0 +1,51 @@
+---Models in module 'website_event_track'---
+---Fields in module 'website_event_track'---
+website_event_track / event.event              / location_display_background (binary): NEW attachment: True
+website_event_track / event.event              / location_display_upcoming_track_count (selection): NEW required, selection_keys: ['2', '3', '4', '5'], hasdefault: default
+website_event_track / event.track              / publish_on (datetime)         : NEW
+website_event_track / event.track              / published_date (datetime)     : NEW
+website_event_track / event.track              / website_message_ids (one2many): DEL relation: mail.message
+---XML records in module 'website_event_track'---
+NEW ir.access: website_event_track.access_event_track_employee
+NEW ir.access: website_event_track.access_event_track_location_manager
+NEW ir.access: website_event_track.access_event_track_location_user
+NEW ir.access: website_event_track.access_event_track_manager
+NEW ir.access: website_event_track.access_event_track_stage_manager
+NEW ir.access: website_event_track.access_event_track_stage_public
+NEW ir.access: website_event_track.access_event_track_tag_category_user
+NEW ir.access: website_event_track.access_event_track_tag_employee
+NEW ir.access: website_event_track.access_event_track_tag_manager
+NEW ir.access: website_event_track.access_event_track_tag_user
+NEW ir.access: website_event_track.access_event_track_user
+NEW ir.access: website_event_track.access_event_track_visitor_manager
+NEW ir.access: website_event_track.event_track_public
+NEW ir.access: website_event_track.ir_rule_event_track_tag_public
+DEL ir.asset: website_event_track.s_searchbar_000_xml
+DEL ir.model.access: website_event_track.access_event_track_employee
+DEL ir.model.access: website_event_track.access_event_track_location_manager
+DEL ir.model.access: website_event_track.access_event_track_location_user
+DEL ir.model.access: website_event_track.access_event_track_manager
+DEL ir.model.access: website_event_track.access_event_track_portal
+DEL ir.model.access: website_event_track.access_event_track_public
+DEL ir.model.access: website_event_track.access_event_track_stage_employee
+DEL ir.model.access: website_event_track.access_event_track_stage_manager
+DEL ir.model.access: website_event_track.access_event_track_stage_portal
+DEL ir.model.access: website_event_track.access_event_track_stage_public
+DEL ir.model.access: website_event_track.access_event_track_tag_category_user
+DEL ir.model.access: website_event_track.access_event_track_tag_employee
+DEL ir.model.access: website_event_track.access_event_track_tag_manager
+DEL ir.model.access: website_event_track.access_event_track_tag_portal
+DEL ir.model.access: website_event_track.access_event_track_tag_public
+DEL ir.model.access: website_event_track.access_event_track_tag_user
+DEL ir.model.access: website_event_track.access_event_track_user
+DEL ir.model.access: website_event_track.access_event_track_visitor
+DEL ir.model.access: website_event_track.access_event_track_visitor_manager
+DEL ir.rule: website_event_track.event_track_public (noupdate)
+DEL ir.rule: website_event_track.ir_rule_event_track_tag_public (noupdate)
+NEW ir.ui.view: website_event_track.event_track_location_display
+NEW ir.ui.view: website_event_track.event_track_location_display_content
+NEW ir.ui.view: website_event_track.event_track_location_display_empty_state
+NEW ir.ui.view: website_event_track.event_track_location_display_no_cookies_bar
+NEW ir.ui.view: website_event_track.event_track_location_display_speaker
+NEW ir.ui.view: website_event_track.event_track_location_display_track
+NEW ir.ui.view: website_event_track.website_event_track_favorite_submenu

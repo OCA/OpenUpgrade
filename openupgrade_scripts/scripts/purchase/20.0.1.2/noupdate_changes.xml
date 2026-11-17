@@ -1,0 +1,13 @@
+<?xml version='1.0' encoding='utf-8'?>
+<odoo>
+  <record id="email_template_edi_purchase" model="mail.template">
+    <field name="subject">{{ object.company_id.name }} Request for Quotation (Ref {{ object.name or 'n/a' }})</field>
+    <field name="email_layout_xmlid">mail.mail_notification_layout_with_responsible_signature</field>
+  </record>
+  <record id="email_template_edi_purchase_done" model="mail.template">
+    <field name="email_layout_xmlid">mail.mail_notification_layout_with_responsible_signature</field>
+  </record>
+  <record id="email_template_edi_purchase_reminder" model="mail.template">
+    <field name="email_layout_xmlid">mail.mail_notification_layout_with_responsible_signature</field>
+  </record>
+</odoo>

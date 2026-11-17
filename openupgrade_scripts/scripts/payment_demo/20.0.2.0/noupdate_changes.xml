@@ -1,0 +1,14 @@
+<?xml version='1.0' encoding='utf-8'?>
+<odoo>
+  <record id="payment.payment_provider_demo" model="payment.provider">
+    <field name="payment_method_ids" eval="None"/>
+  </record>
+  <record id="payment_method_demo" model="payment.method">
+    <field name="allow_amount_selection">True</field>
+    <field name="provider_id" ref="payment.payment_provider_demo"/>
+  </record>
+  <record id="payment_method_unknown" model="payment.method">
+    <field name="name">Express Checkout</field>
+    <field name="provider_id" ref="payment.payment_provider_demo"/>
+  </record>
+</odoo>

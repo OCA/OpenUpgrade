@@ -1,0 +1,82 @@
+---Models in module 'im_livechat'---
+obsolete model im_livechat.conversation.tag
+---Fields in module 'im_livechat'---
+im_livechat  / chatbot.script           / source_id (many2one)          : DEL relation: utm.source, required
+im_livechat  / discuss.channel          / livechat_conversation_tag_ids (many2many): DEL relation: im_livechat.conversation.tag
+im_livechat  / discuss.channel          / livechat_looking_for_help_since_dt (datetime): NEW isfunction: function, stored
+im_livechat  / discuss.channel          / livechat_operator_id (many2one): DEL relation: res.partner
+im_livechat  / discuss.channel          / livechat_rating (selection)   : NEW selection_keys: ['1', '3', '5']
+im_livechat  / discuss.channel          / livechat_status (selection)   : selection_keys removed: [waiting]
+im_livechat  / discuss.channel          / rating_last_text (selection)  : DEL selection_keys: function
+im_livechat  / discuss.channel          / rating_last_value (float)     : DEL
+im_livechat  / im_livechat.channel      / rating_ids (one2many)         : DEL relation: rating.rating
+im_livechat  / im_livechat.channel      / rating_percentage_satisfaction (integer): type is now 'float' ('integer')
+im_livechat  / im_livechat.channel.member.history / rating (float)                : is now stored
+im_livechat  / im_livechat.channel.member.history / rating (float)                : not related anymore
+im_livechat  / im_livechat.channel.member.history / rating (float)                : now a function
+im_livechat  / im_livechat.channel.member.history / rating (float)                : selection_keys is now '['1', '3', '5']' ('False')
+im_livechat  / im_livechat.channel.member.history / rating (float)                : type is now 'selection' ('float')
+im_livechat  / im_livechat.channel.member.history / rating_id (many2one)          : DEL relation: rating.rating
+im_livechat  / im_livechat.conversation.tag / color (integer)               : DEL
+im_livechat  / im_livechat.conversation.tag / conversation_ids (many2many)  : DEL relation: discuss.channel
+im_livechat  / im_livechat.conversation.tag / name (char)                   : DEL required
+im_livechat  / im_livechat.expertise    / color (integer)               : NEW
+im_livechat  / mail.message             / chatbot_message_ids (one2many): NEW relation: chatbot.message
+---XML records in module 'im_livechat'---
+NEW ir.access: im_livechat.access_chatbot_message_user
+NEW ir.access: im_livechat.access_chatbot_script_answer_user
+NEW ir.access: im_livechat.access_chatbot_script_step_user
+NEW ir.access: im_livechat.access_chatbot_script_user
+NEW ir.access: im_livechat.access_im_livechat_channel_member_history_user
+NEW ir.access: im_livechat.access_livechat_channel_manager
+NEW ir.access: im_livechat.access_livechat_channel_rule_manager
+NEW ir.access: im_livechat.access_livechat_channel_rule_user
+NEW ir.access: im_livechat.access_livechat_channel_user
+NEW ir.access: im_livechat.access_livechat_expertise_internal_user
+NEW ir.access: im_livechat.access_livechat_expertise_livechat_manager
+NEW ir.access: im_livechat.access_livechat_support_report_channel
+NEW ir.access: im_livechat.ir_rule_discuss_call_history_im_livechat_group_user
+NEW ir.access: im_livechat.ir_rule_discuss_channel_im_livechat_group_user
+NEW ir.access: im_livechat.ir_rule_discuss_channel_member_im_livechat_group_user
+NEW ir.actions.act_window: im_livechat.im_livechat_channel_config_action
+DEL ir.actions.act_window: im_livechat.discuss_channel_looking_for_help_action
+DEL ir.actions.act_window: im_livechat.livechat_conversation_tag_action
+NEW ir.actions.act_window.view: im_livechat.im_livechat_channel_config_action_kanban
+NEW ir.actions.act_window.view: im_livechat.im_livechat_channel_config_action_list
+DEL ir.actions.act_window.view: im_livechat.discuss_channel_looking_for_help_action_form
+DEL ir.actions.act_window.view: im_livechat.discuss_channel_looking_for_help_action_kanban
+DEL ir.actions.act_window.view: im_livechat.discuss_channel_looking_for_help_action_list
+DEL ir.model.access: im_livechat.access_chatbot_message_user
+DEL ir.model.access: im_livechat.access_chatbot_script_answer
+DEL ir.model.access: im_livechat.access_chatbot_script_answer_user
+DEL ir.model.access: im_livechat.access_chatbot_script_step_user
+DEL ir.model.access: im_livechat.access_chatbot_script_user
+DEL ir.model.access: im_livechat.access_im_livechat_channel_member_history_user
+DEL ir.model.access: im_livechat.access_livechat_channel_manager
+DEL ir.model.access: im_livechat.access_livechat_channel_rule_manager
+DEL ir.model.access: im_livechat.access_livechat_channel_rule_user
+DEL ir.model.access: im_livechat.access_livechat_channel_user
+DEL ir.model.access: im_livechat.access_livechat_conversation_tag_livechat_manager
+DEL ir.model.access: im_livechat.access_livechat_conversation_tag_livechat_user
+DEL ir.model.access: im_livechat.access_livechat_expertise_internal_user
+DEL ir.model.access: im_livechat.access_livechat_expertise_livechat_manager
+DEL ir.model.access: im_livechat.access_livechat_support_report_channel
+NEW ir.model.constraint: im_livechat.constraint_discuss_channel_livechat_looking_for_help_since_dt_constraint
+NEW ir.model.constraint: im_livechat.constraint_discuss_channel_livechat_rating_constraint
+DEL ir.model.constraint: im_livechat.constraint_discuss_channel_livechat_operator_id
+DEL ir.model.constraint: im_livechat.constraint_im_livechat_conversation_tag_name_unique
+DEL ir.rule: im_livechat.ir_rule_discuss_call_history_im_livechat_group_user (noupdate)
+DEL ir.rule: im_livechat.ir_rule_discuss_channel_im_livechat_group_user (noupdate)
+DEL ir.rule: im_livechat.ir_rule_discuss_channel_member_im_livechat_group_user (noupdate)
+NEW ir.ui.menu: im_livechat.livechat_channels_config
+DEL ir.ui.menu: im_livechat.menu_livechat_all_conversations
+DEL ir.ui.menu: im_livechat.menu_livechat_conversation_tag
+DEL ir.ui.menu: im_livechat.menu_livechat_looking_for_help
+NEW ir.ui.view: im_livechat.im_livechat_channel_config_view_kanban
+NEW ir.ui.view: im_livechat.im_livechat_channel_view_list
+DEL ir.ui.view: im_livechat.discuss_channel_looking_for_help_view_kanban
+DEL ir.ui.view: im_livechat.discuss_channel_looking_for_help_view_list
+DEL ir.ui.view: im_livechat.discuss_channel_looking_for_help_view_search
+DEL ir.ui.view: im_livechat.im_livechat_channel_conversation_tag_view_form
+DEL ir.ui.view: im_livechat.im_livechat_channel_conversation_tag_view_list
+NEW utm.source: im_livechat.utm_source_chatbot
