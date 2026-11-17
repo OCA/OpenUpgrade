@@ -1,4 +1,5 @@
 ---Models in module 'website_sale_wishlist'---
 ---Fields in module 'website_sale_wishlist'---
 ---XML records in module 'website_sale_wishlist'---
+ir.model.constraint: website_sale_wishlist.constraint_product_wishlist_product_unique_partner_id (changed definition: is now 'unique(product_id,partner_id,website_id)' ('unique(product_id,partner_id)'))
 NEW ir.ui.view: website_sale_wishlist.product_cart_lines
