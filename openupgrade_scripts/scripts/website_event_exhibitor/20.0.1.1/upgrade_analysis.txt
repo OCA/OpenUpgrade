@@ -1,0 +1,16 @@
+---Models in module 'website_event_exhibitor'---
+---Fields in module 'website_event_exhibitor'---
+website_event_exhibitor / event.sponsor            / publish_on (datetime)         : NEW
+website_event_exhibitor / event.sponsor            / published_date (datetime)     : NEW
+website_event_exhibitor / event.sponsor            / website_message_ids (one2many): DEL relation: mail.message
+---XML records in module 'website_event_exhibitor'---
+NEW ir.access: website_event_exhibitor.access_event_sponsor_manager
+NEW ir.access: website_event_exhibitor.access_event_sponsor_public_employee
+NEW ir.access: website_event_exhibitor.access_event_sponsor_type_manager
+NEW ir.access: website_event_exhibitor.event_sponsor_rule_share
+DEL ir.model.access: website_event_exhibitor.access_event_sponsor_manager
+DEL ir.model.access: website_event_exhibitor.access_event_sponsor_public_employee
+DEL ir.model.access: website_event_exhibitor.access_event_sponsor_public_portal
+DEL ir.model.access: website_event_exhibitor.access_event_sponsor_public_public
+DEL ir.model.access: website_event_exhibitor.access_event_sponsor_type_manager
+DEL ir.rule: website_event_exhibitor.event_sponsor_rule_share (noupdate)

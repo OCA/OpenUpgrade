@@ -1,0 +1,10 @@
+---Models in module 'l10n_ar_stock'---
+---Fields in module 'l10n_ar_stock'---
+l10n_ar_stock / stock.picking            / l10n_ar_delivery_guide_cron_user_id (many2one): NEW relation: res.users
+---XML records in module 'l10n_ar_stock'---
+NEW ir.actions.server: l10n_ar_stock.action_generate_delivery_guide
+NEW ir.actions.server: l10n_ar_stock.action_generate_delivery_guide_for_batch
+NEW ir.actions.server: l10n_ar_stock.action_send_delivery_guide
+NEW ir.actions.server: l10n_ar_stock.action_send_delivery_guide_for_batch
+NEW ir.cron: l10n_ar_stock.ir_cron_l10n_ar_send_delivery_guide (noupdate)
+NEW ir.ui.view: l10n_ar_stock.stock_picking_batch_form

@@ -1,0 +1,7 @@
+---Models in module 'mail_tracking_mass_mailing'---
+---Fields in module 'mail_tracking_mass_mailing'---
+mail_tracking_mass_mailing / mail.message             / source_mailing_id (many2one)  : NEW relation: mailing.mailing
+---XML records in module 'mail_tracking_mass_mailing'---
+NEW ir.ui.view: mail_tracking_mass_mailing.mail_message_view_form
+NEW ir.ui.view: mail_tracking_mass_mailing.mail_message_view_list
+NEW ir.ui.view: mail_tracking_mass_mailing.mail_message_view_search

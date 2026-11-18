@@ -1,0 +1,15 @@
+---Models in module 'l10n_sa'---
+new model zatca.mixin [abstract]
+---Fields in module 'l10n_sa'---
+l10n_sa      / account.move             / l10n_sa_invoice_type (selection): NEW selection_keys: ['simplified', 'tax'], hasdefault: compute
+---XML records in module 'l10n_sa'---
+NEW ir.ui.view: l10n_sa.external_layout_footer_content
+NEW ir.ui.view: l10n_sa.l10n_sa_external_layout_center
+NEW ir.ui.view: l10n_sa.l10n_sa_external_layout_compact
+NEW ir.ui.view: l10n_sa.l10n_sa_external_layout_dual
+NEW ir.ui.view: l10n_sa.l10n_sa_external_layout_lines
+NEW ir.ui.view: l10n_sa.res_config_settings_view_form
+DEL ir.ui.view: l10n_sa.l10n_sa_additional_footer
+DEL ir.ui.view: l10n_sa.l10n_sa_external_layout_bold
+DEL ir.ui.view: l10n_sa.l10n_sa_external_layout_boxed
+DEL ir.ui.view: l10n_sa.l10n_sa_external_layout_striped

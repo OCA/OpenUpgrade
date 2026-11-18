@@ -1,0 +1,279 @@
+<?xml version='1.0' encoding='utf-8'?>
+<odoo>
+  <record id="UZS" model="res.currency">
+    <field name="symbol">so'm</field>
+  </record>
+  <record id="ae" model="res.country">
+    <field name="zip_applicability">not_applicable</field>
+  </record>
+  <record id="ag" model="res.country">
+    <field name="zip_applicability">not_applicable</field>
+  </record>
+  <record id="ao" model="res.country">
+    <field name="zip_applicability">not_applicable</field>
+  </record>
+  <record id="aw" model="res.country">
+    <field name="zip_applicability">not_applicable</field>
+  </record>
+  <record id="bf" model="res.country">
+    <field name="zip_applicability">not_applicable</field>
+  </record>
+  <record id="bh" model="res.country">
+    <field eval="'%(street)s\n%(street2)s\n%(city)s %(state_name)s %(zip)s\n%(country_name)s'" name="address_format"/>
+  </record>
+  <record id="bi" model="res.country">
+    <field name="zip_applicability">not_applicable</field>
+  </record>
+  <record id="bj" model="res.country">
+    <field name="zip_applicability">not_applicable</field>
+  </record>
+  <record id="br" model="res.country">
+    <field name="vat_label">CNPJ</field>
+  </record>
+  <record id="bs" model="res.country">
+    <field name="zip_applicability">not_applicable</field>
+  </record>
+  <record id="bw" model="res.country">
+    <field name="zip_applicability">not_applicable</field>
+  </record>
+  <record id="bz" model="res.country">
+    <field name="zip_applicability">not_applicable</field>
+  </record>
+  <record id="cd" model="res.country">
+    <field name="zip_applicability">not_applicable</field>
+  </record>
+  <record id="cf" model="res.country">
+    <field name="zip_applicability">not_applicable</field>
+  </record>
+  <record id="cg" model="res.country">
+    <field name="zip_applicability">not_applicable</field>
+  </record>
+  <record id="ci" model="res.country">
+    <field name="vat_label">NCC</field>
+    <field name="zip_applicability">not_applicable</field>
+  </record>
+  <record id="ck" model="res.country">
+    <field name="zip_applicability">not_applicable</field>
+  </record>
+  <record id="cl" model="res.country">
+    <field name="zip_applicability">optional</field>
+  </record>
+  <record id="cm" model="res.country">
+    <field name="zip_applicability">not_applicable</field>
+  </record>
+  <record id="co" model="res.country">
+    <field name="zip_applicability">optional</field>
+  </record>
+  <record id="cw" model="res.country">
+    <field name="zip_applicability">not_applicable</field>
+  </record>
+  <record id="default_max_email_size" model="ir.config_parameter">
+    <field name="value">20</field>
+  </record>
+  <record id="dj" model="res.country">
+    <field name="zip_applicability">not_applicable</field>
+  </record>
+  <record id="dm" model="res.country">
+    <field name="zip_applicability">not_applicable</field>
+  </record>
+  <record id="ec" model="res.country">
+    <field name="zip_applicability">optional</field>
+  </record>
+  <record id="eg" model="res.country">
+    <field name="zip_applicability">optional</field>
+  </record>
+  <record id="er" model="res.country">
+    <field name="zip_applicability">not_applicable</field>
+  </record>
+  <record id="fj" model="res.country">
+    <field name="zip_applicability">not_applicable</field>
+  </record>
+  <record id="ga" model="res.country">
+    <field name="zip_applicability">not_applicable</field>
+  </record>
+  <record id="gd" model="res.country">
+    <field name="zip_applicability">not_applicable</field>
+  </record>
+  <record id="gh" model="res.country">
+    <field name="zip_applicability">optional</field>
+  </record>
+  <record id="gm" model="res.country">
+    <field name="zip_applicability">not_applicable</field>
+  </record>
+  <record id="gn" model="res.country">
+    <field name="zip_applicability">not_applicable</field>
+  </record>
+  <record id="gq" model="res.country">
+    <field name="zip_applicability">not_applicable</field>
+  </record>
+  <record id="gy" model="res.country">
+    <field name="zip_applicability">not_applicable</field>
+  </record>
+  <record id="hk" model="res.country">
+    <field name="vat_label">BRN</field>
+    <field name="zip_applicability">not_applicable</field>
+  </record>
+  <record id="id" model="res.country">
+    <field name="vat_label">NPWP/NIK</field>
+  </record>
+  <record id="ie" model="res.country">
+    <field name="zip_applicability">optional</field>
+  </record>
+  <record id="jm" model="res.country">
+    <field name="zip_applicability">not_applicable</field>
+  </record>
+  <record id="ke" model="res.country">
+    <field name="zip_applicability">optional</field>
+  </record>
+  <record id="ki" model="res.country">
+    <field name="zip_applicability">not_applicable</field>
+  </record>
+  <record id="km" model="res.country">
+    <field name="zip_applicability">not_applicable</field>
+  </record>
+  <record id="kn" model="res.country">
+    <field name="zip_applicability">not_applicable</field>
+  </record>
+  <record id="kp" model="res.country">
+    <field name="zip_applicability">not_applicable</field>
+  </record>
+  <record id="kr" model="res.country">
+    <field name="vat_label">BRN</field>
+  </record>
+  <record id="kw" model="res.country">
+    <field eval="'%(street)s\n%(street2)s\n%(city)s %(state_name)s %(zip)s\n%(country_name)s'" name="address_format"/>
+  </record>
+  <record id="lc" model="res.country">
+    <field name="zip_applicability">not_applicable</field>
+  </record>
+  <record id="main_partner" model="res.partner">
+    <field name="is_company" eval="False"/>
+  </record>
+  <record id="ml" model="res.country">
+    <field name="zip_applicability">not_applicable</field>
+  </record>
+  <record id="mo" model="res.country">
+    <field name="zip_applicability">not_applicable</field>
+  </record>
+  <record id="mr" model="res.country">
+    <field name="zip_applicability">not_applicable</field>
+  </record>
+  <record id="ms" model="res.country">
+    <field name="zip_applicability">not_applicable</field>
+  </record>
+  <record id="mu" model="res.country">
+    <field name="zip_applicability">optional</field>
+  </record>
+  <record id="mw" model="res.country">
+    <field name="zip_applicability">optional</field>
+  </record>
+  <record id="my" model="res.country">
+    <field eval="'%(street)s\n%(street2)s\n%(zip)s %(city)s\n%(state_name)s\n%(country_name)s'" name="address_format"/>
+  </record>
+  <record id="na" model="res.country">
+    <field name="zip_applicability">optional</field>
+  </record>
+  <record id="nr" model="res.country">
+    <field name="zip_applicability">not_applicable</field>
+  </record>
+  <record id="nu" model="res.country">
+    <field name="zip_applicability">not_applicable</field>
+  </record>
+  <record id="pa" model="res.country">
+    <field name="zip_applicability">optional</field>
+  </record>
+  <record id="pe" model="res.country">
+    <field name="zip_applicability">optional</field>
+  </record>
+  <record id="ph" model="res.country">
+    <field name="vat_label">TIN</field>
+  </record>
+  <record id="pk" model="res.country">
+    <field eval="'%(street)s\n%(street2)s\n%(city)s %(state_name)s %(zip)s\n%(country_name)s'" name="address_format"/>
+  </record>
+  <record id="qa" model="res.country">
+    <field eval="'%(street)s\n%(street2)s\n%(city)s %(state_name)s %(zip)s\n%(country_name)s'" name="address_format"/>
+    <field name="zip_applicability">not_applicable</field>
+  </record>
+  <record id="rw" model="res.country">
+    <field name="zip_applicability">not_applicable</field>
+  </record>
+  <record id="sa" model="res.country">
+    <field name="zip_applicability">optional</field>
+  </record>
+  <record id="sb" model="res.country">
+    <field name="zip_applicability">not_applicable</field>
+  </record>
+  <record id="sc" model="res.country">
+    <field name="zip_applicability">not_applicable</field>
+  </record>
+  <record id="sl" model="res.country">
+    <field name="zip_applicability">not_applicable</field>
+  </record>
+  <record id="so" model="res.country">
+    <field name="zip_applicability">not_applicable</field>
+  </record>
+  <record id="sr" model="res.country">
+    <field name="zip_applicability">not_applicable</field>
+  </record>
+  <record id="ss" model="res.country">
+    <field name="zip_applicability">not_applicable</field>
+  </record>
+  <record id="st" model="res.country">
+    <field name="zip_applicability">not_applicable</field>
+  </record>
+  <record id="sx" model="res.country">
+    <field name="zip_applicability">not_applicable</field>
+  </record>
+  <record id="sy" model="res.country">
+    <field name="zip_applicability">not_applicable</field>
+  </record>
+  <record id="td" model="res.country">
+    <field name="zip_applicability">not_applicable</field>
+  </record>
+  <record id="tg" model="res.country">
+    <field name="zip_applicability">not_applicable</field>
+  </record>
+  <record id="tk" model="res.country">
+    <field name="zip_applicability">not_applicable</field>
+  </record>
+  <record id="tl" model="res.country">
+    <field name="zip_applicability">not_applicable</field>
+  </record>
+  <record id="to" model="res.country">
+    <field name="zip_applicability">not_applicable</field>
+  </record>
+  <record id="tt" model="res.country">
+    <field name="zip_applicability">not_applicable</field>
+  </record>
+  <record id="tv" model="res.country">
+    <field name="zip_applicability">not_applicable</field>
+  </record>
+  <record id="tz" model="res.country">
+    <field name="zip_applicability">optional</field>
+  </record>
+  <record id="ug" model="res.country">
+    <field name="zip_applicability">not_applicable</field>
+  </record>
+  <record id="us" model="res.country">
+    <field name="vat_label">TIN</field>
+  </record>
+  <record id="vc" model="res.country">
+    <field name="zip_applicability">not_applicable</field>
+  </record>
+  <record id="vn" model="res.country">
+    <field name="zip_applicability">optional</field>
+  </record>
+  <record id="vu" model="res.country">
+    <field name="zip_applicability">not_applicable</field>
+  </record>
+  <record id="ye" model="res.country">
+    <field name="zip_applicability">not_applicable</field>
+  </record>
+  <record id="za" model="res.country">
+    <field name="zip_applicability">optional</field>
+  </record>
+  <record id="zw" model="res.country">
+    <field name="zip_applicability">not_applicable</field>
+  </record>
+</odoo>

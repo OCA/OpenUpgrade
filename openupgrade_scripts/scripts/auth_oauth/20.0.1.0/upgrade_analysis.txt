@@ -1,0 +1,6 @@
+---Models in module 'auth_oauth'---
+---Fields in module 'auth_oauth'---
+auth_oauth   / auth.oauth.provider      / icon (char)                   : NEW hasdefault: default
+---XML records in module 'auth_oauth'---
+NEW ir.access: auth_oauth.access_auth_oauth_provider
+DEL ir.model.access: auth_oauth.access_auth_oauth_provider

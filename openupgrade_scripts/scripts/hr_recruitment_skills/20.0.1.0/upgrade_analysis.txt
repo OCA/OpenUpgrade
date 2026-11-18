@@ -1,0 +1,17 @@
+---Models in module 'hr_recruitment_skills'---
+---Fields in module 'hr_recruitment_skills'---
+hr_recruitment_skills / hr.applicant             / degree_score (integer)        : NEW isfunction: function, stored
+hr_recruitment_skills / hr.applicant             / matching_score (integer)      : is now stored
+hr_recruitment_skills / hr.applicant             / skills_score (integer)        : NEW isfunction: function, stored
+hr_recruitment_skills / hr.applicant.skill       / certificate_file (binary)     : NEW attachment: True
+---XML records in module 'hr_recruitment_skills'---
+NEW ir.access: hr_recruitment_skills.access_hr_job_skill_recruitment_user
+NEW ir.access: hr_recruitment_skills.hr_applicant_skill_interviewer_rule
+NEW ir.access: hr_recruitment_skills.hr_applicant_skill_officer_rule
+DEL ir.actions.act_window: hr_recruitment_skills.action_find_matching_job
+DEL ir.actions.server: hr_recruitment_skills.action_applicant_search_applicant
+DEL ir.model.access: hr_recruitment_skills.access_hr_applicant_skill_interviewer
+DEL ir.model.access: hr_recruitment_skills.access_hr_job_skill_recruitment_user
+DEL ir.rule: hr_recruitment_skills.hr_applicant_skill_interviewer_rule (noupdate)
+DEL ir.rule: hr_recruitment_skills.hr_applicant_skill_officer_rule (noupdate)
+NEW ir.ui.view: hr_recruitment_skills.view_hr_job_kanban

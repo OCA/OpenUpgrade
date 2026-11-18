@@ -1,0 +1,17 @@
+---Models in module 'l10n_account_withholding_tax'---
+---Fields in module 'l10n_account_withholding_tax'---
+l10n_account_withholding_tax / account.move             / withholding_deducted_amount_currency (float): NEW isfunction: function, stored
+l10n_account_withholding_tax / account.move             / withholding_total_amount_currency (float): NEW isfunction: function, stored
+l10n_account_withholding_tax / account.payment          / should_withhold_tax (boolean) : DEL
+l10n_account_withholding_tax / account.payment          / withhold (selection)          : NEW selection_keys: ['payment', 'withhold', 'withhold_pay'], hasdefault: default
+l10n_account_withholding_tax / account.tax              / is_withholding_tax (boolean)  : NEW
+l10n_account_withholding_tax / account.tax              / is_withholding_tax_on_payment (boolean): DEL
+---XML records in module 'l10n_account_withholding_tax'---
+NEW ir.access: l10n_account_withholding_tax.access_account_payment_register_withholding_line
+NEW ir.access: l10n_account_withholding_tax.access_account_payment_withholding_line
+DEL ir.model.access: l10n_account_withholding_tax.access_account_payment_register_withholding_line
+DEL ir.model.access: l10n_account_withholding_tax.access_account_payment_withholding_line
+NEW ir.ui.view: l10n_account_withholding_tax.account_move_view_form_inherit_l10n_account_withholding_tax
+NEW ir.ui.view: l10n_account_withholding_tax.report_invoice_document
+NEW ir.ui.view: l10n_account_withholding_tax.view_account_payment_tree
+NEW ir.ui.view: l10n_account_withholding_tax.view_account_tax_search_inherit_l10n_account_withholding_tax
