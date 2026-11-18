@@ -1,0 +1,12 @@
+---Models in module 'account_tax_python'---
+---Fields in module 'account_tax_python'---
+account_tax_python / account.tax              / formula (text)                : NEW hasdefault: default
+# DONE: renamed from python_compute in pre-migration
+
+account_tax_python / account.tax              / python_applicable (text)      : DEL
+# NOTHING TO DO
+
+account_tax_python / account.tax              / python_compute (text)         : DEL
+# DONE: renamed to formula in pre-migration
+
+---XML records in module 'account_tax_python'---
