@@ -18,6 +18,7 @@ on:
         - all
         - 18.0
         - 19.0
+        - 20.0
 
 jobs:
   generate-analysis18:
@@ -44,3 +45,15 @@ jobs:
       to_version: "19.0"
       to_version_python: "3.10"
       postgres_version: "14"
+  generate-analysis20:
+    name: Generate analysis 20.0
+    if: |
+      github.repository == 'OCA/OpenUpgrade' && (github.event_name == 'schedule' || github.ref_name == '20.0') ||
+      github.event_name == 'workflow_dispatch' && (inputs.version == '20.0' || inputs.version == 'all')
+    uses: ./.github/workflows/generate-analysis.yml
+    with:
+      from_version: "19.0"
+      from_version_python: "3.10"
+      to_version: "20.0"
+      to_version_python: "3.12"
+      postgres_version: "16"
