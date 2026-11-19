@@ -53,6 +53,7 @@ DEL ir.model.access: base.access_ir_translation_all
 DEL ir.model.access: base.access_ir_translation_group_system
 ir.model.constraint: base.constraint_ir_filters_name_model_uid_unique (changed definition: is now 'unique(model_id,user_id,action_id,name)' ('unique(name,model_id,user_id,action_id)'))
 ir.model.constraint: base.constraint_res_partner_bank_unique_number (changed definition: is now 'unique(sanitized_acc_number,partner_id)' ('unique(sanitized_acc_number,company_id)'))
+# DONE pre-migration: re-point references to the kept record and delete duplicates for the same partner/account number
 DEL ir.model.constraint: base.constraint_ir_translation_lang_fkey_res_lang
 NEW ir.module.module: base.module_knowledge (noupdate)
 NEW ir.module.module: base.module_social (noupdate)

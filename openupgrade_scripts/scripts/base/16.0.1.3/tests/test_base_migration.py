@@ -14,3 +14,14 @@ class TestBaseMigration(TransactionCase):
         title_mister = self.env.ref("base.res_partner_title_mister")
         self.assertEqual(title_mister.name, "Mister")
         self.assertEqual(title_mister.with_context(lang="fr_FR").name, "Monsieur")
+
+    def test_partner_bank_unique_number(self):
+        """The same account for a partner in two companies is deduplicated."""
+        partner = self.env["res.partner"].search(
+            [("name", "=", "OpenUpgrade Test Partner")]
+        )
+        self.assertEqual(len(partner), 1)
+        bank_accounts = self.env["res.partner.bank"].search(
+            [("partner_id", "=", partner.id)]
+        )
+        self.assertEqual(len(bank_accounts), 1)
