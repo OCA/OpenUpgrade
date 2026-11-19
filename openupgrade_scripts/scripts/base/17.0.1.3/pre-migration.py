@@ -123,10 +123,22 @@ def _fill_ir_server_object_lines_into_action_server(cr):
                 im.id,
                 CASE WHEN isol.evaluation_type = 'equation'
                     THEN isol.value
-                    ELSE NULL
+                    WHEN imf.ttype = 'many2many' THEN
+                        -- v14 could store the m2m value as a Python list
+                        -- ("[35]"); 17.0 works with a single id.  If the
+                        -- list has several ids, only the first is kept.
+                        COALESCE(
+                            (regexp_match(isol.value, '\\[([0-9]+)'))[1],
+                            (regexp_match(isol.value, '^\\s*([0-9]+)\\s*$'))[1]
+                        )
+                    ELSE isol.value
                 END,
-                CASE WHEN imf.ttype in ('many2one', 'many2many')
-                    THEN imf.relation || ',' || isol.value
+                CASE WHEN isol.evaluation_type = 'equation' THEN NULL
+                    WHEN imf.ttype in ('many2one', 'many2many') THEN
+                        imf.relation || ',' || COALESCE(
+                            (regexp_match(isol.value, '\\[([0-9]+)'))[1],
+                            (regexp_match(isol.value, '^\\s*([0-9]+)\\s*$'))[1]
+                        )
                     ELSE NULL
                 END,
                 imfs.id,
