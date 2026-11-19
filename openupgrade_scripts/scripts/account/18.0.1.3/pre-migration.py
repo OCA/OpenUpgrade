@@ -1,7 +1,11 @@
 # Copyright 2025 ForgeFlow S.L. (https://www.forgeflow.com)
 # License AGPL-3.0 or later (https://www.gnu.org/licenses/agpl).
 
+import logging
+
 from openupgradelib import openupgrade
+
+_logger = logging.getLogger(__name__)
 
 field_renames = [
     ("account.move", "account_move", "payment_id", "origin_payment_id"),
@@ -181,6 +185,73 @@ def fill_account_payment(env):
     )
 
 
+def fill_account_payment_journal_id(env):
+    """Fill the journal of the payments missed by fill_account_payment.
+
+    In <= 17 account.payment inherits journal_id from its move, so the move
+    journal is right even when it is not a payment journal. Payments migrated
+    from <= 13 can also have no move: use their legacy journal, the payment
+    method line journal or, as Odoo 18 does, a journal of the company.
+    """
+    openupgrade.logged_query(
+        env.cr,
+        """
+        UPDATE account_payment ap
+        SET journal_id = am.journal_id
+        FROM account_move am
+        WHERE ap.journal_id IS NULL
+            AND ap.move_id = am.id""",
+    )
+    if openupgrade.column_exists(env.cr, "account_payment", "old_journal_id"):
+        openupgrade.logged_query(
+            env.cr,
+            """
+            UPDATE account_payment ap
+            SET journal_id = aj.id,
+                company_id = COALESCE(ap.company_id, aj.company_id)
+            FROM account_journal aj
+            WHERE ap.journal_id IS NULL
+                AND ap.old_journal_id = aj.id""",
+        )
+    openupgrade.logged_query(
+        env.cr,
+        """
+        UPDATE account_payment ap
+        SET journal_id = apml.journal_id,
+            company_id = COALESCE(ap.company_id, aj.company_id)
+        FROM account_payment_method_line apml
+        JOIN account_journal aj ON aj.id = apml.journal_id
+        WHERE ap.journal_id IS NULL
+            AND ap.payment_method_line_id = apml.id""",
+    )
+    # Last resort, the same default of account.payment._compute_journal_id
+    openupgrade.logged_query(
+        env.cr,
+        """
+        UPDATE account_payment ap
+        SET journal_id = (
+            SELECT aj.id
+            FROM account_journal aj
+            WHERE aj.company_id = ap.company_id
+                AND aj.type IN ('bank', 'cash', 'credit')
+            ORDER BY aj.id
+            LIMIT 1
+        )
+        WHERE ap.journal_id IS NULL
+            AND ap.company_id IS NOT NULL""",
+    )
+    env.cr.execute(
+        "SELECT id FROM account_payment WHERE journal_id IS NULL OR company_id IS NULL"
+    )
+    payment_ids = [row[0] for row in env.cr.fetchall()]
+    if payment_ids:
+        _logger.warning(
+            "account.payment %s still have no journal or company after the "
+            "migration; fix them manually.",
+            payment_ids,
+        )
+
+
 def fill_statement_line_fields(env):
     openupgrade.logged_query(
         env.cr,
@@ -252,6 +323,7 @@ def migrate(env, version):
     adapt_account_move_sending_data(env)
     rename_selection_option(env)
     fill_account_payment(env)
+    fill_account_payment_journal_id(env)
     fill_statement_line_fields(env)
     openupgrade.convert_field_to_html(
         env.cr,
