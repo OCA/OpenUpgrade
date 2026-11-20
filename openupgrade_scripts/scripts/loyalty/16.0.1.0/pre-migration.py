@@ -130,8 +130,11 @@ def update_loyalty_program_data(env):
         AND loyalty_rule.rule_date_to IS NOT NULL
         """,
     )
-    # Sets the value of the limit_usage column to True for those records where the max_usage
-    # column is not null.
+    # Sets the value of the limit_usage column, which is True only when the usage is
+    # limited. In v14 the original field (maximum_use_number) stores 0 when there is
+    # no limit, therefore limit_usage must be True only for positive max_usage values:
+    # otherwise the check_max_usage constraint of the new model
+    # (limit_usage = False OR max_usage > 0) cannot be created.
     openupgrade.logged_query(
         env.cr,
         """
@@ -143,8 +146,7 @@ def update_loyalty_program_data(env):
         env.cr,
         """
         UPDATE loyalty_program
-        SET limit_usage = TRUE
-        WHERE max_usage IS NOT NULL
+        SET limit_usage = CASE WHEN max_usage > 0 THEN TRUE ELSE FALSE END
         """,
     )
     # Determine the visibility on the default portal of specific loyalty programs, based
