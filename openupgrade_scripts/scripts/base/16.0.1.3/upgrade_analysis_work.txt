@@ -2,8 +2,10 @@
 obsolete model base.update.translations [transient]
 obsolete model ir.translation
 
-# PARTIALLY DONE for fields with translate=True (plain text)
-# TODO translations of fields with translate=callable (html etc)
+# PARTIALLY DONE for fields with translate=True (plain text), including the
+# name of the ir.actions.* models in the post-migration
+# TODO translations of fields with translate=callable (html etc), except the
+# help of the ir.actions.* models, done in the post-migration
 
 new model change.password.own [transient]
 new model ir.binary [abstract]

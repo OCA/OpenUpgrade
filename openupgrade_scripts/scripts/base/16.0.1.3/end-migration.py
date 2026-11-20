@@ -10,7 +10,7 @@ def update_callable_translatable_fields(env):
     """Use Odoo's core method to get complete translations of translated fields with
     a callable method for translations (html_translate, xml_translate)"""
     exclusions = [
-        # ir.actions.* inherits the name and help columns from ir.actions.actions
+        # ir.actions.* name and help are merged in the base post-migration
         ("ir.actions.act_window", "name"),
         ("ir.actions.act_window", "help"),
         ("ir.actions.act_url", "name"),
