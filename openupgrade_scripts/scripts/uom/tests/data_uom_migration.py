@@ -13,7 +13,7 @@ env["uom.uom"].create(
     {
         "name": "Mm",
         "category_id": env.ref("uom.uom_categ_length").id,
-        "factor": 1000000,
+        "factor_inv": 1000000,
         "uom_type": "bigger",
     }
 )
@@ -43,7 +43,7 @@ env["uom.uom"].create(
     {
         "name": "MA",
         "category_id": uom_category.id,
-        "factor": 1000000,
+        "factor_inv": 1000000,
         "uom_type": "bigger",
     }
 )
