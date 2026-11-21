@@ -30,7 +30,7 @@ def event_event_badge_format(env):
     """
     openupgrade.map_values(
         env.cr,
-        "badge_format",
+        openupgrade.get_legacy_name("badge_format"),
         "badge_format",
         [("96x134", "four_per_sheet"), ("96x82", "four_per_sheet")],
         table="event_event",
