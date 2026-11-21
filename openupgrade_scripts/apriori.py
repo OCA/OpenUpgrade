@@ -62,6 +62,9 @@ merged_modules = {
     "account_payment_partner": "account_payment_mode",
     # OCA/edi-framework
     "edi_account_core_oca": "edi_account_oca",
+    "edi_oca": "edi_core_oca",
+    "edi_webservice_component_oca": "edi_webservice_oca",
+    "edi_webservice_core_oca": "edi_webservice_oca",
     # OCA/e-commerce
     "website_sale_category_breadcrumb": "website_sale",
     # OCA/hr
