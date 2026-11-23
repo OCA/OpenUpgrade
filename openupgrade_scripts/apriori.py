@@ -34,6 +34,8 @@ renamed_modules = {
     "sale_commission_delegated_partner": "commission_delegated_partner",
     # OCA/knowledge
     "knowledge": "document_knowledge",
+    # OCA/l10n-brazil
+    "l10n_br_website_sale": "l10n_br_website_sale_oca",
     # OCA/multi-company
     "res_partner_category_multi_company": "partner_category_multi_company",
     # OCA/pos
