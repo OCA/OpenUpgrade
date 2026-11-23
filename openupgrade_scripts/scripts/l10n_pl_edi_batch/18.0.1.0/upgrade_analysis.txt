@@ -1,0 +1,32 @@
+---Models in module 'l10n_pl_edi_batch'---
+new model l10n_pl_edi_batch.download
+new model l10n_pl_edi_batch.part
+---Fields in module 'l10n_pl_edi_batch'---
+l10n_pl_edi_batch / l10n_pl_edi_batch.download / company_id (many2one)         : NEW relation: res.company, required
+l10n_pl_edi_batch / l10n_pl_edi_batch.download / content (json)                : NEW
+l10n_pl_edi_batch / l10n_pl_edi_batch.download / date_from (datetime)          : NEW required
+l10n_pl_edi_batch / l10n_pl_edi_batch.download / date_to (datetime)            : NEW required
+l10n_pl_edi_batch / l10n_pl_edi_batch.download / encrypted_symmetric_key (binary): NEW attachment: True
+l10n_pl_edi_batch / l10n_pl_edi_batch.download / name (char)                   : NEW required
+l10n_pl_edi_batch / l10n_pl_edi_batch.download / part_ids (one2many)           : NEW relation: l10n_pl_edi_batch.part
+l10n_pl_edi_batch / l10n_pl_edi_batch.download / raw_iv (binary)               : NEW attachment: True
+l10n_pl_edi_batch / l10n_pl_edi_batch.download / raw_symmetric_key (binary)    : NEW attachment: True
+l10n_pl_edi_batch / l10n_pl_edi_batch.download / retry_count (integer)         : NEW
+l10n_pl_edi_batch / l10n_pl_edi_batch.part   / batch_id (many2one)           : NEW relation: l10n_pl_edi_batch.download, required
+l10n_pl_edi_batch / l10n_pl_edi_batch.part   / decrypted_file (binary)       : NEW attachment: True
+l10n_pl_edi_batch / l10n_pl_edi_batch.part   / download_method (selection)   : NEW required, selection_keys: ['DELETE', 'GET', 'PATCH', 'POST', 'PUT']
+l10n_pl_edi_batch / l10n_pl_edi_batch.part   / download_url (char)           : NEW required
+l10n_pl_edi_batch / l10n_pl_edi_batch.part   / part_name (char)              : NEW required
+l10n_pl_edi_batch / l10n_pl_edi_batch.part   / part_number (integer)         : NEW required
+l10n_pl_edi_batch / res.company              / l10n_pl_edi_batch_historic_date (date): NEW
+---XML records in module 'l10n_pl_edi_batch'---
+NEW ir.cron: l10n_pl_edi_batch.ir_cron_check_status (noupdate)
+NEW ir.cron: l10n_pl_edi_batch.ir_cron_download (noupdate)
+NEW ir.cron: l10n_pl_edi_batch.ir_cron_import (noupdate)
+NEW ir.cron: l10n_pl_edi_batch.ir_cron_request_historic (noupdate)
+NEW ir.cron: l10n_pl_edi_batch.ir_cron_request_today (noupdate)
+NEW ir.model.access: l10n_pl_edi_batch.access_l10n_pl_edi_batch_download_system
+NEW ir.model.access: l10n_pl_edi_batch.access_l10n_pl_edi_batch_part_system
+NEW ir.rule: l10n_pl_edi_batch.l10n_pl_edi_batch_download_rule_multi_company
+NEW ir.rule: l10n_pl_edi_batch.l10n_pl_edi_batch_part_rule_multi_company
+NEW ir.ui.view: l10n_pl_edi_batch.res_config_settings_view_form_l10n_pl_edi
