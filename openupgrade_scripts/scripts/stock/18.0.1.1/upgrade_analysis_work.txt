@@ -10,7 +10,7 @@ new model stock.scrap.reason.tag
 stock        / product.template         / detailed_type (False)         : DEL selection_keys: ['consu', 'product', 'service'], mode: modify
 stock        / product.template         / type (False)                  : DEL selection_keys: ['consu', 'product', 'service'], mode: modify
 stock        / product.template         / is_storable (boolean)         : NEW hasdefault: default
-# DONE: pre-migration:: pre-create and fill is_storable and move 'product' to 'consu'
+# DONE: pre-migration: stored rows; end-migration: dead type defaults
 
 stock        / product.template         / route_from_categ_ids (many2many): table is now 'False' ('stock.route')
 # NOTHING TO DO: related field

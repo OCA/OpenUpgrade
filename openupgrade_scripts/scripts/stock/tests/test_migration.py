@@ -1,6 +1,6 @@
 import unittest
 
-from odoo.tests.common import TransactionCase
+from odoo.tests import TransactionCase, tagged
 
 from odoo.addons.openupgrade_framework import openupgrade_test
 
@@ -138,3 +138,13 @@ class TestStockMigration(TransactionCase):
 
         self.assertEqual(from_intermediate.location_dest_id, customer_location)
         self.assertEqual(from_intermediate.location_final_id, customer_location)
+
+
+@openupgrade_test
+@tagged("post_install", "-at_install")
+class TestProductTypeDefaults(TransactionCase):
+    def test_product_type_defaults(self):
+        for model in ("product.template", "product.product"):
+            product = self.env[model].create({"name": "Default type"})
+            self.assertEqual(product.type, "consu")
+            self.assertTrue(product.is_storable)
