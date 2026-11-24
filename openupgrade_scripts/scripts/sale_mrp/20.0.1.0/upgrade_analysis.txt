@@ -1,0 +1,15 @@
+---Models in module 'sale_mrp'---
+---Fields in module 'sale_mrp'---
+---XML records in module 'sale_mrp'---
+NEW ir.access: sale_mrp.access_mrp_bom_line_salesman
+NEW ir.access: sale_mrp.access_mrp_bom_user
+NEW ir.access: sale_mrp.access_mrp_production_salesman
+NEW ir.access: sale_mrp.access_mrp_production_workcenter_line_salesman
+NEW ir.access: sale_mrp.sale_order_line_mrp_rule
+NEW ir.access: sale_mrp.sale_order_mrp_rule
+DEL ir.model.access: sale_mrp.access_mrp_bom_line_salesman
+DEL ir.model.access: sale_mrp.access_mrp_bom_user
+DEL ir.model.access: sale_mrp.access_mrp_production_salesman
+DEL ir.model.access: sale_mrp.access_mrp_production_workcenter_line_salesman
+DEL ir.model.access: sale_mrp.access_sale_order_line_manufacturing_user
+DEL ir.model.access: sale_mrp.access_sale_order_manufacturing_user

@@ -1,0 +1,17 @@
+---Models in module 'auth_passkey'---
+---Fields in module 'auth_passkey'---
+---XML records in module 'auth_passkey'---
+NEW ir.access: auth_passkey.rule_auth_passkey_key_admin
+NEW ir.access: auth_passkey.rule_auth_passkey_key_create_portal
+NEW ir.access: auth_passkey.rule_auth_passkey_key_create_portal_1
+NEW ir.access: auth_passkey.rule_auth_passkey_key_user
+NEW ir.access: auth_passkey.rule_auth_passkey_key_user_1
+NEW ir.access: auth_passkey.rule_auth_passkey_key_user_2
+DEL ir.model.access: auth_passkey.access_auth_passkey_key
+DEL ir.model.access: auth_passkey.access_auth_passkey_key_admin
+DEL ir.model.access: auth_passkey.access_auth_passkey_key_create
+DEL ir.model.access: auth_passkey.access_auth_passkey_key_create_portal
+DEL ir.model.access: auth_passkey.access_auth_passkey_key_portal
+DEL ir.rule: auth_passkey.rule_auth_passkey_key_admin (noupdate)
+DEL ir.rule: auth_passkey.rule_auth_passkey_key_create_portal (noupdate)
+DEL ir.rule: auth_passkey.rule_auth_passkey_key_user (noupdate)

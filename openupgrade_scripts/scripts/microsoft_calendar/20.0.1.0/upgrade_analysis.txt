@@ -1,0 +1,8 @@
+---Models in module 'microsoft_calendar'---
+---Fields in module 'microsoft_calendar'---
+microsoft_calendar / res.users.settings       / microsoft_account_email (char): NEW
+---XML records in module 'microsoft_calendar'---
+NEW ir.access: microsoft_calendar.microsoft_calendar_account_reset
+DEL ir.model.access: microsoft_calendar.microsoft_calendar_account_reset
+NEW ir.ui.view: microsoft_calendar.calendar_calendar_view_form_inherit_microsoft_calendar
+NEW ir.ui.view: microsoft_calendar.view_microsoft_calendar_event_form

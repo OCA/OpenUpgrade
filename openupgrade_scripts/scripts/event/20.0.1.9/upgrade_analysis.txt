@@ -1,0 +1,91 @@
+---Models in module 'event'---
+---Fields in module 'event'---
+event        / digest.digest            / kpi_nbr_of_registrations (boolean): NEW
+event        / event.event              / website_message_ids (one2many): DEL relation: mail.message
+event        / event.event.ticket       / entry_limit (integer)         : NEW hasdefault: default
+event        / event.registration       / event_begin_date (datetime)   : is now stored
+event        / event.registration       / main_registration_id (many2one): NEW relation: event.registration
+event        / event.registration       / website_message_ids (one2many): DEL relation: mail.message
+---XML records in module 'event'---
+NEW ir.access: event.access_event_event_manager
+NEW ir.access: event.access_event_event_registration
+NEW ir.access: event.access_event_event_ticket_registration
+NEW ir.access: event.access_event_event_ticket_user
+NEW ir.access: event.access_event_event_user
+NEW ir.access: event.access_event_mail_registration
+NEW ir.access: event.access_event_mail_registration_manager
+NEW ir.access: event.access_event_mail_registration_registration
+NEW ir.access: event.access_event_mail_slot_manager
+NEW ir.access: event.access_event_mail_slot_registration
+NEW ir.access: event.access_event_mail_user
+NEW ir.access: event.access_event_question_answer_employee
+NEW ir.access: event.access_event_question_answer_registration
+NEW ir.access: event.access_event_question_user
+NEW ir.access: event.access_event_registration_answer
+NEW ir.access: event.access_event_registration_manager
+NEW ir.access: event.access_event_registration_registration
+NEW ir.access: event.access_event_slot_registration
+NEW ir.access: event.access_event_slot_user
+NEW ir.access: event.access_event_stage_manager
+NEW ir.access: event.access_event_stage_registration
+NEW ir.access: event.access_event_tag_category_registration
+NEW ir.access: event.access_event_tag_category_user
+NEW ir.access: event.access_event_tag_manager
+NEW ir.access: event.access_event_tag_registration
+NEW ir.access: event.access_event_tag_user
+NEW ir.access: event.access_event_type_mail_manager
+NEW ir.access: event.access_event_type_mail_registration
+NEW ir.access: event.access_event_type_manager
+NEW ir.access: event.access_event_type_registration
+NEW ir.access: event.access_event_type_ticket_manager
+NEW ir.access: event.access_event_type_ticket_registration
+NEW ir.access: event.event_event_company_rule
+NEW ir.access: event.event_question_answer_registration_desk_rule
+NEW ir.access: event.event_question_user_rule
+NEW ir.access: event.event_registration_company_rule
+NEW ir.access: event.event_registration_portal_rule
+NEW ir.access: event.event_registration_user_portal_rule
+NEW ir.access: event.ir_rule_event_event_ticket_company
+DEL ir.model.access: event.access_event_event_manager
+DEL ir.model.access: event.access_event_event_registration
+DEL ir.model.access: event.access_event_event_ticket
+DEL ir.model.access: event.access_event_event_ticket_registration
+DEL ir.model.access: event.access_event_event_ticket_user
+DEL ir.model.access: event.access_event_event_user
+DEL ir.model.access: event.access_event_mail_registration
+DEL ir.model.access: event.access_event_mail_registration_manager
+DEL ir.model.access: event.access_event_mail_registration_registration
+DEL ir.model.access: event.access_event_mail_slot_manager
+DEL ir.model.access: event.access_event_mail_slot_registration
+DEL ir.model.access: event.access_event_mail_user
+DEL ir.model.access: event.access_event_question_answer_employee
+DEL ir.model.access: event.access_event_question_answer_registration
+DEL ir.model.access: event.access_event_question_answer_user
+DEL ir.model.access: event.access_event_question_manager
+DEL ir.model.access: event.access_event_question_user
+DEL ir.model.access: event.access_event_registration
+DEL ir.model.access: event.access_event_registration_answer
+DEL ir.model.access: event.access_event_registration_manager
+DEL ir.model.access: event.access_event_registration_registration
+DEL ir.model.access: event.access_event_slot_registration
+DEL ir.model.access: event.access_event_slot_user
+DEL ir.model.access: event.access_event_stage_manager
+DEL ir.model.access: event.access_event_stage_registration
+DEL ir.model.access: event.access_event_tag
+DEL ir.model.access: event.access_event_tag_category_registration
+DEL ir.model.access: event.access_event_tag_category_user
+DEL ir.model.access: event.access_event_tag_manager
+DEL ir.model.access: event.access_event_tag_registration
+DEL ir.model.access: event.access_event_tag_user
+DEL ir.model.access: event.access_event_type_mail_manager
+DEL ir.model.access: event.access_event_type_mail_registration
+DEL ir.model.access: event.access_event_type_manager
+DEL ir.model.access: event.access_event_type_registration
+DEL ir.model.access: event.access_event_type_ticket_manager
+DEL ir.model.access: event.access_event_type_ticket_registration
+DEL ir.rule: event.event_event_company_rule (noupdate)
+DEL ir.rule: event.event_registration_company_rule (noupdate)
+DEL ir.rule: event.ir_rule_event_event_ticket_company (noupdate)
+NEW ir.ui.view: event.digest_digest_view_form
+NEW ir.ui.view: event.portal_my_events
+NEW portal.entry: event.portal_events_client (noupdate)

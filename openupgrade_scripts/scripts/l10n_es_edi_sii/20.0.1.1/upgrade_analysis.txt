@@ -1,0 +1,19 @@
+---Models in module 'l10n_es_edi_sii'---
+new model l10n_es_edi_sii.document
+---Fields in module 'l10n_es_edi_sii'---
+l10n_es_edi_sii / account.move             / l10n_es_edi_csv (char)        : not stored anymore
+l10n_es_edi_sii / account.move             / l10n_es_edi_csv (char)        : now a function
+l10n_es_edi_sii / account.move             / l10n_es_edi_sii_document_ids (one2many): NEW relation: l10n_es_edi_sii.document
+l10n_es_edi_sii / certificate.certificate  / scope (False)                 : selection_keys added: [ca] (most likely nothing to do)
+l10n_es_edi_sii / l10n_es_edi_sii.document / attachment_id (many2one)      : NEW relation: ir.attachment
+l10n_es_edi_sii / l10n_es_edi_sii.document / csv (char)                    : NEW
+l10n_es_edi_sii / l10n_es_edi_sii.document / move_id (many2one)            : NEW relation: account.move, required
+l10n_es_edi_sii / l10n_es_edi_sii.document / response_message (html)       : NEW
+l10n_es_edi_sii / l10n_es_edi_sii.document / state (selection)             : NEW required, selection_keys: ['accepted', 'accepted_with_errors', 'cancelled', 'to_cancel', 'to_send'], hasdefault: default
+---XML records in module 'l10n_es_edi_sii'---
+DEL account.edi.format: l10n_es_edi_sii.edi_es_sii
+NEW ir.access: l10n_es_edi_sii.access_l10n_es_edi_sii_document_readonly
+NEW ir.access: l10n_es_edi_sii.sii_document_comp_rule
+NEW ir.actions.server: l10n_es_edi_sii.action_l10n_es_send_sii
+NEW ir.actions.server: l10n_es_edi_sii.action_request_cancel
+NEW ir.ui.view: l10n_es_edi_sii.view_invoice_tree_inherit_l10n_es_edi_sii

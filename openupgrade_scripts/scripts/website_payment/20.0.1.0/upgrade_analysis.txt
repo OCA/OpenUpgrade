@@ -1,0 +1,13 @@
+---Models in module 'website_payment'---
+---Fields in module 'website_payment'---
+website_payment / payment.transaction      / is_donation (boolean)         : DEL
+---XML records in module 'website_payment'---
+DEL ir.asset: website_payment.s_donation_000_scss [renamed to website_sale module]
+DEL ir.ui.view: website_payment.donation_information
+DEL ir.ui.view: website_payment.donation_input
+DEL ir.ui.view: website_payment.donation_mail_body (noupdate)
+DEL ir.ui.view: website_payment.donation_pay
+DEL ir.ui.view: website_payment.payment_form
+DEL ir.ui.view: website_payment.remove_external_snippets
+DEL ir.ui.view: website_payment.s_donation
+DEL ir.ui.view: website_payment.s_donation_button

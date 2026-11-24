@@ -1,0 +1,78 @@
+---Models in module 'stock_account'---
+obsolete model stock_account.stock.valuation.report [abstract]
+---Fields in module 'stock_account'---
+stock_account / account.account          / account_stock_expense_id (many2one): module is now 'account' ('stock_account')
+stock_account / account.account          / account_stock_variation_id (many2one): module is now 'account' ('stock_account')
+stock_account / account.move             / closing_datetime (datetime)   : NEW
+stock_account / account.move             / product_value_id (one2many)   : NEW relation: product.value
+stock_account / account.move.line        / cogs_origin_id (many2one)     : module is now 'account' ('stock_account')
+stock_account / account.move.line        / stock_move_id (many2one)      : NEW relation: stock.move
+stock_account / product.category         / account_stock_variation_id (many2one): module is now 'account' ('stock_account')
+stock_account / product.category         / property_cost_method (False)  : NEW selection_keys: ['average', 'fifo', 'standard'], mode: modify
+stock_account / product.category         / property_cost_method (selection): module is now 'account' ('stock_account')
+stock_account / product.category         / property_price_difference_account_id (many2one): module is now 'account' ('stock_account')
+stock_account / product.category         / property_stock_journal (many2one): module is now 'account' ('stock_account')
+stock_account / product.category         / property_stock_valuation_account_id (many2one): module is now 'account' ('stock_account')
+stock_account / product.category         / property_valuation (selection): module is now 'account' ('stock_account')
+stock_account / product.product          / cost_method (selection)       : module is now 'account' ('stock_account')
+stock_account / product.product          / valuation (selection)         : module is now 'account' ('stock_account')
+stock_account / product.template         / cost_method (False)           : NEW selection_keys: ['average', 'fifo', 'standard'], mode: modify
+stock_account / product.template         / cost_method (selection)       : module is now 'account' ('stock_account')
+stock_account / product.template         / property_price_difference_account_id (many2one): DEL relation: account.account
+stock_account / product.template         / valuation (selection)         : module is now 'account' ('stock_account')
+stock_account / product.value            / account_move_id (many2one)    : NEW relation: account.move
+stock_account / product.value            / new_cost (float)              : NEW
+stock_account / product.value            / new_value (float)             : NEW hasdefault: default
+stock_account / product.value            / old_cost (float)              : NEW
+stock_account / product.value            / old_value (float)             : NEW hasdefault: default
+stock_account / product.value            / quantity (float)              : NEW
+stock_account / res.company              / account_stock_journal_id (many2one): module is now 'account' ('stock_account')
+stock_account / res.company              / account_stock_valuation_id (many2one): module is now 'account' ('stock_account')
+stock_account / res.company              / cost_method (False)           : NEW selection_keys: ['average', 'fifo', 'standard'], mode: modify
+stock_account / res.company              / cost_method (selection)       : module is now 'account' ('stock_account')
+stock_account / res.company              / inventory_period (selection)  : module is now 'account' ('stock_account')
+stock_account / res.company              / inventory_valuation (selection): module is now 'account' ('stock_account')
+stock_account / stock.move               / invoice_line_ids (one2many)   : NEW relation: account.move.line
+stock_account / stock.move               / product_value_ids (one2many)  : NEW relation: product.value
+---XML records in module 'stock_account'---
+NEW ir.access: stock_account.access_account_account_stock_manager
+NEW ir.access: stock_account.access_account_journal_stock_manager
+NEW ir.access: stock_account.access_product_value_account_manager
+NEW ir.access: stock_account.access_product_value_stock_manager
+NEW ir.access: stock_account.access_stock_avco_report_account_readonly
+NEW ir.access: stock_account.access_stock_avco_report_stock_manager
+NEW ir.access: stock_account.access_stock_move_invoicing_payments
+NEW ir.access: stock_account.access_stock_move_invoicing_payments_readonly
+NEW ir.access: stock_account.access_stock_picking_invoicing_payments
+NEW ir.access: stock_account.access_stock_picking_invoicing_payments_readonly
+NEW ir.access: stock_account.product_value_rule
+NEW ir.access: stock_account.stock_avco_report_rule
+NEW ir.actions.act_window: stock_account.product_value_list_action
+DEL ir.actions.client: stock_account.action_report_stock_valuation [renamed to account module]
+DEL ir.cron: stock_account.ir_cron_post_stock_valuation [renamed to account module] (noupdate)
+NEW ir.filters: stock_account.filter_stock_move_aging_report
+NEW ir.filters: stock_account.filter_stock_move_intercompany_deliveries
+DEL ir.model.access: stock_account.access_account_account_stock_manager
+DEL ir.model.access: stock_account.access_account_journal_stock_manager
+DEL ir.model.access: stock_account.access_stock_avco_report_account_readonly
+DEL ir.model.access: stock_account.access_stock_avco_report_stock_manager
+DEL ir.model.access: stock_account.access_stock_move_invoicing_payments
+DEL ir.model.access: stock_account.access_stock_move_invoicing_payments_readonly
+DEL ir.model.access: stock_account.access_stock_picking_invoicing_payments
+DEL ir.model.access: stock_account.access_stock_picking_invoicing_payments_readonly
+DEL ir.model.access: stock_account.access_stock_product_value
+DEL ir.rule: stock_account.product_value_rule (noupdate)
+DEL ir.rule: stock_account.stock_avco_report_rule (noupdate)
+NEW ir.ui.menu: stock_account.valuation_adjustments_menu
+NEW ir.ui.view: stock_account.product_template_form_view_stock_account
+NEW ir.ui.view: stock_account.product_value_list_view
+NEW ir.ui.view: stock_account.product_value_search_view
+NEW ir.ui.view: stock_account.stock_move_view_pivot
+NEW ir.ui.view: stock_account.view_move_form
+DEL ir.ui.view: stock_account.product_product_view_list_at_date
+DEL ir.ui.view: stock_account.view_account_form
+DEL ir.ui.view: stock_account.view_category_property_form
+DEL ir.ui.view: stock_account.view_category_property_form_stock
+DEL ir.ui.view: stock_account.view_picking_form
+DEL ir.ui.view: stock_account.view_stock_return_picking_form_inherit_stock_account
+DEL ir.ui.view: stock_account.view_template_property_form_stock_account
