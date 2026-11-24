@@ -1,0 +1,8 @@
+---Models in module 'pos_worldline'---
+---Fields in module 'pos_worldline'---
+pos_worldline / pos.payment.method       / worldline_api_key (char)      : NEW
+pos_worldline / pos.payment.method       / worldline_merchant_id (char)  : NEW
+pos_worldline / pos.payment.method       / worldline_terminal_id (char)  : NEW
+pos_worldline / pos.payment.method       / worldline_test_mode (boolean) : NEW
+---XML records in module 'pos_worldline'---
+NEW ir.ui.view: pos_worldline.pos_payment_method_view_form_inherit_pos_worldline

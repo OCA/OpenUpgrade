@@ -5,6 +5,5 @@ website_sale_wishlist / website                  / wishlist_grid_columns (intege
 website_sale_wishlist / website                  / wishlist_mobile_columns (integer): NEW hasdefault: default
 website_sale_wishlist / website                  / wishlist_opt_products_design_classes (char): NEW hasdefault: default
 ---XML records in module 'website_sale_wishlist'---
-ir.model.constraint: website_sale_wishlist.constraint_product_wishlist_product_unique_partner_id (changed definition: is now 'UNIQUE(product_id, partner_id)' ('unique(product_id,partner_id,website_id)'))
 NEW ir.ui.view: website_sale_wishlist.empty_wishlist_svg
 DEL ir.ui.view: website_sale_wishlist.snippet_options
