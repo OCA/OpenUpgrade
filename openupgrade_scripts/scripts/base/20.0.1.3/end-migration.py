@@ -4,7 +4,7 @@
 from collections import namedtuple
 
 from markupsafe import Markup
-from openupgradelib import openupgrade
+from openupgradelib import openupgrade, openupgrade_200
 
 
 class SetOfDomainWithOrigin(dict):
@@ -313,3 +313,4 @@ def ir_access(env):
 def migrate(env, version):
     openupgrade.disable_invalid_filters(env)
     ir_access(env)
+    openupgrade_200.migrate_qweb_fields(env, "ir.ui.view", "arch_db", "arch_prev")
