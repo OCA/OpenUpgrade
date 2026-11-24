@@ -1,0 +1,39 @@
+---Models in module 'sale_loyalty'---
+---Fields in module 'sale_loyalty'---
+---XML records in module 'sale_loyalty'---
+NEW ir.access: sale_loyalty.access_applicability_manager
+NEW ir.access: sale_loyalty.access_applicability_salesman
+NEW ir.access: sale_loyalty.access_communication_manager
+NEW ir.access: sale_loyalty.access_communication_salesman
+NEW ir.access: sale_loyalty.access_coupon_manager
+NEW ir.access: sale_loyalty.access_coupon_salesman
+NEW ir.access: sale_loyalty.access_loyalty_card_update_balance_salesman
+NEW ir.access: sale_loyalty.access_loyalty_history_salesman
+NEW ir.access: sale_loyalty.access_program_manager
+NEW ir.access: sale_loyalty.access_program_salesman
+NEW ir.access: sale_loyalty.access_reward_manager
+NEW ir.access: sale_loyalty.access_reward_salesman
+NEW ir.access: sale_loyalty.access_sale_coupon_apply_code
+NEW ir.access: sale_loyalty.access_sale_coupon_apply_code_line
+NEW ir.access: sale_loyalty.access_sale_coupon_generate
+NEW ir.access: sale_loyalty.access_sale_order_coupon_points_manager
+NEW ir.access: sale_loyalty.access_sale_order_coupon_points_salesman
+DEL ir.model.access: sale_loyalty.access_applicability_manager
+DEL ir.model.access: sale_loyalty.access_applicability_salesman
+DEL ir.model.access: sale_loyalty.access_communication_manager
+DEL ir.model.access: sale_loyalty.access_communication_salesman
+DEL ir.model.access: sale_loyalty.access_coupon_manager
+DEL ir.model.access: sale_loyalty.access_coupon_salesman
+DEL ir.model.access: sale_loyalty.access_loyalty_card_update_balance_salesman
+DEL ir.model.access: sale_loyalty.access_loyalty_history_salesman
+DEL ir.model.access: sale_loyalty.access_program_manager
+DEL ir.model.access: sale_loyalty.access_program_salesman
+DEL ir.model.access: sale_loyalty.access_reward_manager
+DEL ir.model.access: sale_loyalty.access_reward_salesman
+DEL ir.model.access: sale_loyalty.access_sale_coupon_apply_code
+DEL ir.model.access: sale_loyalty.access_sale_coupon_apply_code_line
+DEL ir.model.access: sale_loyalty.access_sale_coupon_generate
+DEL ir.model.access: sale_loyalty.access_sale_order_coupon_points_manager
+DEL ir.model.access: sale_loyalty.access_sale_order_coupon_points_salesman
+NEW ir.ui.menu: sale_loyalty.menu_sale_promotions
+NEW ir.ui.view: sale_loyalty.sale_order_portal_template

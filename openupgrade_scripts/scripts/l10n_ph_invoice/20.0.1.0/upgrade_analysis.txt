@@ -1,0 +1,32 @@
+---Models in module 'l10n_ph_invoice'---
+new model l10n_ph.discount.privilege
+new model l10n_ph.discount.privilege.line.mixin [abstract]
+new model l10n_ph.discount.privilege.wizard [transient]
+new model l10n_ph.discount.privilege.wizard.line [transient]
+---Fields in module 'l10n_ph_invoice'---
+l10n_ph_invoice / account.move.line        / l10n_ph_discount_privilege_id (many2one): NEW relation: l10n_ph.discount.privilege
+l10n_ph_invoice / account.move.line        / l10n_ph_original_discount (float): NEW
+l10n_ph_invoice / account.move.line        / l10n_ph_original_price_unit (float): NEW
+l10n_ph_invoice / account.move.line        / l10n_ph_original_tax_ids (many2many): NEW relation: account.tax
+l10n_ph_invoice / l10n_ph.discount.privilege / account_id (many2one)         : NEW relation: account.account, required
+l10n_ph_invoice / l10n_ph.discount.privilege / active (boolean)              : NEW hasdefault: default
+l10n_ph_invoice / l10n_ph.discount.privilege / applied_to_category_ids (many2many): NEW relation: product.category
+l10n_ph_invoice / l10n_ph.discount.privilege / company_id (many2one)         : NEW relation: res.company, required, hasdefault: default
+l10n_ph_invoice / l10n_ph.discount.privilege / discount_amount (float)       : NEW required
+l10n_ph_invoice / l10n_ph.discount.privilege / discount_type (selection)     : NEW required, selection_keys: ['pwd', 'sc', 'special'], hasdefault: default
+l10n_ph_invoice / l10n_ph.discount.privilege / fiscal_position_id (many2one) : NEW relation: account.fiscal.position
+l10n_ph_invoice / l10n_ph.discount.privilege / name (char)                   : NEW required
+---XML records in module 'l10n_ph_invoice'---
+NEW ir.access: l10n_ph_invoice.access_l10n_ph_discount_privilege_account_invoice
+NEW ir.access: l10n_ph_invoice.access_l10n_ph_discount_privilege_account_manager
+NEW ir.access: l10n_ph_invoice.access_l10n_ph_discount_privilege_account_readonly
+NEW ir.access: l10n_ph_invoice.access_l10n_ph_discount_privilege_wizard_account_invoice
+NEW ir.access: l10n_ph_invoice.access_l10n_ph_discount_privilege_wizard_line_account_invoice
+NEW ir.access: l10n_ph_invoice.l10n_ph_discount_privilege_company_rule
+NEW ir.actions.act_window: l10n_ph_invoice.action_l10n_ph_discount_privilege
+NEW ir.model.constraint: l10n_ph_invoice.constraint_l10n_ph_discount_privilege_l10n_ph_discount_privilege__933ee0d6
+NEW ir.ui.menu: l10n_ph_invoice.menu_l10n_ph_discount_privilege_invoicing
+NEW ir.ui.view: l10n_ph_invoice.view_l10n_ph_discount_privilege_form
+NEW ir.ui.view: l10n_ph_invoice.view_l10n_ph_discount_privilege_tree
+NEW ir.ui.view: l10n_ph_invoice.view_l10n_ph_discount_privilege_wizard_form
+NEW ir.ui.view: l10n_ph_invoice.view_move_form_l10n_ph_discount_privilege_button

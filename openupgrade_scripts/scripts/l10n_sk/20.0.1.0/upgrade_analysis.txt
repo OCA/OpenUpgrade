@@ -1,0 +1,19 @@
+---Models in module 'l10n_sk'---
+---Fields in module 'l10n_sk'---
+l10n_sk      / res.company              / trade_registry (char)         : previously in module l10n_cz
+---XML records in module 'l10n_sk'---
+NEW account.report.expression: l10n_sk.sk_deductible_specific_20_simpl_vat
+NEW account.report.expression: l10n_sk.sk_deductible_specific_20a_simpl_vat
+NEW account.report.expression: l10n_sk.sk_deductible_specific_21_simpl_vat
+NEW account.report.expression: l10n_sk.sk_vat_exempt_14_goods_base
+NEW account.report.expression: l10n_sk.sk_vat_exempt_14_services_base
+NEW account.report.expression: l10n_sk.sk_vat_exempt_14_triangular_base
+NEW account.report.line: l10n_sk.sk_deductible_specific_20_simpl
+NEW account.report.line: l10n_sk.sk_deductible_specific_20a_simpl
+NEW account.report.line: l10n_sk.sk_deductible_specific_21_simpl
+DEL ir.ui.view: l10n_sk.l10n_sk_external_layout_bold
+DEL ir.ui.view: l10n_sk.l10n_sk_external_layout_boxed
+DEL ir.ui.view: l10n_sk.l10n_sk_external_layout_bubble
+DEL ir.ui.view: l10n_sk.l10n_sk_external_layout_striped
+DEL ir.ui.view: l10n_sk.l10n_sk_external_layout_wave
+DEL ir.ui.view: l10n_sk.res_partner_view_form_inherit_l10n_sk

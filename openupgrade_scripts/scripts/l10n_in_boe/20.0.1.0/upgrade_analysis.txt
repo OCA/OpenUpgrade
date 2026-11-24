@@ -1,0 +1,10 @@
+---Models in module 'l10n_in_boe'---
+new model l10n_in.boe.wizard [transient]
+new model l10n_in.boe.wizard.line [transient]
+---Fields in module 'l10n_in_boe'---
+---XML records in module 'l10n_in_boe'---
+NEW ir.access: l10n_in_boe.access_l10n_in_boe_wizard
+NEW ir.access: l10n_in_boe.access_l10n_in_boe_wizard_line
+NEW ir.actions.server: l10n_in_boe.action_l10n_in_boe_wizard_multi
+NEW ir.ui.view: l10n_in_boe.boe_view_form
+NEW ir.ui.view: l10n_in_boe.invoice_form_inherit_l10n_in_boe

@@ -1,0 +1,20 @@
+---Models in module 'mrp_account'---
+---Fields in module 'mrp_account'---
+mrp_account  / mrp.bom                  / extra_cost (float)            : NEW hasdefault: default
+---XML records in module 'mrp_account'---
+NEW ir.access: mrp_account.access_mrp_bom_invoice_bom
+NEW ir.access: mrp_account.access_mrp_bom_invoice_bom_readonly
+NEW ir.access: mrp_account.access_mrp_bom_line_invoice_bom
+NEW ir.access: mrp_account.access_mrp_bom_line_invoice_bom_readonly
+NEW ir.access: mrp_account.access_mrp_wip_accounting
+NEW ir.access: mrp_account.access_mrp_wip_accounting_line
+DEL ir.model.access: mrp_account.access_mrp_bom_invoice_bom
+DEL ir.model.access: mrp_account.access_mrp_bom_invoice_bom_readonly
+DEL ir.model.access: mrp_account.access_mrp_bom_line_invoice_bom
+DEL ir.model.access: mrp_account.access_mrp_bom_line_invoice_bom_readonly
+DEL ir.model.access: mrp_account.access_mrp_wip_accounting
+DEL ir.model.access: mrp_account.access_mrp_wip_accounting_line
+NEW ir.ui.view: mrp_account.mo_overview_components
+NEW ir.ui.view: mrp_account.mrp_account_inherits_mrp_bom_form_view
+NEW ir.ui.view: mrp_account.view_production_pivot_inherit_mrp_account
+DEL ir.ui.view: mrp_account.product_variant_easy_edit_view_bom_inherit

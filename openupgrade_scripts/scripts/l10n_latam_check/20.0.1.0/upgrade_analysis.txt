@@ -1,0 +1,18 @@
+---Models in module 'l10n_latam_check'---
+---Fields in module 'l10n_latam_check'---
+l10n_latam_check / l10n_latam.check         / bank_account_id (many2one)    : NEW relation: res.partner.bank, hasdefault: compute
+l10n_latam_check / l10n_latam.check         / bank_id (many2one)            : DEL relation: res.bank
+l10n_latam_check / l10n_latam.check         / company_id (many2one)         : not related anymore
+l10n_latam_check / l10n_latam.check         / company_id (many2one)         : now a function
+l10n_latam_check / l10n_latam.check         / website_message_ids (one2many): DEL relation: mail.message
+---XML records in module 'l10n_latam_check'---
+NEW ir.access: l10n_latam_check.access_l10n_latam_account_payment_register_check
+NEW ir.access: l10n_latam_check.access_l10n_latam_check
+NEW ir.access: l10n_latam_check.access_l10n_latam_check_readonly
+NEW ir.access: l10n_latam_check.access_l10n_latam_payment_mass_transfer
+NEW ir.access: l10n_latam_check.l10n_latam_check_comp_rule
+DEL ir.model.access: l10n_latam_check.access_l10n_latam_account_payment_register_check
+DEL ir.model.access: l10n_latam_check.access_l10n_latam_check
+DEL ir.model.access: l10n_latam_check.access_l10n_latam_check_readonly
+DEL ir.model.access: l10n_latam_check.access_l10n_latam_payment_mass_transfer
+DEL ir.rule: l10n_latam_check.l10n_latam_check_comp_rule (noupdate)

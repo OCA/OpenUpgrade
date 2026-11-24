@@ -1,0 +1,67 @@
+---Models in module 'resource'---
+---Fields in module 'resource'---
+resource     / res.company              / tz (selection)                : NEW selection_keys: function, hasdefault: compute
+resource     / resource.calendar        / calendar_type (selection)     : NEW required, selection_keys: ['fixed', 'undefined', 'variable'], hasdefault: default
+resource     / resource.calendar        / days_per_week (float)         : NEW hasdefault: compute
+resource     / resource.calendar        / duration_based (boolean)      : DEL
+resource     / resource.calendar        / flexible_hours (boolean)      : DEL
+resource     / resource.calendar        / reference_calendar_id (many2one): NEW relation: resource.calendar, hasdefault: default
+resource     / resource.calendar        / schedule_type (selection)     : DEL required, selection_keys: ['flexible', 'fully_fixed']
+resource     / resource.calendar        / two_weeks_calendar (boolean)  : DEL
+resource     / resource.calendar        / tz (selection)                : DEL required, selection_keys: function
+resource     / resource.calendar        / work_time_rate (float)        : is now stored
+resource     / resource.calendar.attendance / _order                        : _order is now 'sequence, date, dayofweek, hour_from' ('sequence, week_type, dayofweek, hour_from')
+resource     / resource.calendar.attendance / date (date)                   : NEW
+resource     / resource.calendar.attendance / day_period (selection)        : now a function
+resource     / resource.calendar.attendance / day_period (selection)        : selection_keys removed: [lunch]
+resource     / resource.calendar.attendance / display_type (selection)      : DEL selection_keys: ['line_section']
+resource     / resource.calendar.attendance / duration_based (boolean)      : is now stored
+resource     / resource.calendar.attendance / duration_based (boolean)      : not related anymore
+resource     / resource.calendar.attendance / duration_based (boolean)      : now a function
+resource     / resource.calendar.attendance / duration_days (float)         : DEL
+resource     / resource.calendar.attendance / duration_hours (float)        : not a function anymore
+resource     / resource.calendar.attendance / name (char)                   : DEL required
+resource     / resource.calendar.attendance / recurrency (boolean)          : NEW
+resource     / resource.calendar.attendance / recurrency_count (integer)    : NEW hasdefault: default
+resource     / resource.calendar.attendance / recurrency_end_type (selection): NEW selection_keys: ['date', 'forever', 'times'], hasdefault: default
+resource     / resource.calendar.attendance / recurrency_excluded_occurences (json): NEW
+resource     / resource.calendar.attendance / recurrency_interval (integer) : NEW hasdefault: default
+resource     / resource.calendar.attendance / recurrency_type (selection)   : NEW selection_keys: ['days', 'weeks'], hasdefault: default
+resource     / resource.calendar.attendance / recurrency_until (date)       : NEW hasdefault: compute
+resource     / resource.calendar.attendance / week_type (selection)         : DEL selection_keys: ['0', '1']
+resource     / resource.calendar.leaves / count_as (selection)          : NEW selection_keys: ['absence', 'working_time'], hasdefault: default
+resource     / resource.calendar.leaves / time_type (selection)         : DEL selection_keys: ['leave', 'other']
+resource     / resource.resource        / calendar_id (many2one)        : now required
+resource     / resource.resource        / color (integer)               : previously in module resource_mail
+---XML records in module 'resource'---
+NEW ir.access: resource.access_resource_calendar_attendance_system
+NEW ir.access: resource.access_resource_calendar_attendance_user
+NEW ir.access: resource.access_resource_calendar_system
+NEW ir.access: resource.access_resource_calendar_user
+NEW ir.access: resource.access_resource_resource_all
+NEW ir.access: resource.resource_calendar_leaves_rule_group_admin_modify
+NEW ir.access: resource.resource_calendar_leaves_rule_group_user_create
+NEW ir.access: resource.resource_calendar_leaves_rule_group_user_modify
+NEW ir.access: resource.resource_calendar_leaves_rule_multi_company
+NEW ir.access: resource.resource_resource_multi_company
+NEW ir.actions.act_window: resource.action_resource_material_from_calendar
+NEW ir.cron: resource.ir_cron_calendar_clean_up
+DEL ir.model.access: resource.access_resource_calendar_attendance_system
+DEL ir.model.access: resource.access_resource_calendar_attendance_user
+DEL ir.model.access: resource.access_resource_calendar_leaves
+DEL ir.model.access: resource.access_resource_calendar_leaves_user
+DEL ir.model.access: resource.access_resource_calendar_system
+DEL ir.model.access: resource.access_resource_calendar_user
+DEL ir.model.access: resource.access_resource_resource
+DEL ir.model.access: resource.access_resource_resource_all
+NEW ir.model.constraint: resource.constraint_resource_calendar_attendance_check_count
+NEW ir.model.constraint: resource.constraint_resource_calendar_attendance_check_duration_hours
+NEW ir.model.constraint: resource.constraint_resource_calendar_attendance_check_interval
+NEW ir.model.constraint: resource.constraint_resource_calendar_attendance_check_recurrency_until
+DEL ir.rule: resource.resource_calendar_leaves_rule_group_admin_modify (noupdate)
+DEL ir.rule: resource.resource_calendar_leaves_rule_group_user_create (noupdate)
+DEL ir.rule: resource.resource_calendar_leaves_rule_group_user_modify (noupdate)
+DEL ir.rule: resource.resource_calendar_leaves_rule_multi_company (noupdate)
+DEL ir.rule: resource.resource_resource_multi_company (noupdate)
+NEW ir.ui.view: resource.view_resource_calendar_attendance_calendar
+NEW ir.ui.view: resource.view_resource_calendar_multi_create_form

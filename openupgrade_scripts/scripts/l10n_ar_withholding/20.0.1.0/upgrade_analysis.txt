@@ -1,0 +1,33 @@
+---Models in module 'l10n_ar_withholding'---
+obsolete model l10n_ar.payment.register.withholding [transient]
+---Fields in module 'l10n_ar_withholding'---
+l10n_ar_withholding / account.tax              / l10n_ar_tax_type (selection)  : DEL selection_keys: ['earnings', 'earnings_scale', 'iibb_total', 'iibb_untaxed']
+l10n_ar_withholding / account.tax              / l10n_ar_withholding_payment_type (selection): DEL selection_keys: ['customer', 'supplier']
+l10n_ar_withholding / account.tax              / l10n_ar_withholding_sequence_id (many2one): DEL relation: ir.sequence
+l10n_ar_withholding / account.tax              / l10n_ar_withholding_tax_type (selection): NEW selection_keys: ['earnings', 'earnings_scale', 'iibb_total', 'iibb_untaxed']
+l10n_ar_withholding / l10n_ar.earnings.scale.line / excess_amount (float)         : DEL
+l10n_ar_withholding / l10n_ar.earnings.scale.line / fixed_amount (float)          : not stored anymore
+l10n_ar_withholding / l10n_ar.earnings.scale.line / fixed_amount (float)          : now a function
+l10n_ar_withholding / res.company              / l10n_ar_tax_base_account_id (many2one): DEL relation: account.account
+---XML records in module 'l10n_ar_withholding'---
+NEW ir.access: l10n_ar_withholding.access_l10n_ar_earnings_scale_all
+NEW ir.access: l10n_ar_withholding.access_l10n_ar_earnings_scale_line_all
+NEW ir.access: l10n_ar_withholding.access_l10n_ar_earnings_scale_line_manager
+NEW ir.access: l10n_ar_withholding.access_l10n_ar_earnings_scale_manager
+NEW ir.access: l10n_ar_withholding.access_l10n_ar_partner_tax_all
+NEW ir.access: l10n_ar_withholding.access_l10n_ar_partner_tax_billing
+NEW ir.access: l10n_ar_withholding.access_l10n_ar_partner_tax_manager
+NEW ir.access: l10n_ar_withholding.l10n_ar_partner_tax_comp_rule
+DEL ir.model.access: l10n_ar_withholding.access_l10n_ar_earnings_scale_all
+DEL ir.model.access: l10n_ar_withholding.access_l10n_ar_earnings_scale_line_all
+DEL ir.model.access: l10n_ar_withholding.access_l10n_ar_earnings_scale_line_manager
+DEL ir.model.access: l10n_ar_withholding.access_l10n_ar_earnings_scale_manager
+DEL ir.model.access: l10n_ar_withholding.access_l10n_ar_partner_tax_all
+DEL ir.model.access: l10n_ar_withholding.access_l10n_ar_partner_tax_billing
+DEL ir.model.access: l10n_ar_withholding.access_l10n_ar_partner_tax_manager
+DEL ir.model.access: l10n_ar_withholding.access_l10n_ar_payment_register_withholding
+DEL ir.rule: l10n_ar_withholding.l10n_ar_partner_tax_comp_rule (noupdate)
+NEW ir.ui.view: l10n_ar_withholding.account_tax_view_search_inherit_l10n_ar_withholding
+DEL ir.ui.view: l10n_ar_withholding.report_payment_receipt_document
+DEL ir.ui.view: l10n_ar_withholding.res_config_settings_view_form
+DEL ir.ui.view: l10n_ar_withholding.view_account_payment_form

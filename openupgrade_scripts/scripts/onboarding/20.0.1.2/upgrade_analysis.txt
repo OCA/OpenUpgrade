@@ -1,0 +1,19 @@
+---Models in module 'onboarding'---
+---Fields in module 'onboarding'---
+---XML records in module 'onboarding'---
+NEW ir.access: onboarding.access_onboarding_manager
+NEW ir.access: onboarding.access_onboarding_progress_manager
+NEW ir.access: onboarding.access_onboarding_progress_step_manager
+NEW ir.access: onboarding.access_onboarding_step_manager
+DEL ir.model.access: onboarding.access_onboarding_all
+DEL ir.model.access: onboarding.access_onboarding_manager
+DEL ir.model.access: onboarding.access_onboarding_progress_all
+DEL ir.model.access: onboarding.access_onboarding_progress_manager
+DEL ir.model.access: onboarding.access_onboarding_progress_step_all
+DEL ir.model.access: onboarding.access_onboarding_progress_step_manager
+DEL ir.model.access: onboarding.access_onboarding_progress_step_user
+DEL ir.model.access: onboarding.access_onboarding_progress_user
+DEL ir.model.access: onboarding.access_onboarding_step_all
+DEL ir.model.access: onboarding.access_onboarding_step_manager
+DEL ir.model.access: onboarding.access_onboarding_step_user
+DEL ir.model.access: onboarding.access_onboarding_user

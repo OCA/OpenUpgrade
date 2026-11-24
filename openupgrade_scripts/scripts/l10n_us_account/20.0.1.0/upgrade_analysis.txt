@@ -1,0 +1,19 @@
+---Models in module 'l10n_us_account'---
+---Fields in module 'l10n_us_account'---
+l10n_us_account / account.tax              / l10n_us_city_id (many2one)    : NEW relation: res.city
+l10n_us_account / account.tax              / l10n_us_county_id (many2one)  : NEW relation: l10n_us.res.county
+l10n_us_account / account.tax              / l10n_us_exempt_parent_tax_id (many2one): NEW relation: account.tax
+l10n_us_account / account.tax              / l10n_us_exempt_tax_ids (one2many): NEW relation: account.tax
+l10n_us_account / account.tax              / l10n_us_jurisdiction_type (selection): NEW selection_keys: ['city', 'county', 'special', 'state']
+l10n_us_account / account.tax              / l10n_us_nontaxable_parent_tax_id (many2one): NEW relation: account.tax
+l10n_us_account / account.tax              / l10n_us_nontaxable_tax_ids (one2many): NEW relation: account.tax
+l10n_us_account / account.tax              / l10n_us_state_id (many2one)   : NEW relation: res.country.state
+l10n_us_account / res.bank                 / intermediary_bank_id (many2one): DEL relation: res.bank
+l10n_us_account / res.partner.bank         / intermediary_bank_bic (char)  : NEW
+---XML records in module 'l10n_us_account'---
+NEW ir.ui.menu: l10n_us_account.menu_finance_us
+NEW ir.ui.menu: l10n_us_account.menu_finance_us_reports
+NEW ir.ui.view: l10n_us_account.res_config_settings_view_form
+NEW ir.ui.view: l10n_us_account.view_partner_bank_form
+NEW ir.ui.view: l10n_us_account.view_tax_form
+DEL ir.ui.view: l10n_us_account.res_bank_view_form

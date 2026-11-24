@@ -1,0 +1,49 @@
+<?xml version='1.0' encoding='utf-8'?>
+<odoo>
+  <record id="channel_admin" model="discuss.channel">
+    <field name="description"/>
+    <field name="name"/>
+  </record>
+  <record id="channel_all_employees" model="discuss.channel">
+    <field name="description"/>
+    <field name="name"/>
+  </record>
+  <record id="channel_member_general_channel_for_admin" model="discuss.channel.member">
+    <field name="channel_role" eval="'owner'"/>
+  </record>
+  <record id="group_mail_canned_response_admin" model="res.groups">
+    <field name="implied_ids" eval="[(4, ref('base.group_user'))]"/>
+  </record>
+  <record id="mail_activity_data_call" model="mail.activity.type">
+    <field name="icon">phone</field>
+  </record>
+  <record id="mail_activity_data_email" model="mail.activity.type">
+    <field name="icon">mail</field>
+  </record>
+  <record id="mail_activity_data_meeting" model="mail.activity.type">
+    <field name="icon">calendar_today</field>
+  </record>
+  <record id="mail_activity_data_todo" model="mail.activity.type">
+    <field name="icon">check</field>
+  </record>
+  <record id="mail_activity_data_upload_document" model="mail.activity.type">
+    <field name="icon">upload</field>
+  </record>
+  <record id="mail_activity_data_warning" model="mail.activity.type">
+    <field name="icon">warning</field>
+  </record>
+  <record id="module_install_notification" model="mail.message">
+    <field name="body"/>
+    <field name="subject"/>
+  </record>
+  <record id="mt_activities" model="mail.message.subtype">
+    <field name="sequence" eval="100"/>
+  </record>
+  <record id="mt_comment" model="mail.message.subtype">
+    <field name="name">Messages</field>
+  </record>
+  <record id="mt_note" model="mail.message.subtype">
+    <field name="name">Notes</field>
+    <field name="sequence" eval="90"/>
+  </record>
+</odoo>

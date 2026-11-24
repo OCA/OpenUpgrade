@@ -1,0 +1,16 @@
+---Models in module 'auth_totp'---
+---Fields in module 'auth_totp'---
+---XML records in module 'auth_totp'---
+NEW ir.access: auth_totp.access_auth_totp_wizard
+NEW ir.access: auth_totp.api_key_admin
+NEW ir.access: auth_totp.api_key_user
+NEW ir.access: auth_totp.api_key_user_1
+NEW ir.access: auth_totp.rule_auth_totp_wizard
+DEL ir.model.access: auth_totp.access_auth_totp_device_access_employee
+DEL ir.model.access: auth_totp.access_auth_totp_device_access_portal
+DEL ir.model.access: auth_totp.access_auth_totp_rate_limit_log
+DEL ir.model.access: auth_totp.access_auth_totp_wizard
+DEL ir.rule: auth_totp.api_key_admin
+DEL ir.rule: auth_totp.api_key_public
+DEL ir.rule: auth_totp.api_key_user
+DEL ir.rule: auth_totp.rule_auth_totp_wizard

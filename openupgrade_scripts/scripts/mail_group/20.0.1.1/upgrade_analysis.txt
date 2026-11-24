@@ -1,0 +1,35 @@
+---Models in module 'mail_group'---
+---Fields in module 'mail_group'---
+---XML records in module 'mail_group'---
+NEW ir.access: mail_group.access_mail_group_message_reject
+NEW ir.access: mail_group.access_mail_group_user
+NEW ir.access: mail_group.mail_group_member_rule_administrator
+NEW ir.access: mail_group.mail_group_member_rule_user
+NEW ir.access: mail_group.mail_group_message_rule_administrator
+NEW ir.access: mail_group.mail_group_message_rule_public
+NEW ir.access: mail_group.mail_group_message_rule_user
+NEW ir.access: mail_group.mail_group_message_rule_user_write
+NEW ir.access: mail_group.mail_group_moderation_rule_administrator
+NEW ir.access: mail_group.mail_group_moderation_rule_user
+NEW ir.access: mail_group.mail_group_rule_administrator
+NEW ir.access: mail_group.mail_group_rule_read_all
+NEW ir.access: mail_group.mail_group_rule_write_all
+DEL ir.model.access: mail_group.access_mail_group_all_portal
+DEL ir.model.access: mail_group.access_mail_group_all_public
+DEL ir.model.access: mail_group.access_mail_group_member
+DEL ir.model.access: mail_group.access_mail_group_message_all_portal
+DEL ir.model.access: mail_group.access_mail_group_message_all_public
+DEL ir.model.access: mail_group.access_mail_group_message_reject
+DEL ir.model.access: mail_group.access_mail_group_message_user
+DEL ir.model.access: mail_group.access_mail_group_moderation
+DEL ir.model.access: mail_group.access_mail_group_user
+DEL ir.rule: mail_group.mail_group_member_rule_administrator (noupdate)
+DEL ir.rule: mail_group.mail_group_member_rule_user (noupdate)
+DEL ir.rule: mail_group.mail_group_message_rule_administrator (noupdate)
+DEL ir.rule: mail_group.mail_group_message_rule_public (noupdate)
+DEL ir.rule: mail_group.mail_group_message_rule_user (noupdate)
+DEL ir.rule: mail_group.mail_group_moderation_rule_administrator (noupdate)
+DEL ir.rule: mail_group.mail_group_moderation_rule_user (noupdate)
+DEL ir.rule: mail_group.mail_group_rule_administrator (noupdate)
+DEL ir.rule: mail_group.mail_group_rule_read_all (noupdate)
+DEL ir.rule: mail_group.mail_group_rule_write_all (noupdate)

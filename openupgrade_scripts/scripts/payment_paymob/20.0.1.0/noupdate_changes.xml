@@ -1,0 +1,80 @@
+<?xml version='1.0' encoding='utf-8'?>
+<odoo>
+  <record id="payment.payment_provider_paymob" model="payment.provider">
+    <field name="redirect_form_view_id" ref="payment.generic_redirect_form"/>
+  </record>
+  <record id="payment_method_aman" model="payment.method">
+    <field name="support_manual_capture" eval="'none'"/>
+    <field name="support_refund" eval="'none'"/>
+    <field name="provider_id" ref="payment.payment_provider_paymob"/>
+  </record>
+  <record id="payment_method_contact" model="payment.method">
+    <field name="support_manual_capture" eval="'none'"/>
+    <field name="support_refund" eval="'none'"/>
+    <field name="provider_id" ref="payment.payment_provider_paymob"/>
+  </record>
+  <record id="payment_method_forsa" model="payment.method">
+    <field name="support_manual_capture" eval="'none'"/>
+    <field name="support_refund" eval="'none'"/>
+    <field name="provider_id" ref="payment.payment_provider_paymob"/>
+  </record>
+  <record id="payment_method_halan" model="payment.method">
+    <field name="support_manual_capture" eval="'none'"/>
+    <field name="support_refund" eval="'none'"/>
+    <field name="provider_id" ref="payment.payment_provider_paymob"/>
+  </record>
+  <record id="payment_method_installments_eg" model="payment.method">
+    <field name="support_manual_capture" eval="'none'"/>
+    <field name="support_refund" eval="'none'"/>
+    <field name="provider_id" ref="payment.payment_provider_paymob"/>
+  </record>
+  <record id="payment_method_kiosk" model="payment.method">
+    <field name="support_manual_capture" eval="'none'"/>
+    <field name="support_refund" eval="'none'"/>
+    <field name="provider_id" ref="payment.payment_provider_paymob"/>
+  </record>
+  <record id="payment_method_mobile_wallet_eg" model="payment.method">
+    <field name="support_manual_capture" eval="'none'"/>
+    <field name="support_refund" eval="'none'"/>
+    <field name="provider_id" ref="payment.payment_provider_paymob"/>
+  </record>
+  <record id="payment_method_premium_card" model="payment.method">
+    <field name="support_manual_capture" eval="'none'"/>
+    <field name="support_refund" eval="'none'"/>
+    <field name="provider_id" ref="payment.payment_provider_paymob"/>
+  </record>
+  <record id="payment_method_souhoola" model="payment.method">
+    <field name="support_manual_capture" eval="'none'"/>
+    <field name="support_refund" eval="'none'"/>
+    <field name="provider_id" ref="payment.payment_provider_paymob"/>
+  </record>
+  <record id="payment_method_stcpay" model="payment.method">
+    <field name="support_manual_capture" eval="'none'"/>
+    <field name="support_refund" eval="'none'"/>
+    <field name="provider_id" ref="payment.payment_provider_paymob"/>
+  </record>
+  <record id="payment_method_sympl" model="payment.method">
+    <field name="support_manual_capture" eval="'none'"/>
+    <field name="support_refund" eval="'none'"/>
+    <field name="provider_id" ref="payment.payment_provider_paymob"/>
+  </record>
+  <record id="payment_method_tabby" model="payment.method">
+    <field name="support_manual_capture" eval="'none'"/>
+    <field name="support_refund" eval="'none'"/>
+    <field name="supported_country_ids" eval="[Command.set([ref('base.ae'), ref('base.sa')])]"/>
+    <field name="supported_currency_ids" eval="[Command.set([ref('base.AED'), ref('base.SAR')])]"/>
+    <field name="provider_id" ref="payment.payment_provider_paymob"/>
+  </record>
+  <record id="payment_method_tamara" model="payment.method">
+    <field name="support_manual_capture" eval="'none'"/>
+    <field name="support_refund" eval="'none'"/>
+    <field name="supported_country_ids" eval="[Command.set([ref('base.ae'), ref('base.sa')])]"/>
+    <field name="supported_currency_ids" eval="[Command.set([ref('base.AED'), ref('base.SAR')])]"/>
+    <field name="provider_id" ref="payment.payment_provider_paymob"/>
+  </record>
+  <record id="payment_method_valu" model="payment.method">
+    <field name="support_manual_capture" eval="'none'"/>
+    <field name="support_refund" eval="'none'"/>
+    <field name="provider_id" ref="payment.payment_provider_paymob"/>
+  </record>
+</odoo>

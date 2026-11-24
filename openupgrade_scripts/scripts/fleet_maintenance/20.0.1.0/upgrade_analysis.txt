@@ -1,0 +1,11 @@
+---Models in module 'fleet_maintenance'---
+---Fields in module 'fleet_maintenance'---
+fleet_maintenance / fleet.vehicle            / equipment_ids (one2many)      : NEW relation: maintenance.equipment
+fleet_maintenance / maintenance.equipment    / equipment_assign_to (False)   : NEW required, selection_keys: ['other', 'vehicle'], mode: modify, hasdefault: default
+fleet_maintenance / maintenance.equipment    / vehicle_id (many2one)         : NEW relation: fleet.vehicle, hasdefault: compute
+---XML records in module 'fleet_maintenance'---
+NEW ir.ui.view: fleet_maintenance.fleet_vehicle_view_form
+NEW ir.ui.view: fleet_maintenance.maintenance_equipment_view_form_inherit_fleet
+NEW ir.ui.view: fleet_maintenance.maintenance_equipment_view_kanban_inherit_fleet
+NEW ir.ui.view: fleet_maintenance.maintenance_equipment_view_search_inherit_fleet
+NEW ir.ui.view: fleet_maintenance.maintenance_equipment_view_tree_inherit_fleet
