@@ -8,7 +8,8 @@ renamed_modules = {
     "purchase_requisition_sale": "purchase_alternative_sale",
     "website_sale_autocomplete": "website_address_autocomplete",
     # odoo/enterprise
-    # OCA/...
+    # OCA/mail
+    "mail_tracking": "mail_recipient_tracking",
 }
 
 # Merged modules contain a mapping from old module names to other,
