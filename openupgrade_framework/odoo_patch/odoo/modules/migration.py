@@ -10,6 +10,14 @@ def _get_files(self):
     to_exclude = [("analytic", "1.2")]
     for addon, version in to_exclude:
         self.migrations.get(addon, {}).get("module", {}).pop(version, None)
+    for pkg in self.graph:
+        if pkg.load_version or pkg.name not in self.migrations:
+            continue
+        # No version in the database means no data to migrate, and an empty
+        # installed_version matches every version folder. Keep only the
+        # OpenUpgrade scripts from upgrade_path.
+        self.migrations[pkg.name]["module"] = {}
+        self.migrations[pkg.name]["module_upgrades"] = {}
 
 
 _get_files._original_method = MigrationManager._get_files
