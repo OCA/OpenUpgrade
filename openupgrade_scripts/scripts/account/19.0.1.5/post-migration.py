@@ -143,25 +143,36 @@ def account_tax_original_tax_ids(env):
 
 def account_full_reconcile_exchange_move_id(env):
     """
-    account.full.reconcile#exchange_move_id has been scrapped, clone a partial
-    reconciliation and link the exchange move to it
+    account.full.reconcile#exchange_move_id has been scrapped, link the exchange
+    move to one of the partial reconciliations of the full reconciliation, the
+    last one not reconciling the exchange move itself if possible. A copy of a
+    partial reconciliation would count its amount twice in the residuals.
     """
-    env.cr.execute(
+    openupgrade.logged_query(
+        env.cr,
         """
-        SELECT id, exchange_move_id
-        FROM account_full_reconcile
-        WHERE exchange_move_id IS NOT NULL
-        """
+        UPDATE account_partial_reconcile apr
+        SET exchange_move_id = candidate.exchange_move_id
+        FROM (
+            SELECT DISTINCT ON (afr.id) afr.exchange_move_id, apr.id AS partial_id
+            FROM account_full_reconcile afr
+            JOIN account_partial_reconcile apr ON apr.full_reconcile_id = afr.id
+            JOIN account_move_line debit ON debit.id = apr.debit_move_id
+            JOIN account_move_line credit ON credit.id = apr.credit_move_id
+            WHERE afr.exchange_move_id IS NOT NULL
+                AND apr.exchange_move_id IS NULL
+                AND NOT EXISTS (
+                    SELECT 1 FROM account_partial_reconcile linked
+                    WHERE linked.exchange_move_id = afr.exchange_move_id
+                )
+            ORDER BY afr.id,
+                debit.move_id = afr.exchange_move_id
+                    OR credit.move_id = afr.exchange_move_id,
+                apr.id DESC
+        ) candidate
+        WHERE apr.id = candidate.partial_id
+        """,
     )
-    AccountFullReconcile = env["account.full.reconcile"]
-
-    for full_reconcile_id, exchange_move_id in env.cr.fetchall():
-        AccountFullReconcile.browse(full_reconcile_id).partial_reconcile_ids[-1:].copy(
-            {
-                "exchange_move_id": exchange_move_id,
-                "full_reconcile_id": full_reconcile_id,
-            }
-        )
 
 
 def account_move_line_no_followup(env):

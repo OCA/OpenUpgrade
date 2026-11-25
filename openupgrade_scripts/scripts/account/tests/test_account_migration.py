@@ -22,8 +22,8 @@ class TestAccountMigration(TransactionCase):
 
     def test_exchange_move(self):
         """
-        Test that we create a partial reconciliation for the exchange move of a full
-        reconciliation if set
+        Test that the exchange move of a full reconciliation is linked to one of its
+        partial reconciliations, and that the reconciled lines keep no residual
         """
         reconciled_move = self.env["account.move"].search(
             [("ref", "=", "Exchange move test move")]
@@ -37,6 +37,13 @@ class TestAccountMigration(TransactionCase):
         self.assertIn(
             exchange_move, full_reconcile.partial_reconcile_ids.exchange_move_id
         )
+        partials = full_reconcile.partial_reconcile_ids
+        pairs = [(p.debit_move_id, p.credit_move_id) for p in partials]
+        self.assertEqual(len(pairs), len(set(pairs)))
+        reconciled_lines = full_reconcile.reconciled_line_ids
+        self.assertTrue(all(reconciled_lines.mapped("reconciled")))
+        self.assertFalse(any(reconciled_lines.mapped("amount_residual")))
+        self.assertFalse(any(reconciled_lines.mapped("amount_residual_currency")))
 
     def test_reconcile_model_partner_mapping(self):
         """
