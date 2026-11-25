@@ -87,7 +87,7 @@ product      / product.template         / priority (selection)          : DEL se
 product      / product.template         / service_tracking (selection)  : previously in module sale_project
 product      / product.template         / type (selection)              : now required
 product      / product.template         / type (selection)              : selection_keys is now '['combo', 'consu', 'service']' ('['consu', 'service']')
-# NOTHING TO DO
+# NOTHING TO DO: dead type defaults handled in stock end-migration
 
 product      / res.partner              / specific_property_product_pricelist (many2one): NEW relation: product.pricelist
 # DONE: post-migration: convert from v17 property res.partner#property_product_pricelist
