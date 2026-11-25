@@ -248,6 +248,20 @@ def _handle_partner_private_type(cr):
         WHERE type = 'private'
         """,
     )
+    # Delete tracking messages that may leak data through the chatter (like a phone
+    # number change, showing both the old and the new one)
+    openupgrade.logged_query(
+        cr,
+        """
+        DELETE FROM mail_message
+        WHERE id IN (
+            SELECT mm.id FROM mail_message mm
+            JOIN res_partner rp ON rp.id = mm.res_id AND mm.model = 'res.partner'
+            JOIN mail_tracking_value mtv ON mtv.mail_message_id = mm.id
+            WHERE rp.type = 'private'
+        )
+        """,
+    )
 
 
 @openupgrade.migrate(use_env=False)
