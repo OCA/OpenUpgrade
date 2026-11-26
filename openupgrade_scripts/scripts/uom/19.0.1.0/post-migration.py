@@ -19,38 +19,37 @@ def _uom_relative_uom_id_relative_factor(env):
     )
     with_xml_id = Uom.browse(set(_id for (_id,) in env.cr.fetchall()))
 
+    # Up to 18.0, one reference unit equals `factor` of a unit, whatever its type
+    # (a "bigger" unit stores factor = 1 / ratio, e.g. a dozen: 1/12), so the 19.0
+    # relative_factor is always 1 / factor.
     env.cr.execute(
         f"""
         SELECT
-        array_agg(id),
-        array_agg({openupgrade.get_legacy_name("factor")}),
-        array_agg({openupgrade.get_legacy_name("uom_type")})
+        reference.id,
+        array_agg(uom.id),
+        array_agg(uom.{openupgrade.get_legacy_name("factor")})
         FROM
-        uom_uom
-        WHERE {openupgrade.get_legacy_name("category_id")} IS NOT NULL
-        GROUP BY {openupgrade.get_legacy_name("category_id")}
+        uom_uom uom
+        JOIN uom_uom reference
+        ON reference.{openupgrade.get_legacy_name("category_id")}
+        = uom.{openupgrade.get_legacy_name("category_id")}
+        AND reference.{openupgrade.get_legacy_name("uom_type")} = 'reference'
+        WHERE uom.id != reference.id
+        GROUP BY reference.id
         """
     )
-    for ids, factors, uom_types in env.cr.fetchall():
+    for reference_id, ids, factors in env.cr.fetchall():
+        old_reference = Uom.browse(reference_id)
         uoms = Uom.browse(ids)
         uom2factor = dict(zip(uoms, factors, strict=True))
-        uom2type = dict(zip(uoms, uom_types, strict=True))
 
-        old_reference = uoms.filtered(
-            lambda x, uom2type=uom2type: uom2type[x] == "reference"
-        )
-
-        for uom in uoms - old_reference - with_xml_id:
+        for uom in uoms - with_xml_id:
             # uoms with xmlid will be updated by the migration of the module
             # providing them
-            relative_factor = (
-                uom2factor[uom] if uom2type[uom] == "bigger" else (1 / uom2factor[uom])
-            )
-
             uom.write(
                 {
                     "relative_uom_id": old_reference,
-                    "relative_factor": relative_factor,
+                    "relative_factor": 1 / uom2factor[uom],
                 }
             )
 
