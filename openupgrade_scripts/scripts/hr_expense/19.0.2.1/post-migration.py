@@ -47,6 +47,81 @@ def hr_expense_approval_fields(env):
     )
 
 
+def hr_expense_sheet_chatter(env):
+    """
+    Move the messages, attachments, followers and activities of each
+    hr.expense.sheet to its first expense, and drop the activities of sheets
+    without expenses, as the model no longer exists
+    """
+    sheet_expense = """
+        sheet_expense AS (
+            SELECT DISTINCT ON (former_sheet_id)
+                former_sheet_id AS sheet_id, id AS expense_id, name
+            FROM hr_expense
+            WHERE former_sheet_id IS NOT NULL
+            ORDER BY former_sheet_id, id
+        )
+    """
+    openupgrade.logged_query(
+        env.cr,
+        f"""
+        WITH {sheet_expense}
+        UPDATE mail_message mm
+        SET model = 'hr.expense', res_id = se.expense_id
+        FROM sheet_expense se
+        WHERE mm.model = 'hr.expense.sheet' AND mm.res_id = se.sheet_id
+        """,
+    )
+    openupgrade.logged_query(
+        env.cr,
+        f"""
+        WITH {sheet_expense}
+        UPDATE ir_attachment ia
+        SET res_model = 'hr.expense', res_id = se.expense_id
+        FROM sheet_expense se
+        WHERE ia.res_model = 'hr.expense.sheet' AND ia.res_id = se.sheet_id
+        """,
+    )
+    openupgrade.logged_query(
+        env.cr,
+        f"""
+        WITH {sheet_expense}
+        UPDATE mail_followers mf
+        SET res_model = 'hr.expense', res_id = se.expense_id
+        FROM sheet_expense se
+        WHERE mf.res_model = 'hr.expense.sheet' AND mf.res_id = se.sheet_id
+            AND NOT EXISTS (
+                SELECT 1 FROM mail_followers mf2
+                WHERE mf2.res_model = 'hr.expense'
+                    AND mf2.res_id = se.expense_id
+                    AND mf2.partner_id = mf.partner_id
+            )
+        """,
+    )
+    openupgrade.logged_query(
+        env.cr,
+        "DELETE FROM mail_followers WHERE res_model = 'hr.expense.sheet'",
+    )
+    openupgrade.logged_query(
+        env.cr,
+        f"""
+        WITH {sheet_expense}
+        UPDATE mail_activity ma
+        SET res_model = 'hr.expense',
+            res_model_id = im.id,
+            res_id = se.expense_id,
+            res_name = se.name
+        FROM sheet_expense se, ir_model im
+        WHERE ma.res_model = 'hr.expense.sheet' AND ma.res_id = se.sheet_id
+            AND im.model = 'hr.expense'
+        """,
+    )
+    openupgrade.logged_query(
+        env.cr,
+        "DELETE FROM mail_activity WHERE res_model = 'hr.expense.sheet'",
+    )
+
+
 def update_product_uoms(env):
     """
     Set updated product uoms if possible
@@ -80,5 +155,6 @@ def migrate(env, version):
     )
     hr_expense_account_move_id(env)
     hr_expense_approval_fields(env)
+    hr_expense_sheet_chatter(env)
     update_product_uoms(env)
     openupgrade.delete_records_safely_by_xml_id(env, deleted_xmlids)
