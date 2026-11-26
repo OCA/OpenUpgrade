@@ -58,6 +58,8 @@ merged_modules = {
     "iot_base": "iot",
     # OCA/crm
     "crm_stage_multi_team": "crm",
+    # OCA/hr-holidays
+    "hr_holidays_natural_period": "hr_holidays",
     # OCA/stock-logistics-warehouse
     "stock_move_quantity_product_uom": "stock",
 }
